@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">CallManager</string>
+    <string name="app_name">Call Manager</string>
+    <string name="activity_ongoing_call">Ongoing Call</string>
 </resources>

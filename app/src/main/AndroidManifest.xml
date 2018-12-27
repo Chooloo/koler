@@ -9,17 +9,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
-
                 <data android:scheme="tel" />
             </intent-filter>
             <intent-filter>
@@ -29,10 +28,18 @@
 
         <service
             android:name=".CallService"
-            android:enabled="false"
-            android:exported="false" />
+            android:permission="android.permission.BIND_INCALL_SERVICE">
+            <meta-data
+                android:name="android.telecom.IN_CALL_SERVICE_UI"
+                android:value="true" />
+            <intent-filter>
+                <action android:name="android.telecom.InCallService" />
+            </intent-filter>
+        </service>
 
-        <activity android:name=".OngoingCallActivity"></activity>
+        <activity
+            android:name=".OngoingCallActivity"
+            android:label="@string/activity_ongoing_call" />
     </application>
 
 </manifest>
