@@ -1,8 +1,10 @@
-package com.chooloo.www.callmanager;
+package com.chooloo.www.callmanager.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.chooloo.www.callmanager.R;
 
 public class OngoingCallActivity extends AppCompatActivity {
 

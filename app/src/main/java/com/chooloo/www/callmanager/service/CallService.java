@@ -1,8 +1,10 @@
-package com.chooloo.www.callmanager;
+package com.chooloo.www.callmanager.service;
 
 import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.InCallService;
+
+import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
 public class CallService extends InCallService {
 
