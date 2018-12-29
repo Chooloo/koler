@@ -22,4 +22,13 @@ public class CallService extends InCallService {
         super.onCallRemoved(call);
         sOngoingCall = null;
     }
+
+    Call.Callback callCallback = new Call.Callback(){
+        @Override
+        public void onStateChanged(Call call, int state) {
+            super.onStateChanged(call, state);
+            // Send updates to the activity
+            CallManager.updateCall(call);
+        }
+    };
 }
