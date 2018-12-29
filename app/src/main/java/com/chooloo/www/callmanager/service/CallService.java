@@ -3,6 +3,8 @@ package com.chooloo.www.callmanager.service;
 import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.InCallService;
+import android.telecom.VideoProfile;
+import android.util.Log;
 
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
@@ -15,6 +17,7 @@ public class CallService extends InCallService {
         super.onCallAdded(call);
         startActivity(new Intent(this, OngoingCallActivity.class));
         sOngoingCall = call;
+        CallManager.updateCall(call);
     }
 
     @Override
@@ -28,7 +31,10 @@ public class CallService extends InCallService {
         public void onStateChanged(Call call, int state) {
             super.onStateChanged(call, state);
             // Send updates to the activity
-            CallManager.updateCall(call);
         }
     };
+
+    public static void acceptCall(){
+        sOngoingCall.answer(VideoProfile.STATE_AUDIO_ONLY);
+    }
 }

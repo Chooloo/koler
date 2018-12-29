@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/placeholder"
-        android:layout_width="wrap_content"
+        android:layout_width="317dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="124dp"
@@ -16,8 +16,8 @@
         android:fontFamily="@font/ubuntu"
         android:text="Someone Calling Inka Inka"
         android:textAlignment="center"
-        android:textSize="40dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,5 +55,7 @@
         android:text="Deny"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
