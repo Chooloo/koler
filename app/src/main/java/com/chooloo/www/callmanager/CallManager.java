@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.service;
+package com.chooloo.www.callmanager;
 
 import android.telecom.Call;
 import android.telecom.VideoProfile;

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,11 +18,14 @@ import com.chooloo.www.callmanager.R;
 import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import timber.log.Timber;
 
+//TODO clean up, give this activity a purpose
 public class MainActivity extends ToolbarActivity {
 
-    @BindView(R.id.numberInput) EditText numberInput;
-    @BindView(R.id.callBtn) Button callBtn;
+    @BindView(R.id.numberInput) EditText mNumberInput;
+    @BindView(R.id.button_call) Button mCallButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +33,9 @@ public class MainActivity extends ToolbarActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        callBtn.setOnClickListener(v -> {
-            if (numberInput.getText() == null) {
-                Toast.makeText(getApplicationContext(), "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
-            } else {
-                try {
-                // Set the data
-                String uri = "tel:" + numberInput.getText().toString();
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+        //Init timber
+        Timber.plant(new Timber.DebugTree());
 
-                startActivity(callIntent);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Something went wrong... Fuck.", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        });
         // Ask for permissions
         // READ_PHONE_STATE
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
@@ -79,5 +70,23 @@ public class MainActivity extends ToolbarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.button_call)
+    public void call(View view ) {
+        if (mNumberInput.getText() == null) {
+            Toast.makeText(getApplicationContext(), "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
+        } else {
+            try {
+                // Set the data
+                String uri = "tel:" + mNumberInput.getText().toString();
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+
+                startActivity(callIntent);
+            } catch (SecurityException e) {
+                Toast.makeText(getApplicationContext(), "Something went wrong... Fuck.", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".activity.OngoingCallActivity">
 
     <TextView
-        android:id="@+id/placeholder"
+        android:id="@+id/text_status"
         android:layout_width="317dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -34,10 +34,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/placeholder" />
+        app:layout_constraintTop_toBottomOf="@+id/text_status" />
 
     <Button
-        android:id="@+id/answerBtn"
+        android:id="@+id/answer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/denyBtn"
+        android:id="@+id/button_deny"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"

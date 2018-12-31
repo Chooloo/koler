@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
+//TODO add more settings
+//TODO add icons
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG_FRAGMENT = "fragment";

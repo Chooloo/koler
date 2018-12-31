@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/appbar" />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/callBtn"
+        android:id="@+id/button_call"
         android:layout_width="145dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
