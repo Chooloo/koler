@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_end_call_timer_entry_values">
+        <item>10</item>
+        <item>5</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="pref_end_call_timer_entries">
+        <item>10 seconds</item>
+        <item>5 seconds</item>
+        <item>3 seconds</item>
+    </string-array>
+</resources>

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Call Manager</string>
     <string name="activity_ongoing_call">Ongoing Call</string>
+
+    <string name="pref_end_call_timer_title">End call timer</string>
 </resources>
