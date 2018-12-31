@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.chooloo.www.callmanager">
 
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--
+         Needed only if your calling app reads numbers from the `PHONE_STATE`
+         intent action.
+    -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,14 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
+
                 <data android:scheme="tel" />
             </intent-filter>
             <intent-filter>
@@ -26,20 +38,26 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.OngoingCallActivity"
+            android:label="@string/activity_ongoing_call" />
+
+        <activity android:name=".activity.SettingsActivity"
+            android:theme="@style/AppTheme"
+            android:label="@string/activity_settings"/>
+
         <service
             android:name=".service.CallService"
             android:permission="android.permission.BIND_INCALL_SERVICE">
             <meta-data
                 android:name="android.telecom.IN_CALL_SERVICE_UI"
                 android:value="true" />
+
             <intent-filter>
                 <action android:name="android.telecom.InCallService" />
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activity.OngoingCallActivity"
-            android:label="@string/activity_ongoing_call" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

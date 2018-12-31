@@ -24,6 +24,6 @@ public class ToolbarActivity extends AppCompatActivity {
         title.setText(getTitle());
 
         setSupportActionBar(toolbar);
-        setTitle("");
+        getSupportActionBar().setTitle("");
     }
 }
