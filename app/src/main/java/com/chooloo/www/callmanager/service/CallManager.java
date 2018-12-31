@@ -11,8 +11,9 @@ public class CallManager {
         mCall = current_call;
     }
 
-    public static void acceptCall(){
+    public static Call.Details acceptCall(){
         mCall.answer(VideoProfile.STATE_AUDIO_ONLY);
+        return mCall.getDetails();
     }
 
     public static void denyCall(){

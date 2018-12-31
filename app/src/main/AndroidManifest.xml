@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.chooloo.www.callmanager">
 
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+
+    <!-- Needed only if your calling app reads numbers from the `PHONE_STATE`
+         intent action. -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
