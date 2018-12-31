@@ -41,22 +41,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         TelecomManager telecomManager = (TelecomManager) getSystemService(Context.TELECOM_SERVICE);
 
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-            statusTxt.setText(telecomManager.getLine1Number(CallManager.mCall.getDetails().getAccountHandle()));
-        } else {
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE},1);
-        }
-
-        View.OnTouchListener Clicked = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (mSTATUS == "ENDED") {
-                    System.exit(0);
-                }
-                return true;
-            }
-        };
-
         answerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

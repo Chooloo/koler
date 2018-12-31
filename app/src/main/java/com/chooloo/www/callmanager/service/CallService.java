@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.service;
 
 import android.content.Intent;
 import android.telecom.Call;
+import android.telecom.CallAudioState;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
@@ -27,7 +28,7 @@ public class CallService extends InCallService {
         sOngoingCall = null;
     }
 
-    Call.Callback callCallback = new Call.Callback(){
+    Call.Callback callCallback = new Call.Callback() {
         @Override
         public void onStateChanged(Call call, int state) {
             super.onStateChanged(call, state);
@@ -35,7 +36,4 @@ public class CallService extends InCallService {
         }
     };
 
-    public static void acceptCall(){
-        sOngoingCall.answer(VideoProfile.STATE_AUDIO_ONLY);
-    }
 }
