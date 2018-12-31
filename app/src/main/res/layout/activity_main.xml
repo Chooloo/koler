@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/appbar" />
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/callBtn"
+        android:id="@+id/button_call"
         android:layout_width="145dp"
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/numberInput"
+        android:id="@+id/text_number_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -65,7 +65,7 @@
         android:hint="Phone Number"
         android:inputType="number"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/chip"
+        app:layout_constraintBottom_toTopOf="@+id/chip2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />

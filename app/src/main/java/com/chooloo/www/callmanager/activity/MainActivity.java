@@ -24,7 +24,7 @@ import timber.log.Timber;
 //TODO clean up, give this activity a purpose
 public class MainActivity extends ToolbarActivity {
 
-    @BindView(R.id.numberInput) EditText mNumberInput;
+    @BindView(R.id.text_number_input) EditText mNumberInput;
     @BindView(R.id.button_call) Button mCallButton;
 
     @Override

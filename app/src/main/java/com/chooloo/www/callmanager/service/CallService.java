@@ -2,11 +2,7 @@ package com.chooloo.www.callmanager.service;
 
 import android.content.Intent;
 import android.telecom.Call;
-import android.telecom.CallAudioState;
 import android.telecom.InCallService;
-import android.telecom.TelecomManager;
-import android.telecom.VideoProfile;
-import android.util.Log;
 
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
