@@ -55,6 +55,7 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/numbers_table"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -66,7 +67,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:weightSum="3"
+        android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,21 +84,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="1"
+                android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
-            
+                android:layout_weight="1"
+                android:text="2"
+                android:textAlignment="center" />
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="3"
+                android:textAlignment="center" />
 
         </TableRow>
 
@@ -108,26 +115,31 @@
             android:weightSum="3">
 
             <com.google.android.material.chip.Chip
-                android:background="@drawable/circle_button"
                 android:id="@+id/chip4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="4"
+                android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="5"
+                android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="6"
+                android:textAlignment="center" />
         </TableRow>
 
         <TableRow
@@ -141,25 +153,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="7"
+                android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="8"
+                android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="9"
+                android:textAlignment="center" />
 
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="3">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipStar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:text="*"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:text="0"
+                android:textAlignment="center" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSulam"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:text="#"
+                android:textAlignment="center" />
+
+        </TableRow>
+
+
     </TableLayout>
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chipDel"
+        android:layout_width="89dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="delete"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/numbers_table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_number_input" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
