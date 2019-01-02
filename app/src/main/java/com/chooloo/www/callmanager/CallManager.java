@@ -19,7 +19,7 @@ public class CallManager extends PhoneStateListener {
         switch (state) {
             case TelephonyManager.CALL_STATE_RINGING:
                 mStatus = "RINGING";
-//TODO why is this line of code isnt working? ---> Intent openCall = new Intent(this,OngoingCallActivity.class);
+//TODO why is this line of code isnt working? --->  1 n01nIntent openCall = new Intent(this,OngoingCallActivity.class);
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
                 mStatus = "OFFHOOK";
