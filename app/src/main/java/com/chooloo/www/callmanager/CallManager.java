@@ -1,9 +1,12 @@
 package com.chooloo.www.callmanager;
 
+import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+
+import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
 public class CallManager extends PhoneStateListener {
 
@@ -16,6 +19,7 @@ public class CallManager extends PhoneStateListener {
         switch (state) {
             case TelephonyManager.CALL_STATE_RINGING:
                 mStatus = "RINGING";
+//TODO why is this line of code isnt working? ---> Intent openCall = new Intent(this,OngoingCallActivity.class);
                 break;
             case TelephonyManager.CALL_STATE_OFFHOOK:
                 mStatus = "OFFHOOK";
