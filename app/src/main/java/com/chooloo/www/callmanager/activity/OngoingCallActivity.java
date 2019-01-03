@@ -16,32 +16,38 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OngoingCallActivity extends AppCompatActivity {
-    @BindView(R.id.answer_button)
+    @BindView(R.id.answer_btn)
     Button mAnswerButton;
-    @BindView(R.id.button_deny)
+    @BindView(R.id.deny_btn)
     Button mDenyButton;
     @BindView(R.id.text_status)
     TextView mStatusText;
+    @BindView(R.id.caller_text)
+    TextView mCallerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoing_call);
         ButterKnife.bind(this);
+
+        mStatusText.setText(getResources().getString(R.string.status_incoming_call));
         if (CallManager.getContactName(this) == "") {
-            mStatusText.setText(CallManager.getPhoneNumber());
+            mCallerText.setText(CallManager.getPhoneNumber());
         } else {
-            mStatusText.setText(CallManager.getContactName(this));
+            mCallerText.setText(CallManager.getContactName(this));
         }
     }
 
-    @OnClick(R.id.answer_button)
+    @OnClick(R.id.answer_btn)
     public void answer(View view) {
         CallManager.sAnswer();
+        mStatusText.setText(getResources().getString(R.string.status_ongoing_call));
     }
 
-    @OnClick(R.id.button_deny)
+    @OnClick(R.id.deny_btn)
     public void deny(View view) {
+        mStatusText.setText(getResources().getString(R.string.status_call_ended));
         CallManager.sReject();
         finish();
     }
