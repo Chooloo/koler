@@ -17,7 +17,7 @@
         android:text="Someone Calling Inka Inka"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline2"
-        android:textSize="10dp"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
