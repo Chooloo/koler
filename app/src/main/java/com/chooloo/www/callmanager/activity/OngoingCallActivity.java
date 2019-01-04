@@ -27,10 +27,11 @@ public class OngoingCallActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mStatusText.setText(getResources().getString(R.string.status_incoming_call));
-        if (CallManager.getContactName(this) == null) {
-            mCallerText.setText(CallManager.getPhoneNumber());
-        } else {
-            mCallerText.setText(CallManager.getContactName(this));
+        mCallerText.setText(CallManager.getPhoneNumber());
+
+        String contactName = CallManager.getContactName(this);
+        if (contactName != null) {
+            mCallerText.setText(contactName);
         }
     }
 

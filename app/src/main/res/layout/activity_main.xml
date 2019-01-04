@@ -53,7 +53,7 @@
         android:hint="Phone Number"
         android:inputType="number"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/numbers_table"
+        app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
 
 
     <TableLayout
-        android:id="@+id/numbers_table"
+        android:id="@+id/table_numbers"
         android:layout_width="368dp"
         android:layout_height="246dp"
         android:layout_marginStart="8dp"
@@ -184,7 +184,7 @@
             android:weightSum="3">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chipStar"
+                android:id="@+id/chip_star"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -202,7 +202,7 @@
                 android:textAlignment="center" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chipSulam"
+                android:id="@+id/chip_hex"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -216,7 +216,7 @@
     </TableLayout>
 
     <com.google.android.material.chip.Chip
-        android:id="@+id/chipDel"
+        android:id="@+id/chip_del"
         android:layout_width="89dp"
         android:layout_height="42dp"
         android:layout_marginStart="8dp"
@@ -224,7 +224,7 @@
         android:layout_marginBottom="8dp"
         android:text="delete"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/numbers_table"
+        app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_number_input" />
 

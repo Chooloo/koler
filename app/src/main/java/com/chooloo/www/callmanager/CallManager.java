@@ -30,6 +30,16 @@ public class CallManager {
         }
     }
 
+    public static void registerCallback(Call.Callback callback) {
+        if (sCall == null) return;
+        sCall.registerCallback(callback);
+    }
+
+    public static void unregisterCallback(Call.Callback callback) {
+        if (sCall == null) return;
+        sCall.unregisterCallback(callback);
+    }
+
     public static String getContactName(Context context) {
         //Check for permission to read contacts
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -58,6 +68,11 @@ public class CallManager {
 
     public static String getPhoneNumber() {
         if (sCall == null) return "";
-        return sCall.getDetails().getHandle().toString().substring(4);
+        String uri = sCall.getDetails().getHandle().toString();
+        if (uri.contains("tel"))
+            return uri.replace("tel:", "");
+        if (uri.contains("voicemail"))
+            return "Voicemail";
+        return null;
     }
 }

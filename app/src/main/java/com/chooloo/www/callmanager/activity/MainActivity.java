@@ -22,47 +22,19 @@ import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 //TODO clean up, give this activity a purpose
-public class MainActivity extends ToolbarActivity implements View.OnClickListener {
+public class MainActivity extends ToolbarActivity {
 
     public static String sToNumber = "";
-    @BindView(R.id.text_number_input)
-    EditText mNumberInput;
-    @BindView(R.id.button_call)
-    Button mCallButton;
-    @BindView(R.id.numbers_table)
-    TableLayout mNumbersTable;
-    @BindView(R.id.chip0)
-    Chip mChip0;
-    @BindView(R.id.chip1)
-    Chip mChip1;
-    @BindView(R.id.chip2)
-    Chip mChip2;
-    @BindView(R.id.chip3)
-    Chip mChip3;
-    @BindView(R.id.chip4)
-    Chip mChip4;
-    @BindView(R.id.chip5)
-    Chip mChip5;
-    @BindView(R.id.chip6)
-    Chip mChip6;
-    @BindView(R.id.chip7)
-    Chip mChip7;
-    @BindView(R.id.chip8)
-    Chip mChip8;
-    @BindView(R.id.chip9)
-    Chip mChip9;
-    @BindView(R.id.chipDel)
-    Chip mChipDel;
-    @BindView(R.id.chipStar)
-    Chip mChipStar;
-    @BindView(R.id.chipSulam)
-    Chip mChipSulam;
 
+    @BindView(R.id.text_number_input) EditText mNumberInput;
+    @BindView(R.id.button_call) Button mCallButton;
+    @BindView(R.id.table_numbers) TableLayout mNumbersTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,21 +44,6 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
         //Init timber
         Timber.plant(new Timber.DebugTree());
-
-        // Set click listeners for all the number chips
-        mChip0.setOnClickListener(this);
-        mChip1.setOnClickListener(this);
-        mChip2.setOnClickListener(this);
-        mChip3.setOnClickListener(this);
-        mChip4.setOnClickListener(this);
-        mChip5.setOnClickListener(this);
-        mChip6.setOnClickListener(this);
-        mChip7.setOnClickListener(this);
-        mChip8.setOnClickListener(this);
-        mChip9.setOnClickListener(this);
-        mChipStar.setOnClickListener(this);
-        mChipSulam.setOnClickListener(this);
-        mChipDel.setOnClickListener(this);
 
         // Ask for permissions
         // CALL_PHONE, READ_CONTACTS
@@ -102,64 +59,6 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
-    }
-
-    //TODO shorten this code and make it responsive
-    @Override
-    public void onClick(View v) {
-        String id = v.getResources().getResourceName(v.getId());
-        if (id.contains("chipDel")) {
-            if (sToNumber.length() > 0) {
-                sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
-            }
-        } else if (id.contains("chip")) {
-            v = (Chip) v;
-            sToNumber += ((Chip) v).getText();
-        }
-//        switch (v.getId()) {
-//            case R.id.chip0:
-//                sToNumber += "0";
-//                break;
-//            case R.id.chip1:
-//                sToNumber += "1";
-//                break;
-//            case R.id.chip2:
-//                sToNumber += "2";
-//                break;
-//            case R.id.chip3:
-//                sToNumber += "3";
-//                break;
-//            case R.id.chip4:
-//                sToNumber += "4";
-//                break;
-//            case R.id.chip5:
-//                sToNumber += "5";
-//                break;
-//            case R.id.chip6:
-//                sToNumber += "6";
-//                break;
-//            case R.id.chip7:
-//                sToNumber += "7";
-//                break;
-//            case R.id.chip8:
-//                sToNumber += "8";
-//                break;
-//            case R.id.chip9:
-//                sToNumber += "9";
-//                break;
-//            case R.id.chipStar:
-//                sToNumber += "*";
-//                break;
-//            case R.id.chipSulam:
-//                sToNumber += "#";
-//                break;
-//            case R.id.chipDel:
-//                if (sToNumber.length() > 0) {
-//                    sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
-//                }
-//                break;
-//        }
-        mNumberInput.setText(sToNumber);
     }
 
     @Override
@@ -179,10 +78,37 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
+    public void addNum(View view) {
+        sToNumber += ((Chip) view).getText();
+        mNumberInput.setText(sToNumber);
+    }
+
+    @OnClick(R.id.chip_del)
+    public void delNum(View view) {
+        if (sToNumber.length() <= 0) return;
+        sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
+        mNumberInput.setText(sToNumber);
+    }
+
+    @OnLongClick(R.id.chip1)
+    public boolean startVoiceMail(View view) {
+        try {
+            Uri uri = Uri.parse("voicemail:1");
+            Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
+            startActivity(voiceMail);
+            return true;
+        } catch (SecurityException e) {
+            Toast.makeText(this, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
+            Timber.e(e);
+            return false;
+        }
+    }
+
     @OnClick(R.id.button_call)
     public void call(View view) {
         if (mNumberInput.getText() == null) {
-            Toast.makeText(getApplicationContext(), "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
         } else {
             try {
                 // Set the data
@@ -191,8 +117,8 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
 
                 startActivity(callIntent);
             } catch (SecurityException e) {
-                Toast.makeText(getApplicationContext(), "Something went wrong... Fuck.", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+                Toast.makeText(this, "Couldn't call " + sToNumber, Toast.LENGTH_LONG).show();
+                Timber.e(e, "Couldn't call %s", sToNumber);
             }
         }
     }
