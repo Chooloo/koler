@@ -1,13 +1,15 @@
 package com.chooloo.www.callmanager;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telecom.Call;
-import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
-import android.text.method.TextKeyListener;
+
+import androidx.core.app.ActivityCompat;
 
 public class CallManager {
     public static Call sCall;
@@ -29,32 +31,33 @@ public class CallManager {
     }
 
     public static String getContactName(Context context) {
-        if (sCall != null) {
-            String phoneNumber = getPhoneNumber();
-
-            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-
-            String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
-
-            String contactName = "";
-            Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-
-            if (cursor != null) {
-                if (cursor.moveToFirst()) {
-                    contactName = cursor.getString(0);
-                }
-                cursor.close();
-            }
-
-            return contactName;
+        //Check for permission to read contacts
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            //Don't prompt the user now, they are getting a call
+            return null;
         }
-        return "";
+        if (sCall == null)
+            return null;
+
+        String phoneNumber = getPhoneNumber();
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
+        String contactName;
+
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        if (cursor.moveToFirst()) {
+            contactName = cursor.getString(0);
+        } else {
+            return null;
+        }
+        cursor.close();
+
+        return contactName;
     }
 
     public static String getPhoneNumber() {
-        if (sCall != null) {
-            return sCall.getDetails().getHandle().toString().substring(4);
-        }
-        return "";
+        if (sCall == null) return "";
+        return sCall.getDetails().getHandle().toString().substring(4);
     }
 }
