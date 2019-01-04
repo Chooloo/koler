@@ -18,10 +18,13 @@ import com.chooloo.www.callmanager.R;
 import com.google.android.material.chip.Chip;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 //TODO clean up, give this activity a purpose
 public class MainActivity extends ToolbarActivity implements View.OnClickListener {
@@ -86,17 +89,10 @@ public class MainActivity extends ToolbarActivity implements View.OnClickListene
         mChipDel.setOnClickListener(this);
 
         // Ask for permissions
-        // READ_PHONE_STATE
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-        }
-        // CALL_PHONE
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 1);
-        }
-        // READ_CONTACTS
-        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+        // CALL_PHONE, READ_CONTACTS
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE, READ_CONTACTS}, 1);
         }
 
         //Prompt the user with a dialog to select this app to be the default phone app
