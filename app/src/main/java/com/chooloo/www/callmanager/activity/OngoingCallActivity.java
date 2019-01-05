@@ -16,11 +16,15 @@ import com.chooloo.www.callmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OngoingCallActivity extends AppCompatActivity {
+
+    @BindView(R.id.ongoingcall_layout)
+    ConstraintLayout mParentLayout;
     @BindView(R.id.answer_btn)
     FloatingActionButton mAnswerButton;
     @BindView(R.id.deny_btn)
@@ -69,10 +73,12 @@ public class OngoingCallActivity extends AppCompatActivity {
     public void answer(View view) {
         CallManager.sAnswer();
         mStatusText.setText(getResources().getString(R.string.status_ongoing_call));
+        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_in_progress_background));
     }
 
     @OnClick(R.id.deny_btn)
     public void deny(View view) {
+        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_ended_background));
         mStatusText.setText(getResources().getString(R.string.status_call_ended));
         CallManager.sReject();
         finish();
