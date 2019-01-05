@@ -75,4 +75,9 @@ public class CallManager {
             return "Voicemail";
         return null;
     }
+
+    public static int getState() {
+        if (sCall == null) return Call.STATE_DISCONNECTED;
+        return sCall.getState();
+    }
 }

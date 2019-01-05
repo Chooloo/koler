@@ -4,6 +4,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,12 +14,15 @@ import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OngoingCallActivity extends AppCompatActivity {
+
+    Callback mCallback = new Callback();
 
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
@@ -49,8 +53,9 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
 
         ButterKnife.bind(this);
+        CallManager.registerCallback(mCallback);
+        updateUI(CallManager.getState());
 
-        mStatusText.setText(getResources().getString(R.string.status_incoming_call));
         mCallerText.setText(CallManager.getPhoneNumber());
 
         String contactName = CallManager.getContactName(this);
@@ -59,23 +64,63 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CallManager.unregisterCallback(mCallback);
+    }
+
     @OnClick(R.id.answer_btn)
     public void answer(View view) {
         CallManager.sAnswer();
-        mStatusText.setText(getResources().getString(R.string.status_ongoing_call));
     }
 
     @OnClick(R.id.deny_btn)
     public void deny(View view) {
-        mStatusText.setText(getResources().getString(R.string.status_call_ended));
+        endCall();
+    }
+
+    private void endCall() {
         CallManager.sReject();
         finish();
     }
 
     //TODO Change the UI depending on the state (active/calling/hold...)
-    private void updateUI() {
-        switch (CallManager.sCall.getState()) {
+    private void updateUI(int state) {
+        @StringRes int statusTextRes;
+        switch (state) {
+            case Call.STATE_ACTIVE:
+                statusTextRes = R.string.status_ongoing_call;
+                break;
+            case Call.STATE_DISCONNECTED:
+                statusTextRes = R.string.status_call_ended;
+                break;
+            case Call.STATE_RINGING:
+                statusTextRes = R.string.status_incoming_call;
+                break;
+            case Call.STATE_DIALING:
+                statusTextRes = R.string.status_outgoing_call;
+                break;
+            case Call.STATE_CONNECTING:
+                statusTextRes = R.string.status_outgoing_call;
+                break;
+            case Call.STATE_HOLDING:
+                statusTextRes = R.string.status_holding_call;
+                break;
+            default:
+                statusTextRes = R.string.status_ongoing_call;
+                break;
+        }
+        mStatusText.setText(statusTextRes);
 
+        if (state == Call.STATE_DISCONNECTED) endCall();
+    }
+
+    class Callback extends Call.Callback {
+        @Override
+        public void onStateChanged(Call call, int state) {
+            super.onStateChanged(call, state);
+            updateUI(state);
         }
     }
 }
