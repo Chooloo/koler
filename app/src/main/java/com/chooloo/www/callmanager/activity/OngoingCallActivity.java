@@ -1,7 +1,12 @@
 package com.chooloo.www.callmanager.activity;
 
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.CallManager;
@@ -24,6 +29,25 @@ public class OngoingCallActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoing_call);
+
+        //This activity needs to show even if the screen is off or locked
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            if (km != null) {
+                km.requestDismissKeyguard(this, null);
+            }
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        }
+
         ButterKnife.bind(this);
 
         mStatusText.setText(getResources().getString(R.string.status_incoming_call));
