@@ -57,7 +57,4 @@ public class CallService extends InCallService {
         CallManager.sCall = null;
     }
 
-    public static void setContext(Context context){
-        mContext = context;
-    }
 }
