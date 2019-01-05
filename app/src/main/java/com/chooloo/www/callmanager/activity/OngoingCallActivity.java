@@ -2,9 +2,7 @@ package com.chooloo.www.callmanager.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.telecom.TelecomManager;
-import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,24 +29,33 @@ public class OngoingCallActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoing_call);
-        ButterKnife.bind(this);
 
-        if (CallManager.sCallState == "RINGING") {
-            mStatusText.setText(getResources().getString(R.string.status_incoming_call));
-//            mAnswerButton.setVisibility(View.VISIBLE);
-//            mDenyButton.setVisibility(View.VISIBLE);
+        //This activity needs to show even if the screen is off or locked
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true);
+            setTurnScreenOn(true);
         } else {
-            mStatusText.setText("Dialing");
-//            mAnswerButton.setVisibility(View.INVISIBLE);
-//            mDenyButton.setVisibility(View.INVISIBLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+            if (km != null) {
+                km.requestDismissKeyguard(this, null);
+            }
+        } else {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
 
-        if (CallManager.sPhoneNumber == "") {
-            mCallerText.setText("Unknown Number");
-        } else if (CallManager.getContactName(this) == "") {
-            mCallerText.setText(CallManager.getPhoneNumber());
-        } else {
-            mCallerText.setText(CallManager.getContactName(this));
+        ButterKnife.bind(this);
+
+        mStatusText.setText(getResources().getString(R.string.status_incoming_call));
+        mCallerText.setText(CallManager.getPhoneNumber());
+
+        String contactName = CallManager.getContactName(this);
+        if (contactName != null) {
+            mCallerText.setText(contactName);
         }
     }
 
