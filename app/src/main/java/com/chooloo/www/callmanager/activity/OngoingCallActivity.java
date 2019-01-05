@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -21,9 +22,9 @@ import butterknife.OnClick;
 
 public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.answer_btn)
-    Button mAnswerButton;
+    FloatingActionButton mAnswerButton;
     @BindView(R.id.deny_btn)
-    Button mDenyButton;
+    FloatingActionButton mDenyButton;
     @BindView(R.id.text_status)
     TextView mStatusText;
     @BindView(R.id.caller_text)
@@ -54,6 +55,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // Set the text fields
         mStatusText.setText(getResources().getString(R.string.status_incoming_call));
         mCallerText.setText(CallManager.getPhoneNumber());
 

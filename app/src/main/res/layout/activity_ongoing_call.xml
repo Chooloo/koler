@@ -15,7 +15,7 @@
         android:layout_marginBottom="4dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textSize="40dp"
+        android:textSize="45dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,8 +26,7 @@
     <TextView
         android:id="@+id/text_status"
         android:layout_width="wrap_content"
-        android:layout_height="22dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="30dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
         app:layout_constraintEnd_toEndOf="@+id/caller_text"
