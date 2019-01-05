@@ -32,15 +32,16 @@ public class CallManager {
         }
     }
 
-    public static void registerCallback(Call.Callback callback) {
-        if (sCall == null) return;
-        sCall.registerCallback(callback);
-    }
-
-    public static void unregisterCallback(Call.Callback callback) {
-        if (sCall == null) return;
-        sCall.unregisterCallback(callback);
-    }
+//    ******** This shit isnt needed, delete it, look at CallService.java for the right way
+//    public static void registerCallback(Call.Callback callback) {
+//        if (sCall == null) return;
+//        sCall.registerCallback(callback);
+//    }
+//
+//    public static void unregisterCallback(Call.Callback callback) {
+//        if (sCall == null) return;
+//        sCall.unregisterCallback(callback);
+//    }
 
     public static String getContactName(Context context) {
         //Check for permission to read contacts

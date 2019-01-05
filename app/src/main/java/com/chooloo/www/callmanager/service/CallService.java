@@ -12,10 +12,12 @@ import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
 public class CallService extends InCallService {
 
+    private CallbackService mCallback = new CallbackService(this);
+
     @Override
     public void onCallAdded(Call call) {
         super.onCallAdded(call);
-        call.registerCallback(new CallbackService(this));
+        call.registerCallback(mCallback);
         startActivity(new Intent(this, OngoingCallActivity.class));
         CallManager.sCall = call;
     }
@@ -23,6 +25,7 @@ public class CallService extends InCallService {
     @Override
     public void onCallRemoved(Call call) {
         super.onCallRemoved(call);
+        call.unregisterCallback(mCallback);
         CallManager.sCall = null;
     }
 

@@ -11,6 +11,6 @@
 
     <!--Other-->
     <string name="status_call_ended">Call ended</string>
-    <string name="status_incoming_call">Incoming call from</string>
+    <string name="status_incoming_call">Is Calling</string>
     <string name="status_ongoing_call">Call in progress</string>
 </resources>
