@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
