@@ -13,35 +13,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
-        android:text="Welcome to the call manager"
-        android:textAlignment="center"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appbar" />
-
     <com.google.android.material.chip.Chip
         android:id="@+id/button_call"
         android:layout_width="146dp"
         android:layout_height="46dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
-        android:text="Call Someone"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="28dp"
+        android:text="Call"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintEnd_toStartOf="@+id/chip_del"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
+        android:background="@android:color/transparent"
         android:id="@+id/text_number_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,27 +41,27 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
 
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="368dp"
-        android:layout_height="246dp"
+        android:layout_width="220dp"
+        android:layout_height="280dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:weightSum="4"
+        app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_number_input">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:weightSum="3">
 
@@ -217,16 +203,15 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_del"
-        android:layout_width="89dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="75dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="28dp"
         android:text="delete"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/table_numbers"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_number_input" />
+        app:layout_constraintStart_toEndOf="@+id/button_call" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
