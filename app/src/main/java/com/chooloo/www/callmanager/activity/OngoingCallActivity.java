@@ -2,7 +2,9 @@ package com.chooloo.www.callmanager.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.telecom.TelecomManager;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,8 +33,19 @@ public class OngoingCallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ongoing_call);
         ButterKnife.bind(this);
 
-        mStatusText.setText(getResources().getString(R.string.status_incoming_call));
-        if (CallManager.getContactName(this) == "") {
+        if (CallManager.sCallState == "RINGING") {
+            mStatusText.setText(getResources().getString(R.string.status_incoming_call));
+//            mAnswerButton.setVisibility(View.VISIBLE);
+//            mDenyButton.setVisibility(View.VISIBLE);
+        } else {
+            mStatusText.setText("Dialing");
+//            mAnswerButton.setVisibility(View.INVISIBLE);
+//            mDenyButton.setVisibility(View.INVISIBLE);
+        }
+
+        if (CallManager.sPhoneNumber == "") {
+            mCallerText.setText("Unknown Number");
+        } else if (CallManager.getContactName(this) == "") {
             mCallerText.setText(CallManager.getPhoneNumber());
         } else {
             mCallerText.setText(CallManager.getContactName(this));

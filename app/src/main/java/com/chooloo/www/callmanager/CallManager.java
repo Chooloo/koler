@@ -7,10 +7,18 @@ import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.text.method.TextKeyListener;
 
+import com.chooloo.www.callmanager.activity.OngoingCallActivity;
+import com.chooloo.www.callmanager.service.CallService;
+
 public class CallManager {
+
+    public static String sPhoneNumber;
     public static Call sCall;
+    public static String sCallState;
 
     public static void sAnswer() {
         if (sCall != null) {
@@ -30,7 +38,7 @@ public class CallManager {
 
     public static String getContactName(Context context) {
         if (sCall != null) {
-            String phoneNumber = getPhoneNumber();
+            String phoneNumber = sPhoneNumber;
 
             Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
 
@@ -52,9 +60,10 @@ public class CallManager {
     }
 
     public static String getPhoneNumber() {
-        if (sCall != null) {
-            return sCall.getDetails().getHandle().toString().substring(4);
-        }
-        return "";
+        return sPhoneNumber;
+//        if (sCall != null) {
+//            return sCall.getDetails().getHandle().toString().substring(4);
+//        }
+//        return "";
     }
 }
