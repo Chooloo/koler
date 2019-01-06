@@ -15,7 +15,7 @@ public class CallService extends InCallService {
     @Override
     public void onCallAdded(Call call) {
         super.onCallAdded(call);
-        call.registerCallback(new CallbackService(this));
+        call.registerCallback(OngoingCallActivity.Callback(this));
         startActivity(new Intent(this, OngoingCallActivity.class));
         CallManager.sCall = call;
     }

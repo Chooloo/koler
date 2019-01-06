@@ -83,7 +83,7 @@ public class MainActivity extends ToolbarActivity {
 
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
-        sToNumber += ((Chip) view).getText();
+        sToNumber += ((Button) view).getText();
         mNumberInput.setText(sToNumber);
     }
 

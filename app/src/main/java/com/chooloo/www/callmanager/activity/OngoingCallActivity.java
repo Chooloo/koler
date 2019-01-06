@@ -4,7 +4,9 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.telecom.TelecomManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -59,10 +61,10 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // Set the text fields
-        mStatusText.setText(getResources().getString(R.string.status_incoming_call));
+        // Set the caller name text view
         mCallerText.setText(CallManager.getPhoneNumber());
 
+        // Get the caller's contact name
         String contactName = CallManager.getContactName(this);
         if (contactName != null) {
             mCallerText.setText(contactName);
@@ -85,9 +87,55 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     //TODO Change the UI depending on the state (active/calling/hold...)
-    private void updateUI() {
-        switch (CallManager.sCall.getState()) {
-
+    private void updateUI(int state) {
+        switch (state) {
+            case 2:
+                mStatusText.setText(getResources().getString(R.string.status_call_incoming));
+                break;
+            case 1:
+                mStatusText.setText(getResources().getString(R.string.status_call_dialing));
+                break;
+            case 3:
+                mStatusText.setText(getResources().getString(R.string.status_call_holding));
+                break;
+            case 4:
+                mStatusText.setText(getResources().getString(R.string.status_call_actuve));
+                break;
         }
+    }
+
+    public class Callback extends Call.Callback {
+
+        private Context context;
+
+        public Callback(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onStateChanged(Call call, int state) {
+//        int = Call.State
+//        1   = Call.STATE_DIALING
+//        2   = Call.STATE_RINGING
+//        3   = Call.STATE_HOLDING
+//        4   = Call.STATE_ACTIVE
+//        7   = Call.STATE_DISCONNECTED
+//        8   = Call.STATE_SELECT_PHONE_ACCOUNT
+//        9   = Call.STATE_CONNECTING
+//        10  = Call.STATE_DISCONNECTING
+//        11  = Call.STATE_PULLING_CALL
+            super.onStateChanged(call, state);
+            String stringState = String.valueOf(state);
+            Log.i("StateChanged", stringState);
+            updateUI(state);
+        }
+
+        @Override
+        public void onDetailsChanged(Call call, Call.Details details) {
+            super.onDetailsChanged(call, details);
+            Log.i("DetailesChanged", details.toString());
+        }
+
+
     }
 }

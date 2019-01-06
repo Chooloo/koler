@@ -12,4 +12,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="CircleButton">
+        <item name="android:background">@drawable/ic_circle_button</item>
+    </style>
 </resources>

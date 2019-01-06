@@ -11,6 +11,8 @@ import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.text.method.TextKeyListener;
 
+import com.chooloo.www.callmanager.activity.OngoingCallActivity;
+
 import androidx.core.app.ActivityCompat;
 
 public class CallManager {
@@ -32,7 +34,7 @@ public class CallManager {
         }
     }
 
-    public static void registerCallback(Call.Callback callback) {
+    public static void registerCallback(OngoingCallActivity.Callback callback) {
         if (sCall == null) return;
         sCall.registerCallback(callback);
     }
