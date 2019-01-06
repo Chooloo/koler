@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.activity;
 
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.telecom.Call;
@@ -14,9 +15,11 @@ import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,6 +34,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.caller_text) TextView mCallerText;
+    @BindView(R.id.button_mute) FloatingActionButton mMuteButton;
+    @BindView(R.id.button_keypad) FloatingActionButton mKeypadButton;
+    @BindView(R.id.button_speaker) FloatingActionButton mSpeakerButton;
+    @BindView(R.id.button_add_call) FloatingActionButton mAddCallButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +82,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     @OnClick(R.id.answer_btn)
     public void answer(View view) {
-        CallManager.sAnswer();
-        mStatusText.setText(getResources().getString(R.string.status_ongoing_call));
-        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_in_progress_background));
+        activateCall();
     }
 
     @OnClick(R.id.deny_btn)
@@ -85,14 +90,40 @@ public class OngoingCallActivity extends AppCompatActivity {
         endCall();
     }
 
+    private void activateCall() {
+        CallManager.sAnswer();
+        switchToCallingUI();
+    }
+
     private void endCall() {
-        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_ended_background));
-        mStatusText.setText(getResources().getString(R.string.status_call_ended));
+        changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
         finish();
     }
 
-    //TODO Change the UI depending on the state (active/calling/hold...)
+    private void switchToCallingUI() {
+        changeBackgroundColor(R.color.call_in_progress_background);
+
+        mAnswerButton.hide();
+        mMuteButton.show();
+        mKeypadButton.show();
+        mSpeakerButton.show();
+        mAddCallButton.show();
+    }
+
+    private void changeBackgroundColor(@ColorRes int colorRes) {
+        int backgroundColor = ContextCompat.getColor(this, colorRes);
+        mParentLayout.setBackgroundColor(backgroundColor);
+        Window window = getWindow();
+        if (window != null) window.setStatusBarColor(backgroundColor);
+
+        ColorStateList stateList = new ColorStateList(new int[][]{}, new int[]{backgroundColor});
+        mMuteButton.setBackgroundTintList(stateList);
+        mKeypadButton.setBackgroundTintList(stateList);
+        mSpeakerButton.setBackgroundTintList(stateList);
+        mAddCallButton.setBackgroundTintList(stateList);
+    }
+
     private void updateUI(int state) {
         @StringRes int statusTextRes;
         switch (state) {
@@ -120,6 +151,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         mStatusText.setText(statusTextRes);
 
+        if (state == Call.STATE_ACTIVE || state == Call.STATE_DIALING) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
