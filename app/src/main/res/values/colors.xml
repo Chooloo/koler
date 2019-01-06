@@ -15,4 +15,7 @@
     <color name="call_in_progress_background">#e8f5e9</color>
     <color name="call_ended_background">#ffebee</color>
 
+    <color name="caller_text_color">#313131</color>
+
+
 </resources>

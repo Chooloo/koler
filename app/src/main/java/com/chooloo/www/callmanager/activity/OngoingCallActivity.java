@@ -126,9 +126,16 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAddCallButton.setBackgroundTintList(stateList);
     }
 
+    private void moveDenyToMiddle(){
+        float parentCenterX = mParentLayout.getX() + mParentLayout.getWidth()/2;
+        float parentCenterY = mParentLayout.getY() + mParentLayout.getHeight()/2;
+        mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth()/2).translationY(parentCenterY - mAnswerButton.getHeight()/2);
+    }
+
     private void switchToCallingUI() {
         changeBackgroundColor(R.color.call_in_progress_background);
 
+        moveDenyToMiddle();
         mAnswerButton.hide();
         mMuteButton.show();
         mKeypadButton.show();

@@ -32,9 +32,12 @@ public class MainActivity extends ToolbarActivity {
 
     public static String sToNumber = "";
 
-    @BindView(R.id.text_number_input) EditText mNumberInput;
-    @BindView(R.id.button_call) Button mCallButton;
-    @BindView(R.id.table_numbers) TableLayout mNumbersTable;
+    @BindView(R.id.text_number_input)
+    EditText mNumberInput;
+    @BindView(R.id.button_call)
+    Button mCallButton;
+    @BindView(R.id.table_numbers)
+    TableLayout mNumbersTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,13 @@ public class MainActivity extends ToolbarActivity {
         if (sToNumber.length() <= 0) return;
         sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
         mNumberInput.setText(sToNumber);
+    }
+
+    @OnLongClick(R.id.chip_del)
+    public boolean delAllNum(View view) {
+        sToNumber = "";
+        mNumberInput.setText(sToNumber);
+        return true;
     }
 
     @OnLongClick(R.id.chip1)

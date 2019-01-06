@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.OngoingCallActivity">
 
+    <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"-->
     <TextView
         android:id="@+id/caller_text"
         android:layout_width="0dp"
@@ -15,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/caller_text_color"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
@@ -34,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="@+id/caller_text"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/caller_text"
-        tools:text="@string/status_incoming_call" />
+        tools:text="@string/status_call_incoming" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
