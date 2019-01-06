@@ -11,4 +11,8 @@
 
     <color name="green_phone">#66bb6a</color>
     <color name="red_phone">#ef5350</color>
+
+    <color name="call_in_progress_background">#e8f5e9</color>
+    <color name="call_ended_background">#ffebee</color>
+
 </resources>

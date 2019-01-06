@@ -16,12 +16,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OngoingCallActivity extends AppCompatActivity {
 
+    @BindView(R.id.ongoingcall_layout)
+    ConstraintLayout mParentLayout;
     Callback mCallback = new Callback();
 
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
@@ -73,6 +76,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.answer_btn)
     public void answer(View view) {
         CallManager.sAnswer();
+        mStatusText.setText(getResources().getString(R.string.status_ongoing_call));
+        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_in_progress_background));
     }
 
     @OnClick(R.id.deny_btn)
@@ -81,6 +86,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     private void endCall() {
+        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_ended_background));
+        mStatusText.setText(getResources().getString(R.string.status_call_ended));
         CallManager.sReject();
         finish();
     }
