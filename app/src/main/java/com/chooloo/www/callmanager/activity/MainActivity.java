@@ -59,11 +59,13 @@ public class MainActivity extends ToolbarActivity {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
+        getSupportActionBar().setElevation(0);
         return super.onCreateOptionsMenu(menu);
     }
 
