@@ -13,5 +13,6 @@
     <string name="status_call_ended">Call ended</string>
     <string name="status_incoming_call">Is calling</string>
     <string name="status_ongoing_call">Call in progress</string>
+    <string name="status_outgoing_call">Calling</string>
     <string name="status_holding_call">On hold</string>
 </resources>

@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
         android:layout_width="wrap_content"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -46,11 +46,13 @@
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@android:color/white"
         app:backgroundTint="@color/green_phone"
+        app:fabCustomSize="72dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="36dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deny_btn"
@@ -63,10 +65,12 @@
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@android:color/white"
         app:backgroundTint="@color/red_phone"
+        app:fabCustomSize="72dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical" />
+        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
+        app:maxImageSize="36dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_bottom"

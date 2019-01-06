@@ -7,9 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telecom.Call;
-import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
-import android.text.method.TextKeyListener;
 
 import androidx.core.app.ActivityCompat;
 
@@ -32,16 +30,15 @@ public class CallManager {
         }
     }
 
-//    ******** This shit isnt needed, delete it, look at CallService.java for the right way
-//    public static void registerCallback(Call.Callback callback) {
-//        if (sCall == null) return;
-//        sCall.registerCallback(callback);
-//    }
-//
-//    public static void unregisterCallback(Call.Callback callback) {
-//        if (sCall == null) return;
-//        sCall.unregisterCallback(callback);
-//    }
+    public static void registerCallback(Call.Callback callback) {
+        if (sCall == null) return;
+        sCall.registerCallback(callback);
+    }
+
+    public static void unregisterCallback(Call.Callback callback) {
+        if (sCall == null) return;
+        sCall.unregisterCallback(callback);
+    }
 
     public static String getContactName(Context context) {
         //Check for permission to read contacts
