@@ -9,10 +9,11 @@
     <!--Preferences-->
     <string name="pref_end_call_timer_title">End call timer</string>
 
-    <!--Other-->
+    <!--Call State-->
     <string name="status_call_disconnected">Call ended</string>
     <string name="status_call_incoming">Is Calling</string>
-    <string name="status_call_actuve">Call in progress</string>
+    <string name="status_call_active">Call in progress</string>
     <string name="status_call_dialing">Dialing...</string>
     <string name="status_call_holding">Call On Hold</string>
+
 </resources>

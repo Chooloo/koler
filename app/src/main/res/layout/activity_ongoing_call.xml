@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textSize="45dp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,17 +27,19 @@
     <TextView
         android:id="@+id/text_status"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
         app:layout_constraintEnd_toEndOf="@+id/caller_text"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/caller_text"
         tools:text="@string/status_incoming_call" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
         android:layout_width="wrap_content"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -45,11 +47,13 @@
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@android:color/white"
         app:backgroundTint="@color/green_phone"
+        app:fabCustomSize="72dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="36dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deny_btn"
@@ -62,10 +66,87 @@
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@android:color/white"
         app:backgroundTint="@color/red_phone"
+        app:fabCustomSize="72dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical" />
+        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
+        app:maxImageSize="36dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_mute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:fabCustomSize="64dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_keypad"
+        app:layout_constraintEnd_toStartOf="@+id/button_keypad"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_keypad"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_mic_off_black_24dp"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_keypad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:fabCustomSize="64dp"
+        app:layout_constraintEnd_toStartOf="@+id/button_speaker"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_mute"
+        app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_dialpad_black_24dp"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:fabCustomSize="64dp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_keypad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_keypad"
+        app:layout_constraintTop_toTopOf="@+id/button_keypad"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_volume_up_black_24dp"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_add_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:backgroundTint="@android:color/transparent"
+        app:elevation="0dp"
+        app:fabCustomSize="64dp"
+        app:layout_constraintEnd_toEndOf="@+id/button_mute"
+        app:layout_constraintStart_toStartOf="@+id/button_mute"
+        app:layout_constraintTop_toBottomOf="@+id/button_mute"
+        app:maxImageSize="30dp"
+        app:srcCompat="@drawable/ic_phone_plus_black_24dp"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_bottom"
@@ -86,6 +167,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.33" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

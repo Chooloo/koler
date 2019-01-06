@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.activity;
 
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.telecom.Call;
@@ -10,15 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,6 +30,8 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     @BindView(R.id.ongoingcall_layout)
     ConstraintLayout mParentLayout;
+    Callback mCallback = new Callback();
+
     @BindView(R.id.answer_btn)
     FloatingActionButton mAnswerButton;
     @BindView(R.id.deny_btn)
@@ -35,6 +40,14 @@ public class OngoingCallActivity extends AppCompatActivity {
     TextView mStatusText;
     @BindView(R.id.caller_text)
     TextView mCallerText;
+    @BindView(R.id.button_mute)
+    FloatingActionButton mMuteButton;
+    @BindView(R.id.button_keypad)
+    FloatingActionButton mKeypadButton;
+    @BindView(R.id.button_speaker)
+    FloatingActionButton mSpeakerButton;
+    @BindView(R.id.button_add_call)
+    FloatingActionButton mAddCallButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +73,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
 
         ButterKnife.bind(this);
+        CallManager.registerCallback(mCallback);
+        updateUI(CallManager.getState());
 
         // Set the caller name text view
         mCallerText.setText(CallManager.getPhoneNumber());
@@ -71,46 +86,88 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CallManager.unregisterCallback(mCallback);
+    }
+
     @OnClick(R.id.answer_btn)
     public void answer(View view) {
-        CallManager.sAnswer();
-        mStatusText.setText(getResources().getString(R.string.status_ongoing_call));
-        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_in_progress_background));
+        activateCall();
     }
 
     @OnClick(R.id.deny_btn)
     public void deny(View view) {
-        mParentLayout.setBackgroundColor(getResources().getColor(R.color.call_ended_background));
-        mStatusText.setText(getResources().getString(R.string.status_call_ended));
+        endCall();
+    }
+
+    private void activateCall() {
+        CallManager.sAnswer();
+        switchToCallingUI();
+    }
+
+    private void endCall() {
+        changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
         finish();
     }
 
-    //TODO Change the UI depending on the state (active/calling/hold...)
+    private void changeBackgroundColor(@ColorRes int colorRes) {
+        int backgroundColor = ContextCompat.getColor(this, colorRes);
+        mParentLayout.setBackgroundColor(backgroundColor);
+        Window window = getWindow();
+        if (window != null) window.setStatusBarColor(backgroundColor);
+
+        ColorStateList stateList = new ColorStateList(new int[][]{}, new int[]{backgroundColor});
+        mMuteButton.setBackgroundTintList(stateList);
+        mKeypadButton.setBackgroundTintList(stateList);
+        mSpeakerButton.setBackgroundTintList(stateList);
+        mAddCallButton.setBackgroundTintList(stateList);
+    }
+
+    private void switchToCallingUI() {
+        changeBackgroundColor(R.color.call_in_progress_background);
+
+        mAnswerButton.hide();
+        mMuteButton.show();
+        mKeypadButton.show();
+        mSpeakerButton.show();
+        mAddCallButton.show();
+    }
+
     private void updateUI(int state) {
+        @StringRes int statusTextRes;
         switch (state) {
-            case 2:
-                mStatusText.setText(getResources().getString(R.string.status_call_incoming));
+            case Call.STATE_ACTIVE:
+                statusTextRes = R.string.status_call_active;
                 break;
-            case 1:
-                mStatusText.setText(getResources().getString(R.string.status_call_dialing));
+            case Call.STATE_DISCONNECTED:
+                statusTextRes = R.string.status_call_disconnected;
                 break;
-            case 3:
-                mStatusText.setText(getResources().getString(R.string.status_call_holding));
+            case Call.STATE_RINGING:
+                statusTextRes = R.string.status_call_incoming;
                 break;
-            case 4:
-                mStatusText.setText(getResources().getString(R.string.status_call_actuve));
+            case Call.STATE_DIALING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case Call.STATE_CONNECTING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case Call.STATE_HOLDING:
+                statusTextRes = R.string.status_call_holding;
+                break;
+            default:
+                statusTextRes = R.string.status_call_active;
                 break;
         }
+        mStatusText.setText(statusTextRes);
+
+        if (state == Call.STATE_ACTIVE || state == Call.STATE_DIALING) switchToCallingUI();
+        if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
     public class Callback extends Call.Callback {
-
-        private Context context;
-
-        public Callback(Context context) {
-            this.context = context;
-        }
 
         @Override
         public void onStateChanged(Call call, int state) {
@@ -126,16 +183,14 @@ public class OngoingCallActivity extends AppCompatActivity {
 //        11  = Call.STATE_PULLING_CALL
             super.onStateChanged(call, state);
             String stringState = String.valueOf(state);
-            Log.i("StateChanged", stringState);
+            Log.i("StateChanged: ", stringState);
             updateUI(state);
         }
 
         @Override
         public void onDetailsChanged(Call call, Call.Details details) {
             super.onDetailsChanged(call, details);
-            Log.i("DetailesChanged", details.toString());
+            Log.i("DetailesChanged: ", details.toString());
         }
-
-
     }
 }

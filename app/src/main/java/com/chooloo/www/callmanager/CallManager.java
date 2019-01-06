@@ -7,9 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telecom.Call;
-import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
-import android.text.method.TextKeyListener;
 
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
@@ -78,5 +76,10 @@ public class CallManager {
         if (uri.contains("voicemail"))
             return "Voicemail";
         return null;
+    }
+
+    public static int getState() {
+        if (sCall == null) return Call.STATE_DISCONNECTED;
+        return sCall.getState();
     }
 }
