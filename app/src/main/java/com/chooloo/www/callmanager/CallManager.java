@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -8,10 +9,19 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
+import android.util.Log;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
+import com.chooloo.www.callmanager.activity.MainActivity;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import androidx.core.app.ActivityCompat;
+
+import static android.content.ContentValues.TAG;
 
 public class CallManager {
     public static Call sCall;
@@ -42,6 +52,71 @@ public class CallManager {
         sCall.unregisterCallback(callback);
     }
 
+
+    public static ArrayList<String> getContacts(Context context) {
+
+        ArrayList<String> contacts = new ArrayList<String>();
+        ContentResolver cr = context.getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                null, null, null, null);
+        if (cur.getCount() > 0) {
+            while (cur.moveToNext()) {
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                if (Integer.parseInt(cur.getString(
+                        cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                    Cursor pCur = cr.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+                    while (pCur.moveToNext()) {
+                        String phoneNo = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        contacts.add(phoneNo);
+                    }
+                    pCur.close();
+                }
+            }
+        }
+        return contacts;
+    }
+
+    public static ArrayList<String> getContactsByNum(Context context, String num) {
+        ArrayList<String> matchContacts = new ArrayList<String>();
+        ArrayList<String> contacts = getContacts(context);
+        for (int i = 0; i < contacts.size(); i++) {
+            if(contacts.get(i).contains(num)){
+                matchContacts.add(contacts.get(i));
+            }
+        }
+        return matchContacts;
+    }
+
+    public static String getContactNameByNum(Context context, String phoneNumber) {
+        //Check for permission to read contacts
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            //Don't prompt the user now, they are getting a call
+            return null;
+        }
+        if (phoneNumber == null)
+            return null;
+
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+        String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
+        String contactName;
+
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cursor == null) return null;
+        if (cursor.moveToFirst()) {
+            contactName = cursor.getString(0);
+        } else {
+            return null;
+        }
+        cursor.close();
+
+        return contactName;
+    }
+
     public static String getContactName(Context context) {
         //Check for permission to read contacts
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -66,6 +141,10 @@ public class CallManager {
         cursor.close();
 
         return contactName;
+    }
+
+    public static void getContactsIntoList() {
+
     }
 
     public static String getPhoneNumber() {

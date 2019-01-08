@@ -12,10 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.google.android.material.chip.Chip;
+
+import java.util.ArrayList;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,6 +42,9 @@ public class MainActivity extends ToolbarActivity {
     Button mCallButton;
     @BindView(R.id.table_numbers)
     TableLayout mNumbersTable;
+    //-----------------
+    @BindView(R.id.contactText)
+    TextView mContactText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +94,21 @@ public class MainActivity extends ToolbarActivity {
     public void addNum(View view) {
         sToNumber += ((Button) view).getText();
         mNumberInput.setText(sToNumber);
+        mContactText.setText(CallManager.getContactNameByNum(this, sToNumber));
+        ArrayList<String> matchedContacts = CallManager.getContactsByNum(this, sToNumber);
+        for (int i = 0; i < matchedContacts.size(); i++) {
+            mContactText.setText(mContactText.getText() + matchedContacts.get(i));
+        }
     }
 
-    @OnClick(R.id.chip_del)
+    @OnClick(R.id.button_delete)
     public void delNum(View view) {
         if (sToNumber.length() <= 0) return;
         sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
         mNumberInput.setText(sToNumber);
     }
 
-    @OnLongClick(R.id.chip_del)
+    @OnLongClick(R.id.button_delete)
     public boolean delAllNum(View view) {
         sToNumber = "";
         mNumberInput.setText(sToNumber);
