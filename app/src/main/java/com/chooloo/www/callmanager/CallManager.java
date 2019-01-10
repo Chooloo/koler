@@ -22,13 +22,12 @@ public class CallManager {
         }
     }
 
-    //TODO fix the bug where the call wouldn't end if it's dialing
     public static void sReject() {
         if (sCall != null) {
-            if (sCall.getState() == Call.STATE_ACTIVE) {
-                sCall.disconnect();
-            } else {
+            if (sCall.getState() == Call.STATE_RINGING) {
                 sCall.reject(false, null);
+            } else {
+                sCall.disconnect();
             }
         }
     }

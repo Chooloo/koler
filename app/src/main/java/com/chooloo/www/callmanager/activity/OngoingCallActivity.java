@@ -7,7 +7,6 @@ import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.telecom.Call;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -28,12 +27,16 @@ import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class OngoingCallActivity extends AppCompatActivity {
 
     @BindView(R.id.ongoingcall_layout)
     ConstraintLayout mParentLayout;
     Callback mCallback = new Callback();
+
+    View.OnTouchListener mDefaultListener = (v, event) -> false;
+    LongClickOptionsListener mLongClickListener;
 
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
@@ -97,8 +100,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             mCallerText.setText(contactName);
         }
 
-        //TODO make this listener active only when there is an incoming call
-        mDenyButton.setOnTouchListener(new LongClickOptionsListener(this, mRejectCallOverlay));
+        mLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
     }
 
     @Override
@@ -194,7 +196,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         mStatusText.setText(statusTextRes);
 
-        if (state == Call.STATE_ACTIVE || state == Call.STATE_DIALING) switchToCallingUI();
+        if (state != Call.STATE_RINGING) {
+            switchToCallingUI();
+            mDenyButton.setOnTouchListener(mDefaultListener);
+        } else {
+            mDenyButton.setOnTouchListener(mLongClickListener);
+        }
+
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
@@ -202,26 +210,28 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         @Override
         public void onStateChanged(Call call, int state) {
-//        int = Call.State
-//        1   = Call.STATE_DIALING
-//        2   = Call.STATE_RINGING
-//        3   = Call.STATE_HOLDING
-//        4   = Call.STATE_ACTIVE
-//        7   = Call.STATE_DISCONNECTED
-//        8   = Call.STATE_SELECT_PHONE_ACCOUNT
-//        9   = Call.STATE_CONNECTING
-//        10  = Call.STATE_DISCONNECTING
-//        11  = Call.STATE_PULLING_CALL
+            /*
+              Call states:
+
+              1   = Call.STATE_DIALING
+              2   = Call.STATE_RINGING
+              3   = Call.STATE_HOLDING
+              4   = Call.STATE_ACTIVE
+              7   = Call.STATE_DISCONNECTED
+              8   = Call.STATE_SELECT_PHONE_ACCOUNT
+              9   = Call.STATE_CONNECTING
+              10  = Call.STATE_DISCONNECTING
+              11  = Call.STATE_PULLING_CALL
+             */
             super.onStateChanged(call, state);
-            String stringState = String.valueOf(state);
-            Log.i("StateChanged: ", stringState);
+            Timber.i("State changed: %s", state);
             updateUI(state);
         }
 
         @Override
         public void onDetailsChanged(Call call, Call.Details details) {
             super.onDetailsChanged(call, details);
-            Log.i("DetailesChanged: ", details.toString());
+            Timber.i("Details changed: %s", details.toString());
         }
     }
 }

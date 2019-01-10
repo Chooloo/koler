@@ -18,12 +18,14 @@ import java.util.List;
 public class LongClickOptionsListener implements View.OnTouchListener {
 
     private static final long LONG_CLICK_MILLIS = 500;
+    private static final long ANIMATE_MILLIS = 50;
 
     private Context mContext;
     private boolean mIsCanceled = false;
 
     private LongClickRunnable mRunnable = new LongClickRunnable();
     private Handler mHandler = new Handler();
+    private int animateChildrenPos = 0;
 
     private ViewGroup mFabView;
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
@@ -105,11 +107,22 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     }
 
     private void changeVisibility(boolean overlayVisible) {
-        //TODO animate the visibility change
         if (overlayVisible) {
-            for (FloatingActionButton actionButton : mFloatingButtons) {
-                actionButton.show();
-            }
+            animateChildrenPos = 0;
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (animateChildrenPos >= mFabView.getChildCount()) return;
+                    View v = mFabView.getChildAt(animateChildrenPos);
+                    if (v instanceof FloatingActionButton) {
+                        ((FloatingActionButton) v).show();
+                        mHandler.postDelayed(this, ANIMATE_MILLIS);
+                    } else {
+                        mHandler.post(this);
+                    }
+                    animateChildrenPos++;
+                }
+            });
         } else {
             for (FloatingActionButton actionButton : mFloatingButtons) {
                 actionButton.hide();
