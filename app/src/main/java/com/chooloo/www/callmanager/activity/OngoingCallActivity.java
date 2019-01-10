@@ -1,19 +1,22 @@
 package com.chooloo.www.callmanager.activity;
 
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.telecom.Call;
-import android.telecom.TelecomManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
+import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,23 +35,22 @@ public class OngoingCallActivity extends AppCompatActivity {
     ConstraintLayout mParentLayout;
     Callback mCallback = new Callback();
 
-    @BindView(R.id.answer_btn)
-    FloatingActionButton mAnswerButton;
-    @BindView(R.id.deny_btn)
-    FloatingActionButton mDenyButton;
-    @BindView(R.id.text_status)
-    TextView mStatusText;
-    @BindView(R.id.caller_text)
-    TextView mCallerText;
-    @BindView(R.id.button_mute)
-    FloatingActionButton mMuteButton;
-    @BindView(R.id.button_keypad)
-    FloatingActionButton mKeypadButton;
-    @BindView(R.id.button_speaker)
-    FloatingActionButton mSpeakerButton;
-    @BindView(R.id.button_add_call)
-    FloatingActionButton mAddCallButton;
+    @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
+    @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
+    @BindView(R.id.text_status) TextView mStatusText;
+    @BindView(R.id.caller_text) TextView mCallerText;
 
+    @BindView(R.id.button_mute) FloatingActionButton mMuteButton;
+    @BindView(R.id.button_keypad) FloatingActionButton mKeypadButton;
+    @BindView(R.id.button_speaker) FloatingActionButton mSpeakerButton;
+    @BindView(R.id.button_add_call) FloatingActionButton mAddCallButton;
+
+    @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
+    @BindView(R.id.button_end_call_timer) FloatingActionButton mEndTimerButton;
+    @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
+    @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,17 +75,30 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
 
         ButterKnife.bind(this);
+        mCancelButton.hide();
+        mSendSMSButton.hide();
+        mEndTimerButton.hide();
+
+        //Listen for call state changes
         CallManager.registerCallback(mCallback);
         updateUI(CallManager.getState());
 
         // Set the caller name text view
-        mCallerText.setText(CallManager.getPhoneNumber());
+        String phoneNumber = CallManager.getPhoneNumber();
+        if (phoneNumber != null) {
+            mCallerText.setText(phoneNumber);
+        } else {
+            mCallerText.setText(R.string.name_unknown);
+        }
 
         // Get the caller's contact name
         String contactName = CallManager.getContactName(this);
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
+
+        //TODO make this listener active only when there is an incoming call
+        mDenyButton.setOnTouchListener(new LongClickOptionsListener(this, mRejectCallOverlay));
     }
 
     @Override
@@ -102,6 +117,17 @@ public class OngoingCallActivity extends AppCompatActivity {
         endCall();
     }
 
+    //TODO add functionality to the different buttons
+    @OnClick(R.id.button_end_call_timer)
+    public void startEndCallTimer(View view) {
+        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.button_send_sms)
+    public void sendSMS(View view) {
+        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
+    }
+
     private void activateCall() {
         CallManager.sAnswer();
         switchToCallingUI();
@@ -116,8 +142,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     private void changeBackgroundColor(@ColorRes int colorRes) {
         int backgroundColor = ContextCompat.getColor(this, colorRes);
         mParentLayout.setBackgroundColor(backgroundColor);
-        Window window = getWindow();
-        if (window != null) window.setStatusBarColor(backgroundColor);
 
         ColorStateList stateList = new ColorStateList(new int[][]{}, new int[]{backgroundColor});
         mMuteButton.setBackgroundTintList(stateList);
@@ -126,10 +150,10 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAddCallButton.setBackgroundTintList(stateList);
     }
 
-    private void moveDenyToMiddle(){
-        float parentCenterX = mParentLayout.getX() + mParentLayout.getWidth()/2;
-        float parentCenterY = mParentLayout.getY() + mParentLayout.getHeight()/2;
-        mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth()/2).translationY(parentCenterY - mAnswerButton.getHeight()/2);
+    private void moveDenyToMiddle() {
+        float parentCenterX = mParentLayout.getX() + mParentLayout.getWidth() / 2;
+        float parentCenterY = mParentLayout.getY() + mParentLayout.getHeight() / 2;
+        mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth() / 2).translationY(parentCenterY - mAnswerButton.getHeight() / 2);
     }
 
     private void switchToCallingUI() {

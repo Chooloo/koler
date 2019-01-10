@@ -16,4 +16,7 @@
     <string name="status_call_dialing">Dialing...</string>
     <string name="status_call_holding">Call On Hold</string>
 
+
+    <string name="name_unknown">Unknown</string>
+
 </resources>
