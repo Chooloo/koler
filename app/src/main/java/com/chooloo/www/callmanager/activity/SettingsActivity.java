@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
     }
 
-    //TODO fix the bug where the preference's summary won't change according to use input
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         @Override
@@ -39,7 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
             ListPreference endCallTimerPref = (ListPreference) findPreference(getString(R.string.pref_end_call_timer_key));
             endCallTimerPref.setSummary(endCallTimerPref.getEntry());
             endCallTimerPref.setOnPreferenceChangeListener((preference, newValue) -> {
-                endCallTimerPref.setSummary(endCallTimerPref.getEntry());
+                String[] entries = getResources().getStringArray(R.array.pref_end_call_timer_entries);
+                endCallTimerPref.setSummary(entries[endCallTimerPref.findIndexOfValue((String) newValue)]);
                 return true;
             });
         }
