@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class LongClickOptionsListener implements View.OnTouchListener {
 
@@ -29,6 +32,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
     private ViewGroup mFabView;
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
+    private List<TextView> mActionsText = new ArrayList<>();
 
     public LongClickOptionsListener(@NotNull Context context, @NotNull ViewGroup fabView) {
         mContext = context;
@@ -38,6 +42,9 @@ public class LongClickOptionsListener implements View.OnTouchListener {
             View v = mFabView.getChildAt(i);
             if (v instanceof FloatingActionButton) {
                 mFloatingButtons.add((FloatingActionButton) v);
+            }
+            if (v instanceof TextView) {
+                mActionsText.add((TextView) v);
             }
         }
     }
@@ -67,7 +74,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
                     //Cycle through each action button and check if the pointer is ints vicinity
                     for (FloatingActionButton action : mFloatingButtons) {
-                        if (Utilities.inViewInBounds(action, rawX, rawY, 16)) {
+                        if (Utilities.inViewInBounds(action, rawX, rawY, 8)) {
                             highlightFAB(action, true);
                         } else {
                             highlightFAB(action, false);
@@ -128,11 +135,24 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                 actionButton.hide();
                 actionButton.setHovered(false);
             }
+            for (TextView textView : mActionsText) {
+                textView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
     private void highlightFAB(FloatingActionButton actionButton, boolean highlight) {
         actionButton.setHovered(highlight);
+
+        //Find the TextView correlated with this button
+        int actionIndex = mFloatingButtons.indexOf(actionButton);
+        if (actionIndex == -1 || mActionsText.size() <= actionIndex)
+            Timber.w("Couldn't find the TextView correlated with action button in index %d", actionIndex);
+        TextView actionText = mActionsText.get(actionIndex);
+        if (highlight)
+            actionText.setVisibility(View.VISIBLE);
+        else
+            actionText.setVisibility(View.INVISIBLE);
     }
 
     class LongClickRunnable implements Runnable {

@@ -28,6 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
     }
 
+    //TODO fix the bug where the preference's summary won't change according to use input
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         @Override

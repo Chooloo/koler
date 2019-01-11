@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.ColorRes;
@@ -50,6 +51,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.button_end_call_timer) FloatingActionButton mEndTimerButton;
+    @BindView(R.id.text_end_call_timer) TextView mEndCallTimerText;
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
 
@@ -101,6 +103,11 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
 
         mLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
+
+        //Set the correct text for the TextView
+        String endCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_end_call_timer_key);
+        String endCallText = mEndCallTimerText.getText() + " " + endCallSeconds + "s";
+        mEndCallTimerText.setText(endCallText);
     }
 
     @Override

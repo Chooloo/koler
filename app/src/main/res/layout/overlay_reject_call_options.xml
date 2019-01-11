@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overlay_reject_call_options"
+    android:animateLayoutChanges="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -30,6 +32,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <!--The order of the buttons below, and the TextViews following them must be in the same order-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_end_call_timer"
@@ -72,5 +76,49 @@
         app:layout_constraintEnd_toStartOf="@+id/ghost_deny_button"
         app:layout_constraintTop_toTopOf="@+id/ghost_deny_button"
         app:srcCompat="@drawable/ic_clear_black_24dp" />
+
+    <TextView
+        android:id="@+id/text_end_call_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/action_end_call_timer"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/colorAccent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button_end_call_timer"
+        app:layout_constraintEnd_toEndOf="@+id/button_end_call_timer"
+        app:layout_constraintStart_toStartOf="@+id/button_end_call_timer"
+        tools:text="Reject in 10s"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/text_send_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/action_send_sms"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/colorAccent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_send_sms"
+        app:layout_constraintEnd_toStartOf="@+id/button_send_sms"
+        app:layout_constraintTop_toTopOf="@+id/button_send_sms"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/text_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/action_cancel"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@color/colorAccent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_cancel"
+        app:layout_constraintEnd_toStartOf="@+id/button_cancel"
+        app:layout_constraintTop_toTopOf="@+id/button_cancel"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

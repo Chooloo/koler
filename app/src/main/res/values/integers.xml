@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="pref_end_call_timer_default_value">10</integer>
-</resources>
