@@ -60,6 +60,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoing_call);
+        PreferenceUtils.getInstance(this);
 
         //This activity needs to show even if the screen is off or locked
         Window window = getWindow();
@@ -83,6 +84,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCancelButton.hide();
         mSendSMSButton.hide();
         mEndTimerButton.hide();
+        mLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
 
         //Listen for call state changes
         CallManager.registerCallback(mCallback);
@@ -101,9 +103,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
-
-        mLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
-
         //Set the correct text for the TextView
         String endCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_end_call_timer_key);
         String endCallText = mEndCallTimerText.getText() + " " + endCallSeconds + "s";

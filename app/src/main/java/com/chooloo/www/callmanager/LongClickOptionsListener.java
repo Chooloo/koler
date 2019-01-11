@@ -37,6 +37,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     public LongClickOptionsListener(@NotNull Context context, @NotNull ViewGroup fabView) {
         mContext = context;
         this.mFabView = fabView;
+        mFabView.setAlpha(0.0f);
 
         for (int i = 0; i < mFabView.getChildCount(); i++) {
             View v = mFabView.getChildAt(i);
@@ -115,6 +116,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
     private void changeVisibility(boolean overlayVisible) {
         if (overlayVisible) {
+            mFabView.animate().alpha(1.0f);
             animateChildrenPos = 0;
             mHandler.post(new Runnable() {
                 @Override
@@ -131,6 +133,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                 }
             });
         } else {
+            mFabView.animate().alpha(0.0f);
             for (FloatingActionButton actionButton : mFloatingButtons) {
                 actionButton.hide();
                 actionButton.setHovered(false);

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/overlay_reject_call_options"
     android:animateLayoutChanges="true"
+    android:background="@color/semi_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -96,15 +97,14 @@
         android:id="@+id/text_send_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/action_send_sms"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorAccent"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button_send_sms"
+        app:layout_constraintBottom_toTopOf="@+id/button_send_sms"
         app:layout_constraintEnd_toStartOf="@+id/button_send_sms"
-        app:layout_constraintTop_toTopOf="@+id/button_send_sms"
         tools:visibility="visible" />
 
     <TextView
