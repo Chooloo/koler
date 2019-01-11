@@ -12,10 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -38,6 +43,9 @@ public class MainActivity extends ToolbarActivity {
     Button mCallButton;
     @BindView(R.id.table_numbers)
     TableLayout mNumbersTable;
+    //-----------------
+    @BindView(R.id.contactText)
+    TextView mContactText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,17 +95,32 @@ public class MainActivity extends ToolbarActivity {
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
         sToNumber += ((Button) view).getText();
+        if (sToNumber.length() > 5) {
+            Map<String, String> matchedContacts = CallManager.getContactsByNum(this, sToNumber);
+            if (matchedContacts.size() == 1) {
+                for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
+                    sToNumber = contact.getValue();
+                }
+            }
+            for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
+                mContactText.setText(mContactText.getText() + " " + contact.getKey());
+            }
+//                for (int i = 0; i < matchedContacts.size(); i++) {
+//                    mContactText.setText(mContactText.getText() + " " + matchedContacts.get(i));
+//                }
+            
+        }
         mNumberInput.setText(sToNumber);
     }
 
-    @OnClick(R.id.chip_del)
+    @OnClick(R.id.button_delete)
     public void delNum(View view) {
         if (sToNumber.length() <= 0) return;
         sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
         mNumberInput.setText(sToNumber);
     }
 
-    @OnLongClick(R.id.chip_del)
+    @OnLongClick(R.id.button_delete)
     public boolean delAllNum(View view) {
         sToNumber = "";
         mNumberInput.setText(sToNumber);
