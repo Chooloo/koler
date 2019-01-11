@@ -38,6 +38,7 @@
 
         <activity
             android:name=".activity.OngoingCallActivity"
+            android:theme="@style/AppTheme.TransparentStatusBar"
             android:label="@string/activity_ongoing_call" />
 
         <activity android:name=".activity.SettingsActivity"

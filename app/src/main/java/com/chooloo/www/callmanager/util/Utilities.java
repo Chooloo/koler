@@ -13,14 +13,22 @@ import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
-//TODO add documentation
 public class Utilities {
 
+    public final static long DEFAULT_VIBRATE_LENGTH = 100;
+
+    /**
+     * Vibrate the phone for {@code DEFAULT_VIBRATE_LENGTH} milliseconds
+     */
     public static void vibrate(@NotNull Context context) {
-        final long DEFAULT_VIBRATE_LENGTH = 100;
         vibrate(context, DEFAULT_VIBRATE_LENGTH);
     }
 
+    /**
+     * Vibrate the phone
+     *
+     * @param millis the amount of milliseconds to vibrate the phone for.
+     */
     public static void vibrate(@NotNull Context context, long millis) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator == null) return;
@@ -31,6 +39,11 @@ public class Utilities {
         }
     }
 
+    /**
+     * Get the dpi for this phone
+     *
+     * @return the dpi
+     */
     public static float dpi(Context context) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -38,6 +51,15 @@ public class Utilities {
         return displayMetrics.densityDpi;
     }
 
+    /**
+     * Get whether a given x and y coordinates are in the vicinity of a view
+     *
+     * @param view the target view
+     * @param x the x value of the point - must be raw
+     * @param y the y value of the point - must be raw
+     * @param buttonVicinityOffset the vicinity in which to check the condition - in dp
+     * @return true if the point is in the view's vicinity, false otherwise.
+     */
     public static boolean inViewInBounds(View view, int x, int y, int buttonVicinityOffset) {
         Rect outRect = new Rect();
         int[] location = new int[2];

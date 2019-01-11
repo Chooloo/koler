@@ -5,14 +5,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/ubuntu</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/grey_50</item>
     </style>
 
-    <!--TODO make status bar transparent-->
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.TransparentStatusBar" parent="AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

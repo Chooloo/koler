@@ -79,6 +79,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         ButterKnife.bind(this);
         mCancelButton.hide();
