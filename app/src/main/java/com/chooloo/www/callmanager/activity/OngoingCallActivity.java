@@ -68,13 +68,16 @@ public class OngoingCallActivity extends AppCompatActivity {
             Stopwatch mCallTimer = new Stopwatch();
     Callback mCallback = new Callback();
 
-    // Time handler variables
+    // Handler variables
     final int TIME_START = 1;
     final int TIME_STOP = 0;
     final int TIME_UPDATE = 2;
     final int REFRESH_RATE = 100;
+    public static int sHangUpTime = 10000;
 
-    Handler mCallTimeHandler = new Handler() {
+    // Handlers
+    Handler mFreeHandler = new Handler();
+    Handler mCallTimeHandler = new Handler() { // Handles the call timer
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -91,6 +94,33 @@ public class OngoingCallActivity extends AppCompatActivity {
                 case TIME_UPDATE:
                     updateTimeUI(); // Updates the time ui
                     mCallTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, REFRESH_RATE); // Text view updates every milisecond (REFRESH RATE)
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    // Runnables
+    private Runnable mHangUpAfterTimeTask = new Runnable() {
+        @Override
+        public void run() {
+            endCall();
+        }
+    };
+
+
+// TODO decide weither to keep this
+    Handler mHangUpAfterTimeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TIME_START:
+                    mHangUpAfterTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, sHangUpTime);
+                    break;
+                case TIME_UPDATE:
+                    endCall();
                     break;
                 default:
                     break;
@@ -182,7 +212,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO add functionality to the different buttons
     @OnClick(R.id.button_end_call_timer)
     public void startEndCallTimer(View view) {
-        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
+        mFreeHandler.postDelayed(mHangUpAfterTimeTask, sHangUpTime);
+//        TODO decide weither to keep the line below
+//        mHangUpAfterTimeHandler.sendEmptyMessage(TIME_START);
+        Toast.makeText(this, "Hanging up after " + sHangUpTime / 1000 + " seconds", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.button_send_sms)

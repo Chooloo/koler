@@ -40,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
             endCallTimerPref.setOnPreferenceChangeListener((preference, newValue) -> {
                 String[] entries = getResources().getStringArray(R.array.pref_end_call_timer_entries);
                 endCallTimerPref.setSummary(entries[endCallTimerPref.findIndexOfValue((String) newValue)]);
+                OngoingCallActivity.sHangUpTime = 1000 * Integer.valueOf((String) newValue);
                 return true;
             });
         }
