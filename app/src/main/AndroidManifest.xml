@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -38,6 +38,7 @@
 
         <activity
             android:name=".activity.OngoingCallActivity"
+            android:theme="@style/AppTheme.TransparentStatusBar"
             android:label="@string/activity_ongoing_call" />
 
         <activity android:name=".activity.SettingsActivity"

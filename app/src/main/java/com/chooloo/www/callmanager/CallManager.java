@@ -43,10 +43,10 @@ public class CallManager {
      */
     public static void sReject() {
         if (sCall != null) {
-            if (sCall.getState() == Call.STATE_ACTIVE) {
-                sCall.disconnect();
-            } else {
+            if (sCall.getState() == Call.STATE_RINGING) {
                 sCall.reject(false, null);
+            } else {
+                sCall.disconnect();
             }
         }
     }

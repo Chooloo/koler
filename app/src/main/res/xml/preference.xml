@@ -5,5 +5,5 @@
         android:title="@string/pref_end_call_timer_title"
         android:entries="@array/pref_end_call_timer_entries"
         android:entryValues="@array/pref_end_call_timer_entry_values"
-        android:defaultValue="@integer/pref_end_call_timer_default_value" />
+        android:defaultValue="@string/pref_end_call_timer_default_value" />
 </PreferenceScreen>

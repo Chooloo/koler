@@ -4,10 +4,17 @@
     <!--Activities-->
     <string name="activity_ongoing_call">Ongoing Call</string>
     <string name="activity_settings">Settings</string>
+
+    <!--Action buttons-->
     <string name="action_settings">Settings</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_end_call_timer">Reject in</string>
+    <string name="action_send_sms">Reject and send SMS</string>
 
     <!--Preferences-->
+    <string name="pref_end_call_timer_key">end_call_timer</string>
     <string name="pref_end_call_timer_title">End call timer</string>
+    <string name="pref_end_call_timer_default_value">10</string>
 
     <!--Call State-->
     <string name="status_call_disconnected">Call ended</string>
@@ -16,4 +23,5 @@
     <string name="status_call_dialing">Dialing...</string>
     <string name="status_call_holding">Call On Hold</string>
 
+    <string name="name_unknown">Unknown</string>
 </resources>

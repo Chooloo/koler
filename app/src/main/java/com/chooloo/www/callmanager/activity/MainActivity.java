@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
-import com.google.android.material.chip.Chip;
+import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -51,6 +51,7 @@ public class MainActivity extends ToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        PreferenceUtils.getInstance(this);
         ButterKnife.bind(this);
 
         //Init timber
