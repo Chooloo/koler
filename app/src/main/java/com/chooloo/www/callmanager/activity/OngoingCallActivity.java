@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,30 +35,69 @@ import timber.log.Timber;
 
 public class OngoingCallActivity extends AppCompatActivity {
 
-    @BindView(R.id.ongoingcall_layout)
-    ConstraintLayout mParentLayout;
-    Callback mCallback = new Callback();
-
+    // Listeners
     View.OnTouchListener mDefaultListener = (v, event) -> false;
     LongClickOptionsListener mLongClickListener;
 
-    @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
-    @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
+    // Layouts
+    @BindView(R.id.ongoingcall_layout) ConstraintLayout mParentLayout;
+
+    // Text views
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.caller_text) TextView mCallerText;
+    @BindView(R.id.text_end_call_timer) TextView mEndCallTimerText;
+    @BindView(R.id.time_text) TextView mTimeText;
 
+    // Action buttons
+    @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
+    @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
     @BindView(R.id.button_mute) FloatingActionButton mMuteButton;
     @BindView(R.id.button_keypad) FloatingActionButton mKeypadButton;
     @BindView(R.id.button_speaker) FloatingActionButton mSpeakerButton;
     @BindView(R.id.button_add_call) FloatingActionButton mAddCallButton;
-
-    @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.button_end_call_timer) FloatingActionButton mEndTimerButton;
-    @BindView(R.id.text_end_call_timer) TextView mEndCallTimerText;
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
 
+    // Overlays
+    @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
+
     @SuppressLint("ClickableViewAccessibility")
+
+    // Instances of local classes
+            Stopwatch mCallTimer = new Stopwatch();
+    Callback mCallback = new Callback();
+
+    // Time handler variables
+    final int TIME_START = 1;
+    final int TIME_STOP = 0;
+    final int TIME_UPDATE = 2;
+    final int REFRESH_RATE = 100;
+
+    Handler mCallTimeHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TIME_START:
+                    mCallTimer.start(); // Starts the timer
+                    mCallTimeHandler.sendEmptyMessage(TIME_UPDATE); // Starts the time ui updates
+                    break;
+                case TIME_STOP:
+                    mCallTimeHandler.removeMessages(TIME_UPDATE); // No more updates
+                    mCallTimer.stop(); // Stops the timer
+                    updateTimeUI(); // Updates the time ui
+                    break;
+                case TIME_UPDATE:
+                    updateTimeUI(); // Updates the time ui
+                    mCallTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, REFRESH_RATE); // Text view updates every milisecond (REFRESH RATE)
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,17 +152,28 @@ public class OngoingCallActivity extends AppCompatActivity {
         mEndCallTimerText.setText(endCallText);
     }
 
+    // If the app has been closed either by user or been forced to
     @Override
     protected void onDestroy() {
         super.onDestroy();
         CallManager.unregisterCallback(mCallback);
     }
 
+    /**
+     * Answers incoming call
+     *
+     * @param view
+     */
     @OnClick(R.id.answer_btn)
     public void answer(View view) {
         activateCall();
     }
 
+    /**
+     * Denies incoming call / Ends active call
+     *
+     * @param view
+     */
     @OnClick(R.id.deny_btn)
     public void deny(View view) {
         endCall();
@@ -137,17 +190,30 @@ public class OngoingCallActivity extends AppCompatActivity {
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
     }
 
+    // Update the current call time ui
+    private void updateTimeUI() {
+        mTimeText.setText(mCallTimer.getStringTime());
+    }
+
+    // Answers incoming call and changes the ui accordingly
     private void activateCall() {
         CallManager.sAnswer();
         switchToCallingUI();
     }
 
+    // End current call / Incoming call and changes the ui accordingly
     private void endCall() {
+        mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
         finish();
     }
 
+    /**
+     * Changes the current background color
+     *
+     * @param colorRes
+     */
     private void changeBackgroundColor(@ColorRes int colorRes) {
         int backgroundColor = ContextCompat.getColor(this, colorRes);
         mParentLayout.setBackgroundColor(backgroundColor);
@@ -159,13 +225,16 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAddCallButton.setBackgroundTintList(stateList);
     }
 
+    // Moves the deny button to the middle (After you answer incoming call)
     private void moveDenyToMiddle() {
         float parentCenterX = mParentLayout.getX() + mParentLayout.getWidth() / 2;
         float parentCenterY = mParentLayout.getY() + mParentLayout.getHeight() / 2;
         mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth() / 2).translationY(parentCenterY - mAnswerButton.getHeight() / 2);
     }
 
+    // Switches the ui to an active call ui
     private void switchToCallingUI() {
+        mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
         changeBackgroundColor(R.color.call_in_progress_background);
 
         moveDenyToMiddle();
@@ -176,6 +245,11 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAddCallButton.show();
     }
 
+    /**
+     * Updates the ui given the call state
+     *
+     * @param state
+     */
     private void updateUI(int state) {
         @StringRes int statusTextRes;
         switch (state) {
@@ -213,8 +287,18 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
+    /**
+     * Callback class
+     * Listens to the call and do stuff when something changes
+     */
     public class Callback extends Call.Callback {
 
+        /**
+         * Listens to the call state
+         *
+         * @param call
+         * @param state
+         */
         @Override
         public void onStateChanged(Call call, int state) {
             /*
@@ -235,6 +319,12 @@ public class OngoingCallActivity extends AppCompatActivity {
             updateUI(state);
         }
 
+        /**
+         * Listens to the call's details
+         *
+         * @param call
+         * @param details
+         */
         @Override
         public void onDetailsChanged(Call call, Call.Details details) {
             super.onDetailsChanged(call, details);
