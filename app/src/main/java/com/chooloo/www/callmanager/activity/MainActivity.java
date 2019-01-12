@@ -107,7 +107,7 @@ public class MainActivity extends ToolbarActivity {
 //                for (int i = 0; i < matchedContacts.size(); i++) {
 //                    mContactText.setText(mContactText.getText() + " " + matchedContacts.get(i));
 //                }
-            
+
         }
         mNumberInput.setText(sToNumber);
     }
