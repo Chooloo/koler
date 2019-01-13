@@ -16,13 +16,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -80,7 +75,6 @@ public class MainActivity extends ToolbarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        getSupportActionBar().setElevation(0);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -118,6 +112,9 @@ public class MainActivity extends ToolbarActivity {
         mNumberInput.setText(sToNumber);
     }
 
+    /**
+     * Deletes a number from the keypad's input when the delete button is clicked
+     */
     @OnClick(R.id.button_delete)
     public void delNum(View view) {
         if (sToNumber.length() <= 0) return;
@@ -125,6 +122,9 @@ public class MainActivity extends ToolbarActivity {
         mNumberInput.setText(sToNumber);
     }
 
+    /**
+     * Deletes the whole keypad's input when the delete button is long clicked
+     */
     @OnLongClick(R.id.button_delete)
     public boolean delAllNum(View view) {
         sToNumber = "";
@@ -132,6 +132,9 @@ public class MainActivity extends ToolbarActivity {
         return true;
     }
 
+    /**
+     * Starts a call to voice mail when the 1 button is long clicked
+     */
     @OnLongClick(R.id.chip1)
     public boolean startVoiceMail(View view) {
         try {
@@ -146,6 +149,9 @@ public class MainActivity extends ToolbarActivity {
         }
     }
 
+    /**
+     * Calls the number in the keypad's input
+     */
     @OnClick(R.id.button_call)
     public void call(View view) {
         if (mNumberInput.getText() == null) {

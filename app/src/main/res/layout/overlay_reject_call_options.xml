@@ -37,7 +37,7 @@
     <!--The order of the buttons below, and the TextViews following them must be in the same order-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_end_call_timer"
+        android:id="@+id/button_reject_call_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
@@ -79,17 +79,17 @@
         app:srcCompat="@drawable/ic_clear_black_24dp" />
 
     <TextView
-        android:id="@+id/text_end_call_timer"
+        android:id="@+id/text_reject_call_timer_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/action_end_call_timer"
+        android:text="@string/action_reject_call_timer"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorAccent"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_end_call_timer"
-        app:layout_constraintEnd_toEndOf="@+id/button_end_call_timer"
-        app:layout_constraintStart_toStartOf="@+id/button_end_call_timer"
+        app:layout_constraintBottom_toTopOf="@+id/button_reject_call_timer"
+        app:layout_constraintEnd_toEndOf="@+id/button_reject_call_timer"
+        app:layout_constraintStart_toStartOf="@+id/button_reject_call_timer"
         tools:text="Reject in 10s"
         tools:visibility="visible" />
 
