@@ -13,4 +13,9 @@
         layout="@layout/overlay_reject_call_options"
         tools:visibility="gone"/>
 
+    <include
+        android:id="@+id/overlay_reject_call_timer"
+        layout="@layout/overlay_end_call_timer"
+        tools:visibility="gone" />
+
 </FrameLayout>

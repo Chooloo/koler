@@ -37,7 +37,6 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     public LongClickOptionsListener(@NotNull Context context, @NotNull ViewGroup fabView) {
         mContext = context;
         this.mFabView = fabView;
-        mFabView.setAlpha(0.0f);
 
         for (int i = 0; i < mFabView.getChildCount(); i++) {
             View v = mFabView.getChildAt(i);
