@@ -108,12 +108,20 @@ public class LongClickOptionsListener implements View.OnTouchListener {
         return false;
     }
 
+    /**
+     * Cancel the long click system
+     */
     private void cancel() {
         mIsCanceled = true;
         mRunnable.reset();
         changeVisibility(false);
     }
 
+    /**
+     * Change the visibility of the overlay
+     *
+     * @param overlayVisible whether to show the overlay or not
+     */
     private void changeVisibility(boolean overlayVisible) {
         if (overlayVisible) {
             mFabView.animate().alpha(1.0f);
@@ -144,6 +152,12 @@ public class LongClickOptionsListener implements View.OnTouchListener {
         }
     }
 
+    /**
+     * Highlight or unhighlight a given button
+     *
+     * @param actionButton the button to highlight or unhighlight
+     * @param highlight whether to highlight
+     */
     private void highlightFAB(FloatingActionButton actionButton, boolean highlight) {
         actionButton.setHovered(highlight);
 

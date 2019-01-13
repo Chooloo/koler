@@ -11,7 +11,7 @@ import androidx.annotation.StringRes;
 
 /*
  * A Singleton for managing your SharedPreferences.
- *
+ *_
  * IMPORTANT: The class is not thread safe. It should work fine in most
  * circumstances since the write and read operations are fast. However
  * if you call edit for bulk updates and do not commit your changes

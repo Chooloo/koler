@@ -33,11 +33,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+@SuppressLint("ClickableViewAccessibility")
 public class OngoingCallActivity extends AppCompatActivity {
 
     // Listeners
     View.OnTouchListener mDefaultListener = (v, event) -> false;
     LongClickOptionsListener mLongClickListener;
+    Callback mCallback = new Callback();
 
     // Layouts
     @BindView(R.id.ongoingcall_layout) ConstraintLayout mParentLayout;
@@ -64,7 +66,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Instances of local classes
     Stopwatch mCallTimer = new Stopwatch();
-    Callback mCallback = new Callback();
 
     // Handler variables
     final int TIME_START = 1;
@@ -99,12 +100,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     };
 
     // Runnables
-    private Runnable mHangUpAfterTimeTask = new Runnable() {
-        @Override
-        public void run() {
-            endCall();
-        }
-    };
+    private Runnable mHangUpAfterTimeTask = this::endCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +138,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         updateUI(CallManager.getState());
 
         // Set the caller name text view
-        String phoneNumber = CallManager.getPhoneNumber();
+        String phoneNumber = CallManager.getDisplayName();
         if (phoneNumber != null) {
             mCallerText.setText(phoneNumber);
         } else {
@@ -160,17 +156,14 @@ public class OngoingCallActivity extends AppCompatActivity {
         mEndCallTimerText.setText(endCallText);
     }
 
-    // If the app has been closed either by user or been forced to
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        CallManager.unregisterCallback(mCallback);
+        CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
     }
 
     /**
      * Answers incoming call
-     *
-     * @param view
      */
     @OnClick(R.id.answer_btn)
     public void answer(View view) {
@@ -178,9 +171,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
-     * Denies incoming call / Ends active call
-     *
-     * @param view
+     * Denies incoming call / Ends active call*
      */
     @OnClick(R.id.deny_btn)
     public void deny(View view) {
@@ -202,18 +193,24 @@ public class OngoingCallActivity extends AppCompatActivity {
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
     }
 
-    // Update the current call time ui
+    /**
+     * Update the current call time ui
+     */
     private void updateTimeUI() {
         mTimeText.setText(mCallTimer.getStringTime());
     }
 
-    // Answers incoming call and changes the ui accordingly
+    /**
+     * Answers incoming call and changes the ui accordingly
+     */
     private void activateCall() {
         CallManager.sAnswer();
         switchToCallingUI();
     }
 
-    // End current call / Incoming call and changes the ui accordingly
+    /**
+     * End current call / Incoming call and changes the ui accordingly
+     */
     private void endCall() {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         changeBackgroundColor(R.color.call_ended_background);
@@ -224,7 +221,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Changes the current background color
      *
-     * @param colorRes
+     * @param colorRes the color to change to
      */
     private void changeBackgroundColor(@ColorRes int colorRes) {
         int backgroundColor = ContextCompat.getColor(this, colorRes);
@@ -237,14 +234,18 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAddCallButton.setBackgroundTintList(stateList);
     }
 
-    // Moves the deny button to the middle (After you answer incoming call)
+    /**
+     * Moves the deny button to the middle
+     */
     private void moveDenyToMiddle() {
         float parentCenterX = mParentLayout.getX() + mParentLayout.getWidth() / 2;
         float parentCenterY = mParentLayout.getY() + mParentLayout.getHeight() / 2;
         mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth() / 2).translationY(parentCenterY - mAnswerButton.getHeight() / 2);
     }
 
-    // Switches the ui to an active call ui
+    /**
+     * Switches the ui to an active call ui
+     */
     private void switchToCallingUI() {
         mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
         changeBackgroundColor(R.color.call_in_progress_background);
@@ -260,7 +261,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Updates the ui given the call state
      *
-     * @param state
+     * @param state the current call state
      */
     private void updateUI(int state) {
         @StringRes int statusTextRes;
@@ -305,12 +306,6 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     public class Callback extends Call.Callback {
 
-        /**
-         * Listens to the call state
-         *
-         * @param call
-         * @param state
-         */
         @Override
         public void onStateChanged(Call call, int state) {
             /*
@@ -331,12 +326,6 @@ public class OngoingCallActivity extends AppCompatActivity {
             updateUI(state);
         }
 
-        /**
-         * Listens to the call's details
-         *
-         * @param call
-         * @param details
-         */
         @Override
         public void onDetailsChanged(Call call, Call.Details details) {
             super.onDetailsChanged(call, details);
