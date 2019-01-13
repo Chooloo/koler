@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.hardware.SensorListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +64,11 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Overlays
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
 
+    // PowerManager
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
+    private int field = 0x00000020;
+
     @SuppressLint("ClickableViewAccessibility")
 
     // Instances of local classes
@@ -115,6 +122,16 @@ public class OngoingCallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ongoing_call);
         PreferenceUtils.getInstance(this);
 
+        ButterKnife.bind(this);
+
+        // Initiate PowerManager and WakeLock
+        try {
+            field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
+        } catch (Throwable ignored) {
+        }
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
+
         //This activity needs to show even if the screen is off or locked
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -134,7 +151,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        ButterKnife.bind(this);
         mCancelButton.hide();
         mSendSMSButton.hide();
         mEndTimerButton.hide();
@@ -157,6 +173,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
+
         //Set the correct text for the TextView
         String endCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_end_call_timer_key);
         String endCallText = mEndCallTimerText.getText() + " " + endCallSeconds + "s";
@@ -168,6 +185,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         CallManager.unregisterCallback(mCallback);
+        releaseWakeLock();
     }
 
     /**
@@ -218,6 +236,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
+        releaseWakeLock();
         finish();
     }
 
@@ -246,15 +265,32 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Switches the ui to an active call ui
     private void switchToCallingUI() {
+        aqcuireWakeLock();
+
         mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
         changeBackgroundColor(R.color.call_in_progress_background);
 
+        // Change the buttons layout
         moveDenyToMiddle();
         mAnswerButton.hide();
         mMuteButton.show();
         mKeypadButton.show();
         mSpeakerButton.show();
         mAddCallButton.show();
+    }
+
+    // Acquires the wake lock
+    private void aqcuireWakeLock() {
+        if (!wakeLock.isHeld()) {
+            wakeLock.acquire();
+        }
+    }
+
+    // Release the wake lock
+    private void releaseWakeLock(){
+        if(wakeLock.isHeld()){
+            wakeLock.release();
+        }
     }
 
     /**
