@@ -62,10 +62,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Overlays
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
 
-    @SuppressLint("ClickableViewAccessibility")
-
     // Instances of local classes
-            Stopwatch mCallTimer = new Stopwatch();
+    Stopwatch mCallTimer = new Stopwatch();
     Callback mCallback = new Callback();
 
     // Handler variables
@@ -73,11 +71,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     final int TIME_STOP = 0;
     final int TIME_UPDATE = 2;
     final int REFRESH_RATE = 100;
-    public static int sHangUpTime = 10000;
 
     // Handlers
     Handler mFreeHandler = new Handler();
-    Handler mCallTimeHandler = new Handler() { // Handles the call timer
+    @SuppressLint("HandlerLeak") Handler mCallTimeHandler = new Handler() { // Handles the call timer
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -190,13 +187,16 @@ public class OngoingCallActivity extends AppCompatActivity {
         endCall();
     }
 
-    //TODO add functionality to the different buttons
     @OnClick(R.id.button_end_call_timer)
     public void startEndCallTimer(View view) {
-        mFreeHandler.postDelayed(mHangUpAfterTimeTask, sHangUpTime);
-        Toast.makeText(this, "Hanging up after " + sHangUpTime / 1000 + " seconds", Toast.LENGTH_SHORT).show();
+        String hangUpSeconds = PreferenceUtils.getInstance().getString(R.string.pref_end_call_timer_key);
+        int seconds = Integer.valueOf(hangUpSeconds);
+        int millis = seconds * 1000;
+        mFreeHandler.postDelayed(mHangUpAfterTimeTask, millis);
+        Toast.makeText(this, "Hanging up after " + seconds + " seconds", Toast.LENGTH_SHORT).show();
     }
 
+    //TODO add functionality to the send SMS Button
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
