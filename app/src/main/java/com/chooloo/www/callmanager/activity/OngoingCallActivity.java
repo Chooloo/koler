@@ -109,25 +109,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     };
 
-
-// TODO decide weither to keep this
-    Handler mHangUpAfterTimeHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case TIME_START:
-                    mHangUpAfterTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, sHangUpTime);
-                    break;
-                case TIME_UPDATE:
-                    endCall();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,8 +194,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.button_end_call_timer)
     public void startEndCallTimer(View view) {
         mFreeHandler.postDelayed(mHangUpAfterTimeTask, sHangUpTime);
-//        TODO decide weither to keep the line below
-//        mHangUpAfterTimeHandler.sendEmptyMessage(TIME_START);
         Toast.makeText(this, "Hanging up after " + sHangUpTime / 1000 + " seconds", Toast.LENGTH_SHORT).show();
     }
 
