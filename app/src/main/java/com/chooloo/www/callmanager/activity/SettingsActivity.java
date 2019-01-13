@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.preference, rootKey);
 
             //Init preferences
-            ListPreference endCallTimerPref = (ListPreference) findPreference(getString(R.string.pref_end_call_timer_key));
+            ListPreference endCallTimerPref = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
             endCallTimerPref.setSummary(endCallTimerPref.getEntry());
             endCallTimerPref.setOnPreferenceChangeListener((preference, newValue) -> {
                 String[] entries = getResources().getStringArray(R.array.pref_end_call_timer_entries);

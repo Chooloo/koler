@@ -9,7 +9,7 @@
 
     <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"-->
     <TextView
-        android:id="@+id/caller_text"
+        android:id="@+id/text_caller"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,9 +32,9 @@
         android:layout_marginBottom="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
-        app:layout_constraintEnd_toEndOf="@+id/caller_text"
+        app:layout_constraintEnd_toEndOf="@+id/text_caller"
         app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="@+id/caller_text"
+        app:layout_constraintStart_toStartOf="@+id/text_caller"
         tools:text="@string/status_call_incoming" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -167,7 +167,7 @@
         app:layout_constraintGuide_percent="0.33" />
 
     <TextView
-        android:id="@+id/time_text"
+        android:id="@+id/text_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

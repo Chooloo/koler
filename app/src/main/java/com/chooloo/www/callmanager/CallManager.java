@@ -9,22 +9,14 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
-import android.util.Log;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
-import com.chooloo.www.callmanager.activity.MainActivity;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import timber.log.Timber;
-
-import static android.content.ContentValues.TAG;
 
 public class CallManager {
     public static Call sCall;
@@ -65,7 +57,7 @@ public class CallManager {
     /**
      * Registers a Callback object to the current call
      *
-     * @param callback
+     * @param callback the callback to register
      */
     public static void registerCallback(OngoingCallActivity.Callback callback) {
         if (sCall == null) return;
@@ -75,7 +67,7 @@ public class CallManager {
     /**
      * Unregisters the Callback from the current call
      *
-     * @param callback
+     * @param callback the callback to unregister
      */
     public static void unregisterCallback(Call.Callback callback) {
         if (sCall == null) return;
@@ -83,13 +75,12 @@ public class CallManager {
     }
 
     /**
-     * Returns a Map (Dictionary) of all the contacts by (name,number)
+     * Returns a {@code Map<String, String>} of all the contacts by (name,number)
      *
-     * @param context
-     * @return Map<String                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               String> of all the contacts currently on the target device
+     * @return A map of all the contacts                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               String> of all the contacts currently on the target device
      */
     public static Map<String, String> getContacts(Context context) {
-        Map<String, String> contacts = new HashMap<String, String>();
+        Map<String, String> contacts = new HashMap<>();
 //        ArrayList<String> contacts = new ArrayList<String>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
@@ -118,14 +109,13 @@ public class CallManager {
     }
 
     /**
-     * Gets the contact's names who contains in their phone number the given number
+     * Gets the contacts which their number begins with the given number.
      *
-     * @param context
-     * @param num
+     * @param num the number, or beginning of it
      * @return ArrayList<String> of the contacts who has the given number in their phone number
      */
     public static Map<String, String> getContactsByNum(Context context, String num) {
-        Map<String, String> matchContacts = new HashMap<String, String>();
+        Map<String, String> matchContacts = new HashMap<>();
         Map<String, String> contacts = getContacts(context);
         for (Map.Entry<String, String> contact : contacts.entrySet()) {
             if (contact.getValue().contains(num)) {
@@ -138,8 +128,7 @@ public class CallManager {
     /**
      * Get the current contact's name from the end side of the current call
      *
-     * @param context
-     * @return String - the contact's name
+     * @return the contact's name
      */
     public static String getContactName(Context context) {
         //Check for permission to read contacts
@@ -150,7 +139,7 @@ public class CallManager {
         if (sCall == null)
             return null;
 
-        String phoneNumber = getPhoneNumber();
+        String phoneNumber = getDisplayName();
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
         String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME};
         String contactName;
@@ -167,18 +156,14 @@ public class CallManager {
         return contactName;
     }
 
-    public static void getContactsIntoList() {
-
-    }
-
     /**
      * Gets the phone number of the contact from the end side of the current call
-     * Incase of a voicemail number, returns "Voicemail
+     * in the case of a voicemail number, returns "Voicemail"
      *
-     * @return String - phone number / Voicemail / null
+     * @return String - phone number, or voicemail. if not recognized, return null.
      */
-    public static String getPhoneNumber() {
-        if (sCall == null) return "";
+    public static String getDisplayName() {
+        if (sCall == null) return null;
         String uri = sCall.getDetails().getHandle().toString();
         if (uri.contains("tel"))
             return uri.replace("tel:", "");

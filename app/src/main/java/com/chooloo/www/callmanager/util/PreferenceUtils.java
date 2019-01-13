@@ -11,7 +11,7 @@ import androidx.annotation.StringRes;
 
 /*
  * A Singleton for managing your SharedPreferences.
- *
+ *_
  * IMPORTANT: The class is not thread safe. It should work fine in most
  * circumstances since the write and read operations are fast. However
  * if you call edit for bulk updates and do not commit your changes
@@ -31,7 +31,7 @@ public class PreferenceUtils {
         mPref = PreferenceManager.getDefaultSharedPreferences(context);
         mContext = context;
 
-        sDefaultValues.put(R.string.pref_end_call_timer_key, context.getResources().getString(R.string.pref_end_call_timer_default_value));
+        sDefaultValues.put(R.string.pref_reject_call_timer_key, context.getResources().getString(R.string.pref_reject_call_timer_default_value));
     }
 
     public static PreferenceUtils getInstance(Context context) {

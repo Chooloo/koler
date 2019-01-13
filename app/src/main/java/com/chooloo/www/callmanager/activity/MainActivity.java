@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +16,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -37,15 +34,16 @@ public class MainActivity extends ToolbarActivity {
 
     public static String sToNumber = "";
 
-    @BindView(R.id.text_number_input)
-    EditText mNumberInput;
-    @BindView(R.id.button_call)
-    Button mCallButton;
-    @BindView(R.id.table_numbers)
-    TableLayout mNumbersTable;
+    @BindView(R.id.text_number_input) EditText mNumberInput;
+    @BindView(R.id.button_call) Button mCallButton;
+    @BindView(R.id.table_numbers) TableLayout mNumbersTable;
     //-----------------
-    @BindView(R.id.contactText)
-    TextView mContactText;
+    @BindView(R.id.contactText) TextView mContactText;
+
+
+    Handler contactSearchHandler = new Handler(){
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +75,6 @@ public class MainActivity extends ToolbarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        getSupportActionBar().setElevation(0);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -95,24 +92,29 @@ public class MainActivity extends ToolbarActivity {
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
         sToNumber += ((Button) view).getText();
-        if (sToNumber.length() > 5) {
-            Map<String, String> matchedContacts = CallManager.getContactsByNum(this, sToNumber);
-            if (matchedContacts.size() == 1) {
-                for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
-                    sToNumber = contact.getValue();
-                }
-            }
-            for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
-                mContactText.setText(mContactText.getText() + " " + contact.getKey());
-            }
+//        TODO finish and fix the shit below (contact searcher) do this with the handler above
+//        if (sToNumber.length() > 5) {
+//            Map<String, String> matchedContacts = CallManager.getContactsByNum(this, sToNumber);
+//            if (matchedContacts.size() == 1) {
+//                for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
+//                    sToNumber = contact.getValue();
+//                }
+//            }
+//            for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
+//                mContactText.setText(mContactText.getText() + " " + contact.getKey());
+//            }
+
 //                for (int i = 0; i < matchedContacts.size(); i++) {
 //                    mContactText.setText(mContactText.getText() + " " + matchedContacts.get(i));
 //                }
 
-        }
+//        }
         mNumberInput.setText(sToNumber);
     }
 
+    /**
+     * Deletes a number from the keypad's input when the delete button is clicked
+     */
     @OnClick(R.id.button_delete)
     public void delNum(View view) {
         if (sToNumber.length() <= 0) return;
@@ -120,6 +122,9 @@ public class MainActivity extends ToolbarActivity {
         mNumberInput.setText(sToNumber);
     }
 
+    /**
+     * Deletes the whole keypad's input when the delete button is long clicked
+     */
     @OnLongClick(R.id.button_delete)
     public boolean delAllNum(View view) {
         sToNumber = "";
@@ -127,6 +132,9 @@ public class MainActivity extends ToolbarActivity {
         return true;
     }
 
+    /**
+     * Starts a call to voice mail when the 1 button is long clicked
+     */
     @OnLongClick(R.id.chip1)
     public boolean startVoiceMail(View view) {
         try {
@@ -141,6 +149,9 @@ public class MainActivity extends ToolbarActivity {
         }
     }
 
+    /**
+     * Calls the number in the keypad's input
+     */
     @OnClick(R.id.button_call)
     public void call(View view) {
         if (mNumberInput.getText() == null) {
