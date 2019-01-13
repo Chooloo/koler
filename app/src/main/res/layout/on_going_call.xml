@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".activity.OngoingCallActivity">
 
-    <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"-->
     <TextView
         android:id="@+id/text_caller"
         android:layout_width="0dp"
