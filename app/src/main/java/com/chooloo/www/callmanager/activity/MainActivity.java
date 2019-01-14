@@ -41,9 +41,7 @@ public class MainActivity extends ToolbarActivity {
     @BindView(R.id.contactText) TextView mContactText;
 
 
-    Handler contactSearchHandler = new Handler(){
-
-    };
+    Handler contactSearchHandler = new Handler() {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +89,7 @@ public class MainActivity extends ToolbarActivity {
 
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
+        view.setBackgroundResource(R.drawable.ic_circle_button);
         sToNumber += ((Button) view).getText();
 //        TODO finish and fix the shit below (contact searcher) do this with the handler above
 //        if (sToNumber.length() > 5) {

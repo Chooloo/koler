@@ -79,9 +79,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="1"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip2"
@@ -89,9 +89,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="2"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip3"
@@ -99,9 +99,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="3"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
         </TableRow>
 
@@ -117,9 +117,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="4"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip5"
@@ -127,9 +127,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="5"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip6"
@@ -137,9 +137,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="6"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
         </TableRow>
 
         <TableRow
@@ -154,9 +154,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="7"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip8"
@@ -164,9 +164,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="8"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip9"
@@ -174,9 +174,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="9"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
         </TableRow>
 
@@ -192,9 +192,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="*"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip0"
@@ -202,9 +202,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="0"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
             <Button
                 android:id="@+id/chip_hex"
@@ -212,9 +212,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
                 android:text="#"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/green_phone" />
 
         </TableRow>
 
@@ -228,9 +228,9 @@
         android:layout_marginStart="70dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_circle_button"
         android:text="Call"
         android:textAlignment="center"
+        android:textColor="@color/green_phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
@@ -241,9 +241,9 @@
         android:layout_height="46dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_circle_button"
-        android:text="delete"
+        android:text="del"
         android:textAlignment="center"
+        android:textColor="@color/green_phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />
