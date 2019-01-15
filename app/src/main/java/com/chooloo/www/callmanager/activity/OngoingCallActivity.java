@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Locale;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,9 +48,10 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Listeners
     View.OnTouchListener mDefaultListener = (v, event) -> false;
-    LongClickOptionsListener mLongClickListener;
+    LongClickOptionsListener mRejectLongClickListener;
+    LongClickOptionsListener mAnswerLongClickListener;
     Callback mCallback = new Callback();
-    RejectTimer mRejectTimer;
+    ActionTimer mActionTimer = new ActionTimer();
 
     // Layouts
     @BindView(R.id.ongoingcall_layout) ConstraintLayout mParentLayout;
@@ -57,8 +59,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
-    @BindView(R.id.text_reject_call_timer_desc) TextView mEndCallTimerText;
-    @BindView(R.id.text_call_ends_in_timer) TextView mCallEndsInText;
+    @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
+    @BindView(R.id.text_answer_call_timer_desc) TextView mAnswerCallTimerText;
+    @BindView(R.id.text_action_time_left) TextView mActionTimeLeftText;
+    @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
     @BindView(R.id.text_stopwatch) TextView mTimeText;
 
     // Action buttons
@@ -74,13 +78,11 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Overlays
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
-    @BindView(R.id.overlay_reject_call_timer) ViewGroup mRejectTimerOverlay;
+    @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
+    @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
 
-    // Instances of local classes
+    // Stopwatch related
     Stopwatch mCallTimer = new Stopwatch();
-
-    // Handlers
-    Handler mFreeHandler = new Handler();
     @SuppressLint("HandlerLeak") Handler mCallTimeHandler = new Handler() { // Handles the call timer
         @Override
         public void handleMessage(Message msg) {
@@ -134,10 +136,12 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCancelButton.hide();
         mSendSMSButton.hide();
         mRejectCallTimerButton.hide();
-        mLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
+        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
+        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay);
 
         //Hide all overlays
-        mRejectTimerOverlay.setAlpha(0.0f);
+        mActionTimerOverlay.setAlpha(0.0f);
+        mAnswerCallOverlay.setAlpha(0.0f);
         mRejectCallOverlay.setAlpha(0.0f);
 
         //Listen for call state changes
@@ -157,23 +161,24 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
-        //Set the correct text for the TextView
 
+        //Set the correct text for the TextViews
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
-        int seconds = Integer.valueOf(rejectCallSeconds);
-        int millis = seconds * 1000;
+        String rejectCallText = mRejectCallTimerText.getText() + " " + rejectCallSeconds + "s";
+        mRejectCallTimerText.setText(rejectCallText);
 
-        String rejectCallText = mEndCallTimerText.getText() + " " + rejectCallSeconds + "s";
-        mEndCallTimerText.setText(rejectCallText);
+        String answerCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key);
+        String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
+        mAnswerCallTimerText.setText(answerCallText);
 
-        mRejectTimer = new RejectTimer(millis, REFRESH_RATE);
+        //mActionTimer = new ActionTimer(millis, REFRESH_RATE);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
-        mRejectTimer.cancel();
+        mActionTimer.cancel();
     }
 
     /**
@@ -196,8 +201,17 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
-        mRejectTimer.start();
-        mRejectTimerOverlay.animate().alpha(1.0f);
+        int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key));
+        mActionTimer.setData(seconds * 1000, true);
+        mActionTimer.start();
+        mActionTimerOverlay.animate().alpha(1.0f);
+    }
+
+    @OnClick(R.id.button_answer_call_timer)
+    public void startAnswerCallTimer(View view) {
+        int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key));
+        mActionTimer.setData(seconds * 1000, false);
+        mActionTimer.start();
     }
 
     //TODO add functionality to the send SMS Button
@@ -208,8 +222,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_cancel_timer)
     public void cancelTimer(View view) {
-        mRejectTimer.cancel();
-        mRejectTimerOverlay.animate().alpha(0.0f);
+        mActionTimer.cancel();
     }
 
     /**
@@ -312,8 +325,10 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (state != Call.STATE_RINGING) {
             switchToCallingUI();
             mDenyButton.setOnTouchListener(mDefaultListener);
+            mAnswerButton.setOnTouchListener(mDefaultListener);
         } else {
-            mDenyButton.setOnTouchListener(mLongClickListener);
+            mDenyButton.setOnTouchListener(mRejectLongClickListener);
+            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
         }
 
         if (state == Call.STATE_DISCONNECTED) endCall();
@@ -352,25 +367,59 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
-    class RejectTimer extends CountDownTimer {
+    class ActionTimer {
 
-        Locale mLocale = Locale.getDefault();
+        CountDownTimer mTimer = null;
+        boolean mIsRejecting = true;
 
-        RejectTimer(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
+        private void setData(long millisInFuture, boolean isRejecting) {
+            mIsRejecting = isRejecting;
+            @ColorRes int textColorRes;
+            @StringRes int textIndicator;
+            if (isRejecting) {
+                textColorRes = R.color.red_phone;
+                textIndicator = R.string.reject_timer_indicator;
+            }
+            else{
+                textColorRes = R.color.green_phone;
+                textIndicator = R.string.answer_timer_indicator;
+            }
+
+            @ColorInt int textColor = ContextCompat.getColor(OngoingCallActivity.this, textColorRes);
+            mActionTimeLeftText.setTextColor(textColor);
+            mTimerIndicatorText.setText(textIndicator);
+
+            mTimer = new CountDownTimer(millisInFuture, REFRESH_RATE) {
+                Locale mLocale = Locale.getDefault();
+
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    int secondsUntilFinished = (int) (millisUntilFinished / 1000);
+                    String timer = String.format(mLocale, "00:%02d", secondsUntilFinished);
+                    mActionTimeLeftText.setText(timer);
+                }
+
+                @Override
+                public void onFinish() {
+                    if (mIsRejecting) endCall();
+                    else activateCall();
+                    mActionTimerOverlay.animate().alpha(0.0f);
+                }
+            };
         }
 
-        @Override
-        public void onTick(long millisUntilFinished) {
-            int secondsUntilFinished = (int) (millisUntilFinished / 1000);
-            String timer = String.format(mLocale, "00:%02d", secondsUntilFinished);
-            mCallEndsInText.setText(timer);
+        private void start() {
+            if (mTimer != null) mTimer.start();
+            else Timber.w("Couldn't start action timer (timer is null)");
+
+            if (mActionTimerOverlay != null) mActionTimerOverlay.animate().alpha(1.0f);
         }
 
-        @Override
-        public void onFinish() {
-            endCall();
-            mRejectTimerOverlay.animate().alpha(0.0f);
+        private void cancel() {
+            if (mTimer != null) mTimer.cancel();
+            else Timber.w("Couldn't cancel action timer (timer is null)");
+
+            if (mActionTimerOverlay != null) mActionTimerOverlay.animate().alpha(0.0f);
         }
     }
 }

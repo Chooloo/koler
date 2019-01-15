@@ -9,12 +9,17 @@
     <string name="action_settings">Settings</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_reject_call_timer">Reject in</string>
+    <string name="action_answer_call_timer">Answer in</string>
     <string name="action_send_sms">Reject and send SMS</string>
 
     <!--Preferences-->
     <string name="pref_reject_call_timer_key">end_call_timer</string>
     <string name="pref_reject_call_timer_title">End call timer</string>
     <string name="pref_reject_call_timer_default_value">10</string>
+
+    <string name="pref_answer_call_timer_key">answer_call_timer</string>
+    <string name="pref_answer_call_timer_title">Answer call timer</string>
+    <string name="pref_answer_call_timer_default_value">10</string>
 
     <!--Call State-->
     <string name="status_call_disconnected">Call ended</string>
@@ -25,5 +30,6 @@
 
     <!--Other-->
     <string name="name_unknown">Unknown</string>
-    <string name="call_ends_in">Call ends in</string>
+    <string name="reject_timer_indicator">Call ends in</string>
+    <string name="answer_timer_indicator">Answering in</string>
 </resources>
