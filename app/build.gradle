@@ -33,8 +33,13 @@ dependencies {
     //ButterKnife
     implementation 'com.jakewharton:butterknife:9.0.0-rc3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc3'
+
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
