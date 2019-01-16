@@ -11,7 +11,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.provider.MediaStore;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,7 +205,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
         mActionTimer.cancel();
         releaseWakeLock();
-        mRejectTimer.cancel();
     }
 
     /**

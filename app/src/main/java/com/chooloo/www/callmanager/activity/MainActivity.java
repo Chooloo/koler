@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.TelecomManager;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +30,6 @@ import butterknife.OnLongClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static android.text.InputType.TYPE_CLASS_TEXT;
 
 public class MainActivity extends ToolbarActivity {
 
