@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.chooloo.www.callmanager">
 
-    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -38,12 +40,13 @@
 
         <activity
             android:name=".activity.OngoingCallActivity"
-            android:theme="@style/AppTheme.TransparentStatusBar"
-            android:label="@string/activity_ongoing_call" />
+            android:label="@string/activity_ongoing_call"
+            android:theme="@style/AppTheme.TransparentStatusBar" />
 
-        <activity android:name=".activity.SettingsActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/activity_settings"/>
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/activity_settings"
+            android:theme="@style/AppTheme" />
 
         <service
             android:name=".service.CallService"

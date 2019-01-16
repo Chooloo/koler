@@ -1,15 +1,19 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.TelecomManager;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -28,8 +32,8 @@ import butterknife.OnLongClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.text.InputType.TYPE_CLASS_TEXT;
 
-//TODO clean up, give this activity a purpose
 public class MainActivity extends ToolbarActivity {
 
     public static String sToNumber = "";
@@ -40,8 +44,9 @@ public class MainActivity extends ToolbarActivity {
     //-----------------
     @BindView(R.id.contactText) TextView mContactText;
 
+    boolean isKeyboardDisabled = false;
 
-    Handler contactSearchHandler = new Handler(){
+    Handler contactSearchHandler = new Handler() {
 
     };
 
@@ -89,6 +94,33 @@ public class MainActivity extends ToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * When the mNumberInput is selected
+     *
+     * @param view which in this case is the mNumberInput
+     */
+    @OnClick(R.id.text_number_input)
+    public void editTextSelected(View view) {
+        hideKeyboard(mNumberInput);
+    }
+
+    /**
+     * Hides the keyboard based on the focused view (most likely EditText)
+     *
+     * @param view is the focused view
+     */
+    private void hideKeyboard(EditText view) {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Dialer buttons click handler
+     *
+     * @param view is the button number
+     */
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
         sToNumber += ((Button) view).getText();

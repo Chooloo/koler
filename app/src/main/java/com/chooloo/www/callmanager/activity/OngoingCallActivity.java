@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.provider.MediaStore;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +56,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     Callback mCallback = new Callback();
     ActionTimer mActionTimer = new ActionTimer();
 
+    // Audio
+    AudioManager mAudioManager;
+    private boolean mIsMuted = false;
+
     // Layouts
     @BindView(R.id.ongoingcall_layout) ConstraintLayout mParentLayout;
 
@@ -81,8 +88,18 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
 
-    // Stopwatch related
-    Stopwatch mCallTimer = new Stopwatch();
+    // PowerManager
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
+    private int field = 0x00000020;
+
+    @SuppressLint("ClickableViewAccessibility")
+
+    // Instances of local classes
+            Stopwatch mCallTimer = new Stopwatch();
+
+    // Handlers
+    Handler mFreeHandler = new Handler();
     @SuppressLint("HandlerLeak") Handler mCallTimeHandler = new Handler() { // Handles the call timer
         @Override
         public void handleMessage(Message msg) {
@@ -113,6 +130,16 @@ public class OngoingCallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ongoing_call);
         PreferenceUtils.getInstance(this);
 
+        ButterKnife.bind(this);
+
+        // Initiate PowerManager and WakeLock
+        try {
+            field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
+        } catch (Throwable ignored) {
+        }
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
+
         //This activity needs to show even if the screen is off or locked
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -132,7 +159,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        ButterKnife.bind(this);
         mCancelButton.hide();
         mSendSMSButton.hide();
         mRejectCallTimerButton.hide();
@@ -162,7 +188,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             mCallerText.setText(contactName);
         }
 
-        //Set the correct text for the TextViews
+        //Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
         String rejectCallText = mRejectCallTimerText.getText() + " " + rejectCallSeconds + "s";
         mRejectCallTimerText.setText(rejectCallText);
@@ -179,6 +205,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         super.onDestroy();
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
         mActionTimer.cancel();
+        releaseWakeLock();
+        mRejectTimer.cancel();
     }
 
     /**
@@ -195,6 +223,25 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.deny_btn)
     public void deny(View view) {
         endCall();
+    }
+
+    /**
+     * Mutes the call's microphone
+     *
+     * @param view
+     */
+    @OnClick(R.id.button_mute)
+    public void mute(View view) {
+        muteMic(!mIsMuted);
+        if (mIsMuted) {
+            mMuteButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.call_in_progress_background)));
+//            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
+            mIsMuted = false;
+        } else {
+            mMuteButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
+//            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
+            mIsMuted = true;
+        }
     }
 
     //TODO remove the ability to click buttons under the overlay
@@ -233,6 +280,13 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
+     * Mutes / Unmutes the device's microphone
+     */
+    private void muteMic(boolean wot) {
+        mAudioManager.setMicrophoneMute(wot);
+    }
+
+    /**
      * Answers incoming call and changes the ui accordingly
      */
     private void activateCall() {
@@ -247,6 +301,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
+        releaseWakeLock();
         finish();
     }
 
@@ -279,15 +334,37 @@ public class OngoingCallActivity extends AppCompatActivity {
      * Switches the ui to an active call ui
      */
     private void switchToCallingUI() {
+
+        mAudioManager.setMode(AudioManager.MODE_IN_CALL);
+        acquireWakeLock();
         mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
         changeBackgroundColor(R.color.call_in_progress_background);
 
+        // Change the buttons layout
         moveDenyToMiddle();
         mAnswerButton.hide();
         mMuteButton.show();
         mKeypadButton.show();
         mSpeakerButton.show();
         mAddCallButton.show();
+    }
+
+    /**
+     * Acquires the wake lock
+     */
+    private void acquireWakeLock() {
+        if (!wakeLock.isHeld()) {
+            wakeLock.acquire();
+        }
+    }
+
+    /**
+     * Releases the wake lock
+     */
+    private void releaseWakeLock() {
+        if (wakeLock.isHeld()) {
+            wakeLock.release();
+        }
     }
 
     /**
