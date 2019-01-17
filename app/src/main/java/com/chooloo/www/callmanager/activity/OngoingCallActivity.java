@@ -220,7 +220,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      * Denies incoming call / Ends active call*
      */
     @OnClick(R.id.reject_btn)
-    public void deny(View view) {
+    public void reject(View view) {
         endCall();
     }
 
@@ -302,12 +302,10 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         if (state != Call.STATE_RINGING) {
             switchToCallingUI();
-            mRejectButton.setOnTouchListener(mDefaultListener);
-            mAnswerButton.setOnTouchListener(mDefaultListener);
-        } else {
-            mRejectButton.setOnTouchListener(mRejectLongClickListener);
-            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
         }
+
+        mRejectButton.setOnTouchListener(mRejectLongClickListener);
+        mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
 
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
@@ -362,7 +360,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
-     * Moves the deny button to the middle
+     * Moves the reject button to the middle
      */
     private void moveDenyToMiddle() {
         float parentCenterX = mOngoingCallLayout.getX() + mOngoingCallLayout.getWidth() / 2;

@@ -87,7 +87,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                 int rawY = (int) event.getRawY();
 
                 boolean actionPerformed = false;
-                //Cycle through each action button and check if the pointer is ints vicinity
+                //Cycle through each action button and check if the pointer is in its vicinity
                 for (FloatingActionButton action : mFloatingButtons) {
                     if (Utilities.inViewInBounds(action, rawX, rawY, 16)) {
                         action.performClick();
