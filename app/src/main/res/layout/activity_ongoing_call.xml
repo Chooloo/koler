@@ -14,8 +14,13 @@
         tools:visibility="gone"/>
 
     <include
-        android:id="@+id/overlay_reject_call_timer"
-        layout="@layout/overlay_end_call_timer"
+        android:id="@+id/overlay_answer_call_options"
+        layout="@layout/overlay_answer_call_options"
+        tools:visibility="gone" />
+
+    <include
+        android:id="@+id/overlay_action_timer"
+        layout="@layout/overlay_action_timer"
         tools:visibility="gone" />
 
 </FrameLayout>

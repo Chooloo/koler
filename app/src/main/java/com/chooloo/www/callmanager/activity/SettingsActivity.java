@@ -7,6 +7,7 @@ import com.chooloo.www.callmanager.R;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 //TODO add more settings
@@ -35,13 +36,19 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.preference, rootKey);
 
             //Init preferences
-            ListPreference endCallTimerPref = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
-            endCallTimerPref.setSummary(endCallTimerPref.getEntry());
-            endCallTimerPref.setOnPreferenceChangeListener((preference, newValue) -> {
-                String[] entries = getResources().getStringArray(R.array.pref_end_call_timer_entries);
-                endCallTimerPref.setSummary(entries[endCallTimerPref.findIndexOfValue((String) newValue)]);
+            Preference.OnPreferenceChangeListener listChangeListener = (preference, newValue) -> {
+                String[] entries = getResources().getStringArray(R.array.pref_call_timer_entries);
+                ListPreference listPreference = (ListPreference) preference;
+                listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
                 return true;
-            });
+            };
+
+            ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
+            ListPreference answerCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_answer_call_timer_key));
+            rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
+            rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
+            answerCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
+            answerCallTimerPreference.setSummary(answerCallTimerPreference.getEntry());
         }
     }
 }

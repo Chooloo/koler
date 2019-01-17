@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/overlay_action_timer"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/overlay_reject_call_timer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/semi_white"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_call_ends_in_timer"
+        android:id="@+id/text_action_time_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -23,28 +23,28 @@
         tools:text="00:05s" />
 
     <TextView
-        android:id="@+id/text_call_ends"
+        android:id="@+id/text_timer_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="@string/call_ends_in"
+        android:text="@string/reject_timer_indicator"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintBottom_toTopOf="@+id/text_call_ends_in_timer"
-        app:layout_constraintEnd_toEndOf="@+id/text_call_ends_in_timer"
-        app:layout_constraintStart_toStartOf="@+id/text_call_ends_in_timer" />
+        app:layout_constraintBottom_toTopOf="@+id/text_action_time_left"
+        app:layout_constraintEnd_toEndOf="@+id/text_action_time_left"
+        app:layout_constraintStart_toStartOf="@+id/text_action_time_left" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_cancel_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:tooltipText="@string/action_cancel"
         android:clickable="true"
         android:tint="@android:color/white"
-        android:tooltipText="@string/action_cancel"
         app:fabSize="normal"
-        app:layout_constraintEnd_toEndOf="@+id/text_call_ends_in_timer"
+        app:layout_constraintEnd_toEndOf="@+id/text_action_time_left"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="@+id/text_call_ends_in_timer"
+        app:layout_constraintStart_toStartOf="@+id/text_action_time_left"
         app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
         app:srcCompat="@drawable/ic_clear_black_24dp" />
 
@@ -54,5 +54,4 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.44" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
