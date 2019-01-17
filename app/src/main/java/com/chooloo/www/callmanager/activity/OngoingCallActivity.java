@@ -58,7 +58,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Audio
     AudioManager mAudioManager;
-    private boolean mIsMuted = false;
 
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
@@ -231,19 +230,13 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     @OnClick(R.id.button_mute)
     public void mute(View view) {
-        muteMic(!mIsMuted);
-        if (mIsMuted) {
-//            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
-            mIsMuted = false;
+        view.setActivated(!view.isActivated());
+        if (view.isActivated()) {
+            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
         } else {
-//            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
-            mIsMuted = true;
+            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
         }
-    }
-
-    @OnClick(R.id.button_keypad)
-    public void showKeypad(View view) {
-
+        muteMic(view.isActivated());
     }
 
     //TODO add functionality to the send SMS Button
@@ -309,8 +302,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Mutes / Unmutes the device's microphone
      */
-    private void muteMic(boolean wot) {
-        mAudioManager.setMicrophoneMute(wot);
+    private void muteMic(boolean mute) {
+        mAudioManager.setMicrophoneMute(mute);
     }
 
     /**
