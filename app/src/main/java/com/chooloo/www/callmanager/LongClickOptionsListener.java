@@ -24,6 +24,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     private static final long ANIMATE_MILLIS = 50;
 
     private Context mContext;
+    private View.OnClickListener mOnNormalClick;
     private boolean mIsCanceled = false;
 
     private LongClickRunnable mRunnable = new LongClickRunnable();
@@ -34,9 +35,10 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
     private List<TextView> mActionsText = new ArrayList<>();
 
-    public LongClickOptionsListener(@NotNull Context context, @NotNull ViewGroup fabView) {
+    public LongClickOptionsListener(@NotNull Context context, @NotNull ViewGroup fabView, @NotNull View.OnClickListener onNormalClick) {
         mContext = context;
-        this.mFabView = fabView;
+        mFabView = fabView;
+        mOnNormalClick = onNormalClick;
 
         for (int i = 0; i < mFabView.getChildCount(); i++) {
             View v = mFabView.getChildAt(i);
@@ -97,7 +99,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
                 if (!actionPerformed) {
                     if (!mRunnable.isFinished) { //Perform a normal click if this wasn't a long click
-                        v.performClick();
+                        mOnNormalClick.onClick(v);
                     }
                 }
 

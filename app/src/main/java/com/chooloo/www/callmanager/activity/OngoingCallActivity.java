@@ -131,6 +131,12 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        View.OnClickListener rejectListener = v -> endCall();
+        View.OnClickListener answerListener = v -> activateCall();
+        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
+        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+
         // Initiate PowerManager and WakeLock
         try {
             field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
@@ -158,18 +164,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        mCancelButton.hide();
-        mSendSMSButton.hide();
-        mRejectCallTimerButton.hide();
-        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
-        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay);
-        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
-
-        //Hide all overlays
-        mActionTimerOverlay.setAlpha(0.0f);
-        mAnswerCallOverlay.setAlpha(0.0f);
-        mRejectCallOverlay.setAlpha(0.0f);
-
         //Listen for call state changes
         CallManager.registerCallback(mCallback);
         updateUI(CallManager.getState());
@@ -188,6 +182,16 @@ public class OngoingCallActivity extends AppCompatActivity {
             mCallerText.setText(contactName);
         }
 
+        //hide buttons
+        mCancelButton.hide();
+        mSendSMSButton.hide();
+        mRejectCallTimerButton.hide();
+
+        //Hide all overlays
+        mActionTimerOverlay.setAlpha(0.0f);
+        mAnswerCallOverlay.setAlpha(0.0f);
+        mRejectCallOverlay.setAlpha(0.0f);
+
         //Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
         String rejectCallText = mRejectCallTimerText.getText() + " " + rejectCallSeconds + "s";
@@ -196,8 +200,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key);
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
-
-        //mActionTimer = new ActionTimer(millis, REFRESH_RATE);
     }
 
     @Override
@@ -206,22 +208,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
         mActionTimer.cancel();
         releaseWakeLock();
-    }
-
-    /**
-     * Answers incoming call
-     */
-    @OnClick(R.id.answer_btn)
-    public void answer(View view) {
-        activateCall();
-    }
-
-    /**
-     * Denies incoming call / Ends active call*
-     */
-    @OnClick(R.id.reject_btn)
-    public void reject(View view) {
-        endCall();
     }
 
     /**
