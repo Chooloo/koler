@@ -5,6 +5,8 @@
     <color name="colorAccent">@color/blue_accent_700</color>
 
     <color name="grey_50">#fafafa</color>
+    <color name="grey_300">@color/material_grey_300</color>
+
     <color name="blue_accent_700">#2962ff</color>
     <color name="green_accent_700">#00c853</color>
     <color name="red_accent_700">#d50000</color>

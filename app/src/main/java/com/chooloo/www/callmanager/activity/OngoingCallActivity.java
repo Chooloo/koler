@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,10 +72,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
-    @BindView(R.id.button_mute) FloatingActionButton mMuteButton;
-    @BindView(R.id.button_keypad) FloatingActionButton mKeypadButton;
-    @BindView(R.id.button_speaker) FloatingActionButton mSpeakerButton;
-    @BindView(R.id.button_add_call) FloatingActionButton mAddCallButton;
+    @BindView(R.id.button_mute) ImageView mMuteButton;
+    @BindView(R.id.button_keypad) ImageView mKeypadButton;
+    @BindView(R.id.button_speaker) ImageView mSpeakerButton;
+    @BindView(R.id.button_add_call) ImageView mAddCallButton;
     @BindView(R.id.button_reject_call_timer) FloatingActionButton mRejectCallTimerButton;
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
@@ -210,23 +210,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         releaseWakeLock();
     }
 
-    /**
-     * Mutes the call's microphone
-     */
-    @OnClick(R.id.button_mute)
-    public void mute(View view) {
-        muteMic(!mIsMuted);
-        if (mIsMuted) {
-            mMuteButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.call_in_progress_background)));
-//            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
-            mIsMuted = false;
-        } else {
-            mMuteButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryDark)));
-//            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
-            mIsMuted = true;
-        }
-    }
-
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
@@ -241,6 +224,26 @@ public class OngoingCallActivity extends AppCompatActivity {
         int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key));
         mActionTimer.setData(seconds * 1000, false);
         mActionTimer.start();
+    }
+
+    /**
+     * Mutes the call's microphone
+     */
+    @OnClick(R.id.button_mute)
+    public void mute(View view) {
+        muteMic(!mIsMuted);
+        if (mIsMuted) {
+//            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
+            mIsMuted = false;
+        } else {
+//            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
+            mIsMuted = true;
+        }
+    }
+
+    @OnClick(R.id.button_keypad)
+    public void showKeypad(View view) {
+
     }
 
     //TODO add functionality to the send SMS Button
@@ -337,12 +340,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     private void changeBackgroundColor(@ColorRes int colorRes) {
         int backgroundColor = ContextCompat.getColor(this, colorRes);
         mOngoingCallLayout.setBackgroundColor(backgroundColor);
-
-        ColorStateList stateList = new ColorStateList(new int[][]{}, new int[]{backgroundColor});
-        mMuteButton.setBackgroundTintList(stateList);
-        mKeypadButton.setBackgroundTintList(stateList);
-        mSpeakerButton.setBackgroundTintList(stateList);
-        mAddCallButton.setBackgroundTintList(stateList);
     }
 
     /**
@@ -367,10 +364,10 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Change the buttons layout
         moveDenyToMiddle();
         mAnswerButton.hide();
-        mMuteButton.show();
-        mKeypadButton.show();
-        mSpeakerButton.show();
-        mAddCallButton.show();
+        mMuteButton.setVisibility(View.VISIBLE);
+        mKeypadButton.setVisibility(View.VISIBLE);
+        mSpeakerButton.setVisibility(View.VISIBLE);
+        mAddCallButton.setVisibility(View.VISIBLE);
     }
 
     /**
