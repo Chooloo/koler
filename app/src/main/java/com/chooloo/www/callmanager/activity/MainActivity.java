@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,14 +43,16 @@ public class MainActivity extends ToolbarActivity {
     public static String sToNumber = "";
 
     @BindView(R.id.text_number_input) EditText mNumberInput;
-    @BindView(R.id.button_call) Button mCallButton;
+    @BindView(R.id.button_call) TextView mCallButton;
+    @BindView(R.id.button_delete) TextView mDelButton;
     @BindView(R.id.table_numbers) TableLayout mNumbersTable;
     //-----------------
     @BindView(R.id.contactText) TextView mContactText;
 
     boolean isKeyboardDisabled = false;
 
-    Handler contactSearchHandler = new Handler() {};
+    Handler contactSearchHandler = new Handler() {
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,8 @@ public class MainActivity extends ToolbarActivity {
 
         //Init timber
         Timber.plant(new Timber.DebugTree());
+
+//        setButtonsUI();
 
         // Ask for permissions
         // CALL_PHONE, READ_CONTACTS
@@ -93,6 +100,22 @@ public class MainActivity extends ToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setButtonsUI() {
+        for (int i = 0; i <= 9; i++) {
+            ImageButton button = (ImageButton) findViewById(getResources().getIdentifier("chip" + i, "id",
+                    this.getPackageName()));
+
+            button.setBackgroundResource(R.drawable.circle_button_background);
+        }
+        mDelButton.setBackgroundResource(R.drawable.circle_button_background);
+        mCallButton.setBackgroundResource(R.drawable.circle_button_background);
+        TextView star = (TextView) findViewById(R.id.chip_star);
+        TextView hex = (TextView) findViewById(R.id.chip_hex);
+        star.setBackgroundResource(R.drawable.circle_button_background);
+        hex.setBackgroundResource(R.drawable.circle_button_background);
+    }
+
+
     /**
      * When the mNumberInput is selected
      *
@@ -122,8 +145,14 @@ public class MainActivity extends ToolbarActivity {
      */
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5, R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
-        view.setBackgroundResource(R.drawable.ic_circle_button);
-        sToNumber += ((Button) view).getText();
+        String id = getResources().getResourceEntryName(view.getId());
+        if (id.contains("chip_star")) sToNumber += "*";
+        else if (id.contains("chip_hex")) sToNumber += "#";
+        else {
+            sToNumber += id.substring(4);
+        }
+//        int id = ((ImageButton) view).getResourceEntryName;
+//        sToNumber += ((ImageButton) view).getText();
 //        TODO finish and fix the shit below (contact searcher) do this with the handler above
 //        if (sToNumber.length() > 5) {
 //            Map<String, String> matchedContacts = CallManager.getContactsByNum(this, sToNumber);

@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="112dp" />
-        
+
     </ScrollView>
 
     <EditText
@@ -50,7 +50,7 @@
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="number"
-        android:textAlignment="center"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +59,10 @@
 
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="220dp"
-        android:layout_height="280dp"
+        android:layout_width="248dp"
+        android:layout_height="311dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,35 +75,35 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip1"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="1"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center"
+                android:text="1"/>
 
-            <Button
+            <TextView
                 android:id="@+id/chip2"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="2"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip3"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="3"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
         </TableRow>
 
@@ -114,35 +113,35 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip4"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="4"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip5"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="5"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip6"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="6"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
         </TableRow>
 
         <TableRow
@@ -151,35 +150,35 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip7"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="7"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip8"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="8"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip9"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="9"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
         </TableRow>
 
@@ -189,64 +188,65 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip_star"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="*"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip0"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="0"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip_hex"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:text="#"
-                android:textAlignment="center"
-                android:textColor="@color/green_phone" />
+                android:gravity="center" />
 
         </TableRow>
 
 
     </TableLayout>
 
-    <Button
+    <TextView
         android:id="@+id/button_call"
-        android:layout_width="146dp"
-        android:layout_height="46dp"
+        style="@style/CircleButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginStart="70dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="30dp"
         android:text="Call"
-        android:textAlignment="center"
-        android:textColor="@color/green_phone"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/button_delete"
-        android:layout_width="85dp"
-        android:layout_height="46dp"
+        style="@style/CircleButton"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="30dp"
         android:text="del"
-        android:textAlignment="center"
-        android:textColor="@color/green_phone"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />
