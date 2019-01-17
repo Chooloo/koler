@@ -163,6 +163,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mRejectCallTimerButton.hide();
         mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
         mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay);
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
         //Hide all overlays
         mActionTimerOverlay.setAlpha(0.0f);
