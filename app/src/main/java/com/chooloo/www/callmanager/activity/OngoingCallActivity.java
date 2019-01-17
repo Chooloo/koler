@@ -26,13 +26,14 @@ import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,9 +60,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     AudioManager mAudioManager;
     private boolean mIsMuted = false;
 
-    // Layouts
-    @BindView(R.id.ongoingcall_layout) ConstraintLayout mParentLayout;
-
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
@@ -73,7 +71,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
-    @BindView(R.id.deny_btn) FloatingActionButton mDenyButton;
+    @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
     @BindView(R.id.button_mute) FloatingActionButton mMuteButton;
     @BindView(R.id.button_keypad) FloatingActionButton mKeypadButton;
     @BindView(R.id.button_speaker) FloatingActionButton mSpeakerButton;
@@ -82,10 +80,12 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
 
-    // Overlays
+    // Layouts and overlays
+    @BindView(R.id.ongoing_call_layout) ViewGroup mOngoingCallLayout;
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
+    ViewGroup mCurrentOverlay = null;
 
     // PowerManager
     PowerManager powerManager;
@@ -219,15 +219,13 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Denies incoming call / Ends active call*
      */
-    @OnClick(R.id.deny_btn)
+    @OnClick(R.id.reject_btn)
     public void deny(View view) {
         endCall();
     }
 
     /**
      * Mutes the call's microphone
-     *
-     * @param view
      */
     @OnClick(R.id.button_mute)
     public void mute(View view) {
@@ -243,14 +241,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
-    //TODO remove the ability to click buttons under the overlay
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
         int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key));
         mActionTimer.setData(seconds * 1000, true);
         mActionTimer.start();
-        mActionTimerOverlay.animate().alpha(1.0f);
+        setOverlay(mActionTimerOverlay);
     }
 
     @OnClick(R.id.button_answer_call_timer)
@@ -269,6 +266,50 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.button_cancel_timer)
     public void cancelTimer(View view) {
         mActionTimer.cancel();
+    }
+
+    /**
+     * Updates the ui given the call state
+     *
+     * @param state the current call state
+     */
+    private void updateUI(int state) {
+        @StringRes int statusTextRes;
+        switch (state) {
+            case Call.STATE_ACTIVE:
+                statusTextRes = R.string.status_call_active;
+                break;
+            case Call.STATE_DISCONNECTED:
+                statusTextRes = R.string.status_call_disconnected;
+                break;
+            case Call.STATE_RINGING:
+                statusTextRes = R.string.status_call_incoming;
+                break;
+            case Call.STATE_DIALING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case Call.STATE_CONNECTING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case Call.STATE_HOLDING:
+                statusTextRes = R.string.status_call_holding;
+                break;
+            default:
+                statusTextRes = R.string.status_call_active;
+                break;
+        }
+        mStatusText.setText(statusTextRes);
+
+        if (state != Call.STATE_RINGING) {
+            switchToCallingUI();
+            mRejectButton.setOnTouchListener(mDefaultListener);
+            mAnswerButton.setOnTouchListener(mDefaultListener);
+        } else {
+            mRejectButton.setOnTouchListener(mRejectLongClickListener);
+            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
+        }
+
+        if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
     /**
@@ -311,7 +352,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void changeBackgroundColor(@ColorRes int colorRes) {
         int backgroundColor = ContextCompat.getColor(this, colorRes);
-        mParentLayout.setBackgroundColor(backgroundColor);
+        mOngoingCallLayout.setBackgroundColor(backgroundColor);
 
         ColorStateList stateList = new ColorStateList(new int[][]{}, new int[]{backgroundColor});
         mMuteButton.setBackgroundTintList(stateList);
@@ -324,8 +365,8 @@ public class OngoingCallActivity extends AppCompatActivity {
      * Moves the deny button to the middle
      */
     private void moveDenyToMiddle() {
-        float parentCenterX = mParentLayout.getX() + mParentLayout.getWidth() / 2;
-        float parentCenterY = mParentLayout.getY() + mParentLayout.getHeight() / 2;
+        float parentCenterX = mOngoingCallLayout.getX() + mOngoingCallLayout.getWidth() / 2;
+        float parentCenterY = mOngoingCallLayout.getY() + mOngoingCallLayout.getHeight() / 2;
         mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth() / 2).translationY(parentCenterY - mAnswerButton.getHeight() / 2);
     }
 
@@ -366,48 +407,37 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Updates the ui given the call state
-     *
-     * @param state the current call state
-     */
-    private void updateUI(int state) {
-        @StringRes int statusTextRes;
-        switch (state) {
-            case Call.STATE_ACTIVE:
-                statusTextRes = R.string.status_call_active;
-                break;
-            case Call.STATE_DISCONNECTED:
-                statusTextRes = R.string.status_call_disconnected;
-                break;
-            case Call.STATE_RINGING:
-                statusTextRes = R.string.status_call_incoming;
-                break;
-            case Call.STATE_DIALING:
-                statusTextRes = R.string.status_call_dialing;
-                break;
-            case Call.STATE_CONNECTING:
-                statusTextRes = R.string.status_call_dialing;
-                break;
-            case Call.STATE_HOLDING:
-                statusTextRes = R.string.status_call_holding;
-                break;
-            default:
-                statusTextRes = R.string.status_call_active;
-                break;
+    private void setOverlay(@NotNull ViewGroup overlay) {
+        if (mCurrentOverlay != null) {
+            mCurrentOverlay.animate().alpha(0.0f);
         }
-        mStatusText.setText(statusTextRes);
+        mCurrentOverlay = overlay;
+        mCurrentOverlay.animate().alpha(1.0f);
+        setActionButtonsClickable(false);
+    }
 
-        if (state != Call.STATE_RINGING) {
-            switchToCallingUI();
-            mDenyButton.setOnTouchListener(mDefaultListener);
-            mAnswerButton.setOnTouchListener(mDefaultListener);
-        } else {
-            mDenyButton.setOnTouchListener(mRejectLongClickListener);
+    private void removeOverlay() {
+        setActionButtonsClickable(true);
+        if (mCurrentOverlay != null) {
+            mCurrentOverlay.animate().alpha(0.0f);
+            mCurrentOverlay = null;
+        }
+    }
+
+    private void setActionButtonsClickable(boolean clickable) {
+        for(int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
+            View v = mOngoingCallLayout.getChildAt(i);
+            if (v instanceof FloatingActionButton) {
+                v.setClickable(clickable);
+            }
+        }
+        if (clickable) {
             mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
+            mRejectButton.setOnTouchListener(mRejectLongClickListener);
+        } else {
+            mAnswerButton.setOnTouchListener(mDefaultListener);
+            mRejectButton.setOnTouchListener(mDefaultListener);
         }
-
-        if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
     /**
@@ -479,7 +509,7 @@ public class OngoingCallActivity extends AppCompatActivity {
                 public void onFinish() {
                     if (mIsRejecting) endCall();
                     else activateCall();
-                    mActionTimerOverlay.animate().alpha(0.0f);
+                    removeOverlay();
                 }
             };
         }
@@ -488,14 +518,14 @@ public class OngoingCallActivity extends AppCompatActivity {
             if (mTimer != null) mTimer.start();
             else Timber.w("Couldn't start action timer (timer is null)");
 
-            if (mActionTimerOverlay != null) mActionTimerOverlay.animate().alpha(1.0f);
+            if (mActionTimerOverlay != null) setOverlay(mActionTimerOverlay);
         }
 
         private void cancel() {
             if (mTimer != null) mTimer.cancel();
             else Timber.w("Couldn't cancel action timer (timer is null)");
 
-            if (mActionTimerOverlay != null) mActionTimerOverlay.animate().alpha(0.0f);
+            removeOverlay();
         }
     }
 }
