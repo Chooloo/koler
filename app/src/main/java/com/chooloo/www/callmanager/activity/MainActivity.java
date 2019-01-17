@@ -1,11 +1,13 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.TelecomManager;
@@ -21,8 +23,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.google.android.material.theme.MaterialComponentsViewInflater;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -48,9 +52,6 @@ public class MainActivity extends ToolbarActivity {
 
     boolean isKeyboardDisabled = false;
 
-    Handler contactSearchHandler = new Handler() {
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,6 @@ public class MainActivity extends ToolbarActivity {
 
         //Init timber
         Timber.plant(new Timber.DebugTree());
-
-//        setButtonsUI();
 
         // Ask for permissions
         // CALL_PHONE, READ_CONTACTS
@@ -78,6 +77,10 @@ public class MainActivity extends ToolbarActivity {
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
 
+        // Checks for permission to read contacts, is there is, updates the contacts list in CallManager
+        if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            runAsyncTask(false);
+        }
     }
 
     @Override
@@ -93,25 +96,12 @@ public class MainActivity extends ToolbarActivity {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.update_contacts:
+                runAsyncTask(true);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void setButtonsUI() {
-        for (int i = 0; i <= 9; i++) {
-            ImageButton button = (ImageButton) findViewById(getResources().getIdentifier("chip" + i, "id",
-                    this.getPackageName()));
-
-            button.setBackgroundResource(R.drawable.circle_button_background);
-        }
-        mDelButton.setBackgroundResource(R.drawable.circle_button_background);
-        mCallButton.setBackgroundResource(R.drawable.circle_button_background);
-        TextView star = (TextView) findViewById(R.id.chip_star);
-        TextView hex = (TextView) findViewById(R.id.chip_hex);
-        star.setBackgroundResource(R.drawable.circle_button_background);
-        hex.setBackgroundResource(R.drawable.circle_button_background);
-    }
-
 
     /**
      * When the mNumberInput is selected
@@ -128,7 +118,7 @@ public class MainActivity extends ToolbarActivity {
      *
      * @param view is the focused view
      */
-    private void hideKeyboard(EditText view) {
+    public void hideKeyboard(EditText view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -148,25 +138,6 @@ public class MainActivity extends ToolbarActivity {
         else {
             sToNumber += id.substring(4);
         }
-//        int id = ((ImageButton) view).getResourceEntryName;
-//        sToNumber += ((ImageButton) view).getText();
-//        TODO finish and fix the shit below (contact searcher) do this with the handler above
-//        if (sToNumber.length() > 5) {
-//            Map<String, String> matchedContacts = CallManager.getContactsByNum(this, sToNumber);
-//            if (matchedContacts.size() == 1) {
-//                for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
-//                    sToNumber = contact.getValue();
-//                }
-//            }
-//            for (Map.Entry<String, String> contact : matchedContacts.entrySet()) {
-//                mContactText.setText(mContactText.getText() + " " + contact.getKey());
-//            }
-
-//                for (int i = 0; i < matchedContacts.size(); i++) {
-//                    mContactText.setText(mContactText.getText() + " " + matchedContacts.get(i));
-//                }
-
-//        }
         mNumberInput.setText(sToNumber);
     }
 
@@ -212,6 +183,7 @@ public class MainActivity extends ToolbarActivity {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
+        Timber.i("Trying to call: " + mNumberInput.getText().toString());
         if (mNumberInput.getText() == null) {
             Toast.makeText(this, "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
         } else {
@@ -227,4 +199,63 @@ public class MainActivity extends ToolbarActivity {
             }
         }
     }
+
+    /**
+     * Updates the contacts list in CallManager
+     */
+    private void updateContacts() {
+        CallManager.sContacts = CallManager.getContactList(this);
+    }
+
+    /**
+     * Creates an instant of AsyncTaskRunner and executes it
+     */
+    private void runAsyncTask(boolean showProgress) {
+        AsyncTaskRunner runner = new AsyncTaskRunner(showProgress);
+        runner.execute();
+    }
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private boolean showProgress;
+        private String status;
+        ProgressDialog progressDialog;
+
+        public AsyncTaskRunner(boolean showProgress) {
+            this.showProgress = showProgress;
+        }
+
+        @Override
+        protected String doInBackground(String... objects) {
+            publishProgress("Getting Contacts...");
+            try {
+                updateContacts();
+            } catch (Exception e) {
+                Timber.e(e);
+                status = "Something went wrong, try again later";
+            }
+            return status;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            if (showProgress) {
+                progressDialog = new ProgressDialog(MainActivity.this, ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                progressDialog.setTitle("Updating Contacts");
+                progressDialog.setMessage("I bet you can't even count to 10");
+                progressDialog.show();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (showProgress) progressDialog.dismiss();
+            Toast.makeText(MainActivity.this, "Updated contacts successfuly", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+        }
+    }
+
 }

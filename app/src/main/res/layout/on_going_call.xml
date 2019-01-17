@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.OngoingCallActivity">
-    
+
     <FrameLayout
         android:layout_width="96dp"
         android:layout_height="96dp"
@@ -37,6 +37,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
         android:textAlignment="center"
         android:textColor="@color/caller_text_color"
         android:textSize="40sp"
@@ -99,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="100dp"
         android:layout_weight="1"
         android:clickable="true"
         android:visibility="invisible"
@@ -155,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="136dp"
+        android:layout_marginBottom="100dp"
         android:clickable="true"
         android:visibility="invisible"
         app:backgroundTint="@android:color/transparent"

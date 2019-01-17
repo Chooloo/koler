@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.provider.MediaStore;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,14 +132,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // Initiate PowerManager and WakeLock
-        try {
-            field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
-        } catch (Throwable ignored) {
-        }
-        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
-
         //This activity needs to show even if the screen is off or locked
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -157,6 +150,16 @@ public class OngoingCallActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        // Initiate PowerManager and WakeLock
+        try {
+            field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
+        } catch (Throwable ignored) {
+        }
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
+
+        mAudioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 
         mCancelButton.hide();
         mSendSMSButton.hide();
@@ -285,6 +288,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
+     * /*
      * Answers incoming call and changes the ui accordingly
      */
     private void activateCall() {
@@ -454,8 +458,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             if (isRejecting) {
                 textColorRes = R.color.red_phone;
                 textIndicator = R.string.reject_timer_indicator;
-            }
-            else{
+            } else {
                 textColorRes = R.color.green_phone;
                 textIndicator = R.string.answer_timer_indicator;
             }

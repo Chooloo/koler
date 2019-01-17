@@ -12,6 +12,7 @@ import android.telecom.VideoProfile;
 
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import timber.log.Timber;
 
 public class CallManager {
     public static Call sCall;
+    public static ArrayList<Contact> sContacts;
 
     /**
      * Answers incoming call
@@ -75,54 +77,61 @@ public class CallManager {
     }
 
     /**
-     * Returns a {@code Map<String, String>} of all the contacts by (name,number)
-     *
-     * @return A map of all the contacts                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               String> of all the contacts currently on the target device
+     * Returns a list of all the contacts on the phone as a list of Contact objects
+     * @param context
+     * @return ArrayList<Contact> a list of contacts
      */
-    public static Map<String, String> getContacts(Context context) {
-        Map<String, String> contacts = new HashMap<>();
-//        ArrayList<String> contacts = new ArrayList<String>();
+    public static ArrayList<Contact> getContactList(Context context) {
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                if (Integer.parseInt(cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+
+        if ((cur != null ? cur.getCount() : 0) > 0) {
+            while (cur != null && cur.moveToNext()) {
+                String id = cur.getString(
+                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(
+                        ContactsContract.Contacts.DISPLAY_NAME));
+
+                if (cur.getInt(cur.getColumnIndex(
+                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
                     Cursor pCur = cr.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
                             new String[]{id}, null);
                     while (pCur.moveToNext()) {
-                        String contactName = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                        String phoneNum = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        contacts.put(contactName, phoneNum);
+                        String phoneNo = pCur.getString(pCur.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        contacts.add(new Contact(name, phoneNo));
+                        Timber.i("Name: " + name);
+                        Timber.i("Phone Number: " + phoneNo);
                     }
                     pCur.close();
                 }
             }
         }
+        if (cur != null) {
+            cur.close();
+        }
         return contacts;
     }
 
     /**
-     * Gets the contacts which their number begins with the given number.
-     *
-     * @param num the number, or beginning of it
-     * @return ArrayList<String> of the contacts who has the given number in their phone number
+     * Get all the contacts the their number contains the number given as a parameter
+     * @param context
+     * @param num the string you want to match
+     * @return ArrayList<Contact> a list of all the matched contacts
      */
-    public static Map<String, String> getContactsByNum(Context context, String num) {
-        Map<String, String> matchContacts = new HashMap<>();
-        Map<String, String> contacts = getContacts(context);
-        for (Map.Entry<String, String> contact : contacts.entrySet()) {
-            if (contact.getValue().contains(num)) {
-                matchContacts.put(contact.getKey(), contact.getValue());
+    public static ArrayList<Contact> getContactByNum(Context context, String num){
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
+        for (Contact contact:sContacts) {
+            if(contact.getContactNumber().contains(num)){
+                contacts.add(contact);
             }
         }
-        return matchContacts;
+        return contacts;
     }
 
     /**
