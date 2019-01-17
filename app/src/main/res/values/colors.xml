@@ -3,12 +3,13 @@
     <color name="colorPrimary">@color/grey_50</color>
     <color name="colorPrimaryDark">#c7c7c7</color>
     <color name="colorAccent">@color/blue_accent_700</color>
+    <color name="colorBackground">@color/grey_50</color>
 
     <color name="icon_active_light">#DF000000</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
+
     <color name="grey_50">#fafafa</color>
-    <color name="grey_300">@color/material_grey_300</color>
 
     <color name="blue_accent_700">#2962ff</color>
     <color name="green_accent_700">#00c853</color>
@@ -18,9 +19,6 @@
 
     <color name="green_phone">#66bb6a</color>
     <color name="red_phone">#ef5350</color>
-
-    <color name="call_in_progress_background">#e8f5e9</color>
-    <color name="call_ended_background">#ffebee</color>
 
     <color name="caller_text_color">#313131</color>
 

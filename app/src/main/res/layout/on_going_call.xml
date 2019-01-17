@@ -8,12 +8,13 @@
     tools:context=".activity.OngoingCallActivity">
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="96dp"
         android:layout_height="96dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/text_caller"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_stopwatch">
+        app:layout_constraintEnd_toEndOf="@+id/text_caller"
+        app:layout_constraintStart_toStartOf="@+id/text_caller">
 
         <ImageView
             android:id="@+id/image_placeholder"
@@ -32,7 +33,7 @@
 
     <TextView
         android:id="@+id/text_caller"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -43,7 +44,6 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Jesus" />
 
@@ -51,13 +51,24 @@
         android:id="@+id/text_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
+        app:layout_constraintBottom_toTopOf="@+id/text_stopwatch"
         app:layout_constraintEnd_toEndOf="@+id/text_caller"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/text_caller"
         tools:text="@string/status_call_incoming" />
+
+    <TextView
+        android:id="@+id/text_stopwatch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="00:00"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
+        app:layout_constraintEnd_toEndOf="@+id/text_status"
+        app:layout_constraintStart_toStartOf="@+id/text_status" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
@@ -65,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@android:color/white"
@@ -83,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@android:color/white"
@@ -96,18 +109,19 @@
 
     <ImageView
         android:id="@+id/button_mute"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/flat_button_size"
+        android:layout_height="@dimen/flat_button_size"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"
+        android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/answer_btn"
+        app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintTop_toBottomOf="@+id/button_keypad"
         app:srcCompat="@drawable/ic_mic_off_black_24dp"
@@ -115,33 +129,34 @@
 
     <ImageView
         android:id="@+id/button_keypad"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/flat_button_size"
+        android:layout_height="@dimen/flat_button_size"
         android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"
+        android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_mute"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
+        app:layout_constraintVertical_bias="0.44"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/ic_dialpad_black_24dp"
         tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/button_speaker"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/flat_button_size"
+        android:layout_height="@dimen/flat_button_size"
         android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"
+        android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/button_keypad"
@@ -152,13 +167,13 @@
 
     <ImageView
         android:id="@+id/button_add_call"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/flat_button_size"
+        android:layout_height="@dimen/flat_button_size"
         android:layout_marginStart="16dp"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
         android:focusable="true"
-        android:padding="16dp"
+        android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/button_mute"
@@ -187,17 +202,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.44" />
-
-    <TextView
-        android:id="@+id/text_stopwatch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:text="00:00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

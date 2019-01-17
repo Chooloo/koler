@@ -319,20 +319,9 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void endCall() {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
-        changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
         releaseWakeLock();
         finish();
-    }
-
-    /**
-     * Changes the current background color
-     *
-     * @param colorRes the color to change to
-     */
-    private void changeBackgroundColor(@ColorRes int colorRes) {
-        int backgroundColor = ContextCompat.getColor(this, colorRes);
-        mOngoingCallLayout.setBackgroundColor(backgroundColor);
     }
 
     /**
@@ -352,7 +341,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         acquireWakeLock();
         mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
-        changeBackgroundColor(R.color.call_in_progress_background);
 
         // Change the buttons layout
         moveDenyToMiddle();

@@ -5,7 +5,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/ubuntu</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/grey_50</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:background">@color/colorBackground</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
