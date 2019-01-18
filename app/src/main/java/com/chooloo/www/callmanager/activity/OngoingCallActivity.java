@@ -11,7 +11,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.provider.MediaStore;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
+import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.Stopwatch;
@@ -40,6 +40,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+import static com.chooloo.www.callmanager.CallManager.getDisplayName;
+import static com.chooloo.www.callmanager.CallManager.sCall;
+
 @SuppressLint("ClickableViewAccessibility")
 public class OngoingCallActivity extends AppCompatActivity {
 
@@ -54,6 +57,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     LongClickOptionsListener mRejectLongClickListener;
     LongClickOptionsListener mAnswerLongClickListener;
     Callback mCallback = new Callback();
+    ContactsManager mContactsManager = new ContactsManager();
     ActionTimer mActionTimer = new ActionTimer();
 
     // Audio
@@ -176,7 +180,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.registerCallback(mCallback);
         updateUI(CallManager.getState());
 
-        // Set the caller name text view
+        // Checks for the caller phone number
         String phoneNumber = CallManager.getDisplayName();
         if (phoneNumber != null) {
             mCallerText.setText(phoneNumber);
@@ -184,8 +188,11 @@ public class OngoingCallActivity extends AppCompatActivity {
             mCallerText.setText(R.string.name_unknown);
         }
 
-        // Get the caller's contact name
-        String contactName = CallManager.getContactName(this);
+        // Checks for the caller name
+        String contactName = null;
+        if(sCall != null) {
+            contactName = mContactsManager.getCallerName(this, getDisplayName());
+        }
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
@@ -209,6 +216,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.cancel();
         releaseWakeLock();
     }
+
+    // -- Buttons -- //
 
     /**
      * Answers incoming call
@@ -273,12 +282,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.cancel();
     }
 
-    /**
-     * Update the current call time ui
-     */
-    private void updateTimeUI() {
-        mTimeText.setText(mCallTimer.getStringTime());
-    }
+    // -- Call Actions -- //
 
     /**
      * Mutes / Unmutes the device's microphone
@@ -305,6 +309,59 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.sReject();
         releaseWakeLock();
         finish();
+    }
+
+    // -- UI -- //
+
+    /**
+     * Updates the ui given the call state
+     *
+     * @param state the current call state
+     */
+    private void updateUI(int state) {
+        @StringRes int statusTextRes;
+        switch (state) {
+            case Call.STATE_ACTIVE:
+                statusTextRes = R.string.status_call_active;
+                break;
+            case Call.STATE_DISCONNECTED:
+                statusTextRes = R.string.status_call_disconnected;
+                break;
+            case Call.STATE_RINGING:
+                statusTextRes = R.string.status_call_incoming;
+                break;
+            case Call.STATE_DIALING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case Call.STATE_CONNECTING:
+                statusTextRes = R.string.status_call_dialing;
+                break;
+            case Call.STATE_HOLDING:
+                statusTextRes = R.string.status_call_holding;
+                break;
+            default:
+                statusTextRes = R.string.status_call_active;
+                break;
+        }
+        mStatusText.setText(statusTextRes);
+
+        if (state != Call.STATE_RINGING) {
+            switchToCallingUI();
+            mDenyButton.setOnTouchListener(mDefaultListener);
+            mAnswerButton.setOnTouchListener(mDefaultListener);
+        } else {
+            mDenyButton.setOnTouchListener(mRejectLongClickListener);
+            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
+        }
+
+        if (state == Call.STATE_DISCONNECTED) endCall();
+    }
+
+    /**
+     * Update the current call time ui
+     */
+    private void updateTimeUI() {
+        mTimeText.setText(mCallTimer.getStringTime());
     }
 
     /**
@@ -369,49 +426,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Updates the ui given the call state
-     *
-     * @param state the current call state
-     */
-    private void updateUI(int state) {
-        @StringRes int statusTextRes;
-        switch (state) {
-            case Call.STATE_ACTIVE:
-                statusTextRes = R.string.status_call_active;
-                break;
-            case Call.STATE_DISCONNECTED:
-                statusTextRes = R.string.status_call_disconnected;
-                break;
-            case Call.STATE_RINGING:
-                statusTextRes = R.string.status_call_incoming;
-                break;
-            case Call.STATE_DIALING:
-                statusTextRes = R.string.status_call_dialing;
-                break;
-            case Call.STATE_CONNECTING:
-                statusTextRes = R.string.status_call_dialing;
-                break;
-            case Call.STATE_HOLDING:
-                statusTextRes = R.string.status_call_holding;
-                break;
-            default:
-                statusTextRes = R.string.status_call_active;
-                break;
-        }
-        mStatusText.setText(statusTextRes);
-
-        if (state != Call.STATE_RINGING) {
-            switchToCallingUI();
-            mDenyButton.setOnTouchListener(mDefaultListener);
-            mAnswerButton.setOnTouchListener(mDefaultListener);
-        } else {
-            mDenyButton.setOnTouchListener(mRejectLongClickListener);
-            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-        }
-
-        if (state == Call.STATE_DISCONNECTED) endCall();
-    }
+    // -- Classes -- //
 
     /**
      * Callback class

@@ -21,11 +21,12 @@
 
     <ScrollView
         android:id="@+id/dial_contacts_scroll"
-        android:layout_width="368dp"
-        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_number_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar">
@@ -33,7 +34,7 @@
         <ListView
             android:id="@+id/dial_contacts_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="112dp" />
 
@@ -42,15 +43,15 @@
     <EditText
         android:id="@+id/text_number_input"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="21dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:ems="10"
+        android:gravity="center"
         android:hint="Phone Number"
         android:inputType="number"
-        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +84,7 @@
                 android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="1"/>
+                android:text="1" />
 
             <TextView
                 android:id="@+id/chip2"
@@ -92,8 +93,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="2"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="2" />
 
             <TextView
                 android:id="@+id/chip3"
@@ -102,8 +103,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="3"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="3" />
 
         </TableRow>
 
@@ -120,8 +121,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="4"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="4" />
 
             <TextView
                 android:id="@+id/chip5"
@@ -130,8 +131,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="5"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="5" />
 
             <TextView
                 android:id="@+id/chip6"
@@ -140,8 +141,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="6"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="6" />
         </TableRow>
 
         <TableRow
@@ -157,8 +158,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="7"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="7" />
 
             <TextView
                 android:id="@+id/chip8"
@@ -167,8 +168,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="8"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="8" />
 
             <TextView
                 android:id="@+id/chip9"
@@ -177,8 +178,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="9"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="9" />
 
         </TableRow>
 
@@ -195,8 +196,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="*"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="*" />
 
             <TextView
                 android:id="@+id/chip0"
@@ -205,8 +206,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="0"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="0" />
 
             <TextView
                 android:id="@+id/chip_hex"
@@ -215,8 +216,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:text="#"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="#" />
 
         </TableRow>
 
@@ -231,8 +232,8 @@
         android:layout_marginStart="70dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="30dp"
-        android:text="Call"
         android:gravity="center"
+        android:text="Call"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
@@ -245,22 +246,11 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="30dp"
-        android:text="del"
         android:gravity="center"
+        android:text="del"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />
-
-    <TextView
-        android:id="@+id/contactText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/dial_contacts_scroll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

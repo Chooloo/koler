@@ -32,4 +32,5 @@
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>
     <string name="answer_timer_indicator">Answering in</string>
+    <string name="pref_previously_started">Yas</string>
 </resources>
