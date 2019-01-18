@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +33,15 @@ import java.util.Locale;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.transition.ChangeBounds;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,8 +63,23 @@ public class OngoingCallActivity extends AppCompatActivity {
     Callback mCallback = new Callback();
     ActionTimer mActionTimer = new ActionTimer();
 
+    //Current states
+    boolean mIsCallingUI = false;
+    boolean mIsCreatingUI = true;
+
+    // PowerManager
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
+    private int field = 0x00000020;
+
+    // Instances of local classes
+    Stopwatch mCallTimer = new Stopwatch();
+
     // Audio
     AudioManager mAudioManager;
+
+    // Handlers
+    Handler mCallTimeHandler = new CallTimeHandler();
 
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
@@ -80,47 +102,12 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
 
     // Layouts and overlays
-    @BindView(R.id.ongoing_call_layout) ViewGroup mOngoingCallLayout;
+    @BindView(R.id.frame) ViewGroup mRootView;
+    @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
     ViewGroup mCurrentOverlay = null;
-
-    // PowerManager
-    PowerManager powerManager;
-    PowerManager.WakeLock wakeLock;
-    private int field = 0x00000020;
-
-    @SuppressLint("ClickableViewAccessibility")
-
-    // Instances of local classes
-            Stopwatch mCallTimer = new Stopwatch();
-
-    // Handlers
-    Handler mFreeHandler = new Handler();
-    @SuppressLint("HandlerLeak") Handler mCallTimeHandler = new Handler() { // Handles the call timer
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case TIME_START:
-                    mCallTimer.start(); // Starts the timer
-                    mCallTimeHandler.sendEmptyMessage(TIME_UPDATE); // Starts the time ui updates
-                    break;
-                case TIME_STOP:
-                    mCallTimeHandler.removeMessages(TIME_UPDATE); // No more updates
-                    mCallTimer.stop(); // Stops the timer
-                    updateTimeUI(); // Updates the time ui
-                    break;
-                case TIME_UPDATE:
-                    updateTimeUI(); // Updates the time ui
-                    mCallTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, REFRESH_RATE); // Text view updates every milisecond (REFRESH RATE)
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,12 +116,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         PreferenceUtils.getInstance(this);
 
         ButterKnife.bind(this);
-
-        View.OnClickListener rejectListener = v -> endCall();
-        View.OnClickListener answerListener = v -> activateCall();
-        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
-        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
-        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
         // Initiate PowerManager and WakeLock
         try {
@@ -163,10 +144,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        //Listen for call state changes
-        CallManager.registerCallback(mCallback);
-        updateUI(CallManager.getState());
-
         // Set the caller name text view
         String phoneNumber = CallManager.getDisplayName();
         if (phoneNumber != null) {
@@ -180,6 +157,15 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
+
+        View.OnClickListener rejectListener = v -> endCall();
+        View.OnClickListener answerListener = v -> activateCall();
+        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
+        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+
+        mRejectButton.setOnTouchListener(mRejectLongClickListener);
+        mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
 
         //hide buttons
         mCancelButton.hide();
@@ -199,6 +185,21 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key);
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        //Listen for call state changes
+        CallManager.registerCallback(mCallback);
+        updateUI(CallManager.getState());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mIsCreatingUI = false;
     }
 
     @Override
@@ -282,28 +283,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         mStatusText.setText(statusTextRes);
 
-        if (state != Call.STATE_RINGING) {
-            switchToCallingUI();
-        }
-
-        mRejectButton.setOnTouchListener(mRejectLongClickListener);
-        mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-
+        if (state != Call.STATE_RINGING) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
-    }
-
-    /**
-     * Update the current call time ui
-     */
-    private void updateTimeUI() {
-        mTimeText.setText(mCallTimer.getStringTime());
-    }
-
-    /**
-     * Mutes / Unmutes the device's microphone
-     */
-    private void muteMic(boolean mute) {
-        mAudioManager.setMicrophoneMute(mute);
     }
 
     /**
@@ -325,30 +306,62 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
-     * Moves the reject button to the middle
+     * Update the current call time ui
      */
-    private void moveDenyToMiddle() {
-        float parentCenterX = mOngoingCallLayout.getX() + mOngoingCallLayout.getWidth() / 2;
-        float parentCenterY = mOngoingCallLayout.getY() + mOngoingCallLayout.getHeight() / 2;
-        mAnswerButton.animate().translationX(parentCenterX - mAnswerButton.getWidth() / 2).translationY(parentCenterY - mAnswerButton.getHeight() / 2);
+    private void updateTimeUI() {
+        mTimeText.setText(mCallTimer.getStringTime());
     }
 
     /**
-     * Switches the ui to an active call ui
+     * Mutes / Unmutes the device's microphone
+     */
+    private void muteMic(boolean mute) {
+        mAudioManager.setMicrophoneMute(mute);
+    }
+
+    /**
+     * Switches the ui to an active call ui.
      */
     private void switchToCallingUI() {
-
+        if (mIsCallingUI) return;
+        else mIsCallingUI = true;
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         acquireWakeLock();
         mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
 
         // Change the buttons layout
-        moveDenyToMiddle();
         mAnswerButton.hide();
         mMuteButton.setVisibility(View.VISIBLE);
         mKeypadButton.setVisibility(View.VISIBLE);
         mSpeakerButton.setVisibility(View.VISIBLE);
         mAddCallButton.setVisibility(View.VISIBLE);
+        moveRejectButtonToMiddle();
+    }
+
+    /**
+     * Moves the reject button to the middle
+     */
+    private void moveRejectButtonToMiddle() {
+        ConstraintSet ongoingSet = new ConstraintSet();
+        ongoingSet.clone(mOngoingCallLayout);
+        ongoingSet.connect(R.id.reject_btn, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.END);
+        ongoingSet.connect(R.id.reject_btn, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.START);
+        ongoingSet.setHorizontalBias(R.id.reject_btn, 0.5f);
+
+        ConstraintSet overlaySet = new ConstraintSet();
+        overlaySet.clone(this, R.layout.correction_overlay_reject_call_options);
+
+        if (!mIsCreatingUI) { //Don't animate if the activity is just being created
+            Transition transition = new ChangeBounds();
+            transition.setInterpolator(new AccelerateDecelerateInterpolator());
+            transition.addTarget(mRejectCallOverlay);
+            transition.addTarget(mRejectButton);
+            TransitionManager.beginDelayedTransition(mOngoingCallLayout, transition);
+        }
+
+        ongoingSet.applyTo(mOngoingCallLayout);
+        overlaySet.applyTo((ConstraintLayout) mRejectCallOverlay);
+        mRootView.removeView(mAnswerCallOverlay);
     }
 
     /**
@@ -387,7 +400,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     private void setActionButtonsClickable(boolean clickable) {
-        for(int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
+        for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
             View v = mOngoingCallLayout.getChildAt(i);
             if (v instanceof FloatingActionButton) {
                 v.setClickable(clickable);
@@ -447,8 +460,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             if (isRejecting) {
                 textColorRes = R.color.red_phone;
                 textIndicator = R.string.reject_timer_indicator;
-            }
-            else{
+            } else {
                 textColorRes = R.color.green_phone;
                 textIndicator = R.string.answer_timer_indicator;
             }
@@ -488,6 +500,31 @@ public class OngoingCallActivity extends AppCompatActivity {
             else Timber.w("Couldn't cancel action timer (timer is null)");
 
             removeOverlay();
+        }
+    }
+
+    @SuppressLint("HandlerLeak")
+    class CallTimeHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TIME_START:
+                    mCallTimer.start(); // Starts the timer
+                    mCallTimeHandler.sendEmptyMessage(TIME_UPDATE); // Starts the time ui updates
+                    break;
+                case TIME_STOP:
+                    mCallTimeHandler.removeMessages(TIME_UPDATE); // No more updates
+                    mCallTimer.stop(); // Stops the timer
+                    updateTimeUI(); // Updates the time ui
+                    break;
+                case TIME_UPDATE:
+                    updateTimeUI(); // Updates the time ui
+                    mCallTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, REFRESH_RATE); // Text view updates every milisecond (REFRESH RATE)
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

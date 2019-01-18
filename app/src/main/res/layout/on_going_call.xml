@@ -74,8 +74,6 @@
         android:id="@+id/answer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
@@ -93,8 +91,6 @@
         android:id="@+id/reject_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
@@ -104,6 +100,8 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/answer_btn"
         app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
         app:maxImageSize="36dp" />
 

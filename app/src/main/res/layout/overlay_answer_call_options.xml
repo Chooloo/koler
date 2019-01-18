@@ -13,6 +13,7 @@
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:layout_marginBottom="8dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintStart_toStartOf="parent" />

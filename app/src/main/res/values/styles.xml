@@ -6,7 +6,6 @@
         <item name="android:fontFamily">@font/ubuntu</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
-        <item name="android:background">@color/colorBackground</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
