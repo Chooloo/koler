@@ -97,10 +97,9 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                     }
                 }
 
-                if (!actionPerformed) {
-                    if (!mRunnable.isFinished) { //Perform a normal click if this wasn't a long click
-                        mOnNormalClick.onClick(v);
-                    }
+                //Perform a normal click if this wasn't a long click
+                if (!actionPerformed && !mRunnable.isFinished && Utilities.inViewInBounds(v, rawX, rawY, 0)) {
+                    mOnNormalClick.onClick(v);
                 }
 
                 cancel(); //Don't run code in the long click related runnable
