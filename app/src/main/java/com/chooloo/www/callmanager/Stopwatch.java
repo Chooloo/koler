@@ -4,6 +4,7 @@ import java.util.Locale;
 
 public class Stopwatch {
 
+    // Variables
     private long startTime = 0;
     private long stopTime = 0;
     private boolean running = false;

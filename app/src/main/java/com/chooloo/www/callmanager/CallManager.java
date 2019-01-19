@@ -24,7 +24,11 @@ import androidx.core.app.ActivityCompat;
 import timber.log.Timber;
 
 public class CallManager {
+
+    // Variables
     public static Call sCall;
+
+    // -- Call Actions -- //
 
     /**
      * Answers incoming call
@@ -78,6 +82,8 @@ public class CallManager {
         if (sCall == null) return;
         sCall.unregisterCallback(callback);
     }
+
+    // -- Getters -- //
 
     /**
      * Gets the phone number of the contact from the end side of the current call

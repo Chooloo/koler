@@ -25,8 +25,29 @@ import static com.chooloo.www.callmanager.CallManager.sCall;
 
 public class ContactsManager {
 
+    // Variables
     private ArrayList<Contact> mContacts = new ArrayList<Contact>();
     private ArrayList<Contact> mCurrentContacts = new ArrayList<Contact>();
+
+    // -- Getters -- //
+
+    /**
+     * Returns the list of all the contacts
+     *
+     * @return ArrayList<Contact>
+     */
+    public ArrayList<Contact> getContacts() {
+        return mContacts;
+    }
+
+    /**
+     * Resturns the list of all the contacts from the last lookup
+     *
+     * @return ArrayList<Contact>
+     */
+    public ArrayList<Contact> getCurrentContacts() {
+        return mCurrentContacts;
+    }
 
     /**
      * Returns a list of all the contacts on the phone as a list of Contact objects
@@ -69,24 +90,6 @@ public class ContactsManager {
             cur.close();
         }
         return contacts;
-    }
-
-    /**
-     * Returns the list of all the contacts
-     *
-     * @return ArrayList<Contact>
-     */
-    public ArrayList<Contact> getContacts() {
-        return mContacts;
-    }
-
-    /**
-     * Resturns the list of all the contacts from the last lookup
-     *
-     * @return ArrayList<Contact>
-     */
-    public ArrayList<Contact> getCurrentContacts() {
-        return mCurrentContacts;
     }
 
     /**
@@ -135,14 +138,7 @@ public class ContactsManager {
         return contactName;
     }
 
-    /**
-     * Creates an instant of AsyncContactLookup and executes it
-     */
-    public ArrayList<Contact> getContactByNumInBackground(Context context, boolean showProgress, String num) {
-        AsyncContactLookup lookup = new AsyncContactLookup(context, showProgress, num);
-        lookup.execute();
-        return mCurrentContacts;
-    }
+    // -- In Background -- //
 
     /**
      * Updates the sContacts list in background
@@ -154,6 +150,17 @@ public class ContactsManager {
         AsyncContactsUpdater updater = new AsyncContactsUpdater(context, showProgress);
         updater.execute();
     }
+
+    /**
+     * Creates an instant of AsyncContactLookup and executes it
+     */
+    public ArrayList<Contact> getContactByNumInBackground(Context context, boolean showProgress, String num) {
+        AsyncContactLookup lookup = new AsyncContactLookup(context, showProgress, num);
+        lookup.execute();
+        return mCurrentContacts;
+    }
+
+    // -- Classes -- //
 
     public class AsyncContactsUpdater extends AsyncTask<String, String, String> {
 

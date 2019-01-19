@@ -266,7 +266,7 @@ public class MainActivity extends ToolbarActivity {
     private void updateContacts(boolean showProgress) {
         mContactsManager.updateContactsInBackground(this, showProgress);
     }
-    
+
     /**
      * Checks weither this is the first time the user opens the app
      *
