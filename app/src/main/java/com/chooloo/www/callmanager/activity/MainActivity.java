@@ -62,7 +62,11 @@ import static android.Manifest.permission.READ_CONTACTS;
 //TODO clean up, give this activity a purpose
 public class MainActivity extends ToolbarActivity {
 
+    // Variables
+    boolean isKeyboardDisabled = false;
     public static String sToNumber = "";
+
+    // Local classes instances
     ContactsManager mContactsManager = new ContactsManager();
     ContactsAdapter mContactAdapter;
 
@@ -71,9 +75,6 @@ public class MainActivity extends ToolbarActivity {
     @BindView(R.id.button_call) TextView mCallButton;
     @BindView(R.id.button_delete) TextView mDelButton;
     @BindView(R.id.table_numbers) TableLayout mNumbersTable;
-    //-----------------
-
-    boolean isKeyboardDisabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class MainActivity extends ToolbarActivity {
         Timber.plant(new Timber.DebugTree());
 
         // Ask for permissions
-        // CALL_PHONE, READ_CONTACTS
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE, READ_CONTACTS}, 1);
@@ -94,6 +94,7 @@ public class MainActivity extends ToolbarActivity {
 
         //Prompt the user with a dialog to select this app to be the default phone app
         String packageName = getApplicationContext().getPackageName();
+
         //noinspection ConstantConditions
         if (!getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
@@ -102,11 +103,19 @@ public class MainActivity extends ToolbarActivity {
 
     }
 
+    /**
+     * If user gave permission
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
+        // If this is the first time the user opens the app
         if (checkFirstTime()) {
             if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                 // If the user gave permission to look for contacts, look for 'em
@@ -123,7 +132,6 @@ public class MainActivity extends ToolbarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
@@ -136,6 +144,14 @@ public class MainActivity extends ToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // -- Buttons -- //
+
+    /**
+     * If the user clicks an item from the list, set the mNumberInput text to
+     * the one from the list item
+     *
+     * @param view
+     */
     @OnItemClick(R.id.dial_contacts_list)
     public void itemClicked(View view) {
         TextView listItem = (TextView) view.findViewById(R.id.contact_dial_list_number_text);
@@ -194,18 +210,6 @@ public class MainActivity extends ToolbarActivity {
     }
 
     /**
-     * Hides the keyboard based on the focused view (most likely EditText)
-     *
-     * @param view is the focused view
-     */
-    public void hideKeyboard(EditText view) {
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    /**
      * Starts a call to voice mail when the 1 button is long clicked
      */
     @OnLongClick(R.id.chip1)
@@ -232,10 +236,10 @@ public class MainActivity extends ToolbarActivity {
             Toast.makeText(this, "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
         } else {
             try {
-                // Set the data
+                // Set the data for the call
                 String uri = "tel:" + mNumberInput.getText().toString();
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
-
+                // Start the call
                 startActivity(callIntent);
             } catch (SecurityException e) {
                 Toast.makeText(this, "Couldn't call " + sToNumber, Toast.LENGTH_LONG).show();
@@ -245,22 +249,24 @@ public class MainActivity extends ToolbarActivity {
     }
 
     /**
-     * Updates the contacts list in CallManager
+     * Hides the keyboard based on the focused view (most likely EditText)
+     *
+     * @param view is the focused view
+     */
+    public void hideKeyboard(EditText view) {
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Updates the contacts list in mContactsManager
      */
     private void updateContacts(boolean showProgress) {
         mContactsManager.updateContactsInBackground(this, showProgress);
     }
-
-    /**
-     * Set the mContactAdapter to the list view
-     *
-     * @param contacts
-     */
-    private void populateListView(ArrayList<Contact> contacts) {
-        mContactAdapter = new ContactsAdapter(contacts, this);
-        mContactsList.setAdapter(mContactAdapter);
-    }
-
+    
     /**
      * Checks weither this is the first time the user opens the app
      *
@@ -277,6 +283,16 @@ public class MainActivity extends ToolbarActivity {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Set the mContactAdapter to the list view
+     *
+     * @param contacts
+     */
+    private void populateListView(ArrayList<Contact> contacts) {
+        mContactAdapter = new ContactsAdapter(contacts, this);
+        mContactsList.setAdapter(mContactAdapter);
     }
 
     private class populateListViewTask extends AsyncTask<String, String, String> {
