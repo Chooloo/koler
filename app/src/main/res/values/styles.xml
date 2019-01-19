@@ -17,7 +17,9 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="CircleButton">
-        <item name="android:background">@drawable/ic_circle_button</item>
+    <style name="CircleButton" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@drawable/circle_button_background</item>
+        <item name="android:textColor">@color/green_phone</item>
+        <item name="android:textSize">16dp</item>
     </style>
 </resources>

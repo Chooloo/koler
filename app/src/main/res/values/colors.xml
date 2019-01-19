@@ -17,6 +17,7 @@
 
     <color name="semi_white">#E6FFFFFF</color>
 
+    <color name="green_phone_semi_trans">#9566bb6a</color>
     <color name="green_phone">#66bb6a</color>
     <color name="red_phone">#ef5350</color>
 

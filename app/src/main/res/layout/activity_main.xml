@@ -21,11 +21,12 @@
 
     <ScrollView
         android:id="@+id/dial_contacts_scroll"
-        android:layout_width="368dp"
-        android:layout_height="56dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_number_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar">
@@ -33,24 +34,24 @@
         <ListView
             android:id="@+id/dial_contacts_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="112dp" />
-        
+
     </ScrollView>
 
     <EditText
         android:id="@+id/text_number_input"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="21dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@android:color/transparent"
         android:ems="10"
+        android:gravity="center"
         android:hint="Phone Number"
         android:inputType="number"
-        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +60,10 @@
 
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="220dp"
-        android:layout_height="280dp"
+        android:layout_width="248dp"
+        android:layout_height="311dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,35 +76,35 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip1"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="1"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="1" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip2"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="2"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="2" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip3"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="3"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="3" />
 
         </TableRow>
 
@@ -114,35 +114,35 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip4"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="4"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="4" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip5"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="5"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="5" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip6"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="6"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="6" />
         </TableRow>
 
         <TableRow
@@ -151,35 +151,35 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip7"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="7"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="7" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip8"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="8"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="8" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip9"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="9"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="9" />
 
         </TableRow>
 
@@ -189,78 +189,68 @@
             android:layout_weight="1"
             android:weightSum="3">
 
-            <Button
+            <TextView
                 android:id="@+id/chip_star"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="*"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="*" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip0"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="0"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="0" />
 
-            <Button
+            <TextView
                 android:id="@+id/chip_hex"
+                style="@style/CircleButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
-                android:background="@drawable/ic_circle_button"
-                android:text="#"
-                android:textAlignment="center" />
+                android:gravity="center"
+                android:text="#" />
 
         </TableRow>
 
 
     </TableLayout>
 
-    <Button
+    <TextView
         android:id="@+id/button_call"
-        android:layout_width="146dp"
-        android:layout_height="46dp"
+        style="@style/CircleButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginStart="70dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_circle_button"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
         android:text="Call"
-        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <TextView
         android:id="@+id/button_delete"
-        android:layout_width="85dp"
-        android:layout_height="46dp"
+        style="@style/CircleButton"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ic_circle_button"
-        android:text="delete"
-        android:textAlignment="center"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="del"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />
-
-    <TextView
-        android:id="@+id/contactText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/dial_contacts_scroll"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

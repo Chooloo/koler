@@ -44,4 +44,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Floating action button design
+    implementation 'com.github.JediBurrell:customFloatingActionButton:-SNAPSHOT'
 }
