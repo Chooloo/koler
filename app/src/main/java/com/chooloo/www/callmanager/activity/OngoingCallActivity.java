@@ -279,6 +279,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO add functionality to the send SMS Button
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
+
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
     }
 

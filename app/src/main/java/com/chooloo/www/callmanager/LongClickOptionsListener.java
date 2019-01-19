@@ -20,18 +20,21 @@ import timber.log.Timber;
 
 public class LongClickOptionsListener implements View.OnTouchListener {
 
+    // Final variables
     private static final long LONG_CLICK_MILLIS = 500;
     private static final long ANIMATE_MILLIS = 50;
 
     private Context mContext;
+    private ViewGroup mFabView;
     private View.OnClickListener mOnNormalClick;
+
     private boolean mIsCanceled = false;
 
     private LongClickRunnable mRunnable = new LongClickRunnable();
     private Handler mHandler = new Handler();
     private int animateChildrenPos = 0;
 
-    private ViewGroup mFabView;
+    // List
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
     private List<TextView> mActionsText = new ArrayList<>();
 
@@ -171,6 +174,8 @@ public class LongClickOptionsListener implements View.OnTouchListener {
         else
             actionText.setVisibility(View.INVISIBLE);
     }
+
+    // -- Classes -- //
 
     class LongClickRunnable implements Runnable {
 

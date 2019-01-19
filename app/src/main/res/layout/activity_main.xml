@@ -8,24 +8,24 @@
     android:focusableInTouchMode="true"
     tools:context=".activity.MainActivity">
 
+    <!-- App Bar -->
     <include
         android:id="@+id/appbar"
         layout="@layout/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Matching Contacts List View -->
     <ScrollView
         android:id="@+id/dial_contacts_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/text_number_input"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,15 +40,13 @@
 
     </ScrollView>
 
+    <!-- Number Input Field -->
     <EditText
         android:id="@+id/text_number_input"
         android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:ems="10"
+        android:ems="13"
         android:gravity="center"
         android:hint="Phone Number"
         android:inputType="number"
@@ -57,13 +55,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dial_contacts_scroll" />
 
-
+    <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="248dp"
-        android:layout_height="311dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +68,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:weightSum="3">
 
@@ -224,33 +220,32 @@
 
     </TableLayout>
 
+    <!-- Delete Button -->
     <TextView
         android:id="@+id/button_call"
         style="@style/CircleButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="70dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="Call"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Call Button -->
     <TextView
         android:id="@+id/button_delete"
         style="@style/CircleButton"
-        android:layout_width="80dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="4dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="del"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

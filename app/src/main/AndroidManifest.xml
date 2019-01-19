@@ -37,12 +37,10 @@
                 <action android:name="android.intent.action.DIAL" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
             android:theme="@style/AppTheme.TransparentStatusBar" />
-
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/activity_settings"
@@ -63,6 +61,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".SmsActivity"></activity>
     </application>
 
 </manifest>
