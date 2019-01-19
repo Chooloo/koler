@@ -66,10 +66,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     LongClickOptionsListener mRejectLongClickListener;
     LongClickOptionsListener mAnswerLongClickListener;
     Callback mCallback = new Callback();
-    ContactsManager mContactsManager = new ContactsManager();
     ActionTimer mActionTimer = new ActionTimer();
 
-    //Current states
+    // Current states
     boolean mIsCallingUI = false;
     boolean mIsCreatingUI = true;
 
@@ -80,6 +79,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Instances of local classes
     Stopwatch mCallTimer = new Stopwatch();
+    ContactsManager mContactsManager = new ContactsManager();
 
     // Audio
     AudioManager mAudioManager;
@@ -87,9 +87,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Handlers
     Handler mCallTimeHandler = new CallTimeHandler();
-
-    // Layouts
-    @BindView(R.id.ongoingcall_layout) ConstraintLayout mParentLayout;
 
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
@@ -135,6 +132,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(field, getLocalClassName());
 
+        // Audio Manager
         mAudioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
 
         //This activity needs to show even if the screen is off or locked
@@ -156,26 +154,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // hide buttons
-        mCancelButton.hide();
-        mSendSMSButton.hide();
-        mRejectCallTimerButton.hide();
-
-        // Income call buttons listeners
-        View.OnClickListener rejectListener = v -> endCall();
-        View.OnClickListener answerListener = v -> activateCall();
-        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay);
-        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay);
-
-        //Hide all overlays
-        mActionTimerOverlay.setAlpha(0.0f);
-        mAnswerCallOverlay.setAlpha(0.0f);
-        mRejectCallOverlay.setAlpha(0.0f);
-
-        //Listen for call state changes
-        CallManager.registerCallback(mCallback);
-        updateUI(CallManager.getState());
-
         // Set the caller name text view
         String phoneNumber = CallManager.getDisplayName();
         if (phoneNumber != null) {
@@ -192,6 +170,25 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (contactName != null) {
             mCallerText.setText(contactName);
         }
+
+        View.OnClickListener rejectListener = v -> endCall();
+        View.OnClickListener answerListener = v -> activateCall();
+        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
+        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+
+        mRejectButton.setOnTouchListener(mRejectLongClickListener);
+        mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
+
+        // hide buttons
+        mCancelButton.hide();
+        mSendSMSButton.hide();
+        mRejectCallTimerButton.hide();
+
+        //Hide all overlays
+        mActionTimerOverlay.setAlpha(0.0f);
+        mAnswerCallOverlay.setAlpha(0.0f);
+        mRejectCallOverlay.setAlpha(0.0f);
 
         //Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
@@ -240,7 +237,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Denies incoming call / Ends active call*
      */
-    @OnClick(R.id.deny_btn)
+    @OnClick(R.id.reject_btn)
     public void deny(View view) {
         endCall();
     }
@@ -259,14 +256,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         muteMic(view.isActivated());
     }
 
-    //TODO remove the ability to click buttons under the overlay
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
         int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key));
         mActionTimer.setData(seconds * 1000, true);
         mActionTimer.start();
-        mActionTimerOverlay.animate().alpha(1.0f);
+        setOverlay(mActionTimerOverlay);
     }
 
     @OnClick(R.id.button_answer_call_timer)
@@ -310,7 +306,6 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void endCall() {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
-        changeBackgroundColor(R.color.call_ended_background);
         CallManager.sReject();
         releaseWakeLock();
         finish();
@@ -350,15 +345,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         mStatusText.setText(statusTextRes);
 
-        if (state != Call.STATE_RINGING) {
-            switchToCallingUI();
-            mDenyButton.setOnTouchListener(mDefaultListener);
-            mAnswerButton.setOnTouchListener(mDefaultListener);
-        } else {
-            mDenyButton.setOnTouchListener(mRejectLongClickListener);
-            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-        }
-
+        if (state != Call.STATE_RINGING) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
 
@@ -370,19 +357,22 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
-     * Changes the current background color
-     *
-     * @param colorRes the color to change to
+     * Switches the ui to an active call ui.
      */
-    private void changeBackgroundColor(@ColorRes int colorRes) {
-        int backgroundColor = ContextCompat.getColor(this, colorRes);
-        mParentLayout.setBackgroundColor(backgroundColor);
+    private void switchToCallingUI() {
+        if (mIsCallingUI) return;
+        else mIsCallingUI = true;
+        mAudioManager.setMode(AudioManager.MODE_IN_CALL);
+        acquireWakeLock();
+        mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
 
-        ColorStateList stateList = new ColorStateList(new int[][]{}, new int[]{backgroundColor});
-        mMuteButton.setBackgroundTintList(stateList);
-        mKeypadButton.setBackgroundTintList(stateList);
-        mSpeakerButton.setBackgroundTintList(stateList);
-        mAddCallButton.setBackgroundTintList(stateList);
+        // Change the buttons layout
+        mAnswerButton.hide();
+        mMuteButton.setVisibility(View.VISIBLE);
+        mKeypadButton.setVisibility(View.VISIBLE);
+        mSpeakerButton.setVisibility(View.VISIBLE);
+        mAddCallButton.setVisibility(View.VISIBLE);
+        moveRejectButtonToMiddle();
     }
 
     /**
@@ -409,25 +399,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         ongoingSet.applyTo(mOngoingCallLayout);
         overlaySet.applyTo((ConstraintLayout) mRejectCallOverlay);
         mRootView.removeView(mAnswerCallOverlay);
-    }
-
-    /**
-     * Switches the ui to an active call ui.
-     */
-    private void switchToCallingUI() {
-        if (mIsCallingUI) return;
-        else mIsCallingUI = true;
-        mAudioManager.setMode(AudioManager.MODE_IN_CALL);
-        acquireWakeLock();
-        mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
-
-        // Change the buttons layout
-        mAnswerButton.hide();
-        mMuteButton.setVisibility(View.VISIBLE);
-        mKeypadButton.setVisibility(View.VISIBLE);
-        mSpeakerButton.setVisibility(View.VISIBLE);
-        mAddCallButton.setVisibility(View.VISIBLE);
-        moveRejectButtonToMiddle();
     }
 
     /**
@@ -480,6 +451,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             mRejectButton.setOnTouchListener(mDefaultListener);
         }
     }
+
     // -- Classes -- //
 
     /**
