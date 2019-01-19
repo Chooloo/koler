@@ -61,29 +61,29 @@ public class OngoingCallActivity extends AppCompatActivity {
     private static final int TIME_UPDATE = 2;
     private static final int REFRESH_RATE = 100;
 
+    // Current states
+    boolean mIsCallingUI = false;
+    boolean mIsCreatingUI = true;
+    private boolean mIsMuted = false;
+
+    // Instances of local classes
+    Stopwatch mCallTimer = new Stopwatch();
+    ContactsManager mContactsManager = new ContactsManager();
+    Callback mCallback = new Callback();
+    ActionTimer mActionTimer = new ActionTimer();
+
     // Listeners
     View.OnTouchListener mDefaultListener = (v, event) -> false;
     LongClickOptionsListener mRejectLongClickListener;
     LongClickOptionsListener mAnswerLongClickListener;
-    Callback mCallback = new Callback();
-    ActionTimer mActionTimer = new ActionTimer();
-
-    // Current states
-    boolean mIsCallingUI = false;
-    boolean mIsCreatingUI = true;
 
     // PowerManager
     PowerManager powerManager;
     PowerManager.WakeLock wakeLock;
     private int field = 0x00000020;
 
-    // Instances of local classes
-    Stopwatch mCallTimer = new Stopwatch();
-    ContactsManager mContactsManager = new ContactsManager();
-
     // Audio
     AudioManager mAudioManager;
-    private boolean mIsMuted = false;
 
     // Handlers
     Handler mCallTimeHandler = new CallTimeHandler();
@@ -124,17 +124,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // Initiate PowerManager and WakeLock
-        try {
-            field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
-        } catch (Throwable ignored) {
-        }
-        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
-
-        // Audio Manager
-        mAudioManager = (AudioManager) getSystemService(this.AUDIO_SERVICE);
-
         //This activity needs to show even if the screen is off or locked
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -153,6 +142,17 @@ public class OngoingCallActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        // Initiate PowerManager and WakeLock
+        try {
+            field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
+        } catch (Throwable ignored) {
+        }
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
+
+        // Audio Manager
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
         // Set the caller name text view
         String phoneNumber = CallManager.getDisplayName();
@@ -175,20 +175,19 @@ public class OngoingCallActivity extends AppCompatActivity {
         View.OnClickListener answerListener = v -> activateCall();
         mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
         mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
-        mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
         mRejectButton.setOnTouchListener(mRejectLongClickListener);
         mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-
-        // hide buttons
-        mCancelButton.hide();
-        mSendSMSButton.hide();
-        mRejectCallTimerButton.hide();
 
         //Hide all overlays
         mActionTimerOverlay.setAlpha(0.0f);
         mAnswerCallOverlay.setAlpha(0.0f);
         mRejectCallOverlay.setAlpha(0.0f);
+
+        // hide buttons
+        mCancelButton.hide();
+        mSendSMSButton.hide();
+        mRejectCallTimerButton.hide();
 
         //Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
@@ -199,7 +198,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
     }
-
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -239,21 +237,8 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     @OnClick(R.id.reject_btn)
     public void deny(View view) {
-        endCall();
-    }
 
-    /**
-     * Mutes the call's microphone
-     */
-    @OnClick(R.id.button_mute)
-    public void mute(View view) {
-        view.setActivated(!view.isActivated());
-        if (view.isActivated()) {
-            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
-        } else {
-            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
-        }
-        muteMic(view.isActivated());
+        endCall();
     }
 
     //TODO silence the ringing
@@ -272,25 +257,32 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.start();
     }
 
+    @OnClick(R.id.button_cancel_timer)
+    public void cancelTimer(View view) {
+        mActionTimer.cancel();
+    }
+
+    /**
+     * Mutes the call's microphone
+     */
+    @OnClick(R.id.button_mute)
+    public void mute(View view) {
+        view.setActivated(!view.isActivated());
+        if (view.isActivated()) {
+            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
+        } else {
+            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
+        }
+        muteMic(view.isActivated());
+    }
+
     //TODO add functionality to the send SMS Button
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.button_cancel_timer)
-    public void cancelTimer(View view) {
-        mActionTimer.cancel();
-    }
-
     // -- Call Actions -- //
-
-    /**
-     * Mutes / Unmutes the device's microphone
-     */
-    private void muteMic(boolean wot) {
-        mAudioManager.setMicrophoneMute(wot);
-    }
 
     /**
      * /*
@@ -309,6 +301,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.sReject();
         releaseWakeLock();
         finish();
+    }
+
+    /**
+     * Mutes / Unmutes the device's microphone
+     */
+    private void muteMic(boolean wot) {
+        mAudioManager.setMicrophoneMute(wot);
     }
 
     // -- UI -- //
@@ -401,24 +400,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         mRootView.removeView(mAnswerCallOverlay);
     }
 
-    /**
-     * Acquires the wake lock
-     */
-    private void acquireWakeLock() {
-        if (!wakeLock.isHeld()) {
-            wakeLock.acquire();
-        }
-    }
-
-    /**
-     * Releases the wake lock
-     */
-    private void releaseWakeLock() {
-        if (wakeLock.isHeld()) {
-            wakeLock.release();
-        }
-    }
-
     private void setOverlay(@NotNull ViewGroup overlay) {
         if (mCurrentOverlay != null) {
             mCurrentOverlay.animate().alpha(0.0f);
@@ -437,6 +418,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     private void setActionButtonsClickable(boolean clickable) {
+
         for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
             View v = mOngoingCallLayout.getChildAt(i);
             if (v instanceof FloatingActionButton) {
@@ -452,40 +434,25 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
-    // -- Classes -- //
-
     /**
-     * Callback class
-     * Listens to the call and do stuff when something changes
+     * Acquires the wake lock
      */
-    public class Callback extends Call.Callback {
-
-        @Override
-        public void onStateChanged(Call call, int state) {
-            /*
-              Call states:
-
-              1   = Call.STATE_DIALING
-              2   = Call.STATE_RINGING
-              3   = Call.STATE_HOLDING
-              4   = Call.STATE_ACTIVE
-              7   = Call.STATE_DISCONNECTED
-              8   = Call.STATE_SELECT_PHONE_ACCOUNT
-              9   = Call.STATE_CONNECTING
-              10  = Call.STATE_DISCONNECTING
-              11  = Call.STATE_PULLING_CALL
-             */
-            super.onStateChanged(call, state);
-            Timber.i("State changed: %s", state);
-            updateUI(state);
-        }
-
-        @Override
-        public void onDetailsChanged(Call call, Call.Details details) {
-            super.onDetailsChanged(call, details);
-            Timber.i("Details changed: %s", details.toString());
+    private void acquireWakeLock() {
+        if (!wakeLock.isHeld()) {
+            wakeLock.acquire();
         }
     }
+
+    /**
+     * Releases the wake lock
+     */
+    private void releaseWakeLock() {
+        if (wakeLock.isHeld()) {
+            wakeLock.release();
+        }
+    }
+
+    // -- Classes -- //
 
     class ActionTimer {
 
@@ -539,6 +506,39 @@ public class OngoingCallActivity extends AppCompatActivity {
             else Timber.w("Couldn't cancel action timer (timer is null)");
 
             removeOverlay();
+        }
+    }
+
+    /**
+     * Callback class
+     * Listens to the call and do stuff when something changes
+     */
+    public class Callback extends Call.Callback {
+
+        @Override
+        public void onStateChanged(Call call, int state) {
+            /*
+              Call states:
+
+              1   = Call.STATE_DIALING
+              2   = Call.STATE_RINGING
+              3   = Call.STATE_HOLDING
+              4   = Call.STATE_ACTIVE
+              7   = Call.STATE_DISCONNECTED
+              8   = Call.STATE_SELECT_PHONE_ACCOUNT
+              9   = Call.STATE_CONNECTING
+              10  = Call.STATE_DISCONNECTING
+              11  = Call.STATE_PULLING_CALL
+             */
+            super.onStateChanged(call, state);
+            Timber.i("State changed: %s", state);
+            updateUI(state);
+        }
+
+        @Override
+        public void onDetailsChanged(Call call, Call.Details details) {
+            super.onDetailsChanged(call, details);
+            Timber.i("Details changed: %s", details.toString());
         }
     }
 
