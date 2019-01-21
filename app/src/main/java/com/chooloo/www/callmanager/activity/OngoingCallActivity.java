@@ -264,6 +264,12 @@ public class OngoingCallActivity extends AppCompatActivity {
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
     }
 
+    @OnClick(R.id.button_speaker)
+    public void toggleSpeaker(View view) {
+        view.setActivated(!view.isActivated());
+        mAudioManager.setSpeakerphoneOn(view.isActivated());
+    }
+
     // -- Call Actions -- //
 
     /**

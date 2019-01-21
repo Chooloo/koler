@@ -14,9 +14,4 @@
         android:entries="@array/pref_call_timer_entries"
         android:entryValues="@array/pref_call_timer_entry_values"
         android:defaultValue="@string/pref_answer_call_timer_default_value" />
-
-    <Button
-        android:key="update_contacts"
-        android:title="Update Contacts" />
-
 </PreferenceScreen>
