@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -223,24 +222,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     // -- Buttons -- //
-
-    /**
-     * Answers incoming call
-     */
-    @OnClick(R.id.answer_btn)
-    public void answer(View view) {
-        activateCall();
-    }
-
-    /**
-     * Denies incoming call / Ends active call*
-     */
-    @OnClick(R.id.reject_btn)
-    public void deny(View view) {
-
-        endCall();
-    }
-
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
