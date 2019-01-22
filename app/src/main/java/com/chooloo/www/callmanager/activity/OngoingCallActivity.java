@@ -48,9 +48,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static com.chooloo.www.callmanager.CallManager.getDisplayName;
-import static com.chooloo.www.callmanager.CallManager.sCall;
-
 @SuppressLint("ClickableViewAccessibility")
 public class OngoingCallActivity extends AppCompatActivity {
 
@@ -63,7 +60,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Current states
     boolean mIsCallingUI = false;
     boolean mIsCreatingUI = true;
-    private boolean mIsMuted = false;
 
     // Instances of local classes
     Stopwatch mCallTimer = new Stopwatch();
@@ -153,22 +149,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
-        // Set the caller name text view
-        String phoneNumber = CallManager.getDisplayName();
-        if (phoneNumber != null) {
-            mCallerText.setText(phoneNumber);
-        } else {
-            mCallerText.setText(R.string.name_unknown);
-        }
-
-        // Checks for the caller name
-        String contactName = null;
-        if (sCall != null) {
-            contactName = mContactsManager.getCallerName(this, getDisplayName());
-        }
-        if (contactName != null) {
-            mCallerText.setText(contactName);
-        }
+        mCallerText.setText(CallManager.getDisplayName(this));
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();

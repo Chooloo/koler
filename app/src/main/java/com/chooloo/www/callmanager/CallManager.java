@@ -1,26 +1,11 @@
 package com.chooloo.www.callmanager;
 
-import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
-import android.widget.Toast;
 
-import com.chooloo.www.callmanager.activity.MainActivity;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.core.app.ActivityCompat;
 import timber.log.Timber;
 
 public class CallManager {
@@ -91,14 +76,22 @@ public class CallManager {
      *
      * @return String - phone number, or voicemail. if not recognized, return null.
      */
-    public static String getDisplayName() {
-        if (sCall == null) return null;
+    public static String getDisplayName(Context context) {
+        String unknown = context.getString(R.string.name_unknown);
+        if (sCall == null) return unknown;
         String uri = sCall.getDetails().getHandle().toString();
-        if (uri.contains("tel"))
-            return uri.replace("tel:", "");
         if (uri.contains("voicemail"))
             return "Voicemail";
-        return null;
+
+        String telephoneNumber = null;
+        if (uri.contains("tel"))
+            telephoneNumber = uri.replace("tel:", "");
+
+        if (telephoneNumber == null || telephoneNumber.isEmpty()) return unknown;
+
+        String contactName = ContactsManager.getCallerName(context, telephoneNumber);
+        if (contactName == null || contactName.isEmpty()) return unknown;
+        return contactName;
     }
 
     /**

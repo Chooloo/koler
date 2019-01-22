@@ -131,7 +131,7 @@
         app:layout_constraintBottom_toTopOf="@+id/button_mute"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
-        app:layout_constraintVertical_bias="0.32999998"
+        app:layout_constraintVertical_bias="0.33999997"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/ic_dialpad_black_24dp"
         tools:visibility="visible" />

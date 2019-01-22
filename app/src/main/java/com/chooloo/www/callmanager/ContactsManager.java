@@ -11,58 +11,30 @@ import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.CallManager;
-import com.chooloo.www.callmanager.Contact;
-import com.chooloo.www.callmanager.activity.MainActivity;
-
 import java.util.ArrayList;
 
 import androidx.core.app.ActivityCompat;
 import timber.log.Timber;
 
-import static com.chooloo.www.callmanager.CallManager.getDisplayName;
-import static com.chooloo.www.callmanager.CallManager.sCall;
-
 public class ContactsManager {
 
     // Variables
-    private ArrayList<Contact> mContacts = new ArrayList<Contact>();
-    private ArrayList<Contact> mCurrentContacts = new ArrayList<Contact>();
-
-    // -- Getters -- //
-
-    /**
-     * Returns the list of all the contacts
-     *
-     * @return ArrayList<Contact>
-     */
-    public ArrayList<Contact> getContacts() {
-        return mContacts;
-    }
-
-    /**
-     * Resturns the list of all the contacts from the last lookup
-     *
-     * @return ArrayList<Contact>
-     */
-    public ArrayList<Contact> getCurrentContacts() {
-        return mCurrentContacts;
-    }
+    private static ArrayList<Contact> mContacts = new ArrayList<Contact>();
+    private static ArrayList<Contact> mCurrentContacts = new ArrayList<Contact>();
 
     /**
      * Returns a list of all the contacts on the phone as a list of Contact objects
      *
-     * @param context
      * @return ArrayList<Contact> a list of contacts
      */
-    public ArrayList<Contact> getContactList(Context context) {
+    public static ArrayList<Contact> getContactList(Context context) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
-            while (cur != null && cur.moveToNext()) {
+            while (cur.moveToNext()) {
                 String id = cur.getString(
                         cur.getColumnIndex(ContactsContract.Contacts._ID));
                 String name = cur.getString(cur.getColumnIndex(
@@ -79,8 +51,8 @@ public class ContactsManager {
                         String phoneNo = pCur.getString(pCur.getColumnIndex(
                                 ContactsContract.CommonDataKinds.Phone.NUMBER));
                         contacts.add(new Contact(name, phoneNo));
-                        Timber.i("Name: " + name);
-                        Timber.i("Phone Number: " + phoneNo);
+                        Timber.i("Name: %s", name);
+                        Timber.i("Phone Number: %s", phoneNo);
                     }
                     pCur.close();
                 }
@@ -95,11 +67,10 @@ public class ContactsManager {
     /**
      * Returns a list of all the contacts on the phone that contain the given number
      *
-     * @param context
      * @param num     the number by which to search for contacts
      * @return returns an ArrayList of all the matching contacts
      */
-    public ArrayList<Contact> getContactsByNum(Context context, String num) {
+    public static ArrayList<Contact> getContactsByNum(String num) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         for (Contact contact : mContacts) {
             if (contact.getContactNumber().contains(num)) {
@@ -162,7 +133,7 @@ public class ContactsManager {
 
     // -- Classes -- //
 
-    public class AsyncContactsUpdater extends AsyncTask<String, String, String> {
+    public static class AsyncContactsUpdater extends AsyncTask<String, String, String> {
 
         private boolean mShowProgress;
         ProgressDialog mProgressDialog;
@@ -207,7 +178,7 @@ public class ContactsManager {
         }
     }
 
-    public class AsyncContactLookup extends AsyncTask<String, String, String> {
+    public static class AsyncContactLookup extends AsyncTask<String, String, String> {
 
         boolean mShowProgress;
         Context mContext;
@@ -224,7 +195,7 @@ public class ContactsManager {
             String status = "0";
             publishProgress("Getting contacts...");
             try {
-                mCurrentContacts = getContactsByNum(mContext, mNumber);
+                mCurrentContacts = getContactsByNum(mNumber);
                 status = "1";
             } catch (Exception e) {
                 status = "0";
