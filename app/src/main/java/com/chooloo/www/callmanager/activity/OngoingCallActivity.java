@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
+import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
@@ -196,6 +197,18 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key);
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
+
+        mOngoingCallLayout.setOnTouchListener(new OnSwipeTouchListener(this){
+            @Override
+            public void onSwipeRight() {
+                endCall();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+                activateCall();
+            }
+        });
     }
 
     @Override
