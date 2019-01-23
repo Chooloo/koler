@@ -3,8 +3,10 @@ package com.chooloo.www.callmanager.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +52,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+import static android.content.Context.AUDIO_SERVICE;
+import static android.content.Context.POWER_SERVICE;
 import static com.chooloo.www.callmanager.CallManager.getDisplayName;
 import static com.chooloo.www.callmanager.CallManager.sCall;
 
@@ -88,6 +93,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Handlers
     Handler mCallTimeHandler = new CallTimeHandler();
 
+    // Edit Texts
+//    @BindView(R.id.sms_input) EditText mSmsInput;
+
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
@@ -114,6 +122,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
+//    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     ViewGroup mCurrentOverlay = null;
 
     @Override
@@ -237,8 +246,21 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     @OnClick(R.id.reject_btn)
     public void deny(View view) {
-
         endCall();
+    }
+
+    /**
+     * Mutes the call's microphone
+     */
+    @OnClick(R.id.button_mute)
+    public void mute(View view) {
+        view.setActivated(!view.isActivated());
+        if (view.isActivated()) {
+            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
+        } else {
+            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
+        }
+        muteMic(view.isActivated());
     }
 
     //TODO silence the ringing
@@ -262,26 +284,31 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.cancel();
     }
 
-    /**
-     * Mutes the call's microphone
-     */
-    @OnClick(R.id.button_mute)
-    public void mute(View view) {
-        view.setActivated(!view.isActivated());
-        if (view.isActivated()) {
-            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
-        } else {
-            mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
-        }
-        muteMic(view.isActivated());
-    }
-
     //TODO add functionality to the send SMS Button
-    @OnClick(R.id.button_send_sms)
-    public void sendSMS(View view) {
+//    @OnClick(R.id.button_send_sms)
+//    public void sendSMS(View view) {
+//        setOverlay(mSendSmsOverlay);
+//        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
+//    }
 
-        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
-    }
+//    @OnClick(R.id.button_send_input_sms)
+//    public void sendInputSMS(View view) {
+//        String phoneNumber = String.format("smsto: %s", CallManager.getDisplayName());
+//        if (phoneNumber != null) {
+//            String message = mSmsInput.getText().toString();
+//            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+//            smsIntent.setData(Uri.parse(phoneNumber));
+//            smsIntent.putExtra("sms_body", message);
+//            if (smsIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(smsIntent);
+//                removeOverlay();
+//            } else {
+//                Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            Toast.makeText(this, "You need a phone number to send an sms... duh", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     // -- Call Actions -- //
 

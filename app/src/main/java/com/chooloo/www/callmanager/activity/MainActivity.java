@@ -83,7 +83,7 @@ public class MainActivity extends ToolbarActivity {
         PreferenceUtils.getInstance(this);
         ButterKnife.bind(this);
 
-        //Init timber
+        // Init timber
         Timber.plant(new Timber.DebugTree());
 
         // Ask for permissions
@@ -92,13 +92,17 @@ public class MainActivity extends ToolbarActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE, READ_CONTACTS}, 1);
         }
 
-        //Prompt the user with a dialog to select this app to be the default phone app
+        // Prompt the user with a dialog to select this app to be the default phone app
         String packageName = getApplicationContext().getPackageName();
 
-        //noinspection ConstantConditions
+        // noinspection ConstantConditions
         if (!getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
+        }
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            updateContacts(false);
         }
 
     }

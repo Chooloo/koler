@@ -66,7 +66,6 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                 }
                 break;
             case MotionEvent.ACTION_MOVE: //Perform the right action based on pointer's location
-
                 Rect outRect = new Rect();
                 v.getDrawingRect(outRect);
                 int x = (int) event.getX();
