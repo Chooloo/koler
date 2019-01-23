@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -90,7 +92,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     Handler mCallTimeHandler = new CallTimeHandler();
 
     // Edit Texts
-    @BindView(R.id.sms_input) EditText mSmsInput;
+//    @BindView(R.id.sms_input) EditText mSmsInput;
 
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
@@ -122,7 +124,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
-    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
+    //    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     ViewGroup mCurrentOverlay = null;
 
     @Override
@@ -199,15 +201,18 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
 
-        mOngoingCallLayout.setOnTouchListener(new OnSwipeTouchListener(this){
+        // Swipe listener
+        mOngoingCallLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+
             @Override
             public void onSwipeRight() {
-                endCall();
+                activateCall();
             }
 
             @Override
             public void onSwipeLeft() {
-                activateCall();
+
+                endCall();
             }
         });
     }
@@ -272,30 +277,30 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     //TODO add functionality to the send SMS Button
-    @OnClick(R.id.button_send_sms)
-    public void sendSMS(View view) {
-        setOverlay(mSendSmsOverlay);
-        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.button_send_input_sms)
-    public void sendInputSMS(View view) {
-        String phoneNumber = String.format("smsto: %s", CallManager.getDisplayContact(this).getPhoneNumber());
-        if (phoneNumber != null) {
-            String message = mSmsInput.getText().toString();
-            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-            smsIntent.setData(Uri.parse(phoneNumber));
-            smsIntent.putExtra("sms_body", message);
-            if (smsIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(smsIntent);
-                removeOverlay();
-            } else {
-                Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "You need a phone number to send an sms... duh", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @OnClick(R.id.button_send_sms)
+//    public void sendSMS(View view) {
+//        setOverlay(mSendSmsOverlay);
+//        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @OnClick(R.id.button_send_input_sms)
+//    public void sendInputSMS(View view) {
+//        String phoneNumber = String.format("smsto: %s", CallManager.getDisplayContact(this).getPhoneNumber());
+//        if (phoneNumber != null) {
+//            String message = mSmsInput.getText().toString();
+//            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+//            smsIntent.setData(Uri.parse(phoneNumber));
+//            smsIntent.putExtra("sms_body", message);
+//            if (smsIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(smsIntent);
+//                removeOverlay();
+//            } else {
+//                Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            Toast.makeText(this, "You need a phone number to send an sms... duh", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     @OnClick(R.id.button_speaker)
     public void toggleSpeaker(View view) {
@@ -318,6 +323,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      * End current call / Incoming call and changes the ui accordingly
      */
     private void endCall() {
+        mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         CallManager.sReject();
         releaseWakeLock();
@@ -342,15 +348,19 @@ public class OngoingCallActivity extends AppCompatActivity {
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.incoming_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 break;
             case Call.STATE_DIALING:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING:
