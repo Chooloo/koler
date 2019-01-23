@@ -76,22 +76,21 @@ public class CallManager {
      *
      * @return String - phone number, or voicemail. if not recognized, return null.
      */
-    public static String getDisplayName(Context context) {
-        String unknown = context.getString(R.string.name_unknown);
-        if (sCall == null) return unknown;
+    public static Contact getDisplayContact(Context context) {
+        if (sCall == null) return Contact.UNKNOWN;
         String uri = sCall.getDetails().getHandle().toString();
         if (uri.contains("voicemail"))
-            return "Voicemail";
+            return Contact.VOICEMAIL;
 
         String telephoneNumber = null;
         if (uri.contains("tel"))
             telephoneNumber = uri.replace("tel:", "");
 
-        if (telephoneNumber == null || telephoneNumber.isEmpty()) return unknown;
+        if (telephoneNumber == null || telephoneNumber.isEmpty()) return Contact.UNKNOWN;
 
-        String contactName = ContactsManager.getCallerName(context, telephoneNumber);
-        if (contactName == null || contactName.isEmpty()) return unknown;
-        return contactName;
+        Contact contact = ContactsManager.getContactByPhoneNumber(context, telephoneNumber);
+        if (contact == null) return Contact.UNKNOWN;
+        return contact;
     }
 
     /**

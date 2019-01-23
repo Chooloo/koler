@@ -246,7 +246,7 @@ public class MainActivity extends ToolbarActivity {
      * Updates the contacts list in mContactsManager
      */
     private void updateContacts(boolean showProgress) {
-        mContactsManager.updateContactsInBackground(this, showProgress);
+        ContactsManager.updateContactsInBackground(this, showProgress);
     }
 
     /**
@@ -272,7 +272,7 @@ public class MainActivity extends ToolbarActivity {
         protected String doInBackground(String... strings) {
             publishProgress("Populating...");
             Timber.i("Looking for contacts to populate the listview");
-            mCurrentContacts = mContactsManager.getContactsByNum(mPhoneNumber);
+            mCurrentContacts = ContactsManager.getContactsByNum(mPhoneNumber);
             return "1";
         }
 
@@ -356,8 +356,8 @@ public class MainActivity extends ToolbarActivity {
             lastPosition = position;
 
             // Set the texts
-            viewHolder.contactNameTxt.setText(contact.getContactName());
-            viewHolder.contactNumTxt.setText(contact.getContactNumber());
+            viewHolder.contactNameTxt.setText(contact.getName());
+            viewHolder.contactNumTxt.setText(contact.getPhoneNumber());
 
             return convertView;
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
+import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.R;
@@ -92,6 +94,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
     @BindView(R.id.text_stopwatch) TextView mTimeText;
 
+    // Images
+    @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
+    @BindView(R.id.image_photo) ImageView mPhotoImage;
+
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
@@ -149,7 +155,14 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
-        mCallerText.setText(CallManager.getDisplayName(this));
+        Contact contact = CallManager.getDisplayContact(this);
+        if (contact.getName() != null && !contact.getName().isEmpty())
+            mCallerText.setText(contact.getName());
+        if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {
+            mPlaceholderImage.setVisibility(View.INVISIBLE);
+            mPhotoImage.setVisibility(View.VISIBLE);
+            mPhotoImage.setImageURI(Uri.parse(contact.getPhotoUri()));
+        }
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
