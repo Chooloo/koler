@@ -13,8 +13,9 @@ public class Contact {
     public Contact(String name, String phoneNumber, String photoUri) {
         this.name = name;
         this.photoUri = photoUri;
-        if (phoneNumber.contains("+972")) this.phoneNumber = phoneNumber.replace("+972", "0");
-        else this.phoneNumber = phoneNumber;
+        if(phoneNumber != null) {
+            if (phoneNumber.contains("+972")) this.phoneNumber = phoneNumber.replace("+972", "0");
+        } else this.phoneNumber = phoneNumber;
     }
 
     // -- Getters -- //

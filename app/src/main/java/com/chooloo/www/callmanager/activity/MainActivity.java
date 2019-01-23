@@ -127,9 +127,9 @@ public class MainActivity extends ToolbarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key)) {
-            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, false);
-        }
+//        if (PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key)) {
+//            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, false);
+//        }
     }
 
     // -- Buttons -- //
