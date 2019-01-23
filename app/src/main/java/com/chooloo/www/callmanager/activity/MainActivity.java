@@ -1,20 +1,13 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.telecom.TelecomManager;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,25 +16,17 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
-import com.google.android.material.theme.MaterialComponentsViewInflater;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -49,7 +34,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,7 +47,6 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class MainActivity extends ToolbarActivity {
 
     // Variables
-    boolean isKeyboardDisabled = false;
     public static String sToNumber = "";
 
     // Local classes instances
@@ -83,7 +66,7 @@ public class MainActivity extends ToolbarActivity {
         PreferenceUtils.getInstance(this);
         ButterKnife.bind(this);
 
-        //Init timber
+        // Init timber
         Timber.plant(new Timber.DebugTree());
 
         // Ask for permissions
@@ -92,32 +75,29 @@ public class MainActivity extends ToolbarActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE, READ_CONTACTS}, 1);
         }
 
-        //Prompt the user with a dialog to select this app to be the default phone app
+        // Prompt the user with a dialog to select this app to be the default phone app
         String packageName = getApplicationContext().getPackageName();
 
-        //noinspection ConstantConditions
+        // noinspection ConstantConditions
         if (!getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
 
+        if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            updateContacts(false);
+        }
+
     }
 
-    /**
-     * If user gave permission
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
+        boolean isFirstInstance = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key);
+
         // If this is the first time the user opens the app
-        if (checkFirstTime()) {
-            if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (isFirstInstance) {
+            if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                 // If the user gave permission to look for contacts, look for 'em
                 updateContacts(false);
             }
@@ -144,19 +124,25 @@ public class MainActivity extends ToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        if (PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key)) {
+//            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, false);
+//        }
+    }
+
     // -- Buttons -- //
 
     /**
      * If the user clicks an item from the list, set the mNumberInput text to
      * the one from the list item
-     *
-     * @param view
      */
     @OnItemClick(R.id.dial_contacts_list)
     public void itemClicked(View view) {
         TextView listItem = (TextView) view.findViewById(R.id.contact_dial_list_number_text);
         mNumberInput.setText(listItem.getText().toString());
-        Timber.i("Item clicked: " + listItem.getText().toString());
+        Timber.i("Item clicked: %s", listItem.getText().toString());
     }
 
     /**
@@ -264,25 +250,7 @@ public class MainActivity extends ToolbarActivity {
      * Updates the contacts list in mContactsManager
      */
     private void updateContacts(boolean showProgress) {
-        mContactsManager.updateContactsInBackground(this, showProgress);
-    }
-
-    /**
-     * Checks weither this is the first time the user opens the app
-     *
-     * @return true if yes and false if no
-     */
-    private boolean checkFirstTime() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
-        if (!previouslyStarted) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.pref_previously_started), Boolean.TRUE);
-            edit.commit();
-            return true;
-        } else {
-            return false;
-        }
+        ContactsManager.updateContactsInBackground(this, showProgress);
     }
 
     /**
@@ -308,7 +276,7 @@ public class MainActivity extends ToolbarActivity {
         protected String doInBackground(String... strings) {
             publishProgress("Populating...");
             Timber.i("Looking for contacts to populate the listview");
-            mCurrentContacts = mContactsManager.getContactsByNum(MainActivity.this, mPhoneNumber);
+            mCurrentContacts = ContactsManager.getContactsByNum(mPhoneNumber);
             return "1";
         }
 
@@ -392,8 +360,8 @@ public class MainActivity extends ToolbarActivity {
             lastPosition = position;
 
             // Set the texts
-            viewHolder.contactNameTxt.setText(contact.getContactName());
-            viewHolder.contactNumTxt.setText(contact.getContactNumber());
+            viewHolder.contactNameTxt.setText(contact.getName());
+            viewHolder.contactNumTxt.setText(contact.getPhoneNumber());
 
             return convertView;
         }

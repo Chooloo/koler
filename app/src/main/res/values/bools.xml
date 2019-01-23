@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="pref_is_first_instance_default_value">true</bool>
+</resources>

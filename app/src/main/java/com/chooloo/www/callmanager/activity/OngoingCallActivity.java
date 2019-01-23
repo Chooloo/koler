@@ -3,7 +3,9 @@ package com.chooloo.www.callmanager.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,11 +18,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
+import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
@@ -48,9 +52,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
-
-import static com.chooloo.www.callmanager.CallManager.getDisplayName;
-import static com.chooloo.www.callmanager.CallManager.sCall;
 
 @SuppressLint("ClickableViewAccessibility")
 public class OngoingCallActivity extends AppCompatActivity {
@@ -88,6 +89,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Handlers
     Handler mCallTimeHandler = new CallTimeHandler();
 
+    // Edit Texts
+    @BindView(R.id.sms_input) EditText mSmsInput;
+
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
@@ -96,6 +100,10 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.text_action_time_left) TextView mActionTimeLeftText;
     @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
     @BindView(R.id.text_stopwatch) TextView mTimeText;
+
+    // Images
+    @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
+    @BindView(R.id.image_photo) ImageView mPhotoImage;
 
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
@@ -114,6 +122,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
+    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     ViewGroup mCurrentOverlay = null;
 
     @Override
@@ -154,21 +163,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
-        // Set the caller name text view
-        String phoneNumber = CallManager.getDisplayName();
-        if (phoneNumber != null) {
-            mCallerText.setText(phoneNumber);
-        } else {
-            mCallerText.setText(R.string.name_unknown);
-        }
-
-        // Checks for the caller name
-        String contactName = null;
-        if (sCall != null) {
-            contactName = mContactsManager.getCallerName(this, getDisplayName());
-        }
-        if (contactName != null) {
-            mCallerText.setText(contactName);
+        Contact contact = CallManager.getDisplayContact(this);
+        if (contact.getName() != null && !contact.getName().isEmpty())
+            mCallerText.setText(contact.getName());
+        if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {
+            mPlaceholderImage.setVisibility(View.INVISIBLE);
+            mPhotoImage.setVisibility(View.VISIBLE);
+            mPhotoImage.setImageURI(Uri.parse(contact.getPhotoUri()));
         }
 
         View.OnClickListener rejectListener = v -> endCall();
@@ -251,11 +252,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.start();
     }
 
-    @OnClick(R.id.button_cancel_timer)
-    public void cancelTimer(View view) {
-        mActionTimer.cancel();
-    }
-
     /**
      * Mutes the call's microphone
      */
@@ -270,11 +266,41 @@ public class OngoingCallActivity extends AppCompatActivity {
         muteMic(view.isActivated());
     }
 
+    @OnClick(R.id.button_cancel_timer)
+    public void cancelTimer(View view) {
+        mActionTimer.cancel();
+    }
+
     //TODO add functionality to the send SMS Button
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
-
+        setOverlay(mSendSmsOverlay);
         Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.button_send_input_sms)
+    public void sendInputSMS(View view) {
+        String phoneNumber = String.format("smsto: %s", CallManager.getDisplayContact(this).getPhoneNumber());
+        if (phoneNumber != null) {
+            String message = mSmsInput.getText().toString();
+            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+            smsIntent.setData(Uri.parse(phoneNumber));
+            smsIntent.putExtra("sms_body", message);
+            if (smsIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(smsIntent);
+                removeOverlay();
+            } else {
+                Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "You need a phone number to send an sms... duh", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.button_speaker)
+    public void toggleSpeaker(View view) {
+        view.setActivated(!view.isActivated());
+        mAudioManager.setSpeakerphoneOn(view.isActivated());
     }
 
     // -- Call Actions -- //

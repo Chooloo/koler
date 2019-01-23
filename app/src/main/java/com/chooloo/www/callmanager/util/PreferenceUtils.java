@@ -33,6 +33,7 @@ public class PreferenceUtils {
 
         sDefaultValues.put(R.string.pref_reject_call_timer_key, context.getString(R.string.pref_reject_call_timer_default_value));
         sDefaultValues.put(R.string.pref_answer_call_timer_key, context.getString(R.string.pref_answer_call_timer_default_value));
+        sDefaultValues.put(R.string.pref_is_first_instance_key, context.getResources().getBoolean(R.bool.pref_is_first_instance_default_value));
     }
 
     public static PreferenceUtils getInstance(Context context) {
