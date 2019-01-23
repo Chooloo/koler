@@ -5,33 +5,36 @@ import androidx.annotation.NonNull;
 public class Contact {
 
     // Variables
-    private String mContactName;
-    private String mContactNumber;
+    private String name;
+    private String phoneNumber;
+    private String photoUri;
 
     // Constructor
-    public Contact(String name, String number) {
-        this.mContactName = name;
-        this.mContactNumber = number;
+    public Contact(String name, String phoneNumber, String photoUri) {
+        this.name = name;
+        this.photoUri = photoUri;
+        if (phoneNumber.contains("+972")) this.phoneNumber = phoneNumber.replace("+972", "0");
+        else this.phoneNumber = phoneNumber;
     }
 
     // -- Getters -- //
 
     /**
      * Returns the contact's name
-     *
-     * @return mContactName
      */
-    public String getContactName() {
-        return this.mContactName;
+    public String getName() {
+        return this.name;
     }
 
     /**
      * Returns the contact's number
-     *
-     * @return mContactNumber
      */
-    public String getContactNumber() {
-        return this.mContactNumber;
+    public String getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public String getPhotoUri() {
+        return photoUri;
     }
 
     /**
@@ -42,6 +45,6 @@ public class Contact {
     @NonNull
     @Override
     public String toString() {
-        return "Name: " + this.mContactName + " Number: " + this.mContactNumber;
+        return "Name: " + this.name + " Number: " + this.phoneNumber;
     }
 }
