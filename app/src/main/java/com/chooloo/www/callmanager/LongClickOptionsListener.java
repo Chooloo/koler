@@ -27,6 +27,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     private Context mContext;
     private ViewGroup mFabView;
     private View.OnClickListener mOnNormalClick;
+    private OverlayChangeListener mOverlayChangeListener;
 
     private boolean mIsCanceled = false;
 
@@ -38,10 +39,14 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
     private List<TextView> mActionsText = new ArrayList<>();
 
-    public LongClickOptionsListener(@NotNull Context context, @NotNull ViewGroup fabView, @NotNull View.OnClickListener onNormalClick) {
+    public LongClickOptionsListener(@NotNull Context context,
+                                    @NotNull ViewGroup fabView,
+                                    @NotNull View.OnClickListener onNormalClick,
+                                    @NotNull OverlayChangeListener overlayChangeListener) {
         mContext = context;
         mFabView = fabView;
         mOnNormalClick = onNormalClick;
+        mOverlayChangeListener = overlayChangeListener;
 
         for (int i = 0; i < mFabView.getChildCount(); i++) {
             View v = mFabView.getChildAt(i);
@@ -126,28 +131,26 @@ public class LongClickOptionsListener implements View.OnTouchListener {
      */
     private void changeVisibility(boolean overlayVisible) {
         if (overlayVisible) {
-            mFabView.animate().alpha(1.0f);
+            mOverlayChangeListener.setOverlay(mFabView);
             animateChildrenPos = 0;
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (animateChildrenPos >= mFabView.getChildCount()) return;
-                    View v = mFabView.getChildAt(animateChildrenPos);
-                    if (v instanceof FloatingActionButton) {
-                        ((FloatingActionButton) v).show();
-                        mHandler.postDelayed(this, ANIMATE_MILLIS);
-                    } else {
-                        mHandler.post(this);
-                    }
-                    animateChildrenPos++;
-                }
-            });
+
+            //TODO add animation - needs to be synchronised with the thingy
+//            mHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (animateChildrenPos >= mFabView.getChildCount()) return;
+//                    View v = mFabView.getChildAt(animateChildrenPos);
+//                    if (v instanceof FloatingActionButton) {
+//                        ((FloatingActionButton) v).show();
+//                        mHandler.postDelayed(this, ANIMATE_MILLIS);
+//                    } else {
+//                        mHandler.post(this);
+//                    }
+//                    animateChildrenPos++;
+//                }
+//            });
         } else {
-            mFabView.animate().alpha(0.0f);
-            for (FloatingActionButton actionButton : mFloatingButtons) {
-                actionButton.hide();
-                actionButton.setHovered(false);
-            }
+            mOverlayChangeListener.removeOverlay(mFabView);
             for (TextView textView : mActionsText) {
                 textView.setVisibility(View.INVISIBLE);
             }
@@ -192,5 +195,10 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                 Utilities.vibrate(mContext);
             }
         }
+    }
+
+    public interface OverlayChangeListener {
+        void setOverlay(@NotNull ViewGroup view);
+        void removeOverlay(@NotNull ViewGroup view);
     }
 }

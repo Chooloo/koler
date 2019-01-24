@@ -116,6 +116,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
 
+    @BindView(R.id.button_cancel_timer) FloatingActionButton mCancelTimerButton;
+
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
     @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
@@ -123,7 +125,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
     @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
-    ViewGroup mCurrentOverlay = null;
+    @Nullable ViewGroup mCurrentOverlay = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +176,19 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
-        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
-        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
+        LongClickOptionsListener.OverlayChangeListener overlayChangeListener = new LongClickOptionsListener.OverlayChangeListener() {
+            @Override
+            public void setOverlay(@NotNull ViewGroup view) {
+                OngoingCallActivity.this.setOverlay(view);
+            }
+
+            @Override
+            public void removeOverlay(@NotNull ViewGroup view) {
+                OngoingCallActivity.this.removeOverlay(view);
+            }
+        };
+        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener, overlayChangeListener);
+        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener, overlayChangeListener);
 
         mRejectButton.setOnTouchListener(mRejectLongClickListener);
         mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
@@ -190,6 +203,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCancelButton.hide();
         mSendSMSButton.hide();
         mRejectCallTimerButton.hide();
+        mCancelTimerButton.hide();
+
 
         //Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
@@ -272,6 +287,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     //TODO add functionality to the Add call button
+    @OnClick(R.id.button_add_call)
     public void addCall(View view) {
 
     }
@@ -416,18 +432,44 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     private void setOverlay(@NotNull ViewGroup overlay) {
         if (mCurrentOverlay != null) {
-            mCurrentOverlay.animate().alpha(0.0f);
+            removeOverlay(mCurrentOverlay);
         }
-        mCurrentOverlay = overlay;
-        mCurrentOverlay.animate().alpha(1.0f);
         setActionButtonsClickable(false);
+
+        mCurrentOverlay = overlay;
+        mCurrentOverlay.setAlpha(0.0f);
+        mCurrentOverlay.animate().alpha(1.0f);
+
+        for (int i = 0; i < overlay.getChildCount(); i++) {
+            View v = overlay.getChildAt(i);
+            if (v instanceof FloatingActionButton) {
+                ((FloatingActionButton) v).show();
+            }
+        }
+    }
+
+    private void removeOverlay(@NotNull ViewGroup overlay) {
+        if (overlay == mCurrentOverlay) {
+            setActionButtonsClickable(true);
+            //Animate fade, and then 'remove' the overlay
+            overlay.animate()
+                    .alpha(0.0f);
+
+            for (int i = 0; i < overlay.getChildCount(); i++) {
+                View v = overlay.getChildAt(i);
+                if (v instanceof FloatingActionButton) {
+                    ((FloatingActionButton) v).hide();
+                }
+                v.setHovered(false);
+            }
+
+            mCurrentOverlay = null;
+        }
     }
 
     private void removeOverlay() {
-        setActionButtonsClickable(true);
         if (mCurrentOverlay != null) {
-            mCurrentOverlay.animate().alpha(0.0f);
-            mCurrentOverlay = null;
+            removeOverlay(mCurrentOverlay);
         }
     }
 
@@ -435,16 +477,10 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
             View v = mOngoingCallLayout.getChildAt(i);
-            if (v instanceof FloatingActionButton) {
+            if (v instanceof FloatingActionButton || v instanceof ImageView) {
                 v.setClickable(clickable);
+                v.setFocusable(false);
             }
-        }
-        if (clickable) {
-            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-            mRejectButton.setOnTouchListener(mRejectLongClickListener);
-        } else {
-            mAnswerButton.setOnTouchListener(mDefaultListener);
-            mRejectButton.setOnTouchListener(mDefaultListener);
         }
     }
 
@@ -453,7 +489,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void acquireWakeLock() {
         if (!wakeLock.isHeld()) {
-            wakeLock.acquire();
+            wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/);
         }
     }
 
