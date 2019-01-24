@@ -78,4 +78,9 @@ public class Utilities {
 
         return outRect.contains(x, y);
     }
+
+    public static void toggleViewActivation(View view) {
+        view.setActivated(!view.isActivated());
+
+    }
 }

@@ -25,11 +25,11 @@ import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.Contact;
-import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,11 +64,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Current states
     boolean mIsCallingUI = false;
     boolean mIsCreatingUI = true;
-    private boolean mIsMuted = false;
 
     // Instances of local classes
     Stopwatch mCallTimer = new Stopwatch();
-    ContactsManager mContactsManager = new ContactsManager();
     Callback mCallback = new Callback();
     ActionTimer mActionTimer = new ActionTimer();
 
@@ -107,10 +105,13 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
+
+    @BindView(R.id.button_hold) ImageView mHoldButton;
     @BindView(R.id.button_mute) ImageView mMuteButton;
     @BindView(R.id.button_keypad) ImageView mKeypadButton;
     @BindView(R.id.button_speaker) ImageView mSpeakerButton;
     @BindView(R.id.button_add_call) ImageView mAddCallButton;
+
     @BindView(R.id.button_reject_call_timer) FloatingActionButton mRejectCallTimerButton;
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
@@ -183,6 +184,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimerOverlay.setAlpha(0.0f);
         mAnswerCallOverlay.setAlpha(0.0f);
         mRejectCallOverlay.setAlpha(0.0f);
+        mSendSmsOverlay.setAlpha(0.0f);
 
         // hide buttons
         mCancelButton.hide();
@@ -223,6 +225,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     // -- Buttons -- //
+
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
@@ -239,18 +242,38 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.start();
     }
 
-    /**
-     * Mutes the call's microphone
-     */
     @OnClick(R.id.button_mute)
-    public void mute(View view) {
-        view.setActivated(!view.isActivated());
+    public void toggleMute(View view) {
+        Utilities.toggleViewActivation(view);
         if (view.isActivated()) {
             mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
         } else {
             mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
         }
-        muteMic(view.isActivated());
+        mAudioManager.setMicrophoneMute(view.isActivated());
+    }
+
+    @OnClick(R.id.button_speaker)
+    public void toggleSpeaker(View view) {
+        Utilities.toggleViewActivation(view);
+        mAudioManager.setSpeakerphoneOn(view.isActivated());
+    }
+
+    @OnClick(R.id.button_hold)
+    public void toggleHold(View view) {
+        Utilities.toggleViewActivation(view);
+        CallManager.sHold(view.isActivated());
+    }
+
+    //TODO add functionality to the Keypad button
+    @OnClick(R.id.button_keypad)
+    public void toggleKeypad(View view) {
+
+    }
+
+    //TODO add functionality to the Add call button
+    public void addCall(View view) {
+
     }
 
     @OnClick(R.id.button_cancel_timer)
@@ -262,32 +285,21 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
         setOverlay(mSendSmsOverlay);
-        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.button_send_input_sms)
     public void sendInputSMS(View view) {
-        String phoneNumber = String.format("smsto: %s", CallManager.getDisplayContact(this).getPhoneNumber());
-        if (phoneNumber != null) {
-            String message = mSmsInput.getText().toString();
-            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-            smsIntent.setData(Uri.parse(phoneNumber));
-            smsIntent.putExtra("sms_body", message);
-            if (smsIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(smsIntent);
-                removeOverlay();
-            } else {
-                Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
-            }
+        String phoneNumber = String.format("SMS to: %s", CallManager.getDisplayContact(this).getPhoneNumber());
+        String message = mSmsInput.getText().toString();
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse(phoneNumber));
+        smsIntent.putExtra("sms_body", message);
+        if (smsIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(smsIntent);
+            removeOverlay();
         } else {
-            Toast.makeText(this, "You need a phone number to send an sms... duh", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @OnClick(R.id.button_speaker)
-    public void toggleSpeaker(View view) {
-        view.setActivated(!view.isActivated());
-        mAudioManager.setSpeakerphoneOn(view.isActivated());
     }
 
     // -- Call Actions -- //
@@ -309,13 +321,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.sReject();
         releaseWakeLock();
         finish();
-    }
-
-    /**
-     * Mutes / Unmutes the device's microphone
-     */
-    private void muteMic(boolean wot) {
-        mAudioManager.setMicrophoneMute(wot);
     }
 
     // -- UI -- //
@@ -375,6 +380,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Change the buttons layout
         mAnswerButton.hide();
+        mHoldButton.setVisibility(View.VISIBLE);
         mMuteButton.setVisibility(View.VISIBLE);
         mKeypadButton.setVisibility(View.VISIBLE);
         mSpeakerButton.setVisibility(View.VISIBLE);
