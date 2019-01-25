@@ -15,6 +15,7 @@
         layout="@layout/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,11 +62,11 @@
         android:id="@+id/table_numbers"
         android:layout_width="250dp"
         android:layout_height="300dp"
+        android:layout_marginBottom="20dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_number_input">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
@@ -228,7 +229,7 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="70dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="48dp"
         android:gravity="center"
         android:text="Call"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -242,11 +243,11 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="del"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_call" />
+        app:layout_constraintStart_toEndOf="@+id/button_call"
+        app:layout_constraintTop_toTopOf="@+id/button_call" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
