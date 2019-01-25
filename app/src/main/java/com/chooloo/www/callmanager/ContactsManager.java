@@ -165,7 +165,7 @@ public class ContactsManager {
         @Override
         protected void onPreExecute() {
             if (mShowProgress) {
-                mProgressDialog = new ProgressDialog(mContext, ProgressDialog.THEME_DEVICE_DEFAULT_LIGHT);
+                mProgressDialog = new ProgressDialog(mContext);
                 mProgressDialog.setTitle("Updating Contacts");
                 mProgressDialog.setMessage("I bet you can't even count to 10");
                 mProgressDialog.show();

@@ -20,6 +20,6 @@
     <style name="CircleButton" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/circle_button_background</item>
         <item name="android:textColor">@color/green_phone</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 </resources>
