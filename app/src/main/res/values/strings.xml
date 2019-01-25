@@ -34,4 +34,7 @@
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>
     <string name="answer_timer_indicator">Answering in</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
+import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
@@ -214,6 +217,21 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key);
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
+
+        // Swipe listener
+        mOngoingCallLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+
+            @Override
+            public void onSwipeRight() {
+                activateCall();
+            }
+
+            @Override
+            public void onSwipeLeft() {
+
+                endCall();
+            }
+        });
     }
 
     @Override
@@ -333,6 +351,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      * End current call / Incoming call and changes the ui accordingly
      */
     private void endCall() {
+        mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         CallManager.sReject();
         releaseWakeLock();
@@ -350,15 +369,19 @@ public class OngoingCallActivity extends AppCompatActivity {
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.incoming_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 break;
             case Call.STATE_DIALING:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING:

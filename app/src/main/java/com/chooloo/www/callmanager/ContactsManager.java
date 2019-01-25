@@ -77,9 +77,11 @@ public class ContactsManager {
     public static ArrayList<Contact> getContactsByNum(String num) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         for (Contact contact : mContacts) {
-            if (contact.getPhoneNumber().contains(num)) {
-                Timber.i("Got a matching contact: " + contact.getName() + " number: " + contact.getPhoneNumber());
-                contacts.add(contact);
+            if (contact.getPhoneNumber() != null) {
+                if (contact.getPhoneNumber().contains(num)) {
+                    Timber.i("Got a matching contact: " + contact.getName() + " number: " + contact.getPhoneNumber());
+                    contacts.add(contact);
+                }
             }
         }
         return contacts;

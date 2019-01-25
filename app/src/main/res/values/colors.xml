@@ -17,9 +17,13 @@
 
     <color name="semi_white">#E6FFFFFF</color>
 
-    <color name="green_phone_semi_trans">#9566bb6a</color>
+    <color name="green_phone_semi_trans">#8066BB6A</color>
     <color name="green_phone">#66bb6a</color>
     <color name="red_phone">#ef5350</color>
+    <color name="red_phone_semi_trans">#80EF5350</color>
+
+    <color name="outgoing_call_back_1">#778F8F8F</color>
+    <color name="outgoing_call_back_2">#77E9E9E9</color>
 
     <color name="caller_text_color">#313131</color>
 

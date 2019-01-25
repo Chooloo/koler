@@ -47,4 +47,9 @@ dependencies {
 
     // Floating action button design
     implementation 'com.github.JediBurrell:customFloatingActionButton:-SNAPSHOT'
+
+    // Navigation
+    def nav_version = "1.0.0-alpha09"
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for kotlin
 }

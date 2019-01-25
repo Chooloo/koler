@@ -5,7 +5,8 @@
     android:id="@+id/ongoing_call_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.OngoingCallActivity">
+    tools:context=".activity.OngoingCallActivity"
+    android:background="@drawable/ongoing_call_background">
 
     <FrameLayout
         android:id="@+id/frameLayout"
