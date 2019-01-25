@@ -193,7 +193,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_keypad"
         app:layout_constraintTop_toTopOf="@+id/button_keypad"
-        app:srcCompat="@drawable/ic_phone_plus_black_24dp"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Guideline
