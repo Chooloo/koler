@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="@color/grey_back"
     tools:context=".activity.MainActivity">
 
     <!-- App Bar -->
