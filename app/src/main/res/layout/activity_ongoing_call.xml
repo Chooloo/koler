@@ -23,4 +23,8 @@
         layout="@layout/overlay_action_timer"
         tools:visibility="gone" />
 
+    <include layout="@layout/overlay_send_sms"
+        android:id="@+id/overlay_send_sms"
+        tools:visibility="gone" />
+
 </FrameLayout>

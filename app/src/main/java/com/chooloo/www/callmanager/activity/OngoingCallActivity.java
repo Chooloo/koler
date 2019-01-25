@@ -27,12 +27,12 @@ import android.widget.Toast;
 
 import com.chooloo.www.callmanager.CallManager;
 import com.chooloo.www.callmanager.Contact;
-import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
@@ -67,11 +67,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Current states
     boolean mIsCallingUI = false;
     boolean mIsCreatingUI = true;
-    private boolean mIsMuted = false;
 
     // Instances of local classes
     Stopwatch mCallTimer = new Stopwatch();
-    ContactsManager mContactsManager = new ContactsManager();
     Callback mCallback = new Callback();
     ActionTimer mActionTimer = new ActionTimer();
 
@@ -92,7 +90,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     Handler mCallTimeHandler = new CallTimeHandler();
 
     // Edit Texts
-//    @BindView(R.id.sms_input) EditText mSmsInput;
+    @BindView(R.id.sms_input) EditText mSmsInput;
 
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
@@ -110,13 +108,18 @@ public class OngoingCallActivity extends AppCompatActivity {
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
+
+    @BindView(R.id.button_hold) ImageView mHoldButton;
     @BindView(R.id.button_mute) ImageView mMuteButton;
     @BindView(R.id.button_keypad) ImageView mKeypadButton;
     @BindView(R.id.button_speaker) ImageView mSpeakerButton;
     @BindView(R.id.button_add_call) ImageView mAddCallButton;
+
     @BindView(R.id.button_reject_call_timer) FloatingActionButton mRejectCallTimerButton;
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
+
+    @BindView(R.id.button_cancel_timer) FloatingActionButton mCancelTimerButton;
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
@@ -124,8 +127,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
-    //    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
-    ViewGroup mCurrentOverlay = null;
+    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
+    @Nullable ViewGroup mCurrentOverlay = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,8 +179,19 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
-        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener);
-        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener);
+        LongClickOptionsListener.OverlayChangeListener overlayChangeListener = new LongClickOptionsListener.OverlayChangeListener() {
+            @Override
+            public void setOverlay(@NotNull ViewGroup view) {
+                OngoingCallActivity.this.setOverlay(view);
+            }
+
+            @Override
+            public void removeOverlay(@NotNull ViewGroup view) {
+                OngoingCallActivity.this.removeOverlay(view);
+            }
+        };
+        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener, overlayChangeListener);
+        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener, overlayChangeListener);
 
         mRejectButton.setOnTouchListener(mRejectLongClickListener);
         mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
@@ -186,11 +200,14 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimerOverlay.setAlpha(0.0f);
         mAnswerCallOverlay.setAlpha(0.0f);
         mRejectCallOverlay.setAlpha(0.0f);
+        mSendSmsOverlay.setAlpha(0.0f);
 
         // hide buttons
         mCancelButton.hide();
         mSendSMSButton.hide();
         mRejectCallTimerButton.hide();
+        mCancelTimerButton.hide();
+
 
         //Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
@@ -241,6 +258,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     // -- Buttons -- //
+
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
     public void startEndCallTimer(View view) {
@@ -257,18 +275,39 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.start();
     }
 
-    /**
-     * Mutes the call's microphone
-     */
     @OnClick(R.id.button_mute)
-    public void mute(View view) {
-        view.setActivated(!view.isActivated());
+    public void toggleMute(View view) {
+        Utilities.toggleViewActivation(view);
         if (view.isActivated()) {
             mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
         } else {
             mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
         }
-        muteMic(view.isActivated());
+        mAudioManager.setMicrophoneMute(view.isActivated());
+    }
+
+    @OnClick(R.id.button_speaker)
+    public void toggleSpeaker(View view) {
+        Utilities.toggleViewActivation(view);
+        mAudioManager.setSpeakerphoneOn(view.isActivated());
+    }
+
+    @OnClick(R.id.button_hold)
+    public void toggleHold(View view) {
+        Utilities.toggleViewActivation(view);
+        CallManager.sHold(view.isActivated());
+    }
+
+    //TODO add functionality to the Keypad button
+    @OnClick(R.id.button_keypad)
+    public void toggleKeypad(View view) {
+
+    }
+
+    //TODO add functionality to the Add call button
+    @OnClick(R.id.button_add_call)
+    public void addCall(View view) {
+
     }
 
     @OnClick(R.id.button_cancel_timer)
@@ -277,35 +316,24 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     //TODO add functionality to the send SMS Button
-//    @OnClick(R.id.button_send_sms)
-//    public void sendSMS(View view) {
-//        setOverlay(mSendSmsOverlay);
-//        Toast.makeText(this, "Supposed to do something here", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @OnClick(R.id.button_send_input_sms)
-//    public void sendInputSMS(View view) {
-//        String phoneNumber = String.format("smsto: %s", CallManager.getDisplayContact(this).getPhoneNumber());
-//        if (phoneNumber != null) {
-//            String message = mSmsInput.getText().toString();
-//            Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-//            smsIntent.setData(Uri.parse(phoneNumber));
-//            smsIntent.putExtra("sms_body", message);
-//            if (smsIntent.resolveActivity(getPackageManager()) != null) {
-//                startActivity(smsIntent);
-//                removeOverlay();
-//            } else {
-//                Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-//            Toast.makeText(this, "You need a phone number to send an sms... duh", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    @OnClick(R.id.button_send_sms)
+    public void sendSMS(View view) {
+        setOverlay(mSendSmsOverlay);
+    }
 
-    @OnClick(R.id.button_speaker)
-    public void toggleSpeaker(View view) {
-        view.setActivated(!view.isActivated());
-        mAudioManager.setSpeakerphoneOn(view.isActivated());
+    @OnClick(R.id.button_send_input_sms)
+    public void sendInputSMS(View view) {
+        String phoneNumber = String.format("SMS to: %s", CallManager.getDisplayContact(this).getPhoneNumber());
+        String message = mSmsInput.getText().toString();
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
+        smsIntent.setData(Uri.parse(phoneNumber));
+        smsIntent.putExtra("sms_body", message);
+        if (smsIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(smsIntent);
+            removeOverlay();
+        } else {
+            Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // -- Call Actions -- //
@@ -328,13 +356,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.sReject();
         releaseWakeLock();
         finish();
-    }
-
-    /**
-     * Mutes / Unmutes the device's microphone
-     */
-    private void muteMic(boolean wot) {
-        mAudioManager.setMicrophoneMute(wot);
     }
 
     // -- UI -- //
@@ -398,6 +419,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Change the buttons layout
         mAnswerButton.hide();
+        mHoldButton.setVisibility(View.VISIBLE);
         mMuteButton.setVisibility(View.VISIBLE);
         mKeypadButton.setVisibility(View.VISIBLE);
         mSpeakerButton.setVisibility(View.VISIBLE);
@@ -433,18 +455,44 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     private void setOverlay(@NotNull ViewGroup overlay) {
         if (mCurrentOverlay != null) {
-            mCurrentOverlay.animate().alpha(0.0f);
+            removeOverlay(mCurrentOverlay);
         }
-        mCurrentOverlay = overlay;
-        mCurrentOverlay.animate().alpha(1.0f);
         setActionButtonsClickable(false);
+
+        mCurrentOverlay = overlay;
+        mCurrentOverlay.setAlpha(0.0f);
+        mCurrentOverlay.animate().alpha(1.0f);
+
+        for (int i = 0; i < overlay.getChildCount(); i++) {
+            View v = overlay.getChildAt(i);
+            if (v instanceof FloatingActionButton) {
+                ((FloatingActionButton) v).show();
+            }
+        }
+    }
+
+    private void removeOverlay(@NotNull ViewGroup overlay) {
+        if (overlay == mCurrentOverlay) {
+            setActionButtonsClickable(true);
+            //Animate fade, and then 'remove' the overlay
+            overlay.animate()
+                    .alpha(0.0f);
+
+            for (int i = 0; i < overlay.getChildCount(); i++) {
+                View v = overlay.getChildAt(i);
+                if (v instanceof FloatingActionButton) {
+                    ((FloatingActionButton) v).hide();
+                }
+                v.setHovered(false);
+            }
+
+            mCurrentOverlay = null;
+        }
     }
 
     private void removeOverlay() {
-        setActionButtonsClickable(true);
         if (mCurrentOverlay != null) {
-            mCurrentOverlay.animate().alpha(0.0f);
-            mCurrentOverlay = null;
+            removeOverlay(mCurrentOverlay);
         }
     }
 
@@ -452,16 +500,10 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
             View v = mOngoingCallLayout.getChildAt(i);
-            if (v instanceof FloatingActionButton) {
+            if (v instanceof FloatingActionButton || v instanceof ImageView) {
                 v.setClickable(clickable);
+                v.setFocusable(false);
             }
-        }
-        if (clickable) {
-            mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-            mRejectButton.setOnTouchListener(mRejectLongClickListener);
-        } else {
-            mAnswerButton.setOnTouchListener(mDefaultListener);
-            mRejectButton.setOnTouchListener(mDefaultListener);
         }
     }
 
@@ -470,7 +512,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void acquireWakeLock() {
         if (!wakeLock.isHeld()) {
-            wakeLock.acquire();
+            wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/);
         }
     }
 

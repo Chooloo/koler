@@ -33,18 +33,20 @@ public class CallManager {
             if (sCall.getState() == Call.STATE_RINGING) {
                 sCall.reject(false, null);
             } else {
-                // Try both disconnecting and rejecting
                 try {
                     sCall.disconnect();
                 } catch (Exception e1) {
-                    Timber.e("Couldn't disconnect call (Trying to reject): %s", e1);
-                    try {
-                        sCall.reject(false, null);
-                    } catch (Exception e2) {
-                        Timber.e("Couldn't end call: %s", e2);
-                    }
+                    Timber.e(e1, "Couldn't disconnect call (Trying to reject)");
+                    sCall.reject(false, null);
                 }
             }
+        }
+    }
+
+    public static void sHold(boolean hold) {
+        if (sCall != null) {
+            if (hold) sCall.hold();
+            else sCall.unhold();
         }
     }
 
