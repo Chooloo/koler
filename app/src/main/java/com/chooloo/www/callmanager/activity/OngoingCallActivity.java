@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -19,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -181,8 +179,12 @@ public class OngoingCallActivity extends AppCompatActivity {
         View.OnClickListener answerListener = v -> activateCall();
         LongClickOptionsListener.OverlayChangeListener overlayChangeListener = new LongClickOptionsListener.OverlayChangeListener() {
             @Override
-            public void setOverlay(@NotNull ViewGroup view) {
-                OngoingCallActivity.this.setOverlay(view);
+            public boolean setOverlay(@NotNull ViewGroup view) {
+                if (mCurrentOverlay == null) {
+                    OngoingCallActivity.this.setOverlay(view);
+                    return true;
+                }
+                return false;
             }
 
             @Override
