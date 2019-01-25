@@ -8,13 +8,13 @@
     <color name="icon_active_light">#DF000000</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
-
     <color name="grey_50">#fafafa</color>
 
     <color name="blue_accent_700">#2962ff</color>
     <color name="green_accent_700">#00c853</color>
     <color name="red_accent_700">#d50000</color>
 
+    <color name="white">#ffffff</color>
     <color name="semi_white">#E6FFFFFF</color>
 
     <color name="green_phone_semi_trans">#8066BB6A</color>
@@ -26,6 +26,5 @@
     <color name="outgoing_call_back_2">#77E9E9E9</color>
 
     <color name="caller_text_color">#313131</color>
-
 
 </resources>
