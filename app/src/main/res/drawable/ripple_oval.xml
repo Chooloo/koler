@@ -3,7 +3,8 @@
     android:color="?android:attr/colorControlHighlight">
     <item>
         <shape android:shape="oval">
-            <solid android:color="@color/selector_button_background"/>
+            <solid android:color="@color/semi_white"/>
+            <!--<solid android:color="@color/selector_button_background"/>-->
         </shape>
     </item>
 </ripple>
