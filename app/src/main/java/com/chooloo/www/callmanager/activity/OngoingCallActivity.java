@@ -193,8 +193,12 @@ public class OngoingCallActivity extends AppCompatActivity {
         View.OnClickListener answerListener = v -> activateCall();
         LongClickOptionsListener.OverlayChangeListener overlayChangeListener = new LongClickOptionsListener.OverlayChangeListener() {
             @Override
-            public void setOverlay(@NotNull ViewGroup view) {
-                OngoingCallActivity.this.setOverlay(view);
+            public boolean setOverlay(@NotNull ViewGroup view) {
+                if (mCurrentOverlay == null) {
+                    OngoingCallActivity.this.setOverlay(view);
+                    return true;
+                }
+                return false;
             }
 
             @Override

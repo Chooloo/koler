@@ -131,10 +131,12 @@ public class LongClickOptionsListener implements View.OnTouchListener {
      */
     private void changeVisibility(boolean overlayVisible) {
         if (overlayVisible) {
-            mOverlayChangeListener.setOverlay(mFabView);
-            animateChildrenPos = 0;
+            if (mOverlayChangeListener.setOverlay(mFabView)) {
+                animateChildrenPos = 0;
+                mRunnable.isFinished = true;
+                Utilities.vibrate(mContext);
 
-            //TODO add animation - needs to be synchronised with the thingy
+                //TODO add animation - needs to be synchronised with the thingy
 //            mHandler.post(new Runnable() {
 //                @Override
 //                public void run() {
@@ -149,6 +151,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 //                    animateChildrenPos++;
 //                }
 //            });
+            }
         } else {
             mOverlayChangeListener.removeOverlay(mFabView);
             for (TextView textView : mActionsText) {
@@ -191,14 +194,24 @@ public class LongClickOptionsListener implements View.OnTouchListener {
         public void run() {
             if (!mIsCanceled) {
                 changeVisibility(true);
-                isFinished = true;
-                Utilities.vibrate(mContext);
             }
         }
     }
 
     public interface OverlayChangeListener {
-        void setOverlay(@NotNull ViewGroup view);
+
+        /**
+         * Set the given view as an overlay
+         *
+         * @param view the overlay
+         * @return whether the view has been set as an overlay
+         */
+        boolean setOverlay(@NotNull ViewGroup view);
+
+        /**
+         * Remove the given view
+         * @param view the overlay
+         */
         void removeOverlay(@NotNull ViewGroup view);
     }
 }

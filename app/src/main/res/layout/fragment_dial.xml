@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".fragment.DialFragment">
+
+    <!-- Matching Contacts List View -->
+    <ListView
+        android:id="@+id/list_dial_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_number_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ListView>
+
+    <!-- Number Input Field -->
+    <EditText
+        android:id="@+id/text_number_input"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        android:ems="13"
+        android:gravity="center"
+        android:hint="Phone Number"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/table_numbers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_dial_contacts" />
+
+    <!-- Dialer Buttons -->
+    <TableLayout
+        android:id="@+id/table_numbers"
+        android:layout_width="240dp"
+        android:layout_height="320dp"
+        android:weightSum="4"
+        app:layout_constraintBottom_toTopOf="@+id/button_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_number_input">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/chip1"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/chip2"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="2" />
+
+            <TextView
+                android:id="@+id/chip3"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="3" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/chip4"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="4" />
+
+            <TextView
+                android:id="@+id/chip5"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="5" />
+
+            <TextView
+                android:id="@+id/chip6"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="6" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/chip7"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="7" />
+
+            <TextView
+                android:id="@+id/chip8"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="8" />
+
+            <TextView
+                android:id="@+id/chip9"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="9" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/chip_star"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="*" />
+
+            <TextView
+                android:id="@+id/chip0"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="0" />
+
+            <TextView
+                android:id="@+id/chip_hex"
+                style="@style/TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="#" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+    <!-- Delete Button -->
+    <TextView
+        android:id="@+id/button_call"
+        style="@style/TextButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Call"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_delete"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Call Button -->
+    <TextView
+        android:id="@+id/button_delete"
+        style="@style/TextButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="del"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_call" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
