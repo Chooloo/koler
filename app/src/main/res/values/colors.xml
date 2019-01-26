@@ -3,12 +3,12 @@
     <color name="colorPrimary">@color/grey_50</color>
     <color name="colorPrimaryDark">#c7c7c7</color>
     <color name="colorAccent">@color/blue_accent_700</color>
-    <color name="colorBackground">@color/grey_50</color>
+    <color name="colorBackground">@color/grey_back</color>
 
     <color name="icon_active_light">#000000</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
-
+    <color name="grey_back">#F0F0F0</color>
     <color name="grey_50">#fafafa</color>
 
     <color name="blue_accent_700">#2962ff</color>
