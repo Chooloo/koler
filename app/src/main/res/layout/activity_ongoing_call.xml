@@ -3,28 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frame"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
+    <!-- OnGoingCall Layout -->
     <include layout="@layout/on_going_call" />
 
+    <!-- Reject Options -->
     <include
         android:id="@+id/overlay_reject_call_options"
         layout="@layout/overlay_reject_call_options"
-        tools:visibility="gone"/>
+        tools:visibility="gone" />
 
+    <!-- Answer Options -->
     <include
         android:id="@+id/overlay_answer_call_options"
         layout="@layout/overlay_answer_call_options"
         tools:visibility="gone" />
 
+    <!-- Action Timer Overlay -->
     <include
         android:id="@+id/overlay_action_timer"
         layout="@layout/overlay_action_timer"
         tools:visibility="gone" />
 
-    <include layout="@layout/overlay_send_sms"
+    <!-- Send SMS Overlay -->
+    <include
         android:id="@+id/overlay_send_sms"
+        layout="@layout/overlay_send_sms"
         tools:visibility="gone" />
 
 </FrameLayout>

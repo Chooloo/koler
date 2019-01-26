@@ -18,9 +18,11 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="TextButton" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/text_button_selector</item>
         <item name="android:textColor">@color/green_phone</item>
         <item name="android:textSize">16dp</item>
     </style>
+
 </resources>

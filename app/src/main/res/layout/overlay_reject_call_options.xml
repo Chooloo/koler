@@ -8,32 +8,10 @@
     android:animateLayoutChanges="true"
     android:background="@color/semi_white">
 
-    <View
-        android:id="@+id/ghost_answer_button"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
 
     <!--The order of the buttons below, and the TextViews following them must be in the same order-->
 
+    <!-- Reject Timer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_reject_call_timer"
         android:layout_width="wrap_content"
@@ -47,34 +25,6 @@
         app:layout_constraintEnd_toEndOf="@+id/ghost_answer_button"
         app:layout_constraintStart_toStartOf="@+id/ghost_answer_button"
         app:srcCompat="@drawable/ic_timer_black_24dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_send_sms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp"
-        android:clickable="true"
-        android:tint="@android:color/white"
-        app:elevation="2dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toTopOf="@+id/ghost_answer_button"
-        app:layout_constraintEnd_toStartOf="@+id/ghost_answer_button"
-        app:srcCompat="@drawable/ic_sms_black_24dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:clickable="true"
-        android:tint="@android:color/white"
-        app:elevation="2dp"
-        app:fabSize="mini"
-        app:layout_constraintBottom_toBottomOf="@+id/ghost_answer_button"
-        app:layout_constraintEnd_toStartOf="@+id/ghost_answer_button"
-        app:layout_constraintTop_toTopOf="@+id/ghost_answer_button"
-        app:srcCompat="@drawable/ic_clear_black_24dp" />
 
     <TextView
         android:id="@+id/text_reject_call_timer_desc"
@@ -91,6 +41,21 @@
         tools:text="Reject in 10s"
         tools:visibility="visible" />
 
+    <!-- Reject With SMS Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_send_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:clickable="true"
+        android:tint="@android:color/white"
+        app:elevation="2dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/ghost_answer_button"
+        app:layout_constraintEnd_toStartOf="@+id/ghost_answer_button"
+        app:srcCompat="@drawable/ic_sms_black_24dp" />
+
     <TextView
         android:id="@+id/text_send_sms"
         android:layout_width="wrap_content"
@@ -105,6 +70,21 @@
         app:layout_constraintEnd_toStartOf="@+id/button_send_sms"
         tools:visibility="visible" />
 
+    <!-- Cancel Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:clickable="true"
+        android:tint="@android:color/white"
+        app:elevation="2dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@+id/ghost_answer_button"
+        app:layout_constraintEnd_toStartOf="@+id/ghost_answer_button"
+        app:layout_constraintTop_toTopOf="@+id/ghost_answer_button"
+        app:srcCompat="@drawable/ic_clear_black_24dp" />
+
     <TextView
         android:id="@+id/text_cancel"
         android:layout_width="wrap_content"
@@ -118,5 +98,31 @@
         app:layout_constraintEnd_toStartOf="@+id/button_cancel"
         app:layout_constraintTop_toTopOf="@+id/button_cancel"
         tools:visibility="visible" />
+
+    <!-- Ghost Button -->
+    <View
+        android:id="@+id/ghost_answer_button"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical" />
+
+    <!-- Guidelines -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

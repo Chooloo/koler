@@ -58,15 +58,27 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
         }
     }
 
+    /**
+     * If the user swipes right
+     */
     public void onSwipeRight() {
     }
 
+    /**
+     * If the user swipes left
+     */
     public void onSwipeLeft() {
     }
 
+    /**
+     * If the user swipes up
+     */
     public void onSwipeTop() {
     }
 
+    /**
+     * Guess what? if the user swipes down
+     */
     public void onSwipeBottom() {
     }
 }

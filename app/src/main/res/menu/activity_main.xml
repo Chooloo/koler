@@ -2,16 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Settings -->
     <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/action_settings"
         app:showAsAction="ifRoom" />
 
+    <!-- Update Contacts -->
     <item
         android:id="@+id/update_contacts"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="Contacts Update"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>

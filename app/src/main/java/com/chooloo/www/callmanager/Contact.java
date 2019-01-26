@@ -13,12 +13,14 @@ public class Contact {
     public Contact(String name, String phoneNumber, String photoUri) {
         this.name = name;
         this.photoUri = photoUri;
-        if (phoneNumber != null) {
-            if (phoneNumber.contains("+972 ")) this.phoneNumber = phoneNumber.replace("+972 ", "0");
-            if (phoneNumber.contains(" ")) this.phoneNumber = phoneNumber.replace(" ", "");
-            if (phoneNumber.contains("-")) this.phoneNumber = phoneNumber.replace("-", "");
+        String lastPhoneNumber = phoneNumber;
+        if (phoneNumber != null) { // Checks for unusual occurrences of a number
+            if (lastPhoneNumber.contains("+972"))
+                lastPhoneNumber = lastPhoneNumber.replace("+972", "0");
+            if (lastPhoneNumber.contains(" ")) lastPhoneNumber = lastPhoneNumber.replace(" ", "");
+            if (lastPhoneNumber.contains("-")) lastPhoneNumber = lastPhoneNumber.replace("-", "");
         }
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = lastPhoneNumber;
     }
 
     // -- Getters -- //
@@ -37,6 +39,11 @@ public class Contact {
         return this.phoneNumber;
     }
 
+    /**
+     * Returns the photoUri of the caller / other side contact
+     *
+     * @return
+     */
     public String getPhotoUri() {
         return photoUri;
     }

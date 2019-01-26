@@ -8,6 +8,19 @@
     android:background="@color/semi_white"
     android:orientation="vertical">
 
+    <!-- Time Indicator Text -->
+    <TextView
+        android:id="@+id/text_timer_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/reject_timer_indicator"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:layout_constraintBottom_toTopOf="@+id/text_action_time_left"
+        app:layout_constraintEnd_toEndOf="@+id/text_action_time_left"
+        app:layout_constraintStart_toStartOf="@+id/text_action_time_left" />
+
+    <!-- Time Left Text -->
     <TextView
         android:id="@+id/text_action_time_left"
         android:layout_width="wrap_content"
@@ -22,17 +35,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="00:05s" />
 
-    <TextView
-        android:id="@+id/text_timer_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/reject_timer_indicator"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        app:layout_constraintBottom_toTopOf="@+id/text_action_time_left"
-        app:layout_constraintEnd_toEndOf="@+id/text_action_time_left"
-        app:layout_constraintStart_toStartOf="@+id/text_action_time_left" />
-
+    <!-- Cancel Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_cancel_timer"
         android:layout_width="wrap_content"
@@ -48,10 +51,12 @@
         app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
         app:srcCompat="@drawable/ic_clear_black_24dp" />
 
+    <!-- Guidelines -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_eye_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.44" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

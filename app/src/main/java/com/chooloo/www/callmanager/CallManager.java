@@ -82,14 +82,14 @@ public class CallManager {
 
         if (sCall == null) return ContactsManager.UNKNOWN;
 
-        String uri = sCall.getDetails().getHandle().toString();
+        String uri = sCall.getDetails().getHandle().toString(); // Callers details
 
-        if (uri.contains("voicemail")) // Check if caller is voicemail
+        if (uri.contains("voicemail")) // If uri contains 'voicemail' this is a... voicemail dah
             return ContactsManager.VOICEMAIL;
 
         String telephoneNumber = null;
 
-        if (uri.contains("tel")) // Check if uri contains a number
+        if (uri.contains("tel")) // If uri contains 'tel' this is a normal number
             telephoneNumber = uri.replace("tel:", "");
 
         if (telephoneNumber == null || telephoneNumber.isEmpty()) return ContactsManager.UNKNOWN;
@@ -101,7 +101,7 @@ public class CallManager {
     }
 
     /**
-     * Gets the current state of the call from the Call object (named sCall)
+     * Returnes the current state of the call from the Call object (named sCall)
      *
      * @return Call.State
      */

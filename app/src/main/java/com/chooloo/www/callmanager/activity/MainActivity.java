@@ -42,6 +42,8 @@ public class MainActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
+
+        // Bind variables
         ButterKnife.bind(this);
 
         // Init timber
@@ -64,6 +66,7 @@ public class MainActivity extends ToolbarActivity {
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
 
+        // Update contacts if possible
         if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             updateContacts(false);
         }

@@ -139,7 +139,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     @Nullable ViewGroup mCurrentOverlay = null;
 
+    // Swipes Listeners
     OnSwipeTouchListener mSmsOverlaySwipeListener;
+    OnSwipeTouchListener mIncomingCallSwipeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +151,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        //This activity needs to show even if the screen is off or locked
+        // This activity needs to show even if the screen is off or locked
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
@@ -168,7 +170,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        // Initiate PowerManager and WakeLock
+        // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
         try {
             field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
         } catch (Throwable ignored) {
@@ -179,6 +181,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
+        // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
         mCallerNumber.setText(callerContact.getPhoneNumber());
         if (callerContact.getName() != null && !callerContact.getName().isEmpty())
@@ -206,9 +209,12 @@ public class OngoingCallActivity extends AppCompatActivity {
                 OngoingCallActivity.this.removeOverlay(view);
             }
         };
+
+        // Set OnLongClick listeners for answer/reject listeners
         mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener, overlayChangeListener);
         mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener, overlayChangeListener);
 
+        // Set OnTouch listeners for answer/reject buttons
         mRejectButton.setOnTouchListener(mRejectLongClickListener);
         mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
 
@@ -224,8 +230,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mRejectCallTimerButton.hide();
         mCancelTimerButton.hide();
 
-
-        //Set the correct text for the TextView
+        // Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
         String rejectCallText = mRejectCallTimerText.getText() + " " + rejectCallSeconds + "s";
         mRejectCallTimerText.setText(rejectCallText);
@@ -234,8 +239,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
         mAnswerCallTimerText.setText(answerCallText);
 
-        // Swipe listener
-        mOngoingCallLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
+        // Initiate Swipe listener
+        mIncomingCallSwipeListener = new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeRight() {
                 activateCall();
@@ -245,7 +250,8 @@ public class OngoingCallActivity extends AppCompatActivity {
             public void onSwipeLeft() {
                 endCall();
             }
-        });
+        };
+        mOngoingCallLayout.setOnTouchListener(mIncomingCallSwipeListener);
 
         mSmsOverlaySwipeListener = new OnSwipeTouchListener(this) {
             @Override
@@ -503,6 +509,11 @@ public class OngoingCallActivity extends AppCompatActivity {
         mRootView.removeView(mAnswerCallOverlay);
     }
 
+    /**
+     * Set a given overlay as visible
+     *
+     * @param overlay
+     */
     private void setOverlay(@NotNull ViewGroup overlay) {
         if (mCurrentOverlay != null) {
             removeOverlay(mCurrentOverlay);
@@ -521,6 +532,11 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Removes a given overlay as visible
+     *
+     * @param overlay
+     */
     private void removeOverlay(@NotNull ViewGroup overlay) {
         if (overlay == mCurrentOverlay) {
             setActionButtonsClickable(true);
@@ -540,12 +556,20 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Removes the current overlay as the visible overlay
+     */
     private void removeOverlay() {
         if (mCurrentOverlay != null) {
             removeOverlay(mCurrentOverlay);
         }
     }
 
+    /**
+     * Sets the action button (call actions) as clickable/not clickable
+     *
+     * @param clickable
+     */
     private void setActionButtonsClickable(boolean clickable) {
 
         for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
