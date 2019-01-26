@@ -357,7 +357,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         CallManager.sReject();
         releaseWakeLock();
-        finish();
+        (new Handler()).postDelayed(this::finish, 3000); // Delay the closing of the call
     }
 
     // -- UI -- //

@@ -9,7 +9,7 @@
     <!-- Call Button -->
     <TextView
         android:id="@+id/button_send_input_sms"
-        style="@style/CircleButton"
+        style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"

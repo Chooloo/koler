@@ -15,6 +15,7 @@
     <color name="green_accent_700">#00c853</color>
     <color name="red_accent_700">#d50000</color>
 
+    <color name="white">#ffffff</color>
     <color name="semi_white">#E6FFFFFF</color>
 
     <color name="green_phone_semi_trans">#8066BB6A</color>
@@ -27,5 +28,6 @@
 
     <color name="caller_text_color">#313131</color>
 
+    <color name="grey_back">#F8F8F8</color>
 
 </resources>
