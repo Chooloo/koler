@@ -338,13 +338,11 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO add functionality to the Keypad button
     @OnClick(R.id.button_keypad)
     public void toggleKeypad(View view) {
-
     }
 
     //TODO add functionality to the Add call button
     @OnClick(R.id.button_add_call)
     public void addCall(View view) {
-
     }
 
     @OnClick(R.id.button_cancel_timer)
@@ -408,7 +406,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(this, new String[]{SEND_SMS}, 1);
         }
-
     }
 
     // -- UI -- //
