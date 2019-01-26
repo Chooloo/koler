@@ -81,12 +81,14 @@ public class CallManager {
     public static Contact getDisplayContact(Context context) {
 
         if (sCall == null) return ContactsManager.UNKNOWN;
+
         String uri = sCall.getDetails().getHandle().toString();
 
         if (uri.contains("voicemail")) // Check if caller is voicemail
             return ContactsManager.VOICEMAIL;
 
         String telephoneNumber = null;
+
         if (uri.contains("tel")) // Check if uri contains a number
             telephoneNumber = uri.replace("tel:", "");
 
@@ -94,6 +96,7 @@ public class CallManager {
 
         Contact contact = ContactsManager.getContactByPhoneNumber(context, telephoneNumber);
         if (contact == null) return ContactsManager.UNKNOWN;
+
         return contact;
     }
 

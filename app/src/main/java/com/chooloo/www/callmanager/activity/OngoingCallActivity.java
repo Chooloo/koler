@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.telecom.Call;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,11 +43,13 @@ import java.util.Locale;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
@@ -54,6 +58,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
+
+import static android.Manifest.permission.CALL_PHONE;
+import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.SEND_SMS;
 
 @SuppressLint("ClickableViewAccessibility")
 public class OngoingCallActivity extends AppCompatActivity {
@@ -93,6 +101,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.sms_input) EditText mSmsInput;
 
     // Text views
+    @BindView(R.id.number_caller) TextView mCallerNumber;
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
     @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
@@ -129,6 +138,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
     @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     @Nullable ViewGroup mCurrentOverlay = null;
+
+    OnSwipeTouchListener mSmsOverlaySwipeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,13 +179,14 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
-        Contact contact = CallManager.getDisplayContact(this);
-        if (contact.getName() != null && !contact.getName().isEmpty())
-            mCallerText.setText(contact.getName());
-        if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {
+        Contact callerContact = CallManager.getDisplayContact(this);
+        mCallerNumber.setText(callerContact.getPhoneNumber());
+        if (callerContact.getName() != null && !callerContact.getName().isEmpty())
+            mCallerText.setText(callerContact.getName());
+        if (callerContact.getPhotoUri() != null && !callerContact.getName().isEmpty()) {
             mPlaceholderImage.setVisibility(View.INVISIBLE);
             mPhotoImage.setVisibility(View.VISIBLE);
-            mPhotoImage.setImageURI(Uri.parse(contact.getPhotoUri()));
+            mPhotoImage.setImageURI(Uri.parse(callerContact.getPhotoUri()));
         }
 
         View.OnClickListener rejectListener = v -> endCall();
@@ -220,7 +232,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Swipe listener
         mOngoingCallLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
-
             @Override
             public void onSwipeRight() {
                 activateCall();
@@ -228,10 +239,24 @@ public class OngoingCallActivity extends AppCompatActivity {
 
             @Override
             public void onSwipeLeft() {
-
                 endCall();
             }
         });
+
+        mSmsOverlaySwipeListener = new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeTop() {
+                sendSmsOnClick(mSendSMSButton);
+                removeOverlay(mSendSmsOverlay);
+                mSendSmsOverlay.setOnTouchListener(null);
+            }
+
+            @Override
+            public void onSwipeBottom() {
+                removeOverlay(mSendSmsOverlay);
+                mSendSmsOverlay.setOnTouchListener(null);
+            }
+        };
     }
 
     @Override
@@ -257,6 +282,14 @@ public class OngoingCallActivity extends AppCompatActivity {
         releaseWakeLock();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // The user gave permission to send sms
+        // we know it's a SEND_SMS permission because that's currently the only option in this activity
+        sendSmsOnClick(mSendSMSButton);
+    }
+
     // -- Buttons -- //
 
     //TODO silence the ringing
@@ -279,9 +312,9 @@ public class OngoingCallActivity extends AppCompatActivity {
     public void toggleMute(View view) {
         Utilities.toggleViewActivation(view);
         if (view.isActivated()) {
-            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
-        } else {
             mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
+        } else {
+            mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
         }
         mAudioManager.setMicrophoneMute(view.isActivated());
     }
@@ -315,25 +348,17 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.cancel();
     }
 
-    //TODO add functionality to the send SMS Button
     @OnClick(R.id.button_send_sms)
-    public void sendSMS(View view) {
+    public void setSmsOverlay(View view) {
         setOverlay(mSendSmsOverlay);
+        mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
     }
 
     @OnClick(R.id.button_send_input_sms)
-    public void sendInputSMS(View view) {
-        String phoneNumber = String.format("SMS to: %s", CallManager.getDisplayContact(this).getPhoneNumber());
-        String message = mSmsInput.getText().toString();
-        Intent smsIntent = new Intent(Intent.ACTION_SENDTO);
-        smsIntent.setData(Uri.parse(phoneNumber));
-        smsIntent.putExtra("sms_body", message);
-        if (smsIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(smsIntent);
-            removeOverlay();
-        } else {
-            Toast.makeText(this, "Something happened, cant send sms", Toast.LENGTH_SHORT).show();
-        }
+    public void sendSmsOnClick(View view) {
+        String msg = mSmsInput.getText().toString();
+        String phoneNum = CallManager.getDisplayContact(this).getPhoneNumber();
+        sendSMS(phoneNum, msg);
     }
 
     // -- Call Actions -- //
@@ -356,6 +381,30 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.sReject();
         releaseWakeLock();
         (new Handler()).postDelayed(this::finish, 3000); // Delay the closing of the call
+    }
+
+    /**
+     * Send sms by given phone number and message
+     *
+     * @param phoneNum destination phone number (where to send the sms to)
+     * @param msg      the content message of the sms
+     */
+    public void sendSMS(String phoneNum, String msg) {
+        if (ContextCompat.checkSelfPermission(this, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                Timber.i("Sending sms to phone number: " + CallManager.getDisplayContact(this).getPhoneNumber());
+                smsManager.sendTextMessage(CallManager.getDisplayContact(this).getPhoneNumber(), null, msg, null, null);
+                Toast.makeText(this, "Message Sent", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Oh shit I can't send the message... Sorry", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{SEND_SMS}, 1);
+        }
+
     }
 
     // -- UI -- //

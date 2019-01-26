@@ -71,7 +71,7 @@ public class ContactsManager {
     /**
      * Returns a list of all the contacts on the phone that contain the given number
      *
-     * @param num     the number by which to search for contacts
+     * @param num the number by which to search for contacts
      * @return returns an ArrayList of all the matching contacts
      */
     public static ArrayList<Contact> getContactsByNum(String num) {
@@ -93,6 +93,7 @@ public class ContactsManager {
      * @return the contact's name
      */
     public static Contact getContactByPhoneNumber(Context context, String phoneNumber) {
+
         //Check for permission to read contacts
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             //Don't prompt the user now, they are getting a call
@@ -111,6 +112,7 @@ public class ContactsManager {
             return null;
         }
         cursor.close();
+
         return contact;
     }
 

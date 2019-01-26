@@ -33,6 +33,20 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/number_caller"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="000000000"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_stopwatch" />
+
+    <TextView
         android:id="@+id/text_caller"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -113,7 +127,7 @@
     <ImageView
         android:id="@+id/button_mute"
         android:layout_width="@dimen/flat_button_size"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/flat_button_size"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
         android:layout_weight="1"
@@ -125,13 +139,13 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_hold"
         app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
-        app:srcCompat="@drawable/ic_mic_off_black_24dp"
+        app:srcCompat="@drawable/ic_mic_black_24dp"
         tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/button_speaker"
         android:layout_width="@dimen/flat_button_size"
-        android:layout_height="66dp"
+        android:layout_height="@dimen/flat_button_size"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
         android:layout_weight="1"
@@ -148,7 +162,7 @@
 
     <ImageView
         android:id="@+id/button_keypad"
-        android:layout_width="60dp"
+        android:layout_width="@dimen/flat_button_size"
         android:layout_height="@dimen/flat_button_size"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="15dp"

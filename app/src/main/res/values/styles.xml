@@ -22,5 +22,7 @@
         <item name="android:background">@drawable/text_button_selector</item>
         <item name="android:textColor">@color/green_phone</item>
         <item name="android:textSize">16dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingLeft">10dp</item>
     </style>
 </resources>
