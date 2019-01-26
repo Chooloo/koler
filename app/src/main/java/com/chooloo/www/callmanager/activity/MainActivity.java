@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.chooloo.www.callmanager.ContactsManager;
 import com.chooloo.www.callmanager.R;
@@ -43,6 +44,8 @@ public class MainActivity extends ToolbarActivity {
 
         // Init timber
         Timber.plant(new Timber.DebugTree());
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Ask for permissions
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||

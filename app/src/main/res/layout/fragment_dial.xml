@@ -56,7 +56,7 @@
 
             <TextView
                 android:id="@+id/chip1"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -66,7 +66,7 @@
 
             <TextView
                 android:id="@+id/chip2"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -76,7 +76,7 @@
 
             <TextView
                 android:id="@+id/chip3"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -94,7 +94,7 @@
 
             <TextView
                 android:id="@+id/chip4"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -104,7 +104,7 @@
 
             <TextView
                 android:id="@+id/chip5"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -114,7 +114,7 @@
 
             <TextView
                 android:id="@+id/chip6"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -131,7 +131,7 @@
 
             <TextView
                 android:id="@+id/chip7"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -141,7 +141,7 @@
 
             <TextView
                 android:id="@+id/chip8"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -151,7 +151,7 @@
 
             <TextView
                 android:id="@+id/chip9"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -169,7 +169,7 @@
 
             <TextView
                 android:id="@+id/chip_star"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -179,7 +179,7 @@
 
             <TextView
                 android:id="@+id/chip0"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -189,7 +189,7 @@
 
             <TextView
                 android:id="@+id/chip_hex"
-                style="@style/CircleButton"
+                style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
@@ -205,7 +205,7 @@
     <!-- Delete Button -->
     <TextView
         android:id="@+id/button_call"
-        style="@style/CircleButton"
+        style="@style/TextButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="70dp"
@@ -219,7 +219,7 @@
     <!-- Call Button -->
     <TextView
         android:id="@+id/button_delete"
-        style="@style/CircleButton"
+        style="@style/TextButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="70dp"

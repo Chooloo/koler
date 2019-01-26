@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_back"
     android:focusable="true"
+    android:fitsSystemWindows="true"
     android:focusableInTouchMode="true"
     tools:context=".activity.MainActivity">
 
@@ -35,6 +35,7 @@
         android:id="@+id/pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/navigation_bar_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
