@@ -19,7 +19,8 @@
     </style>
 
     <style name="TextButton" parent="Widget.AppCompat.TextView">
-        <item name="android:background">@drawable/text_button_selector</item>
+        <item name="android:backgroundTint">@color/selector_button_dial</item>
+        <item name="android:background">@drawable/text_button</item>
         <item name="android:textColor">@color/green_phone</item>
         <item name="android:textSize">16sp</item>
     </style>

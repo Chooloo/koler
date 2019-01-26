@@ -40,8 +40,8 @@
     <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="250dp"
-        android:layout_height="300dp"
+        android:layout_width="240dp"
+        android:layout_height="320dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
