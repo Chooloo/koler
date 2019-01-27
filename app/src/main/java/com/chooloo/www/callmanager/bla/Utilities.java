@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.util;
+package com.chooloo.www.callmanager.bla;
 
 import android.content.Context;
 import android.graphics.Rect;
