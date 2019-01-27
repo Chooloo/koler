@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.chooloo.www.callmanager.ContactsManager;
+import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.MainPagerAdapter;
 import com.chooloo.www.callmanager.util.PreferenceUtils;

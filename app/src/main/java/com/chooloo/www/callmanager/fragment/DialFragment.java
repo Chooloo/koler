@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.Contact;
-import com.chooloo.www.callmanager.ContactsManager;
+import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.R;
 
 import java.util.ArrayList;

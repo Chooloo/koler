@@ -1,9 +1,10 @@
-package com.chooloo.www.callmanager;
+package com.chooloo.www.callmanager.util;
 
 import android.content.Context;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
 
+import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
 import timber.log.Timber;

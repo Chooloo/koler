@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager;
+package com.chooloo.www.callmanager.util;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.widget.Toast;
+
+import com.chooloo.www.callmanager.Contact;
 
 import java.util.ArrayList;
 

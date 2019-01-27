@@ -3,9 +3,7 @@ package com.chooloo.www.callmanager.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -21,18 +19,17 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.CallManager;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.Stopwatch;
+import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,8 +56,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static android.Manifest.permission.CALL_PHONE;
-import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
 
 @SuppressLint("ClickableViewAccessibility")

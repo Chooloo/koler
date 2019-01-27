@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@drawable/app_bar_background"
-    android:elevation="0dp"
     android:padding="10dp"
     android:textAlignment="center"
     app:elevation="0dp"
@@ -26,6 +25,7 @@
             android:layout_gravity="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             tools:text="@string/app_name" />
+
     </androidx.appcompat.widget.Toolbar>
 
 </com.google.android.material.appbar.AppBarLayout>
