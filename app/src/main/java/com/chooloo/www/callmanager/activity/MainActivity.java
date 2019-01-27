@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 
-import com.chooloo.www.callmanager.bla.ContactsManager;
+import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.MainPagerAdapter;
-import com.chooloo.www.callmanager.bla.PreferenceUtils;
+import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;

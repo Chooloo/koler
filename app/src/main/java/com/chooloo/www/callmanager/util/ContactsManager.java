@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.bla;
+package com.chooloo.www.callmanager.util;
 
 import android.Manifest;
 import android.app.ProgressDialog;

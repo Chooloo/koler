@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.InCallService;
 
-import com.chooloo.www.callmanager.bla.CallManager;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
 public class CallService extends InCallService {

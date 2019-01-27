@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.bla;
+package com.chooloo.www.callmanager.util;
 
 import java.util.Locale;
 

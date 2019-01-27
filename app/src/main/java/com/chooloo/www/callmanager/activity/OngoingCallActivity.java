@@ -24,14 +24,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.bla.CallManager;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.Contact;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.bla.Stopwatch;
-import com.chooloo.www.callmanager.bla.PreferenceUtils;
-import com.chooloo.www.callmanager.bla.Utilities;
+import com.chooloo.www.callmanager.util.Stopwatch;
+import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jetbrains.annotations.NotNull;
