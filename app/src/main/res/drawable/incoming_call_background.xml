@@ -3,8 +3,7 @@
     android:shape="rectangle">
 
     <gradient
-        android:type="linear"
-        android:startColor="@color/green_phone_semi_trans"
-        android:endColor="@color/red_phone_semi_trans"/>
+        android:startColor="@color/incoming_call_color_1"
+        android:endColor="@color/incoming_call_color_2"/>
 
 </shape>

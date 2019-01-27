@@ -436,6 +436,7 @@ public class OngoingCallActivity extends AppCompatActivity {
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING:
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING:

@@ -12,7 +12,7 @@
     <!-- Shades Of White -->
     <color name="white">#ffffff</color>
     <color name="semi_white">#B3FFFFFF</color>
-    <color name="grey_back">#F0F0F0</color>
+    <color name="grey_back">#C8C8C8</color>
     <color name="grey_50">#fafafa</color>
     <color name="glass_trans">#1A585858</color>
 
@@ -31,8 +31,11 @@
     <color name="red_phone_semi_trans">#80EF5350</color>
 
     <!-- Back Colors-->
-    <color name="outgoing_call_back_1">#778F8F8F</color>
-    <color name="outgoing_call_back_2">#77E9E9E9</color>
+    <color name="ongoing_call_color">@color/green_phone_semi_trans</color>
+    <color name="outgoing_call_color">@color/grey_back</color>
+    <color name="ended_call_color">@color/red_phone_semi_trans</color>
+    <color name="incoming_call_color_1">@color/green_phone_semi_trans</color>
+    <color name="incoming_call_color_2">@color/red_phone_semi_trans</color>
 
     <color name="caller_text_color">#313131</color>
 

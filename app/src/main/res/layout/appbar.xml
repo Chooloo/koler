@@ -5,7 +5,7 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@drawable/app_bar_background"
+    android:background="@android:color/transparent"
     android:padding="10dp"
     android:textAlignment="center"
     app:elevation="0dp"
