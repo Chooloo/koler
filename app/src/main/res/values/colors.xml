@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">@color/grey_50</color>
+    <color name="colorPrimary">@color/semi_grey</color>
     <color name="colorPrimaryDark">#c7c7c7</color>
-    <color name="colorAccent">@color/blue_accent_700</color>
-    <color name="colorBackground">@color/grey_back</color>
+    <color name="colorAccent">@color/green_phone</color>
+    <color name="colorBackground">@color/semi_grey</color>
 
     <color name="icon_active_light">#000000</color>
     <color name="icon_active_dark">#FFFFFF</color>
@@ -12,13 +12,7 @@
     <!-- Shades Of White -->
     <color name="white">#ffffff</color>
     <color name="semi_white">#B3FFFFFF</color>
-    <color name="grey_back">#C8C8C8</color>
-    <color name="grey_50">#fafafa</color>
-    <color name="glass_trans">#1A585858</color>
-
-    <color name="blue_accent_700">#2962ff</color>
-    <color name="green_accent_700">#00c853</color>
-    <color name="red_accent_700">#d50000</color>
+    <color name="semi_grey">#fafafa</color>
 
     <!-- Green -->
     <color name="green_phone">#66bb6a</color>
@@ -32,7 +26,6 @@
 
     <!-- Back Colors-->
     <color name="ongoing_call_color">@color/green_phone_semi_trans</color>
-    <color name="outgoing_call_color">@color/grey_back</color>
     <color name="ended_call_color">@color/red_phone_semi_trans</color>
     <color name="incoming_call_color_1">@color/green_phone_semi_trans</color>
     <color name="incoming_call_color_2">@color/red_phone_semi_trans</color>

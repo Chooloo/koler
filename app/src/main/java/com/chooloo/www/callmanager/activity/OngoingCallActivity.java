@@ -438,23 +438,27 @@ public class OngoingCallActivity extends AppCompatActivity {
     private void updateUI(int state) {
         @StringRes int statusTextRes;
         switch (state) {
-            case Call.STATE_ACTIVE:
+            case Call.STATE_ACTIVE: // Ongoing
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
                 statusTextRes = R.string.status_call_active;
                 break;
-            case Call.STATE_DISCONNECTED:
+            case Call.STATE_DISCONNECTED: // Ended
                 mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
-            case Call.STATE_RINGING:
+            case Call.STATE_RINGING: // Inooming
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 break;
-            case Call.STATE_DIALING:
+            case Call.STATE_DIALING: // Outgoing
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
-            case Call.STATE_CONNECTING:
+            case Call.STATE_CONNECTING: // Connecting (probably outgoing)
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
-            case Call.STATE_HOLDING:
+            case Call.STATE_HOLDING: // On Hold
                 statusTextRes = R.string.status_call_holding;
                 break;
             default:
@@ -500,7 +504,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void timeBackAnimation() {
         mBackgroundAnimation = (AnimationDrawable) mOngoingCallLayout.getBackground();
-        mBackgroundAnimation.setEnterFadeDuration(2000);
+        mBackgroundAnimation.setEnterFadeDuration(6000);
         mBackgroundAnimation.setExitFadeDuration(2000);
     }
 

@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<solid android:color="@color/colorBackground"/>-->
+    <item android:duration="4000">
+        <shape>
+            <gradient
+                android:angle="315"
+                android:endColor="#89f7fe"
+                android:startColor="#ff9a9e" />
+        </shape>
+    </item>
+    <item android:duration="4000">
+        <shape>
+            <gradient
+                android:angle="45"
+                android:endColor="#89f7fe"
+                android:startColor="#ff9a9e" />
+        </shape>
+    </item>
+    <item android:duration="4000">
+        <shape>
+            <gradient
+                android:angle="225"
+                android:endColor="#89f7fe"
+                android:startColor="#ff9a9e" />
+        </shape>
+    </item>
+    <item android:duration="4000">
+        <shape>
+            <gradient
+                android:angle="135"
+                android:endColor="#89f7fe"
+                android:startColor="#ff9a9e" />
+        </shape>
+    </item>
 
+    <!-- Radial Shape -->
+    <!--<item android:duration="3000">-->
+    <!--<shape>-->
     <!--<gradient-->
-        <!--android:angle="90"-->
-        <!--android:startColor="@color/white"-->
-        <!--android:endColor="@color/outgoing_call_color"/>-->
+    <!--android:type="radial"-->
+    <!--android:gradientRadius="500dp"-->
+    <!--android:startColor="#ff9a9e"-->
+    <!--android:endColor="#89f7fe"/>-->
+    <!--</shape>-->
+    <!--</item>-->
 
-</shape>
+</animation-list>
