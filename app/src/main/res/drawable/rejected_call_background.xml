@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<solid android:color="@color/red_phone_semi_trans"/>-->
+    <item
+        android:drawable="@drawable/gradient_green_background"
+        android:duration="100" />
+    <item
+        android:drawable="@drawable/gradient_red_background"
+        android:duration="7000"/>
 
-    <gradient
-        android:angle="90"
-        android:endColor="@color/red_phone_semi_trans"
-        android:startColor="@color/white" />
-
-</shape>
+</animation-list>

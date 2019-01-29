@@ -39,9 +39,10 @@
     <!-- Caller Pic -->
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="129dp"
+        android:layout_height="135dp"
         android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_caller"
         app:layout_constraintEnd_toEndOf="@+id/text_caller"
         app:layout_constraintStart_toStartOf="@+id/text_caller"
         app:layout_constraintTop_toBottomOf="@+id/text_stopwatch">
@@ -50,6 +51,7 @@
             android:id="@+id/image_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:tint="@color/selector_button_icon"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -88,6 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:textColor="@color/caller_text_color"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
         app:layout_constraintEnd_toEndOf="@+id/text_caller"
         app:layout_constraintHorizontal_bias="0.502"

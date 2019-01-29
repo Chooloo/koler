@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<solid android:color="@color/green_phone_semi_trans"/>-->
+    <item
+        android:drawable="@drawable/gradient_green_background"
+        android:duration="3000" />
+    <item
+        android:drawable="@drawable/gradient_green_background_1"
+        android:duration="3000" />
+    <item
+        android:drawable="@drawable/gradient_green_background_2"
+        android:duration="3000" />
+    <item
+        android:drawable="@drawable/gradient_green_background_3"
+        android:duration="3000" />
+    <item
+        android:drawable="@drawable/gradient_green_background_4"
+        android:duration="3000" />
 
-    <gradient
-        android:angle="90"
-        android:startColor="@color/white"
-        android:endColor="@color/ongoing_call_color"/>
+</animation-list>
 
-</shape>
+
+    <!--<shape xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:shape="rectangle">-->
+
+    <!--<solid android:color="@color/green_phone_semi_trans"/>--><!--<gradient--><!--android:angle="90"--><!--android:startColor="@color/white"--><!--android:endColor="@color/ongoing_call_color"/>-->
+
+    <!--</shape>-->

@@ -37,6 +37,7 @@
     <color name="incoming_call_color_1">@color/green_phone_semi_trans</color>
     <color name="incoming_call_color_2">@color/red_phone_semi_trans</color>
 
-    <color name="caller_text_color">#313131</color>
+    <!--<color name="caller_text_color">#313131</color>-->
+    <color name="caller_text_color">@color/white</color>
 
 </resources>

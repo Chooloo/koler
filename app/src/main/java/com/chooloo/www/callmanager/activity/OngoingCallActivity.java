@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -51,6 +52,7 @@ import androidx.core.content.ContextCompat;
 import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
+import butterknife.BindAnim;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -134,9 +136,13 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     @Nullable ViewGroup mCurrentOverlay = null;
 
+    AnimationDrawable mBackgroundAnimation;
+
     // Swipes Listeners
     OnSwipeTouchListener mSmsOverlaySwipeListener;
     OnSwipeTouchListener mIncomingCallSwipeListener;
+
+    // -- Native Even Listeners -- //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,6 +268,8 @@ public class OngoingCallActivity extends AppCompatActivity {
                 mSendSmsOverlay.setOnTouchListener(null);
             }
         };
+
+        timeBackAnimation();
     }
 
     @Override
@@ -285,6 +293,18 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
         mActionTimer.cancel();
         releaseWakeLock();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBackAnimation(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setBackAnimation(false);
     }
 
     @Override
@@ -379,7 +399,6 @@ public class OngoingCallActivity extends AppCompatActivity {
      * End current call / Incoming call and changes the ui accordingly
      */
     private void endCall() {
-        mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         CallManager.sReject();
         releaseWakeLock();
@@ -420,7 +439,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE:
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED:
@@ -428,15 +446,12 @@ public class OngoingCallActivity extends AppCompatActivity {
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING:
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.incoming_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 break;
             case Call.STATE_DIALING:
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING:
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING:
@@ -447,7 +462,8 @@ public class OngoingCallActivity extends AppCompatActivity {
                 break;
         }
         mStatusText.setText(statusTextRes);
-
+        timeBackAnimation();
+        setBackAnimation(true);
         if (state != Call.STATE_RINGING) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
@@ -477,6 +493,27 @@ public class OngoingCallActivity extends AppCompatActivity {
         mSpeakerButton.setVisibility(View.VISIBLE);
         mAddCallButton.setVisibility(View.VISIBLE);
         moveRejectButtonToMiddle();
+    }
+
+    /**
+     * Sets the gradient back animation enter and exit durations
+     */
+    private void timeBackAnimation() {
+        mBackgroundAnimation = (AnimationDrawable) mOngoingCallLayout.getBackground();
+        mBackgroundAnimation.setEnterFadeDuration(2000);
+        mBackgroundAnimation.setExitFadeDuration(2000);
+    }
+
+    /**
+     * Starts or stops the background gradient animation
+     *
+     * @param state true / false = start / stop
+     */
+    private void setBackAnimation(boolean state) {
+        if (state && mBackgroundAnimation != null && !mBackgroundAnimation.isRunning()) {
+            mBackgroundAnimation.start();
+        } else if (!state && mBackgroundAnimation != null && mBackgroundAnimation.isRunning())
+            mBackgroundAnimation.stop();
     }
 
     /**

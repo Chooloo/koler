@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -33,6 +35,9 @@ public class MainActivity extends ToolbarActivity {
 
     @BindView(R.id.pager) ViewPager mViewPager;
     @BindView(R.id.tab_layout) TabLayout mTabLayout;
+    @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
+
+    AnimationDrawable mMainAnimation;
 
     private MainPagerAdapter mPagerAdapter;
 
@@ -77,13 +82,24 @@ public class MainActivity extends ToolbarActivity {
         mViewPager.setAdapter(mPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mMainAnimation = (AnimationDrawable) mMainLayout.getBackground();
+        mMainAnimation.setEnterFadeDuration(2000);
+        mMainAnimation.setExitFadeDuration(2000);
     }
 
-    /**
-     * Updates the contacts list in mContactsManager
-     */
-    private void updateContacts(boolean showProgress) {
-        ContactsManager.updateContactsInBackground(this, showProgress);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mMainAnimation != null && !mMainAnimation.isRunning())
+            mMainAnimation.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mMainAnimation != null && mMainAnimation.isRunning())
+            mMainAnimation.start();
     }
 
     @Override
@@ -118,6 +134,13 @@ public class MainActivity extends ToolbarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Updates the contacts list in mContactsManager
+     */
+    private void updateContacts(boolean showProgress) {
+        ContactsManager.updateContactsInBackground(this, showProgress);
     }
 
 }
