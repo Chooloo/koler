@@ -11,7 +11,7 @@ import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.Contact;
+import com.chooloo.www.callmanager.database.Contact;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public class ContactsManager {
     // Variables
     private static ArrayList<Contact> mContacts = new ArrayList<Contact>();
     private static ArrayList<Contact> mCurrentContacts = new ArrayList<Contact>();
-    public static final Contact UNKNOWN = new Contact("Unknown", null, null);
-    public static final Contact VOICEMAIL = new Contact("Voicemail", null, null);
+    public static final Contact UNKNOWN = new Contact("Unknown", "", null);
+    public static final Contact VOICEMAIL = new Contact("Voicemail", "", null);
 
     /**
      * Returns a list of all the contacts on the phone as a list of Contact objects
@@ -79,9 +79,9 @@ public class ContactsManager {
     public static ArrayList<Contact> getContactsByNum(String num) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         for (Contact contact : mContacts) {
-            if (contact.getPhoneNumber() != null) {
-                if (contact.getPhoneNumber().contains(num)) {
-                    Timber.i("Got a matching contact: " + contact.getName() + " number: " + contact.getPhoneNumber());
+            if (contact.getMainPhoneNumber() != null) {
+                if (contact.getMainPhoneNumber().contains(num)) {
+                    Timber.i("Got a matching contact: " + contact.getName() + " number: " + contact.getMainPhoneNumber());
                     contacts.add(contact);
                 }
             }

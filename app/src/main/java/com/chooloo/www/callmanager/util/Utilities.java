@@ -79,8 +79,28 @@ public class Utilities {
         return outRect.contains(x, y);
     }
 
+    /**
+     * Toggle the active state of a view
+     * @param view the view to toggle
+     */
     public static void toggleViewActivation(View view) {
         view.setActivated(!view.isActivated());
 
+    }
+
+    /**
+     * Format a given phone number to a readable string for the user
+     * @param phoneNumber the number to format
+     * @return the formatted number
+     */
+    public static String formatPhoneNumber(String phoneNumber) {
+        String lastPhoneNumber = phoneNumber;
+        if (phoneNumber != null) { // Checks for unusual occurrences of a number
+            if (lastPhoneNumber.contains("+972"))
+                lastPhoneNumber = lastPhoneNumber.replace("+972", "0");
+            if (lastPhoneNumber.contains(" ")) lastPhoneNumber = lastPhoneNumber.replace(" ", "");
+            if (lastPhoneNumber.contains("-")) lastPhoneNumber = lastPhoneNumber.replace("-", "");
+        }
+        return lastPhoneNumber;
     }
 }

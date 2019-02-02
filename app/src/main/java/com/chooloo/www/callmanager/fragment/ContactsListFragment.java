@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-public class CallingLists extends Fragment {
+public class ContactsListFragment extends Fragment {
 
-    private CallingListsViewModel mViewModel;
+    private ContactsListViewModel mViewModel;
 
-    public static CallingLists newInstance() {
-        return new CallingLists();
+    public static ContactsListFragment newInstance() {
+        return new ContactsListFragment();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class CallingLists extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(CallingListsViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ContactsListViewModel.class);
     }
 
 }

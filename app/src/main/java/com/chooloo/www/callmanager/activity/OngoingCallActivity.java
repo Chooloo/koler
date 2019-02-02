@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.Contact;
+import com.chooloo.www.callmanager.database.Contact;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
@@ -52,7 +52,6 @@ import androidx.core.content.ContextCompat;
 import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
-import butterknife.BindAnim;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -184,7 +183,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
-        mCallerNumber.setText(callerContact.getPhoneNumber());
+        mCallerNumber.setText(callerContact.getMainPhoneNumber());
         if (callerContact.getName() != null && !callerContact.getName().isEmpty())
             mCallerText.setText(callerContact.getName());
         if (callerContact.getPhotoUri() != null && !callerContact.getName().isEmpty()) {
@@ -380,7 +379,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.button_send_input_sms)
     public void sendSmsOnClick(View view) {
         String msg = mSmsInput.getText().toString();
-        String phoneNum = CallManager.getDisplayContact(this).getPhoneNumber();
+        String phoneNum = CallManager.getDisplayContact(this).getMainPhoneNumber();
         sendSMS(phoneNum, msg);
     }
 
@@ -415,8 +414,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
-                Timber.i("Sending sms to phone number: " + CallManager.getDisplayContact(this).getPhoneNumber());
-                smsManager.sendTextMessage(CallManager.getDisplayContact(this).getPhoneNumber(), null, msg, null, null);
+                Timber.i("Sending sms to phone number: " + CallManager.getDisplayContact(this).getMainPhoneNumber());
+                smsManager.sendTextMessage(CallManager.getDisplayContact(this).getMainPhoneNumber(), null, msg, null, null);
                 Toast.makeText(this, "Message Sent", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_LONG).show();

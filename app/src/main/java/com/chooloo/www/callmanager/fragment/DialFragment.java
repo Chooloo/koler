@@ -18,7 +18,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.Contact;
+import com.chooloo.www.callmanager.database.Contact;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.R;
 
@@ -294,7 +294,7 @@ public class DialFragment extends Fragment {
 
             // Set the texts
             viewHolder.contactNameTxt.setText(contact.getName());
-            viewHolder.contactNumTxt.setText(contact.getPhoneNumber());
+            viewHolder.contactNumTxt.setText(contact.getMainPhoneNumber());
 
             return convertView;
         }

@@ -9,6 +9,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -32,10 +38,16 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //Room
+    implementation "androidx.room:room-runtime:2.0.0"
+    annotationProcessor "androidx.room:room-compiler:2.0.0"
+    testImplementation "androidx.room:room-testing:2.0.0"
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -52,6 +64,12 @@ dependencies {
     implementation 'com.github.JediBurrell:customFloatingActionButton:-SNAPSHOT'
 
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment:1.0.0-alpha09"
-    implementation "android.arch.navigation:navigation-ui:1.0.0-alpha09"
+    implementation "android.arch.navigation:navigation-fragment:1.0.0-alpha11"
+    implementation "android.arch.navigation:navigation-ui:1.0.0-alpha11"
+
+    //Test
+    androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.24.0'
+    androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
 }
