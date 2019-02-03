@@ -40,6 +40,7 @@ public class DatabaseTest {
 
     private ContactsList mList1;
     private Contact mContact1;
+    private Contact mContact2;
 
     @Rule public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
@@ -55,6 +56,7 @@ public class DatabaseTest {
     public void initObjects() {
         mList1 = new ContactsList("Gods");
         mContact1 = new Contact("Jesus Christ", "0000000000000", null);
+        mContact2 = new Contact("Moses Avinu", "0000000000001", null);
     }
 
     @After
@@ -90,6 +92,20 @@ public class DatabaseTest {
         assertThat(contactsDb1.get(0), is(mContact1));
     }
 
+    //This is not supposed to work
+    @Test(timeout = 1000)
+    public void contactInsert() throws Exception {
+        mContactDao.insert(mContact2);
+
+        LiveData<List<Contact>> result1 = mContactDao.getContactsByPhoneNumber(mContact2.getMainPhoneNumber());
+        List<Contact> contactsDb1 = TestObserver.test(result1)
+                .awaitValue()
+                .assertHasValue()
+                .value();
+        assertThat(contactsDb1.size(), greaterThan(0));
+        assertThat(contactsDb1.get(0), is(mContact2));
+    }
+
     @Test(timeout = 1000)
     public void simpleDeletion() throws Exception {
 
@@ -107,7 +123,7 @@ public class DatabaseTest {
             Log.d(TAG, "List rows deleted: " + rowsDeleted);
         }
 
-        //Make sure it deleted all the contacts too
+        //Make sure it deleted all the associated contacts too
         LiveData<List<Contact>> result2 = mContactDao.getContactsByPhoneNumber(mContact1.getMainPhoneNumber());
         List<Contact> contactsDb1 = TestObserver.test(result2)
                 .awaitValue()
@@ -115,5 +131,18 @@ public class DatabaseTest {
                 .value();
 
         assertThat(contactsDb1, not(hasItem(mContact1)));
+
+        mContactDao.deleteByPhoneNumber(mContact2.getMainPhoneNumber());
+        LiveData<List<Contact>> result3 = mContactDao.getContactsByPhoneNumber(mContact2.getMainPhoneNumber());
+        List<Contact> contactsDb2 = TestObserver.test(result3)
+                .awaitValue()
+                .assertHasValue()
+                .value();
+
+        if (contactsDb2.contains(mContact2)) {
+            int rowsDeleted = mContactDao.deleteByPhoneNumber(mContact2.getName());
+            assertThat(rowsDeleted, greaterThan(0));
+            Log.d(TAG, "Contact2 rows deleted: " + rowsDeleted);
+        }
     }
 }

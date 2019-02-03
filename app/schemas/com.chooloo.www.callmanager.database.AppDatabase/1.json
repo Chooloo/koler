@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e2f0997792c9f8a87adb5737c9a0dd41",
+    "identityHash": "bc7dcae064c989ddca5fbc41b666ce4d",
     "entities": [
       {
         "tableName": "contacts_list_table",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "contact_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT NOT NULL, `phone_numbers` TEXT NOT NULL, FOREIGN KEY(`contact_id`) REFERENCES `contacts_list_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER, `full_name` TEXT, `phone_numbers` TEXT NOT NULL, FOREIGN KEY(`contact_id`) REFERENCES `contacts_list_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "contactId",
@@ -44,13 +44,13 @@
             "fieldPath": "listId",
             "columnName": "list_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
             "columnName": "full_name",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "phoneNumbers",
@@ -83,7 +83,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e2f0997792c9f8a87adb5737c9a0dd41\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bc7dcae064c989ddca5fbc41b666ce4d\")"
     ]
   }
 }

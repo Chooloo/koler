@@ -21,25 +21,25 @@ public class Contact {
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "contact_id") int contactId;
     @ColumnInfo(name = "list_id") private int listId;
 
-    @ColumnInfo(name = "full_name") @NonNull private String name;
+    @ColumnInfo(name = "full_name") private String name;
     @ColumnInfo(name = "phone_numbers") @NonNull private List<String> phoneNumbers;
 
     @Ignore private String photoUri; //No need to save this to the database
 
-    public Contact(@NonNull String name, @NonNull List<String> phoneNumbers) {
+    public Contact(String name, @NonNull List<String> phoneNumbers) {
         this.name = name;
         this.phoneNumbers = phoneNumbers;
     }
 
     @Ignore
-    public Contact(@NonNull String name, @NonNull List<String> phoneNumbers, String photoUri) {
+    public Contact(String name, @NonNull List<String> phoneNumbers, String photoUri) {
         this.name = name;
         this.phoneNumbers = phoneNumbers;
         this.photoUri = photoUri;
     }
 
     @Ignore
-    public Contact(@NonNull String name, @NonNull String phoneNumber, @Nullable String photoUri) {
+    public Contact(String name, @NonNull String phoneNumber, @Nullable String photoUri) {
         this.name = name;
         this.photoUri = photoUri;
 
