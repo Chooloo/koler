@@ -1,4 +1,4 @@
-# call_manage
+# Call Manager (we really need to come up with a name)
 Dialer and Incoming call app, with unique and extra options.
 
 # Dialer
@@ -22,10 +22,6 @@ making it way more comfortable, faster and nice looking.
     * __Reject/End__      - Swipe left  
     * __Answer__          - Swipe right 
     * __Send sms__        - Swipe up on sms screen  
-  
-  
-Please use it
-
-
-> Elephants in the sky so you is a printer
-_Einstein_
+   
+ 
+Please use it 
