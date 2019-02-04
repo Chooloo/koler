@@ -13,14 +13,14 @@ Using swipes and minimalism, making everything more beatiful and intuitive.
 The app's main goal is to be more intuitive and comfortable,  
 For that reason, the swipes are the main way of controlling the app,  
 making it way more comfortable, faster and nice looking.  
-  #### Dialer
-  Call            - swipe up  
-  Delete number   - swipe left  
-  Collapse dialer - swipe on the contacts list  
-  #### Incoming Call
-  Open keypad     - Swipe up   
-  Reject/End      - Swipe left  
-  Answer          - Swipe right 
-  Send sms        - Swipe up on sms screen  
+  * ### Dialer
+    * __Call__            - swipe up  
+    * __Delete number__   - swipe left  
+    * __Collapse dialer__ - swipe on the contacts list  
+  * ### Incoming Call
+    * __Open keypad__     - Swipe up   
+    * __Reject/End__      - Swipe left  
+    * __Answer__          - Swipe right 
+    * __Send sms__        - Swipe up on sms screen  
   
   
