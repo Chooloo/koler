@@ -24,3 +24,8 @@ making it way more comfortable, faster and nice looking.
     * __Send sms__        - Swipe up on sms screen  
   
   
+Please use it
+
+
+> Elephants in the sky so you is a printer
+_Einstein_
