@@ -38,7 +38,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
 
     //Room
     implementation "androidx.room:room-runtime:2.0.0"
@@ -55,11 +54,6 @@ dependencies {
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
-    //Test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
     // Floating action button design
     implementation 'com.github.JediBurrell:customFloatingActionButton:-SNAPSHOT'
 
@@ -67,7 +61,17 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment:1.0.0-alpha11"
     implementation "android.arch.navigation:navigation-ui:1.0.0-alpha11"
 
+    //Apache POI
+    implementation 'org.apache.poi:poi:4.0.1'
+    implementation 'org.apache.poi:poi-ooxml:4.0.1'
+    implementation 'org.apache.poi:poi-ooxml-schemas:4.0.1'
+    implementation 'org.apache.xmlbeans:xmlbeans:3.0.2'
+
     //Test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:core:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
