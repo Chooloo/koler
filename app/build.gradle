@@ -67,6 +67,10 @@ dependencies {
     implementation 'org.apache.poi:poi-ooxml-schemas:4.0.1'
     implementation 'org.apache.xmlbeans:xmlbeans:3.0.2'
 
+    //Material Dialogs -- will not work if upgraded
+    //noinspection GradleDependency
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
