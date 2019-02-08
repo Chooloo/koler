@@ -5,5 +5,6 @@
 
     <dimen name="flat_button_size">64dp</dimen>
     <dimen name="flat_button_padding">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

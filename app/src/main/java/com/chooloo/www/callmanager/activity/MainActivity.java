@@ -2,18 +2,21 @@ package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 
+import com.chooloo.www.callmanager.OnSwipeTouchListener;
+import com.chooloo.www.callmanager.fragment.ContactsFragment;
+import com.chooloo.www.callmanager.fragment.DialFragment;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.MainPagerAdapter;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
-import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 
@@ -21,25 +24,28 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
+import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 
-//TODO clean up, give this activity a purpose
 public class MainActivity extends ToolbarActivity {
 
-    @BindView(R.id.pager) ViewPager mViewPager;
-    @BindView(R.id.tab_layout) TabLayout mTabLayout;
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
 
-    AnimationDrawable mMainAnimation;
+    ViewGroup mDialerLayout;
+    DialFragment mDialFragment;
+    ContactsFragment mContactsFragment;
 
-    private MainPagerAdapter mPagerAdapter;
+    OnSwipeTouchListener mContactsSwipeListener;
+
+    @BindView(R.id.button) Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +62,7 @@ public class MainActivity extends ToolbarActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Ask for permissions
-        if (ContextCompat.checkSelfPermission(MainActivity.this, CALL_PHONE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(MainActivity.this, SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (!checkStrPermission(this, CALL_PHONE) || !checkStrPermission(this, SEND_SMS)) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS}, 1);
         }
 
@@ -71,35 +75,35 @@ public class MainActivity extends ToolbarActivity {
         }
 
         // Update contacts if possible
-        if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+        if (checkStrPermission(this, READ_CONTACTS)) {
             updateContacts(false);
         }
 
-        mTabLayout.addTab(mTabLayout.newTab());
 
-        //Instantiate ViewPager
-        mPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this);
-        mViewPager.setAdapter(mPagerAdapter);
+        mDialerLayout = (ViewGroup) findViewById(R.id.dialer_layout);
+        mContactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_contacts_fragment);
+        mDialFragment = (DialFragment) getSupportFragmentManager().findFragmentById(R.id.main_dialer_fragment);
 
-        mTabLayout.setupWithViewPager(mViewPager);
+        mContactsSwipeListener = new OnSwipeTouchListener(this) {
+            @Override
+            public void onSwipeTop() {
+                animateDialer(mMainLayout);
+            }
+        };
 
-        mMainAnimation = (AnimationDrawable) mMainLayout.getBackground();
-        mMainAnimation.setEnterFadeDuration(2000);
-        mMainAnimation.setExitFadeDuration(2000);
+
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mMainAnimation != null && !mMainAnimation.isRunning())
-            mMainAnimation.start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mMainAnimation != null && mMainAnimation.isRunning())
-            mMainAnimation.start();
+    @OnClick(R.id.button)
+    public void animateDialer(View view) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        if (mDialFragment.isHidden()) {
+            ft.show(mDialFragment);
+        } else {
+            ft.hide(mDialFragment);
+        }
+        ft.commit();
     }
 
     @Override
@@ -112,6 +116,8 @@ public class MainActivity extends ToolbarActivity {
             if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                 // If the user gave permission to look for contacts, look for 'em
                 updateContacts(false);
+                ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_contacts_fragment);
+                contactsFragment.populateListView();
             }
         }
     }

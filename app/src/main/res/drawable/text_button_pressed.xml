@@ -4,7 +4,7 @@
 
     <corners android:radius="60dp" />
 
-    <solid android:color="@color/green_phone_semi_trans" />
+    <solid android:color="@color/main_activity_color" />
 
     <size
         android:width="50dp"

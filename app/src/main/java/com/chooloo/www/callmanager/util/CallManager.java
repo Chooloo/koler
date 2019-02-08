@@ -93,10 +93,10 @@ public class CallManager {
         if (uri.contains("tel")) // If uri contains 'tel' this is a normal number
             telephoneNumber = uri.replace("tel:", "");
 
-        if (telephoneNumber == null || telephoneNumber.isEmpty()) return ContactsManager.UNKNOWN;
+        if (telephoneNumber == null || telephoneNumber.isEmpty()) return ContactsManager.UNKNOWN; // Unknown number
 
-        Contact contact = ContactsManager.getContactByPhoneNumber(context, telephoneNumber);
-        if (contact == null) return ContactsManager.UNKNOWN;
+        Contact contact = ContactsManager.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
+        if (contact == null) return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 
         return contact;
     }

@@ -13,4 +13,13 @@
         <item>3 seconds</item>
     </string-array>
 
+    <string-array name="contacts_placeholders">
+        <item>Bla</item>
+        <item>Bla</item>
+        <item>Bla</item>
+        <item>Bla</item>
+        <item>Bla</item>
+        <item>Bla</item>
+    </string-array>
+
 </resources>

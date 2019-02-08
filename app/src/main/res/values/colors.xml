@@ -9,10 +9,13 @@
     <color name="icon_active_light">#000000</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
+    <color name="black">#000000</color>
+
     <!-- Shades Of White -->
     <color name="white">#ffffff</color>
     <color name="semi_white">#B3FFFFFF</color>
     <color name="semi_grey">#fafafa</color>
+    <color name="grey">#F4F4F4</color>
 
     <!-- Green -->
     <color name="green_phone">#66bb6a</color>
@@ -29,6 +32,7 @@
     <color name="ended_call_color">@color/red_phone_semi_trans</color>
     <color name="incoming_call_color_1">@color/green_phone_semi_trans</color>
     <color name="incoming_call_color_2">@color/red_phone_semi_trans</color>
+    <color name="main_activity_color">#feada6</color>
 
     <!--<color name="caller_text_color">#313131</color>-->
     <color name="caller_text_color">@color/white</color>

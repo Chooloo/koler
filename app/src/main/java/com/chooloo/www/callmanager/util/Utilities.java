@@ -1,6 +1,8 @@
 package com.chooloo.www.callmanager.util;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -9,13 +11,31 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.chooloo.www.callmanager.activity.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 public class Utilities {
 
     public final static long DEFAULT_VIBRATE_LENGTH = 100;
+
+    /**
+     * Checks for a given permission and returns true if true and false if false
+     *
+     * @param context
+     * @param permission a string of the permission (Manifest.permission.***)
+     * @return boolean true/false
+     */
+    public static boolean checkStrPermission(Context context, String permission) {
+        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED)
+            return true;
+        return false;
+    }
 
     /**
      * Vibrate the phone for {@code DEFAULT_VIBRATE_LENGTH} milliseconds
@@ -54,9 +74,9 @@ public class Utilities {
     /**
      * Get whether a given x and y coordinates are in the vicinity of a view
      *
-     * @param view the target view
-     * @param x the x value of the point - must be raw
-     * @param y the y value of the point - must be raw
+     * @param view                 the target view
+     * @param x                    the x value of the point - must be raw
+     * @param y                    the y value of the point - must be raw
      * @param buttonVicinityOffset the vicinity in which to check the condition - in dp
      * @return true if the point is in the view's vicinity, false otherwise.
      */
