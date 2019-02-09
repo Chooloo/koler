@@ -37,8 +37,15 @@ public class ContactsManager {
     public static ArrayList<Contact> getContactList(Context context) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         ContentResolver cr = context.getContentResolver();
+
+        String[] projection = new String[]{
+                Contacts._ID,
+                Contacts.DISPLAY_NAME,
+                Contacts.PHOTO_URI,
+                Contacts.HAS_PHONE_NUMBER
+        };
         Cursor cur = cr.query(Contacts.CONTENT_URI,
-                null, null, null, Contacts.DISPLAY_NAME + " ASC");
+                projection, null, null, Contacts.DISPLAY_NAME + " ASC");
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
@@ -52,9 +59,13 @@ public class ContactsManager {
                 if (cur.getInt(cur.getColumnIndex(Contacts.HAS_PHONE_NUMBER)) == 0)
                     continue; //Ignore
 
+                String[] phoneProjection = new String[] {
+                        Phone.NORMALIZED_NUMBER
+                };
+
                 Cursor pCur = cr.query(
                         Phone.CONTENT_URI,
-                        null,
+                        phoneProjection,
                         Phone.CONTACT_ID + " = ?",
                         new String[]{id}, null);
 
