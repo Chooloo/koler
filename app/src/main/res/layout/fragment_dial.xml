@@ -2,53 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@drawable/dialer_background"
+    android:elevation="20sp"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:padding="10sp"
+    android:paddingBottom="0sp"
     tools:context=".fragment.DialFragment">
-
-    <!-- Matching Contacts List View -->
-    <ListView
-        android:id="@+id/list_dial_contacts"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/text_number_input"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ListView>
 
     <!-- Number Input Field -->
     <EditText
-        android:textColor="@color/white"
         android:id="@+id/text_number_input"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:background="@android:color/transparent"
-        android:ems="13"
+        style="@style/TextButton"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:hint="Phone Number"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_dial_contacts" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
         android:layout_width="240dp"
         android:layout_height="320dp"
+        android:layout_marginBottom="40dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_number_input">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
@@ -63,6 +51,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="1" />
 
@@ -73,6 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="2" />
 
@@ -83,6 +73,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="3" />
 
@@ -101,6 +92,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="4" />
 
@@ -111,6 +103,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="5" />
 
@@ -121,6 +114,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="6" />
         </TableRow>
@@ -138,6 +132,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="7" />
 
@@ -148,6 +143,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="8" />
 
@@ -158,6 +154,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="9" />
 
@@ -176,6 +173,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="*" />
 
@@ -186,6 +184,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="0" />
 
@@ -196,6 +195,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="6dp"
                 android:layout_weight="1"
+                android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="#" />
 
@@ -212,8 +212,10 @@
         android:layout_height="50dp"
         android:layout_marginStart="70dp"
         android:layout_marginBottom="20dp"
+        android:duplicateParentState="true"
         android:gravity="center"
         android:text="Call"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
@@ -228,6 +230,7 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="del"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />

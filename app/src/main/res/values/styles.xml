@@ -21,8 +21,28 @@
     <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="TextButton" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/text_button_selector</item>
-        <item name="android:textColor">@color/green_phone</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/main_activity_color</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- List View -->
+    <style name="ListView" parent="Widget.AppCompat.ListView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:dividerHeight">5.0sp</item>
+        <item name="android:divider">@android:color/transparent</item>
+    </style>
+
+    <!-- List Item Text (Big) -->
+    <style name="ListItemText" parent="Widget.AppCompat.TextView"></style>
+
+    <style name="ListItemText.Big">
+        <item name="android:textSize">20sp</item>
+        <item name="android:color">@color/black</item>
+    </style>
+
+    <style name="ListItemText.Small">
+        <item name="android:textSize">10sp</item>
+        <item name="android:color">@color/grey</item>
     </style>
 
 </resources>

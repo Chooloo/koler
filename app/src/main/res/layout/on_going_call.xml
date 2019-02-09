@@ -198,7 +198,8 @@
         android:id="@+id/answer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@android:color/white"
@@ -207,6 +208,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:maxImageSize="36dp" />
@@ -216,7 +218,8 @@
         android:id="@+id/reject_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="40dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@android:color/white"
@@ -225,8 +228,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/answer_btn"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
         app:maxImageSize="36dp" />
 
@@ -236,7 +238,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_center_vertical"

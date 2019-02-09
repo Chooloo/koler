@@ -31,7 +31,7 @@ public class ContactsManager {
      *
      * @return ArrayList<Contact> a list of contacts
      */
-    private static ArrayList<Contact> getContactList(Context context) {
+    public static ArrayList<Contact> getContactList(Context context) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         ContentResolver cr = context.getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -106,24 +105,24 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
     @BindView(R.id.text_stopwatch) TextView mTimeText;
 
-    // Images
-    @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
-    @BindView(R.id.image_photo) ImageView mPhotoImage;
 
     // Action buttons
     @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
 
+    // Image Views
+    @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
+    @BindView(R.id.image_photo) ImageView mPhotoImage;
     @BindView(R.id.button_hold) ImageView mHoldButton;
     @BindView(R.id.button_mute) ImageView mMuteButton;
     @BindView(R.id.button_keypad) ImageView mKeypadButton;
     @BindView(R.id.button_speaker) ImageView mSpeakerButton;
     @BindView(R.id.button_add_call) ImageView mAddCallButton;
 
+    // Floating Action Buttons
     @BindView(R.id.button_reject_call_timer) FloatingActionButton mRejectCallTimerButton;
     @BindView(R.id.button_send_sms) FloatingActionButton mSendSMSButton;
     @BindView(R.id.button_cancel) FloatingActionButton mCancelButton;
-
     @BindView(R.id.button_cancel_timer) FloatingActionButton mCancelTimerButton;
 
     // Layouts and overlays
@@ -134,8 +133,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
     @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     @Nullable ViewGroup mCurrentOverlay = null;
-
-    AnimationDrawable mBackgroundAnimation;
 
     // Swipes Listeners
     OnSwipeTouchListener mSmsOverlaySwipeListener;
@@ -268,7 +265,6 @@ public class OngoingCallActivity extends AppCompatActivity {
             }
         };
 
-        timeBackAnimation();
     }
 
     @Override
@@ -292,18 +288,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
         mActionTimer.cancel();
         releaseWakeLock();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setBackAnimation(true);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        setBackAnimation(false);
     }
 
     @Override
@@ -438,23 +422,23 @@ public class OngoingCallActivity extends AppCompatActivity {
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE: // Ongoing
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
+                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.green_phone_semi_trans));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED: // Ended
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
+                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.red_phone_semi_trans));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING: // Inooming
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
+                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 statusTextRes = R.string.status_call_incoming;
                 break;
             case Call.STATE_DIALING: // Outgoing
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
+                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING: // Connecting (probably outgoing)
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
+                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING: // On Hold
@@ -465,8 +449,6 @@ public class OngoingCallActivity extends AppCompatActivity {
                 break;
         }
         mStatusText.setText(statusTextRes);
-        timeBackAnimation();
-        setBackAnimation(true);
         if (state != Call.STATE_RINGING) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
     }
@@ -496,27 +478,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         mSpeakerButton.setVisibility(View.VISIBLE);
         mAddCallButton.setVisibility(View.VISIBLE);
         moveRejectButtonToMiddle();
-    }
-
-    /**
-     * Sets the gradient back animation enter and exit durations
-     */
-    private void timeBackAnimation() {
-        mBackgroundAnimation = (AnimationDrawable) mOngoingCallLayout.getBackground();
-        mBackgroundAnimation.setEnterFadeDuration(6000);
-        mBackgroundAnimation.setExitFadeDuration(2000);
-    }
-
-    /**
-     * Starts or stops the background gradient animation
-     *
-     * @param state true / false = start / stop
-     */
-    private void setBackAnimation(boolean state) {
-        if (state && mBackgroundAnimation != null && !mBackgroundAnimation.isRunning()) {
-            mBackgroundAnimation.start();
-        } else if (!state && mBackgroundAnimation != null && mBackgroundAnimation.isRunning())
-            mBackgroundAnimation.stop();
     }
 
     /**
