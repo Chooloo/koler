@@ -15,19 +15,19 @@ import androidx.lifecycle.ViewModelProviders;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ContactsListFragment extends Fragment {
+public class CustomContactsFragment extends Fragment {
 
     private ViewGroup mRootView;
-    private ContactsListViewModel mViewModel;
+    private CustomContactsViewModel mViewModel;
 
-    public static ContactsListFragment newInstance() {
-        return new ContactsListFragment();
+    public static CustomContactsFragment newInstance() {
+        return new CustomContactsFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_calling_lists, container, false);
+        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_custom_contacts, container, false);
         ButterKnife.bind(this, mRootView);
         return mRootView;
     }
@@ -35,7 +35,7 @@ public class ContactsListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ContactsListViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(CustomContactsViewModel.class);
     }
 
     @OnClick(R.id.add_contacts)

@@ -24,6 +24,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,7 +42,6 @@ public class MainActivity extends AppBarActivity {
 
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
-    ContactsFragment mContactsFragment;
 
     OnSwipeTouchListener mContactsSwipeListener;
 
@@ -77,8 +78,7 @@ public class MainActivity extends AppBarActivity {
         }
 
 
-        mDialerLayout = (ViewGroup) findViewById(R.id.dialer_layout);
-        mContactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_contacts_fragment);
+        mDialerLayout = findViewById(R.id.dialer_layout);
         mDialFragment = (DialFragment) getSupportFragmentManager().findFragmentById(R.id.main_dialer_fragment);
 
         mContactsSwipeListener = new OnSwipeTouchListener(this) {
@@ -103,6 +103,17 @@ public class MainActivity extends AppBarActivity {
         ft.commit();
     }
 
+    @OnClick(R.id.button2)
+    public void switchFragments(View view) {
+        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
+        int id = controller.getCurrentDestination().getId();
+        if (id == R.id.contactsFragment) {
+            controller.navigate(R.id.action_contactsFragment_to_customContactsFragment);
+        } else {
+            controller.navigate(R.id.action_customContactsFragment_to_contactsFragment);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -113,7 +124,7 @@ public class MainActivity extends AppBarActivity {
             if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                 // If the user gave permission to look for contacts, look for 'em
                 updateContacts(false);
-                ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_contacts_fragment);
+                ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
                 contactsFragment.populateListView();
             }
         }

@@ -3,11 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/contactsListFragment">
-
+    app:startDestination="@id/contactsFragment">
     <fragment
-        android:id="@+id/contactsListFragment"
-        android:name="com.chooloo.www.callmanager.fragment.ContactsListFragment"
-        android:label="fragment_calling_lists"
-        tools:layout="@layout/fragment_calling_lists" />
+        android:id="@+id/contactsFragment"
+        android:name="com.chooloo.www.callmanager.fragment.ContactsFragment"
+        android:label="fragment_contacts"
+        tools:layout="@layout/fragment_contacts" >
+        <action
+            android:id="@+id/action_contactsFragment_to_customContactsFragment"
+            app:destination="@id/customContactsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customContactsFragment"
+        android:name="com.chooloo.www.callmanager.fragment.CustomContactsFragment"
+        android:label="fragment_custom_contacts"
+        tools:layout="@layout/fragment_custom_contacts" >
+        <action
+            android:id="@+id/action_customContactsFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+    </fragment>
 </navigation>
