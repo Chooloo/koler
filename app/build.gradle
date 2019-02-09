@@ -71,6 +71,9 @@ dependencies {
     //noinspection GradleDependency
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
+    //Phone number formatting
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.10.5'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

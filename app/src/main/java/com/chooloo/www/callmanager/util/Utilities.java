@@ -10,6 +10,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
@@ -134,13 +138,15 @@ public class Utilities {
      * @return the for444444444matted number
      */
     public static String formatPhoneNumber(String phoneNumber) {
-        String lastPhoneNumber = phoneNumber;
-        if (phoneNumber != null) { // Checks for unusual occurrences of a number
-            if (lastPhoneNumber.contains("+972"))
-                lastPhoneNumber = lastPhoneNumber.replace("+972", "0");
-            if (lastPhoneNumber.contains(" ")) lastPhoneNumber = lastPhoneNumber.replace(" ", "");
-            if (lastPhoneNumber.contains("-")) lastPhoneNumber = lastPhoneNumber.replace("-", "");
+        Phonenumber.PhoneNumber formattedNumber = null;
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry());
+        } catch (NumberParseException e) {
+            System.err.println("NumberParseException was thrown: " + e.toString());
         }
-        return lastPhoneNumber;
+
+        if (formattedNumber == null) return phoneNumber;
+        else return phoneUtil.format(formattedNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
     }
 }

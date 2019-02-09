@@ -9,11 +9,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Contacts;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.database.Contact;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.core.app.ActivityCompat;
 import timber.log.Timber;
@@ -34,34 +37,41 @@ public class ContactsManager {
     public static ArrayList<Contact> getContactList(Context context) {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
         ContentResolver cr = context.getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
+        Cursor cur = cr.query(Contacts.CONTENT_URI,
+                null, null, null, Contacts.DISPLAY_NAME + " ASC");
 
         if ((cur != null ? cur.getCount() : 0) > 0) {
             while (cur.moveToNext()) {
                 String id = cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+                        cur.getColumnIndex(Contacts._ID));
                 String name = cur.getString(cur.getColumnIndex(
-                        ContactsContract.Contacts.DISPLAY_NAME));
-                String photo = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.PHOTO_URI));
+                        Contacts.DISPLAY_NAME));
+                String photo = cur.getString(cur.getColumnIndex(Contacts.PHOTO_URI));
+                List<String> phoneNumbers = new ArrayList<>();
 
-                if (cur.getInt(cur.getColumnIndex(
-                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-                    Cursor pCur = cr.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null);
-                    if (pCur != null) {
-                        while (pCur.moveToNext()) {
-                            String phoneNo = pCur.getString(pCur.getColumnIndex(
-                                    ContactsContract.CommonDataKinds.Phone.NUMBER));
-                            contacts.add(new Contact(name, phoneNo, photo));
-                            Timber.i("Name: %s, Phone number: %s", name, phoneNo);
-                        }
-                        pCur.close();
-                    }
+                if (cur.getInt(cur.getColumnIndex(Contacts.HAS_PHONE_NUMBER)) == 0)
+                    continue; //Ignore
+
+                Cursor pCur = cr.query(
+                        Phone.CONTENT_URI,
+                        null,
+                        Phone.CONTACT_ID + " = ?",
+                        new String[]{id}, null);
+
+                if (pCur == null) continue; //Ignore
+
+                while (pCur.moveToNext()) {
+                    String phoneNo = pCur.getString(pCur.getColumnIndex(
+                            Phone.NORMALIZED_NUMBER));
+
+                    phoneNumbers.add(phoneNo);
+                    Timber.i("Name: %s, Phone number: %s", name, phoneNo);
                 }
+                pCur.close();
+
+                if (phoneNumbers.size() == 0) continue;
+                Contact contact = new Contact(name, phoneNumbers, photo);
+                contacts.add(contact);
             }
         }
         if (cur != null) {
