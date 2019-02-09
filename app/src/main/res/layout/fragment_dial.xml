@@ -9,8 +9,6 @@
     android:elevation="20sp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:padding="10sp"
-    android:paddingBottom="0sp"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -32,8 +30,8 @@
         android:id="@+id/table_numbers"
         android:layout_width="240dp"
         android:layout_height="320dp"
-        android:layout_marginBottom="40dp"
         android:weightSum="4"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

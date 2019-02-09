@@ -77,10 +77,10 @@ public class Utilities {
      * This method converts dp unit to equivalent pixels, depending on device density.
      *
      * @param context Context to get resources and device specific display metrics
-     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param dp      A value in dp (density independent pixels) unit. Which we need to convert into pixels
      * @return A float value to represent px equivalent to dp depending on device density
      */
-    public static float convertDpToPixel(Context context, float dp){
+    public static float convertDpToPixel(Context context, float dp) {
         return dp * (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
     }
 
@@ -88,10 +88,10 @@ public class Utilities {
      * This method converts device specific pixels to density independent pixels.
      *
      * @param context Context to get resources and device specific display metrics
-     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param px      A value in px (pixels) unit. Which we need to convert into db
      * @return A float value to represent dp equivalent to px value
      */
-    public static float convertPixelsToDp(Context context, float px){
+    public static float convertPixelsToDp(Context context, float px) {
         return px / (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
     }
 
@@ -125,6 +125,7 @@ public class Utilities {
 
     /**
      * Toggle the active state of a view
+     *
      * @param view the view to toggle
      */
     public static void toggleViewActivation(View view) {
@@ -134,18 +135,26 @@ public class Utilities {
 
     /**
      * Format a given phone number to a readable string for the user
+     *
      * @param phoneNumber the number to format
-     * @return the for444444444matted number
+     * @return the formatted number
      */
     public static String formatPhoneNumber(String phoneNumber) {
+
+        // check for unwanted letters
+        if (phoneNumber.contains("-")) phoneNumber.replace("-", "");
+        if (phoneNumber.contains(" ")) phoneNumber.replace(" ", "");
+
         Phonenumber.PhoneNumber formattedNumber = null;
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry());
+            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry()); // parse the number into a country formatted one
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
         }
 
+        // return the number
         if (formattedNumber == null) return phoneNumber;
         else return phoneUtil.format(formattedNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
     }

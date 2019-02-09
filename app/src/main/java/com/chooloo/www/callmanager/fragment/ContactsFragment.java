@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.chooloo.www.callmanager.activity.MainActivity;
 import com.chooloo.www.callmanager.database.Contact;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.ContactsManager;
@@ -24,6 +26,8 @@ import java.util.Arrays;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -33,6 +37,10 @@ import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 
 
 public class ContactsFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    OnContactsChangeListener mCallback;
+
+    private MainActivity.MainSharedViewModel mMainModel;
 
     ArrayAdapter mArrayAdapter;
 
@@ -46,14 +54,12 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     ViewGroup mRootView;
     @BindView(R.id.list_contacts) ListView mContactsList;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_contacts, container, false);
         ButterKnife.bind(this, mRootView);
-
         return mRootView;
     }
 
@@ -63,7 +69,18 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         if (checkStrPermission(getContext(), READ_CONTACTS)) {
             populateListView();
         }
-        mContactsList.setOnItemClickListener(this);
+        mContactsList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == 0) mCallback.onContactsScroll(false);
+                else mCallback.onContactsScroll(true);
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
     }
 
     @Override
@@ -76,6 +93,18 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    }
+
+    /**
+     * Set the given activity as the listener
+     * @param activity
+     */
+    public void setOnContactsChangeListener(OnContactsChangeListener activity) {
+        mCallback = activity;
+    }
+
+    public interface OnContactsChangeListener {
+        public void onContactsScroll(boolean isScrolling);
     }
 
     /**
