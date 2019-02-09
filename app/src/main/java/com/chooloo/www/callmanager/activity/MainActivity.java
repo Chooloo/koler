@@ -8,14 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.fragment.DialFragment;
 import com.chooloo.www.callmanager.util.ContactsManager;
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.util.Objects;
@@ -35,7 +34,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 
-public class MainActivity extends ToolbarActivity {
+public class MainActivity extends AppBarActivity {
 
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
 
@@ -58,8 +57,6 @@ public class MainActivity extends ToolbarActivity {
 
         // Init timber
         Timber.plant(new Timber.DebugTree());
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // Ask for permissions
         if (!checkStrPermission(this, CALL_PHONE) || !checkStrPermission(this, SEND_SMS)) {

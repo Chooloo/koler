@@ -5,37 +5,32 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:context=".activity.MainActivity">
-
-    <!-- Contacts List View Fragment-->
-    <fragment
-        android:id="@+id/main_contacts_fragment"
-        android:name="com.chooloo.www.callmanager.fragment.ContactsFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_contacts" />
 
     <!-- App Bar -->
     <include
         android:id="@+id/appbar"
         layout="@layout/appbar"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="@dimen/action_bar_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Contacts List View Fragment-->
+    <fragment
+        android:id="@+id/main_contacts_fragment"
+        android:name="com.chooloo.www.callmanager.fragment.ContactsFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        tools:layout="@layout/fragment_contacts" />
 
     <!-- Dialer Fragment-->
     <fragment

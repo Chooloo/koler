@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="navigation_bar_height">48dp</dimen>
+    <dimen name="default_padding">16dp</dimen>
+
+    <dimen name="app_bar_corner_radius">16dp</dimen>
+    <dimen name="action_bar_size">48dp</dimen>
 
     <dimen name="flat_button_size">64dp</dimen>
     <dimen name="flat_button_padding">16dp</dimen>

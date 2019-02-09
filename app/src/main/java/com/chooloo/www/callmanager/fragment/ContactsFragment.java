@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.chooloo.www.callmanager.database.Contact;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.ContactsManager;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -233,7 +234,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
             // Set the texts
             viewHolder.contactNameTxt.setText(contact.getName());
-            viewHolder.contactNumTxt.setText(contact.getMainPhoneNumber());
+            viewHolder.contactNumTxt.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
 
             return convertView;
         }

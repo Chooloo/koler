@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.util;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -11,17 +10,16 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.chooloo.www.callmanager.activity.MainActivity;
-
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
 
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
 public class Utilities {
 
+    public final static Locale LOCALE = Locale.getDefault();
     public final static long DEFAULT_VIBRATE_LENGTH = 100;
 
     /**
@@ -72,6 +70,28 @@ public class Utilities {
     }
 
     /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param context Context to get resources and device specific display metrics
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    public static float convertDpToPixel(Context context, float dp){
+        return dp * (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param context Context to get resources and device specific display metrics
+     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @return A float value to represent dp equivalent to px value
+     */
+    public static float convertPixelsToDp(Context context, float px){
+        return px / (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    /**
      * Get whether a given x and y coordinates are in the vicinity of a view
      *
      * @param view                 the target view
@@ -88,7 +108,7 @@ public class Utilities {
 
         outRect.offset(location[0], location[1]);
 
-        int e = (int) (buttonVicinityOffset * (dpi(view.getContext()) / DisplayMetrics.DENSITY_DEFAULT));
+        int e = (int) (convertDpToPixel(view.getContext(), buttonVicinityOffset));
         outRect = new Rect(outRect.left - e,
                 outRect.top - e,
                 outRect.right + e,
@@ -111,7 +131,7 @@ public class Utilities {
     /**
      * Format a given phone number to a readable string for the user
      * @param phoneNumber the number to format
-     * @return the formatted number
+     * @return the for444444444matted number
      */
     public static String formatPhoneNumber(String phoneNumber) {
         String lastPhoneNumber = phoneNumber;
