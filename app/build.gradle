@@ -29,6 +29,9 @@ android {
 }
 
 dependencies {
+
+    def lifecycle_version = "2.0.0"
+
     //Base
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
@@ -80,4 +83,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
     androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 }

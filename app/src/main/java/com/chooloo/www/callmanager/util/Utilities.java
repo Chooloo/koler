@@ -137,17 +137,24 @@ public class Utilities {
      * Format a given phone number to a readable string for the user
      *
      * @param phoneNumber the number to format
-     * @return the for444444444matted number
+     * @return the formatted number
      */
     public static String formatPhoneNumber(String phoneNumber) {
+
+        // check for unwanted letters
+        if (phoneNumber.contains("-")) phoneNumber.replace("-", "");
+        if (phoneNumber.contains(" ")) phoneNumber.replace(" ", "");
+
         Phonenumber.PhoneNumber formattedNumber = null;
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry());
+            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry()); // parse the number into a country formatted one
         } catch (NumberParseException e) {
             System.err.println("NumberParseException was thrown: " + e.toString());
         }
 
+        // return the number
         if (formattedNumber == null) return phoneNumber;
         else return phoneUtil.format(formattedNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
     }

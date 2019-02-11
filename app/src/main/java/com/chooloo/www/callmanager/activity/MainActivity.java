@@ -8,21 +8,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.fragment.DialFragment;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
@@ -33,18 +35,15 @@ import timber.log.Timber;
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
+import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
-public class MainActivity extends AppBarActivity {
+public class MainActivity extends AppBarActivity implements DialFragment.OnDialChangeListener, ContactsFragment.OnContactsChangeListener {
 
+    // Layouts and Fragments
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
-
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
-
-    OnSwipeTouchListener mContactsSwipeListener;
-
-    @BindView(R.id.button) Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class MainActivity extends AppBarActivity {
 
         // Ask for permissions
         if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS)) {
-            Utilities.askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
+            askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
         }
 
         // Prompt the user with a dialog to select this app to be the default phone app
@@ -76,30 +75,22 @@ public class MainActivity extends AppBarActivity {
             updateContacts(false);
         }
 
-
         mDialerLayout = findViewById(R.id.dialer_layout);
-        mDialFragment = (DialFragment) getSupportFragmentManager().findFragmentById(R.id.main_dialer_fragment);
-
-        mContactsSwipeListener = new OnSwipeTouchListener(this) {
-            @Override
-            public void onSwipeTop() {
-                animateDialer(mMainLayout);
-            }
-        };
-
-
+//        mContactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_contacts_fragment);
+//        mDialFragment = (DialFragment) getSupportFragmentManager().findFragmentById(R.id.main_dialer_fragment);
     }
 
-    @OnClick(R.id.button)
-    public void animateDialer(View view) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        if (mDialFragment.isHidden()) {
-            ft.show(mDialFragment);
-        } else {
-            ft.hide(mDialFragment);
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        // Set this class as the listener for the fragments
+        if (fragment instanceof DialFragment) {
+            mDialFragment = (DialFragment) fragment;
+            mDialFragment.setOnDialChangeListener(this);
         }
-        ft.commit();
+        if (fragment instanceof ContactsFragment) {
+            mContactsFragment = (ContactsFragment) fragment;
+            mContactsFragment.setOnContactsChangeListener(this);
+        }
     }
 
     @OnClick(R.id.button2)
@@ -149,11 +140,62 @@ public class MainActivity extends AppBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onNumberChanged(String number) {
+        mContactsFragment.populateListView(number);
+    }
+
+    @Override
+    public void onContactsScroll(boolean isScrolling) {
+        animateDialer(!isScrolling);
+    }
+
+    public void animateDialer(boolean trig) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        if (mDialFragment.isHidden() && trig) {
+            ft.show(mDialFragment);
+        } else if (mDialFragment.isVisible() && !trig) {
+            ft.hide(mDialFragment);
+        }
+        ft.commit();
+    }
+
     /**
      * Updates the contacts list in mContactsManager
      */
     private void updateContacts(boolean showProgress) {
         ContactsManager.updateContactsInBackground(this, showProgress);
+    }
+
+    // IGNORE FOR NOW
+    public class MainSharedViewModel extends ViewModel {
+
+        private final MutableLiveData<String> mLiveNumber;
+        private final MutableLiveData<String> mIsScrolling;
+
+        public MainSharedViewModel() {
+            mLiveNumber = new MutableLiveData<String>();
+            mIsScrolling = new MutableLiveData<String>();
+        }
+
+        public void updateNumber(String number) {
+            mLiveNumber.setValue(number);
+        }
+
+        public LiveData<String> getNumber() {
+            return mLiveNumber;
+        }
+
+        public void updateIsScrolling(boolean isScroll) {
+            if (isScroll) mIsScrolling.setValue("yes");
+            else mIsScrolling.setValue("no");
+        }
+
+        public LiveData<String> getIsScrolling() {
+            return mIsScrolling;
+        }
+
     }
 
 }

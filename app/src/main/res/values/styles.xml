@@ -21,8 +21,10 @@
 
     <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="TextButton" parent="Widget.AppCompat.TextView">
+        <item name="android:clickable">true</item>
+        <item name="android:elevation">4sp</item>
         <item name="android:background">@drawable/text_button_selector</item>
-        <item name="android:textColor">@color/main_activity_color</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">20sp</item>
     </style>
 
@@ -42,7 +44,7 @@
     </style>
 
     <style name="ListItemText.Small">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:color">@color/grey</item>
     </style>
 

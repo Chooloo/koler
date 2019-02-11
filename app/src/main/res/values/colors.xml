@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">@color/semi_grey</color>
-    <color name="colorPrimaryDark">#c7c7c7</color>
+    <color name="colorPrimary">@color/white</color>
+    <color name="colorPrimaryDark">@color/grey</color>
     <color name="colorAccent">@color/green_phone</color>
     <color name="colorBackground">@color/semi_grey</color>
 
@@ -32,7 +32,6 @@
     <color name="ended_call_color">@color/red_phone_semi_trans</color>
     <color name="incoming_call_color_1">@color/green_phone_semi_trans</color>
     <color name="incoming_call_color_2">@color/red_phone_semi_trans</color>
-    <color name="main_activity_color">#feada6</color>
 
     <!--<color name="caller_text_color">#313131</color>-->
     <color name="caller_text_color">@color/white</color>

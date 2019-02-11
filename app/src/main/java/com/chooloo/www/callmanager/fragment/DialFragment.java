@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chooloo.www.callmanager.activity.MainActivity;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
@@ -23,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,13 +36,10 @@ import timber.log.Timber;
 
 public class DialFragment extends Fragment {
 
+    OnDialChangeListener mCallback;
+
     // Variables
     private static String sToNumber = "";
-
-    // Local classes instances
-    private ContactsManager mContactsManager = new ContactsManager();
-    private ContactsFragment mContactsFragment = new ContactsFragment();
-    private DialViewModel mViewModel;
 
     // Edit Texts
     @BindView(R.id.text_number_input) EditText mNumberInput;
@@ -84,12 +84,6 @@ public class DialFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DialViewModel.class);
-    }
-
     // -- Buttons -- //
 
     /**
@@ -107,6 +101,7 @@ public class DialFragment extends Fragment {
             sToNumber += id.substring(4);
         }
         mNumberInput.setText(sToNumber);
+        numberChanged(sToNumber);
     }
 
     /**
@@ -117,7 +112,7 @@ public class DialFragment extends Fragment {
         if (sToNumber.length() <= 0) return;
         sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
         mNumberInput.setText(sToNumber);
-        mContactsFragment.populateListView(sToNumber);
+        numberChanged(sToNumber);
     }
 
     /**
@@ -127,6 +122,7 @@ public class DialFragment extends Fragment {
     public boolean delAllNum(View view) {
         sToNumber = "";
         mNumberInput.setText(sToNumber);
+        numberChanged(sToNumber);
         return true;
     }
 
@@ -177,6 +173,26 @@ public class DialFragment extends Fragment {
                 Timber.e(e, "Couldn't call %s", sToNumber);
             }
         }
+    }
+
+    /**
+     * The input number changed
+     * @param number
+     */
+    public void numberChanged(String number) {
+        mCallback.onNumberChanged(sToNumber);
+    }
+
+    /**
+     * Set the given activity as the listener
+     * @param activity
+     */
+    public void setOnDialChangeListener(OnDialChangeListener activity) {
+        mCallback = activity;
+    }
+
+    public interface OnDialChangeListener {
+        public void onNumberChanged(String number);
     }
 
     /**
