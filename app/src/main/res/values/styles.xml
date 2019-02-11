@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/ubuntu</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
     </style>

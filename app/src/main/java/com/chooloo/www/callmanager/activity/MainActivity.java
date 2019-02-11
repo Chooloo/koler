@@ -12,16 +12,15 @@ import android.widget.Button;
 
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.fragment.DialFragment;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -34,7 +33,7 @@ import timber.log.Timber;
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
-import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
+import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class MainActivity extends AppBarActivity {
 
@@ -60,8 +59,8 @@ public class MainActivity extends AppBarActivity {
         Timber.plant(new Timber.DebugTree());
 
         // Ask for permissions
-        if (!checkStrPermission(this, CALL_PHONE) || !checkStrPermission(this, SEND_SMS)) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS}, 1);
+        if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS)) {
+            Utilities.askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
         }
 
         // Prompt the user with a dialog to select this app to be the default phone app
@@ -73,7 +72,7 @@ public class MainActivity extends AppBarActivity {
         }
 
         // Update contacts if possible
-        if (checkStrPermission(this, READ_CONTACTS)) {
+        if (checkPermissionGranted(this, READ_CONTACTS)) {
             updateContacts(false);
         }
 
@@ -124,9 +123,9 @@ public class MainActivity extends AppBarActivity {
             if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                 // If the user gave permission to look for contacts, look for 'em
                 updateContacts(false);
-                ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-                contactsFragment.populateListView();
             }
+
+            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, true);
         }
     }
 

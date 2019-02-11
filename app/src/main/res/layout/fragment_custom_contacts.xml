@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_black_24dp"
-        android:tint="@color/colorFabIcon"
         app:layout_anchor="@+id/recycler_view"
         app:layout_anchorGravity="right|bottom" />
 

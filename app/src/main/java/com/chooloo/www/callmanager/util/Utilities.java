@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -23,20 +24,19 @@ import timber.log.Timber;
 
 public class Utilities {
 
+    public static final int PERMISSION_RC = 10;
     public final static Locale LOCALE = Locale.getDefault();
     public final static long DEFAULT_VIBRATE_LENGTH = 100;
 
-    /**
-     * Checks for a given permission and returns true if true and false if false
-     *
-     * @param context
-     * @param permission a string of the permission (Manifest.permission.***)
-     * @return boolean true/false
-     */
-    public static boolean checkStrPermission(Context context, String permission) {
-        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED)
-            return true;
-        return false;
+    public static boolean checkPermissionGranted(Context context, String permission) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && ContextCompat.checkSelfPermission(
+                context, permission)
+                != PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static void askForPermissions(Activity activity, String[] permissions) {
+        activity.requestPermissions(permissions, PERMISSION_RC);
     }
 
     /**
@@ -77,10 +77,10 @@ public class Utilities {
      * This method converts dp unit to equivalent pixels, depending on device density.
      *
      * @param context Context to get resources and device specific display metrics
-     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param dp      A value in dp (density independent pixels) unit. Which we need to convert into pixels
      * @return A float value to represent px equivalent to dp depending on device density
      */
-    public static float convertDpToPixel(Context context, float dp){
+    public static float convertDpToPixel(Context context, float dp) {
         return dp * (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
     }
 
@@ -88,10 +88,10 @@ public class Utilities {
      * This method converts device specific pixels to density independent pixels.
      *
      * @param context Context to get resources and device specific display metrics
-     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param px      A value in px (pixels) unit. Which we need to convert into db
      * @return A float value to represent dp equivalent to px value
      */
-    public static float convertPixelsToDp(Context context, float px){
+    public static float convertPixelsToDp(Context context, float px) {
         return px / (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
     }
 
@@ -125,6 +125,7 @@ public class Utilities {
 
     /**
      * Toggle the active state of a view
+     *
      * @param view the view to toggle
      */
     public static void toggleViewActivation(View view) {
@@ -134,6 +135,7 @@ public class Utilities {
 
     /**
      * Format a given phone number to a readable string for the user
+     *
      * @param phoneNumber the number to format
      * @return the for444444444matted number
      */

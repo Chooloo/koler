@@ -31,7 +31,7 @@ android {
 dependencies {
     //Base
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.preference:preference:1.0.0'
@@ -54,12 +54,9 @@ dependencies {
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
-    // Floating action button design
-    implementation 'com.github.JediBurrell:customFloatingActionButton:-SNAPSHOT'
-
     // Navigation
-    implementation "android.arch.navigation:navigation-fragment:1.0.0-alpha11"
-    implementation "android.arch.navigation:navigation-ui:1.0.0-alpha11"
+    implementation "android.arch.navigation:navigation-fragment:1.0.0-beta01"
+    implementation "android.arch.navigation:navigation-ui:1.0.0-beta01"
 
     //Apache POI
     implementation 'org.apache.poi:poi:4.0.1'
@@ -67,9 +64,9 @@ dependencies {
     implementation 'org.apache.poi:poi-ooxml-schemas:4.0.1'
     implementation 'org.apache.xmlbeans:xmlbeans:3.0.2'
 
-    //Material Dialogs -- will not work if upgraded
-    //noinspection GradleDependency
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    //Material dialogs
+    implementation 'com.github.NuclearGandhi.material-dialogs:core:3.0.0'
+    implementation 'com.github.NuclearGandhi.material-dialogs:commons:3.0.0'
 
     //Phone number formatting
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.10.5'

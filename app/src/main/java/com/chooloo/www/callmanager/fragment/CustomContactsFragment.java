@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CustomContactsFragment extends Fragment {
-
     private ViewGroup mRootView;
     private CustomContactsViewModel mViewModel;
 
@@ -40,6 +39,6 @@ public class CustomContactsFragment extends Fragment {
 
     @OnClick(R.id.add_contacts)
     public void addContacts(View view) {
-        ImportSpreadsheetDialog.showDialog(getContext());
+        new ImportSpreadsheetDialog.Builder(getFragmentManager()).show(new ImportSpreadsheetDialog());
     }
 }

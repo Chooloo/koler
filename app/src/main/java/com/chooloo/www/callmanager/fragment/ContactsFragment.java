@@ -13,8 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.database.Contact;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.database.Contact;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 
 
 public class ContactsFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -46,7 +45,6 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     ViewGroup mRootView;
     @BindView(R.id.list_contacts) ListView mContactsList;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,7 +58,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (checkStrPermission(getContext(), READ_CONTACTS)) {
+        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS)) {
             populateListView();
         }
         mContactsList.setOnItemClickListener(this);
