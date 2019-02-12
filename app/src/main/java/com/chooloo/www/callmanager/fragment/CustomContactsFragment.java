@@ -5,8 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.database.ContactsList;
 import com.chooloo.www.callmanager.dialog.ImportSpreadsheetDialog;
+import com.chooloo.www.callmanager.util.AsyncSpreadsheetImport;
+
+import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CustomContactsFragment extends Fragment {
+public class CustomContactsFragment extends Fragment implements ImportSpreadsheetDialog.OnImportListener {
     private ViewGroup mRootView;
     private CustomContactsViewModel mViewModel;
 
@@ -39,6 +44,33 @@ public class CustomContactsFragment extends Fragment {
 
     @OnClick(R.id.add_contacts)
     public void addContacts(View view) {
-        new ImportSpreadsheetDialog.Builder(getFragmentManager()).show(new ImportSpreadsheetDialog());
+        new ImportSpreadsheetDialog.Builder(getFragmentManager())
+                .onImportListener(this)
+                .show(new ImportSpreadsheetDialog());
+    }
+
+    @Override
+    public void onImport(ContactsList list, File excelFile, int nameColIndex, int numberColIndex) {
+        MaterialDialog progressDialog = new MaterialDialog.Builder(getContext())
+                .progress(false, 0, true)
+                .progressNumberFormat("%1d/%2d")
+                .show();
+
+        AsyncSpreadsheetImport task = new AsyncSpreadsheetImport(getContext(),
+                excelFile,
+                nameColIndex,
+                numberColIndex,
+                list);
+
+        AsyncSpreadsheetImport.OnProgressListener onProgressListener = (rowsRead, rowsCount) -> {
+            progressDialog.setProgress(rowsRead);
+            progressDialog.setMaxProgress(rowsCount);
+        };
+
+        AsyncSpreadsheetImport.OnFinishListener onFinishListener = progressDialog::dismiss;
+
+        task.setOnProgressListener(onProgressListener);
+        task.setOnFinishListener(onFinishListener);
+        task.execute();
     }
 }

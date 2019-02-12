@@ -32,7 +32,7 @@ public class Utilities {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(
                 context, permission)
-                != PackageManager.PERMISSION_GRANTED;
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     public static void askForPermissions(Activity activity, String[] permissions) {

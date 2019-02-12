@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.chooloo.www.callmanager.database.AppDatabase;
@@ -77,7 +78,7 @@ public class DatabaseTest {
                         .value();
         assertThat(listDb1.size(), greaterThan(0));
         assertThat(listDb1.get(0), is(mList1));
-        int listId = listDb1.get(0).getListId();
+        long listId = listDb1.get(0).getListId();
 
         //Insert the contact
         mContact1.setListId(listId);
@@ -92,18 +93,15 @@ public class DatabaseTest {
         assertThat(contactsDb1.get(0), is(mContact1));
     }
 
-    //This is not supposed to work
     @Test(timeout = 1000)
-    public void contactInsert() throws Exception {
-        mContactDao.insert(mContact2);
-
-        LiveData<List<Contact>> result1 = mContactDao.getContactsByPhoneNumber(mContact2.getMainPhoneNumber());
-        List<Contact> contactsDb1 = TestObserver.test(result1)
-                .awaitValue()
-                .assertHasValue()
-                .value();
-        assertThat(contactsDb1.size(), greaterThan(0));
-        assertThat(contactsDb1.get(0), is(mContact2));
+    public void singleContactInsert() throws Exception {
+        boolean foreignKeyConstraintFailed = false;
+        try {
+            mContactDao.insert(mContact2);
+        } catch (SQLiteConstraintException e) {
+            foreignKeyConstraintFailed = true;
+        }
+        assertThat(foreignKeyConstraintFailed, is(true));
     }
 
     @Test(timeout = 1000)

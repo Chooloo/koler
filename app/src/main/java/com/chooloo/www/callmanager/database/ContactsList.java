@@ -9,19 +9,21 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "contacts_list_table")
 public class ContactsList {
 
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "list_id") private int listId;
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "list_id")
+    private long listId;
 
-    @NonNull @ColumnInfo(name = "name") private String name;
+    @NonNull @ColumnInfo(name = "name")
+    private String name;
 
     public ContactsList(@NonNull String name) {
         this.name = name;
     }
 
-    public int getListId() {
+    public long getListId() {
         return listId;
     }
 
-    public void setListId(int listId) {
+    public void setListId(long listId) {
         this.listId = listId;
     }
 

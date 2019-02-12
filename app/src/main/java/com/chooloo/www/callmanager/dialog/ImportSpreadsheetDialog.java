@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.dialog;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,21 +14,11 @@ import com.afollestad.materialdialogs.BaseDialogFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.Contact;
+import com.chooloo.www.callmanager.database.ContactsList;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +26,9 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
+import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
 
@@ -57,11 +49,27 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         View customView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_import_spreadsheet, null, false);
         ButterKnife.bind(this, customView);
 
+        MaterialDialog.SingleButtonCallback onPositive = (dialog, which) -> {
+
+            if (mBuilder.onImportListener != null) {
+                File excelFile = new File(mEditPath.getText().toString());
+                int nameIndex = Integer.parseInt(mEditNameIndex.getText().toString());
+                int numberIndex = Integer.parseInt(mEditNumberIndex.getText().toString());
+
+                mBuilder.onImportListener.onImport(
+                        new ContactsList("Hey"),
+                        excelFile,
+                        nameIndex,
+                        numberIndex);
+            }
+        };
+
         return new MaterialDialog.Builder(getContext())
                 .customView(customView, false)
                 .title("Import contacts from spreadsheet")
                 .positiveText("Import")
                 .negativeText("Cancel")
+                .onPositive(onPositive)
                 .build();
     }
 
@@ -98,9 +106,8 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     }
 
     private void showFileChooser() {
-        if (Utilities.checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Utilities.askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-
+        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
             return;
         }
 
@@ -121,45 +128,22 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
     }
 
+    public interface OnImportListener {
+        void onImport(ContactsList list, File excelFile, int nameColIndex, int numberColIndex);
+    }
+
     public static class Builder extends BaseDialogFragment.Builder {
+
+        protected OnImportListener onImportListener;
 
         public Builder(FragmentManager fragmentManager) {
             super(fragmentManager);
             tag = TAG;
         }
-    }
 
-    class LoadContactsFromSpreadSheet extends AsyncTask<Void, Void, List<Contact>> {
-
-        private File mExcelFile;
-        private int mNameColIndex;
-        private int mPhoneNumberColIndex;
-
-        public LoadContactsFromSpreadSheet(File excelFile, int nameColIndex, int phoneNumberColIndex) {
-            mExcelFile = excelFile;
-            mNameColIndex = nameColIndex;
-            mPhoneNumberColIndex = phoneNumberColIndex;
-        }
-
-        @Override
-        protected List<Contact> doInBackground(Void... voids) {
-            List<Contact> contacts = new ArrayList<>();
-            try {
-                Workbook workbook = new HSSFWorkbook(new FileInputStream(mExcelFile));
-                Sheet sheet = workbook.getSheetAt(0);
-                Iterator<Row> rowIterator = sheet.rowIterator();
-
-                while (rowIterator.hasNext()) {
-                    Row row = rowIterator.next();
-                    String name = row.getCell(mNameColIndex).getStringCellValue();
-                    String phoneNumber = row.getCell(mPhoneNumberColIndex).getStringCellValue();
-                    Contact contact = new Contact(name, phoneNumber, null);
-                    contacts.add(contact);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return contacts;
+        public Builder onImportListener(OnImportListener listener) {
+            onImportListener = listener;
+            return this;
         }
     }
 }

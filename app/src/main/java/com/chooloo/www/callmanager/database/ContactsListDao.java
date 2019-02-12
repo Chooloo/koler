@@ -11,13 +11,16 @@ import androidx.room.Query;
 public interface ContactsListDao {
 
     @Insert
-    void insert (ContactsList list);
+    long insert (ContactsList list);
 
     @Query("DELETE FROM contacts_list_table")
     int deleteAll();
 
     @Query("DELETE FROM contacts_list_table WHERE name LIKE :name")
     int deleteByName(String name);
+
+    @Query("SELECT * from contacts_list_table WHERE list_id LIKE :listId")
+    List<ContactsList> getContactsListById(long listId);
 
     @Query("SELECT * from contacts_list_table WHERE name LIKE :name")
     LiveData<List<ContactsList>> getContactsListByName(String name);

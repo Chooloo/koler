@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5e173f5c4f4dc1803e31f4d03b71e29e",
+    "identityHash": "0e3b0c038e6ff62e147e6297ce2a2b84",
     "entities": [
       {
         "tableName": "contacts_list_table",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "contact_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT, `phone_numbers` TEXT NOT NULL, FOREIGN KEY(`contact_id`) REFERENCES `contacts_list_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT, `phone_numbers` TEXT NOT NULL, FOREIGN KEY(`list_id`) REFERENCES `contacts_list_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "contactId",
@@ -72,7 +72,7 @@
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "contact_id"
+              "list_id"
             ],
             "referencedColumns": [
               "list_id"
@@ -83,7 +83,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5e173f5c4f4dc1803e31f4d03b71e29e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0e3b0c038e6ff62e147e6297ce2a2b84\")"
     ]
   }
 }

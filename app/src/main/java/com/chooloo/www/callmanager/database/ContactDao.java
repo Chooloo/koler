@@ -14,7 +14,7 @@ public interface ContactDao {
     void insert(Contact contact);
 
     @Insert
-    void bulkInsert(List<Contact> contacts);
+    void insert(List<Contact> contacts);
 
     @Query("DELETE FROM contact_table")
     void deleteAll();
