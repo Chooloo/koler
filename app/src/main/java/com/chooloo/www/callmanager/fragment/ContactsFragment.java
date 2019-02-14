@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,10 +41,6 @@ import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 public class ContactsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     OnContactsChangeListener mCallback;
-
-    private MainActivity.MainSharedViewModel mMainModel;
-
-    ArrayAdapter mArrayAdapter;
 
     ArrayList<Contact> mCurrentContacts;
 
@@ -97,6 +95,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     /**
      * Set the given activity as the listener
+     *
      * @param activity
      */
     public void setOnContactsChangeListener(OnContactsChangeListener activity) {
@@ -192,6 +191,8 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         private class ViewHolder {
             TextView contactNameTxt;
             TextView contactNumTxt;
+            ImageView contactImagePlaceholder;
+            ImageView contactImage;
         }
 
         /**
@@ -244,6 +245,8 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
                 // Get the item views
                 viewHolder.contactNameTxt = convertView.findViewById(R.id.contact_dial_list_name_text);
                 viewHolder.contactNumTxt = convertView.findViewById(R.id.contact_dial_list_number_text);
+                viewHolder.contactImage = convertView.findViewById(R.id.list_image_photo);
+                viewHolder.contactImagePlaceholder = convertView.findViewById(R.id.list_image_placeholder);
 
                 // Final result
                 result = convertView;
@@ -264,6 +267,14 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
             // Set the texts
             viewHolder.contactNameTxt.setText(contact.getName());
             viewHolder.contactNumTxt.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+
+            //  Set the image
+            if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {
+                viewHolder.contactImagePlaceholder.setVisibility(View.INVISIBLE);
+                viewHolder.contactImage.setVisibility(View.VISIBLE);
+                viewHolder.contactImage.setImageURI(Uri.parse(contact.getPhotoUri()));
+            }
+
 
             return convertView;
         }

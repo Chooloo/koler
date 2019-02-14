@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/action_bar_size"
     android:background="@drawable/app_bar_background"
-    android:elevation="4dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">

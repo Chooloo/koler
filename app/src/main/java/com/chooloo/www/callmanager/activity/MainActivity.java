@@ -3,7 +3,9 @@ package com.chooloo.www.callmanager.activity;
 import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,8 +48,11 @@ import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 
 public class MainActivity extends AppBarActivity implements DialFragment.OnDialChangeListener, ContactsFragment.OnContactsChangeListener {
 
+    // Variables
+    boolean mIsScrolling;
+
     // Layouts and Fragments
-    @BindView(R.id.appbar) AppBarActivity mAppBar;
+    @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
@@ -84,7 +89,6 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         }
 
         mDialerLayout = findViewById(R.id.dialer_layout);
-
     }
 
     @Override
@@ -150,11 +154,23 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         if (mDialFragment.isHidden() && trig) {
-            ft.show(mDialFragment);
+            mIsScrolling = false;
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(mIsScrolling == false) {
+                        ft.show(mDialFragment);
+                        ft.commit();
+                    }
+                }
+            }, 1500);
         } else if (mDialFragment.isVisible() && !trig) {
+            mIsScrolling = true;
             ft.hide(mDialFragment);
+            ft.commit();
         }
-        ft.commit();
+
     }
 
     /**
@@ -164,34 +180,5 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         ContactsManager.updateContactsInBackground(this, showProgress);
     }
 
-    // IGNORE FOR NOW
-    public class MainSharedViewModel extends ViewModel {
-
-        private final MutableLiveData<String> mLiveNumber;
-        private final MutableLiveData<String> mIsScrolling;
-
-        public MainSharedViewModel() {
-            mLiveNumber = new MutableLiveData<String>();
-            mIsScrolling = new MutableLiveData<String>();
-        }
-
-        public void updateNumber(String number) {
-            mLiveNumber.setValue(number);
-        }
-
-        public LiveData<String> getNumber() {
-            return mLiveNumber;
-        }
-
-        public void updateIsScrolling(boolean isScroll) {
-            if (isScroll) mIsScrolling.setValue("yes");
-            else mIsScrolling.setValue("no");
-        }
-
-        public LiveData<String> getIsScrolling() {
-            return mIsScrolling;
-        }
-
-    }
 
 }

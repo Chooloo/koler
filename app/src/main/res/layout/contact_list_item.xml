@@ -1,10 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="5.0sp"
-    android:layout_marginEnd="5.0sp"
-    android:elevation="2sp"
     android:clickable="true"
     android:background="@drawable/list_item_background"
     android:orientation="horizontal"
@@ -13,19 +11,22 @@
     <!-- Caller Pic -->
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_marginEnd="10dp"
         android:layout_width="40dp"
-        android:layout_height="match_parent">
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/image_placeholder"
+            android:id="@+id/list_image_placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:tint="@color/soft_shadow"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_photo"
+            android:id="@+id/list_image_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
@@ -34,9 +35,14 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginStart="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/frameLayout"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/contact_dial_list_name_text"
@@ -57,4 +63,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
