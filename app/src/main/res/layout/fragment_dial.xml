@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:background="@drawable/dialer_background"
-    android:elevation="20sp"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:padding="6sp"
+    android:elevation="4dp"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -28,10 +29,10 @@
     <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="240dp"
-        android:layout_height="320dp"
-        android:weightSum="4"
+        android:layout_width="210dp"
+        android:layout_height="280dp"
         android:background="@android:color/transparent"
+        android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -47,7 +48,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -58,7 +58,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -69,7 +68,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -88,7 +86,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -99,7 +96,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -110,7 +106,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -128,7 +123,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -139,7 +133,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -150,7 +143,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -169,7 +161,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -180,7 +171,6 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
@@ -191,14 +181,12 @@
                 style="@style/TextButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
                 android:gravity="center"
                 android:text="#" />
 
         </TableRow>
-
 
     </TableLayout>
 
@@ -232,5 +220,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_call" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

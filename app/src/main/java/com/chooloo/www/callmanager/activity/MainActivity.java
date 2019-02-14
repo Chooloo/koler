@@ -47,6 +47,7 @@ import static com.chooloo.www.callmanager.util.Utilities.checkStrPermission;
 public class MainActivity extends AppBarActivity implements DialFragment.OnDialChangeListener, ContactsFragment.OnContactsChangeListener {
 
     // Layouts and Fragments
+    @BindView(R.id.appbar) AppBarActivity mAppBar;
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
@@ -83,8 +84,7 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         }
 
         mDialerLayout = findViewById(R.id.dialer_layout);
-//        mContactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.main_contacts_fragment);
-//        mDialFragment = (DialFragment) getSupportFragmentManager().findFragmentById(R.id.main_dialer_fragment);
+
     }
 
     @Override

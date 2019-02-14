@@ -1,27 +1,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5.0sp"
     android:layout_marginEnd="5.0sp"
+    android:elevation="2sp"
+    android:clickable="true"
     android:background="@drawable/list_item_background"
     android:orientation="horizontal"
-    android:padding="20dp"
-    android:paddingStart="20sp">
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/contact_dial_list_name_text"
-        style="@style/ListItemText.Big"
+    <!-- Caller Pic -->
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_marginEnd="10dp"
+        android:layout_width="40dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tint="@color/soft_shadow"
+            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:civ_border_width="0dp" />
+
+    </FrameLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10sp"
-        android:clickable="true" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/contact_dial_list_name_text"
+            style="@style/ListItemText.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Name Placeholder" />
 
 
-    <TextView
-        android:id="@+id/contact_dial_list_number_text"
-        style="@style/ListItemText.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true" />
+        <TextView
+            android:id="@+id/contact_dial_list_number_text"
+            style="@style/ListItemText.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Number Placeholder" />
+
+    </LinearLayout>
 
 </LinearLayout>

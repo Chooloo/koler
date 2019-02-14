@@ -429,16 +429,13 @@ public class OngoingCallActivity extends AppCompatActivity {
                 mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.red_phone_semi_trans));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
-            case Call.STATE_RINGING: // Inooming
-                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+            case Call.STATE_RINGING: // Incoming
                 statusTextRes = R.string.status_call_incoming;
                 break;
             case Call.STATE_DIALING: // Outgoing
-                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING: // Connecting (probably outgoing)
-                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING: // On Hold
