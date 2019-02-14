@@ -34,6 +34,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
     public static final String TAG = "import_spreadsheet";
 
+    @BindView(R.id.edit_name) TextInputEditText mEditName;
     @BindView(R.id.edit_path) TextInputEditText mEditPath;
     @BindView(R.id.edit_name_index) TextInputEditText mEditNameIndex;
     @BindView(R.id.edit_number_index) TextInputEditText mEditNumberIndex;
@@ -52,12 +53,13 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         MaterialDialog.SingleButtonCallback onPositive = (dialog, which) -> {
 
             if (mBuilder.onImportListener != null) {
+                String name = mEditName.getText().toString();
                 File excelFile = new File(mEditPath.getText().toString());
                 int nameIndex = Integer.parseInt(mEditNameIndex.getText().toString());
                 int numberIndex = Integer.parseInt(mEditNumberIndex.getText().toString());
 
                 mBuilder.onImportListener.onImport(
-                        new CGroup("Hey"),
+                        new CGroup(name),
                         excelFile,
                         nameIndex,
                         numberIndex);
