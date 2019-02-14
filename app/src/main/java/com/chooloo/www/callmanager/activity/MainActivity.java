@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
@@ -145,31 +146,17 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         mContactsFragment.populateListView(number);
     }
 
-    @Override
-    public void onContactsScroll(boolean isScrolling) {
-        animateDialer(!isScrolling);
-    }
-
     public void animateDialer(boolean trig) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         if (mDialFragment.isHidden() && trig) {
             mIsScrolling = false;
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(mIsScrolling == false) {
-                        ft.show(mDialFragment);
-                        ft.commit();
-                    }
-                }
-            }, 1500);
+            ft.show(mDialFragment);
         } else if (mDialFragment.isVisible() && !trig) {
             mIsScrolling = true;
             ft.hide(mDialFragment);
-            ft.commit();
         }
+        ft.commit();
 
     }
 
@@ -180,5 +167,16 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         ContactsManager.updateContactsInBackground(this, showProgress);
     }
 
+    // ===ContactsFragment Function=== //
+    @Override
+    public void onContactsScroll(boolean isScrolling) {
+        animateDialer(!isScrolling);
+    }
 
+    @Override
+    public void onContactsListItemClick(View view) {
+        TextView textView = (TextView) view.findViewById(R.id.contact_list_number_text);
+        String number = textView.getText().toString();
+        mDialFragment.setNumber(number);
+    }
 }

@@ -175,8 +175,13 @@ public class DialFragment extends Fragment {
         }
     }
 
+    public void setNumber(String number) {
+        mNumberInput.setText(number);
+    }
+
     /**
      * The input number changed
+     *
      * @param number
      */
     public void numberChanged(String number) {
@@ -185,6 +190,7 @@ public class DialFragment extends Fragment {
 
     /**
      * Set the given activity as the listener
+     *
      * @param activity
      */
     public void setOnDialChangeListener(OnDialChangeListener activity) {

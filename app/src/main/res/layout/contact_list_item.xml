@@ -3,8 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
     android:background="@drawable/list_item_background"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -14,6 +17,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="5dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -39,26 +45,27 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/frameLayout"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/contact_dial_list_name_text"
+            android:id="@+id/contact_list_name_text"
             style="@style/ListItemText.Big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:text="Name Placeholder" />
 
 
         <TextView
-            android:id="@+id/contact_dial_list_number_text"
+            android:id="@+id/contact_list_number_text"
             style="@style/ListItemText.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:text="Number Placeholder" />
 
     </LinearLayout>

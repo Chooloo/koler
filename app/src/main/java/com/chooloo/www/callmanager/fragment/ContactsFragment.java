@@ -45,7 +45,6 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     ArrayList<Contact> mCurrentContacts;
 
     // Local classes instances
-    private ContactsManager mContactsManager = new ContactsManager();
     private ContactsAdapter mContactAdapter;
 
     // Views
@@ -79,6 +78,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
             }
         });
+        mContactsList.setOnItemClickListener(this);
     }
 
     @Override
@@ -91,7 +91,12 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        TextView textv = view.findViewById(R.id.contact_list_number_text);
+        Timber.i("item clicked with number: " + textv.getText().toString());
+        mCallback.onContactsListItemClick(view);
     }
+
+    // ===mCallback=== //
 
     /**
      * Set the given activity as the listener
@@ -103,8 +108,14 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     public interface OnContactsChangeListener {
+
         public void onContactsScroll(boolean isScrolling);
+
+        public void onContactsListItemClick(View view);
+
     }
+
+    // ===Populate ListView=== //
 
     /**
      * Creates a new populateListViewTask and executes it without a given number
@@ -215,9 +226,9 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
             Contact contact = (Contact) object;
 
             switch (v.getId()) {
-                case R.id.contact_dial_list_name_text:
+                case R.id.contact_list_name_text:
                     break;
-                case R.id.contact_dial_list_number_text:
+                case R.id.contact_list_number_text:
                     break;
             }
         }
@@ -243,8 +254,8 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
                 convertView = inflater.inflate(R.layout.contact_list_item, parent, false);
 
                 // Get the item views
-                viewHolder.contactNameTxt = convertView.findViewById(R.id.contact_dial_list_name_text);
-                viewHolder.contactNumTxt = convertView.findViewById(R.id.contact_dial_list_number_text);
+                viewHolder.contactNameTxt = convertView.findViewById(R.id.contact_list_name_text);
+                viewHolder.contactNumTxt = convertView.findViewById(R.id.contact_list_number_text);
                 viewHolder.contactImage = convertView.findViewById(R.id.list_image_photo);
                 viewHolder.contactImagePlaceholder = convertView.findViewById(R.id.list_image_placeholder);
 
