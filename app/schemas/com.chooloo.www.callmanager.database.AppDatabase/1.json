@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0e3b0c038e6ff62e147e6297ce2a2b84",
+    "identityHash": "f2c387ae68ad176a9fa3507fcd61132e",
     "entities": [
       {
-        "tableName": "contacts_list_table",
+        "tableName": "cgroup_table",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`list_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL)",
         "fields": [
           {
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "contact_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT, `phone_numbers` TEXT NOT NULL, FOREIGN KEY(`list_id`) REFERENCES `contacts_list_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT, `phone_numbers` TEXT NOT NULL, FOREIGN KEY(`list_id`) REFERENCES `cgroup_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "contactId",
@@ -68,7 +68,7 @@
         "indices": [],
         "foreignKeys": [
           {
-            "table": "contacts_list_table",
+            "table": "cgroup_table",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -83,7 +83,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0e3b0c038e6ff62e147e6297ce2a2b84\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f2c387ae68ad176a9fa3507fcd61132e\")"
     ]
   }
 }

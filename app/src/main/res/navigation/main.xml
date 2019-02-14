@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/customContactsFragment"
-        android:name="com.chooloo.www.callmanager.fragment.CustomContactsFragment"
+        android:name="com.chooloo.www.callmanager.fragment.CGroupsFragment"
         android:label="fragment_custom_contacts"
         tools:layout="@layout/fragment_custom_contacts" >
         <action

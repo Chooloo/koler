@@ -1,4 +1,6 @@
-package com.chooloo.www.callmanager.database;
+package com.chooloo.www.callmanager.database.dao;
+
+import com.chooloo.www.callmanager.database.entity.Contact;
 
 import java.util.List;
 
@@ -27,4 +29,7 @@ public interface ContactDao {
 
     @Query("SELECT * from contact_table ORDER BY contact_id ASC")
     LiveData<List<Contact>> getAllContacts();
+
+    @Query("SELECT * from contact_table WHERE list_id LIKE :listId")
+    LiveData<List<Contact>> getContactsInList(long listId);
 }

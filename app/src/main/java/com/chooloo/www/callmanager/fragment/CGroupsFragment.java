@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.ContactsList;
+import com.chooloo.www.callmanager.adapter.CGroupAdapter;
+import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.util.AsyncSpreadsheetImport;
 
@@ -17,15 +18,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CustomContactsFragment extends Fragment implements ImportSpreadsheetDialog.OnImportListener {
-    private ViewGroup mRootView;
-    private CustomContactsViewModel mViewModel;
+public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog.OnImportListener {
 
-    public static CustomContactsFragment newInstance() {
-        return new CustomContactsFragment();
+    private CGroupsViewModel mViewModel;
+
+    private ViewGroup mRootView;
+    private CGroupAdapter mAdapter;
+    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+
+    public static CGroupsFragment newInstance() {
+        return new CGroupsFragment();
     }
 
     @Override
@@ -33,13 +41,18 @@ public class CustomContactsFragment extends Fragment implements ImportSpreadshee
                              @Nullable Bundle savedInstanceState) {
         mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_custom_contacts, container, false);
         ButterKnife.bind(this, mRootView);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        mAdapter = new CGroupAdapter();
+        mRecyclerView.setAdapter(mAdapter);
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(CustomContactsViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
+        mViewModel.getContactsLists().observe(this, cgroups -> mAdapter.setData(cgroups));
     }
 
     @OnClick(R.id.add_contacts)
@@ -50,7 +63,7 @@ public class CustomContactsFragment extends Fragment implements ImportSpreadshee
     }
 
     @Override
-    public void onImport(ContactsList list, File excelFile, int nameColIndex, int numberColIndex) {
+    public void onImport(CGroup list, File excelFile, int nameColIndex, int numberColIndex) {
         MaterialDialog progressDialog = new MaterialDialog.Builder(getContext())
                 .progress(false, 0, true)
                 .progressNumberFormat("%1d/%2d")

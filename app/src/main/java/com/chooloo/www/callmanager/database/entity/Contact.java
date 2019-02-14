@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.database;
+package com.chooloo.www.callmanager.database.entity;
 
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -14,7 +14,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "contact_table",
-        foreignKeys = @ForeignKey(entity = ContactsList.class,
+        foreignKeys = @ForeignKey(entity = CGroup.class,
                 parentColumns = "list_id",
                 childColumns = "list_id",
                 onDelete = ForeignKey.CASCADE))

@@ -5,10 +5,10 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.database.AppDatabase;
-import com.chooloo.www.callmanager.database.Contact;
-import com.chooloo.www.callmanager.database.ContactDao;
-import com.chooloo.www.callmanager.database.ContactsList;
-import com.chooloo.www.callmanager.database.ContactsListDao;
+import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.database.dao.ContactDao;
+import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.database.dao.CGroupDao;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
@@ -33,7 +33,7 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
     private int mNameColIndex;
     private int mNumberColIndex;
 
-    private ContactsList mDatabaseList;
+    private CGroup mDatabaseList;
 
     private OnProgressListener mOnProgressListener;
     private OnFinishListener mOnFinishListener;
@@ -52,7 +52,7 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
                                   @NotNull File excelFile,
                                   int nameColIndex,
                                   int numberColIndex,
-                                  @NotNull ContactsList databaseList) {
+                                  @NotNull CGroup databaseList) {
         mContext = context;
         mExcelFile = excelFile;
         mNameColIndex = nameColIndex;
@@ -74,8 +74,8 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
         long listId = mDatabaseList.getListId();
         AppDatabase db = AppDatabase.getDatabase(mContext);
         if (listId == 0) { //If this list isn't in the database
-            ContactsListDao contactsListDao = db.getContactsListDao();
-            listId = contactsListDao.insert(mDatabaseList);
+            CGroupDao CGroupDao = db.getCGroupDao();
+            listId = CGroupDao.insert(mDatabaseList);
         }
 
         List<Contact> contacts = fetchContacts(listId);

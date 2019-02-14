@@ -14,7 +14,7 @@ import com.afollestad.materialdialogs.BaseDialogFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.ContactsList;
+import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -57,7 +57,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
                 int numberIndex = Integer.parseInt(mEditNumberIndex.getText().toString());
 
                 mBuilder.onImportListener.onImport(
-                        new ContactsList("Hey"),
+                        new CGroup("Hey"),
                         excelFile,
                         nameIndex,
                         numberIndex);
@@ -129,7 +129,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     }
 
     public interface OnImportListener {
-        void onImport(ContactsList list, File excelFile, int nameColIndex, int numberColIndex);
+        void onImport(CGroup list, File excelFile, int nameColIndex, int numberColIndex);
     }
 
     public static class Builder extends BaseDialogFragment.Builder {

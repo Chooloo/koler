@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.Contact;
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.util.Utilities;
 

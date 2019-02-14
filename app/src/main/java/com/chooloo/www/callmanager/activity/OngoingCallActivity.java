@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.database.Contact;
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.LongClickOptionsListener;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;

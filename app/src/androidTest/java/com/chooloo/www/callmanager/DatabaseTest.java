@@ -5,10 +5,10 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 
 import com.chooloo.www.callmanager.database.AppDatabase;
-import com.chooloo.www.callmanager.database.Contact;
-import com.chooloo.www.callmanager.database.ContactDao;
-import com.chooloo.www.callmanager.database.ContactsList;
-import com.chooloo.www.callmanager.database.ContactsListDao;
+import com.chooloo.www.callmanager.database.dao.CGroupDao;
+import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.database.dao.ContactDao;
 import com.jraska.livedata.TestObserver;
 
 import org.junit.After;
@@ -37,9 +37,9 @@ public class DatabaseTest {
 
     private AppDatabase mDb;
     private ContactDao mContactDao;
-    private ContactsListDao mContactsListDao;
+    private CGroupDao mCGroupDao;
 
-    private ContactsList mList1;
+    private CGroup mList1;
     private Contact mContact1;
     private Contact mContact2;
 
@@ -50,12 +50,12 @@ public class DatabaseTest {
         Context context = ApplicationProvider.getApplicationContext();
         mDb = AppDatabase.getDatabase(context);
         mContactDao = mDb.getContactDao();
-        mContactsListDao = mDb.getContactsListDao();
+        mCGroupDao = mDb.getCGroupDao();
     }
 
     @Before
     public void initObjects() {
-        mList1 = new ContactsList("Gods");
+        mList1 = new CGroup("Gods");
         mContact1 = new Contact("Jesus Christ", "0000000000000", null);
         mContact2 = new Contact("Moses Avinu", "0000000000001", null);
     }
@@ -68,10 +68,10 @@ public class DatabaseTest {
     @Test(timeout = 1000)
     public void simpleInsert() throws Exception {
         //Insert the list
-        mContactsListDao.insert(mList1);
+        mCGroupDao.insert(mList1);
 
-        LiveData<List<ContactsList>> result1 = mContactsListDao.getContactsListByName(mList1.getName());
-        List<ContactsList> listDb1 =
+        LiveData<List<CGroup>> result1 = mCGroupDao.getCGroupByName(mList1.getName());
+        List<CGroup> listDb1 =
                 TestObserver.test(result1)
                         .awaitValue()
                         .assertHasValue()
@@ -108,15 +108,15 @@ public class DatabaseTest {
     public void simpleDeletion() throws Exception {
 
         //Delete the list
-        LiveData<List<ContactsList>> result1 = mContactsListDao.getContactsListByName(mList1.getName());
-        List<ContactsList> listDb1 =
+        LiveData<List<CGroup>> result1 = mCGroupDao.getCGroupByName(mList1.getName());
+        List<CGroup> listDb1 =
                 TestObserver.test(result1)
                         .awaitValue()
                         .assertHasValue()
                         .value();
 
         if (listDb1.contains(mList1)) {
-            int rowsDeleted = mContactsListDao.deleteByName(mList1.getName());
+            int rowsDeleted = mCGroupDao.deleteByName(mList1.getName());
             assertThat(rowsDeleted, greaterThan(0));
             Log.d(TAG, "List rows deleted: " + rowsDeleted);
         }
