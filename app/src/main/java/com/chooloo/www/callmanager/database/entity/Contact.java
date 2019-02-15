@@ -1,4 +1,6 @@
-package com.chooloo.www.callmanager.database;
+package com.chooloo.www.callmanager.database.entity;
+
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +14,23 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "contact_table",
-        foreignKeys = @ForeignKey(entity = ContactsList.class,
+        foreignKeys = @ForeignKey(entity = CGroup.class,
                 parentColumns = "list_id",
-                childColumns = "contact_id",
-        onDelete = ForeignKey.CASCADE))
+                childColumns = "list_id",
+                onDelete = ForeignKey.CASCADE))
 public class Contact {
 
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "contact_id") int contactId;
-    @ColumnInfo(name = "list_id") private int listId;
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "contact_id")
+    long contactId;
 
-    @ColumnInfo(name = "full_name") private String name;
-    @ColumnInfo(name = "phone_numbers") @NonNull private List<String> phoneNumbers;
+    @ColumnInfo(name = "list_id")
+    private long listId;
+
+    @ColumnInfo(name = "full_name")
+    private String name;
+
+    @ColumnInfo(name = "phone_numbers")
+    @NonNull private List<String> phoneNumbers;
 
     @Ignore private String photoUri; //No need to save this to the database
 
@@ -47,11 +55,11 @@ public class Contact {
         this.phoneNumbers.add(phoneNumber);
     }
 
-    public int getContactId() {
+    public long getContactId() {
         return contactId;
     }
 
-    public void setContactId(int contactId) {
+    public void setContactId(long contactId) {
         this.contactId = contactId;
     }
 
@@ -77,11 +85,11 @@ public class Contact {
         return phoneNumbers.get(0);
     }
 
-    public int getListId() {
+    public long getListId() {
         return listId;
     }
 
-    public void setListId(int listId) {
+    public void setListId(long listId) {
         this.listId = listId;
     }
 
@@ -101,7 +109,7 @@ public class Contact {
     @NonNull
     @Override
     public String toString() {
-        return String.format("name: %s, numbers: %s", name, this.phoneNumbers.toString());
+        return String.format(Utilities.LOCALE, "id: %d, list_id: %d, name: %s, numbers: %s", contactId, listId, name, this.phoneNumbers.toString());
     }
 
     @Override

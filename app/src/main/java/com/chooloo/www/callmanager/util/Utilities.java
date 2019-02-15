@@ -25,14 +25,16 @@ import timber.log.Timber;
 public class Utilities {
 
     public static final int PERMISSION_RC = 10;
-    public final static Locale LOCALE = Locale.getDefault();
-    public final static long DEFAULT_VIBRATE_LENGTH = 100;
+    public static final Locale LOCALE = Locale.getDefault();
+
+    public static final long LONG_VIBRATE_LENGTH = 500;
+    public static final long DEFAULT_VIBRATE_LENGTH = 100;
 
     public static boolean checkPermissionGranted(Context context, String permission) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(
                 context, permission)
-                != PackageManager.PERMISSION_GRANTED;
+                == PackageManager.PERMISSION_GRANTED;
     }
 
     public static void askForPermissions(Activity activity, String[] permissions) {

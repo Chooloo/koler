@@ -30,10 +30,22 @@
     <string name="status_call_dialing">Dialing…</string>
     <string name="status_call_holding">Call On Hold</string>
 
+    <!--Hint-->
+    <string name="hint_path">Path</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_name_column">Name column</string>
+    <string name="hint_number_column">Number column</string>
+
+    <!--Errors-->
+    <string name="error_name">Must be a non empty string</string>
+    <string name="error_column_index">Must be a valid integer</string>
+
+    <!--Dialog-->
+    <string name="dialog_folder_up">Up</string>
+    <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\' fields are in:</string>
+
     <!--Other-->
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>
     <string name="answer_timer_indicator">Answering in</string>
-
-    <string name="dialog_folder_up">Up</string>
 </resources>

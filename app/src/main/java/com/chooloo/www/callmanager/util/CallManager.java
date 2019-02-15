@@ -4,7 +4,7 @@ import android.content.Context;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
 
-import com.chooloo.www.callmanager.database.Contact;
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.activity.OngoingCallActivity;
 
 import timber.log.Timber;

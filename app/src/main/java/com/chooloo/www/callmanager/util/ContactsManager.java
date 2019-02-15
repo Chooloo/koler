@@ -13,7 +13,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.database.Contact;
+import com.chooloo.www.callmanager.database.entity.Contact;
 
 import java.util.ArrayList;
 import java.util.List;

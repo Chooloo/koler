@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.database;
+package com.chooloo.www.callmanager.database.entity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,22 +6,24 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "contacts_list_table")
-public class ContactsList {
+@Entity(tableName = "cgroup_table")
+public class CGroup {
 
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "list_id") private int listId;
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "list_id")
+    private long listId;
 
-    @NonNull @ColumnInfo(name = "name") private String name;
+    @NonNull @ColumnInfo(name = "name")
+    private String name;
 
-    public ContactsList(@NonNull String name) {
+    public CGroup(@NonNull String name) {
         this.name = name;
     }
 
-    public int getListId() {
+    public long getListId() {
         return listId;
     }
 
-    public void setListId(int listId) {
+    public void setListId(long listId) {
         this.listId = listId;
     }
 
@@ -37,8 +39,8 @@ public class ContactsList {
     @Override
     public boolean equals(@Nullable Object obj) {
         if (super.equals(obj)) return true;
-        if (obj instanceof ContactsList) {
-            ContactsList cl = (ContactsList) obj;
+        if (obj instanceof CGroup) {
+            CGroup cl = (CGroup) obj;
             return name.equals(cl.getName());
         }
         return false;

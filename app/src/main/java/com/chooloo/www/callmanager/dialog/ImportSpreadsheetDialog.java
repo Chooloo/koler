@@ -3,9 +3,9 @@ package com.chooloo.www.callmanager.dialog;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,21 +15,12 @@ import com.afollestad.materialdialogs.BaseDialogFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.Contact;
+import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.validation.Validator;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,11 +28,16 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
+
+import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
+import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
 
     public static final String TAG = "import_spreadsheet";
 
+    @BindView(R.id.edit_name) TextInputEditText mEditName;
     @BindView(R.id.edit_path) TextInputEditText mEditPath;
     @BindView(R.id.edit_name_index) TextInputEditText mEditNameIndex;
     @BindView(R.id.edit_number_index) TextInputEditText mEditNumberIndex;
@@ -57,11 +53,40 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         View customView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_import_spreadsheet, null, false);
         ButterKnife.bind(this, customView);
 
+        MaterialDialog.SingleButtonCallback onPositive = (dialog, which) -> {
+
+            onEditName(mEditName.getText());
+            onEditNameIndex(mEditNameIndex.getText());
+            onEditNumberIndex(mEditNumberIndex.getText());
+
+            //If one of the inputs shows an error
+            if (mEditName.getError() != null || mEditNumberIndex.getError() != null || mEditNameIndex.getError() != null) {
+                Utilities.vibrate(getContext(), Utilities.LONG_VIBRATE_LENGTH);
+                return;
+            }
+
+            if (mBuilder.onImportListener != null) {
+                String name = mEditName.getText().toString();
+                File excelFile = new File(mEditPath.getText().toString());
+                int nameIndex = Integer.parseInt(mEditNameIndex.getText().toString());
+                int numberIndex = Integer.parseInt(mEditNumberIndex.getText().toString());
+
+                mBuilder.onImportListener.onImport(
+                        new CGroup(name),
+                        excelFile,
+                        nameIndex,
+                        numberIndex);
+            }
+            dismiss();
+        };
+
         return new MaterialDialog.Builder(getContext())
                 .customView(customView, false)
                 .title("Import contacts from spreadsheet")
                 .positiveText("Import")
                 .negativeText("Cancel")
+                .autoDismiss(false)
+                .onPositive(onPositive)
                 .build();
     }
 
@@ -98,9 +123,8 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     }
 
     private void showFileChooser() {
-        if (Utilities.checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Utilities.askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-
+        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
             return;
         }
 
@@ -121,45 +145,49 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
     }
 
+    @OnTextChanged(value = R.id.edit_name, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onEditName(Editable editable) {
+        if (!Validator.validateName(editable.toString())) {
+            mEditName.setError(getString(R.string.error_name));
+        } else {
+            mEditName.setError(null);
+        }
+    }
+
+    @OnTextChanged(value = R.id.edit_number_index, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onEditNumberIndex(Editable editable) {
+        validateColumnIndex(editable, mEditNumberIndex);
+    }
+
+    @OnTextChanged(value = R.id.edit_name_index, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onEditNameIndex(Editable editable) {
+        validateColumnIndex(editable, mEditNameIndex);
+    }
+
+    private void validateColumnIndex(Editable editable, TextInputEditText view) {
+        if (!Validator.validateColumnIndex(editable.toString())) {
+            view.setError(getString(R.string.error_column_index));
+        } else {
+            view.setError(null);
+        }
+    }
+
+    public interface OnImportListener {
+        void onImport(CGroup list, File excelFile, int nameColIndex, int numberColIndex);
+    }
+
     public static class Builder extends BaseDialogFragment.Builder {
+
+        protected OnImportListener onImportListener;
 
         public Builder(FragmentManager fragmentManager) {
             super(fragmentManager);
             tag = TAG;
         }
-    }
 
-    class LoadContactsFromSpreadSheet extends AsyncTask<Void, Void, List<Contact>> {
-
-        private File mExcelFile;
-        private int mNameColIndex;
-        private int mPhoneNumberColIndex;
-
-        public LoadContactsFromSpreadSheet(File excelFile, int nameColIndex, int phoneNumberColIndex) {
-            mExcelFile = excelFile;
-            mNameColIndex = nameColIndex;
-            mPhoneNumberColIndex = phoneNumberColIndex;
-        }
-
-        @Override
-        protected List<Contact> doInBackground(Void... voids) {
-            List<Contact> contacts = new ArrayList<>();
-            try {
-                Workbook workbook = new HSSFWorkbook(new FileInputStream(mExcelFile));
-                Sheet sheet = workbook.getSheetAt(0);
-                Iterator<Row> rowIterator = sheet.rowIterator();
-
-                while (rowIterator.hasNext()) {
-                    Row row = rowIterator.next();
-                    String name = row.getCell(mNameColIndex).getStringCellValue();
-                    String phoneNumber = row.getCell(mPhoneNumberColIndex).getStringCellValue();
-                    Contact contact = new Contact(name, phoneNumber, null);
-                    contacts.add(contact);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return contacts;
+        public Builder onImportListener(OnImportListener listener) {
+            onImportListener = listener;
+            return this;
         }
     }
 }
