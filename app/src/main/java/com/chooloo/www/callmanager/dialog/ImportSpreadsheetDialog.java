@@ -55,9 +55,12 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
         MaterialDialog.SingleButtonCallback onPositive = (dialog, which) -> {
 
-            if (!Validator.validateName(mEditName.getText().toString()) ||
-                    !Validator.validateColumnIndex(mEditNameIndex.getText().toString()) ||
-                    !Validator.validateColumnIndex(mEditNumberIndex.getText().toString())) {
+            onEditName(mEditName.getText());
+            onEditNameIndex(mEditNameIndex.getText());
+            onEditNumberIndex(mEditNumberIndex.getText());
+
+            //If one of the inputs shows an error
+            if (mEditName.getError() != null || mEditNumberIndex.getError() != null || mEditNameIndex.getError() != null) {
                 Utilities.vibrate(getContext(), Utilities.LONG_VIBRATE_LENGTH);
                 return;
             }
@@ -143,9 +146,11 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     }
 
     @OnTextChanged(value = R.id.edit_name, callback = OnTextChanged.Callback.TEXT_CHANGED)
-    public void onEditField(Editable editable) {
+    public void onEditName(Editable editable) {
         if (!Validator.validateName(editable.toString())) {
             mEditName.setError(getString(R.string.error_name));
+        } else {
+            mEditName.setError(null);
         }
     }
 
@@ -162,6 +167,8 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     private void validateColumnIndex(Editable editable, TextInputEditText view) {
         if (!Validator.validateColumnIndex(editable.toString())) {
             view.setError(getString(R.string.error_column_index));
+        } else {
+            view.setError(null);
         }
     }
 
