@@ -47,6 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout="@layout/fragment_dial" />
 
+    <!--TODO remove these ugly buttons when we can-->
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"

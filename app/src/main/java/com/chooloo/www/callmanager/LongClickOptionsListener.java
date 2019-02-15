@@ -18,6 +18,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
+//TODO move to a new folder called 'listener'
 public class LongClickOptionsListener implements View.OnTouchListener {
 
     // Final variables

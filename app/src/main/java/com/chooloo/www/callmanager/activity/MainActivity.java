@@ -85,6 +85,7 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
     @Override
     protected void onStart() {
         super.onStart();
+        //TODO this is not good - need to consider ViewModel
         NavHostFragment navFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
         mContactsFragment = (ContactsFragment) navFragment.getChildFragmentManager().getFragments().get(0);
         mContactsFragment.setOnContactsChangeListener(this);

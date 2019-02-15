@@ -59,6 +59,7 @@ import timber.log.Timber;
 import static android.Manifest.permission.SEND_SMS;
 
 @SuppressLint("ClickableViewAccessibility")
+//TODO Fix the buttons
 public class OngoingCallActivity extends AppCompatActivity {
 
     // Handler variables

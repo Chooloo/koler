@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+//TODO add a fragment to display all the contacts in a group
 public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog.OnImportListener {
 
     private CGroupsViewModel mViewModel;
