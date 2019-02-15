@@ -36,6 +36,10 @@
     <string name="hint_name_column">Name column</string>
     <string name="hint_number_column">Number column</string>
 
+    <!--Errors-->
+    <string name="error_name">Must be a non empty string</string>
+    <string name="error_column_index">Must be a valid integer</string>
+
     <!--Dialog-->
     <string name="dialog_folder_up">Up</string>
     <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\' fields are in:</string>

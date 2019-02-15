@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.validation.Validator;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
@@ -26,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
@@ -52,6 +55,13 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
         MaterialDialog.SingleButtonCallback onPositive = (dialog, which) -> {
 
+            if (!Validator.validateName(mEditName.getText().toString()) ||
+                    !Validator.validateColumnIndex(mEditNameIndex.getText().toString()) ||
+                    !Validator.validateColumnIndex(mEditNumberIndex.getText().toString())) {
+                Utilities.vibrate(getContext(), Utilities.LONG_VIBRATE_LENGTH);
+                return;
+            }
+
             if (mBuilder.onImportListener != null) {
                 String name = mEditName.getText().toString();
                 File excelFile = new File(mEditPath.getText().toString());
@@ -64,6 +74,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
                         nameIndex,
                         numberIndex);
             }
+            dismiss();
         };
 
         return new MaterialDialog.Builder(getContext())
@@ -71,6 +82,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
                 .title("Import contacts from spreadsheet")
                 .positiveText("Import")
                 .negativeText("Cancel")
+                .autoDismiss(false)
                 .onPositive(onPositive)
                 .build();
     }
@@ -128,6 +140,29 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     @Override
     public void onFileChooserDismissed(FileChooserDialog dialog) {
 
+    }
+
+    @OnTextChanged(value = R.id.edit_name, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onEditField(Editable editable) {
+        if (!Validator.validateName(editable.toString())) {
+            mEditName.setError(getString(R.string.error_name));
+        }
+    }
+
+    @OnTextChanged(value = R.id.edit_number_index, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onEditNumberIndex(Editable editable) {
+        validateColumnIndex(editable, mEditNumberIndex);
+    }
+
+    @OnTextChanged(value = R.id.edit_name_index, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onEditNameIndex(Editable editable) {
+        validateColumnIndex(editable, mEditNameIndex);
+    }
+
+    private void validateColumnIndex(Editable editable, TextInputEditText view) {
+        if (!Validator.validateColumnIndex(editable.toString())) {
+            view.setError(getString(R.string.error_column_index));
+        }
     }
 
     public interface OnImportListener {

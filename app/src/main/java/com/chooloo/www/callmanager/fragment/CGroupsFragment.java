@@ -80,7 +80,7 @@ public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog
             progressDialog.setMaxProgress(rowsCount);
         };
 
-        AsyncSpreadsheetImport.OnFinishListener onFinishListener = progressDialog::dismiss;
+        AsyncSpreadsheetImport.OnFinishListener onFinishListener = callback -> progressDialog.dismiss();
 
         task.setOnProgressListener(onProgressListener);
         task.setOnFinishListener(onFinishListener);

@@ -21,6 +21,9 @@ public interface CGroupDao {
     @Query("DELETE FROM cgroup_table WHERE name LIKE :name")
     int deleteByName(String name);
 
+    @Query("DELETE FROM cgroup_table WHERE list_id LIKE :listId")
+    int deleteById(long listId);
+
     @Query("SELECT * from cgroup_table WHERE list_id LIKE :listId")
     List<CGroup> getCGroupById(long listId);
 

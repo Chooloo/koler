@@ -5,10 +5,10 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.database.AppDatabase;
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.database.dao.CGroupDao;
 import com.chooloo.www.callmanager.database.dao.ContactDao;
 import com.chooloo.www.callmanager.database.entity.CGroup;
-import com.chooloo.www.callmanager.database.dao.CGroupDao;
+import com.chooloo.www.callmanager.database.entity.Contact;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,10 +29,16 @@ import timber.log.Timber;
 
 public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contact>> {
 
+    public static final int STATUS_SUCCESSFUL = 0;
+    public static final int STATUS_FAILED = 1;
+    public static final int STATUS_FILE_NOT_FOUND = 2;
+
     private Context mContext;
     private File mExcelFile;
     private int mNameColIndex;
     private int mNumberColIndex;
+
+    private int status = STATUS_SUCCESSFUL;
 
     private CGroup mDatabaseList;
 
@@ -73,13 +80,14 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
 
         long listId = mDatabaseList.getListId();
         AppDatabase db = AppDatabase.getDatabase(mContext);
+        CGroupDao cgroupDao = db.getCGroupDao();
         if (listId == 0) { //If this list isn't in the database
-            CGroupDao CGroupDao = db.getCGroupDao();
-            listId = CGroupDao.insert(mDatabaseList);
+            listId = cgroupDao.insert(mDatabaseList);
         }
 
         List<Contact> contacts = fetchContacts(listId);
-        if (contacts.size() == 0) {
+        if (contacts == null) {
+            cgroupDao.deleteById(listId);
             return null;
         }
 
@@ -124,8 +132,14 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
                 rowsRead++;
                 publishProgress(rowsRead);
             }
+        } catch (FileNotFoundException e) {
+            Timber.e(e);
+            status = STATUS_FILE_NOT_FOUND;
+            return null;
         } catch (IOException e) {
             Timber.e(e);
+            status = STATUS_FAILED;
+            return null;
         }
         return contacts;
     }
@@ -138,12 +152,14 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
 
     @Override
     protected void onPostExecute(List<Contact> contacts) {
-        if (contacts == null) {
+        if (status == STATUS_FAILED) {
             Toast.makeText(mContext, "Couldn't find contacts in the spreadsheet specified", Toast.LENGTH_LONG).show();
             Timber.w("Couldn't find contacts in %s at the columns %d and %d", mExcelFile.getPath(), mNameColIndex, mNumberColIndex);
+        } else if (status == STATUS_FILE_NOT_FOUND) {
+            Toast.makeText(mContext, "Couldn't find the file specified", Toast.LENGTH_SHORT).show();
         }
 
-        if (mOnFinishListener != null) mOnFinishListener.onFinish();
+        if (mOnFinishListener != null) mOnFinishListener.onFinish(status);
     }
 
     public interface OnProgressListener {
@@ -151,6 +167,6 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
     }
 
     public interface OnFinishListener {
-        void onFinish();
+        void onFinish(int callback);
     }
 }
