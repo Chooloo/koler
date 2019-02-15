@@ -17,6 +17,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="00:00"
+        android:textColor="@color/caller_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,14 +28,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="000000000"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        android:textColor="@color/caller_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_stopwatch" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Caller Pic -->
     <FrameLayout
@@ -70,14 +70,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
         android:textAlignment="center"
         android:textColor="@color/caller_text_color"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/text_status"
+        app:layout_constraintBottom_toTopOf="@+id/number_caller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,12 +87,11 @@
         android:id="@+id/text_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:textColor="@color/caller_text_color"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
-        app:layout_constraintEnd_toEndOf="@+id/text_caller"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/text_caller"
         tools:text="@string/status_call_incoming" />
 

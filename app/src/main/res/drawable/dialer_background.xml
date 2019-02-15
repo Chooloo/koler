@@ -4,9 +4,8 @@
     <corners
         android:bottomLeftRadius="0sp"
         android:bottomRightRadius="0sp"
-        android:topLeftRadius="40sp"
-        android:topRightRadius="40sp" />
+        android:topLeftRadius="@dimen/bubble_corner_radius"
+        android:topRightRadius="@dimen/bubble_corner_radius" />
 
-    <!--<solid android:color="@color/semi_white" />-->
-    <solid android:color="@android:color/transparent" />
+    <solid android:color="@color/dialer_background" />
 </shape>

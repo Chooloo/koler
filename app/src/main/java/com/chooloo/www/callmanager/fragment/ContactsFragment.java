@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.fragment;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,14 +39,9 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     OnContactsChangeListener mCallback;
 
-    private MainActivity.MainSharedViewModel mMainModel;
-
-    ArrayAdapter mArrayAdapter;
-
     ArrayList<Contact> mCurrentContacts;
 
     // Local classes instances
-    private ContactsManager mContactsManager = new ContactsManager();
     private ContactsAdapter mContactAdapter;
 
     // Views
@@ -78,6 +75,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
             }
         });
+        mContactsList.setOnItemClickListener(this);
     }
 
     @Override
@@ -90,10 +88,16 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        TextView textv = view.findViewById(R.id.contact_list_number_text);
+        Timber.i("item clicked with number: " + textv.getText().toString());
+        mCallback.onContactsListItemClick(view);
     }
+
+    // ===mCallback=== //
 
     /**
      * Set the given activity as the listener
+     *
      * @param activity
      */
     public void setOnContactsChangeListener(OnContactsChangeListener activity) {
@@ -101,8 +105,14 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     public interface OnContactsChangeListener {
+
         public void onContactsScroll(boolean isScrolling);
+
+        public void onContactsListItemClick(View view);
+
     }
+
+    // ===Populate ListView=== //
 
     /**
      * Creates a new populateListViewTask and executes it without a given number
@@ -189,6 +199,8 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         private class ViewHolder {
             TextView contactNameTxt;
             TextView contactNumTxt;
+            ImageView contactImagePlaceholder;
+            ImageView contactImage;
         }
 
         /**
@@ -211,9 +223,9 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
             Contact contact = (Contact) object;
 
             switch (v.getId()) {
-                case R.id.contact_dial_list_name_text:
+                case R.id.contact_list_name_text:
                     break;
-                case R.id.contact_dial_list_number_text:
+                case R.id.contact_list_number_text:
                     break;
             }
         }
@@ -239,8 +251,10 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
                 convertView = inflater.inflate(R.layout.contact_list_item, parent, false);
 
                 // Get the item views
-                viewHolder.contactNameTxt = convertView.findViewById(R.id.contact_dial_list_name_text);
-                viewHolder.contactNumTxt = convertView.findViewById(R.id.contact_dial_list_number_text);
+                viewHolder.contactNameTxt = convertView.findViewById(R.id.contact_list_name_text);
+                viewHolder.contactNumTxt = convertView.findViewById(R.id.contact_list_number_text);
+                viewHolder.contactImage = convertView.findViewById(R.id.list_image_photo);
+                viewHolder.contactImagePlaceholder = convertView.findViewById(R.id.list_image_placeholder);
 
                 // Final result
                 result = convertView;
@@ -261,6 +275,14 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
             // Set the texts
             viewHolder.contactNameTxt.setText(contact.getName());
             viewHolder.contactNumTxt.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+
+            //  Set the image
+            if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {
+                viewHolder.contactImagePlaceholder.setVisibility(View.INVISIBLE);
+                viewHolder.contactImage.setVisibility(View.VISIBLE);
+                viewHolder.contactImage.setImageURI(Uri.parse(contact.getPhotoUri()));
+            }
+
 
             return convertView;
         }
