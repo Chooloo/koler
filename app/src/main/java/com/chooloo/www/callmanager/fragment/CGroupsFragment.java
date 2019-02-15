@@ -10,7 +10,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.dialog.ImportSpreadsheetDialog;
-import com.chooloo.www.callmanager.util.AsyncSpreadsheetImport;
+import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 
 import java.io.File;
 
