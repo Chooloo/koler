@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.database;
 
 import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
 import java.util.List;
@@ -42,5 +43,9 @@ public class DataRepository {
 
     public LiveData<List<CGroup>> getAllCGroups() {
         return mDatabase.getCGroupDao().getAllCGroups();
+    }
+
+    public LiveData<List<CGroupAndItsContacts>> getAllCGroupsAndTheirContacts() {
+        return mDatabase.getCGroupAndItsContactsDao().getAllCGroupsAndTheirContacts();
     }
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f2c387ae68ad176a9fa3507fcd61132e",
+    "identityHash": "02342a555377e5b7655f9a48db54f5ad",
     "entities": [
       {
         "tableName": "cgroup_table",
@@ -65,7 +65,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_contact_table_list_id",
+            "unique": false,
+            "columnNames": [
+              "list_id"
+            ],
+            "createSql": "CREATE  INDEX `index_contact_table_list_id` ON `${TABLE_NAME}` (`list_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "cgroup_table",
@@ -83,7 +92,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f2c387ae68ad176a9fa3507fcd61132e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"02342a555377e5b7655f9a48db54f5ad\")"
     ]
   }
 }

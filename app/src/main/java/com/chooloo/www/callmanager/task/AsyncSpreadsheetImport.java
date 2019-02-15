@@ -80,6 +80,8 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
 
         long listId = mDatabaseList.getListId();
         AppDatabase db = AppDatabase.getDatabase(mContext);
+
+        //TODO use a repository
         CGroupDao cgroupDao = db.getCGroupDao();
         if (listId == 0) { //If this list isn't in the database
             listId = cgroupDao.insert(mDatabaseList);

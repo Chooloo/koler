@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
+import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.util.Utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -18,7 +21,7 @@ import butterknife.ButterKnife;
 
 public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHolder> {
 
-    private List<CGroup> mData;
+    private List<CGroupAndItsContacts> mData;
 
     @NonNull
     @Override
@@ -30,8 +33,16 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
 
     @Override
     public void onBindViewHolder(@NonNull CGroupHolder holder, int position) {
-        CGroup cgroup = mData.get(position);
-        holder.title.setText(cgroup.getName());
+        CGroupAndItsContacts cgroupAndItsContacts = mData.get(position);
+
+        List<String> names = new ArrayList<>();
+        for(Contact contact : cgroupAndItsContacts.getContacts()) {
+            names.add(contact.getName());
+        }
+        String namesStr = Utilities.joinStringsWithSeparator(names, ", ");
+
+        holder.title.setText(cgroupAndItsContacts.getCgroup().getName());
+        holder.description.setText(namesStr);
     }
 
     @Override
@@ -40,7 +51,7 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
         return mData.size();
     }
 
-    public void setData(List<CGroup> data) {
+    public void setData(List<CGroupAndItsContacts> data) {
         mData = data;
         notifyDataSetChanged();
     }

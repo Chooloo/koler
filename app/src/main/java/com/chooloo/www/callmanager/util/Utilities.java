@@ -17,6 +17,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Locale;
 
 import androidx.core.content.ContextCompat;
@@ -141,7 +142,7 @@ public class Utilities {
      * @param phoneNumber the number to format
      * @return the formatted number
      */
-    public static String formatPhoneNumber(String phoneNumber) {
+    public static String formatPhoneNumber(@NotNull String phoneNumber) {
 
         // check for unwanted letters
         if (phoneNumber.contains("-")) phoneNumber.replace("-", "");
@@ -159,5 +160,16 @@ public class Utilities {
         // return the number
         if (formattedNumber == null) return phoneNumber;
         else return phoneUtil.format(formattedNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
+    }
+
+    public static String joinStringsWithSeparator(@NotNull List<String> list, @NotNull String separator) {
+        if (list.size() == 0) return "";
+        StringBuilder builder = new StringBuilder();
+        for (String str : list) {
+            builder.append(str);
+            builder.append(separator);
+        }
+        String result = builder.toString();
+        return result.substring(0, result.length() - separator.length());
     }
 }

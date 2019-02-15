@@ -273,7 +273,9 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
             // Set the texts
             viewHolder.contactNameTxt.setText(contact.getName());
-            viewHolder.contactNumTxt.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+            if (contact.getMainPhoneNumber() != null) {
+                viewHolder.contactNumTxt.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+            }
 
             //  Set the image
             if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {

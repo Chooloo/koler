@@ -11,9 +11,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "contact_table",
+        indices = {@Index("list_id")},
         foreignKeys = @ForeignKey(entity = CGroup.class,
                 parentColumns = "list_id",
                 childColumns = "list_id",
