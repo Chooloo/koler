@@ -15,7 +15,7 @@
     <!-- Number Input Field -->
     <EditText
         android:id="@+id/text_number_input"
-        style="@style/TextButton"
+        android:background="@drawable/text_button_selector"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -46,6 +46,7 @@
             <TextView
                 android:id="@+id/chip1"
                 style="@style/TextButton"
+                android:background="@drawable/text_button_selector"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

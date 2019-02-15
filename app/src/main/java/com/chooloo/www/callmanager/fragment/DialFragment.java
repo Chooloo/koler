@@ -84,7 +84,7 @@ public class DialFragment extends Fragment {
 
     }
 
-    // -- Buttons -- //
+    // -- On Clicks -- //
 
     /**
      * Dialer buttons click handler
@@ -123,6 +123,18 @@ public class DialFragment extends Fragment {
         sToNumber = "";
         mNumberInput.setText(sToNumber);
         numberChanged(sToNumber);
+        return true;
+    }
+
+    /**
+     * When the user long clicks the number input field
+     *
+     * @param view
+     * @return true
+     */
+    @OnLongClick(R.id.text_number_input)
+    public boolean onInputLongClick(View view) {
+        delAllNum(mNumberInput);
         return true;
     }
 
@@ -175,6 +187,12 @@ public class DialFragment extends Fragment {
         }
     }
 
+    /**
+     * Sets the input number to a given number
+     * This function for now will be called due to list item click (contact)
+     *
+     * @param number
+     */
     public void setNumber(String number) {
         mNumberInput.setText(number);
     }
@@ -197,6 +215,9 @@ public class DialFragment extends Fragment {
         mCallback = activity;
     }
 
+    /**
+     * Interface for the callback activity to implement
+     */
     public interface OnDialChangeListener {
         public void onNumberChanged(String number);
     }

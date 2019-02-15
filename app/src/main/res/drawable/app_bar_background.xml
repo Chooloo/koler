@@ -3,7 +3,7 @@
     android:shape="rectangle">
     <corners
         android:bottomLeftRadius="@dimen/app_bar_corner_radius"
-        android:bottomRightRadius="@dimen/app_bar_corner_radius"
+        android:bottomRightRadius="@dimen/bubble_corner_radius"
         android:topLeftRadius="0dp"
         android:topRightRadius="0dp" />
 

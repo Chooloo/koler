@@ -100,17 +100,14 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         }
     }
 
-    @OnClick(R.id.button2)
-    public void switchFragments(View view) {
-        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-        int id = controller.getCurrentDestination().getId();
-        if (id == R.id.contactsFragment) {
-            controller.navigate(R.id.action_contactsFragment_to_customContactsFragment);
-        } else {
-            controller.navigate(R.id.action_customContactsFragment_to_contactsFragment);
-        }
-    }
-
+    /**
+     * Triggered when the user gives some kind of a permission
+     * (Usually through a permission dialog)
+     *
+     * @param requestCode
+     * @param permissions  the permissions given
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -147,11 +144,38 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * A function implemented from the dialer fragment (a callback method)
+     *
+     * @param number
+     */
     @Override
     public void onNumberChanged(String number) {
         mContactsFragment.populateListView(number);
     }
 
+    // -- On Clicks -- //
+
+    @OnClick(R.id.button2)
+    public void switchFragments(View view) {
+        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
+        int id = controller.getCurrentDestination().getId();
+        if (id == R.id.contactsFragment) {
+            controller.navigate(R.id.action_contactsFragment_to_customContactsFragment);
+        } else {
+            controller.navigate(R.id.action_customContactsFragment_to_contactsFragment);
+        }
+    }
+
+    // -- Other -- //
+
+    /**
+     * Hides or Shows the dialer according to the given parameter
+     * If it needs to show the dialer it waits for 700 milis and shows
+     * (In case the user keeps scrolling after he stopped)
+     *
+     * @param trig
+     */
     public void animateDialer(boolean trig) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -173,7 +197,8 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         ContactsManager.updateContactsInBackground(this, showProgress);
     }
 
-    // ===ContactsFragment Function=== //
+    // -- ContactsFragment Function -- //
+
     @Override
     public void onContactsScroll(boolean isScrolling) {
         animateDialer(!isScrolling);

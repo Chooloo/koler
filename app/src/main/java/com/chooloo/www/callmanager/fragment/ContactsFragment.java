@@ -33,7 +33,7 @@ import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-
+// TODO there is a bug where some contacts on the list get an image of another contact
 public class ContactsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     OnContactsChangeListener mCallback;
@@ -85,6 +85,14 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         }
     }
 
+    /**
+     * When the user clicks on a contact from the list
+     *
+     * @param parent   parent activity or layout im not sure
+     * @param view     the clicked view
+     * @param position position in the list
+     * @param id       id of the clicked view
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TextView textv = view.findViewById(R.id.contact_list_number_text);
@@ -92,7 +100,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         mCallback.onContactsListItemClick(view);
     }
 
-    // ===mCallback=== //
+    // -- mCallback -- //
 
     /**
      * Set the given activity as the listener
@@ -103,6 +111,10 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         mCallback = activity;
     }
 
+    /**
+     * Interface for the parent activity to implement
+     * (Callback methods)
+     */
     public interface OnContactsChangeListener {
 
         public void onContactsScroll(boolean isScrolling);
@@ -111,7 +123,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     }
 
-    // ===Populate ListView=== //
+    // -- Populate ListView -- //
 
     /**
      * Creates a new populateListViewTask and executes it without a given number

@@ -5,8 +5,6 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     tools:context=".activity.MainActivity">
 
     <!-- App Bar -->
@@ -24,16 +22,15 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar"
-        tools:layout="@layout/fragment_contacts"
-
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/main" />
+        app:navGraph="@navigation/main"
+        tools:layout="@layout/fragment_contacts" />
 
     <!-- Dialer Fragment-->
     <fragment
@@ -52,8 +49,8 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Button 1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/main_fragment" />
@@ -62,10 +59,10 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Button 2"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Excel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

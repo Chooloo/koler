@@ -21,7 +21,6 @@
 
     <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="TextButton" parent="Widget.AppCompat.TextView">
-        <item name="android:clickable">true</item>
         <item name="android:background">@drawable/text_button_selector</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">20sp</item>
@@ -29,7 +28,7 @@
 
     <!-- List View -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@color/white</item>
         <item name="android:dividerHeight">5.0sp</item>
         <item name="android:divider">@android:color/transparent</item>
     </style>
@@ -38,14 +37,13 @@
     <style name="ListItemText" parent="Widget.AppCompat.TextView"></style>
 
     <style name="ListItemText.Big">
-        <item name="android:textSize">19sp</item>
-        <item name="android:color">@color/black</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:text">Big Text</item>
     </style>
 
     <style name="ListItemText.Small">
-        <item name="android:textSize">15sp</item>
-        <item name="android:color">@color/grey</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="android:text">small text, small text, small text</item>
     </style>
 
 </resources>
