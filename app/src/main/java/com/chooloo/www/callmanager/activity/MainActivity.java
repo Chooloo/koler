@@ -2,15 +2,12 @@ package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
@@ -26,11 +23,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +47,7 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
+    ContactsFragment mContactsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +83,19 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        NavHostFragment navFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+        mContactsFragment = (ContactsFragment) navFragment.getChildFragmentManager().getFragments().get(0);
+        mContactsFragment.setOnContactsChangeListener(this);
+    }
+
+    @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         // Set this class as the listener for the fragments
         if (fragment instanceof DialFragment) {
             mDialFragment = (DialFragment) fragment;
             mDialFragment.setOnDialChangeListener(this);
-        }
-        if (fragment instanceof ContactsFragment) {
-            mContactsFragment = (ContactsFragment) fragment;
-            mContactsFragment.setOnContactsChangeListener(this);
         }
     }
 
