@@ -36,9 +36,10 @@
     <fragment
         android:id="@+id/main_dialer_fragment"
         android:name="com.chooloo.www.callmanager.fragment.DialFragment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="main_dialer_tag"
+        android:layout_margin="7sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

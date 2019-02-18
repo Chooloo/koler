@@ -23,7 +23,7 @@
     <style name="TextButton" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/text_button_selector</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <!-- List View -->

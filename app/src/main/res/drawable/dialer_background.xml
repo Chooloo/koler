@@ -2,8 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:bottomLeftRadius="0sp"
-        android:bottomRightRadius="0sp"
+        android:bottomLeftRadius="10sp"
+        android:bottomRightRadius="10sp"
         android:topLeftRadius="@dimen/bubble_corner_radius"
         android:topRightRadius="@dimen/bubble_corner_radius" />
 

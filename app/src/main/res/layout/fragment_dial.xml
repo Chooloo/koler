@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialer_layout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialer_background"
     android:focusable="true"
@@ -29,7 +29,7 @@
     <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="210dp"
+        android:layout_width="match_parent"
         android:layout_height="280dp"
         android:background="@android:color/transparent"
         android:weightSum="4"
