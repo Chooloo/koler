@@ -10,7 +10,7 @@
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts" >
         <action
-            android:id="@+id/action_contactsFragment_to_cgroupsFragment"
+            android:id="@+id/action_contactsFragment_to_cGroupsFragment"
             app:destination="@id/cgroupsFragment" />
     </fragment>
     <fragment
@@ -19,7 +19,7 @@
         android:label="fragment_cgroups"
         tools:layout="@layout/fragment_cgroups" >
         <action
-            android:id="@+id/action_cgroupsFragment_to_contactsFragment"
+            android:id="@+id/action_cGroupsFragment_to_contactsFragment"
             app:destination="@id/contactsFragment" />
         <action
             android:id="@+id/action_cgroupsFragment_to_cGroupDetailsFragment"

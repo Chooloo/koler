@@ -163,9 +163,9 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         NavController controller = Navigation.findNavController(this, R.id.main_fragment);
         int id = controller.getCurrentDestination().getId();
         if (id == R.id.contactsFragment) {
-            controller.navigate(R.id.action_contactsFragment_to_customContactsFragment);
+            controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
         } else {
-            controller.navigate(R.id.action_customContactsFragment_to_contactsFragment);
+            controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
         }
     }
 

@@ -65,6 +65,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         mContactsList.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                //TODO fix null callback crash
                 if (scrollState == 0) mCallback.onContactsScroll(false);
                 else mCallback.onContactsScroll(true);
             }
