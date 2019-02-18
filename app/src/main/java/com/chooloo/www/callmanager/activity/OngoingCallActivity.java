@@ -139,8 +139,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     OnSwipeTouchListener mSmsOverlaySwipeListener;
     OnSwipeTouchListener mIncomingCallSwipeListener;
 
-    // -- Native Even Listeners -- //
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -299,7 +297,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         sendSmsOnClick(mSendSMSButton);
     }
 
-    // -- Buttons -- //
+    // -- On Clicks -- //
 
     //TODO silence the ringing
     @OnClick(R.id.button_reject_call_timer)
@@ -369,6 +367,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     // -- Call Actions -- //
+    // (There are also call actions above in the On Clicks part but here
+    // are the raw functions
 
     /**
      * /*
@@ -505,6 +505,23 @@ public class OngoingCallActivity extends AppCompatActivity {
     }
 
     /**
+     * Sets the action button (call actions) as clickable/not clickable
+     *
+     * @param clickable
+     */
+    private void setActionButtonsClickable(boolean clickable) {
+        for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
+            View v = mOngoingCallLayout.getChildAt(i);
+            if (v instanceof FloatingActionButton || v instanceof ImageView) {
+                v.setClickable(clickable);
+                v.setFocusable(false);
+            }
+        }
+    }
+
+    // -- Overlays -- //
+
+    /**
      * Set a given overlay as visible
      *
      * @param overlay
@@ -560,21 +577,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Sets the action button (call actions) as clickable/not clickable
-     *
-     * @param clickable
-     */
-    private void setActionButtonsClickable(boolean clickable) {
 
-        for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
-            View v = mOngoingCallLayout.getChildAt(i);
-            if (v instanceof FloatingActionButton || v instanceof ImageView) {
-                v.setClickable(clickable);
-                v.setFocusable(false);
-            }
-        }
-    }
+    // -- Wake Lock -- //
 
     /**
      * Acquires the wake lock

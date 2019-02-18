@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialer_layout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialer_background"
     android:focusable="true"
@@ -15,7 +15,7 @@
     <!-- Number Input Field -->
     <EditText
         android:id="@+id/text_number_input"
-        style="@style/TextButton"
+        android:background="@drawable/text_button_selector"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -29,7 +29,7 @@
     <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="210dp"
+        android:layout_width="match_parent"
         android:layout_height="280dp"
         android:background="@android:color/transparent"
         android:weightSum="4"
@@ -46,6 +46,7 @@
             <TextView
                 android:id="@+id/chip1"
                 style="@style/TextButton"
+                android:background="@drawable/text_button_selector"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
