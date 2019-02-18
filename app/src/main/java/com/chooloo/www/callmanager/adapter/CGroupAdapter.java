@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -21,12 +23,19 @@ import butterknife.ButterKnife;
 
 public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHolder> {
 
+    private Context mContext;
     private List<CGroupAndItsContacts> mData;
+
+    private OnChildClickListener mListener;
+
+    public CGroupAdapter(Context context) {
+        mContext = context;
+    }
 
     @NonNull
     @Override
     public CGroupHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cgroup, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_image_two_line, parent, false);
         CGroupHolder holder = new CGroupHolder(view);
         return holder;
     }
@@ -43,6 +52,10 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
 
         holder.title.setText(cgroupAndItsContacts.getCgroup().getName());
         holder.description.setText(namesStr);
+
+        if (mListener != null) {
+            holder.itemView.setOnClickListener(v -> mListener.onClick(v, cgroupAndItsContacts.getCgroup()));
+        }
     }
 
     @Override
@@ -56,7 +69,15 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
         notifyDataSetChanged();
     }
 
-    public class CGroupHolder extends RecyclerView.ViewHolder {
+    public void setListener(OnChildClickListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnChildClickListener {
+        void onClick(View v, CGroup cgroup);
+    }
+
+    class CGroupHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_image) ImageView image;
         @BindView(R.id.item_title) TextView title;

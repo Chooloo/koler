@@ -10,16 +10,24 @@
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts" >
         <action
-            android:id="@+id/action_contactsFragment_to_customContactsFragment"
-            app:destination="@id/customContactsFragment" />
+            android:id="@+id/action_contactsFragment_to_cgroupsFragment"
+            app:destination="@id/cgroupsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/customContactsFragment"
+        android:id="@+id/cgroupsFragment"
         android:name="com.chooloo.www.callmanager.fragment.CGroupsFragment"
-        android:label="fragment_custom_contacts"
-        tools:layout="@layout/fragment_custom_contacts" >
+        android:label="fragment_cgroups"
+        tools:layout="@layout/fragment_cgroups" >
         <action
-            android:id="@+id/action_customContactsFragment_to_contactsFragment"
+            android:id="@+id/action_cgroupsFragment_to_contactsFragment"
             app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_cgroupsFragment_to_cGroupDetailsFragment"
+            app:destination="@id/cGroupDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cGroupDetailsFragment"
+        android:name="com.chooloo.www.callmanager.fragment.CGroupDetailsFragment"
+        android:label="fragment_cgroup_details"
+        tools:layout="@layout/fragment_cgroup_details" />
 </navigation>

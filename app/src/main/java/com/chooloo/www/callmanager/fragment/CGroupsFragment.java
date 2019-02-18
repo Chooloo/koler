@@ -18,13 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-//TODO add a fragment to display all the contacts in a group
 public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog.OnImportListener {
 
     private CGroupsViewModel mViewModel;
@@ -33,19 +33,21 @@ public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog
     private CGroupAdapter mAdapter;
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
-    public static CGroupsFragment newInstance() {
-        return new CGroupsFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_custom_contacts, container, false);
+        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_cgroups, container, false);
         ButterKnife.bind(this, mRootView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupAdapter();
+        mAdapter = new CGroupAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setListener((v, cgroup) -> {
+            Bundle args = new Bundle();
+            args.putLong(getString(R.string.arg_list_id), cgroup.getListId());
+            Navigation.findNavController(v).navigate(R.id.action_cgroupsFragment_to_cGroupDetailsFragment, args);
+        });
         return mRootView;
     }
 

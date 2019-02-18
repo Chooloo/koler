@@ -87,8 +87,10 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         super.onStart();
         //TODO this is not good - need to consider ViewModel
         NavHostFragment navFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-        mContactsFragment = (ContactsFragment) navFragment.getChildFragmentManager().getFragments().get(0);
-        mContactsFragment.setOnContactsChangeListener(this);
+        if (navFragment.getChildFragmentManager().getFragments().get(0) instanceof ContactsFragment) {
+            mContactsFragment = (ContactsFragment) navFragment.getChildFragmentManager().getFragments().get(0);
+            mContactsFragment.setOnContactsChangeListener(this);
+        }
     }
 
     @Override
@@ -105,9 +107,9 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         NavController controller = Navigation.findNavController(this, R.id.main_fragment);
         int id = controller.getCurrentDestination().getId();
         if (id == R.id.contactsFragment) {
-            controller.navigate(R.id.action_contactsFragment_to_customContactsFragment);
+            controller.navigate(R.id.action_contactsFragment_to_cgroupsFragment);
         } else {
-            controller.navigate(R.id.action_customContactsFragment_to_contactsFragment);
+            controller.navigate(R.id.action_cgroupsFragment_to_contactsFragment);
         }
     }
 

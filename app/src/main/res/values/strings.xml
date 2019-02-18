@@ -23,6 +23,9 @@
 
     <string name="pref_is_first_instance_key">first_instance</string>
 
+    <!--Arguments-->
+    <string name="arg_list_id">list_id</string>
+
     <!--Call State-->
     <string name="status_call_disconnected">Call ended</string>
     <string name="status_call_incoming">Is Calling</string>

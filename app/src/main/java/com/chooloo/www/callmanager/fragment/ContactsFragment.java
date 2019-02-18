@@ -184,6 +184,8 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         }
     }
 
+    //TODO move this to the adapter 'package'
+    //TODO Fix the picture bug
     /**
      * Populates the list view with contacts
      */
