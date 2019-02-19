@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
-        android:startColor="@color/incoming_call_color_1"
-        android:endColor="@color/incoming_call_color_2"/>
-
+        android:angle="180"
+        android:centerY="0.5"
+        android:endColor="@color/green_phone_light"
+        android:startColor="@color/red_phone_light" />
 </shape>

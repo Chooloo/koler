@@ -7,7 +7,7 @@
     <color name="colorAccent">@color/green_phone</color>
     <color name="colorBackground">@color/semi_grey</color>
 
-    <color name="icon_active_light">#000000</color>
+    <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
     <color name="black">#000000</color>
@@ -23,11 +23,12 @@
     <color name="green_phone">#66bb6a</color>
     <color name="green_phone_70_trans">#B366BB6A</color>
     <color name="green_phone_semi_trans">#8066BB6A</color>
-
+    <color name="green_phone_light">#BFDBC0</color>
     <!-- Red -->
     <color name="red_phone">#ef5350</color>
     <color name="red_phone_70_trans">#B3EF5350</color>
     <color name="red_phone_semi_trans">#80EF5350</color>
+    <color name="red_phone_light">#ECD9D9</color>
 
     <!-- Back Colors-->
     <color name="ongoing_call_color">@color/green_phone_semi_trans</color>
@@ -35,7 +36,7 @@
     <color name="incoming_call_color_1">@color/green_phone_semi_trans</color>
     <color name="incoming_call_color_2">@color/red_phone_semi_trans</color>
 
-    <color name="caller_text_color">@color/white</color>
+    <color name="caller_text_color">@color/icon_active_light</color>
 
     <color name="dialer_background">@color/white</color>
 

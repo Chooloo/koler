@@ -423,20 +423,25 @@ public class OngoingCallActivity extends AppCompatActivity {
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE: // Ongoing
-                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.green_phone_semi_trans));
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
+//                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.green_phone_semi_trans));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED: // Ended
-                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.red_phone_semi_trans));
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
+//                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.red_phone_semi_trans));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING: // Incoming
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 break;
             case Call.STATE_DIALING: // Outgoing
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING: // Connecting (probably outgoing)
+                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING: // On Hold
