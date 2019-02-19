@@ -7,9 +7,11 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -20,8 +22,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
+
+import static android.Manifest.permission.SEND_SMS;
 
 public class Utilities {
 
@@ -171,5 +176,28 @@ public class Utilities {
         }
         String result = builder.toString();
         return result.substring(0, result.length() - separator.length());
+    }
+
+    /**
+     * Send sms by given phone number and message
+     *
+     * @param phoneNum destination phone number (where to send the sms to)
+     * @param msg      the content message of the sms
+     */
+    public static void sendSMS(Activity activity, String phoneNum, String msg) {
+        if (ContextCompat.checkSelfPermission(activity, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                Timber.i("Sending sms to phone number: " + CallManager.getDisplayContact(activity).getMainPhoneNumber());
+                smsManager.sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
+                Toast.makeText(activity, "Message Sent", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(activity, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Oh shit I can't send the message... Sorry", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{SEND_SMS}, 1);
+        }
     }
 }

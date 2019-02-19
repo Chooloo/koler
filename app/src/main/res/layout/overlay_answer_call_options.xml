@@ -40,7 +40,7 @@
 
     <!-- Cancel Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_cancel"
+        android:id="@+id/button_floating_cancel_overlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
@@ -63,9 +63,9 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorAccent"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button_cancel"
-        app:layout_constraintStart_toEndOf="@+id/button_cancel"
-        app:layout_constraintTop_toTopOf="@+id/button_cancel"
+        app:layout_constraintBottom_toBottomOf="@+id/button_floating_cancel_overlay"
+        app:layout_constraintStart_toEndOf="@+id/button_floating_cancel_overlay"
+        app:layout_constraintTop_toTopOf="@+id/button_floating_cancel_overlay"
         tools:visibility="visible" />
 
     <!-- Ghost Button -->
@@ -77,6 +77,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Guidelines -->
@@ -92,5 +93,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.95" />
 </androidx.constraintlayout.widget.ConstraintLayout>

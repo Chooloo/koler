@@ -14,34 +14,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:text="00:00"
         android:textColor="@color/caller_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:00" />
 
     <!-- Caller Number (Temporary) -->
-    <TextView
-        android:id="@+id/number_caller"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="000000000"
-        android:textColor="@color/caller_text_color"
-        app:layout_constraintBottom_toTopOf="@+id/text_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Caller Pic -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="129dp"
         android:layout_height="135dp"
-        android:layout_marginTop="60dp"
         app:layout_constraintBottom_toTopOf="@+id/text_caller"
         app:layout_constraintEnd_toEndOf="@+id/text_caller"
         app:layout_constraintStart_toStartOf="@+id/text_caller"
@@ -68,15 +55,14 @@
         android:id="@+id/text_caller"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
         android:textAlignment="center"
         android:textColor="@color/caller_text_color"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/number_caller"
+        app:layout_constraintBottom_toTopOf="@+id/text_phone_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,10 +70,21 @@
 
     <!-- Call Status -->
     <TextView
+        android:id="@+id/text_phone_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/caller_text_color"
+        app:layout_constraintBottom_toTopOf="@+id/text_status"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="000-000-0000" />
+
+    <TextView
         android:id="@+id/text_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:textColor="@color/caller_text_color"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
@@ -100,8 +97,8 @@
         android:id="@+id/button_hold"
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="62dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -109,8 +106,13 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_keypad"
-        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_call"
+        app:layout_constraintEnd_toStartOf="@+id/button_speaker"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_mute"
+        app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
+        app:layout_constraintVertical_bias="0.32999998"
+        app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/ic_pause_black_24dp"
         tools:visibility="visible" />
 
@@ -119,8 +121,7 @@
         android:id="@+id/button_mute"
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="@dimen/flat_button_size"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -128,8 +129,12 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_speaker"
-        app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/button_hold"
+        app:layout_constraintEnd_toStartOf="@+id/button_hold"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_hold"
         app:srcCompat="@drawable/ic_mic_off_black_24dp"
         tools:visibility="visible" />
 
@@ -138,8 +143,7 @@
         android:id="@+id/button_speaker"
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="@dimen/flat_button_size"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -147,8 +151,11 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_call"
-        app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/button_hold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_hold"
+        app:layout_constraintTop_toTopOf="@+id/button_hold"
         app:srcCompat="@drawable/ic_volume_up_black_24dp"
         tools:visibility="visible" />
 
@@ -157,8 +164,7 @@
         android:id="@+id/button_keypad"
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="@dimen/flat_button_size"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -166,8 +172,12 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_call"
-        app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/button_add_call"
+        app:layout_constraintEnd_toStartOf="@+id/button_add_call"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_add_call"
         app:srcCompat="@drawable/ic_dialpad_black_24dp"
         tools:visibility="visible" />
 
@@ -176,9 +186,9 @@
         android:id="@+id/button_add_call"
         android:layout_width="65dp"
         android:layout_height="67dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
         android:focusable="true"
@@ -187,7 +197,9 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_keypad"
+        app:layout_constraintTop_toBottomOf="@+id/button_hold"
         app:srcCompat="@drawable/ic_add_black_24dp"
         tools:visibility="visible" />
 
@@ -196,8 +208,7 @@
         android:id="@+id/answer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@android:color/white"
@@ -206,8 +217,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
         app:maxImageSize="36dp" />
 
@@ -216,8 +226,7 @@
         android:id="@+id/reject_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="8dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@android:color/white"
@@ -226,7 +235,7 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.66"
         app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
         app:maxImageSize="36dp" />
 
@@ -236,14 +245,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.925" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.50121653" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_eye_level"
