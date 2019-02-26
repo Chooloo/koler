@@ -203,7 +203,7 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
 
     @Override
     public void onContactsScroll(boolean isScrolling) {
-        animateDialer(!isScrolling);
+        // animateDialer(!isScrolling);
     }
 
     @Override
@@ -211,5 +211,6 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         TextView textView = (TextView) view.findViewById(R.id.contact_list_number_text);
         String number = textView.getText().toString();
         mDialFragment.setNumber(number);
+        mDialFragment.sToNumber = number;
     }
 }

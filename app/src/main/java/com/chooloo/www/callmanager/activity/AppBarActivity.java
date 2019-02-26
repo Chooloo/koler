@@ -31,13 +31,13 @@ public class AppBarActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 
-        ViewOutlineProvider outlineProvider = new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                float radiusDp = getResources().getDimension(R.dimen.app_bar_corner_radius);
-                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radiusDp);
-            }
-        };
-        mAppBarLayout.setOutlineProvider(outlineProvider);
+//        ViewOutlineProvider outlineProvider = new ViewOutlineProvider() {
+//            @Override
+//            public void getOutline(View view, Outline outline) {
+//                float radiusDp = getResources().getDimension(R.dimen.app_bar_corner_radius);
+//                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radiusDp);
+//            }
+//        };
+//        mAppBarLayout.setOutlineProvider(outlineProvider);
     }
 }
