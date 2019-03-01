@@ -119,10 +119,12 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Floating Action Buttons
     @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
+    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
+
     @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
     @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
     @BindView(R.id.button_cancel_sms) FloatingActionButton mFloatingCancelSMS;
-    @BindView(R.id.button_cancel_timer) FloatingActionButton mCancelTimerButton;
+    @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
@@ -221,11 +223,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         mSendSmsOverlay.setAlpha(0.0f);
 
         // hide buttons
+        mFloatingRejectCallTimerButton.hide();
+        mFloatingAnswerCallTimerButton.hide();
+
         mFloatingCancelOverlayButton.hide();
         mFloatingSendSMSButton.hide();
-        mFloatingRejectCallTimerButton.hide();
         mFloatingCancelSMS.hide();
-        mCancelTimerButton.hide();
+        mFloatingCancelTimerButton.hide();
         mSendSmsButton.setVisibility(View.GONE);
 
         // Set the correct text for the TextView
@@ -309,7 +313,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         setOverlay(mActionTimerOverlay);
     }
 
-    @OnClick(R.id.button_answer_call_timer)
+    @OnClick(R.id.button_floating_answer_call_timer)
     public void startAnswerCallTimer(View view) {
         int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key));
         mActionTimer.setData(seconds * 1000, false);
@@ -491,6 +495,11 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ongoingSet.applyTo(mOngoingCallLayout);
         overlaySet.applyTo((ConstraintLayout) mRejectCallOverlay);
+
+        mFloatingRejectCallTimerButton.hide();
+        mFloatingCancelOverlayButton.hide();
+        mFloatingSendSMSButton.hide();
+
         mRootView.removeView(mAnswerCallOverlay);
     }
 
@@ -563,7 +572,6 @@ public class OngoingCallActivity extends AppCompatActivity {
                 }
                 v.setHovered(false);
             }
-
             mCurrentOverlay = null;
         }
     }

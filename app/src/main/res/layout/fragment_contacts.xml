@@ -7,15 +7,15 @@
     android:background="@color/grey"
     tools:context=".fragment.ContactsFragment">
 
-    <ListView
-        android:id="@+id/list_contacts"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         style="@style/ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_contact">
 
-    </ListView>
-
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

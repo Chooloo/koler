@@ -1,31 +1,25 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.fragment.DialFragment;
-import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,7 +31,7 @@ import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
-public class MainActivity extends AppBarActivity implements DialFragment.OnDialChangeListener, ContactsFragment.OnContactsChangeListener {
+public class MainActivity extends AppBarActivity {
 
     // Variables
     boolean mIsScrolling;
@@ -47,7 +41,6 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
-    ContactsFragment mContactsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,23 +67,7 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
 
-        // Update contacts if possible
-        if (checkPermissionGranted(this, READ_CONTACTS)) {
-            updateContacts(false);
-        }
-
         mDialerLayout = findViewById(R.id.dialer_layout);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //TODO this is not good - need to consider ViewModel
-        NavHostFragment navFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-        if (navFragment.getChildFragmentManager().getFragments().get(0) instanceof ContactsFragment) {
-            mContactsFragment = (ContactsFragment) navFragment.getChildFragmentManager().getFragments().get(0);
-            mContactsFragment.setOnContactsChangeListener(this);
-        }
     }
 
     @Override
@@ -98,7 +75,6 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         // Set this class as the listener for the fragments
         if (fragment instanceof DialFragment) {
             mDialFragment = (DialFragment) fragment;
-            mDialFragment.setOnDialChangeListener(this);
         }
     }
 
@@ -117,11 +93,6 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
 
         // If this is the first time the user opens the app
         if (isFirstInstance) {
-            if (ContextCompat.checkSelfPermission(MainActivity.this, READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                // If the user gave permission to look for contacts, look for 'em
-                updateContacts(false);
-            }
-
             PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, true);
         }
     }
@@ -139,21 +110,8 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.update_contacts:
-                updateContacts(true);
-                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A function implemented from the dialer fragment (a callback method)
-     *
-     * @param number
-     */
-    @Override
-    public void onNumberChanged(String number) {
-        mContactsFragment.populateListView(number);
     }
 
     // -- On Clicks -- //
@@ -190,26 +148,5 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
         }
         ft.commit();
 
-    }
-
-    /**
-     * Updates the contacts list in mContactsManager
-     */
-    private void updateContacts(boolean showProgress) {
-        ContactsManager.updateContactsInBackground(this, showProgress);
-    }
-
-    // -- ContactsFragment Function -- //
-
-    @Override
-    public void onContactsScroll(boolean isScrolling) {
-        animateDialer(!isScrolling);
-    }
-
-    @Override
-    public void onContactsListItemClick(View view) {
-        TextView textView = (TextView) view.findViewById(R.id.contact_list_number_text);
-        String number = textView.getText().toString();
-        mDialFragment.setNumber(number);
     }
 }

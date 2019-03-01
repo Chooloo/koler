@@ -81,21 +81,21 @@ public class CallManager {
      */
     public static Contact getDisplayContact(Context context) {
 
-        if (sCall == null) return ContactsManager.UNKNOWN;
+        if (sCall == null) return ContactUtils.UNKNOWN;
 
         String uri = sCall.getDetails().getHandle().toString(); // Callers details
 
         if (uri.contains("voicemail")) // If uri contains 'voicemail' this is a... voicemail dah
-            return ContactsManager.VOICEMAIL;
+            return ContactUtils.VOICEMAIL;
 
         String telephoneNumber = null;
 
         if (uri.contains("tel")) // If uri contains 'tel' this is a normal number
             telephoneNumber = uri.replace("tel:", "");
 
-        if (telephoneNumber == null || telephoneNumber.isEmpty()) return ContactsManager.UNKNOWN; // Unknown number
+        if (telephoneNumber == null || telephoneNumber.isEmpty()) return ContactUtils.UNKNOWN; // Unknown number
 
-        Contact contact = ContactsManager.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
+        Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
         if (contact == null) return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 
         return contact;

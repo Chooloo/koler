@@ -1,5 +1,8 @@
 package com.chooloo.www.callmanager.database.entity;
 
+import android.database.Cursor;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.ArrayList;
@@ -81,6 +84,15 @@ public class Contact {
 
         this.phoneNumbers = new ArrayList<>();
         this.phoneNumbers.add(phoneNumber);
+    }
+
+    @Ignore
+    public Contact(Cursor cursor) {
+        this.name = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY));
+        this.photoUri = cursor.getString(cursor.getColumnIndex(Phone.PHOTO_THUMBNAIL_URI));
+
+        this.phoneNumbers = new ArrayList<>();
+        this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER)));
     }
 
     /**

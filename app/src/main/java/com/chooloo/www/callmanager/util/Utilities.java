@@ -19,6 +19,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,6 +42,15 @@ public class Utilities {
                 && ContextCompat.checkSelfPermission(
                 context, permission)
                 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean checkPermissionGranted(String permission, String[] permissions, int[] grantResults) {
+        List<String> permList = Arrays.asList(permission);
+        if (permList.contains(permission)) {
+            int index = permList.indexOf(permission);
+            return grantResults[index] == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
     }
 
     public static void askForPermissions(Activity activity, String[] permissions) {

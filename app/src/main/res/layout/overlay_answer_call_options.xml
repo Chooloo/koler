@@ -18,14 +18,14 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorAccent"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_answer_call_timer"
-        app:layout_constraintEnd_toEndOf="@+id/button_answer_call_timer"
-        app:layout_constraintStart_toStartOf="@+id/button_answer_call_timer"
+        app:layout_constraintBottom_toTopOf="@+id/button_floating_answer_call_timer"
+        app:layout_constraintEnd_toEndOf="@+id/button_floating_answer_call_timer"
+        app:layout_constraintStart_toStartOf="@+id/button_floating_answer_call_timer"
         tools:text="Answer in 10s"
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_answer_call_timer"
+        android:id="@+id/button_floating_answer_call_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
