@@ -5,22 +5,21 @@
     android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialer_background"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:padding="6sp"
-    android:elevation="4dp"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
     <EditText
         android:id="@+id/text_number_input"
-        android:background="@drawable/text_button_selector"
         android:layout_width="204dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:background="@drawable/text_button_selector"
+        android:elevation="1dp"
         android:gravity="center"
         android:hint="Phone Number"
+        android:visibility="invisible"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/table_numbers"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,9 +28,10 @@
     <!-- Dialer Buttons -->
     <TableLayout
         android:id="@+id/table_numbers"
-        android:layout_width="match_parent"
+        android:layout_width="385dp"
         android:layout_height="280dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/dialer_background"
+        android:elevation="20dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,10 +46,10 @@
             <TextView
                 android:id="@+id/chip1"
                 style="@style/TextButton"
-                android:background="@drawable/text_button_selector"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@drawable/text_button_selector"
                 android:gravity="center"
                 android:text="1" />
 

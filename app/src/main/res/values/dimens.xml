@@ -10,5 +10,5 @@
     <dimen name="flat_button_padding">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="bubble_corner_radius">30dp</dimen>
+    <dimen name="bubble_corner_radius">20dp</dimen>
 </resources>
