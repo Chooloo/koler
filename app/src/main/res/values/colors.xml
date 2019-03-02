@@ -10,10 +10,12 @@
     <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
+    <!-- Blacks -->
     <color name="black">#000000</color>
+    <color name="soft_black">#3D3D3D</color>
     <color name="soft_shadow">#CCCCCC</color>
 
-    <!-- Shades Of White -->
+    <!-- Whites -->
     <color name="white">#ffffff</color>
     <color name="semi_white">#B3FFFFFF</color>
     <color name="semi_grey">#fafafa</color>
