@@ -22,8 +22,8 @@
     <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="TextButton" parent="Widget.AppCompat.TextView">
         <item name="android:background">@drawable/text_button_selector</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <!-- List View -->

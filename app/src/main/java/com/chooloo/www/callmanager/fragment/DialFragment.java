@@ -30,7 +30,7 @@ public class DialFragment extends Fragment {
     OnDialChangeListener mCallback;
 
     // Variables
-    private static String sToNumber = "";
+    public String sToNumber = "";
 
     // Edit Texts
     @BindView(R.id.text_number_input) EditText mNumberInput;
@@ -85,6 +85,7 @@ public class DialFragment extends Fragment {
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5,
             R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addNum(View view) {
+        mNumberInput.setVisibility(view.VISIBLE);
         String id = getResources().getResourceEntryName(view.getId());
         if (id.contains("chip_star")) sToNumber += "*";
         else if (id.contains("chip_hex")) sToNumber += "#";
@@ -104,6 +105,7 @@ public class DialFragment extends Fragment {
         sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
         mNumberInput.setText(sToNumber);
         numberChanged(sToNumber);
+        if (sToNumber.length() == 0) mNumberInput.setVisibility(view.INVISIBLE);
     }
 
     /**
@@ -114,6 +116,7 @@ public class DialFragment extends Fragment {
         sToNumber = "";
         mNumberInput.setText(sToNumber);
         numberChanged(sToNumber);
+        mNumberInput.setVisibility(view.INVISIBLE);
         return true;
     }
 
