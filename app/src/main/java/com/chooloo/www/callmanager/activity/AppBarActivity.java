@@ -1,9 +1,6 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Outline;
-import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
@@ -30,14 +27,5 @@ public class AppBarActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
-
-//        ViewOutlineProvider outlineProvider = new ViewOutlineProvider() {
-//            @Override
-//            public void getOutline(View view, Outline outline) {
-//                float radiusDp = getResources().getDimension(R.dimen.app_bar_corner_radius);
-//                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radiusDp);
-//            }
-//        };
-//        mAppBarLayout.setOutlineProvider(outlineProvider);
     }
 }

@@ -93,7 +93,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.edit_sms) TextInputEditText mEditSms;
 
     // Text views
-    @BindView(R.id.text_phone_number) TextView mPhoneNumberText;
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
     @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
@@ -179,9 +178,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
-        mPhoneNumberText.setText(Utilities.formatPhoneNumber(
-                callerContact.getMainPhoneNumber()
-        ));
         if (callerContact.getName() != null && !callerContact.getName().isEmpty())
             mCallerText.setText(callerContact.getName());
         if (callerContact.getPhotoUri() != null && !callerContact.getName().isEmpty()) {

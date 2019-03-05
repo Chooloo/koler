@@ -1,31 +1,25 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.fragment.DialFragment;
-import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
