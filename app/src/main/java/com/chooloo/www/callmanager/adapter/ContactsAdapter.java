@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.ContactHolder> {
+
+    private OnChildClickListener mOnChildClickListener;
 
     public ContactsAdapter(Context context, Cursor cursor) {
         super(context, cursor);
@@ -33,8 +36,9 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
     @Override
     public void onBindViewHolder(ContactHolder viewHolder, Cursor cursor) {
         Contact contact = new Contact(cursor);
+        String phoneNumber = contact.getMainPhoneNumber();
         viewHolder.name.setText(contact.getName());
-        viewHolder.number.setText(contact.getMainPhoneNumber());
+        viewHolder.number.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
 
         if (contact.getPhotoUri() == null) {
             viewHolder.photo.setVisibility(View.GONE);
@@ -44,6 +48,17 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
             viewHolder.photo.setVisibility(View.VISIBLE);
             viewHolder.photoPlaceholder.setVisibility(View.GONE);
         }
+        if (mOnChildClickListener != null) {
+            viewHolder.itemView.setOnClickListener(v -> mOnChildClickListener.onChildClick(phoneNumber));
+        }
+    }
+
+    public void setOnChildClickListener(OnChildClickListener onChildClickListener) {
+        mOnChildClickListener = onChildClickListener;
+    }
+
+    public interface OnChildClickListener {
+        void onChildClick(String normPhoneNumber);
     }
 
     class ContactHolder extends RecyclerView.ViewHolder {

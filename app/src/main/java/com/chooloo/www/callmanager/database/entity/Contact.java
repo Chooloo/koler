@@ -92,7 +92,7 @@ public class Contact {
         this.photoUri = cursor.getString(cursor.getColumnIndex(Phone.PHOTO_THUMBNAIL_URI));
 
         this.phoneNumbers = new ArrayList<>();
-        this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER)));
+        this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(Phone.NUMBER)));
     }
 
     /**
@@ -204,7 +204,7 @@ public class Contact {
     @NonNull
     @Override
     public String toString() {
-        return String.format(Utilities.LOCALE, "id: %d, list_id: %d, name: %s, numbers: %s", contactId, listId, name, this.phoneNumbers.toString());
+        return String.format(Utilities.sLocale, "id: %d, list_id: %d, name: %s, numbers: %s", contactId, listId, name, this.phoneNumbers.toString());
     }
 
     @Override

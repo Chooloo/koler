@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -39,8 +39,8 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     private static final String IGNORE_NUMBER_TOO_LONG_CLAUSE =
             "length(" + Phone.NUMBER + ") < 1000";
 
-    private ContactsViewModel mViewModel;
 
+    private SharedDialViewModel mSharedDialViewModel;
     private View mRootView;
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
@@ -56,13 +56,22 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         mAdapter = new ContactsAdapter(getContext(), null);
         mRecyclerView.setAdapter(mAdapter);
 
+        mAdapter.setOnChildClickListener(this);
+
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ContactsViewModel.class);
+        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getNumber().observe(this, s -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_PHONE_NUMBER, s);
+                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
+            }
+        });
         tryRunningLoader();
     }
 
@@ -96,7 +105,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                 Phone._ID,
                 Phone.DISPLAY_NAME_PRIMARY,
                 Phone.PHOTO_THUMBNAIL_URI,
-                Phone.NORMALIZED_NUMBER
+                Phone.NUMBER
         };
         String selection = Data.MIMETYPE + " = '" + Phone.CONTENT_ITEM_TYPE + "' AND " +
                 RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%' AND " +
@@ -110,7 +119,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
             phoneNumber = args.getString(ARG_PHONE_NUMBER);
         }
 
-        if (phoneNumber != null) {
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
             builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
         } else {
             builder = Phone.CONTENT_URI.buildUpon();
@@ -137,5 +146,10 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mAdapter.changeCursor(null);
+    }
+
+    @Override
+    public void onChildClick(String normPhoneNumber) {
+        mSharedDialViewModel.setNumber(normPhoneNumber);
     }
 }

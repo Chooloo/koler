@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.fragment.DialFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
 
@@ -50,6 +52,12 @@ public class MainActivity extends AppBarActivity {
 
         // Bind variables
         ButterKnife.bind(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Utilities.sLocale = getResources().getSystem().getConfiguration().getLocales().get(0);
+        } else {
+            Utilities.sLocale = getResources().getSystem().getConfiguration().locale;
+        }
 
         // Init timber
         Timber.plant(new Timber.DebugTree());

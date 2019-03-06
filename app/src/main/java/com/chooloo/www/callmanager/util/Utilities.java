@@ -32,7 +32,7 @@ import static android.Manifest.permission.SEND_SMS;
 public class Utilities {
 
     public static final int PERMISSION_RC = 10;
-    public static final Locale LOCALE = Locale.getDefault();
+    public static Locale sLocale;
 
     public static final long LONG_VIBRATE_LENGTH = 500;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
@@ -157,24 +157,35 @@ public class Utilities {
      * @param phoneNumber the number to format
      * @return the formatted number
      */
-    public static String formatPhoneNumber(@NotNull String phoneNumber) {
+    public static String formatPhoneNumber(String phoneNumber) {
 
-        // check for unwanted letters
-        if (phoneNumber.contains("-")) phoneNumber.replace("-", "");
-        if (phoneNumber.contains(" ")) phoneNumber.replace(" ", "");
+        if (phoneNumber == null) return null;
+        phoneNumber = normalizePhoneNumber(phoneNumber);
 
         Phonenumber.PhoneNumber formattedNumber = null;
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry()); // parse the number into a country formatted one
+            formattedNumber = phoneUtil.parse(phoneNumber, "");
         } catch (NumberParseException e) {
-            System.err.println("NumberParseException was thrown: " + e.toString());
+            Timber.e(e);
         }
 
         // return the number
         if (formattedNumber == null) return phoneNumber;
-        else return phoneUtil.format(formattedNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
+        else {
+            PhoneNumberUtil.PhoneNumberFormat format;
+            if (phoneUtil.getRegionCodeForCountryCode(formattedNumber.getCountryCode()).equals(sLocale.getCountry()))
+                format = PhoneNumberUtil.PhoneNumberFormat.NATIONAL;
+            else
+                format = PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL;
+
+            return phoneUtil.format(formattedNumber, format);
+        }
+    }
+
+    public static String normalizePhoneNumber(String phoneNumber) {
+        return PhoneNumberUtil.normalizeDiallableCharsOnly(phoneNumber);
     }
 
     public static String joinStringsWithSeparator(@NotNull List<String> list, @NotNull String separator) {
