@@ -57,6 +57,24 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnChildClickListener(this);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        mSharedDialViewModel.setIsOutOfFocus(false);
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        mSharedDialViewModel.setIsOutOfFocus(true);
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        mSharedDialViewModel.setIsOutOfFocus(true);
+                    default:
+                        mSharedDialViewModel.setIsOutOfFocus(false);
+                }
+            }
+        });
 
         return mRootView;
     }

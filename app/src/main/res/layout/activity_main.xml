@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
-    android:background="@color/grey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".activity.MainActivity">
 
     <!-- App Bar -->
@@ -19,31 +19,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Contacts List View Fragment-->
-    <fragment
-        android:id="@+id/main_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_up_panel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/main_dialer_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"
-        app:navGraph="@navigation/main"
-        tools:layout="@layout/fragment_contacts" />
-
-    <!-- Dialer Fragment-->
-    <fragment
-        android:id="@+id/main_dialer_fragment"
-        android:name="com.chooloo.www.callmanager.fragment.DialFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:tag="main_dialer_tag"
+        android:clickable="false"
+        android:focusable="true"
+        android:gravity="bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_dial" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:umanoFadeColor="#00000000"
+        app:umanoOverlay="true"
+        app:umanoPanelHeight="@dimen/phone_number_input_height"
+        app:umanoShadowHeight="0dp">
+
+        <!-- Contacts List View Fragment-->
+        <fragment
+            android:id="@+id/main_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main"
+            tools:layout="@layout/fragment_contacts" />
+
+        <!-- Dialer Fragment-->
+        <fragment
+            android:id="@+id/main_dialer_fragment"
+            android:name="com.chooloo.www.callmanager.fragment.DialFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:tag="main_dialer_tag"
+            tools:layout="@layout/fragment_dial" />
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <!--TODO remove these ugly buttons when we can-->
 
@@ -55,6 +66,6 @@
         android:layout_marginEnd="8dp"
         android:text="Excel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/main_fragment" />
+        app:layout_constraintTop_toTopOf="@+id/sliding_up_panel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

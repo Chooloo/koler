@@ -11,4 +11,6 @@
     <dimen name="text_margin">16dp</dimen>
 
     <dimen name="bubble_corner_radius">20dp</dimen>
+
+    <dimen name="phone_number_input_height">64dp</dimen>
 </resources>

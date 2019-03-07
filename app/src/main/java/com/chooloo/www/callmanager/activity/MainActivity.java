@@ -11,15 +11,17 @@ import android.view.ViewGroup;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.fragment.DialFragment;
+import com.chooloo.www.callmanager.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
@@ -35,12 +37,13 @@ import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class MainActivity extends AppBarActivity {
 
-    // Variables
-    boolean mIsScrolling;
+    SharedDialViewModel mSharedDialViewModel;
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
+    @BindView(R.id.sliding_up_panel) SlidingUpPanelLayout mSlidingPanelLayout;
+
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
 
@@ -50,8 +53,8 @@ public class MainActivity extends AppBarActivity {
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
 
-        // Bind variables
-        ButterKnife.bind(this);
+        // Init timber
+        Timber.plant(new Timber.DebugTree());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Utilities.sLocale = getResources().getSystem().getConfiguration().getLocales().get(0);
@@ -59,8 +62,16 @@ public class MainActivity extends AppBarActivity {
             Utilities.sLocale = getResources().getSystem().getConfiguration().locale;
         }
 
-        // Init timber
-        Timber.plant(new Timber.DebugTree());
+        // Bind variables
+        ButterKnife.bind(this);
+
+        mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
+            if (b) {
+                mSlidingPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+
 
         // Ask for permissions
         if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS)) {
@@ -133,28 +144,5 @@ public class MainActivity extends AppBarActivity {
         } else {
             controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
         }
-    }
-
-    // -- Other -- //
-
-    /**
-     * Hides or Shows the dialer according to the given parameter
-     * If it needs to show the dialer it waits for 700 milis and shows
-     * (In case the user keeps scrolling after he stopped)
-     *
-     * @param trig
-     */
-    public void animateDialer(boolean trig) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        if (mDialFragment.isHidden() && trig) {
-            mIsScrolling = false;
-            ft.show(mDialFragment);
-        } else if (mDialFragment.isVisible() && !trig) {
-            mIsScrolling = true;
-            ft.hide(mDialFragment);
-        }
-        ft.commit();
-
     }
 }
