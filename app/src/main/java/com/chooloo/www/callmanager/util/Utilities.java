@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -35,6 +36,7 @@ public class Utilities {
     public static Locale sLocale;
 
     public static final long LONG_VIBRATE_LENGTH = 500;
+    public static final long SHORT_VIBRATE_LENGTH = 20;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
 
     public static boolean checkPermissionGranted(Context context, String permission) {
@@ -220,5 +222,21 @@ public class Utilities {
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{SEND_SMS}, 1);
         }
+    }
+
+    public static boolean hasNavBar (Context context)
+    {
+        Resources resources = context.getResources();
+        int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
+        return id > 0 && resources.getBoolean(id);
+    }
+
+    public static int navBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 }

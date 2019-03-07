@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,9 +39,9 @@ public class DialFragment extends Fragment {
     // Edit Texts
     @BindView(R.id.text_number_input) EditText mNumberInput;
 
-    // Text Views
+    // Buttons
     @BindView(R.id.button_call) TextView mCallButton;
-    @BindView(R.id.button_delete) TextView mDelButton;
+    @BindView(R.id.button_delete) ImageView mDelButton;
     @BindView(R.id.chip0) TextView mChip0;
 
     // Layouts
@@ -109,6 +110,8 @@ public class DialFragment extends Fragment {
 
         mNumberText += toAdd;
         setNumber(mAsYouTypeFormatter.inputDigit(toAdd));
+
+        vibrate();
     }
 
     /**
@@ -123,9 +126,12 @@ public class DialFragment extends Fragment {
             String s = mAsYouTypeFormatter.inputDigit(mNumberText.charAt(i));
             if (i == mNumberText.length() - 1) setNumber(s);
         }
+
         if (mNumberText.length() == 0) {
             delAllNum(view);
         }
+
+        vibrate();
     }
 
     /**
@@ -235,12 +241,16 @@ public class DialFragment extends Fragment {
         mViewModel.setNumber(mNumberText);
     }
 
+    private void vibrate() {
+        Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
+    }
+
     /**
      * Hides the keyboard based on the focused view (most likely EditText)
      *
      * @param view is the focused view
      */
-    public void hideKeyboard(EditText view) {
+    private void hideKeyboard(EditText view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

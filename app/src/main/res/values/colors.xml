@@ -17,7 +17,7 @@
 
     <!-- Whites -->
     <color name="white">#ffffff</color>
-    <color name="semi_white">#B3FFFFFF</color>
+    <color name="semi_white">#DAFFFFFF</color>
     <color name="semi_grey">#fafafa</color>
     <color name="grey">#F4F4F4</color>
 
@@ -40,6 +40,6 @@
 
     <color name="caller_text_color">@color/icon_active_light</color>
 
-    <color name="dialer_background">@color/white</color>
-
+    <color name="dialer_background">#ECECEC</color>
+    <color name="dialer_text">#388E3C</color>
 </resources>
