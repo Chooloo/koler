@@ -38,7 +38,7 @@
             android:layout_alignTop="@+id/text_number_input"
             android:layout_alignBottom="@id/text_number_input"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="18dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_backspace_black_24dp"
             android:tint="@color/icon_active_light" />

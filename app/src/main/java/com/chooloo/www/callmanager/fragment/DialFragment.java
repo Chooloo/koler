@@ -142,6 +142,8 @@ public class DialFragment extends Fragment {
         mNumberText = "";
         mAsYouTypeFormatter.clear();
         setNumber("");
+        vibrate();
+        vibrate();
         return true;
     }
 

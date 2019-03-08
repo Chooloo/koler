@@ -25,11 +25,14 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
+
+import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
 
@@ -51,6 +54,9 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         ButterKnife.bind(this, mRootView);
+
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
+        mRecyclerView.addItemDecoration(itemDecor);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new ContactsAdapter(getContext(), null);
