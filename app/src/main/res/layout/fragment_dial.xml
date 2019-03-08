@@ -27,9 +27,12 @@
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
+            android:hint="phone number"
             android:inputType="number"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            tools:text="+972-999-999-9999" />
+            android:textSize="20dp" />
+        <!--tools:text="+972-999-999-9999" />-->
 
         <ImageView
             android:id="@+id/button_delete"
@@ -50,10 +53,10 @@
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="0.8dp"
         android:layout_marginStart="@dimen/divider_sides_margin"
         android:layout_marginEnd="@dimen/divider_sides_margin"
-        android:background="?attr/dividerHorizontal"
+        android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
