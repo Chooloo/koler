@@ -9,7 +9,6 @@
     android:elevation="4dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:paddingBottom="32dp"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -17,7 +16,7 @@
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="0dp"
-        android:layout_height="@dimen/phone_number_input_height"
+        android:layout_height="65dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -52,6 +51,8 @@
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginStart="@dimen/divider_sides_margin"
+        android:layout_marginEnd="@dimen/divider_sides_margin"
         android:background="?attr/dividerHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,10 +62,7 @@
     <TableLayout
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_height="280dp"
         android:elevation="20dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
@@ -84,7 +82,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/text_button_selector"
                 android:gravity="center"
                 android:text="1" />
 
