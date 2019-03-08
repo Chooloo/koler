@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,7 +45,7 @@ public class MainActivity extends AppBarActivity implements DialFragment.OnDialC
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
-    @BindView(R.id.activity_main) ConstraintLayout mMainLayout;
+    @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
     ContactsFragment mContactsFragment;

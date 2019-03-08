@@ -8,6 +8,9 @@
     android:background="@drawable/dialer_background"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="60dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
