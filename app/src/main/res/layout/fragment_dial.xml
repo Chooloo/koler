@@ -6,38 +6,71 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/dialer_background"
+    android:elevation="4dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    app:behavior_hideable="true"
-    app:behavior_peekHeight="60dp"
-    app:layout_behavior="@string/bottom_sheet_behavior"
+    android:paddingBottom="32dp"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
-    <EditText
-        android:id="@+id/text_number_input"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:background="@drawable/text_button_selector"
-        android:gravity="center"
-        android:hint="Phone Number"
-        android:inputType="number"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/table_numbers"
+
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/phone_number_input_height"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/text_number_input"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"
+            android:inputType="number"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            tools:text="+972-999-999-9999" />
+
+        <ImageView
+            android:id="@+id/button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/text_number_input"
+            android:layout_alignBottom="@id/text_number_input"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_backspace_black_24dp"
+            android:tint="@color/icon_active_light" />
+
+    </RelativeLayout>
 
     <!-- Dialer Buttons -->
     <!--android:layout_width="385dp"-->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?attr/dividerHorizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top" />
+
     <TableLayout
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:elevation="20dp"
         android:weightSum="4"
         app:layout_constraintBottom_toTopOf="@+id/button_call"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top">
 
         <TableRow
             android:layout_width="match_parent"
@@ -47,7 +80,7 @@
 
             <TextView
                 android:id="@+id/chip1"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -57,7 +90,7 @@
 
             <TextView
                 android:id="@+id/chip2"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -66,7 +99,7 @@
 
             <TextView
                 android:id="@+id/chip3"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -83,7 +116,7 @@
 
             <TextView
                 android:id="@+id/chip4"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -92,7 +125,7 @@
 
             <TextView
                 android:id="@+id/chip5"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -101,7 +134,7 @@
 
             <TextView
                 android:id="@+id/chip6"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -117,7 +150,7 @@
 
             <TextView
                 android:id="@+id/chip7"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -126,7 +159,7 @@
 
             <TextView
                 android:id="@+id/chip8"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -135,7 +168,7 @@
 
             <TextView
                 android:id="@+id/chip9"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -152,7 +185,7 @@
 
             <TextView
                 android:id="@+id/chip_star"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -161,7 +194,7 @@
 
             <TextView
                 android:id="@+id/chip0"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -170,7 +203,7 @@
 
             <TextView
                 android:id="@+id/chip_hex"
-                style="@style/TextButton"
+                style="@style/DialButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -184,7 +217,7 @@
     <!-- Delete Button -->
     <TextView
         android:id="@+id/button_call"
-        style="@style/TextButton"
+        style="@style/DialButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="70dp"
@@ -193,23 +226,7 @@
         android:text="Call"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Call Button -->
-    <TextView
-        android:id="@+id/button_delete"
-        style="@style/TextButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="del"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_call" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

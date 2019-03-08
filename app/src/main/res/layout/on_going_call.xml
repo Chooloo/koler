@@ -9,19 +9,22 @@
     tools:context=".activity.OngoingCallActivity">
 
     <!-- Call Timer -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_status_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="24dp" />
+
     <TextView
         android:id="@+id/text_stopwatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="8dp"
         android:textColor="@color/caller_text_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_status_bar"
         tools:text="00:00" />
 
     <!-- Caller Number (Temporary) -->
@@ -85,7 +88,7 @@
         android:id="@+id/text_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="24dp"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:textColor="@color/caller_text_color"
         app:layout_constraintBottom_toTopOf="@+id/guide_eye_level"
@@ -210,7 +213,6 @@
         android:id="@+id/answer_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@android:color/white"
@@ -221,6 +223,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_bottom"
         app:maxImageSize="36dp" />
 
     <!-- Reject Button -->
@@ -228,7 +231,6 @@
         android:id="@+id/reject_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@android:color/white"
@@ -239,6 +241,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.66"
         app:layout_constraintStart_toStartOf="@+id/guide_center_vertical"
+        app:layout_constraintTop_toTopOf="@+id/guide_bottom"
         app:maxImageSize="36dp" />
 
     <!-- Guidelines -->
@@ -247,14 +250,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.925" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50121653" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_eye_level"

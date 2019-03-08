@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,43 +9,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.activity.MainActivity;
-import com.chooloo.www.callmanager.util.ContactsManager;
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
-
-import java.util.ArrayList;
+import com.chooloo.www.callmanager.util.Utilities;
+import com.google.i18n.phonenumbers.AsYouTypeFormatter;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MotionEventCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 import butterknife.OnLongClick;
 import timber.log.Timber;
 
 public class DialFragment extends Fragment {
 
-    OnDialChangeListener mCallback;
-
-    // Variables
-    public String sToNumber = "";
+    SharedDialViewModel mViewModel;
+    private String mNumberText = "";
+    private AsYouTypeFormatter mAsYouTypeFormatter;
 
     // Edit Texts
     @BindView(R.id.text_number_input) EditText mNumberInput;
 
-    // Text Views
+    // Buttons
     @BindView(R.id.button_call) TextView mCallButton;
-    @BindView(R.id.button_delete) TextView mDelButton;
+    @BindView(R.id.button_delete) ImageView mDelButton;
     @BindView(R.id.chip0) TextView mChip0;
 
     // Layouts
@@ -84,6 +79,19 @@ public class DialFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
+        mViewModel.getNumber().observe(this, s -> {
+            if (!s.equals(mNumberText)) {
+                setNumber(s, true);
+            }
+        });
+
+        mAsYouTypeFormatter = PhoneNumberUtil.getInstance().getAsYouTypeFormatter(Utilities.sLocale.getCountry());
+    }
+
     // -- On Clicks -- //
 
     /**
@@ -93,16 +101,17 @@ public class DialFragment extends Fragment {
      */
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5,
             R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
-    public void addNum(View view) {
-        mNumberInput.setVisibility(view.VISIBLE);
+    public void addChar(View view) {
         String id = getResources().getResourceEntryName(view.getId());
-        if (id.contains("chip_star")) sToNumber += "*";
-        else if (id.contains("chip_hex")) sToNumber += "#";
-        else {
-            sToNumber += id.substring(4);
-        }
-        mNumberInput.setText(sToNumber);
-        numberChanged(sToNumber);
+        char toAdd;
+        if (id.contains("chip_star")) toAdd = '*';
+        else if (id.contains("chip_hex")) toAdd = '#';
+        else toAdd = id.charAt(4);
+
+        mNumberText += toAdd;
+        setNumber(mAsYouTypeFormatter.inputDigit(toAdd));
+
+        vibrate();
     }
 
     /**
@@ -110,11 +119,19 @@ public class DialFragment extends Fragment {
      */
     @OnClick(R.id.button_delete)
     public void delNum(View view) {
-        if (sToNumber.length() <= 0) return;
-        sToNumber = sToNumber.substring(0, sToNumber.length() - 1);
-        mNumberInput.setText(sToNumber);
-        numberChanged(sToNumber);
-        if (sToNumber.length() == 0) mNumberInput.setVisibility(view.INVISIBLE);
+        if (mNumberText.length() <= 0) return;
+        mNumberText = mNumberText.substring(0, mNumberText.length() - 1);
+        mAsYouTypeFormatter.clear();
+        for (int i = 0; i < mNumberText.length(); i++) {
+            String s = mAsYouTypeFormatter.inputDigit(mNumberText.charAt(i));
+            if (i == mNumberText.length() - 1) setNumber(s);
+        }
+
+        if (mNumberText.length() == 0) {
+            delAllNum(view);
+        }
+
+        vibrate();
     }
 
     /**
@@ -122,10 +139,9 @@ public class DialFragment extends Fragment {
      */
     @OnLongClick(R.id.button_delete)
     public boolean delAllNum(View view) {
-        sToNumber = "";
-        mNumberInput.setText(sToNumber);
-        numberChanged(sToNumber);
-        mNumberInput.setVisibility(view.INVISIBLE);
+        mNumberText = "";
+        mAsYouTypeFormatter.clear();
+        setNumber("");
         return true;
     }
 
@@ -168,25 +184,49 @@ public class DialFragment extends Fragment {
         }
     }
 
+    @OnLongClick(R.id.chip0)
+    public boolean addPlus(View view) {
+        mNumberText += "+";
+        setNumber(mAsYouTypeFormatter.inputDigit('+'));
+        return true;
+    }
+
     /**
      * Calls the number in the keypad's input
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        Timber.i("Trying to call: " + mNumberInput.getText().toString());
-        if (mNumberInput.getText() == null) {
+        Timber.i("Trying to call: " + mNumberText);
+        if (mNumberText.isEmpty()) {
             Toast.makeText(getContext(), "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
         } else {
             try {
                 // Set the data for the call
-                String uri = "tel:" + mNumberInput.getText().toString();
+                String uri = "tel:" + mNumberText;
                 Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
                 // Start the call
                 startActivity(callIntent);
             } catch (SecurityException e) {
-                Toast.makeText(getContext(), "Couldn't call " + sToNumber, Toast.LENGTH_LONG).show();
-                Timber.e(e, "Couldn't call %s", sToNumber);
+                Toast.makeText(getContext(), "Couldn't call " + mNumberText, Toast.LENGTH_LONG).show();
+                Timber.e(e, "Couldn't call %s", mNumberText);
             }
+        }
+    }
+
+    // -- Setters -- //
+
+    public void setNumber(String number, boolean updateAll) {
+        if (updateAll) {
+            mNumberText = number;
+            mNumberInput.setText(number);
+            mAsYouTypeFormatter.clear();
+            for (int i = 0; i < number.length(); i++) {
+                mAsYouTypeFormatter.inputDigit(number.charAt(i));
+            }
+
+            mViewModel.setNumber(mNumberText);
+        } else {
+            setNumber(number);
         }
     }
 
@@ -198,31 +238,11 @@ public class DialFragment extends Fragment {
      */
     public void setNumber(String number) {
         mNumberInput.setText(number);
+        mViewModel.setNumber(mNumberText);
     }
 
-    /**
-     * The input number changed
-     *
-     * @param number
-     */
-    public void numberChanged(String number) {
-        mCallback.onNumberChanged(sToNumber);
-    }
-
-    /**
-     * Set the given activity as the listener
-     *
-     * @param activity
-     */
-    public void setOnDialChangeListener(OnDialChangeListener activity) {
-        mCallback = activity;
-    }
-
-    /**
-     * Interface for the callback activity to implement
-     */
-    public interface OnDialChangeListener {
-        public void onNumberChanged(String number);
+    private void vibrate() {
+        Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
     }
 
     /**
@@ -230,11 +250,10 @@ public class DialFragment extends Fragment {
      *
      * @param view is the focused view
      */
-    public void hideKeyboard(EditText view) {
+    private void hideKeyboard(EditText view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
 }

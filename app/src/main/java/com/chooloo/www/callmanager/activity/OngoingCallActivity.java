@@ -93,7 +93,6 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.edit_sms) TextInputEditText mEditSms;
 
     // Text views
-//    @BindView(R.id.text_phone_number) TextView mPhoneNumberText;
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
     @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
@@ -119,10 +118,12 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Floating Action Buttons
     @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
+    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
+
     @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
     @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
     @BindView(R.id.button_cancel_sms) FloatingActionButton mFloatingCancelSMS;
-    @BindView(R.id.button_cancel_timer) FloatingActionButton mCancelTimerButton;
+    @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
@@ -164,6 +165,15 @@ public class OngoingCallActivity extends AppCompatActivity {
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        //Detect a nav bar and adapt layout accordingly
+        boolean hasNavBar = Utilities.hasNavBar(this);
+        int navBarHeight = Utilities.navBarHeight(this);
+        if (hasNavBar) {
+            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
+            mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
+            mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
+        }
+
         // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
         try {
             field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
@@ -177,10 +187,6 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
-        //TODO do somn with with this
-//        mPhoneNumberText.setText(Utilities.formatPhoneNumber(
-//                callerContact.getMainPhoneNumber()
-//        ));
         if (callerContact.getName() != null && !callerContact.getName().isEmpty())
             mCallerText.setText(callerContact.getName());
         if (callerContact.getPhotoUri() != null && !callerContact.getName().isEmpty()) {
@@ -222,11 +228,13 @@ public class OngoingCallActivity extends AppCompatActivity {
         mSendSmsOverlay.setAlpha(0.0f);
 
         // hide buttons
+        mFloatingRejectCallTimerButton.hide();
+        mFloatingAnswerCallTimerButton.hide();
+
         mFloatingCancelOverlayButton.hide();
         mFloatingSendSMSButton.hide();
-        mFloatingRejectCallTimerButton.hide();
         mFloatingCancelSMS.hide();
-        mCancelTimerButton.hide();
+        mFloatingCancelTimerButton.hide();
         mSendSmsButton.setVisibility(View.GONE);
 
         // Set the correct text for the TextView
@@ -310,7 +318,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         setOverlay(mActionTimerOverlay);
     }
 
-    @OnClick(R.id.button_answer_call_timer)
+    @OnClick(R.id.button_floating_answer_call_timer)
     public void startAnswerCallTimer(View view) {
         int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key));
         mActionTimer.setData(seconds * 1000, false);
@@ -492,6 +500,11 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         ongoingSet.applyTo(mOngoingCallLayout);
         overlaySet.applyTo((ConstraintLayout) mRejectCallOverlay);
+
+        mFloatingRejectCallTimerButton.hide();
+        mFloatingCancelOverlayButton.hide();
+        mFloatingSendSMSButton.hide();
+
         mRootView.removeView(mAnswerCallOverlay);
     }
 
@@ -564,7 +577,6 @@ public class OngoingCallActivity extends AppCompatActivity {
                 }
                 v.setHovered(false);
             }
-
             mCurrentOverlay = null;
         }
     }

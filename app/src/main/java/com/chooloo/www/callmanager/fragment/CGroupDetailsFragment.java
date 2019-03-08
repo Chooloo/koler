@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.ContactAdapter;
+import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,7 @@ public class CGroupDetailsFragment extends Fragment {
     private View mRootView;
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
-    private ContactAdapter mAdapter;
+    private CGroupDetailsAdapter mAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -34,7 +34,7 @@ public class CGroupDetailsFragment extends Fragment {
         ButterKnife.bind(this, mRootView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new ContactAdapter(getContext());
+        mAdapter = new CGroupDetailsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         return mRootView;

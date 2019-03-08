@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:background="?attr/selectableItemBackground"
     android:padding="10dp">
 
     <!-- Caller Pic -->
@@ -18,14 +18,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/list_image_placeholder"
+            android:id="@+id/item_photo_placeholder"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:tint="@color/soft_shadow"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/list_image_photo"
+            android:id="@+id/item_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:visibility="gone"
@@ -35,7 +35,7 @@
 
 
     <TextView
-        android:id="@+id/contact_list_name_text"
+        android:id="@+id/item_name_text"
         style="@style/ListItemText.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,13 +45,13 @@
 
 
     <TextView
-        android:id="@+id/contact_list_number_text"
+        android:id="@+id/item_number_text"
         style="@style/ListItemText.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/contact_list_name_text"
-        app:layout_constraintTop_toBottomOf="@+id/contact_list_name_text" />
+        app:layout_constraintStart_toStartOf="@+id/item_name_text"
+        app:layout_constraintTop_toBottomOf="@+id/item_name_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

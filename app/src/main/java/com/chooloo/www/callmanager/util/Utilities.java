@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -19,6 +20,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,9 +33,10 @@ import static android.Manifest.permission.SEND_SMS;
 public class Utilities {
 
     public static final int PERMISSION_RC = 10;
-    public static final Locale LOCALE = Locale.getDefault();
+    public static Locale sLocale;
 
     public static final long LONG_VIBRATE_LENGTH = 500;
+    public static final long SHORT_VIBRATE_LENGTH = 20;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
 
     public static boolean checkPermissionGranted(Context context, String permission) {
@@ -41,6 +44,15 @@ public class Utilities {
                 && ContextCompat.checkSelfPermission(
                 context, permission)
                 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean checkPermissionGranted(String permission, String[] permissions, int[] grantResults) {
+        List<String> permList = Arrays.asList(permission);
+        if (permList.contains(permission)) {
+            int index = permList.indexOf(permission);
+            return grantResults[index] == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
     }
 
     public static void askForPermissions(Activity activity, String[] permissions) {
@@ -147,24 +159,35 @@ public class Utilities {
      * @param phoneNumber the number to format
      * @return the formatted number
      */
-    public static String formatPhoneNumber(@NotNull String phoneNumber) {
+    public static String formatPhoneNumber(String phoneNumber) {
 
-        // check for unwanted letters
-        if (phoneNumber.contains("-")) phoneNumber.replace("-", "");
-        if (phoneNumber.contains(" ")) phoneNumber.replace(" ", "");
+        if (phoneNumber == null) return null;
+        phoneNumber = normalizePhoneNumber(phoneNumber);
 
         Phonenumber.PhoneNumber formattedNumber = null;
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, LOCALE.getCountry()); // parse the number into a country formatted one
+            formattedNumber = phoneUtil.parse(phoneNumber, "");
         } catch (NumberParseException e) {
-            System.err.println("NumberParseException was thrown: " + e.toString());
+            Timber.e(e);
         }
 
         // return the number
         if (formattedNumber == null) return phoneNumber;
-        else return phoneUtil.format(formattedNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
+        else {
+            PhoneNumberUtil.PhoneNumberFormat format;
+            if (phoneUtil.getRegionCodeForCountryCode(formattedNumber.getCountryCode()).equals(sLocale.getCountry()))
+                format = PhoneNumberUtil.PhoneNumberFormat.NATIONAL;
+            else
+                format = PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL;
+
+            return phoneUtil.format(formattedNumber, format);
+        }
+    }
+
+    public static String normalizePhoneNumber(String phoneNumber) {
+        return PhoneNumberUtil.normalizeDiallableCharsOnly(phoneNumber);
     }
 
     public static String joinStringsWithSeparator(@NotNull List<String> list, @NotNull String separator) {
@@ -199,5 +222,21 @@ public class Utilities {
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{SEND_SMS}, 1);
         }
+    }
+
+    public static boolean hasNavBar (Context context)
+    {
+        Resources resources = context.getResources();
+        int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
+        return id > 0 && resources.getBoolean(id);
+    }
+
+    public static int navBarHeight(Context context) {
+        Resources resources = context.getResources();
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return resources.getDimensionPixelSize(resourceId);
+        }
+        return 0;
     }
 }

@@ -45,6 +45,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
 
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment:2.0.0-rc02" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-ui:2.0.0-rc02"
+
     //Room
     implementation "androidx.room:room-runtime:2.0.0"
     annotationProcessor "androidx.room:room-compiler:2.0.0"
@@ -60,9 +64,8 @@ dependencies {
     //CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
-    // Navigation
-    implementation "android.arch.navigation:navigation-fragment:1.0.0-beta01"
-    implementation "android.arch.navigation:navigation-ui:1.0.0-beta01"
+    //Sliding Panel
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
     //Apache POI
     implementation 'org.apache.poi:poi:4.0.1'

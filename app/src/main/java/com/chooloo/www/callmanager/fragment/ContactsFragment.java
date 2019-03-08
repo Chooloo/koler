@@ -1,306 +1,173 @@
 package com.chooloo.www.callmanager.fragment;
 
-import android.content.Context;
+import android.Manifest;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.provider.ContactsContract.Contacts;
+import android.provider.ContactsContract.Data;
+import android.provider.ContactsContract.RawContacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.util.ContactsManager;
+import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.util.Utilities;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-import static android.Manifest.permission.READ_CONTACTS;
+public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
 
-// TODO there is a bug where some contacts on the list get an image of another contact
-public class ContactsFragment extends Fragment implements AdapterView.OnItemClickListener {
+    private static final int LOADER_ID = 1;
+    private static final String ARG_PHONE_NUMBER = "phone_number";
 
-    OnContactsChangeListener mCallback;
+    private static final String IGNORE_NUMBER_TOO_LONG_CLAUSE =
+            "length(" + Phone.NUMBER + ") < 1000";
 
-    ArrayList<Contact> mCurrentContacts;
 
-    // Local classes instances
-    private ContactsAdapter mContactAdapter;
+    private SharedDialViewModel mSharedDialViewModel;
+    private View mRootView;
 
-    // Views
-    ViewGroup mRootView;
-    @BindView(R.id.list_contacts) ListView mContactsList;
+    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+    ContactsAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_contacts, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_contacts, container, false);
         ButterKnife.bind(this, mRootView);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new ContactsAdapter(getContext(), null);
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnChildClickListener(this);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        mSharedDialViewModel.setIsOutOfFocus(false);
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        mSharedDialViewModel.setIsOutOfFocus(true);
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        mSharedDialViewModel.setIsOutOfFocus(true);
+                    default:
+                        mSharedDialViewModel.setIsOutOfFocus(false);
+                }
+            }
+        });
+
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS)) {
-            populateListView();
-        }
-        mContactsList.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                //TODO fix null callback crash
-                if (scrollState == 0) mCallback.onContactsScroll(false);
-                else mCallback.onContactsScroll(true);
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
+        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getNumber().observe(this, s -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_PHONE_NUMBER, s);
+                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
-        mContactsList.setOnItemClickListener(this);
+        tryRunningLoader();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (Arrays.asList(permissions).contains(READ_CONTACTS)) {
-            populateListView();
+    public void onResume() {
+        super.onResume();
+        tryRunningLoader();
+    }
+
+    private void tryRunningLoader() {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
+            runLoader();
         }
     }
 
-    /**
-     * When the user clicks on a contact from the list
-     *
-     * @param parent   parent activity or layout im not sure
-     * @param view     the clicked view
-     * @param position position in the list
-     * @param id       id of the clicked view
-     */
+    private void runLoader() {
+        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
+    }
+
+    private boolean isLoaderRunning() {
+        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
+        return loader != null;
+    }
+
+    @NonNull
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView textv = view.findViewById(R.id.contact_list_number_text);
-        Timber.i("item clicked with number: " + textv.getText().toString());
-        mCallback.onContactsListItemClick(view);
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+
+        Uri.Builder builder;
+        final String[] PROJECTION = new String[]{
+                Phone._ID,
+                Phone.DISPLAY_NAME_PRIMARY,
+                Phone.PHOTO_THUMBNAIL_URI,
+                Phone.NUMBER
+        };
+        String selection = Data.MIMETYPE + " = '" + Phone.CONTENT_ITEM_TYPE + "' AND " +
+                RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%' AND " +
+                Contacts.IN_VISIBLE_GROUP + "=1 AND " +
+                Contacts.HAS_PHONE_NUMBER + "=1 AND " +
+                IGNORE_NUMBER_TOO_LONG_CLAUSE;
+        String sortOrder = Phone.DISPLAY_NAME_PRIMARY + " COLLATE LOCALIZED ASC";
+
+        String phoneNumber = null;
+        if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
+            phoneNumber = args.getString(ARG_PHONE_NUMBER);
+        }
+
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
+        } else {
+            builder = Phone.CONTENT_URI.buildUpon();
+        }
+        builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
+        builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
+
+        return new CursorLoader(
+                getContext(),
+                builder.build(),
+                PROJECTION,
+                selection,
+                null,
+                sortOrder
+        );
     }
 
-    // -- mCallback -- //
-
-    /**
-     * Set the given activity as the listener
-     *
-     * @param activity
-     */
-    public void setOnContactsChangeListener(OnContactsChangeListener activity) {
-        mCallback = activity;
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        mAdapter.changeCursor(data);
+        Timber.d(DatabaseUtils.dumpCursorToString(data));
     }
 
-    /**
-     * Interface for the parent activity to implement
-     * (Callback methods)
-     */
-    public interface OnContactsChangeListener {
-
-        public void onContactsScroll(boolean isScrolling);
-
-        public void onContactsListItemClick(View view);
-
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        mAdapter.changeCursor(null);
     }
 
-    // -- Populate ListView -- //
-
-    /**
-     * Creates a new populateListViewTask and executes it without a given number
-     * Basically populates the list view
-     */
-    public void populateListView() {
-        populateListViewTask populateList = new populateListViewTask();
-        populateList.execute();
-    }
-
-    /**
-     * Creates a new populateListViewTask and executes it with a given number
-     * Basically populates the list view by a number
-     */
-    public void populateListView(String number) {
-        populateListViewTask populateList = new populateListViewTask(number);
-        populateList.execute();
-    }
-
-    /**
-     * Set the mContactAdapter to the list view
-     *
-     * @param contacts
-     */
-    private void populateListViewArray(ArrayList<Contact> contacts) {
-        mContactAdapter = new ContactsAdapter(contacts, getContext());
-        mContactsList.setAdapter(mContactAdapter);
-    }
-
-    /**
-     * If a number is given, returns all the contacts with the given number
-     * If no number is given, returns all the contacts
-     */
-    private class populateListViewTask extends AsyncTask<String, String, String> {
-
-        ArrayList<Contact> mContacts = new ArrayList<Contact>();
-        String mPhoneNumber;
-
-        /**
-         * Constructor
-         *
-         * @param number get all the contacts that has that number
-         */
-        public populateListViewTask(String number) {
-            this.mPhoneNumber = number;
-        }
-
-        /**
-         * Constructor that takes no parameters
-         * Meaning getting all the contacts
-         */
-        public populateListViewTask() {
-            this.mPhoneNumber = null;
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            publishProgress("Populating...");
-            Timber.i("Looking for contacts to populate the listview");
-            if (mPhoneNumber == null)
-                mContacts = ContactsManager.getContactList(getContext());
-            else mContacts = ContactsManager.getContactsByNum(mPhoneNumber);
-            return "1";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            mCurrentContacts = mContacts;
-            populateListViewArray(mContacts);
-        }
-    }
-
-    //TODO move this to the adapter 'package'
-    //TODO Fix the picture bug
-    /**
-     * Populates the list view with contacts
-     */
-    private class ContactsAdapter extends ArrayAdapter<Contact> implements View.OnClickListener {
-
-        private ArrayList<Contact> contacts;
-        Context mContext;
-
-        /**
-         * A class for a view holder which is the items populating the list
-         */
-        private class ViewHolder {
-            TextView contactNameTxt;
-            TextView contactNumTxt;
-            ImageView contactImagePlaceholder;
-            ImageView contactImage;
-        }
-
-        /**
-         * Constructor, takes a list of contacts and the context
-         *
-         * @param contacts a list of contacts
-         * @param context
-         */
-        public ContactsAdapter(ArrayList<Contact> contacts, Context context) {
-            super(context, R.layout.contact_list_item, contacts);
-            this.contacts = contacts;
-            this.mContext = context;
-        }
-
-        // Not in use right now but keep it in case we want to use it
-        @Override
-        public void onClick(View v) {
-            int position = (Integer) v.getTag();
-            Object object = getItem(position);
-            Contact contact = (Contact) object;
-
-            switch (v.getId()) {
-                case R.id.contact_list_name_text:
-                    break;
-                case R.id.contact_list_number_text:
-                    break;
-            }
-        }
-
-        private int lastPosition = -1;
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-            // Get the contact for this position
-            Contact contact = getItem(position);
-            ContactsAdapter.ViewHolder viewHolder;
-
-            final View result;
-
-            if (convertView == null) {
-
-                viewHolder = new ContactsAdapter.ViewHolder();
-
-                // Inflate
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                convertView = inflater.inflate(R.layout.contact_list_item, parent, false);
-
-                // Get the item views
-                viewHolder.contactNameTxt = convertView.findViewById(R.id.contact_list_name_text);
-                viewHolder.contactNumTxt = convertView.findViewById(R.id.contact_list_number_text);
-                viewHolder.contactImage = convertView.findViewById(R.id.list_image_photo);
-                viewHolder.contactImagePlaceholder = convertView.findViewById(R.id.list_image_placeholder);
-
-                // Final result
-                result = convertView;
-                convertView.setTag(viewHolder);
-
-            } else {
-
-                viewHolder = (ContactsAdapter.ViewHolder) convertView.getTag();
-                result = convertView;
-
-            }
-
-            // Set animation of added list item
-            Animation animation = AnimationUtils.loadAnimation(mContext, (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
-            result.startAnimation(animation);
-            lastPosition = position;
-
-            // Set the texts
-            viewHolder.contactNameTxt.setText(contact.getName());
-            if (contact.getMainPhoneNumber() != null) {
-                viewHolder.contactNumTxt.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
-            }
-
-            //  Set the image
-            if (contact.getPhotoUri() != null && !contact.getName().isEmpty()) {
-                viewHolder.contactImagePlaceholder.setVisibility(View.INVISIBLE);
-                viewHolder.contactImage.setVisibility(View.VISIBLE);
-                viewHolder.contactImage.setImageURI(Uri.parse(contact.getPhotoUri()));
-            }
-
-
-            return convertView;
-        }
+    @Override
+    public void onChildClick(String normPhoneNumber) {
+        mSharedDialViewModel.setNumber(normPhoneNumber);
     }
 }

@@ -17,12 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactHolder> {
+public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdapter.ContactHolder> {
 
     private Context mContext;
     private List<Contact> mData;
 
-    public ContactAdapter(Context context) {
+    public CGroupDetailsAdapter(Context context) {
         mContext = context;
     }
 

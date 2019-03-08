@@ -18,14 +18,14 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@color/colorAccent"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_answer_call_timer"
-        app:layout_constraintEnd_toEndOf="@+id/button_answer_call_timer"
-        app:layout_constraintStart_toStartOf="@+id/button_answer_call_timer"
+        app:layout_constraintBottom_toTopOf="@+id/button_floating_answer_call_timer"
+        app:layout_constraintEnd_toEndOf="@+id/button_floating_answer_call_timer"
+        app:layout_constraintStart_toStartOf="@+id/button_floating_answer_call_timer"
         tools:text="Answer in 10s"
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button_answer_call_timer"
+        android:id="@+id/button_floating_answer_call_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
@@ -73,12 +73,12 @@
         android:id="@+id/ghost_answer_button"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_marginBottom="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@+id/guide_center_vertical"
         app:layout_constraintHorizontal_bias="0.33"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_bottom" />
 
     <!-- Guidelines -->
     <androidx.constraintlayout.widget.Guideline
@@ -93,5 +93,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.925" />
+        app:layout_constraintGuide_percent="0.9" />
 </androidx.constraintlayout.widget.ConstraintLayout>
