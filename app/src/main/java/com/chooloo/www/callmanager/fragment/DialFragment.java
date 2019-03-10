@@ -40,7 +40,7 @@ public class DialFragment extends Fragment {
     @BindView(R.id.text_number_input) EditText mNumberInput;
 
     // Buttons
-    @BindView(R.id.button_call) TextView mCallButton;
+    @BindView(R.id.button_call) ImageView mCallButton;
     @BindView(R.id.button_delete) ImageView mDelButton;
     @BindView(R.id.chip0) TextView mChip0;
 
