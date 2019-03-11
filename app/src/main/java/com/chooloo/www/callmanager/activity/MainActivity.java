@@ -9,6 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
@@ -50,7 +54,7 @@ public class MainActivity extends AppBarActivity {
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
     @BindView(R.id.sliding_up_panel) SlidingUpPanelLayout mSlidingPanelLayout;
-
+    @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
     ViewGroup mDialerLayout;
     DialFragment mDialFragment;
 
@@ -72,13 +76,14 @@ public class MainActivity extends AppBarActivity {
         // Bind variables
         ButterKnife.bind(this);
 
+        // Initiate SharedViewModel
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
+        // Watch the sliding panel state
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
             if (b) {
                 mSlidingPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         });
-
 
         // Ask for permissions
         if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS)) {
@@ -151,5 +156,47 @@ public class MainActivity extends AppBarActivity {
         } else {
             controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
         }
+    }
+
+    public void hideView(final View view) {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+        //use this to make it longer:  animation.setDuration(1000);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+            }
+        });
+
+        view.startAnimation(animation);
+    }
+
+    public void showView(final View view) {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        //use this to make it longer:  animation.setDuration(1000);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+        });
+
+        view.startAnimation(animation);
     }
 }

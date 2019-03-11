@@ -5,18 +5,21 @@
     android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialer_background"
-    android:elevation="4dp"
+    android:elevation="6dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:outlineSpotShadowColor="@color/green_phone"
+    android:background="@android:color/transparent"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
 
     <RelativeLayout
-        android:id="@+id/top"
+        android:layout_margin="5dp"
+        android:id="@+id/top_dialer"
         android:layout_width="0dp"
         android:layout_height="65dp"
+        android:background="@drawable/dialer_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,10 +43,10 @@
             android:layout_centerHorizontal="true"
             android:background="@android:color/transparent"
             android:hint="phone number"
-            android:textColor="@color/green_phone"
             android:inputType="number"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/green_phone"
             android:textSize="20dp" />
         <!--tools:text="+972-999-999-9999" />-->
 
@@ -73,18 +76,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top" />
+        app:layout_constraintTop_toBottomOf="@+id/top_dialer" />
 
     <TableLayout
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:background="@drawable/dialer_background"
         android:elevation="20dp"
         android:weightSum="4"
-        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top">
+        app:layout_constraintTop_toBottomOf="@+id/top_dialer">
 
         <TableRow
             android:layout_width="match_parent"

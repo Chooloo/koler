@@ -16,16 +16,17 @@ public class AppBarActivity extends AppCompatActivity {
 
     @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
-//    @BindView(R.id.toolbar_title) TextView mTextTitle;
+    @BindView(R.id.toolbar_title) TextView mTextTitle;
 
     @Override
     protected void onStart() {
         super.onStart();
         ButterKnife.bind(this);
 
-//        mTextTitle.setText(getTitle());
+        mTextTitle.setText(getTitle());
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setElevation(0);
     }
 }

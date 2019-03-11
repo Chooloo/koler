@@ -10,6 +10,7 @@ public class SharedDialViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> mNumber;
     private MutableLiveData<Boolean> mIsOutOfFocus;
+    private MutableLiveData<Boolean> mIsTopOpened;
 
     public SharedDialViewModel(@NonNull Application application) {
         super(application);
@@ -18,6 +19,9 @@ public class SharedDialViewModel extends AndroidViewModel {
 
         mIsOutOfFocus = new MutableLiveData<>();
         mIsOutOfFocus.setValue(false);
+
+        mIsTopOpened = new MutableLiveData<>();
+        mIsTopOpened.setValue(true);
     }
 
     public MutableLiveData<String> getNumber() {
@@ -34,5 +38,13 @@ public class SharedDialViewModel extends AndroidViewModel {
 
     public void setIsOutOfFocus(boolean isOutOfFocus) {
         mIsOutOfFocus.setValue(isOutOfFocus);
+    }
+
+    public MutableLiveData<Boolean> getIsTopOpened() {
+        return mIsTopOpened;
+    }
+
+    public void setIsTopOpened(boolean isTopOpened) {
+        mIsTopOpened.setValue(isTopOpened);
     }
 }
