@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -63,6 +64,11 @@ public class MainActivity extends AppBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
+        }
 
         // Init timber
         Timber.plant(new Timber.DebugTree());
@@ -141,22 +147,14 @@ public class MainActivity extends AppBarActivity {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.excel:
+                switchFragments();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     // -- On Clicks -- //
-
-    @OnClick(R.id.button2)
-    public void switchFragments(View view) {
-        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-        int id = controller.getCurrentDestination().getId();
-        if (id == R.id.contactsFragment) {
-            controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
-        } else {
-            controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
-        }
-    }
 
     public void hideView(final View view) {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
@@ -198,5 +196,17 @@ public class MainActivity extends AppBarActivity {
         });
 
         view.startAnimation(animation);
+    }
+
+    // -- Other -- //
+
+    public void switchFragments() {
+        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
+        int id = controller.getCurrentDestination().getId();
+        if (id == R.id.contactsFragment) {
+            controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
+        } else {
+            controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
+        }
     }
 }

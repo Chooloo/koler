@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
+    app:statusBarBackground="@android:color/transparent"
     tools:context=".activity.MainActivity">
 
     <!-- App Bar -->
@@ -21,12 +22,12 @@
         android:layout_height="match_parent"
         android:clickable="false"
         android:focusable="true"
-        android:nestedScrollingEnabled="true"
         android:gravity="bottom"
         app:umanoFadeColor="#00000000"
         app:umanoOverlay="true"
         app:umanoPanelHeight="@dimen/phone_number_input_height"
         app:umanoShadowHeight="0dp">
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
 
         <!-- Contacts List View Fragment-->
         <fragment
@@ -48,17 +49,5 @@
             tools:layout="@layout/fragment_dial" />
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
-
-    <!--TODO remove these ugly buttons when we can-->
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Excel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sliding_up_panel" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

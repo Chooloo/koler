@@ -15,7 +15,6 @@
     <!-- Number Input Field -->
 
     <RelativeLayout
-        android:layout_margin="5dp"
         android:id="@+id/top_dialer"
         android:layout_width="0dp"
         android:layout_height="65dp"
@@ -39,8 +38,8 @@
         <EditText
             android:id="@+id/text_number_input"
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:layout_centerHorizontal="true"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:background="@android:color/transparent"
             android:hint="phone number"
             android:inputType="number"

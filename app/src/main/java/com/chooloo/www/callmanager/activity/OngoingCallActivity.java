@@ -356,6 +356,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO add functionality to the Add call button
     @OnClick(R.id.button_add_call)
     public void addCall(View view) {
+//        CallManager.sAddCall(// a call);
     }
 
     @OnClick(R.id.button_cancel_timer)
@@ -544,8 +545,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             View v = overlay.getChildAt(i);
             if (v instanceof FloatingActionButton) {
                 ((FloatingActionButton) v).show();
-            }
-            else {
+            } else {
                 v.setVisibility(View.VISIBLE);
             }
         }
@@ -571,8 +571,7 @@ public class OngoingCallActivity extends AppCompatActivity {
                 View v = overlay.getChildAt(i);
                 if (v instanceof FloatingActionButton) {
                     ((FloatingActionButton) v).hide();
-                }
-                else {
+                } else {
                     v.setVisibility(View.GONE);
                 }
                 v.setHovered(false);

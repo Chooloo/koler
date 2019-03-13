@@ -44,10 +44,26 @@ public class CallManager {
         }
     }
 
+    /**
+     * Put call on hold
+     *
+     * @param hold
+     */
     public static void sHold(boolean hold) {
         if (sCall != null) {
             if (hold) sCall.hold();
             else sCall.unhold();
+        }
+    }
+
+    /**
+     * Add a call to the current call
+     *
+     * @param call
+     */
+    public static void sAddCall(Call call) {
+        if (sCall != null) {
+            sCall.conference(call);
         }
     }
 
@@ -93,10 +109,12 @@ public class CallManager {
         if (uri.contains("tel")) // If uri contains 'tel' this is a normal number
             telephoneNumber = uri.replace("tel:", "");
 
-        if (telephoneNumber == null || telephoneNumber.isEmpty()) return ContactUtils.UNKNOWN; // Unknown number
+        if (telephoneNumber == null || telephoneNumber.isEmpty())
+            return ContactUtils.UNKNOWN; // Unknown number
 
         Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
-        if (contact == null) return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
+        if (contact == null)
+            return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 
         return contact;
     }

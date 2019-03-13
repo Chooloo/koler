@@ -4,9 +4,19 @@
 
     <!-- Settings -->
     <item
-        android:id="@+id/settings"
+        android:id="@+id/dropdownSettings"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/action_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/excel"
+                android:title="excel" />
+            <item
+                android:id="@+id/settings"
+                android:title="settings" />
+        </menu>
+    </item>
 
 </menu>
+
