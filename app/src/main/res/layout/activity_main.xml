@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- Sliding Panel -->
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_up_panel"
         android:layout_width="match_parent"

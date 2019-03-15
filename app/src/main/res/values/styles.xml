@@ -23,7 +23,7 @@
     <style name="DialButton" parent="Widget.AppCompat.TextView">
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
         <!--<item name="android:background">@drawable/text_button_selector</item>-->
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/soft_black</item>
         <item name="android:textSize">30sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>

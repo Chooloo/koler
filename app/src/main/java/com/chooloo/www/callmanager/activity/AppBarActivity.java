@@ -27,6 +27,5 @@ public class AppBarActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setElevation(0);
     }
 }
