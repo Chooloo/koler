@@ -10,13 +10,13 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.dialog.ImportSpreadsheetDialog;
+import com.chooloo.www.callmanager.fragment.base.RecyclerViewFragment;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 
 import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog.OnImportListener {
+public class CGroupsFragment extends RecyclerViewFragment implements ImportSpreadsheetDialog.OnImportListener {
 
     private CGroupsViewModel mViewModel;
 
@@ -48,6 +48,7 @@ public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog
             args.putLong(getString(R.string.arg_list_id), cgroup.getListId());
             Navigation.findNavController(v).navigate(R.id.action_cgroupsFragment_to_cGroupDetailsFragment, args);
         });
+        super.onCreateView(inflater, container, savedInstanceState);
         return mRootView;
     }
 
@@ -56,6 +57,11 @@ public class CGroupsFragment extends Fragment implements ImportSpreadsheetDialog
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
         mViewModel.getContactsLists().observe(this, cgroups -> mAdapter.setData(cgroups));
+    }
+
+    @Override
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 
     @OnClick(R.id.add_contacts)

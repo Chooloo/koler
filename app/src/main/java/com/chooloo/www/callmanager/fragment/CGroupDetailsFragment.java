@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
+import com.chooloo.www.callmanager.fragment.base.RecyclerViewFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CGroupDetailsFragment extends Fragment {
+public class CGroupDetailsFragment extends RecyclerViewFragment {
 
     private CGroupDetailsViewModel mViewModel;
 
@@ -37,6 +37,7 @@ public class CGroupDetailsFragment extends Fragment {
         mAdapter = new CGroupDetailsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
+        super.onCreateView(inflater, container, savedInstanceState);
         return mRootView;
     }
 
@@ -55,6 +56,11 @@ public class CGroupDetailsFragment extends Fragment {
         mViewModel.getContacts().observe(this, contacts -> {
             mAdapter.setData(contacts);
         });
+    }
+
+    @Override
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 
     @OnClick(R.id.call_cgroup)

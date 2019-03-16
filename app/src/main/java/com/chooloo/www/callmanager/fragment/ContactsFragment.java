@@ -16,11 +16,11 @@ import android.view.ViewGroup;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.fragment.base.RecyclerViewFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -34,7 +34,7 @@ import timber.log.Timber;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
-public class ContactsFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
+public class ContactsFragment extends RecyclerViewFragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -81,7 +81,7 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
                 }
             }
         });
-
+        super.onCreateView(inflater, container, savedInstanceState);
         return mRootView;
     }
 
@@ -103,6 +103,11 @@ public class ContactsFragment extends Fragment implements LoaderManager.LoaderCa
     public void onResume() {
         super.onResume();
         tryRunningLoader();
+    }
+
+    @Override
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
     }
 
     private void tryRunningLoader() {

@@ -28,4 +28,8 @@ public class AppBarActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         getSupportActionBar().setElevation(0);
     }
+
+    public void onVerticalScroll(boolean canScrollUp) {
+        mAppBarLayout.setSelected(canScrollUp);
+    }
 }
