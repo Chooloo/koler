@@ -7,6 +7,7 @@
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="android:statusBarColor">@color/colorBackground</item>
     </style>
 

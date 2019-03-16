@@ -24,7 +24,6 @@ public class AppBarActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mTextTitle.setText(getTitle());
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setElevation(0);

@@ -1,44 +1,33 @@
 package com.chooloo.www.callmanager.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.fragment.DialFragment;
 import com.chooloo.www.callmanager.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
@@ -54,9 +43,8 @@ public class MainActivity extends AppBarActivity {
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
-    @BindView(R.id.sliding_up_panel) SlidingUpPanelLayout mSlidingPanelLayout;
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
-    ViewGroup mDialerLayout;
+    @BindView(R.id.main_dialer_fragment) View mDialerLayout;
     DialFragment mDialFragment;
 
     @Override
@@ -87,7 +75,7 @@ public class MainActivity extends AppBarActivity {
         // Watch the sliding panel state
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
             if (b) {
-                mSlidingPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                BottomSheetBehavior.from(mDialerLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
 
@@ -103,8 +91,6 @@ public class MainActivity extends AppBarActivity {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
         }
-
-        mDialerLayout = findViewById(R.id.dialer_layout);
     }
 
     @Override
@@ -113,6 +99,11 @@ public class MainActivity extends AppBarActivity {
         if (fragment instanceof DialFragment) {
             mDialFragment = (DialFragment) fragment;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     /**
@@ -152,50 +143,6 @@ public class MainActivity extends AppBarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // -- On Clicks -- //
-
-    public void hideView(final View view) {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-        //use this to make it longer:  animation.setDuration(1000);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                view.setVisibility(View.GONE);
-            }
-        });
-
-        view.startAnimation(animation);
-    }
-
-    public void showView(final View view) {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-        //use this to make it longer:  animation.setDuration(1000);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                view.setVisibility(View.VISIBLE);
-            }
-        });
-
-        view.startAnimation(animation);
     }
 
     // -- Other -- //

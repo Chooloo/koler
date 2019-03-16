@@ -16,38 +16,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout
-        android:id="@+id/sliding_up_panel"
+    <!-- Contacts List View Fragment-->
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="false"
-        android:focusable="true"
-        android:gravity="bottom"
-        app:umanoFadeColor="#00000000"
-        app:umanoOverlay="true"
-        app:umanoPanelHeight="@dimen/phone_number_input_height"
-        app:umanoShadowHeight="0dp">
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main"
+        tools:layout="@layout/fragment_contacts" />
 
-        <!-- Contacts List View Fragment-->
-        <fragment
-            android:id="@+id/main_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/main"
-            tools:layout="@layout/fragment_contacts" />
-
-        <!-- Dialer Fragment-->
-        <fragment
-            android:id="@+id/main_dialer_fragment"
-            android:name="com.chooloo.www.callmanager.fragment.DialFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:tag="main_dialer_tag"
-            tools:layout="@layout/fragment_dial" />
-
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+    <!-- Dialer Fragment-->
+    <fragment
+        android:id="@+id/main_dialer_fragment"
+        android:name="com.chooloo.www.callmanager.fragment.DialFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="64dp"
+        android:tag="main_dialer_tag"
+        tools:layout="@layout/fragment_dial" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
