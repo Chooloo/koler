@@ -1,28 +1,17 @@
 package com.chooloo.www.callmanager.fragment.base;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.activity.AppBarActivity;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 
-public abstract class RecyclerViewFragment extends Fragment {
-    protected RecyclerView mRecyclerView;
+public abstract class AbsRecyclerViewFragment extends BaseFragment {
 
-    @Nullable
-    @Override
-    @CallSuper
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRecyclerView = getRecyclerView();
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
+    public @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -34,6 +23,4 @@ public abstract class RecyclerViewFragment extends Fragment {
             });
         }
     }
-
-    public abstract RecyclerView getRecyclerView();
 }

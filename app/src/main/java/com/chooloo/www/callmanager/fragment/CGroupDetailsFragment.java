@@ -1,44 +1,34 @@
 package com.chooloo.www.callmanager.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
-import com.chooloo.www.callmanager.fragment.base.RecyclerViewFragment;
+import com.chooloo.www.callmanager.fragment.base.AbsRecyclerViewFragment;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CGroupDetailsFragment extends RecyclerViewFragment {
+public class CGroupDetailsFragment extends AbsRecyclerViewFragment {
 
     private CGroupDetailsViewModel mViewModel;
 
-    private View mRootView;
-
-    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     private CGroupDetailsAdapter mAdapter;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_cgroup_details, container, false);
-        ButterKnife.bind(this, mRootView);
-
+    protected void onCreateView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter = new CGroupDetailsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
+    }
 
-        super.onCreateView(inflater, container, savedInstanceState);
-        return mRootView;
+    @Override
+    protected int layoutId() {
+        return R.layout.fragment_cgroup_details;
     }
 
     @Override
@@ -56,11 +46,6 @@ public class CGroupDetailsFragment extends RecyclerViewFragment {
         mViewModel.getContacts().observe(this, contacts -> {
             mAdapter.setData(contacts);
         });
-    }
-
-    @Override
-    public RecyclerView getRecyclerView() {
-        return mRecyclerView;
     }
 
     @OnClick(R.id.call_cgroup)

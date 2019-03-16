@@ -10,13 +10,11 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.RawContacts;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-import com.chooloo.www.callmanager.fragment.base.RecyclerViewFragment;
+import com.chooloo.www.callmanager.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
@@ -29,12 +27,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import timber.log.Timber;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
-public class ContactsFragment extends RecyclerViewFragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
+public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -49,12 +46,8 @@ public class ContactsFragment extends RecyclerViewFragment implements LoaderMana
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     ContactsAdapter mAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_contacts, container, false);
-        ButterKnife.bind(this, mRootView);
-
+    protected void onCreateView() {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
         mRecyclerView.addItemDecoration(itemDecor);
 
@@ -81,8 +74,11 @@ public class ContactsFragment extends RecyclerViewFragment implements LoaderMana
                 }
             }
         });
-        super.onCreateView(inflater, container, savedInstanceState);
-        return mRootView;
+    }
+
+    @Override
+    protected int layoutId() {
+        return R.layout.fragment_contacts;
     }
 
     @Override
@@ -103,11 +99,6 @@ public class ContactsFragment extends RecyclerViewFragment implements LoaderMana
     public void onResume() {
         super.onResume();
         tryRunningLoader();
-    }
-
-    @Override
-    public RecyclerView getRecyclerView() {
-        return mRecyclerView;
     }
 
     private void tryRunningLoader() {

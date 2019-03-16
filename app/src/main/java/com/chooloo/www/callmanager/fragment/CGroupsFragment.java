@@ -1,44 +1,35 @@
 package com.chooloo.www.callmanager.fragment;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.dialog.ImportSpreadsheetDialog;
-import com.chooloo.www.callmanager.fragment.base.RecyclerViewFragment;
+import com.chooloo.www.callmanager.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 
 import java.io.File;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CGroupsFragment extends RecyclerViewFragment implements ImportSpreadsheetDialog.OnImportListener {
+public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSpreadsheetDialog.OnImportListener {
 
     private CGroupsViewModel mViewModel;
 
-    private ViewGroup mRootView;
     private CGroupAdapter mAdapter;
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_cgroups, container, false);
-        ButterKnife.bind(this, mRootView);
-
+    protected void onCreateView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter = new CGroupAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -48,8 +39,11 @@ public class CGroupsFragment extends RecyclerViewFragment implements ImportSprea
             args.putLong(getString(R.string.arg_list_id), cgroup.getListId());
             Navigation.findNavController(v).navigate(R.id.action_cgroupsFragment_to_cGroupDetailsFragment, args);
         });
-        super.onCreateView(inflater, container, savedInstanceState);
-        return mRootView;
+    }
+
+    @Override
+    protected int layoutId() {
+        return R.layout.fragment_cgroups;
     }
 
     @Override
@@ -57,11 +51,6 @@ public class CGroupsFragment extends RecyclerViewFragment implements ImportSprea
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
         mViewModel.getContactsLists().observe(this, cgroups -> mAdapter.setData(cgroups));
-    }
-
-    @Override
-    public RecyclerView getRecyclerView() {
-        return mRecyclerView;
     }
 
     @OnClick(R.id.add_contacts)
