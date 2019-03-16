@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    app:statusBarBackground="@android:color/transparent"
     tools:context=".activity.MainActivity">
 
     <!-- App Bar -->
@@ -18,6 +17,7 @@
 
     <!-- Sliding Panel -->
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:elevation="-1dp"
         android:id="@+id/sliding_up_panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

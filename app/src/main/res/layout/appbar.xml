@@ -3,15 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appbar"
+    app:elevation="0dp"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
+    android:paddingRight="@dimen/dial_padding"
+    android:paddingLeft="@dimen/dial_padding"
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
+        android:background="@drawable/dialer_background"
+        app:elevation="0dp"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:layout_scrollFlags="scroll|enterAlways|snap">
 
         <TextView
             android:id="@+id/toolbar_title"

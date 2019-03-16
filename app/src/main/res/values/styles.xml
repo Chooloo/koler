@@ -7,7 +7,7 @@
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
