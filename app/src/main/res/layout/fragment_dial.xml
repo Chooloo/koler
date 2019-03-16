@@ -5,12 +5,14 @@
     android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dial_padding"
-    android:background="@android:color/transparent"
-    android:elevation="6dp"
+    android:clickable="true"
     android:focusable="true"
+    android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
     android:outlineSpotShadowColor="@color/green_phone"
+    android:paddingLeft="@dimen/dial_padding"
+    android:paddingRight="@dimen/dial_padding"
+    android:paddingBottom="@dimen/dial_padding"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -18,7 +20,7 @@
     <RelativeLayout
         android:id="@+id/top_dialer"
         android:layout_width="0dp"
-        android:layout_height="65dp"
+        android:layout_height="@dimen/phone_number_input_height"
         android:background="@drawable/dialer_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,12 +28,12 @@
 
         <ImageView
             android:id="@+id/button_call"
-            android:layout_width="35dp"
+            android:layout_width="36dp"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/text_number_input"
             android:layout_alignBottom="@id/text_number_input"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="18dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="18dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_call_black_24dp"
             android:tint="@color/green_phone" />
@@ -52,7 +54,7 @@
 
         <ImageView
             android:id="@+id/button_delete"
-            android:layout_width="25dp"
+            android:layout_width="24dp"
             android:layout_height="match_parent"
             android:layout_alignTop="@+id/text_number_input"
             android:layout_alignBottom="@id/text_number_input"
@@ -79,10 +81,10 @@
     <!--app:layout_constraintTop_toBottomOf="@+id/top_dialer" />-->
 
     <TableLayout
-        android:layout_marginTop="@dimen/dial_padding"
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
         android:layout_height="320dp"
+        android:layout_marginTop="@dimen/dial_padding"
         android:background="@drawable/dialer_background"
         android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"

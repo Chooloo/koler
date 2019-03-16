@@ -29,6 +29,6 @@ public class AppBarActivity extends AppCompatActivity {
     }
 
     public void onVerticalScroll(boolean canScrollUp) {
-        mAppBarLayout.setSelected(canScrollUp);
+        //mAppBarLayout.setSelected(canScrollUp);
     }
 }

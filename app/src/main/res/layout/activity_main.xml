@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
+    android:background="@color/colorBackground"
     android:layout_height="match_parent"
-    android:background="@color/grey"
     app:statusBarBackground="@android:color/transparent"
     tools:context=".activity.MainActivity">
 
@@ -22,8 +22,9 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="@dimen/phone_number_input_with_margins_and_appbar_height"
         app:defaultNavHost="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/main"
         tools:layout="@layout/fragment_contacts" />
 
@@ -33,10 +34,11 @@
         android:name="com.chooloo.www.callmanager.fragment.DialFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="64dp"
         android:tag="main_dialer_tag"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="@dimen/phone_number_input_with_margins_height"
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dial" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

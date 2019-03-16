@@ -12,12 +12,14 @@
 
     <dimen name="bubble_corner_radius">20dp</dimen>
 
-    <dimen name="phone_number_input_height">85dp</dimen>
+    <dimen name="phone_number_input_height">64dp</dimen>
+    <dimen name="phone_number_input_with_margins_height">68dp</dimen>
+    <dimen name="phone_number_input_with_margins_and_appbar_height">132dp</dimen>
 
-    <dimen name="divider_sides_margin">10dp</dimen>
+    <dimen name="divider_sides_margin">8dp</dimen>
 
     <!-- padding around the dialer -->
-    <dimen name="dial_padding">10dp</dimen>
+    <dimen name="dial_padding">8dp</dimen>
 
     <!-- TODO decide between 0.75 and 0.74 -->
     <!-- Here i choosed between 0.75 and 0.74, both have cons and pros -->
