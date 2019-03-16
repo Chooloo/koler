@@ -5,11 +5,12 @@
     android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="@dimen/dial_padding"
+    android:background="@android:color/transparent"
     android:elevation="6dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:outlineSpotShadowColor="@color/green_phone"
-    android:background="@android:color/transparent"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -65,24 +66,24 @@
 
     <!-- Dialer Buttons -->
     <!--android:layout_width="385dp"-->
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="0.8dp"
-        android:layout_marginStart="@dimen/divider_sides_margin"
-        android:layout_marginEnd="@dimen/divider_sides_margin"
-        android:background="@color/grey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_dialer" />
+    <!--<View-->
+    <!--android:id="@+id/divider"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="0.8dp"-->
+    <!--android:layout_marginStart="@dimen/divider_sides_margin"-->
+    <!--android:layout_marginEnd="@dimen/divider_sides_margin"-->
+    <!--android:background="@color/grey"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/top_dialer" />-->
 
     <TableLayout
+        android:layout_marginTop="@dimen/dial_padding"
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="320dp"
         android:background="@drawable/dialer_background"
-        android:elevation="20dp"
         android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
