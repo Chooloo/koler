@@ -13,8 +13,7 @@
     <dimen name="bubble_corner_radius">20dp</dimen>
 
     <dimen name="phone_number_input_height">64dp</dimen>
-    <dimen name="phone_number_input_with_margins_height">68dp</dimen>
-    <dimen name="phone_number_input_with_margins_and_appbar_height">132dp</dimen>
+    <dimen name="phone_number_input_with_margins_height">72dp</dimen>
 
     <dimen name="divider_sides_margin">8dp</dimen>
 

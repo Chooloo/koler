@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
-    android:background="@color/colorBackground"
     android:layout_height="match_parent"
-    app:statusBarBackground="@android:color/transparent"
+    android:background="@color/colorBackground"
     tools:context=".activity.MainActivity">
 
     <!-- App Bar -->
@@ -22,7 +21,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/phone_number_input_with_margins_and_appbar_height"
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/main"

@@ -102,6 +102,7 @@ public class DialFragment extends Fragment {
     @OnClick({R.id.chip0, R.id.chip1, R.id.chip2, R.id.chip3, R.id.chip4, R.id.chip5,
             R.id.chip6, R.id.chip7, R.id.chip8, R.id.chip9, R.id.chip_star, R.id.chip_hex})
     public void addChar(View view) {
+        vibrate();
         String id = getResources().getResourceEntryName(view.getId());
         char toAdd;
         if (id.contains("chip_star")) toAdd = '*';
@@ -111,7 +112,6 @@ public class DialFragment extends Fragment {
         mNumberText += toAdd;
         setNumber(mAsYouTypeFormatter.inputDigit(toAdd));
 
-        vibrate();
     }
 
     /**
@@ -120,6 +120,7 @@ public class DialFragment extends Fragment {
     @OnClick(R.id.button_delete)
     public void delNum(View view) {
         if (mNumberText.length() <= 0) return;
+        vibrate();
         mNumberText = mNumberText.substring(0, mNumberText.length() - 1);
         mAsYouTypeFormatter.clear();
         for (int i = 0; i < mNumberText.length(); i++) {
@@ -130,8 +131,6 @@ public class DialFragment extends Fragment {
         if (mNumberText.length() == 0) {
             delAllNum(view);
         }
-
-        vibrate();
     }
 
     /**
@@ -142,8 +141,6 @@ public class DialFragment extends Fragment {
         mNumberText = "";
         mAsYouTypeFormatter.clear();
         setNumber("");
-        vibrate();
-        vibrate();
         return true;
     }
 

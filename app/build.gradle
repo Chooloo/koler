@@ -33,21 +33,20 @@ android {
 
 dependencies {
 
-    def lifecycle_version = "2.0.0"
-
     //Base
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.preference:preference:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment:2.0.0-rc02" // For Kotlin use navigation-fragment-ktx
-    implementation "androidx.navigation:navigation-ui:2.0.0-rc02"
+    implementation "androidx.navigation:navigation-fragment:2.0.0" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-ui:2.0.0"
 
     //Room
     implementation "androidx.room:room-runtime:2.0.0"
@@ -77,6 +76,9 @@ dependencies {
     //Phone number formatting
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.10.5'
 
+    // Beauty Color Shadow Button
+    implementation "com.subsub.libs:buttoncustomshadow:1.1.0"
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
@@ -86,12 +88,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
     androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
-
-    // ViewModel and LiveData
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation 'androidx.cardview:cardview:1.0.0'
-
-    // Beauty Color Shadow Button
-    implementation "com.subsub.libs:buttoncustomshadow:1.1.0"
-
 }
