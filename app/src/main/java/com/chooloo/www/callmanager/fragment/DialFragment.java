@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,21 +14,19 @@ import android.widget.Toast;
 
 import com.chooloo.www.callmanager.OnSwipeTouchListener;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 import timber.log.Timber;
 
-public class DialFragment extends Fragment {
+public class DialFragment extends BaseFragment {
 
     SharedDialViewModel mViewModel;
     private String mNumberText = "";
@@ -46,37 +42,22 @@ public class DialFragment extends Fragment {
 
     // Layouts
     @BindView(R.id.table_numbers) TableLayout mNumbersTable;
-    @Nullable ViewGroup mRootView;
 
-    // Swipe Listeners
-    OnSwipeTouchListener mDialerSwipeListener;
+    @Override
+    protected void onCreateView() {
 
-    public static DialFragment newInstance() {
-        return new DialFragment();
+        OnSwipeTouchListener swipeToDelListener = new OnSwipeTouchListener(getContext()) {
+            @Override
+            public void onSwipeLeft() {
+                delNum(mDelButton);
+            }
+        };
+        mNumberInput.setOnTouchListener(swipeToDelListener);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        mRootView = (ViewGroup) inflater.inflate(R.layout.fragment_dial, container, false);
-        ButterKnife.bind(this, mRootView);
-
-        // Initiate swipe listener
-        mDialerSwipeListener = new OnSwipeTouchListener(getContext()) {
-            @Override
-            public void onSwipeTop() {
-                call(mCallButton);
-            }
-
-            @Override
-            public void onSwipeLeft() {
-                delNum(mNumberInput);
-            }
-        };
-        mNumberInput.setOnTouchListener(mDialerSwipeListener);
-
-        return mRootView;
-
+    protected int layoutId() {
+        return R.layout.fragment_dial;
     }
 
     @Override
