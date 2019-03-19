@@ -32,21 +32,24 @@
 
     <!-- List View -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
-        <item name="android:background">@color/white</item>
-        <item name="android:dividerHeight">5.0sp</item>
+        <item name="android:dividerHeight">5dp</item>
         <item name="android:divider">@android:color/transparent</item>
     </style>
 
-    <style name="ListItemText"/>
+    <style name="ListItemText" />
 
     <style name="ListItemText.Big">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:text">Big Text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="ListItemText.Small">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="android:text">small text, small text, small text</item>
+        <item name="android:text">small text, small text, small text, small text, small text, small text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

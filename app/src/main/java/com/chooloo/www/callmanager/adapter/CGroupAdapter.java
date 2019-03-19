@@ -35,7 +35,7 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
     @NonNull
     @Override
     public CGroupHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_image_two_line, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_contact, parent, false);
         CGroupHolder holder = new CGroupHolder(view);
         return holder;
     }
@@ -50,8 +50,8 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
         }
         String namesStr = Utilities.joinStringsWithSeparator(names, ", ");
 
-        holder.title.setText(cgroupAndItsContacts.getCgroup().getName());
-        holder.description.setText(namesStr);
+        holder.name.setText(cgroupAndItsContacts.getCgroup().getName());
+        holder.number.setText(namesStr);
 
         if (mListener != null) {
             holder.itemView.setOnClickListener(v -> mListener.onClick(v, cgroupAndItsContacts.getCgroup()));
@@ -79,9 +79,9 @@ public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHold
 
     class CGroupHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_image) ImageView image;
-        @BindView(R.id.item_title) TextView title;
-        @BindView(R.id.item_desc) TextView description;
+        @BindView(R.id.item_photo) ImageView image;
+        @BindView(R.id.item_name_text) TextView name;
+        @BindView(R.id.item_number_text) TextView number;
 
         public CGroupHolder(@NonNull View itemView) {
             super(itemView);

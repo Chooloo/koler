@@ -29,7 +29,7 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
     @NonNull
     @Override
     public ContactHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_image_two_line, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_contact, parent, false);
         ContactHolder holder = new ContactHolder(view);
         return holder;
     }
@@ -38,8 +38,8 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
     public void onBindViewHolder(@NonNull ContactHolder holder, int position) {
         Contact contact = mData.get(position);
 
-        holder.title.setText(contact.getName());
-        holder.description.setText(contact.getMainPhoneNumber());
+        holder.name.setText(contact.getName());
+        holder.number.setText(contact.getMainPhoneNumber());
     }
 
     @Override
@@ -55,9 +55,9 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
     class ContactHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.item_image) ImageView image;
-        @BindView(R.id.item_title) TextView title;
-        @BindView(R.id.item_desc) TextView description;
+        @BindView(R.id.item_photo) ImageView image;
+        @BindView(R.id.item_name_text) TextView name;
+        @BindView(R.id.item_number_text) TextView number;
 
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
