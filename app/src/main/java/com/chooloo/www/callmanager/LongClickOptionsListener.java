@@ -34,7 +34,6 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
     private LongClickRunnable mRunnable = new LongClickRunnable();
     private Handler mHandler = new Handler();
-    private int animateChildrenPos = 0;
 
     // List
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
@@ -133,25 +132,8 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     private void changeVisibility(boolean overlayVisible) {
         if (overlayVisible) {
             if (mOverlayChangeListener.setOverlay(mFabView)) {
-                animateChildrenPos = 0;
                 mRunnable.isFinished = true;
                 Utilities.vibrate(mContext);
-
-                //TODO add animation - needs to be synchronised with the thingy
-//            mHandler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    if (animateChildrenPos >= mFabView.getChildCount()) return;
-//                    View v = mFabView.getChildAt(animateChildrenPos);
-//                    if (v instanceof FloatingActionButton) {
-//                        ((FloatingActionButton) v).show();
-//                        mHandler.postDelayed(this, ANIMATE_MILLIS);
-//                    } else {
-//                        mHandler.post(this);
-//                    }
-//                    animateChildrenPos++;
-//                }
-//            });
             }
         } else {
             mOverlayChangeListener.removeOverlay(mFabView);

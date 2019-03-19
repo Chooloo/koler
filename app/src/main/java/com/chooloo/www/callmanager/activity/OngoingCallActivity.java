@@ -528,6 +528,28 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // -- Overlays -- //
 
+    private void setLayerEnabled(@NotNull ViewGroup layer, boolean isEnabled) {
+        for (int i = 0; i < layer.getChildCount(); i++) {
+            View v = layer.getChildAt(i);
+            if (isEnabled) { // If we want to enable it
+                if (v instanceof FloatingActionButton) {
+                    ((FloatingActionButton) v).show();
+                } else {
+                    v.setVisibility(View.VISIBLE);
+                }
+            } else { // If we don't
+                if (v instanceof FloatingActionButton) { // Make it non-clickable
+                    ((FloatingActionButton) v).hide();
+                } else if (v instanceof Button) {
+                    v.setVisibility(View.GONE);
+                } else { // Don't move any other views that are constrained to it
+                    v.setVisibility(View.INVISIBLE);
+                }
+                v.setHovered(false);
+            }
+        }
+    }
+
     /**
      * Set a given overlay as visible
      *
@@ -543,14 +565,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mCurrentOverlay.setAlpha(0.0f);
         mCurrentOverlay.animate().alpha(1.0f);
 
-        for (int i = 0; i < overlay.getChildCount(); i++) {
-            View v = overlay.getChildAt(i);
-            if (v instanceof FloatingActionButton) {
-                ((FloatingActionButton) v).show();
-            } else {
-                v.setVisibility(View.VISIBLE);
-            }
-        }
+        setLayerEnabled(overlay, true);
     }
 
     /**
@@ -565,20 +580,9 @@ public class OngoingCallActivity extends AppCompatActivity {
             overlay.animate()
                     .alpha(0.0f);
 
-            if (mCurrentOverlay instanceof ViewGroup) {
-                mCurrentOverlay.setOnTouchListener(null);
-            }
-
-            for (int i = 0; i < overlay.getChildCount(); i++) {
-                View v = overlay.getChildAt(i);
-                if (v instanceof FloatingActionButton) {
-                    ((FloatingActionButton) v).hide();
-                } else {
-                    v.setVisibility(View.GONE);
-                }
-                v.setHovered(false);
-            }
+            mCurrentOverlay.setOnTouchListener(null);
             mCurrentOverlay = null;
+            setLayerEnabled(overlay, false);
         }
     }
 
