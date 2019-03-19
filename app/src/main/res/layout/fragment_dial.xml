@@ -11,9 +11,9 @@
     android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
     android:outlineSpotShadowColor="@color/green_phone"
-    android:paddingLeft="@dimen/dial_padding"
-    android:paddingRight="@dimen/dial_padding"
-    android:paddingBottom="@dimen/dial_padding"
+    android:paddingLeft="@dimen/default_edge_padding"
+    android:paddingRight="@dimen/default_edge_padding"
+    android:paddingBottom="@dimen/default_edge_padding"
     tools:context=".fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -86,7 +86,7 @@
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:layout_marginTop="@dimen/dial_padding"
+        android:layout_marginTop="@dimen/default_edge_padding"
         android:background="@drawable/dialer_background"
         android:weightSum="4"
         app:layout_constraintEnd_toEndOf="parent"

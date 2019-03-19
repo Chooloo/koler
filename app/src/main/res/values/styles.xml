@@ -37,7 +37,6 @@
         <item name="android:divider">@android:color/transparent</item>
     </style>
 
-    <!-- List Item Text (Big) -->
     <style name="ListItemText"/>
 
     <style name="ListItemText.Big">

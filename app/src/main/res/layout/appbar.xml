@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
-    android:paddingLeft="@dimen/dial_padding"
-    android:paddingRight="@dimen/dial_padding"
+    android:paddingLeft="@dimen/default_edge_padding"
+    android:paddingRight="@dimen/default_edge_padding"
     app:elevation="0dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_size"
+        android:layout_marginTop="@dimen/default_edge_padding"
         android:background="@drawable/dialer_background"
         app:layout_scrollFlags="scroll|snap|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
