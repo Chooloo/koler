@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.LongClickOptionsListener;
-import com.chooloo.www.callmanager.OnSwipeTouchListener;
+import com.chooloo.www.callmanager.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.CallManager;
@@ -135,8 +135,8 @@ public class OngoingCallActivity extends AppCompatActivity {
     @Nullable ViewGroup mCurrentOverlay = null;
 
     // Swipes Listeners
-    OnSwipeTouchListener mSmsOverlaySwipeListener;
-    OnSwipeTouchListener mIncomingCallSwipeListener;
+    AllPurposeTouchListener mSmsOverlaySwipeListener;
+    AllPurposeTouchListener mIncomingCallSwipeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,7 +247,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAnswerCallTimerText.setText(answerCallText);
 
         // Initiate Swipe listener
-        mIncomingCallSwipeListener = new OnSwipeTouchListener(this) {
+        mIncomingCallSwipeListener = new AllPurposeTouchListener(this) {
             @Override
             public void onSwipeRight() {
                 activateCall();
@@ -260,7 +260,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         };
         mOngoingCallLayout.setOnTouchListener(mIncomingCallSwipeListener);
 
-        mSmsOverlaySwipeListener = new OnSwipeTouchListener(this) {
+        mSmsOverlaySwipeListener = new AllPurposeTouchListener(this) {
             @Override
             public void onSwipeTop() {
                 sendSMS(mFloatingSendSMSButton);
@@ -487,6 +487,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         ongoingSet.connect(R.id.reject_btn, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.END);
         ongoingSet.connect(R.id.reject_btn, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.START);
         ongoingSet.setHorizontalBias(R.id.reject_btn, 0.5f);
+
+        ongoingSet.setMargin(R.id.reject_btn, ConstraintSet.END, 0);
 
         ConstraintSet overlaySet = new ConstraintSet();
         overlaySet.clone(this, R.layout.correction_overlay_reject_call_options);

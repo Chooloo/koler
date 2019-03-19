@@ -44,7 +44,7 @@ public class MainActivity extends AppBarActivity {
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
-    @BindView(R.id.main_dialer_fragment) View mDialerLayout;
+    @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
     DialFragment mDialFragment;
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends AppBarActivity {
         // Watch the sliding panel state
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
             if (b) {
-                BottomSheetBehavior.from(mDialerLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
+                BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
 
@@ -146,6 +146,14 @@ public class MainActivity extends AppBarActivity {
     }
 
     // -- Other -- //
+
+    public void setDialerExpanded(boolean isExpanded) {
+        if (isExpanded) {
+            BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+    }
 
     public void switchFragments() {
         NavController controller = Navigation.findNavController(this, R.id.main_fragment);

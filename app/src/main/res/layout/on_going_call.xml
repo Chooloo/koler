@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ongoing_call_background"
+    android:layoutDirection="ltr"
     tools:context=".activity.OngoingCallActivity">
 
     <!-- Call Timer -->
@@ -30,6 +31,7 @@
     <!-- Caller Number (Temporary) -->
 
     <!-- Caller Pic -->
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="129dp"
@@ -63,8 +65,8 @@
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
         android:textAlignment="center"
-        android:textColor="@color/soft_black"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/soft_black"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,6 +100,13 @@
         tools:text="@string/status_call_incoming" />
 
     <!-- Hold Button -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_eye_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.44" />
+
     <ImageView
         android:id="@+id/button_hold"
         android:layout_width="@dimen/flat_button_size"
@@ -242,13 +251,6 @@
         app:maxImageSize="36dp" />
 
     <!-- Guidelines -->
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_eye_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:layoutDirection="ltr"
     android:focusable="true"
     android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
@@ -38,18 +39,19 @@
             android:src="@drawable/ic_call_black_24dp"
             android:tint="@color/green_phone" />
 
-        <EditText
+        <TextView
             android:id="@+id/text_number_input"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
+            android:gravity="center"
             android:hint="phone number"
-            android:inputType="number"
+            android:textCursorDrawable="@android:color/transparent"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             android:textColor="@color/green_phone"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
         <!--tools:text="+972-999-999-9999" />-->
 
         <ImageView

@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -22,8 +23,7 @@ import timber.log.Timber;
 public class LongClickOptionsListener implements View.OnTouchListener {
 
     // Final variables
-    private static final long LONG_CLICK_MILLIS = 500;
-    private static final long ANIMATE_MILLIS = 50;
+    private static final long LONG_PRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();
 
     private Context mContext;
     private ViewGroup mFabView;
@@ -68,7 +68,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
                 //Start the timer for long click
                 if (!mRunnable.isFinished) {
-                    mHandler.postDelayed(mRunnable, LONG_CLICK_MILLIS);
+                    mHandler.postDelayed(mRunnable, LONG_PRESS_TIMEOUT);
                 }
                 break;
             case MotionEvent.ACTION_MOVE: //Perform the right action based on pointer's location

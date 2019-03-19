@@ -1,19 +1,18 @@
 package com.chooloo.www.callmanager.fragment;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.OnSwipeTouchListener;
+import com.chooloo.www.callmanager.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.activity.MainActivity;
 import com.chooloo.www.callmanager.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
@@ -33,7 +32,7 @@ public class DialFragment extends BaseFragment {
     private AsYouTypeFormatter mAsYouTypeFormatter;
 
     // Edit Texts
-    @BindView(R.id.text_number_input) EditText mNumberInput;
+    @BindView(R.id.text_number_input) TextView mNumberView;
 
     // Buttons
     @BindView(R.id.button_call) ImageView mCallButton;
@@ -43,16 +42,23 @@ public class DialFragment extends BaseFragment {
     // Layouts
     @BindView(R.id.table_numbers) TableLayout mNumbersTable;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreateView() {
 
-        OnSwipeTouchListener swipeToDelListener = new OnSwipeTouchListener(getContext()) {
+        AllPurposeTouchListener swipeToDelListener = new AllPurposeTouchListener(getContext()) {
             @Override
             public void onSwipeLeft() {
                 delNum(mDelButton);
             }
+
+            @Override
+            public boolean onSingleTapUp(View v) {
+                ((MainActivity) DialFragment.this.getActivity()).setDialerExpanded(true);
+                return true;
+            }
         };
-        mNumberInput.setOnTouchListener(swipeToDelListener);
+        mNumberView.setOnTouchListener(swipeToDelListener);
     }
 
     @Override
@@ -92,7 +98,6 @@ public class DialFragment extends BaseFragment {
 
         mNumberText += toAdd;
         setNumber(mAsYouTypeFormatter.inputDigit(toAdd));
-
     }
 
     /**
@@ -123,28 +128,6 @@ public class DialFragment extends BaseFragment {
         mAsYouTypeFormatter.clear();
         setNumber("");
         return true;
-    }
-
-    /**
-     * When the user long clicks the number input field
-     *
-     * @param view
-     * @return true
-     */
-    @OnLongClick(R.id.text_number_input)
-    public boolean onInputLongClick(View view) {
-        delAllNum(mNumberInput);
-        return true;
-    }
-
-    /**
-     * When the mNumberInput is selected
-     *
-     * @param view which in this case is the mNumberInput
-     */
-    @OnClick(R.id.text_number_input)
-    public void editTextSelected(View view) {
-        hideKeyboard(mNumberInput);
     }
 
     /**
@@ -198,7 +181,7 @@ public class DialFragment extends BaseFragment {
     public void setNumber(String number, boolean updateAll) {
         if (updateAll) {
             mNumberText = number;
-            mNumberInput.setText(number);
+            mNumberView.setText(number);
             mAsYouTypeFormatter.clear();
             for (int i = 0; i < number.length(); i++) {
                 mAsYouTypeFormatter.inputDigit(number.charAt(i));
@@ -217,23 +200,13 @@ public class DialFragment extends BaseFragment {
      * @param number
      */
     public void setNumber(String number) {
-        mNumberInput.setText(number);
+        mNumberView.setText(number);
         mViewModel.setNumber(mNumberText);
     }
 
+    // -- Utils -- //
+
     private void vibrate() {
         Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
-    }
-
-    /**
-     * Hides the keyboard based on the focused view (most likely EditText)
-     *
-     * @param view is the focused view
-     */
-    private void hideKeyboard(EditText view) {
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
     }
 }
