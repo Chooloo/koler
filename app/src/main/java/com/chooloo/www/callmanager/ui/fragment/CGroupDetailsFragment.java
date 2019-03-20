@@ -1,11 +1,11 @@
-package com.chooloo.www.callmanager.fragment;
+package com.chooloo.www.callmanager.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
-import com.chooloo.www.callmanager.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;

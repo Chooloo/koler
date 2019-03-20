@@ -6,7 +6,7 @@
     app:startDestination="@id/contactsFragment">
     <fragment
         android:id="@+id/contactsFragment"
-        android:name="com.chooloo.www.callmanager.fragment.ContactsFragment"
+        android:name="com.chooloo.www.callmanager.ui.fragment.ContactsFragment"
         android:label="fragment_contacts"
         tools:layout="@layout/fragment_contacts" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/cgroupsFragment"
-        android:name="com.chooloo.www.callmanager.fragment.CGroupsFragment"
+        android:name="com.chooloo.www.callmanager.ui.fragment.CGroupsFragment"
         android:label="fragment_cgroups"
         tools:layout="@layout/fragment_cgroups" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/cGroupDetailsFragment"
-        android:name="com.chooloo.www.callmanager.fragment.CGroupDetailsFragment"
+        android:name="com.chooloo.www.callmanager.ui.fragment.CGroupDetailsFragment"
         android:label="fragment_cgroup_details"
         tools:layout="@layout/fragment_cgroup_details" />
 </navigation>

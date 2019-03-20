@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -44,13 +44,13 @@
         </activity>
 
         <activity
-            android:name=".activity.OngoingCallActivity"
+            android:name=".ui.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentStatusBar" />
 
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".ui.activity.SettingsActivity"
             android:label="@string/activity_settings"
             android:theme="@style/AppTheme" />
 

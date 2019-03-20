@@ -1,7 +1,6 @@
-package com.chooloo.www.callmanager.activity;
+package com.chooloo.www.callmanager.ui.activity;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.chooloo.www.callmanager.R;
 
@@ -10,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import butterknife.OnClick;
 
 //TODO add more settings
 //TODO add icons

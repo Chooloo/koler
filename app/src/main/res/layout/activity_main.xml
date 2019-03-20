@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".activity.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <!-- App Bar -->
     <include
@@ -29,7 +29,7 @@
     <!-- Dialer Fragment-->
     <fragment
         android:id="@+id/main_dialer_fragment"
-        android:name="com.chooloo.www.callmanager.fragment.DialFragment"
+        android:name="com.chooloo.www.callmanager.ui.fragment.DialFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="main_dialer_tag"

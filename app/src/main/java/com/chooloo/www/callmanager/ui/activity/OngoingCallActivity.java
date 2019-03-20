@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.activity;
+package com.chooloo.www.callmanager.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
@@ -21,8 +21,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.LongClickOptionsListener;
-import com.chooloo.www.callmanager.AllPurposeTouchListener;
+import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
+import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.CallManager;

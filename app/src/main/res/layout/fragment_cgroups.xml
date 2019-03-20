@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/phone_number_input_with_margins_height"
-    tools:context=".fragment.CGroupsFragment">
+    tools:context=".ui.fragment.CGroupsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

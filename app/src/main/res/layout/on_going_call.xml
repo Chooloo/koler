@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/ongoing_call_background"
     android:layoutDirection="ltr"
-    tools:context=".activity.OngoingCallActivity">
+    tools:context=".ui.activity.OngoingCallActivity">
 
     <!-- Call Timer -->
     <androidx.constraintlayout.widget.Guideline

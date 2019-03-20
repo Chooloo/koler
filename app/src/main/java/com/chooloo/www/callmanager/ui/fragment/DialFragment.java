@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.fragment;
+package com.chooloo.www.callmanager.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,10 +10,10 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.AllPurposeTouchListener;
+import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.activity.MainActivity;
-import com.chooloo.www.callmanager.fragment.base.BaseFragment;
+import com.chooloo.www.callmanager.ui.activity.MainActivity;
+import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;

@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.activity;
+package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -11,8 +11,8 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.fragment.DialFragment;
-import com.chooloo.www.callmanager.fragment.SharedDialViewModel;
+import com.chooloo.www.callmanager.ui.fragment.DialFragment;
+import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;

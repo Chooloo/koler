@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.dialog;
+package com.chooloo.www.callmanager.ui.dialog;
 
 import android.Manifest;
 import android.app.Dialog;

@@ -14,7 +14,7 @@
     android:paddingLeft="@dimen/default_edge_padding"
     android:paddingRight="@dimen/default_edge_padding"
     android:paddingBottom="@dimen/default_edge_padding"
-    tools:context=".fragment.DialFragment">
+    tools:context=".ui.fragment.DialFragment">
 
     <!-- Number Input Field -->
 

@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.fragment;
+package com.chooloo.www.callmanager.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +7,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
-import com.chooloo.www.callmanager.dialog.ImportSpreadsheetDialog;
-import com.chooloo.www.callmanager.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 
 import java.io.File;

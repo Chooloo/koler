@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.activity;
+package com.chooloo.www.callmanager.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.widget.TextView;

@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.fragment;
+package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.database.Cursor;
@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-import com.chooloo.www.callmanager.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;

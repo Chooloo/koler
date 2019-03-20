@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.fragment.base;
+package com.chooloo.www.callmanager.ui.fragment.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
