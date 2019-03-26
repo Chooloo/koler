@@ -1,18 +1,25 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
+import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
+import com.chooloo.www.callmanager.ui.fragment.SharedSearchViewModel;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -28,6 +35,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
@@ -38,14 +46,21 @@ import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class MainActivity extends AppBarActivity {
 
+    // View Models
     SharedDialViewModel mSharedDialViewModel;
+    SharedSearchViewModel mSharedSearchViewModel;
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
     @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
+
+    // Fragments
     DialFragment mDialFragment;
+    SearchBarFragment mSearchBarFragment;
+
+    private View.OnFocusChangeListener mFocusListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +68,7 @@ public class MainActivity extends AppBarActivity {
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
 
+        // Check for system version
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
@@ -71,7 +87,16 @@ public class MainActivity extends AppBarActivity {
         ButterKnife.bind(this);
 
         // Initiate SharedViewModel
+        mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
+
+        mSharedSearchViewModel.getIsFocused().observe(this, f -> {
+            if (f) {
+                collapseAppBar(true);
+            } else {
+//                collapseAppBar(false);
+            }
+        });
         // Watch the sliding panel state
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
             if (b) {
@@ -98,6 +123,8 @@ public class MainActivity extends AppBarActivity {
         // Set this class as the listener for the fragments
         if (fragment instanceof DialFragment) {
             mDialFragment = (DialFragment) fragment;
+        } else if (fragment instanceof SearchBarFragment) {
+            mSearchBarFragment = (SearchBarFragment) fragment;
         }
     }
 
@@ -155,6 +182,9 @@ public class MainActivity extends AppBarActivity {
         }
     }
 
+    /**
+     * Switch between contacts and excel fragments
+     */
     public void switchFragments() {
         NavController controller = Navigation.findNavController(this, R.id.main_fragment);
         int id = controller.getCurrentDestination().getId();
@@ -163,5 +193,34 @@ public class MainActivity extends AppBarActivity {
         } else {
             controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
         }
+    }
+
+    /**
+     * Extend/Collapse the appbar according to given parameter
+     *
+     * @param collapse
+     */
+    public void collapseAppBar(boolean collapse) {
+        mAppBarLayout.setExpanded(!collapse);
+    }
+
+    /**
+     * Clear focus on touch outside for all EditText inputs.
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 }

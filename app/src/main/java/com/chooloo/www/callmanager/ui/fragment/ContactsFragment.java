@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -35,12 +36,14 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderM
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
+    private static final String ARG_CONTACT_NAME = "contact_name";
 
     private static final String IGNORE_NUMBER_TOO_LONG_CLAUSE =
             "length(" + Phone.NUMBER + ") < 1000";
 
 
     private SharedDialViewModel mSharedDialViewModel;
+    private SharedSearchViewModel mSharedSearchViewModel;
     private View mRootView;
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
@@ -92,6 +95,14 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderM
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
+        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
+        mSharedSearchViewModel.getText().observe(this, t -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_CONTACT_NAME, t);
+                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
+            }
+        });
         tryRunningLoader();
     }
 
@@ -134,17 +145,24 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderM
                 IGNORE_NUMBER_TOO_LONG_CLAUSE;
         String sortOrder = Phone.DISPLAY_NAME_PRIMARY + " COLLATE LOCALIZED ASC";
 
+        String contactName = null;
         String phoneNumber = null;
         if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
             phoneNumber = args.getString(ARG_PHONE_NUMBER);
+        } else if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
+            contactName = args.getString(ARG_CONTACT_NAME);
         }
 
         if (phoneNumber != null && !phoneNumber.isEmpty()) {
             builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
+            builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
+        } else if (contactName != null && !contactName.isEmpty()) {
+            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
+            builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
         } else {
             builder = Phone.CONTENT_URI.buildUpon();
         }
-        builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
+
         builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
 
         return new CursorLoader(

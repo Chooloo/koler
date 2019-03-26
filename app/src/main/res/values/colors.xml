@@ -4,7 +4,7 @@
 
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/grey</color>
-    <color name="colorAccent">@color/green_phone</color>
+    <color name="colorAccent">@color/ic_launcher_background</color>
     <color name="colorBackground">@color/semi_grey</color>
 
     <color name="icon_active_light">#3D3D3D</color>
