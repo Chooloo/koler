@@ -10,6 +10,8 @@
     tools:context=".ui.fragment.SearchBarFragment">
 
     <EditText
+        android:textAlignment="center"
+        android:textAppearance="@style/ThemeOverlay.AppCompat.Light"
         android:id="@+id/search_input"
         android:layout_width="match_parent"
         android:layout_height="30dp"

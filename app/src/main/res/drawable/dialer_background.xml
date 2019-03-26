@@ -11,6 +11,6 @@
 
     <stroke
         android:width="@dimen/bubble_border_width"
-        android:color="@color/soft_black" />
+        android:color="@color/soft_shadow" />
 
 </shape>

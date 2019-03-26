@@ -22,5 +22,5 @@
     <!-- Here i choosed between 0.75 and 0.74, both have cons and pros -->
     <dimen name="bubble_border_width">0.75dp</dimen>
 
-    <dimen name="item_contact_padding">30dp</dimen>
+    <dimen name="item_contact_padding">23dp</dimen>
 </resources>

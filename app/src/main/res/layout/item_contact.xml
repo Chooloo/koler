@@ -40,7 +40,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/frameLayout"
         app:layout_constraintTop_toTopOf="@+id/frameLayout" />
@@ -51,7 +50,6 @@
         style="@style/ListItemText.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/item_name_text"
         app:layout_constraintTop_toBottomOf="@+id/item_name_text" />
@@ -61,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
