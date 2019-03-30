@@ -12,6 +12,7 @@ import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -238,5 +239,16 @@ public class Utilities {
             return resources.getDimensionPixelSize(resourceId);
         }
         return 0;
+    }
+
+    public static void toggleKeyboard(Context context, View view, boolean isToOpen) {
+        if (isToOpen) {
+            InputMethodManager imm = (InputMethodManager)
+                    context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        } else {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
     }
 }

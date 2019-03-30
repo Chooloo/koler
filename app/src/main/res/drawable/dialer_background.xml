@@ -9,8 +9,8 @@
 
     <solid android:color="@color/dialer_background" />
 
-    <stroke
-        android:width="@dimen/bubble_border_width"
-        android:color="@color/soft_shadow" />
+    <!--<stroke-->
+        <!--android:width="@dimen/bubble_border_width"-->
+        <!--android:color="@color/soft_shadow" />-->
 
 </shape>

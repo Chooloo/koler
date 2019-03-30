@@ -23,6 +23,7 @@ import com.chooloo.www.callmanager.ui.fragment.SharedSearchViewModel;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -30,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -56,11 +59,15 @@ public class MainActivity extends AppBarActivity {
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
     @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
 
+    // Buttons
+    @BindView(R.id.dialer_button) FloatingActionButton mDialerButton;
+    @BindView(R.id.search_button) FloatingActionButton mSearchButton;
+
     // Fragments
     DialFragment mDialFragment;
     SearchBarFragment mSearchBarFragment;
 
-    private View.OnFocusChangeListener mFocusListener;
+    BottomSheetBehavior mBottomSheetBehaviour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +75,24 @@ public class MainActivity extends AppBarActivity {
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
 
-        // Check for system version
+        // Init timber
+        Timber.plant(new Timber.DebugTree());
+
+        // Bind variables
+        ButterKnife.bind(this);
+
+        // Prompt the user with a dialog to select this app to be the default phone app
+        String packageName = getApplicationContext().getPackageName();
+        if (!Objects.requireNonNull(getSystemService(TelecomManager.class)).getDefaultDialerPackage().equals(packageName)) {
+            startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
+                    .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
+
+        }
+
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
         }
-
-        // Init timber
-        Timber.plant(new Timber.DebugTree());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Utilities.sLocale = getResources().getSystem().getConfiguration().getLocales().get(0);
@@ -83,39 +100,54 @@ public class MainActivity extends AppBarActivity {
             Utilities.sLocale = getResources().getSystem().getConfiguration().locale;
         }
 
-        // Bind variables
-        ButterKnife.bind(this);
-
-        // Initiate SharedViewModel
-        mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
-        mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
-
-        mSharedSearchViewModel.getIsFocused().observe(this, f -> {
-            if (f) {
-                collapseAppBar(true);
-            } else {
-//                collapseAppBar(false);
-            }
-        });
-        // Watch the sliding panel state
-        mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
-            if (b) {
-                BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
-
         // Ask for permissions
         if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS)) {
             askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
         }
 
-        // Prompt the user with a dialog to select this app to be the default phone app
-        String packageName = getApplicationContext().getPackageName();
 
-        if (!Objects.requireNonNull(getSystemService(TelecomManager.class)).getDefaultDialerPackage().equals(packageName)) {
-            startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
-                    .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
-        }
+        // Watch the search bar state
+        mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
+        mSharedSearchViewModel.getIsFocused().observe(this, f -> {
+            if (f) {
+                collapseAppBar(true);
+            } else {
+                if (mSearchBarFragment != null)
+                    toggleSearchBar();
+            }
+        });
+
+        // Watch the dial state
+        mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
+            if (b) {
+                mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        // Set the bottom sheet behaviour
+        mBottomSheetBehaviour = BottomSheetBehavior.from(mDialerFragmentLayout);
+        // First hide the bottom sheet completely
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+
+        mBottomSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (i == BottomSheetBehavior.STATE_HIDDEN) {
+                    mSearchButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+                    mDialerButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+                } else {
+                    mSearchButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+                    mDialerButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
     }
 
     @Override
@@ -172,8 +204,26 @@ public class MainActivity extends AppBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // -- OnClicks -- //
+
+    @OnClick(R.id.dialer_button)
+    public void toggleDialer(View view) {
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    @OnClick(R.id.search_button)
+    public void toggleSearch(View view) {
+        toggleSearchBar();
+    }
+
+
     // -- Other -- //
 
+    /**
+     * Change the dialer status (collapse/expand)
+     *
+     * @param isExpanded
+     */
     public void setDialerExpanded(boolean isExpanded) {
         if (isExpanded) {
             BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_EXPANDED);

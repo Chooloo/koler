@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:focusableInTouchMode="true"
     android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:context=".ui.fragment.SearchBarFragment">
 
     <EditText
-        android:textAlignment="center"
-        android:textAppearance="@style/ThemeOverlay.AppCompat.Light"
         android:id="@+id/search_input"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -21,9 +19,10 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/search_bar_background"
         android:paddingStart="10dp"
-        android:paddingTop="5dp"
+        android:paddingTop="1dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="1dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

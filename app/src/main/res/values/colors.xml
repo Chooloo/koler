@@ -42,4 +42,6 @@
 
     <color name="dialer_background">@color/white</color>
     <color name="dialer_text">#388E3C</color>
+
+    <color name="default_pic_color">#EE716F</color>
 </resources>

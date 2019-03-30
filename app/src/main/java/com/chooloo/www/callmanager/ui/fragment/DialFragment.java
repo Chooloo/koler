@@ -127,6 +127,7 @@ public class DialFragment extends BaseFragment {
         mNumberText = "";
         mAsYouTypeFormatter.clear();
         setNumber("");
+        vibrate();
         return true;
     }
 
@@ -209,4 +210,6 @@ public class DialFragment extends BaseFragment {
     private void vibrate() {
         Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
     }
+
+
 }
