@@ -5,10 +5,12 @@
 <!--</animation-list>-->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+
     <gradient
-        android:angle="270"
-        android:centerY="0.5"
         android:centerColor="@color/semi_white"
         android:endColor="@color/green_phone_light"
-        android:startColor="@color/white" />
+        android:gradientRadius="500dp"
+        android:startColor="@color/white"
+        android:type="radial" />
+
 </shape>
