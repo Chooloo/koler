@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.media.AudioManager;
+import android.media.Image;
+import android.media.MediaMetadata;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -230,7 +232,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         // hide buttons
         mFloatingRejectCallTimerButton.hide();
         mFloatingAnswerCallTimerButton.hide();
-
         mFloatingCancelOverlayButton.hide();
         mFloatingSendSMSButton.hide();
         mFloatingCancelSMS.hide();
@@ -260,6 +261,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         };
         mOngoingCallLayout.setOnTouchListener(mIncomingCallSwipeListener);
 
+        // Sms swipe listener
         mSmsOverlaySwipeListener = new AllPurposeTouchListener(this) {
             @Override
             public void onSwipeTop() {
@@ -318,6 +320,10 @@ public class OngoingCallActivity extends AppCompatActivity {
         setOverlay(mActionTimerOverlay);
     }
 
+    /**
+     * Starts call timer (answer)
+     * @param view
+     */
     @OnClick(R.id.button_floating_answer_call_timer)
     public void startAnswerCallTimer(View view) {
         int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key));
@@ -325,6 +331,10 @@ public class OngoingCallActivity extends AppCompatActivity {
         mActionTimer.start();
     }
 
+    /**
+     * Turns on mute according to current state (if already on/off)
+     * @param view
+     */
     @OnClick(R.id.button_mute)
     public void toggleMute(View view) {
         Utilities.toggleViewActivation(view);
@@ -336,12 +346,20 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAudioManager.setMicrophoneMute(view.isActivated());
     }
 
+    /**
+     * Turns on/off the speaker according to current state (if already on/off)
+     * @param view
+     */
     @OnClick(R.id.button_speaker)
     public void toggleSpeaker(View view) {
         Utilities.toggleViewActivation(view);
         mAudioManager.setSpeakerphoneOn(view.isActivated());
     }
 
+    /**
+     * Puts the call on hold
+     * @param view
+     */
     @OnClick(R.id.button_hold)
     public void toggleHold(View view) {
         Utilities.toggleViewActivation(view);
@@ -359,11 +377,19 @@ public class OngoingCallActivity extends AppCompatActivity {
 //        CallManager.sAddCall(// a call);
     }
 
+    /**
+     * Cancel the call timer
+     * @param view
+     */
     @OnClick(R.id.button_cancel_timer)
     public void cancelTimer(View view) {
         mActionTimer.cancel();
     }
 
+    /**
+     * Set the sms overlay (from which you can send sms)
+     * @param view
+     */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
         setOverlay(mSendSmsOverlay);
@@ -371,6 +397,10 @@ public class OngoingCallActivity extends AppCompatActivity {
         mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
     }
 
+    /**
+     * Send sms
+     * @param view
+     */
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
         String msg = mEditSms.getText().toString();
@@ -379,14 +409,29 @@ public class OngoingCallActivity extends AppCompatActivity {
         removeOverlay();
     }
 
+    /**
+     * Cancel sms overlay
+     * @param view
+     */
     @OnClick(R.id.button_cancel_sms)
     public void cancelSMS(View view) {
         removeOverlay();
     }
 
+    /**
+     * Changes the color of the icon according to button status (activated or not)
+     * @param view
+     */
+    @OnClick({R.id.button_speaker, R.id.button_hold, R.id.button_mute})
+    public void changeColors(View view) {
+        ImageView imageButton = (ImageView) view;
+        if (view.isActivated())
+            imageButton.setColorFilter(getResources().getColor(R.color.white));
+        else
+            imageButton.setColorFilter(getResources().getColor(R.color.soft_black));
+    }
+
     // -- Call Actions -- //
-    // (There are also call actions above in the On Clicks part but here
-    // are the raw functions
 
     /**
      * /*

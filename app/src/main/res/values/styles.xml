@@ -24,7 +24,8 @@
     <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="DialButton">
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-        <!--<item name="android:background">@drawable/text_button_selector</item>-->
+        <item name="android:backgroundTint">@color/red_phone</item>
+        <item name="android:gravity">center</item>
         <item name="android:textColor">@color/soft_black</item>
         <item name="android:textSize">30sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
