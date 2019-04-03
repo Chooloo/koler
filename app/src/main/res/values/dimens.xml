@@ -3,9 +3,9 @@
 
     <dimen name="default_padding">16dp</dimen>
 
-    <dimen name="divider_sides_margin">8dp</dimen>
     <dimen name="default_edge_padding">8dp</dimen>
 
+    <!-- Action Bar-->
     <dimen name="app_bar_corner_radius">16dp</dimen>
     <dimen name="action_bar_size">48dp</dimen>
 
@@ -15,10 +15,17 @@
 
     <dimen name="bubble_corner_radius">20dp</dimen>
 
+    <!-- Dialer -->
     <dimen name="phone_number_input_height">64dp</dimen>
     <dimen name="phone_number_input_with_margins_height">72dp</dimen>
+    <dimen name="dialer_elevation">1dp</dimen>
 
     <!-- TODO decide between 0.75 and 0.74 -->
     <!-- Here i choosed between 0.75 and 0.74, both have cons and pros -->
     <dimen name="bubble_border_width">0.75dp</dimen>
+
+    <!-- List Items -->
+    <dimen name="divider_sides_margin">8dp</dimen>
+    <dimen name="item_contact_padding">20dp</dimen>
+
 </resources>

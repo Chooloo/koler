@@ -127,6 +127,7 @@ public class DialFragment extends BaseFragment {
         mNumberText = "";
         mAsYouTypeFormatter.clear();
         setNumber("");
+        vibrate();
         return true;
     }
 
@@ -135,6 +136,7 @@ public class DialFragment extends BaseFragment {
      */
     @OnLongClick(R.id.chip1)
     public boolean startVoiceMail(View view) {
+        vibrate();
         try {
             Uri uri = Uri.parse("voicemail:1");
             Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
@@ -149,6 +151,7 @@ public class DialFragment extends BaseFragment {
 
     @OnLongClick(R.id.chip0)
     public boolean addPlus(View view) {
+        vibrate();
         mNumberText += "+";
         setNumber(mAsYouTypeFormatter.inputDigit('+'));
         return true;
@@ -209,4 +212,6 @@ public class DialFragment extends BaseFragment {
     private void vibrate() {
         Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
     }
+
+
 }

@@ -5,15 +5,12 @@
     android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
     android:clickable="true"
-    android:layoutDirection="ltr"
     android:focusable="true"
-    android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
+    android:layoutDirection="ltr"
     android:outlineSpotShadowColor="@color/green_phone"
-    android:paddingLeft="@dimen/default_edge_padding"
-    android:paddingRight="@dimen/default_edge_padding"
-    android:paddingBottom="@dimen/default_edge_padding"
     tools:context=".ui.fragment.DialFragment">
 
     <!-- Number Input Field -->
@@ -22,7 +19,10 @@
         android:id="@+id/top_dialer"
         android:layout_width="0dp"
         android:layout_height="@dimen/phone_number_input_height"
+        android:layout_marginLeft="@dimen/default_edge_padding"
+        android:layout_marginRight="@dimen/default_edge_padding"
         android:background="@drawable/dialer_background"
+        android:elevation="@dimen/dialer_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +37,7 @@
             android:layout_marginStart="18dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_call_black_24dp"
-            android:tint="@color/green_phone" />
+            android:tint="@color/red_phone" />
 
         <TextView
             android:id="@+id/text_number_input"
@@ -47,10 +47,10 @@
             android:background="@android:color/transparent"
             android:gravity="center"
             android:hint="phone number"
-            android:textCursorDrawable="@android:color/transparent"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             android:textColor="@color/green_phone"
+            android:textCursorDrawable="@android:color/transparent"
             android:textSize="20sp" />
         <!--tools:text="+972-999-999-9999" />-->
 
@@ -64,31 +64,22 @@
             android:layout_marginRight="18dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_backspace_black_24dp"
-            android:tint="@color/icon_active_light" />
+            android:tint="@color/red_phone_light" />
 
     </RelativeLayout>
-
-    <!-- Dialer Buttons -->
-    <!--android:layout_width="385dp"-->
-    <!--<View-->
-    <!--android:id="@+id/divider"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="0.8dp"-->
-    <!--android:layout_marginStart="@dimen/divider_sides_margin"-->
-    <!--android:layout_marginEnd="@dimen/divider_sides_margin"-->
-    <!--android:background="@color/grey"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"-->
-    <!--app:layout_constraintHorizontal_bias="0.0"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--app:layout_constraintTop_toBottomOf="@+id/top_dialer" />-->
 
     <TableLayout
         android:id="@+id/table_numbers"
         android:layout_width="match_parent"
         android:layout_height="320dp"
+        android:layout_marginLeft="@dimen/default_edge_padding"
         android:layout_marginTop="@dimen/default_edge_padding"
+        android:layout_marginRight="@dimen/default_edge_padding"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/dialer_background"
+        android:elevation="@dimen/dialer_elevation"
         android:weightSum="4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_dialer">
@@ -105,7 +96,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="1" />
 
             <TextView
@@ -114,7 +104,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="2" />
 
             <TextView
@@ -123,7 +112,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="3" />
 
         </TableRow>
@@ -140,7 +128,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="4" />
 
             <TextView
@@ -149,7 +136,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="5" />
 
             <TextView
@@ -158,7 +144,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="6" />
         </TableRow>
 
@@ -174,7 +159,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="7" />
 
             <TextView
@@ -183,7 +167,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="8" />
 
             <TextView
@@ -192,7 +175,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="9" />
 
         </TableRow>
@@ -209,7 +191,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="*" />
 
             <TextView
@@ -218,7 +199,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="0" />
 
             <TextView
@@ -227,7 +207,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:text="#" />
 
         </TableRow>

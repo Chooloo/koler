@@ -1,24 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--<animation-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<?xml version="1.0" encoding="utf-8"?><!--<animation-list xmlns:android="http://schemas.android.com/apk/res/android">-->
 
-    <!--<item android:duration="100">-->
-        <!--<shape>-->
-            <!--<gradient-->
-                <!--android:angle="45"-->
-                <!--android:endColor="#50A7C2"-->
-                <!--android:startColor="#B7F8DB" />-->
-        <!--</shape>-->
-    <!--</item>-->
-    <!--<item-->
-        <!--android:drawable="@drawable/gradient_red_background"-->
-        <!--android:duration="7000" />-->
+<!--<item android:duration="100">--><!--<shape>--><!--<gradient--><!--android:angle="45"--><!--android:endColor="#50A7C2"--><!--android:startColor="#B7F8DB" />--><!--</shape>--><!--</item>--><!--<item--><!--android:drawable="@drawable/gradient_red_background"--><!--android:duration="7000" />-->
 
 <!--</animation-list>-->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+
     <gradient
-        android:angle="270"
-        android:centerY="0.5"
-        android:centerColor="@color/white"
+        android:centerColor="@color/semi_white"
         android:endColor="@color/red_phone_light"
-        android:startColor="@color/white"/>
+        android:gradientRadius="500dp"
+        android:startColor="@color/white"
+        android:type="radial" />
+
 </shape>

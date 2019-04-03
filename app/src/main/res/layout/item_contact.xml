@@ -2,14 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground">
+    android:paddingStart="@dimen/item_contact_padding"
+    android:paddingEnd="@dimen/item_contact_padding"
+    android:background="@color/white">
+    <!--android:background="?attr/selectableItemBackground">-->
 
     <!-- Caller Pic -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +21,7 @@
             android:id="@+id/item_photo_placeholder"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:tint="@color/soft_shadow"
+            android:tint="@color/default_pic_color"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -39,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/frameLayout"
         app:layout_constraintTop_toTopOf="@+id/frameLayout" />
@@ -50,7 +51,6 @@
         style="@style/ListItemText.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/item_name_text"
         app:layout_constraintTop_toBottomOf="@+id/item_name_text" />
@@ -58,9 +58,9 @@
     <View
         android:id="@+id/app_bar_divider"
         android:layout_width="0dp"
-        android:layout_height="0.6dp"
+        android:layout_height="0dp"
         android:layout_marginStart="70dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
