@@ -2,10 +2,12 @@ package com.chooloo.www.callmanager.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -29,6 +31,7 @@ import java.util.Locale;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.SEND_SMS;
@@ -227,8 +230,7 @@ public class Utilities {
         }
     }
 
-    public static boolean hasNavBar (Context context)
-    {
+    public static boolean hasNavBar(Context context) {
         Resources resources = context.getResources();
         int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
         return id > 0 && resources.getBoolean(id);
@@ -254,5 +256,45 @@ public class Utilities {
         }
     }
 
-    // -- UI -- //
+    /**
+     * Call a given number
+     *
+     * @param context
+     * @param number
+     */
+    public static void call(Context context, String number) {
+        Timber.i("Trying to call: " + number);
+        if (number.isEmpty()) {
+            Toast.makeText(context, "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
+        } else {
+            try {
+                // Set the data for the call
+                String uri = "tel:" + number;
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+                // Start the call
+                context.startActivity(callIntent);
+            } catch (SecurityException e) {
+                Toast.makeText(context, "Couldn't call " + number, Toast.LENGTH_LONG).show();
+                Timber.e(e, "Couldn't call %s", number);
+            }
+        }
+    }
+
+    /**
+     * Call voicemail
+     *
+     * @param view
+     */
+    public static boolean callVoicemail(Context context) {
+        try {
+            Uri uri = Uri.parse("voicemail:1");
+            Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
+            context.startActivity(voiceMail);
+            return true;
+        } catch (SecurityException e) {
+            Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
+            Timber.e(e);
+            return false;
+        }
+    }
 }

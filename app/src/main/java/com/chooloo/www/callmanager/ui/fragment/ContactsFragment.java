@@ -16,6 +16,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
@@ -69,9 +70,11 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderM
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING:
                         mSharedDialViewModel.setIsOutOfFocus(true);
+                        mSharedSearchViewModel.setIsFocused(false);
                         break;
                     case RecyclerView.SCROLL_STATE_SETTLING:
                         mSharedDialViewModel.setIsOutOfFocus(true);
+                        mSharedSearchViewModel.setIsFocused(false);
                     default:
                         mSharedDialViewModel.setIsOutOfFocus(false);
                 }
@@ -186,8 +189,14 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderM
         mAdapter.changeCursor(null);
     }
 
+    /**
+     * Call the contact on click
+     *
+     * @param normPhoneNumber
+     */
     @Override
     public void onChildClick(String normPhoneNumber) {
-        mSharedDialViewModel.setNumber(normPhoneNumber);
+//        mSharedDialViewModel.setNumber(normPhoneNumber);
+        Utilities.call(this.getContext(), normPhoneNumber);
     }
 }

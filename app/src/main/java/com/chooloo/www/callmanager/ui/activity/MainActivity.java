@@ -14,8 +14,12 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.fragment.CGroupsFragment;
+import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
+import com.chooloo.www.callmanager.ui.fragment.CurrentFragmentViewModel;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
@@ -25,6 +29,7 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
@@ -52,6 +57,7 @@ public class MainActivity extends AppBarActivity {
     // View Models
     SharedDialViewModel mSharedDialViewModel;
     SharedSearchViewModel mSharedSearchViewModel;
+    CurrentFragmentViewModel mCurrentFragmentViewModel;
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
@@ -105,19 +111,20 @@ public class MainActivity extends AppBarActivity {
             askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
         }
 
+        // - View Models - //
 
-        // Watch the search bar state
+        // Watch the current fragment
+        mCurrentFragmentViewModel = ViewModelProviders.of(this).get(CurrentFragmentViewModel.class);
+
+        // Search Bar View Model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getIsFocused().observe(this, f -> {
             if (f) {
                 collapseAppBar(true);
-            } else {
-                if (mSearchBarFragment != null)
-                    toggleSearchBar();
             }
         });
 
-        // Watch the dial state
+        // Dial View Model
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
             if (b) {
@@ -125,21 +132,17 @@ public class MainActivity extends AppBarActivity {
             }
         });
 
-        // Set the bottom sheet behaviour
-        mBottomSheetBehaviour = BottomSheetBehavior.from(mDialerFragmentLayout);
-        // First hide the bottom sheet completely
-        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
+        // - Bottom Sheet Behavior - //
 
-
+        mBottomSheetBehaviour = BottomSheetBehavior.from(mDialerFragmentLayout); // Set the bottom sheet behaviour
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
         mBottomSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
-                if (i == BottomSheetBehavior.STATE_HIDDEN) {
-                    mSearchButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
-                    mDialerButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+                if (i == BottomSheetBehavior.STATE_HIDDEN || i == BottomSheetBehavior.STATE_COLLAPSED) {
+                    animateButtons(true);
                 } else {
-                    mSearchButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
-                    mDialerButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+                    animateButtons(false);
                 }
             }
 
@@ -148,7 +151,11 @@ public class MainActivity extends AppBarActivity {
 
             }
         });
+
+
     }
+
+    // -- Overrides -- //
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
@@ -204,6 +211,36 @@ public class MainActivity extends AppBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Clear focus on touch outside for all EditText inputs.
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        String currentFragment = mCurrentFragmentViewModel.getCurrentFragment().getValue();
+        if (currentFragment == CurrentFragmentViewModel.mCGroupsFragment) {
+            mCurrentFragmentViewModel.setCurrentFragment(CurrentFragmentViewModel.mContactsFragment);
+            animateButtons(true);
+        }
+        super.onBackPressed();
+    }
+
     // -- OnClicks -- //
 
     @OnClick(R.id.dialer_button)
@@ -213,7 +250,9 @@ public class MainActivity extends AppBarActivity {
 
     @OnClick(R.id.search_button)
     public void toggleSearch(View view) {
-        toggleSearchBar();
+        boolean isOpened = toggleSearchBar();
+        if (isOpened) mSearchButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
+        else mSearchButton.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
 
@@ -239,9 +278,12 @@ public class MainActivity extends AppBarActivity {
         NavController controller = Navigation.findNavController(this, R.id.main_fragment);
         int id = controller.getCurrentDestination().getId();
         if (id == R.id.contactsFragment) {
+            animateButtons(false);
             controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
+            mCurrentFragmentViewModel.setCurrentFragment(CurrentFragmentViewModel.mCGroupsFragment);
         } else {
             controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
+            mCurrentFragmentViewModel.setCurrentFragment(CurrentFragmentViewModel.mContactsFragment);
         }
     }
 
@@ -255,22 +297,44 @@ public class MainActivity extends AppBarActivity {
     }
 
     /**
-     * Clear focus on touch outside for all EditText inputs.
+     * Animate action buttons (toggle on/off)
+     *
+     * @param isShow animate to visible/invisible
      */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
+    public void animateButtons(boolean isShow) {
+        if (isShow) {
+            // Move them back and show them
+            CoordinatorLayout.LayoutParams p1 = (CoordinatorLayout.LayoutParams) mSearchButton.getLayoutParams();
+            p1.setAnchorId(R.id.main_dialer_fragment);
+            mSearchButton.setLayoutParams(p1);
+            mSearchButton.setVisibility(View.VISIBLE);
+            CoordinatorLayout.LayoutParams p2 = (CoordinatorLayout.LayoutParams) mDialerButton.getLayoutParams();
+            p2.setAnchorId(R.id.main_dialer_fragment);
+            mDialerButton.setLayoutParams(p2);
+            mDialerButton.setVisibility(View.VISIBLE);
+            // Animate them
+            mSearchButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+            mDialerButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+            // Enable them
+            mSearchButton.setEnabled(true);
+            mDialerButton.setEnabled(true);
+
+        } else {
+            // Animate them
+            mSearchButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+            mDialerButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+            // Disable them
+            mSearchButton.setEnabled(false);
+            mDialerButton.setEnabled(false);
+            // Move them and hide them
+            CoordinatorLayout.LayoutParams p1 = (CoordinatorLayout.LayoutParams) mSearchButton.getLayoutParams();
+            p1.setAnchorId(View.NO_ID); //should let you set visibility
+            mSearchButton.setLayoutParams(p1);
+            mSearchButton.setVisibility(View.GONE);
+            CoordinatorLayout.LayoutParams p2 = (CoordinatorLayout.LayoutParams) mDialerButton.getLayoutParams();
+            p2.setAnchorId(View.NO_ID); //should let you set visibility
+            mDialerButton.setLayoutParams(p2);
+            mDialerButton.setVisibility(View.GONE);
         }
-        return super.dispatchTouchEvent(event);
     }
 }

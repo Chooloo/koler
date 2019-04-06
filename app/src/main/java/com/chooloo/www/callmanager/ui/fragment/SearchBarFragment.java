@@ -70,17 +70,8 @@ public class SearchBarFragment extends BaseFragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     mSearchViewModel.setIsFocused(true);
-//                    final float scale = getContext().getResources().getDisplayMetrics().density;
-//                    int pixels = (int) (45 * scale + 0.5f);
-//                    mInputParams.height = pixels;
-//                    mInputParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//                    mSearchInput.setLayoutParams(mInputParams);
                 } else {
                     mSearchViewModel.setIsFocused(false);
-//                    final float scale = getContext().getResources().getDisplayMetrics().density;
-//                    int pixels = (int) (30 * scale + 0.5f);
-//                    mInputParams.height = pixels;
-//                    mSearchInput.setLayoutParams(mInputParams);
                 }
             }
         });

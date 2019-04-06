@@ -53,4 +53,9 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="ActionButton" parent="Widget.Design.FloatingActionButton">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="tint">@color/red_phone</item>
+        <item name="rippleColor">@color/red_phone</item>
+    </style>
 </resources>

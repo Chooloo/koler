@@ -137,16 +137,7 @@ public class DialFragment extends BaseFragment {
     @OnLongClick(R.id.chip1)
     public boolean startVoiceMail(View view) {
         vibrate();
-        try {
-            Uri uri = Uri.parse("voicemail:1");
-            Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
-            startActivity(voiceMail);
-            return true;
-        } catch (SecurityException e) {
-            Toast.makeText(getContext(), "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
-            Timber.e(e);
-            return false;
-        }
+        return Utilities.callVoicemail(this.getContext());
     }
 
     @OnLongClick(R.id.chip0)
@@ -162,21 +153,7 @@ public class DialFragment extends BaseFragment {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        Timber.i("Trying to call: " + mNumberText);
-        if (mNumberText.isEmpty()) {
-            Toast.makeText(getContext(), "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
-        } else {
-            try {
-                // Set the data for the call
-                String uri = "tel:" + mNumberText;
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
-                // Start the call
-                startActivity(callIntent);
-            } catch (SecurityException e) {
-                Toast.makeText(getContext(), "Couldn't call " + mNumberText, Toast.LENGTH_LONG).show();
-                Timber.e(e, "Couldn't call %s", mNumberText);
-            }
-        }
+        Utilities.call(this.getContext(), mNumberText);
     }
 
     // -- Setters -- //

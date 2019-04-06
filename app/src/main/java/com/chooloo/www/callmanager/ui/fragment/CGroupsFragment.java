@@ -1,25 +1,33 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 
 import java.io.File;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSpreadsheetDialog.OnImportListener {
 
@@ -30,6 +38,9 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSp
 
     @Override
     protected void onCreateView() {
+        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
+        mRecyclerView.addItemDecoration(itemDecor);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter = new CGroupAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -41,6 +52,8 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSp
         });
     }
 
+    // -- Overrides -- //
+
     @Override
     protected int layoutId() {
         return R.layout.fragment_cgroups;
@@ -51,13 +64,6 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSp
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
         mViewModel.getContactsLists().observe(this, cgroups -> mAdapter.setData(cgroups));
-    }
-
-    @OnClick(R.id.add_contacts)
-    public void addContacts(View view) {
-        new ImportSpreadsheetDialog.Builder(getFragmentManager())
-                .onImportListener(this)
-                .show(new ImportSpreadsheetDialog());
     }
 
     @Override
@@ -83,5 +89,19 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSp
         task.setOnProgressListener(onProgressListener);
         task.setOnFinishListener(onFinishListener);
         task.execute();
+    }
+
+    // -- OnClicks -- //
+
+    @OnClick(R.id.add_contacts)
+    public void addContacts(View view) {
+        new ImportSpreadsheetDialog.Builder(getFragmentManager())
+                .onImportListener(this)
+                .show(new ImportSpreadsheetDialog());
+    }
+
+    @OnClick(R.id.back_button)
+    public void switchBack(View view) {
+        getActivity().onBackPressed();
     }
 }

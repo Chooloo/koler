@@ -50,7 +50,8 @@ public class AppBarActivity extends AppCompatActivity {
      * If the bar is visible -> hide it
      * If the bar is hidden  -> show it
      */
-    public void toggleSearchBar() {
+    public boolean toggleSearchBar() {
+        boolean isOpened;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
@@ -59,11 +60,14 @@ public class AppBarActivity extends AppCompatActivity {
             ft.show(mSearchBarFragment);
             mSearchBarFragment.setFocus();
             Utilities.toggleKeyboard(this, mSearchBarFragment.mSearchInput, true);
+            isOpened = true;
         } else {
             mSearchBarContainer.setVisibility(View.GONE);
             ft.hide(mSearchBarFragment);
             Utilities.toggleKeyboard(this, mSearchBarFragment.mSearchInput, false);
+            isOpened = false;
         }
         ft.commit();
+        return isOpened;
     }
 }

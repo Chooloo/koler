@@ -29,27 +29,25 @@
     <!-- TODO add style for bottom FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/search_button"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
+        style="@style/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_search_black_24dp"
-        android:tint="@color/red_phone"
-        android:backgroundTint="@color/white"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_anchor="@+id/main_dialer_fragment"
-        app:layout_anchorGravity="left|bottom" />
+        app:layout_anchorGravity="left|bottom"
+        app:srcCompat="@drawable/ic_search_black_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialer_button"
-        android:tint="@color/red_phone"
-        android:backgroundTint="@color/white"
-        app:srcCompat="@drawable/ic_dialpad_black_24dp"
+        style="@style/ActionButton"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_height="wrap_content"
         app:layout_anchor="@+id/main_dialer_fragment"
-        app:layout_anchorGravity="right|bottom" />
+        app:layout_anchorGravity="right|bottom"
+        app:srcCompat="@drawable/ic_dialpad_black_24dp" />
 
     <!-- Dialer Fragment-->
     <fragment
@@ -59,9 +57,9 @@
         android:layout_height="wrap_content"
         android:tag="main_dialer_tag"
         app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"
-        app:behavior_peekHeight="@dimen/phone_number_input_with_margins_height"
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dial" />
-
+    <!-- app:behavior_peekHeight="@dimen/phone_number_input_with_margins_height" -->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
