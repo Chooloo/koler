@@ -61,5 +61,5 @@
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dial" />
-    <!-- app:behavior_peekHeight="@dimen/phone_number_input_with_margins_height" -->
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

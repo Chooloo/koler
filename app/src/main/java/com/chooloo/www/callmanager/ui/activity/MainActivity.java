@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -14,12 +15,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.fragment.CGroupsFragment;
-import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
-import com.chooloo.www.callmanager.ui.fragment.CurrentFragmentViewModel;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
@@ -28,16 +25,15 @@ import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 
-import java.util.List;
 import java.util.Objects;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -57,10 +53,10 @@ public class MainActivity extends AppBarActivity {
     // View Models
     SharedDialViewModel mSharedDialViewModel;
     SharedSearchViewModel mSharedSearchViewModel;
-    CurrentFragmentViewModel mCurrentFragmentViewModel;
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
+    @BindView(R.id.tab_layout) TabLayout mTabLayout;
     @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
     @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
@@ -111,10 +107,37 @@ public class MainActivity extends AppBarActivity {
             askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
         }
 
-        // - View Models - //
+        //Select the second item in the tab layout
+        mTabLayout.setScrollPosition(1, 0f, true);
+        //Move to the desired tab on tap
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        //TODO add recents fragment
+                    case 1:
+                        moveToFragment(R.id.contactsFragment);
+                        break;
+                    case 2:
+                        moveToFragment(R.id.cgroupsFragment);
+                        break;
+                    default:
+                }
+            }
 
-        // Watch the current fragment
-        mCurrentFragmentViewModel = ViewModelProviders.of(this).get(CurrentFragmentViewModel.class);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        // - View Models - //
 
         // Search Bar View Model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
@@ -151,8 +174,6 @@ public class MainActivity extends AppBarActivity {
 
             }
         });
-
-
     }
 
     // -- Overrides -- //
@@ -193,7 +214,7 @@ public class MainActivity extends AppBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.main_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -203,9 +224,6 @@ public class MainActivity extends AppBarActivity {
             case R.id.settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
-                return true;
-            case R.id.excel:
-                switchFragments();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -233,9 +251,9 @@ public class MainActivity extends AppBarActivity {
 
     @Override
     public void onBackPressed() {
-        String currentFragment = mCurrentFragmentViewModel.getCurrentFragment().getValue();
-        if (currentFragment == CurrentFragmentViewModel.mCGroupsFragment) {
-            mCurrentFragmentViewModel.setCurrentFragment(CurrentFragmentViewModel.mContactsFragment);
+        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
+        int currentFragment = controller.getCurrentDestination().getId();
+        if (currentFragment == R.id.cgroupsFragment) {
             animateButtons(true);
         }
         super.onBackPressed();
@@ -271,19 +289,23 @@ public class MainActivity extends AppBarActivity {
         }
     }
 
-    /**
-     * Switch between contacts and excel fragments
-     */
-    public void switchFragments() {
+    public void moveToFragment(@IdRes int fragmentId) {
         NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-        int id = controller.getCurrentDestination().getId();
-        if (id == R.id.contactsFragment) {
-            animateButtons(false);
-            controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
-            mCurrentFragmentViewModel.setCurrentFragment(CurrentFragmentViewModel.mCGroupsFragment);
-        } else {
-            controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
-            mCurrentFragmentViewModel.setCurrentFragment(CurrentFragmentViewModel.mContactsFragment);
+        int currentFragmentId = controller.getCurrentDestination().getId();
+        switch(currentFragmentId) {
+            case R.id.contactsFragment: {
+                animateButtons(false);
+                if (fragmentId == R.id.cgroupsFragment) {
+                    controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
+                }
+                break;
+            }
+            case R.id.cgroupsFragment: {
+                if (fragmentId == R.id.contactsFragment) {
+                    controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
+                }
+                break;
+            }
         }
     }
 
@@ -301,6 +323,7 @@ public class MainActivity extends AppBarActivity {
      *
      * @param isShow animate to visible/invisible
      */
+    @SuppressLint("RestrictedApi")
     public void animateButtons(boolean isShow) {
         if (isShow) {
             // Move them back and show them
