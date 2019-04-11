@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -32,7 +31,6 @@ import java.util.Objects;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -89,11 +87,6 @@ public class MainActivity extends AppBarActivity {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
 
-        }
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.white));
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

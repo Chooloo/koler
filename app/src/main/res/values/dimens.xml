@@ -2,8 +2,8 @@
 <resources>
 
     <dimen name="default_padding">16dp</dimen>
-
     <dimen name="default_edge_padding">8dp</dimen>
+    <dimen name="default_spacing_padding">8dp</dimen>
 
     <!-- Action Bar-->
     <dimen name="app_bar_corner_radius">16dp</dimen>

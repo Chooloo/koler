@@ -8,6 +8,6 @@
         android:angle="270"
         android:centerY="0.5"
         android:centerColor="@color/white"
-        android:endColor="@color/semi_grey"
+        android:endColor="@color/grey_50"
         android:startColor="@color/white" />
 </shape>
