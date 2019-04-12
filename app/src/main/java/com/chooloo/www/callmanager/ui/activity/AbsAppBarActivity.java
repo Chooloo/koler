@@ -1,9 +1,7 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -12,6 +10,7 @@ import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.appbar.AppBarLayout;
 
+import androidx.annotation.CallSuper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
@@ -20,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 @SuppressLint("Registered")
-public class AppBarActivity extends AppCompatActivity {
+public abstract class AbsAppBarActivity extends AppCompatActivity {
 
     SearchBarFragment mSearchBarFragment;
 
@@ -30,6 +29,7 @@ public class AppBarActivity extends AppCompatActivity {
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
 
     @Override
+    @CallSuper
     protected void onStart() {
         super.onStart();
         ButterKnife.bind(this);
@@ -47,27 +47,25 @@ public class AppBarActivity extends AppCompatActivity {
 
     /**
      * Toggles the search bar according to it's current state
-     * If the bar is visible -> hide it
-     * If the bar is hidden  -> show it
      */
-    public boolean toggleSearchBar() {
-        boolean isOpened;
+    public void toggleSearchBar(boolean isShow) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
-        if (mSearchBarContainer.getVisibility() == View.GONE) {
+        if (isShow) {
             mSearchBarContainer.setVisibility(View.VISIBLE);
             ft.show(mSearchBarFragment);
             mSearchBarFragment.setFocus();
             Utilities.toggleKeyboard(this, mSearchBarFragment.mSearchInput, true);
-            isOpened = true;
         } else {
             mSearchBarContainer.setVisibility(View.GONE);
             ft.hide(mSearchBarFragment);
             Utilities.toggleKeyboard(this, mSearchBarFragment.mSearchInput, false);
-            isOpened = false;
         }
         ft.commit();
-        return isOpened;
+    }
+
+    public boolean isSearchBarVisible() {
+        return mSearchBarContainer.getVisibility() == View.VISIBLE;
     }
 }

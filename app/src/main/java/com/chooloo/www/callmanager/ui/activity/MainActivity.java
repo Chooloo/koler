@@ -27,6 +27,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +51,7 @@ import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
-public class MainActivity extends AppBarActivity implements FABCoordinator.OnFabClickListener {
+public class MainActivity extends AbsAppBarActivity implements FABCoordinator.OnFabClickListener {
 
     // View Models
     SharedDialViewModel mSharedDialViewModel;
@@ -61,7 +63,7 @@ public class MainActivity extends AppBarActivity implements FABCoordinator.OnFab
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.tab_layout) TabLayout mTabLayout;
-    @BindView(R.id.activity_main) CoordinatorLayout mMainLayout;
+    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
     @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
 
@@ -177,6 +179,16 @@ public class MainActivity extends AppBarActivity implements FABCoordinator.OnFab
         //Initialize FABCoordinator
         mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
         syncFABAndFragment();
+
+        //Listen for keyboard state changes
+        KeyboardVisibilityEvent.setEventListener(
+                this,
+                isOpen -> {
+                    if (!isOpen) { //If hides
+                        toggleSearchBar(false);
+                    }
+                }
+        );
     }
 
     // -- Overrides -- //
@@ -280,7 +292,8 @@ public class MainActivity extends AppBarActivity implements FABCoordinator.OnFab
 
     @Override
     public void onLeftClick() {
-        boolean isOpened = toggleSearchBar();
+        boolean isOpened = isSearchBarVisible();
+        toggleSearchBar(!isOpened);
         if (isOpened) mRightButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
         else mRightButton.setBackgroundColor(getResources().getColor(R.color.white));
     }

@@ -77,14 +77,16 @@ dependencies {
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.10.5'
 
     // Beauty Color Shadow Button
-    implementation "com.subsub.libs:buttoncustomshadow:1.1.0"
+    implementation 'com.subsub.libs:buttoncustomshadow:1.1.0'
+
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
 
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test:core:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
     androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
