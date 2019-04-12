@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -16,6 +15,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.FABCoordinator;
+import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
@@ -26,6 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.IdRes;
@@ -35,6 +37,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,11 +49,14 @@ import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
-public class MainActivity extends AppBarActivity {
+public class MainActivity extends AppBarActivity implements FABCoordinator.OnFabClickListener {
 
     // View Models
     SharedDialViewModel mSharedDialViewModel;
     SharedSearchViewModel mSharedSearchViewModel;
+
+    //Coordinator
+    FABCoordinator mFABCoordinator;
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
@@ -60,8 +66,8 @@ public class MainActivity extends AppBarActivity {
     @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
 
     // Buttons
-    @BindView(R.id.dialer_button) FloatingActionButton mDialerButton;
-    @BindView(R.id.search_button) FloatingActionButton mSearchButton;
+    @BindView(R.id.right_button) FloatingActionButton mRightButton;
+    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
 
     // Fragments
     DialFragment mDialFragment;
@@ -156,9 +162,9 @@ public class MainActivity extends AppBarActivity {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
                 if (i == BottomSheetBehavior.STATE_HIDDEN || i == BottomSheetBehavior.STATE_COLLAPSED) {
-                    animateButtons(true);
+                    showButtons(true);
                 } else {
-                    animateButtons(false);
+                    showButtons(false);
                 }
             }
 
@@ -167,6 +173,10 @@ public class MainActivity extends AppBarActivity {
 
             }
         });
+
+        //Initialize FABCoordinator
+        mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
+        syncFABAndFragment();
     }
 
     // -- Overrides -- //
@@ -179,11 +189,6 @@ public class MainActivity extends AppBarActivity {
         } else if (fragment instanceof SearchBarFragment) {
             mSearchBarFragment = (SearchBarFragment) fragment;
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     /**
@@ -244,30 +249,63 @@ public class MainActivity extends AppBarActivity {
 
     @Override
     public void onBackPressed() {
-        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-        int currentFragment = controller.getCurrentDestination().getId();
-        if (currentFragment == R.id.cgroupsFragment) {
-            animateButtons(true);
-        }
         super.onBackPressed();
+        syncFABAndFragment();
+    }
+
+    @Override
+    public int[] getIconsResources() {
+        return new int[] {
+                R.drawable.ic_dialpad_black_24dp,
+                R.drawable.ic_search_black_24dp
+        };
     }
 
     // -- OnClicks -- //
 
-    @OnClick(R.id.dialer_button)
-    public void toggleDialer(View view) {
+    @OnClick(R.id.right_button)
+    public void fabRightClick() {
+        mFABCoordinator.performRightClick();
+    }
+
+    @OnClick(R.id.left_button)
+    public void fabLeftClick() {
+        mFABCoordinator.performLeftClick();
+    }
+
+    @Override
+    public void onRightClick() {
         mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
-    @OnClick(R.id.search_button)
-    public void toggleSearch(View view) {
+    @Override
+    public void onLeftClick() {
         boolean isOpened = toggleSearchBar();
-        if (isOpened) mSearchButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
-        else mSearchButton.setBackgroundColor(getResources().getColor(R.color.white));
+        if (isOpened) mRightButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
+        else mRightButton.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
-
     // -- Other -- //
+
+    private Fragment getCurrentFragment() {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+        List<Fragment> fragmentList = navHostFragment.getChildFragmentManager().getFragments();
+        if (fragmentList == null || fragmentList.isEmpty()) {
+            return null;
+        } else {
+            return fragmentList.get(0);
+        }
+    }
+
+    public void syncFABAndFragment() {
+        Fragment fragment = getCurrentFragment();
+        if (fragment == null || fragment instanceof ContactsFragment) {
+            mFABCoordinator.setListener(this);
+        } else if (fragment instanceof FABCoordinator.OnFabClickListener) {
+            mFABCoordinator.setListener((FABCoordinator.OnFabClickListener) fragment);
+        }
+        showButtons(true);
+    }
 
     /**
      * Change the dialer status (collapse/expand)
@@ -287,7 +325,7 @@ public class MainActivity extends AppBarActivity {
         int currentFragmentId = controller.getCurrentDestination().getId();
         switch(currentFragmentId) {
             case R.id.contactsFragment: {
-                animateButtons(false);
+                //showButtons(false);
                 if (fragmentId == R.id.cgroupsFragment) {
                     controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
                 }
@@ -300,6 +338,7 @@ public class MainActivity extends AppBarActivity {
                 break;
             }
         }
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     /**
@@ -312,45 +351,14 @@ public class MainActivity extends AppBarActivity {
     }
 
     /**
-     * Animate action buttons (toggle on/off)
+     * Animate action buttons
      *
      * @param isShow animate to visible/invisible
      */
-    @SuppressLint("RestrictedApi")
-    public void animateButtons(boolean isShow) {
-        if (isShow) {
-            // Move them back and show them
-            CoordinatorLayout.LayoutParams p1 = (CoordinatorLayout.LayoutParams) mSearchButton.getLayoutParams();
-            p1.setAnchorId(R.id.main_dialer_fragment);
-            mSearchButton.setLayoutParams(p1);
-            mSearchButton.setVisibility(View.VISIBLE);
-            CoordinatorLayout.LayoutParams p2 = (CoordinatorLayout.LayoutParams) mDialerButton.getLayoutParams();
-            p2.setAnchorId(R.id.main_dialer_fragment);
-            mDialerButton.setLayoutParams(p2);
-            mDialerButton.setVisibility(View.VISIBLE);
-            // Animate them
-            mSearchButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
-            mDialerButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
-            // Enable them
-            mSearchButton.setEnabled(true);
-            mDialerButton.setEnabled(true);
-
-        } else {
-            // Animate them
-            mSearchButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
-            mDialerButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
-            // Disable them
-            mSearchButton.setEnabled(false);
-            mDialerButton.setEnabled(false);
-            // Move them and hide them
-            CoordinatorLayout.LayoutParams p1 = (CoordinatorLayout.LayoutParams) mSearchButton.getLayoutParams();
-            p1.setAnchorId(View.NO_ID); //should let you set visibility
-            mSearchButton.setLayoutParams(p1);
-            mSearchButton.setVisibility(View.GONE);
-            CoordinatorLayout.LayoutParams p2 = (CoordinatorLayout.LayoutParams) mDialerButton.getLayoutParams();
-            p2.setAnchorId(View.NO_ID); //should let you set visibility
-            mDialerButton.setLayoutParams(p2);
-            mDialerButton.setVisibility(View.GONE);
-        }
+    public void showButtons(boolean isShow) {
+        if (isShow && mRightButton.isEnabled()) mRightButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+        else mRightButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+        if (isShow && mLeftButton.isEnabled()) mLeftButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+        else mLeftButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
     }
 }

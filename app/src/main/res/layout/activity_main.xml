@@ -26,31 +26,6 @@
         tools:layout="@layout/fragment_contacts" />
 
     <!-- TODO add style for bottom FloatingActionButton -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/search_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:borderWidth="0dp"
-        app:layout_anchor="@+id/main_dialer_fragment"
-        app:layout_anchorGravity="left|bottom"
-        app:srcCompat="@drawable/ic_search_black_24dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/dialer_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:borderWidth="0dp"
-        app:layout_anchor="@+id/main_dialer_fragment"
-        app:layout_anchorGravity="right|bottom"
-        app:srcCompat="@drawable/ic_dialpad_black_24dp" />
-
-    <!-- Dialer Fragment-->
     <fragment
         android:id="@+id/main_dialer_fragment"
         android:name="com.chooloo.www.callmanager.ui.fragment.DialFragment"
@@ -62,5 +37,31 @@
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dial" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/left_button"
+        style="@style/ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        app:borderWidth="0dp"
+        app:layout_anchor="@+id/main_dialer_fragment"
+        app:layout_anchorGravity="left|bottom"
+        tools:src="@drawable/ic_search_black_24dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/right_button"
+        style="@style/ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        app:borderWidth="0dp"
+        app:layout_anchor="@+id/main_dialer_fragment"
+        app:layout_anchorGravity="right|bottom"
+        tools:src="@drawable/ic_dialpad_black_24dp" />
+
+    <!-- Dialer Fragment-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

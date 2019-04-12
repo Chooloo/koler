@@ -1,40 +1,34 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
-import com.chooloo.www.callmanager.ui.activity.MainActivity;
+import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
+import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 
 import java.io.File;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.OnClick;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
-public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSpreadsheetDialog.OnImportListener {
+public class CGroupsFragment extends AbsRecyclerViewFragment implements
+        ImportSpreadsheetDialog.OnImportListener,
+        FABCoordinator.OnFabClickListener {
 
     private CGroupsViewModel mViewModel;
 
     private CGroupAdapter mAdapter;
-    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
     @Override
     protected void onCreateView() {
@@ -51,8 +45,6 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSp
             Navigation.findNavController(v).navigate(R.id.action_cgroupsFragment_to_cGroupDetailsFragment, args);
         });
     }
-
-    // -- Overrides -- //
 
     @Override
     protected int layoutId() {
@@ -91,17 +83,25 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements ImportSp
         task.execute();
     }
 
+    @Override
+    public int[] getIconsResources() {
+        return new int[] {
+                R.drawable.ic_add_black_24dp,
+                -1 //This means no FAB at all
+        };
+    }
+
     // -- OnClicks -- //
 
-    @OnClick(R.id.add_contacts)
-    public void addContacts(View view) {
+    @Override
+    public void onRightClick() {
         new ImportSpreadsheetDialog.Builder(getFragmentManager())
                 .onImportListener(this)
                 .show(new ImportSpreadsheetDialog());
     }
 
-    @OnClick(R.id.back_button)
-    public void switchBack(View view) {
-        getActivity().onBackPressed();
+    @Override
+    public void onLeftClick() {
+
     }
 }

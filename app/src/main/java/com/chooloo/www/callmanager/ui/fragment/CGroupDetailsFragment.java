@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
@@ -11,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.OnClick;
 
 public class CGroupDetailsFragment extends AbsRecyclerViewFragment {
 
@@ -46,10 +44,5 @@ public class CGroupDetailsFragment extends AbsRecyclerViewFragment {
         mViewModel.getContacts().observe(this, contacts -> {
             mAdapter.setData(contacts);
         });
-    }
-
-    @OnClick(R.id.call_cgroup)
-    public void callCGroup(View v) {
-        //TODO implement
     }
 }

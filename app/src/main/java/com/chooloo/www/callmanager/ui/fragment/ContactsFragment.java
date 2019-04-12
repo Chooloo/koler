@@ -14,9 +14,7 @@ import android.view.View;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
@@ -33,7 +31,9 @@ import timber.log.Timber;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
-public class ContactsFragment extends AbsRecyclerViewFragment implements LoaderManager.LoaderCallbacks<Cursor>, ContactsAdapter.OnChildClickListener {
+public class ContactsFragment extends AbsRecyclerViewFragment implements
+        LoaderManager.LoaderCallbacks<Cursor>,
+        ContactsAdapter.OnChildClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
