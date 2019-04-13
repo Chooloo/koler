@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -18,7 +17,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.R;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -31,7 +29,6 @@ import java.util.Locale;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.SEND_SMS;
@@ -174,9 +171,9 @@ public class Utilities {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, "");
+            formattedNumber = phoneUtil.parse(phoneNumber, "ZZ");
         } catch (NumberParseException e) {
-            Timber.e(e);
+            Timber.w(e);
         }
 
         // return the number
@@ -280,11 +277,6 @@ public class Utilities {
         }
     }
 
-    /**
-     * Call voicemail
-     *
-     * @param view
-     */
     public static boolean callVoicemail(Context context) {
         try {
             Uri uri = Uri.parse("voicemail:1");
