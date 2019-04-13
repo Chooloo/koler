@@ -57,8 +57,11 @@ public final class ContactsCursorLoader extends CursorLoader {
     }
 
     private static String getWhere(Context context) {
-        String where = getProjection(context)[CONTACT_DISPLAY_NAME] + " IS NOT NULL";
-        where += " AND " + Contacts.HAS_PHONE_NUMBER + "=1";
+        String where = getProjection(context)[CONTACT_DISPLAY_NAME] + " IS NOT NULL" +
+                " AND " + Contacts.HAS_PHONE_NUMBER + "=1" +
+                " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%'" +
+                " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%tachyon%'";
+
         return where;
     }
 
