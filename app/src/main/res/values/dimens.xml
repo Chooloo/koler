@@ -15,9 +15,11 @@
 
     <dimen name="bubble_corner_radius">20dp</dimen>
 
+    <dimen name="fab_and_bottom_padding">88dp</dimen>
+    <dimen name="fab_margins">24dp</dimen>
+
     <!-- Dialer -->
     <dimen name="phone_number_input_height">64dp</dimen>
-    <dimen name="phone_number_input_with_margins_height">72dp</dimen>
     <dimen name="dialer_elevation">1dp</dimen>
 
     <!-- TODO decide between 0.75 and 0.74 -->
@@ -28,4 +30,10 @@
     <dimen name="divider_sides_margin">8dp</dimen>
     <dimen name="item_contact_padding">20dp</dimen>
 
+
+    <dimen name="fast_scroller_touch_target_width">20dp</dimen>
+    <dimen name="fast_scroller_container_size">88dp</dimen>
+    <dimen name="fast_scroller_container_corner_radius">44dp</dimen>
+    <dimen name="fast_scroller_bottom_right_corner_radius">0px</dimen>
+    <dimen name="fast_scroller_bottom_left_corner_radius">44dp</dimen>
 </resources>

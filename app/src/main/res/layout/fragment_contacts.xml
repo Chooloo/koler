@@ -6,22 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ContactsFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        style="@style/ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_contact">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            style="@style/ListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_contact">
+    </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
+    <!--A piece of code from google's default Dial App-->
+    <!-- Scrollbars are always on the right side of the screen. Layouts should use Rights/Left instead
+    of Start/End -->
+    <com.chooloo.www.callmanager.google.FastScroller
+        android:id="@+id/fast_scroller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/default_spacing_padding"
+        android:layout_marginBottom="@dimen/fab_and_bottom_padding"
+        android:clipChildren="false"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <TextView
+            android:id="@+id/fast_scroller_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/fast_scroller_scroll_bar"
+            android:background="@drawable/fast_scroller_container_background"
+            android:gravity="center"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textSize="48sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/fast_scroller_scroll_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="8dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/fast_scroller_scroll_bar" />
+    </com.chooloo.www.callmanager.google.FastScroller>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

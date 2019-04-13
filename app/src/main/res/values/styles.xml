@@ -32,8 +32,10 @@
 
     <!-- List View -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
-        <item name="android:dividerHeight">5dp</item>
         <item name="android:divider">@android:color/transparent</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:paddingTop">@dimen/default_spacing_padding</item>
+        <item name="android:paddingBottom">@dimen/fab_and_bottom_padding</item>
     </style>
 
     <style name="ListItemText" />

@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract.Contacts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +12,57 @@ import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.ui.fragment.ContactsFragment.Header;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.ContactHolder> {
 
-    private OnChildClickListener mOnChildClickListener;
+    private OnContactSelectedListener mOnContactSelectedListener;
+
+    private @Header int mHeader = Header.NONE;
+    // List of contact sublist mHeaders
+    private String[] mHeaders = new String[0];
+    // Number of contacts that correspond to each mHeader in {@code mHeaders}.
+    private int[] mCounts = new int[0];
+    // Cursor with list of contacts
+    private Cursor mCursor;
 
     public ContactsAdapter(Context context, Cursor cursor) {
         super(context, cursor);
+        mCursor = cursor;
+    }
+
+    @Override
+    public void changeCursor(Cursor cursor) {
+        super.changeCursor(cursor);
+        mCursor = cursor;
+        mHeaders = cursor.getExtras().getStringArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
+        mCounts = cursor.getExtras().getIntArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
+        if (mCounts != null) {
+            int sum = 0;
+            for (int count : mCounts) {
+                sum += count;
+            }
+            if (sum != cursor.getCount()) {
+                Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
+            }
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        int count = super.getItemCount();
+        // Manually insert the header if one exists.
+        if (mHeader != Header.NONE) {
+            count++;
+        }
+        return count;
     }
 
     @NonNull
@@ -36,9 +75,9 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
     @Override
     public void onBindViewHolder(ContactHolder viewHolder, Cursor cursor) {
         Contact contact = new Contact(cursor);
-        String phoneNumber = contact.getMainPhoneNumber();
         viewHolder.name.setText(contact.getName());
-        viewHolder.number.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+        String phoneNumber = contact.getMainPhoneNumber();
+        viewHolder.number.setText(Utilities.formatPhoneNumber(phoneNumber));
 
         if (contact.getPhotoUri() == null) {
             viewHolder.photo.setVisibility(View.GONE);
@@ -48,17 +87,32 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
             viewHolder.photo.setVisibility(View.VISIBLE);
             viewHolder.photoPlaceholder.setVisibility(View.GONE);
         }
-        if (mOnChildClickListener != null) {
-            viewHolder.itemView.setOnClickListener(v -> mOnChildClickListener.onChildClick(phoneNumber));
+        if (mOnContactSelectedListener != null) {
+            viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(phoneNumber));
         }
     }
 
-    public void setOnChildClickListener(OnChildClickListener onChildClickListener) {
-        mOnChildClickListener = onChildClickListener;
+    public String getHeaderString(int position) {
+        if (mHeader != Header.NONE) {
+            if (position == 0) {
+                return "+";
+            }
+            position--;
+        }
+        int index = -1;
+        int sum = 0;
+        while (sum <= position) {
+            sum += mCounts[++index];
+        }
+        return mHeaders[index];
     }
 
-    public interface OnChildClickListener {
-        void onChildClick(String normPhoneNumber);
+    public void setOnContactSelectedListener(OnContactSelectedListener onContactSelectedListener) {
+        mOnContactSelectedListener = onContactSelectedListener;
+    }
+
+    public interface OnContactSelectedListener {
+        void onContactSelected(String normPhoneNumber);
     }
 
     class ContactHolder extends RecyclerView.ViewHolder {

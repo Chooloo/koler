@@ -157,6 +157,7 @@ public class Contact {
      * @return String
      */
     public String getMainPhoneNumber() {
+        if (phoneNumbers.isEmpty()) return null;
         return phoneNumbers.get(0);
     }
 
