@@ -31,7 +31,7 @@
     <dimen name="item_contact_padding">20dp</dimen>
 
 
-    <dimen name="fast_scroller_touch_target_width">20dp</dimen>
+    <dimen name="fast_scroller_touch_target_width">32dp</dimen>
     <dimen name="fast_scroller_container_size">88dp</dimen>
     <dimen name="fast_scroller_container_corner_radius">44dp</dimen>
     <dimen name="fast_scroller_bottom_right_corner_radius">0px</dimen>
