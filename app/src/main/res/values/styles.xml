@@ -39,6 +39,7 @@
     <style name="ListItemText" />
 
     <style name="ListItemText.Big">
+        <item name="android:textAlignment">viewStart</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:text">Big Text</item>
         <item name="android:maxLines">1</item>
@@ -53,6 +54,7 @@
     </style>
 
     <style name="ActionButton" parent="Widget.Design.FloatingActionButton">
+        <item name="borderWidth">0.3dp</item>
         <item name="android:backgroundTint">@color/white</item>
         <item name="tint">@color/red_phone</item>
         <item name="rippleColor">@color/red_phone</item>

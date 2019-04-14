@@ -5,16 +5,14 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.RawContacts;
+import android.telecom.Call;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -34,25 +32,21 @@ import timber.log.Timber;
 
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
-public class ContactsFragment extends AbsRecyclerViewFragment implements
+public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        ContactsAdapter.OnChildClickListener {
+        RecentsAdapter.OnChildClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_CONTACT_NAME = "contact_name";
 
-    private static final String IGNORE_NUMBER_TOO_LONG_CLAUSE =
-            "length(" + Phone.NUMBER + ") < 1000";
-
-
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
     private View mRootView;
 
-    @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
-    ContactsAdapter mAdapter;
+    @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.recents_recycler_view) RecyclerView mRecyclerView;
+    RecentsAdapter mAdapter;
 
     @Override
     protected void onCreateView() {
@@ -60,7 +54,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mRecyclerView.addItemDecoration(itemDecor);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new ContactsAdapter(getContext(), null);
+        mAdapter = new RecentsAdapter(getContext(), null);
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnChildClickListener(this);
@@ -88,7 +82,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, null, ContactsFragment.this);
+                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
                 tryRunningLoader();
             }
         });
@@ -97,7 +91,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected int layoutId() {
-        return R.layout.fragment_contacts;
+        return R.layout.fragment_recents;
     }
 
     @Override
@@ -108,7 +102,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
                 args.putString(ARG_PHONE_NUMBER, s);
-                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
+                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
             }
         });
         mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
@@ -116,7 +110,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
                 args.putString(ARG_CONTACT_NAME, t);
-                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
+                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
             }
         });
         tryRunningLoader();
@@ -147,21 +141,17 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
-        Uri.Builder builder;
-
         // Strings
         final String[] PROJECTION = new String[]{
-                Phone._ID,
-                Phone.DISPLAY_NAME_PRIMARY,
-                Phone.PHOTO_THUMBNAIL_URI,
-                Phone.NUMBER
+                CallLog.Calls._ID,
+                CallLog.Calls.NUMBER,
+                CallLog.Calls.DATE,
+                CallLog.Calls.DURATION,
+                CallLog.Calls.TYPE,
         };
-        String selection = Data.MIMETYPE + " = '" + Phone.CONTENT_ITEM_TYPE + "' AND " +
-                RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%' AND " +
-                Contacts.IN_VISIBLE_GROUP + "=1 AND " +
-                Contacts.HAS_PHONE_NUMBER + "=1 AND " +
-                IGNORE_NUMBER_TOO_LONG_CLAUSE;
-        String sortOrder = Phone.DISPLAY_NAME_PRIMARY + " COLLATE LOCALIZED ASC";
+        String SELECTION = null;
+        String ORDER = CallLog.Calls.DATE + " DESC";
+
 
         // Check if a specific name/number is required
         String contactName = null;
@@ -174,34 +164,26 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         }
 
         if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
+            SELECTION = CallLog.Calls.NUMBER + " = " + phoneNumber;
         } else if (contactName != null && !contactName.isEmpty()) {
-            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
-        } else {
-            builder = Phone.CONTENT_URI.buildUpon();
+            SELECTION = CallLog.Calls.CACHED_NAME + " = " + contactName;
         }
-
-        // Remove duplicated
-        builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
 
         // Return cursor
         return new CursorLoader(
                 getContext(),
-                builder.build(),
+                CallLog.Calls.CONTENT_URI,
                 PROJECTION,
-                selection,
+                SELECTION,
                 null,
-                sortOrder
-        );
+                ORDER);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         mAdapter.changeCursor(data);
         Timber.d(DatabaseUtils.dumpCursorToString(data));
-        if(mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
+        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
     }
 
     @Override

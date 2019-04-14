@@ -26,6 +26,6 @@
 
     <!-- List Items -->
     <dimen name="divider_sides_margin">8dp</dimen>
-    <dimen name="item_contact_padding">20dp</dimen>
+    <dimen name="item_contact_padding">14dp</dimen>
 
 </resources>

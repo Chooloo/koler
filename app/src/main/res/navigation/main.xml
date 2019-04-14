@@ -8,22 +8,40 @@
         android:id="@+id/contactsFragment"
         android:name="com.chooloo.www.callmanager.ui.fragment.ContactsFragment"
         android:label="fragment_contacts"
-        tools:layout="@layout/fragment_contacts" >
+        tools:layout="@layout/fragment_contacts">
         <action
             android:id="@+id/action_contactsFragment_to_cGroupsFragment"
             app:destination="@id/cgroupsFragment" />
+        <action
+            android:id="@+id/action_contactsFragment_to_recentsFragment"
+            app:destination="@id/recentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recentsFragment"
+        android:name="com.chooloo.www.callmanager.ui.fragment.ContactsFragment"
+        android:label="fragment_recents"
+        tools:layout="@layout/fragment_recents">
+        <action
+            android:id="@+id/action_recentFragment_to_cGroupsFragment"
+            app:destination="@id/cgroupsFragment" />
+        <action
+            android:id="@+id/action_recentFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cgroupsFragment"
         android:name="com.chooloo.www.callmanager.ui.fragment.CGroupsFragment"
         android:label="fragment_cgroups"
-        tools:layout="@layout/fragment_cgroups" >
+        tools:layout="@layout/fragment_cgroups">
         <action
             android:id="@+id/action_cGroupsFragment_to_contactsFragment"
             app:destination="@id/contactsFragment" />
         <action
-            android:id="@+id/action_cgroupsFragment_to_cGroupDetailsFragment"
+            android:id="@+id/action_cGroupsFragment_to_cGroupDetailsFragment"
             app:destination="@id/cGroupDetailsFragment" />
+        <action
+            android:id="@+id/action_cGroupsFragment_to_recentsFragment"
+            app:destination="@id/recentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cGroupDetailsFragment"
