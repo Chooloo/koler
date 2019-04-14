@@ -39,7 +39,6 @@ import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.SEND_SMS;
@@ -182,9 +181,9 @@ public class Utilities {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, "");
+            formattedNumber = phoneUtil.parse(phoneNumber, "ZZ");
         } catch (NumberParseException e) {
-            Timber.e(e);
+            Timber.w(e);
         }
 
         // return the number
