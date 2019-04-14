@@ -15,11 +15,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recents_recycler_view"
-            android:scrollbars="none"
+            android:id="@+id/recycler_view"
             style="@style/ListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="none"
             tools:listitem="@layout/item_contact">
 
         </androidx.recyclerview.widget.RecyclerView>

@@ -3,15 +3,10 @@ package com.chooloo.www.callmanager.ui.fragment;
 import android.Manifest;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CallLog;
-import android.provider.ContactsContract;
-import android.telecom.Call;
-import android.view.View;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
@@ -42,10 +37,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
-    private View mRootView;
 
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.recents_recycler_view) RecyclerView mRecyclerView;
     RecentsAdapter mAdapter;
 
     @Override

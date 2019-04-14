@@ -109,7 +109,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         // -- Tab Layout -- //
 
         // Select the second item in the tab layout
-        mTabLayout.setScrollPosition(1, 0f, true);
+        mTabLayout.getTabAt(1).select();
         // Move to the desired tab on tap
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -117,6 +117,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
                 switch (tab.getPosition()) {
                     case 0:
                         moveToFragment(R.id.recentsFragment);
+                        break;
                     case 1:
                         moveToFragment(R.id.contactsFragment);
                         break;
@@ -347,6 +348,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
                 } else if (fragmentId == R.id.cgroupsFragment) {
                     controller.navigate(R.id.action_recentFragment_to_cGroupsFragment);
                 }
+                break;
             }
         }
         mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);

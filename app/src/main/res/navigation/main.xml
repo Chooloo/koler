@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/recentsFragment"
-        android:name="com.chooloo.www.callmanager.ui.fragment.ContactsFragment"
+        android:name="com.chooloo.www.callmanager.ui.fragment.RecentsFragment"
         android:label="fragment_recents"
         tools:layout="@layout/fragment_recents">
         <action
