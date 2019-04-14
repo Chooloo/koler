@@ -27,8 +27,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -108,15 +106,17 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
             askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
         }
 
-        //Select the second item in the tab layout
+        // -- Tab Layout -- //
+
+        // Select the second item in the tab layout
         mTabLayout.setScrollPosition(1, 0f, true);
-        //Move to the desired tab on tap
+        // Move to the desired tab on tap
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        //TODO add recents fragment
+                        moveToFragment(R.id.recentsFragment);
                     case 1:
                         moveToFragment(R.id.contactsFragment);
                         break;
@@ -181,14 +181,14 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         syncFABAndFragment();
 
         //Listen for keyboard state changes
-        KeyboardVisibilityEvent.setEventListener(
-                this,
-                isOpen -> {
-                    if (!isOpen) { //If hides
-                        toggleSearchBar(false);
-                    }
-                }
-        );
+//        KeyboardVisibilityEvent.setEventListener(
+//                this,
+//                isOpen -> {
+//                    if (!isOpen) { //If hides
+//                        toggleSearchBar(false);
+//                    }
+//                }
+//        );
     }
 
     // -- Overrides -- //
@@ -267,7 +267,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
 
     @Override
     public int[] getIconsResources() {
-        return new int[] {
+        return new int[]{
                 R.drawable.ic_dialpad_black_24dp,
                 R.drawable.ic_search_black_24dp
         };
@@ -298,7 +298,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         else mRightButton.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
-    // -- Other -- //
+    // -- Fragments -- //
 
     private Fragment getCurrentFragment() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
@@ -320,6 +320,40 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         showButtons(true);
     }
 
+    public void moveToFragment(@IdRes int fragmentId) {
+        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
+        int currentFragmentId = controller.getCurrentDestination().getId();
+        switch (currentFragmentId) {
+            case R.id.contactsFragment: {
+                //showButtons(false);
+                if (fragmentId == R.id.cgroupsFragment) {
+                    controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
+                } else if (fragmentId == R.id.recentsFragment) {
+                    controller.navigate(R.id.action_contactsFragment_to_recentsFragment);
+                }
+                break;
+            }
+            case R.id.cgroupsFragment: {
+                if (fragmentId == R.id.contactsFragment) {
+                    controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
+                } else if (fragmentId == R.id.recentsFragment) {
+                    controller.navigate(R.id.action_cGroupsFragment_to_recentsFragment);
+                }
+                break;
+            }
+            case R.id.recentsFragment: {
+                if (fragmentId == R.id.contactsFragment) {
+                    controller.navigate(R.id.action_recentFragment_to_contactsFragment);
+                } else if (fragmentId == R.id.cgroupsFragment) {
+                    controller.navigate(R.id.action_recentFragment_to_cGroupsFragment);
+                }
+            }
+        }
+        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
+    // -- Other -- //
+
     /**
      * Change the dialer status (collapse/expand)
      *
@@ -331,27 +365,6 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         } else {
             BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
-    }
-
-    public void moveToFragment(@IdRes int fragmentId) {
-        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-        int currentFragmentId = controller.getCurrentDestination().getId();
-        switch(currentFragmentId) {
-            case R.id.contactsFragment: {
-                //showButtons(false);
-                if (fragmentId == R.id.cgroupsFragment) {
-                    controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
-                }
-                break;
-            }
-            case R.id.cgroupsFragment: {
-                if (fragmentId == R.id.contactsFragment) {
-                    controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
-                }
-                break;
-            }
-        }
-        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     /**
@@ -369,9 +382,11 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
      * @param isShow animate to visible/invisible
      */
     public void showButtons(boolean isShow) {
-        if (isShow && mRightButton.isEnabled()) mRightButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+        if (isShow && mRightButton.isEnabled())
+            mRightButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
         else mRightButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
-        if (isShow && mLeftButton.isEnabled()) mLeftButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
+        if (isShow && mLeftButton.isEnabled())
+            mLeftButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
         else mLeftButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
     }
 }

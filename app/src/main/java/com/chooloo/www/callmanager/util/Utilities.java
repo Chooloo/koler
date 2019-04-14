@@ -5,11 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.CallLog;
+import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,15 +21,21 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -277,6 +287,11 @@ public class Utilities {
         }
     }
 
+    /**
+     * Call voicemail
+     *
+     * @param view
+     */
     public static boolean callVoicemail(Context context) {
         try {
             Uri uri = Uri.parse("voicemail:1");
@@ -288,5 +303,48 @@ public class Utilities {
             Timber.e(e);
             return false;
         }
+    }
+
+    public ArrayList<RecentCall> getRecentCalls(Context context) {
+
+        ArrayList<RecentCall> recentCalls = new ArrayList<RecentCall>();
+
+        Uri queryUri = android.provider.CallLog.Calls.CONTENT_URI;
+
+        final String[] PROJECTION = new String[]{
+                ContactsContract.Contacts._ID,
+                CallLog.Calls._ID,
+                CallLog.Calls.CACHED_NAME,
+                CallLog.Calls.NUMBER,
+                CallLog.Calls.TYPE,
+                CallLog.Calls.DATE,
+                CallLog.Calls.DURATION};
+
+        String sortOrder = String.format("%s limit 500 ", CallLog.Calls.DATE + " DESC");
+
+        Cursor cursor = context.getContentResolver().query(queryUri, PROJECTION, null, null, sortOrder);
+
+        int title = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
+        int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
+        int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
+        int date = cursor.getColumnIndex(CallLog.Calls.DATE);
+        int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
+
+        while (cursor.moveToNext()) {
+
+            // Get the details
+            String callerName = cursor.getString(title);
+            String phNumber = cursor.getString(number);
+            String callType = cursor.getString(type);
+            long callDate = cursor.getLong(date);
+            String callDuration = cursor.getString(duration);
+
+            int callTypeCode = Integer.parseInt(callType);
+
+            RecentCall recentCall = new RecentCall(context, phNumber, callTypeCode, callDuration, callDate);
+            recentCalls.add(recentCall);
+        }
+        cursor.close();
+        return recentCalls;
     }
 }

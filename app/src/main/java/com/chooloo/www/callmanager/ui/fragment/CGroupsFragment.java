@@ -42,7 +42,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         mAdapter.setListener((v, cgroup) -> {
             Bundle args = new Bundle();
             args.putLong(getString(R.string.arg_list_id), cgroup.getListId());
-            Navigation.findNavController(v).navigate(R.id.action_cgroupsFragment_to_cGroupDetailsFragment, args);
+            Navigation.findNavController(v).navigate(R.id.action_cGroupsFragment_to_cGroupDetailsFragment, args);
         });
     }
 

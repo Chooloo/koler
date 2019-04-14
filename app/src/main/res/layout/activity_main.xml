@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ui.activity.MainActivity">
 
@@ -43,9 +44,8 @@
         style="@style/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/fab_margins"
-        android:layout_marginBottom="@dimen/fab_margins"
-        app:borderWidth="0dp"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
         app:layout_anchor="@+id/main_dialer_fragment"
         app:layout_anchorGravity="left|bottom"
         tools:src="@drawable/ic_search_black_24dp" />
@@ -55,9 +55,8 @@
         style="@style/ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/fab_margins"
-        android:layout_marginBottom="@dimen/fab_margins"
-        app:borderWidth="0dp"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
         app:layout_anchor="@+id/main_dialer_fragment"
         app:layout_anchorGravity="right|bottom"
         tools:src="@drawable/ic_dialpad_black_24dp" />

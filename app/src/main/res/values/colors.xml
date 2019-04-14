@@ -5,7 +5,7 @@
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/grey</color>
     <color name="colorAccent">@color/ic_launcher_background</color>
-    <color name="colorBackground">@color/grey_50</color>
+    <color name="colorBackground">@color/white</color>
 
     <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>

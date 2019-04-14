@@ -43,22 +43,20 @@
             android:id="@+id/recents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_access_time_black_24dp"
-            android:text="Recents" />
+            android:icon="@drawable/ic_access_time_black_24dp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/contacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_contacts_black_24dp"
-            android:text="Contacts" />
+            android:icon="@drawable/ic_contacts_black_24dp" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/lists"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_list_black_24dp"
-            android:text="Lists" />
+            android:icon="@drawable/ic_list_black_24dp" />
+
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
@@ -69,9 +67,5 @@
         android:layout_marginRight="7dp"
         android:layout_marginBottom="10dp"
         android:visibility="gone" />
-
-    <!-- If you want to see the search bar, replce "FrameLayout" with "fragment" and add -->
-    <!-- tools:layout="@layout/@layout/fragment_search_bar" -->
-
 
 </com.google.android.material.appbar.AppBarLayout>
