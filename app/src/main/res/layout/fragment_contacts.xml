@@ -25,6 +25,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <!--A piece of code from google's default Dial App-->
     <!-- Scrollbars are always on the right side of the screen. Layouts should use Rights/Left instead
     of Start/End -->
@@ -61,4 +62,5 @@
             android:paddingRight="16dp"
             android:src="@drawable/fast_scroller_scroll_bar" />
     </com.chooloo.www.callmanager.google.FastScroller>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

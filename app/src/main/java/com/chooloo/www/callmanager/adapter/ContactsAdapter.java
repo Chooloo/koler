@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,7 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
 
     private OnContactSelectedListener mOnContactSelectedListener;
 
-    private @Header int mHeader = Header.NONE;
+    private @ContactsFragment.Header int mHeader = ContactsFragment.Header.NONE;
     // List of contact sublist mHeaders
     private String[] mHeaders = new String[0];
     // Number of contacts that correspond to each mHeader in {@code mHeaders}.
@@ -40,8 +42,8 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
     public void changeCursor(Cursor cursor) {
         super.changeCursor(cursor);
         mCursor = cursor;
-        mHeaders = cursor.getExtras().getStringArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
-        mCounts = cursor.getExtras().getIntArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
+        mHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
+        mCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
         if (mCounts != null) {
             int sum = 0;
             for (int count : mCounts) {
@@ -57,7 +59,7 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
     public int getItemCount() {
         int count = super.getItemCount();
         // Manually insert the header if one exists.
-        if (mHeader != Header.NONE) {
+        if (mHeader != ContactsFragment.Header.NONE) {
             count++;
         }
         return count;
@@ -92,7 +94,7 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
     }
 
     public String getHeaderString(int position) {
-        if (mHeader != Header.NONE) {
+        if (mHeader != ContactsFragment.Header.NONE) {
             if (position == 0) {
                 return "+";
             }

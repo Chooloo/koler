@@ -62,6 +62,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
+    @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
 
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
@@ -186,6 +187,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         mContactsAdapter.changeCursor(data);
         mFastScroller.setup(mContactsAdapter, mLayoutManager);
+        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
     }
 
     @Override
