@@ -7,6 +7,7 @@ import android.provider.CallLog;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.util.ContactUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RecentCall {
@@ -17,7 +18,7 @@ public class RecentCall {
     private String mNumber;
     private String mCallType;
     private String mCallDuration;
-    private long mCallDate;
+    private Date mCallDate;
 
     // Call Types
     public static final String mOutgoingCall = "OUTGOING_CALL";
@@ -32,7 +33,7 @@ public class RecentCall {
      * @param duration call's duration
      * @param date     call's date
      */
-    public RecentCall(Context context, String number, int type, String duration, long date) {
+    public RecentCall(Context context, String number, int type, String duration, Date date) {
         this.mContext = context;
         this.mNumber = number;
         this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, number);
@@ -46,15 +47,18 @@ public class RecentCall {
         this.mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
         this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, this.mNumber);
         this.mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
-        this.mCallDate = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE));
+        this.mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
         int callType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
         switch (callType) {
             case 0:
                 this.mCallType = mOutgoingCall;
+                break;
             case 1:
                 this.mCallType = mIncomingCall;
+                break;
             case 2:
                 this.mCallType = mMissedCall;
+                break;
             default:
                 this.mCallType = null;
         }
@@ -80,8 +84,14 @@ public class RecentCall {
         return this.mCallDuration;
     }
 
-    public long getCallDate() {
+    public Date getCallDate() {
         return this.mCallDate;
+    }
+
+    public String getCallDateString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
+        String dateString = simpleDateFormat.format(this.mCallDate);
+        return dateString;
     }
 
     private String getTypeByInt(int type) {

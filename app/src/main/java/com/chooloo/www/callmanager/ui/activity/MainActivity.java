@@ -44,6 +44,7 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
+import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
@@ -102,8 +103,8 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         }
 
         // Ask for permissions
-        if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS)) {
-            askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS});
+        if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS) || !checkPermissionGranted(this, READ_CALL_LOG)) {
+            askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS, READ_CALL_LOG});
         }
 
         // -- Tab Layout -- //
