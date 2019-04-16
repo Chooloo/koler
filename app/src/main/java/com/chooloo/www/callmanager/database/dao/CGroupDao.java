@@ -25,7 +25,7 @@ public interface CGroupDao {
     int deleteById(long listId);
 
     @Query("SELECT * from cgroup_table WHERE list_id LIKE :listId")
-    List<CGroup> getCGroupById(long listId);
+    LiveData<List<CGroup>> getCGroupById(long listId);
 
     @Query("SELECT * from cgroup_table WHERE name LIKE :name")
     LiveData<List<CGroup>> getCGroupByName(String name);

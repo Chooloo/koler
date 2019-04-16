@@ -45,6 +45,10 @@ public class DataRepository {
         return mDatabase.getCGroupDao().getAllCGroups();
     }
 
+    public LiveData<List<CGroup>> getCGroup(long listId) {
+        return mDatabase.getCGroupDao().getCGroupById(listId);
+    }
+
     public LiveData<List<CGroupAndItsContacts>> getAllCGroupsAndTheirContacts() {
         return mDatabase.getCGroupAndItsContactsDao().getAllCGroupsAndTheirContacts();
     }

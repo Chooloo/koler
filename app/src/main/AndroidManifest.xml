@@ -28,7 +28,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--From Google's Dialer App-->
+            <!-- From Google's Dialer App -->
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
 
@@ -48,6 +48,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -73,13 +74,13 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".ui.activity.CGroupActivity"
+            android:parentActivityName=".ui.activity.MainActivity"/>
         <activity
             android:name=".ui.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransparentStatusBar" />
-
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:label="@string/activity_settings"

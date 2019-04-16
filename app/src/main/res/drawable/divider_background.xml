@@ -3,7 +3,7 @@
     <size
         android:width="1dp"
         android:height="0.1dp" />
-    <solid android:color="@color/grey" />
+    <solid android:color="@color/colorBackground" />
     <corners
         android:bottomLeftRadius="@dimen/default_edge_padding"
         android:topLeftRadius="@dimen/default_edge_padding" />

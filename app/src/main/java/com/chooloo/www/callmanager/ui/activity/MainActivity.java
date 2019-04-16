@@ -49,7 +49,7 @@ import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
-public class MainActivity extends AbsAppBarActivity implements FABCoordinator.OnFabClickListener {
+public class MainActivity extends AbsSearchBarActivity implements FABCoordinator.OnFabClickListener {
 
     // View Models
     SharedDialViewModel mSharedDialViewModel;
@@ -181,7 +181,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
         mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
         syncFABAndFragment();
 
-        //Listen for keyboard state changes
+//        //Listen for keyboard state changes
 //        KeyboardVisibilityEvent.setEventListener(
 //                this,
 //                isOpen -> {
@@ -370,7 +370,7 @@ public class MainActivity extends AbsAppBarActivity implements FABCoordinator.On
     }
 
     /**
-     * Extend/Collapse the appbar according to given parameter
+     * Extend/Collapse the appbar_main according to given parameter
      *
      * @param collapse
      */

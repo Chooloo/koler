@@ -5,9 +5,7 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBackground"
     app:elevation="20dp">
-    <!--android:background="@drawable/app_bar_background"-->
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -28,44 +26,4 @@
             tools:text="@string/app_name" />
 
     </androidx.appcompat.widget.Toolbar>
-
-    <!-- Placeholder for the search bar -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        style="@style/Widget.MaterialComponents.TabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBackground"
-        app:layout_scrollFlags="scroll|snap|enterAlways"
-        app:tabIndicatorColor="@color/colorAccent">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/recents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_access_time_black_24dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/contacts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_contacts_black_24dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/lists"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_list_black_24dp" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <FrameLayout
-        android:id="@+id/search_bar_container"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone" />
-
 </com.google.android.material.appbar.AppBarLayout>
