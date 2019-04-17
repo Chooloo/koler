@@ -30,6 +30,15 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     private CGroupAdapter mAdapter;
 
+    public static CGroupsFragment newInstance(int page, String title) {
+        CGroupsFragment cGroupsFragment = new CGroupsFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        cGroupsFragment.setArguments(args);
+        return cGroupsFragment;
+    }
+
     @Override
     protected void onCreateView() {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
@@ -85,7 +94,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     public int[] getIconsResources() {
-        return new int[] {
+        return new int[]{
                 R.drawable.ic_add_black_24dp,
                 -1 //This means no FAB at all
         };

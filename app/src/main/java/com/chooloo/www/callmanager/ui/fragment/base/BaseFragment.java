@@ -26,5 +26,6 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void onCreateView();
 
-    protected abstract @LayoutRes int layoutId();
+    protected abstract @LayoutRes
+    int layoutId();
 }
