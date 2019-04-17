@@ -1,19 +1,17 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -23,7 +21,6 @@ import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
-import timber.log.Timber;
 
 public class DialFragment extends BaseFragment {
 
@@ -146,7 +143,7 @@ public class DialFragment extends BaseFragment {
     @OnLongClick(R.id.chip1)
     public boolean startVoiceMail(View view) {
         vibrate();
-        return Utilities.callVoicemail(this.getContext());
+        return CallManager.callVoicemail(this.getContext());
     }
 
     @OnLongClick(R.id.chip0)
@@ -162,7 +159,7 @@ public class DialFragment extends BaseFragment {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        Utilities.call(this.getContext(), mNumberText);
+        CallManager.call(this.getContext(), mNumberText);
     }
 
     // -- Setters -- //

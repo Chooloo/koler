@@ -10,6 +10,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
@@ -202,7 +203,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onChildClick(String normPhoneNumber) {
 //        mSharedDialViewModel.setNumber(normPhoneNumber);
-        Utilities.call(this.getContext(), normPhoneNumber);
+        CallManager.call(this.getContext(), normPhoneNumber);
     }
 
     @Override

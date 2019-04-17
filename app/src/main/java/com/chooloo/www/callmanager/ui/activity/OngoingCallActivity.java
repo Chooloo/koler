@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.Image;
-import android.media.MediaMetadata;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,10 +21,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
-import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
+import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Stopwatch;
@@ -363,7 +361,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @OnClick(R.id.button_hold)
     public void toggleHold(View view) {
         Utilities.toggleViewActivation(view);
-        CallManager.sHold(view.isActivated());
+        CallManager.hold(view.isActivated());
     }
 
     //TODO add functionality to the Keypad button
@@ -374,7 +372,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO add functionality to the Add call button
     @OnClick(R.id.button_add_call)
     public void addCall(View view) {
-//        CallManager.sAddCall(// a call);
+//        CallManager.addCall(// a call);
     }
 
     /**
@@ -438,7 +436,7 @@ public class OngoingCallActivity extends AppCompatActivity {
      * Answers incoming call and changes the ui accordingly
      */
     private void activateCall() {
-        CallManager.sAnswer();
+        CallManager.answer();
         switchToCallingUI();
     }
 
@@ -447,9 +445,14 @@ public class OngoingCallActivity extends AppCompatActivity {
      */
     private void endCall() {
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
-        CallManager.sReject();
+        CallManager.reject();
         releaseWakeLock();
-        (new Handler()).postDelayed(this::finish, END_CALL_MILLIS); // Delay the closing of the call
+        if (CallManager.isAutoCalling()) {
+            finish();
+            CallManager.nextCall(this);
+        } else {
+            (new Handler()).postDelayed(this::finish, END_CALL_MILLIS); // Delay the closing of the call
+        }
     }
 
     // -- UI -- //

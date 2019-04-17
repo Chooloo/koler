@@ -27,23 +27,34 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/main_view_pager"
+    <!-- Placeholder for the search bar -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        style="@style/Widget.MaterialComponents.TabLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|snap|enterAlways"
+        app:tabIndicatorColor="@color/colorAccent">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            style="@style/Widget.MaterialComponents.TabLayout"
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/recents"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorBackground"
-            app:layout_scrollFlags="scroll|snap|enterAlways"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorAccent"
-            app:tabMode="fixed" />
+            android:icon="@drawable/ic_access_time_black_24dp" />
 
-    </androidx.viewpager.widget.ViewPager>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_contacts_black_24dp" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/lists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_list_black_24dp" />
+
+    </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
         android:id="@+id/search_bar_container"

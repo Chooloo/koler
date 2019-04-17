@@ -21,14 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CGroupAdapter extends RecyclerView.Adapter<CGroupAdapter.CGroupHolder> {
+public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHolder> {
 
     private Context mContext;
     private List<CGroupAndItsContacts> mData;
 
     private OnChildClickListener mListener;
 
-    public CGroupAdapter(Context context) {
+    public CGroupsAdapter(Context context) {
         mContext = context;
     }
 

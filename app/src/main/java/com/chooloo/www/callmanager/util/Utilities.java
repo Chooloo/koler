@@ -2,11 +2,9 @@ package com.chooloo.www.callmanager.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -21,7 +19,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -31,11 +28,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -181,7 +175,7 @@ public class Utilities {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
         try {
-            formattedNumber = phoneUtil.parse(phoneNumber, "ZZ");
+            formattedNumber = phoneUtil.parse(phoneNumber, sLocale.getCountry());
         } catch (NumberParseException e) {
             Timber.w(e);
         }
@@ -260,48 +254,6 @@ public class Utilities {
         } else {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-        }
-    }
-
-    /**
-     * Call a given number
-     *
-     * @param context
-     * @param number
-     */
-    public static void call(Context context, String number) {
-        Timber.i("Trying to call: " + number);
-        if (number.isEmpty()) {
-            Toast.makeText(context, "Calling without a number huh? U little shit", Toast.LENGTH_LONG).show();
-        } else {
-            try {
-                // Set the data for the call
-                String uri = "tel:" + number;
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
-                // Start the call
-                context.startActivity(callIntent);
-            } catch (SecurityException e) {
-                Toast.makeText(context, "Couldn't call " + number, Toast.LENGTH_LONG).show();
-                Timber.e(e, "Couldn't call %s", number);
-            }
-        }
-    }
-
-    /**
-     * Call voicemail
-     *
-     * @param view
-     */
-    public static boolean callVoicemail(Context context) {
-        try {
-            Uri uri = Uri.parse("voicemail:1");
-            Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
-            context.startActivity(voiceMail);
-            return true;
-        } catch (SecurityException e) {
-            Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
-            Timber.e(e);
-            return false;
         }
     }
 

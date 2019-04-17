@@ -45,7 +45,8 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.0.0'
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment:2.0.0" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-fragment:2.0.0"
+    // For Kotlin use navigation-fragment-ktx
     implementation "androidx.navigation:navigation-ui:2.0.0"
 
     //Room

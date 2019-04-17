@@ -37,15 +37,7 @@
             android:id="@+id/action_cGroupsFragment_to_contactsFragment"
             app:destination="@id/contactsFragment" />
         <action
-            android:id="@+id/action_cGroupsFragment_to_cGroupDetailsFragment"
-            app:destination="@id/cGroupDetailsFragment" />
-        <action
             android:id="@+id/action_cGroupsFragment_to_recentsFragment"
             app:destination="@id/recentsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/cGroupDetailsFragment"
-        android:name="com.chooloo.www.callmanager.ui.fragment.CGroupDetailsFragment"
-        android:label="fragment_cgroup_details"
-        tools:layout="@layout/fragment_cgroup_details" />
 </navigation>

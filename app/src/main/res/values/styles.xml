@@ -8,7 +8,8 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -32,6 +33,7 @@
 
     <!-- List View -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
+        <item name="background">@color/white</item>
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:paddingTop">@dimen/default_spacing_padding</item>
@@ -50,7 +52,9 @@
 
     <style name="ListItemText.Small">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="android:text">small text, small text, small text, small text, small text, small text</item>
+        <item name="android:text">small text, small text, small text, small text, small text, small
+            text
+        </item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>

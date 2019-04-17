@@ -3,9 +3,9 @@
     <color name="ic_launcher_background">#ED4F4F</color>
 
     <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/grey</color>
+    <color name="colorPrimaryDark">@color/grey_50</color>
     <color name="colorAccent">@color/ic_launcher_background</color>
-    <color name="colorBackground">@color/white</color>
+    <color name="colorBackground">@color/grey_50</color>
 
     <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>
@@ -19,7 +19,7 @@
     <color name="white">#ffffff</color>
     <color name="semi_white">#DAFFFFFF</color>
     <color name="grey_50">#FAFAFA</color>
-    <color name="grey">#F4F4F4</color>
+    <color name="grey_300">#E0E0E0</color>
 
     <!-- Green -->
     <color name="green_phone">#66bb6a</color>

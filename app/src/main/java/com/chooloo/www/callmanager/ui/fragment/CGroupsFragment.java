@@ -1,13 +1,15 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.CGroupAdapter;
+import com.chooloo.www.callmanager.adapter.CGroupsAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
+import com.chooloo.www.callmanager.ui.activity.CGroupActivity;
 import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 
@@ -15,7 +17,6 @@ import java.io.File;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +29,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     private CGroupsViewModel mViewModel;
 
-    private CGroupAdapter mAdapter;
+    private CGroupsAdapter mAdapter;
 
     public static CGroupsFragment newInstance(int page, String title) {
         CGroupsFragment cGroupsFragment = new CGroupsFragment();
@@ -45,13 +46,13 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         mRecyclerView.addItemDecoration(itemDecor);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupAdapter(getContext());
+        mAdapter = new CGroupsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setListener((v, cgroup) -> {
-            Bundle args = new Bundle();
-            args.putLong(getString(R.string.arg_list_id), cgroup.getListId());
-            Navigation.findNavController(v).navigate(R.id.action_cGroupsFragment_to_cGroupDetailsFragment, args);
+            Intent intent = new Intent(getContext(), CGroupActivity.class);
+            intent.putExtra(CGroupActivity.EXTRA_LIST_ID, cgroup.getListId());
+            startActivity(intent);
         });
     }
 
