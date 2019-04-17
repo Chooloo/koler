@@ -67,6 +67,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
                     case RecyclerView.SCROLL_STATE_SETTLING:
                         mSharedDialViewModel.setIsOutOfFocus(true);
                         mSharedSearchViewModel.setIsFocused(false);
+                        break;
                     default:
                         mSharedDialViewModel.setIsOutOfFocus(false);
                 }

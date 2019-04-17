@@ -39,7 +39,7 @@ public class RecentsAdapter extends CursorRecyclerViewAdapter<RecentsAdapter.Rec
         RecentCall recentCall = new RecentCall(this.mContext, cursor);
 
         String phoneNumber = recentCall.getCallerNumber();
-        viewHolder.time.setText(Utilities.formatPhoneNumber(Long.toString(recentCall.getCallDate())));
+        viewHolder.time.setText(recentCall.getCallDateString());
 
         if (recentCall.getCallerName() != null) viewHolder.name.setText(recentCall.getCallerName());
         else viewHolder.name.setText(phoneNumber);

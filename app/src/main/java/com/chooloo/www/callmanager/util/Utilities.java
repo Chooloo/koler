@@ -288,7 +288,7 @@ public class Utilities {
             String callerName = cursor.getString(title);
             String phNumber = cursor.getString(number);
             String callType = cursor.getString(type);
-            long callDate = cursor.getLong(date);
+            Date callDate = new Date(cursor.getLong(date));
             String callDuration = cursor.getString(duration);
 
             int callTypeCode = Integer.parseInt(callType);
