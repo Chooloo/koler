@@ -9,6 +9,7 @@ import com.chooloo.www.callmanager.database.dao.CGroupDao;
 import com.chooloo.www.callmanager.database.dao.ContactDao;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
@@ -110,13 +111,17 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
             int rowsRead = 0;
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
+                if (row.getCell(mNameColIndex) == null || row.getCell(mNumberColIndex) == null)
+                    continue;
+
                 String name = row.getCell(mNameColIndex).getStringCellValue();
 
                 CellType cellType = row.getCell(mNumberColIndex).getCellType();
                 String phoneNumber = null;
                 switch (cellType) {
                     case NUMERIC:
-                        phoneNumber = String.valueOf(row.getCell(mNumberColIndex).getNumericCellValue());
+                        double number = row.getCell(mNumberColIndex).getNumericCellValue();
+                        phoneNumber = String.format(Utilities.sLocale, "%.0f\n", number);
                         break;
                     case STRING:
                         phoneNumber = row.getCell(mNumberColIndex).getStringCellValue();
