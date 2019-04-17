@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.CGroupAdapter;
+import com.chooloo.www.callmanager.adapter.CGroupsAdapter;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
@@ -29,7 +29,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     private CGroupsViewModel mViewModel;
 
-    private CGroupAdapter mAdapter;
+    private CGroupsAdapter mAdapter;
 
     @Override
     protected void onCreateView() {
@@ -37,7 +37,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         mRecyclerView.addItemDecoration(itemDecor);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupAdapter(getContext());
+        mAdapter = new CGroupsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setListener((v, cgroup) -> {

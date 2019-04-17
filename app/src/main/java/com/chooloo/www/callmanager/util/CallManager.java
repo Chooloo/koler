@@ -1,25 +1,72 @@
 package com.chooloo.www.callmanager.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
+import android.widget.Toast;
 
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.activity.OngoingCallActivity;
+import com.chooloo.www.callmanager.util.validation.Validator;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
 
 public class CallManager {
 
     // Variables
     public static Call sCall;
+    private static boolean sIsAutoCalling = false;
+    private static List<Contact> sAutoCallingContactsList = null;
+    private static int sAutoCallPosition = 0;
 
     // -- Call Actions -- //
 
     /**
+     * Call a given number
+     *
+     * @param context
+     * @param number
+     */
+    public static void call(@NotNull Context context, @NotNull String number) {
+        Timber.i("Trying to call: " + number);
+        try {
+            // Set the data for the call
+            String uri = "tel:" + number;
+            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+            // Start the call
+            context.startActivity(callIntent);
+        } catch (SecurityException e) {
+            Timber.e(e, "Couldn't call %s", number);
+        }
+    }
+
+    /**
+     * Call voicemail
+     */
+    public static boolean callVoicemail(Context context) {
+        try {
+            Uri uri = Uri.parse("voicemail:1");
+            Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
+            context.startActivity(voiceMail);
+            return true;
+        } catch (SecurityException e) {
+            Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
+            Timber.e(e);
+            return false;
+        }
+    }
+
+    /**
      * Answers incoming call
      */
-    public static void sAnswer() {
+    public static void answer() {
         if (sCall != null) {
             sCall.answer(VideoProfile.STATE_AUDIO_ONLY);
         }
@@ -28,19 +75,17 @@ public class CallManager {
     /**
      * Ends call
      * If call ended from the other side, disconnects
+     *
+     * @return true whether there's no more calls awaiting
      */
-    public static void sReject() {
+    public static void reject() {
         if (sCall != null) {
             if (sCall.getState() == Call.STATE_RINGING) {
                 sCall.reject(false, null);
             } else {
-                try {
-                    sCall.disconnect();
-                } catch (Exception e1) {
-                    Timber.e(e1, "Couldn't disconnect call (Trying to reject)");
-                    sCall.reject(false, null);
-                }
+                sCall.disconnect();
             }
+            if (sIsAutoCalling) sAutoCallPosition++;
         }
     }
 
@@ -49,7 +94,7 @@ public class CallManager {
      *
      * @param hold
      */
-    public static void sHold(boolean hold) {
+    public static void hold(boolean hold) {
         if (sCall != null) {
             if (hold) sCall.hold();
             else sCall.unhold();
@@ -61,7 +106,7 @@ public class CallManager {
      *
      * @param call
      */
-    public static void sAddCall(Call call) {
+    public static void addCall(Call call) {
         if (sCall != null) {
             sCall.conference(call);
         }
@@ -85,6 +130,40 @@ public class CallManager {
     public static void unregisterCallback(Call.Callback callback) {
         if (sCall == null) return;
         sCall.unregisterCallback(callback);
+    }
+
+    // -- Auto-Calling -- //
+
+    public static void startAutoCalling(@NotNull List<Contact> list, @NotNull AppCompatActivity context, int startPosition) {
+        sIsAutoCalling = true;
+        sAutoCallPosition = startPosition;
+        sAutoCallingContactsList = list;
+        if (sAutoCallingContactsList.isEmpty()) Timber.e("No contacts in auto calling list");
+        nextCall(context);
+    }
+
+    public static void nextCall(@NotNull Context context) {
+        if (sAutoCallingContactsList != null && sAutoCallPosition < sAutoCallingContactsList.size()) {
+            String phoneNumber = sAutoCallingContactsList.get(sAutoCallPosition).getMainPhoneNumber();
+            if (Validator.validatePhoneNumber(phoneNumber)) {
+                call(context, phoneNumber);
+            } else {
+                Toast.makeText(context, "Can't call " + phoneNumber, Toast.LENGTH_SHORT).show();
+                sAutoCallPosition++;
+                nextCall(context);
+            }
+        } else {
+            finishAutoCall();
+        }
+    }
+
+    public static void finishAutoCall() {
+        sIsAutoCalling = false;
+        sAutoCallPosition = 0;
+    }
+
+    public static boolean isAutoCalling() {
+        return sIsAutoCalling;
     }
 
     // -- Getters -- //

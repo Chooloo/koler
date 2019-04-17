@@ -4,14 +4,13 @@ import android.Manifest;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.google.FastScroller;
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.lang.annotation.Retention;
@@ -22,9 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -209,6 +206,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     public void onContactSelected(String normPhoneNumber) {
         if (normPhoneNumber == null) return;
 //        mSharedDialViewModel.setNumber(normPhoneNumber);
-        Utilities.call(this.getContext(), normPhoneNumber);
+        CallManager.call(this.getContext(), normPhoneNumber);
     }
 }

@@ -1,5 +1,7 @@
 package com.chooloo.www.callmanager.util.validation;
 
+import android.util.Patterns;
+
 public class Validator {
 
     public static boolean validateName(String name) {
@@ -17,5 +19,9 @@ public class Validator {
                 return false;
             }
         }
+    }
+
+    public static boolean validatePhoneNumber(String phoneNumber) {
+        return Patterns.PHONE.matcher(phoneNumber).matches();
     }
 }
