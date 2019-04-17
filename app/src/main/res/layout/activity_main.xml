@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activity.MainActivity">
 
     <!-- App Bar -->
@@ -15,16 +15,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Contacts List View Fragment-->
-    <fragment
-        android:id="@+id/main_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:navGraph="@navigation/main"
-        tools:layout="@layout/fragment_contacts" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            style="@style/Widget.MaterialComponents.TabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBackground"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabMode="fixed" />
+
+    </androidx.viewpager.widget.ViewPager>
 
     <!-- TODO add style for bottom FloatingActionButton -->
     <fragment

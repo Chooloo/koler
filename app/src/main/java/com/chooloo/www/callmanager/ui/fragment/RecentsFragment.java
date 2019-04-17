@@ -42,15 +42,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     RecentsAdapter mAdapter;
 
-    public static RecentsFragment newInstance(int page, String title){
-        RecentsFragment recentsFragment = new RecentsFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        recentsFragment.setArguments(args);
-        return recentsFragment;
-    }
-
     @Override
     protected void onCreateView() {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);

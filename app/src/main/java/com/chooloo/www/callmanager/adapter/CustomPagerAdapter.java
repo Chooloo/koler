@@ -18,6 +18,10 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
 
     private Context mContext;
 
+    private final static String FIRST_POSITION_TITLE = "Recents";
+    private final static String SECOND_POSITION_TITLE = "Contacts";
+    private final static String THIRD_POSITION_TITLE = "Excel";
+
     public CustomPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
@@ -46,7 +50,15 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Page " + position;
+        switch (position) {
+            case 0:
+                return FIRST_POSITION_TITLE;
+            case 1:
+                return SECOND_POSITION_TITLE;
+            case 2:
+                return THIRD_POSITION_TITLE;
+            default:
+                return null;
+        }
     }
-
 }

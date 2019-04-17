@@ -39,15 +39,6 @@ public class DialFragment extends BaseFragment {
     // Layouts
     @BindView(R.id.table_numbers) TableLayout mNumbersTable;
 
-    public static DialFragment newInstance(int page, String title){
-        DialFragment dialFragment = new DialFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        dialFragment.setArguments(args);
-        return dialFragment;
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreateView() {

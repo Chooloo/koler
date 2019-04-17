@@ -64,15 +64,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
 
-    public static ContactsFragment newInstance(int page, String title){
-        ContactsFragment contactsFragment = new ContactsFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        contactsFragment.setArguments(args);
-        return contactsFragment;
-    }
-
     @Override
     protected void onCreateView() {
         mLayoutManager =

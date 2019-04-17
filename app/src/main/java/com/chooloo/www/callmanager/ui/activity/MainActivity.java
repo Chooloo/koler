@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
@@ -65,7 +64,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
     // Layouts and Fragments
     @BindView(R.id.appbar) View mAppBar;
-    //    @BindView(R.id.tab_layout) TabLayout mTabLayout;
     @BindView(R.id.main_view_pager) ViewPager mViewPager;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
     @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
@@ -124,7 +122,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getApplicationContext(), "you in page: " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -301,7 +298,8 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     }
 
 //    private Fragment getCurrentFragment() {
-//        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+//        int position = mViewPager.getCurrentItem();
+//        NavHostFragment navHostFragment = (NavHostFragment) mAdapterViewPager.getItem(position);
 //        List<Fragment> fragmentList = navHostFragment.getChildFragmentManager().getFragments();
 //        if (fragmentList == null || fragmentList.isEmpty()) {
 //            return null;
@@ -319,39 +317,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
         }
         showButtons(true);
     }
-
-//    public void moveToFragment(@IdRes int fragmentId) {
-//        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-//        int currentFragmentId = controller.getCurrentDestination().getId();
-//        switch (currentFragmentId) {
-//            case R.id.contactsFragment: {
-//                //showButtons(false);
-//                if (fragmentId == R.id.cgroupsFragment) {
-//                    controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
-//                } else if (fragmentId == R.id.recentsFragment) {
-//                    controller.navigate(R.id.action_contactsFragment_to_recentsFragment);
-//                }
-//                break;
-//            }
-//            case R.id.cgroupsFragment: {
-//                if (fragmentId == R.id.contactsFragment) {
-//                    controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
-//                } else if (fragmentId == R.id.recentsFragment) {
-//                    controller.navigate(R.id.action_cGroupsFragment_to_recentsFragment);
-//                }
-//                break;
-//            }
-//            case R.id.recentsFragment: {
-//                if (fragmentId == R.id.contactsFragment) {
-//                    controller.navigate(R.id.action_recentFragment_to_contactsFragment);
-//                } else if (fragmentId == R.id.cgroupsFragment) {
-//                    controller.navigate(R.id.action_recentFragment_to_cGroupsFragment);
-//                }
-//                break;
-//            }
-//        }
-//        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//    }
 
     // -- Other -- //
 

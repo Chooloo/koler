@@ -31,15 +31,6 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     private CGroupsAdapter mAdapter;
 
-    public static CGroupsFragment newInstance(int page, String title) {
-        CGroupsFragment cGroupsFragment = new CGroupsFragment();
-        Bundle args = new Bundle();
-        args.putInt("someInt", page);
-        args.putString("someTitle", title);
-        cGroupsFragment.setArguments(args);
-        return cGroupsFragment;
-    }
-
     @Override
     protected void onCreateView() {
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
