@@ -82,6 +82,12 @@ dependencies {
 
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
 
+    // SpringIndicator
+    implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
+
+    // SmartTabLayout
+    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.annotation:annotation:1.0.0'

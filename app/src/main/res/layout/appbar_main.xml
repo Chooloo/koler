@@ -27,35 +27,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Placeholder for the search bar -->
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        style="@style/Widget.MaterialComponents.TabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|snap|enterAlways"
-        app:tabIndicatorColor="@color/colorAccent">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/recents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_access_time_black_24dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/contacts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_contacts_black_24dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/lists"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_list_black_24dp" />
-
-    </com.google.android.material.tabs.TabLayout>
-
     <FrameLayout
         android:id="@+id/search_bar_container"
         android:layout_width="match_parent"
@@ -64,5 +35,45 @@
         android:layout_marginRight="7dp"
         android:layout_marginBottom="10dp"
         android:visibility="gone" />
+
+    <com.ogaclejapan.smarttablayout.SmartTabLayout
+        android:id="@+id/view_pager_tab"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:stl_clickable="true"
+        app:stl_defaultTabBackground="?attr/selectableItemBackground"
+        app:stl_defaultTabTextAllCaps="true"
+        app:stl_defaultTabTextColor="@drawable/tab_color_selector"
+        app:stl_defaultTabTextHorizontalPadding="16dp"
+        app:stl_defaultTabTextMinWidth="0dp"
+        app:stl_defaultTabTextSize="12sp"
+        app:stl_distributeEvenly="false"
+        app:stl_dividerColor="#4D000000"
+        app:stl_dividerThickness="0dp"
+        app:stl_drawDecorationAfterTab="false"
+        app:stl_indicatorAlwaysInCenter="true"
+        app:stl_indicatorColor="@color/default_pic_color"
+        app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
+        app:stl_indicatorGravity="center"
+        app:stl_indicatorInFront="true"
+        app:stl_indicatorInterpolation="smart"
+        app:stl_indicatorThickness="30dp"
+        app:stl_indicatorWidth="auto"
+        app:stl_indicatorWithoutPadding="false"
+        app:stl_overlineColor="#4D000000"
+        app:stl_overlineThickness="0dp"
+        app:stl_titleOffset="24dp"
+        app:stl_underlineColor="#4D000000"
+        app:stl_underlineThickness="0dp" />
+    <!--<github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/indicator"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--app:siIndicatorColors="@array/indicator_colors"-->
+    <!--app:siIndicatorColor="@color/colorAccent"-->
+    <!--app:siSelectedTextColor="@android:color/white"-->
+    <!--app:siTextColor="@color/white"-->
+    <!--app:siTextSize="13sp" />-->
+
 
 </com.google.android.material.appbar.AppBarLayout>

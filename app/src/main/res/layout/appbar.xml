@@ -27,24 +27,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!--<androidx.viewpager.widget.ViewPager-->
-        <!--android:id="@+id/main_view_pager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp">-->
-
-        <!--<com.google.android.material.tabs.TabLayout-->
-            <!--android:id="@+id/tab_layout"-->
-            <!--style="@style/Widget.MaterialComponents.TabLayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/colorBackground"-->
-            <!--app:layout_scrollFlags="scroll|snap|enterAlways"-->
-            <!--app:tabGravity="fill"-->
-            <!--app:tabIndicatorColor="@color/colorAccent"-->
-            <!--app:tabMode="fixed" />-->
-
-    <!--</androidx.viewpager.widget.ViewPager>-->
-
     <FrameLayout
         android:id="@+id/search_bar_container"
         android:layout_width="match_parent"

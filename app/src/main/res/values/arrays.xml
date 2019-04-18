@@ -22,4 +22,10 @@
         <item>Bla</item>
     </string-array>
 
+    <string-array name="indicator_colors">
+        <item>@color/colorAccent</item>
+        <item>@color/colorAccent</item>
+        <item>@color/colorAccent</item>
+        <item>@color/colorAccent</item>
+    </string-array>
 </resources>

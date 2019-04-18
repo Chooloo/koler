@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color name="ic_launcher_background">#ED4F4F</color>
 
     <color name="colorPrimary">@color/white</color>
@@ -44,4 +44,9 @@
     <color name="dialer_text">#388E3C</color>
 
     <color name="default_pic_color">#EE716F</color>
+
+    <color name="selector_color">
+        <item android:color="@color/colorAccent" />
+        <item android:color="@color/white" android:state_selected="true" />
+    </color>
 </resources>

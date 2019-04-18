@@ -27,6 +27,7 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +45,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import github.chenupt.springindicator.SpringIndicator;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
@@ -62,17 +64,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     //Coordinator
     FABCoordinator mFABCoordinator;
 
-    // Layouts and Fragments
-    @BindView(R.id.appbar) View mAppBar;
-    @BindView(R.id.main_view_pager) ViewPager mViewPager;
-    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
-    @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
-    @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
-
-    // Buttons
-    @BindView(R.id.right_button) FloatingActionButton mRightButton;
-    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
-
     // Fragments
     DialFragment mDialFragment;
     SearchBarFragment mSearchBarFragment;
@@ -80,6 +71,22 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     BottomSheetBehavior mBottomSheetBehaviour;
 
     FragmentPagerAdapter mAdapterViewPager;
+
+    // - View Binds - //
+
+    // Views
+    @BindView(R.id.appbar) View mAppBar;
+    @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
+    // Layouts
+    @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
+    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
+    // Buttons
+    @BindView(R.id.right_button) FloatingActionButton mRightButton;
+    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
+    // Other
+//    @BindView(R.id.indicator) SpringIndicator mSpringIndicator;
+    @BindView(R.id.main_view_pager) ViewPager mViewPager;
+    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +136,9 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
             }
         });
+        // Initialize SpringIndicator
+//        mSpringIndicator.setViewPager(mViewPager);
+        mSmartTabLayout.setViewPager(mViewPager);
 
         // - View Models - //
 
