@@ -84,7 +84,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     @BindView(R.id.right_button) FloatingActionButton mRightButton;
     @BindView(R.id.left_button) FloatingActionButton mLeftButton;
     // Other
-//    @BindView(R.id.indicator) SpringIndicator mSpringIndicator;
     @BindView(R.id.main_view_pager) ViewPager mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
@@ -136,8 +135,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
             }
         });
-        // Initialize SpringIndicator
-//        mSpringIndicator.setViewPager(mViewPager);
         mSmartTabLayout.setViewPager(mViewPager);
 
         // - View Models - //
@@ -302,6 +299,11 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
     // -- Fragments -- //
 
+    /**
+     * Returns the current displayed fragment (recents/contacts/excel)
+     *
+     * @return Fragment
+     */
     private Fragment getCurrentFragment() {
         int position = mViewPager.getCurrentItem();
         return mAdapterViewPager.getItem(position);

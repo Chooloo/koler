@@ -65,15 +65,5 @@
         app:stl_titleOffset="24dp"
         app:stl_underlineColor="#4D000000"
         app:stl_underlineThickness="0dp" />
-    <!--<github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/indicator"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="50dp"-->
-    <!--app:siIndicatorColors="@array/indicator_colors"-->
-    <!--app:siIndicatorColor="@color/colorAccent"-->
-    <!--app:siSelectedTextColor="@android:color/white"-->
-    <!--app:siTextColor="@color/white"-->
-    <!--app:siTextSize="13sp" />-->
-
 
 </com.google.android.material.appbar.AppBarLayout>
