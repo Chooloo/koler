@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
@@ -26,6 +27,7 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,13 +36,16 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import github.chenupt.springindicator.SpringIndicator;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
@@ -59,22 +64,28 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     //Coordinator
     FABCoordinator mFABCoordinator;
 
-    // Layouts and Fragments
-    @BindView(R.id.appbar) View mAppBar;
-    @BindView(R.id.tab_layout) TabLayout mTabLayout;
-    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
-    @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
-    @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
-
-    // Buttons
-    @BindView(R.id.right_button) FloatingActionButton mRightButton;
-    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
-
     // Fragments
     DialFragment mDialFragment;
     SearchBarFragment mSearchBarFragment;
 
     BottomSheetBehavior mBottomSheetBehaviour;
+
+    FragmentPagerAdapter mAdapterViewPager;
+
+    // - View Binds - //
+
+    // Views
+    @BindView(R.id.appbar) View mAppBar;
+    @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
+    // Layouts
+    @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
+    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
+    // Buttons
+    @BindView(R.id.right_button) FloatingActionButton mRightButton;
+    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
+    // Other
+    @BindView(R.id.main_view_pager) ViewPager mViewPager;
+    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,38 +118,24 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
             askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS, READ_CALL_LOG});
         }
 
-        // -- Tab Layout -- //
-
-        // Select the second item in the tab layout
-        mTabLayout.getTabAt(1).select();
-        // Move to the desired tab on tap
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mAdapterViewPager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        moveToFragment(R.id.recentsFragment);
-                        break;
-                    case 1:
-                        moveToFragment(R.id.contactsFragment);
-                        break;
-                    case 2:
-                        moveToFragment(R.id.cgroupsFragment);
-                        break;
-                    default:
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
+        mSmartTabLayout.setViewPager(mViewPager);
 
         // - View Models - //
 
@@ -302,15 +299,26 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
     // -- Fragments -- //
 
+    /**
+     * Returns the current displayed fragment (recents/contacts/excel)
+     *
+     * @return Fragment
+     */
     private Fragment getCurrentFragment() {
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-        List<Fragment> fragmentList = navHostFragment.getChildFragmentManager().getFragments();
-        if (fragmentList == null || fragmentList.isEmpty()) {
-            return null;
-        } else {
-            return fragmentList.get(0);
-        }
+        int position = mViewPager.getCurrentItem();
+        return mAdapterViewPager.getItem(position);
     }
+
+//    private Fragment getCurrentFragment() {
+//        int position = mViewPager.getCurrentItem();
+//        NavHostFragment navHostFragment = (NavHostFragment) mAdapterViewPager.getItem(position);
+//        List<Fragment> fragmentList = navHostFragment.getChildFragmentManager().getFragments();
+//        if (fragmentList == null || fragmentList.isEmpty()) {
+//            return null;
+//        } else {
+//            return fragmentList.get(0);
+//        }
+//    }
 
     public void syncFABAndFragment() {
         Fragment fragment = getCurrentFragment();
@@ -320,39 +328,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
             mFABCoordinator.setListener((FABCoordinator.OnFabClickListener) fragment);
         }
         showButtons(true);
-    }
-
-    public void moveToFragment(@IdRes int fragmentId) {
-        NavController controller = Navigation.findNavController(this, R.id.main_fragment);
-        int currentFragmentId = controller.getCurrentDestination().getId();
-        switch (currentFragmentId) {
-            case R.id.contactsFragment: {
-                //showButtons(false);
-                if (fragmentId == R.id.cgroupsFragment) {
-                    controller.navigate(R.id.action_contactsFragment_to_cGroupsFragment);
-                } else if (fragmentId == R.id.recentsFragment) {
-                    controller.navigate(R.id.action_contactsFragment_to_recentsFragment);
-                }
-                break;
-            }
-            case R.id.cgroupsFragment: {
-                if (fragmentId == R.id.contactsFragment) {
-                    controller.navigate(R.id.action_cGroupsFragment_to_contactsFragment);
-                } else if (fragmentId == R.id.recentsFragment) {
-                    controller.navigate(R.id.action_cGroupsFragment_to_recentsFragment);
-                }
-                break;
-            }
-            case R.id.recentsFragment: {
-                if (fragmentId == R.id.contactsFragment) {
-                    controller.navigate(R.id.action_recentFragment_to_contactsFragment);
-                } else if (fragmentId == R.id.cgroupsFragment) {
-                    controller.navigate(R.id.action_recentFragment_to_cGroupsFragment);
-                }
-                break;
-            }
-        }
-        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     // -- Other -- //

@@ -26,4 +26,14 @@
             tools:text="@string/app_name" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/search_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone" />
+
 </com.google.android.material.appbar.AppBarLayout>

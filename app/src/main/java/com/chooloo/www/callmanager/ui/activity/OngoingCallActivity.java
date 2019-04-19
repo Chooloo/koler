@@ -113,13 +113,11 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.button_keypad) ImageView mKeypadButton;
     @BindView(R.id.button_speaker) ImageView mSpeakerButton;
     @BindView(R.id.button_add_call) ImageView mAddCallButton;
-
     @BindView(R.id.button_send_sms) Button mSendSmsButton;
 
     // Floating Action Buttons
     @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
     @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
-
     @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
     @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
     @BindView(R.id.button_cancel_sms) FloatingActionButton mFloatingCancelSMS;

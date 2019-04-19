@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activity.MainActivity">
 
     <!-- App Bar -->
@@ -15,18 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Contacts List View Fragment-->
-    <fragment
-        android:id="@+id/main_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <!-- View Pager -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:navGraph="@navigation/main"
-        tools:layout="@layout/fragment_contacts" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp" />
 
-    <!-- TODO add style for bottom FloatingActionButton -->
+    <!-- Dialer Fragment -->
     <fragment
         android:id="@+id/main_dialer_fragment"
         android:name="com.chooloo.www.callmanager.ui.fragment.DialFragment"
@@ -39,6 +35,7 @@
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dial" />
 
+    <!-- Left Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/left_button"
         style="@style/ActionButton"
@@ -50,6 +47,7 @@
         app:layout_anchorGravity="left|bottom"
         tools:src="@drawable/ic_search_black_24dp" />
 
+    <!-- Right Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/right_button"
         style="@style/ActionButton"
@@ -60,7 +58,5 @@
         app:layout_anchor="@+id/main_dialer_fragment"
         app:layout_anchorGravity="right|bottom"
         tools:src="@drawable/ic_dialpad_black_24dp" />
-
-    <!-- Dialer Fragment-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
