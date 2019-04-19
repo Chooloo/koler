@@ -1,12 +1,14 @@
 package com.chooloo.www.callmanager.database;
 
+import android.os.Process;
+
+import androidx.lifecycle.LiveData;
+
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
 import java.util.List;
-
-import androidx.lifecycle.LiveData;
 
 public class DataRepository {
 
@@ -28,6 +30,28 @@ public class DataRepository {
     private DataRepository(final AppDatabase database) {
         mDatabase = database;
     }
+
+    // - Update - //
+
+    public void update(Contact... contacts) {
+        Thread thread = new Thread(() -> {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            mDatabase.getContactDao().update(contacts);
+        });
+        thread.start();
+    }
+
+    // - Remove - //
+
+    public void removeContact(long contactId) {
+        Thread thread = new Thread(() -> {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            mDatabase.getContactDao().deleteById(contactId);
+        });
+        thread.start();
+    }
+
+    // - Query - //
 
     public LiveData<List<Contact>> getAllContacts() {
         return mDatabase.getContactDao().getAllContacts();

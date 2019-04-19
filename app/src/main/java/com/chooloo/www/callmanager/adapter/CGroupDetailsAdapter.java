@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,14 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperViewHolder;
 import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
+import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperViewHolder;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
+import com.chooloo.www.callmanager.database.AppDatabase;
+import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,16 +29,20 @@ import butterknife.ButterKnife;
 public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdapter.ContactHolder>
         implements SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
 
-    private Context mContext;
+    private AppCompatActivity mContext;
+    private DataRepository mRepository;
+
     private List<Contact> mData;
 
     private boolean mEditModeEnabled = false;
 
     private ItemTouchHelperListener mItemTouchHelperListener;
 
-    public CGroupDetailsAdapter(Context context, ItemTouchHelperListener itemTouchHelperListener) {
+    public CGroupDetailsAdapter(AppCompatActivity context, ItemTouchHelperListener itemTouchHelperListener) {
         mContext = context;
         mItemTouchHelperListener = itemTouchHelperListener;
+
+        mRepository = DataRepository.getInstance(AppDatabase.getDatabase(mContext));
     }
 
     @NonNull
@@ -79,16 +86,44 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
+
+        //Switch in database
+        Contact firstContact = mData.get(fromPosition);
+        Contact secondContact = mData.get(toPosition);
+        long temp = firstContact.getContactId();
+        firstContact.setContactId(secondContact.getContactId());
+        secondContact.setContactId(temp);
+        mRepository.update(firstContact, secondContact);
+
+        //Switch in list - has to be this way for smooth dragging
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mData, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mData, i, i - 1);
+            }
+        }
+
         notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
-    public void onItemDismiss(int position)
-    {
+    public void onItemDismiss(int position) {
+        //Remove in database
+        long id = mData.get(position).getContactId();
+
+        //Remove in list
+        mData.remove(position);
+
+        mRepository.removeContact(id);
+
         notifyItemRemoved(position);
     }
 
     public void setData(List<Contact> data) {
+        if (mData != null) return;
         mData = data;
         notifyDataSetChanged();
     }
@@ -121,7 +156,6 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
         @Override
         public void onItemClear() {
-            itemView.setElevation(0f);
         }
     }
 }
