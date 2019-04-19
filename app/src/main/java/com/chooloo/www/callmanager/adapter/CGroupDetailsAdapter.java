@@ -14,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperViewHolder;
-import com.chooloo.www.callmanager.adapter.helper.OnItemSelectedListener;
-import com.chooloo.www.callmanager.adapter.helper.OnStartDragListener;
+import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
@@ -32,13 +31,11 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
     private boolean mEditModeEnabled = false;
 
-    private OnStartDragListener mOnDragListener;
-    private OnItemSelectedListener mSelectedListener;
+    private ItemTouchHelperListener mItemTouchHelperListener;
 
-    public CGroupDetailsAdapter(Context context, OnStartDragListener dragListener, OnItemSelectedListener selectedListener) {
+    public CGroupDetailsAdapter(Context context, ItemTouchHelperListener itemTouchHelperListener) {
         mContext = context;
-        mSelectedListener = selectedListener;
-        mOnDragListener = dragListener;
+        mItemTouchHelperListener = itemTouchHelperListener;
     }
 
     @NonNull
@@ -60,14 +57,12 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         holder.dragHandle.setOnTouchListener((v, event) -> {
             if (event.getActionMasked() ==
                     MotionEvent.ACTION_DOWN) {
-                mOnDragListener.onStartDrag(holder);
+                mItemTouchHelperListener.onStartDrag(holder);
             }
             return false;
         });
 
-        holder.removeItem.setOnClickListener(v -> {
-
-        });
+        holder.removeItem.setOnClickListener(v -> onItemDismiss(position));
 
         int visibility;
         if (mEditModeEnabled) visibility = View.VISIBLE;
@@ -88,7 +83,9 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
     }
 
     @Override
-    public void onItemDismiss(int position) {
+    public void onItemDismiss(int position)
+    {
+        notifyItemRemoved(position);
     }
 
     public void setData(List<Contact> data) {
@@ -119,7 +116,7 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         @Override
         public void onItemSelected() {
             enableEditMode(true);
-            if (mSelectedListener != null) mSelectedListener.onItemSelected(this);
+            if (mItemTouchHelperListener != null) mItemTouchHelperListener.onItemSelected(this);
         }
 
         @Override

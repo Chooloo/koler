@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
-import com.chooloo.www.callmanager.adapter.helper.OnItemSelectedListener;
-import com.chooloo.www.callmanager.adapter.helper.OnStartDragListener;
+import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.CallManager;
@@ -28,8 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CGroupActivity extends AbsAppBarActivity implements
-        OnItemSelectedListener,
-        OnStartDragListener {
+        ItemTouchHelperListener {
 
     public static final String EXTRA_LIST_ID = "list_id";
 
@@ -94,7 +92,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         long listId = intent.getLongExtra(EXTRA_LIST_ID, -1);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupDetailsAdapter(this, this, this);
+        mAdapter = new CGroupDetailsAdapter(this,  this);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemTouchHelper.Callback callback =
@@ -129,15 +127,20 @@ public class CGroupActivity extends AbsAppBarActivity implements
     }
 
     @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
-    }
-
-    @Override
     public void onItemSelected(RecyclerView.ViewHolder holder) {
         if (mActionMode != null) return;
 
         // Start the CAB using the ActionMode.Callback defined above
         mActionMode = startSupportActionMode(mActionModeCallback);
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder holder) {
+        mItemTouchHelper.startDrag(holder);
+    }
+
+    @Override
+    public void onStartSwipe(RecyclerView.ViewHolder holder) {
+        mItemTouchHelper.startSwipe(holder);
     }
 }
