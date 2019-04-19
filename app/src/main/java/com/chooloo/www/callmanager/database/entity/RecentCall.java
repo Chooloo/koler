@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog;
 
-import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.util.ContactUtils;
 
 import java.text.SimpleDateFormat;
@@ -13,7 +12,6 @@ import java.util.Date;
 public class RecentCall {
 
     // Attributes
-    private Context mContext;
     private Contact mCaller;
     private String mNumber;
     private String mCallType;
@@ -34,33 +32,33 @@ public class RecentCall {
      * @param date     call's date
      */
     public RecentCall(Context context, String number, int type, String duration, Date date) {
-        this.mContext = context;
         this.mNumber = number;
-        this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, number);
+        this.mCaller = ContactUtils.getContactByPhoneNumber(context, number);
         this.mCallType = getTypeByInt(type);
         this.mCallDuration = duration;
         this.mCallDate = date;
     }
 
     public RecentCall(Context context, Cursor cursor) {
-        this.mContext = context;
-        this.mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-        this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, this.mNumber);
-        this.mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
-        this.mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
+        mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
+        if (mNumber != null) {
+            mCaller = ContactUtils.getContactByPhoneNumber(context, mNumber);
+        }
+        mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
+        mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
         int callType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
         switch (callType) {
             case 0:
-                this.mCallType = mOutgoingCall;
+                mCallType = mOutgoingCall;
                 break;
             case 1:
-                this.mCallType = mIncomingCall;
+                mCallType = mIncomingCall;
                 break;
             case 2:
-                this.mCallType = mMissedCall;
+                mCallType = mMissedCall;
                 break;
             default:
-                this.mCallType = null;
+                mCallType = null;
         }
     }
 
@@ -69,6 +67,7 @@ public class RecentCall {
     }
 
     public String getCallerName() {
+        if (mCaller == null) return null;
         return this.mCaller.getName();
     }
 
