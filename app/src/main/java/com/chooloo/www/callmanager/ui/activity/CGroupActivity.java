@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,7 +63,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.dismiss:
+                case R.id.action_dismiss:
                     mAdapter.enableEditMode(false);
                     mode.finish(); // Action picked, so close the CAB
                     return true;
@@ -74,6 +75,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
+            getWindow().setStatusBarColor(Color.WHITE);
         }
     };
 
@@ -92,7 +94,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         long listId = intent.getLongExtra(EXTRA_LIST_ID, -1);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupDetailsAdapter(this,  this);
+        mAdapter = new CGroupDetailsAdapter(this, mRecyclerView, this);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemTouchHelper.Callback callback =
@@ -121,6 +123,23 @@ public class CGroupActivity extends AbsAppBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit: {
+                startActionMode();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @OnClick(R.id.fab_auto_call)
     public void autoCall(View view) {
         CallManager.startAutoCalling(mContacts, this, 0);
@@ -128,10 +147,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
 
     @Override
     public void onItemSelected(RecyclerView.ViewHolder holder) {
-        if (mActionMode != null) return;
-
-        // Start the CAB using the ActionMode.Callback defined above
-        mActionMode = startSupportActionMode(mActionModeCallback);
+        startActionMode();
     }
 
     @Override
@@ -142,5 +158,14 @@ public class CGroupActivity extends AbsAppBarActivity implements
     @Override
     public void onStartSwipe(RecyclerView.ViewHolder holder) {
         mItemTouchHelper.startSwipe(holder);
+    }
+
+    private void startActionMode() {
+        if (mActionMode != null) return;
+        // Start the CAB using the ActionMode.Callback defined above
+        mActionMode = startSupportActionMode(mActionModeCallback);
+
+        mAdapter.enableEditMode(true);
+        getWindow().setStatusBarColor(getColor(R.color.grey_100));
     }
 }

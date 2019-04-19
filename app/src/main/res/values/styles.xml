@@ -11,6 +11,7 @@
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
 
+        <item name="actionModeStyle">@style/ActionMode</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
 
@@ -21,6 +22,12 @@
 
     <style name="AppTheme.TransparentStatusBar" parent="AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+    
+    <!-- AppBar Overlay -->
+    <style name="ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/grey_100</item>
+        <item name="height">@dimen/action_bar_size</item>
     </style>
 
     <!-- Text Button (A button with text in it *gets a seizure*)-->

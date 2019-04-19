@@ -11,8 +11,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_size"
-        android:paddingLeft="@dimen/default_edge_padding"
-        android:paddingRight="@dimen/default_edge_padding"
         app:layout_scrollFlags="scroll|snap"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -20,7 +18,9 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
+            android:paddingLeft="@dimen/default_edge_padding"
+            android:paddingRight="@dimen/default_edge_padding"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             tools:text="@string/app_name" />

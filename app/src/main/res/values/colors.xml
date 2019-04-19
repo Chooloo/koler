@@ -19,7 +19,7 @@
     <color name="white">#ffffff</color>
     <color name="semi_white">#DAFFFFFF</color>
     <color name="grey_50">#FAFAFA</color>
-    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_100">#F5F5F5</color>
 
     <!-- Green -->
     <color name="green_phone">#66bb6a</color>

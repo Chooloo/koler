@@ -1,16 +1,23 @@
 package com.chooloo.www.callmanager.adapter;
 
 import android.annotation.SuppressLint;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
@@ -36,10 +43,12 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
     private boolean mEditModeEnabled = false;
 
+    private RecyclerView mRecyclerView;
     private ItemTouchHelperListener mItemTouchHelperListener;
 
-    public CGroupDetailsAdapter(AppCompatActivity context, ItemTouchHelperListener itemTouchHelperListener) {
+    public CGroupDetailsAdapter(AppCompatActivity context, RecyclerView recyclerView, ItemTouchHelperListener itemTouchHelperListener) {
         mContext = context;
+        mRecyclerView = recyclerView;
         mItemTouchHelperListener = itemTouchHelperListener;
 
         mRepository = DataRepository.getInstance(AppDatabase.getDatabase(mContext));
@@ -71,11 +80,11 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
         holder.removeItem.setOnClickListener(v -> onItemDismiss(position));
 
-        int visibility;
-        if (mEditModeEnabled) visibility = View.VISIBLE;
-        else visibility = View.GONE;
-        holder.dragHandle.setVisibility(visibility);
-        holder.removeItem.setVisibility(visibility);
+        ConstraintLayout itemRoot = (ConstraintLayout) holder.itemView;
+        ConstraintSet set = new ConstraintSet();
+        int layoutId = mEditModeEnabled ? R.layout.item_contact_editable_modified : R.layout.item_contact_editable;
+        set.load(mContext, layoutId);
+        set.applyTo(itemRoot);
     }
 
     @Override
@@ -131,10 +140,16 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
     public void enableEditMode(boolean enable) {
         if (mEditModeEnabled == enable) return;
         mEditModeEnabled = enable;
-        notifyDataSetChanged();
+
+        //Animate all the RecyclerView items:
+        for (int childCount = mRecyclerView.getChildCount(), i = 0; i < childCount; ++i) {
+            ((CGroupDetailsAdapter.ContactHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(i))).animate();
+        }
+
+        new Handler().postDelayed(this::notifyDataSetChanged, 500);
     }
 
-    class ContactHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
+    public class ContactHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
         @BindView(R.id.item_photo) ImageView image;
         @BindView(R.id.item_name_text) TextView name;
@@ -156,6 +171,19 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
         @Override
         public void onItemClear() {
+        }
+
+        public void animate() {
+            ConstraintLayout itemRoot = (ConstraintLayout) itemView;
+            ConstraintSet set = new ConstraintSet();
+            set.clone(itemRoot);
+
+            Transition transition = new AutoTransition();
+            transition.setInterpolator(new OvershootInterpolator());
+            TransitionManager.beginDelayedTransition(itemRoot, transition);
+            int layoutId = mEditModeEnabled ? R.layout.item_contact_editable_modified : R.layout.item_contact_editable;
+            set.load(mContext, layoutId);
+            set.applyTo(itemRoot);
         }
     }
 }
