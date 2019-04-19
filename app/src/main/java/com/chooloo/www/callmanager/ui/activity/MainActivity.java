@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
+import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.ui.fragment.SharedSearchViewModel;
@@ -120,6 +122,7 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
         mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
+        mViewPager.setCurrentItem(1);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,6 +131,7 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
             @Override
             public void onPageSelected(int position) {
+                Toast.makeText(getApplicationContext(), "You are in page " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -188,9 +192,14 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 //                    }
 //                }
 //        );
+
     }
 
     // -- Overrides -- //
+
+    public void makeMes() {
+        Toast.makeText(this, "bla bla", Toast.LENGTH_SHORT);
+    }
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
@@ -306,7 +315,9 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
      */
     private Fragment getCurrentFragment() {
         int position = mViewPager.getCurrentItem();
-        return mAdapterViewPager.getItem(position);
+        Fragment currentFragment = mAdapterViewPager.getItem(position);
+        if (currentFragment == null) return null;
+        else return currentFragment;
     }
 
 //    private Fragment getCurrentFragment() {
