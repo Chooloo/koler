@@ -1,20 +1,15 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="@dimen/item_contact_padding"
-    android:paddingEnd="@dimen/item_contact_padding"
+    android:layout_height="@dimen/item_height"
     android:background="?attr/selectableItemBackground">
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_marginRight="10dp"-->
-    <!--android:layout_marginBottom="5dp"-->
 
     <!-- Caller Pic -->
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/item_contact_padding"
         android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,13 +19,15 @@
             android:id="@+id/item_photo_placeholder"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:tint="@color/default_pic_color"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/item_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
             android:visibility="gone"
             app:civ_border_width="0dp" />
 
@@ -42,8 +39,9 @@
         style="@style/ListItemText.Big"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/item_contact_padding"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/frameLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/frameLayout" />
@@ -57,17 +55,6 @@
         app:layout_constraintEnd_toEndOf="@id/item_name_text"
         app:layout_constraintStart_toStartOf="@+id/item_name_text"
         app:layout_constraintTop_toBottomOf="@+id/item_name_text" />
-
-    <View
-        android:id="@+id/app_bar_divider"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
