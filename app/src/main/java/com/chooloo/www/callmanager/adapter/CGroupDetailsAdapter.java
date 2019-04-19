@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
@@ -19,7 +18,6 @@ import com.chooloo.www.callmanager.adapter.helper.OnItemSelectedListener;
 import com.chooloo.www.callmanager.adapter.helper.OnStartDragListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.List;
 
@@ -121,7 +119,6 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         @Override
         public void onItemSelected() {
             enableEditMode(true);
-            ViewCompat.setElevation(itemView, Utilities.convertDpToPixel(mContext, 4.0f));
             if (mSelectedListener != null) mSelectedListener.onItemSelected(this);
         }
 
