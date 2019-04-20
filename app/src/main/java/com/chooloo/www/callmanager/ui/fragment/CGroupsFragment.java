@@ -2,7 +2,11 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
@@ -16,14 +20,6 @@ import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 
 import java.io.File;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
-
 public class CGroupsFragment extends AbsRecyclerViewFragment implements
         ImportSpreadsheetDialog.OnImportListener,
         FABCoordinator.OnFabClickListener {
@@ -34,9 +30,6 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onCreateView() {
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
-        mRecyclerView.addItemDecoration(itemDecor);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mAdapter = new CGroupsAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);

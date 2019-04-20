@@ -6,6 +6,16 @@ import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.provider.CallLog;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
@@ -13,20 +23,8 @@ import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import timber.log.Timber;
-
-import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -44,9 +42,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onCreateView() {
-        DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), HORIZONTAL);
-        mRecyclerView.addItemDecoration(itemDecor);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new RecentsAdapter(getContext(), null);
         mRecyclerView.setAdapter(mAdapter);
