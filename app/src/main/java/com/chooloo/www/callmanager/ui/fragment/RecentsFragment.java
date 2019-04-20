@@ -14,9 +14,9 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.bla.CallManager;
-import com.chooloo.www.callmanager.util.bla.ContactUtils;
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.ContactUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -19,7 +19,7 @@ import com.chooloo.www.callmanager.adapter.SingleCGroupAdapter;
 import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.util.bla.CallManager;
+import com.chooloo.www.callmanager.util.CallManager;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;

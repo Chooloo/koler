@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.Utilities;
 
 /**
  * A helper influenced by <a href="Medium's Article">https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf</a>

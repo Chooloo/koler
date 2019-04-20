@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.util.bla;
+package com.chooloo.www.callmanager.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

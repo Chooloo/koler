@@ -3,7 +3,7 @@ package com.chooloo.www.callmanager.database.entity;
 import android.database.Cursor;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;

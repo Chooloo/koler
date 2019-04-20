@@ -20,7 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.CGroup;
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.util.validation.Validator;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -31,8 +31,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
-import static com.chooloo.www.callmanager.util.bla.Utilities.askForPermissions;
-import static com.chooloo.www.callmanager.util.bla.Utilities.checkPermissionGranted;
+import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
+import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
 

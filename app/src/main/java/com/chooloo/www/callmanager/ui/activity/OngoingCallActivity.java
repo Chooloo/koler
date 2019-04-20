@@ -25,10 +25,10 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
-import com.chooloo.www.callmanager.util.bla.CallManager;
-import com.chooloo.www.callmanager.util.bla.PreferenceUtils;
-import com.chooloo.www.callmanager.util.bla.Stopwatch;
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Stopwatch;
+import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 

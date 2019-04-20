@@ -17,7 +17,7 @@ import com.chooloo.www.callmanager.database.AppDatabase;
 import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.util.bla.Utilities;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
