@@ -22,16 +22,14 @@ public class FABCoordinator {
         if (resources[0] != -1) {
             mRightFAB.setEnabled(true);
             mRightFAB.setImageResource(resources[0]);
-        }
-        else {
+        } else {
             mRightFAB.setEnabled(false);
         }
 
         if (resources[1] != -1) {
             mLeftFAB.setEnabled(true);
             mLeftFAB.setImageResource(resources[1]);
-        }
-        else {
+        } else {
             mLeftFAB.setEnabled(false);
         }
     }
@@ -45,8 +43,11 @@ public class FABCoordinator {
     }
 
     public interface OnFabClickListener {
-        @DrawableRes int[] getIconsResources();
+        @DrawableRes
+        int[] getIconsResources();
+
         void onRightClick();
+
         void onLeftClick();
     }
 }

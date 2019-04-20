@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
@@ -84,6 +85,8 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         task.execute();
     }
 
+    // -- FABCoordniator.OnFabClickListener -- //
+
     @Override
     public int[] getIconsResources() {
         return new int[]{
@@ -91,8 +94,6 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
                 -1 //This means no FAB at all
         };
     }
-
-    // -- OnClicks -- //
 
     @Override
     public void onRightClick() {

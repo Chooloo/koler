@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="8dp"
-            android:paddingRight="16dp"
+            android:paddingRight="7dp"
             android:src="@drawable/fast_scroller_scroll_bar" />
     </com.chooloo.www.callmanager.google.FastScroller>
 
