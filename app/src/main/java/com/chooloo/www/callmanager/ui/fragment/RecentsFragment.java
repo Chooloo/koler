@@ -2,9 +2,9 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.provider.CallLog;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,16 +19,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import butterknife.BindView;
-import timber.log.Timber;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        RecentsAdapter.OnChildClickListener {
+        View.OnScrollChangeListener,
+        RecentsAdapter.OnChildClickListener{
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -37,16 +38,33 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
+    LinearLayoutManager mLayoutManager;
+    RecentsAdapter mRecentsAdapter;
+
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    RecentsAdapter mAdapter;
+    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
 
     @Override
     protected void onCreateView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new RecentsAdapter(getContext(), null);
-        mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager =
+                new LinearLayoutManager(getContext()) {
+                    @Override
+                    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                        super.onLayoutChildren(recycler, state);
+                        int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
+                        if (mRecentsAdapter.getItemCount() > itemsShown) {
+                            mFastScroller.setVisibility(View.VISIBLE);
+                            mRecyclerView.setOnScrollChangeListener(RecentsFragment.this);
+                        } else {
+                            mFastScroller.setVisibility(View.GONE);
+                        }
+                    }
+                };
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecentsAdapter = new RecentsAdapter(getContext(), null);
+        mRecyclerView.setAdapter(mRecentsAdapter);
 
-        mAdapter.setOnChildClickListener(this);
+        mRecentsAdapter.setOnChildClickListener(this);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -69,14 +87,11 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             }
         });
 
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
-                tryRunningLoader();
-            }
+        mRefreshLayout.setOnRefreshListener(() -> {
+            LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
+            tryRunningLoader();
         });
-        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.red_phone));
+        mRefreshLayout.setColorSchemeColors(getContext().getColor(R.color.red_phone));
     }
 
     @Override
@@ -171,14 +186,14 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        mAdapter.changeCursor(data);
-        Timber.d(DatabaseUtils.dumpCursorToString(data));
+        mRecentsAdapter.changeCursor(data);
+        mFastScroller.setup(mRecentsAdapter, mLayoutManager);
         if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mAdapter.changeCursor(null);
+        mRecentsAdapter.changeCursor(null);
     }
 
     /**
@@ -196,5 +211,10 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     public boolean onChildLongClick(Contact contact) {
         // TODO make a pop window with the contact's details
         return true;
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
     }
 }

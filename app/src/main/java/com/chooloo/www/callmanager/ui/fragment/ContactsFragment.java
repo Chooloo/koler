@@ -5,6 +5,16 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.google.ContactsCursorLoader;
@@ -16,15 +26,6 @@ import com.chooloo.www.callmanager.util.Utilities;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 
 /**
@@ -55,9 +56,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
-    private View mRootView;
 
-    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
     @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
 
@@ -106,12 +105,9 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             }
         });
 
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, null, ContactsFragment.this);
-                tryRunningLoader();
-            }
+        mRefreshLayout.setOnRefreshListener(() -> {
+            LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, null, ContactsFragment.this);
+            tryRunningLoader();
         });
         mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.red_phone));
     }

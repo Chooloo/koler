@@ -23,18 +23,18 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
 
 public class FastScroller extends RelativeLayout {
 
     private final int touchTargetWidth;
 
-    private ContactsAdapter adapter;
+    private AbsFastScrollerAdapter adapter;
     private LinearLayoutManager layoutManager;
 
     private TextView container;
@@ -55,7 +55,7 @@ public class FastScroller extends RelativeLayout {
         scrollBar = findViewById(R.id.fast_scroller_scroll_bar);
     }
 
-    public void setup(ContactsAdapter adapter, LinearLayoutManager layoutManager) {
+    public void setup(AbsFastScrollerAdapter adapter, LinearLayoutManager layoutManager) {
         this.adapter = adapter;
         this.layoutManager = layoutManager;
         setVisibility(VISIBLE);
@@ -98,7 +98,14 @@ public class FastScroller extends RelativeLayout {
         float scrolledPosition = getScrolledPercentage(y) * (float) itemCount;
         int targetPos = getValueInRange(0, itemCount - 1, (int) scrolledPosition);
         layoutManager.scrollToPositionWithOffset(targetPos, 0);
-        container.setText(adapter.getHeaderString(targetPos));
+
+        String header = adapter.getHeaderString(targetPos);
+        if (header == null) {
+            container.setVisibility(INVISIBLE);
+        } else {
+            container.setVisibility(VISIBLE);
+            container.setText(header);
+        }
     }
 
     // Returns a float in range [0, 1] which represents the position of the scroller.

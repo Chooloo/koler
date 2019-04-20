@@ -10,18 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.ContactHolder> {
+public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.ContactHolder> {
 
     private OnContactSelectedListener mOnContactSelectedListener;
 
@@ -30,18 +31,14 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
     private String[] mHeaders = new String[0];
     // Number of contacts that correspond to each mHeader in {@code mHeaders}.
     private int[] mCounts = new int[0];
-    // Cursor with list of contacts
-    private Cursor mCursor;
 
     public ContactsAdapter(Context context, Cursor cursor) {
         super(context, cursor);
-        mCursor = cursor;
     }
 
     @Override
     public void changeCursor(Cursor cursor) {
         super.changeCursor(cursor);
-        mCursor = cursor;
         mHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
         mCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
         if (mCounts != null) {
@@ -93,6 +90,7 @@ public class ContactsAdapter extends CursorRecyclerViewAdapter<ContactsAdapter.C
 
     }
 
+    @Override
     public String getHeaderString(int position) {
         if (mHeader != ContactsFragment.Header.NONE) {
             if (position == 0) {

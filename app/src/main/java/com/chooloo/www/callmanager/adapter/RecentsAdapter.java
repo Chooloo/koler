@@ -19,7 +19,7 @@ import com.chooloo.www.callmanager.database.entity.RecentCall;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecentsAdapter extends CursorRecyclerViewAdapter<RecentsAdapter.RecentCallHolder> {
+public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.RecentCallHolder> {
 
     private OnChildClickListener mOnChildClickListener;
 
@@ -58,6 +58,11 @@ public class RecentsAdapter extends CursorRecyclerViewAdapter<RecentsAdapter.Rec
             viewHolder.itemView.setOnClickListener(v -> mOnChildClickListener.onChildClick(phoneNumber));
             viewHolder.itemView.setOnLongClickListener(v -> mOnChildClickListener.onChildLongClick(recentCall.getCaller()));
         }
+    }
+
+    @Override
+    public String getHeaderString(int position) {
+        return null;
     }
 
     public void setOnChildClickListener(OnChildClickListener onChildClickListener) {
