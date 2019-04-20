@@ -140,6 +140,12 @@ public class CGroupActivity extends AbsAppBarActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @OnClick(R.id.fab_auto_call)
     public void autoCall(View view) {
         CallManager.startAutoCalling(mContacts, this, 0);

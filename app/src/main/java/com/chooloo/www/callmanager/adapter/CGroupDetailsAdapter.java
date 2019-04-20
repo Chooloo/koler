@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.adapter;
 
 import android.annotation.SuppressLint;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -78,7 +77,7 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
             return false;
         });
 
-        holder.removeItem.setOnClickListener(v -> onItemDismiss(position));
+        holder.removeItem.setOnClickListener(v -> onItemDismiss(holder.getAdapterPosition()));
 
         ConstraintLayout itemRoot = (ConstraintLayout) holder.itemView;
         ConstraintSet set = new ConstraintSet();
@@ -142,11 +141,10 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         mEditModeEnabled = enable;
 
         //Animate all the RecyclerView items:
-        for (int childCount = mRecyclerView.getChildCount(), i = 0; i < childCount; ++i) {
-            ((CGroupDetailsAdapter.ContactHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(i))).animate();
+        for(int i = 0; i < getItemCount(); i++) {
+            ContactHolder holder = (ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) holder.animate();
         }
-
-        new Handler().postDelayed(this::notifyDataSetChanged, 500);
     }
 
     public class ContactHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
