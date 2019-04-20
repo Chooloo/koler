@@ -41,12 +41,20 @@ public class DataRepository {
         thread.start();
     }
 
-    // - Remove - //
+    // - Delete - //
 
-    public void removeContact(long contactId) {
+    public void deleteContact(long contactId) {
         Thread thread = new Thread(() -> {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
             mDatabase.getContactDao().deleteById(contactId);
+        });
+        thread.start();
+    }
+
+    public void deleteCGroup(long listId) {
+        Thread thread = new Thread(() -> {
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+            mDatabase.getCGroupDao().deleteById(listId);
         });
         thread.start();
     }

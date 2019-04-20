@@ -87,7 +87,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         if (mOnContactSelectedListener != null) {
             viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(phoneNumber));
         }
-
     }
 
     @Override

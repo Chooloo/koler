@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdapter.ContactHolder>
+public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapter.ContactHolder>
         implements SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
 
     private AppCompatActivity mContext;
@@ -45,7 +45,7 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
     private RecyclerView mRecyclerView;
     private ItemTouchHelperListener mItemTouchHelperListener;
 
-    public CGroupDetailsAdapter(AppCompatActivity context, RecyclerView recyclerView, ItemTouchHelperListener itemTouchHelperListener) {
+    public SingleCGroupAdapter(AppCompatActivity context, RecyclerView recyclerView, ItemTouchHelperListener itemTouchHelperListener) {
         mContext = context;
         mRecyclerView = recyclerView;
         mItemTouchHelperListener = itemTouchHelperListener;
@@ -125,7 +125,7 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         //Remove in list
         mData.remove(position);
 
-        mRepository.removeContact(id);
+        mRepository.deleteContact(id);
 
         notifyItemRemoved(position);
     }

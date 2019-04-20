@@ -18,7 +18,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
+import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
@@ -29,7 +32,8 @@ import butterknife.BindView;
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         View.OnScrollChangeListener,
-        RecentsAdapter.OnChildClickListener{
+        OnItemClickListener,
+        OnItemLongClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -61,10 +65,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
                     }
                 };
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecentsAdapter = new RecentsAdapter(getContext(), null);
+        mRecentsAdapter = new RecentsAdapter(getContext(), null, null, null);
         mRecyclerView.setAdapter(mRecentsAdapter);
 
-        mRecentsAdapter.setOnChildClickListener(this);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -196,25 +199,20 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         mRecentsAdapter.changeCursor(null);
     }
 
-    /**
-     * Call the contact on click
-     *
-     * @param normPhoneNumber
-     */
-    @Override
-    public void onChildClick(String normPhoneNumber) {
-//        mSharedDialViewModel.setNumber(normPhoneNumber);
-        CallManager.call(this.getContext(), normPhoneNumber);
-    }
-
-    @Override
-    public boolean onChildLongClick(Contact contact) {
-        // TODO make a pop window with the contact's details
-        return true;
-    }
-
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
+        RecentCall recentCall = (RecentCall) data;
+        CallManager.call(this.getContext(), recentCall.getCallerNumber());
+
+    }
+
+    @Override
+    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
+        // TODO make a pop window with the contact's details
     }
 }

@@ -2,15 +2,15 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
 import com.chooloo.www.callmanager.database.AppDatabase;
 import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 public class CGroupsViewModel extends AndroidViewModel {
 

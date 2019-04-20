@@ -7,8 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.database.AppDatabase;
+import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -16,20 +22,26 @@ import com.chooloo.www.callmanager.util.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHolder> {
 
     private Context mContext;
+
     private List<CGroupAndItsContacts> mData;
+    private DataRepository mRepository;
 
-    private OnChildClickListener mListener;
+    private OnItemClickListener mOnItemClickListener;
 
-    public CGroupsAdapter(Context context) {
+    public CGroupsAdapter(Context context,
+                          List<CGroupAndItsContacts> data,
+                          OnItemClickListener onItemClickListener) {
         mContext = context;
+        mData = data;
+        mOnItemClickListener = onItemClickListener;
+
+        mRepository = DataRepository.getInstance(AppDatabase.getDatabase(mContext));
     }
 
     @NonNull
@@ -45,7 +57,7 @@ public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHo
         CGroupAndItsContacts cgroupAndItsContacts = mData.get(position);
 
         List<String> names = new ArrayList<>();
-        for(Contact contact : cgroupAndItsContacts.getContacts()) {
+        for (Contact contact : cgroupAndItsContacts.getContacts()) {
             names.add(contact.getName());
         }
         String namesStr = Utilities.joinStringsWithSeparator(names, ", ");
@@ -53,9 +65,25 @@ public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHo
         holder.name.setText(cgroupAndItsContacts.getCgroup().getName());
         holder.number.setText(namesStr);
 
-        if (mListener != null) {
-            holder.itemView.setOnClickListener(v -> mListener.onClick(v, cgroupAndItsContacts.getCgroup()));
+        if (mOnItemClickListener != null) {
+            holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(holder, cgroupAndItsContacts.getCgroup()));
         }
+        holder.itemView.setOnLongClickListener(v -> {
+            //Create a dialog with options regarding the selected list
+            new MaterialDialog.Builder(mContext)
+                    .title(R.string.dialog_long_click_cgroup_title)
+                    .items(R.array.dialog_long_click_cgroup_options)
+                    .itemsCallback((dialog, itemView, listPosition, text) -> {
+                        switch (listPosition) {
+                            case 0:
+                                mRepository.deleteCGroup(cgroupAndItsContacts.getCgroup().getListId());
+                                break;
+                        }
+                    })
+                    .show();
+            notifyItemRemoved(holder.getAdapterPosition());
+            return true;
+        });
     }
 
     @Override
@@ -67,14 +95,6 @@ public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHo
     public void setData(List<CGroupAndItsContacts> data) {
         mData = data;
         notifyDataSetChanged();
-    }
-
-    public void setListener(OnChildClickListener listener) {
-        mListener = listener;
-    }
-
-    public interface OnChildClickListener {
-        void onClick(View v, CGroup cgroup);
     }
 
     class CGroupHolder extends RecyclerView.ViewHolder {

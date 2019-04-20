@@ -47,6 +47,8 @@
     <string name="dialog_folder_up">Up</string>
     <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\' fields are in:</string>
 
+    <string name="dialog_long_click_cgroup_title">What would you like to do?</string>
+
     <!--Other-->
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>

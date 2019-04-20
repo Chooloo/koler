@@ -12,6 +12,10 @@
         <item>5 seconds</item>
         <item>3 seconds</item>
     </string-array>
+    
+    <string-array name="dialog_long_click_cgroup_options">
+        <item>Delete this list</item>
+    </string-array>
 
     <string-array name="contacts_placeholders">
         <item>Bla</item>

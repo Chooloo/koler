@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
+import com.chooloo.www.callmanager.adapter.SingleCGroupAdapter;
 import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
@@ -35,7 +35,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
     CGroupViewModel mViewModel;
 
     ItemTouchHelper mItemTouchHelper;
-    CGroupDetailsAdapter mAdapter;
+    SingleCGroupAdapter mAdapter;
 
     List<Contact> mContacts = null;
 
@@ -94,7 +94,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         long listId = intent.getLongExtra(EXTRA_LIST_ID, -1);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupDetailsAdapter(this, mRecyclerView, this);
+        mAdapter = new SingleCGroupAdapter(this, mRecyclerView, this);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemTouchHelper.Callback callback =

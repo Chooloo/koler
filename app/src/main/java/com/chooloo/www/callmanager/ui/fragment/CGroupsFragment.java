@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupsAdapter;
+import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
@@ -22,7 +23,8 @@ import java.io.File;
 
 public class CGroupsFragment extends AbsRecyclerViewFragment implements
         ImportSpreadsheetDialog.OnImportListener,
-        FABCoordinator.OnFabClickListener {
+        FABCoordinator.OnFabClickListener,
+        OnItemClickListener{
 
     private CGroupsViewModel mViewModel;
 
@@ -31,14 +33,8 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
     @Override
     protected void onCreateView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupsAdapter(getContext());
+        mAdapter = new CGroupsAdapter(getContext(), null, this);
         mRecyclerView.setAdapter(mAdapter);
-
-        mAdapter.setListener((v, cgroup) -> {
-            Intent intent = new Intent(getContext(), CGroupActivity.class);
-            intent.putExtra(CGroupActivity.EXTRA_LIST_ID, cgroup.getListId());
-            startActivity(intent);
-        });
     }
 
     @Override
@@ -50,7 +46,11 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
-        mViewModel.getContactsLists().observe(this, cgroups -> mAdapter.setData(cgroups));
+        mViewModel.getContactsLists().observe(this, cgroups -> {
+            if (mAdapter.getItemCount() == 0) {
+                mAdapter.setData(cgroups);
+            }
+        });
     }
 
     @Override
@@ -98,5 +98,13 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onLeftClick() {
 
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
+        CGroup cGroup = (CGroup) data;
+        Intent intent = new Intent(getContext(), CGroupActivity.class);
+        intent.putExtra(CGroupActivity.EXTRA_LIST_ID, cGroup.getListId());
+        startActivity(intent);
     }
 }
