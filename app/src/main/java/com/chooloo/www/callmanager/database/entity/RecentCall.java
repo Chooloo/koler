@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog;
 
+import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.util.ContactUtils;
 
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ import java.util.Date;
 public class RecentCall {
 
     // Attributes
+    private Context mContext;
     private Contact mCaller;
     private String mNumber;
     private String mCallType;
@@ -32,14 +34,16 @@ public class RecentCall {
      * @param date     call's date
      */
     public RecentCall(Context context, String number, int type, String duration, Date date) {
+        this.mContext = context;
         this.mNumber = number;
-        this.mCaller = ContactUtils.getContactByPhoneNumber(context, number);
+        this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, number);
         this.mCallType = getTypeByInt(type);
         this.mCallDuration = duration;
         this.mCallDate = date;
     }
 
     public RecentCall(Context context, Cursor cursor) {
+        this.mContext = context;
         mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
         if (mNumber != null) {
             mCaller = ContactUtils.getContactByPhoneNumber(context, mNumber);
@@ -67,8 +71,8 @@ public class RecentCall {
     }
 
     public String getCallerName() {
-        if (mCaller == null) return null;
-        return this.mCaller.getName();
+        if(this.mCaller != null) return this.mCaller.getName();
+        else return null;
     }
 
     public String getCallerNumber() {

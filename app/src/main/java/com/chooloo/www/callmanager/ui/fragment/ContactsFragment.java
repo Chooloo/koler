@@ -19,6 +19,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.google.FastScroller;
+import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -35,7 +36,7 @@ import butterknife.BindView;
 public class ContactsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         View.OnScrollChangeListener,
-        ContactsAdapter.OnContactSelectedListener {
+        ContactsAdapter.OnContactSelectedListener{
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -62,6 +63,8 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
+
+    OnFabsClickListener mOnFabsClickListener;
 
     @Override
     protected void onCreateView() {
@@ -203,5 +206,16 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         if (normPhoneNumber == null) return;
 //        mSharedDialViewModel.setNumber(normPhoneNumber);
         CallManager.call(this.getContext(), normPhoneNumber);
+    }
+
+    public void setClickListener(OnFabsClickListener onFabsClickListener){
+        this.mOnFabsClickListener = onFabsClickListener;
+    }
+
+    public interface OnFabsClickListener {
+
+        void onRightContactsFabClick();
+
+        void onLeftContactsFabClick();
     }
 }
