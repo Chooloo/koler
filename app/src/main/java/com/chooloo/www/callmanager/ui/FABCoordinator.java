@@ -1,24 +1,31 @@
 package com.chooloo.www.callmanager.ui;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import androidx.annotation.DrawableRes;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FABCoordinator {
 
     private FloatingActionButton mRightFAB;
     private FloatingActionButton mLeftFAB;
-    private OnFabClickListener mListener;
+    private OnFABClickListener mListener;
 
     public FABCoordinator(FloatingActionButton rightFAB, FloatingActionButton leftFAB) {
         mRightFAB = rightFAB;
         mLeftFAB = leftFAB;
     }
 
-    public void setListener(OnFabClickListener listener) {
-        mListener = listener;
-        int[] resources = mListener.getIconsResources();
+    public void setListener(Fragment fragment) {
+        if (!(fragment instanceof OnFABClickListener) || !(fragment instanceof FABDrawableCoordination)) {
+            mListener = null;
+            mRightFAB.setEnabled(false);
+            mLeftFAB.setEnabled(false);
+            return;
+        }
 
+        //Set the correct icons
+        int[] resources = ((FABDrawableCoordination) fragment).getIconsResources();
         if (resources[0] != -1) {
             mRightFAB.setEnabled(true);
             mRightFAB.setImageResource(resources[0]);
@@ -32,6 +39,9 @@ public class FABCoordinator {
         } else {
             mLeftFAB.setEnabled(false);
         }
+
+        //Set the listener;
+        mListener = (OnFABClickListener) fragment;
     }
 
     public void performRightClick() {
@@ -42,12 +52,13 @@ public class FABCoordinator {
         if (mListener != null) mListener.onLeftClick();
     }
 
-    public interface OnFabClickListener {
+    public interface OnFABClickListener {
+        void onRightClick();
+        void onLeftClick();
+    }
+
+    public interface FABDrawableCoordination {
         @DrawableRes
         int[] getIconsResources();
-
-        void onRightClick();
-
-        void onLeftClick();
     }
 }

@@ -2,7 +2,6 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -25,10 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
-import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
-import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
@@ -53,7 +48,7 @@ import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
-public class MainActivity extends AbsSearchBarActivity implements FABCoordinator.OnFabClickListener {
+public class MainActivity extends AbsSearchBarActivity {
 
     // View Models
     SharedDialViewModel mSharedDialViewModel;
@@ -82,7 +77,7 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     @BindView(R.id.right_button) FloatingActionButton mRightButton;
     @BindView(R.id.left_button) FloatingActionButton mLeftButton;
     // Other
-    @BindView(R.id.main_view_pager) ViewPager mViewPager;
+    @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
     @Override
@@ -141,7 +136,7 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getIsFocused().observe(this, f -> {
             if (f) {
-                collapseAppBar(true);
+                expandAppBar(true);
             }
         });
 
@@ -278,26 +273,17 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     // -- Fragments -- //
 
     /**
-     * Returns the current displayed fragment (recents/contacts/excel)
-     *
+     * Returns the currently displayed fragment. Based on <a href="this">https://stackoverflow.com/a/18611036/5407365</a> answer
      * @return Fragment
      */
     private Fragment getCurrentFragment() {
-        int position = mViewPager.getCurrentItem();
-        Fragment currentFragment = mAdapterViewPager.getItem(position);
-        if (currentFragment == null) return null;
-        else return currentFragment;
+        return getSupportFragmentManager()
+                .findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + mViewPager.getCurrentItem());
     }
 
     public void syncFABAndFragment() {
         Fragment fragment = getCurrentFragment();
-//        if (fragment instanceof ContactsFragment) {
-        mFABCoordinator.setListener(this);
-//        } else
-//        if (fragment instanceof FABCoordinator.OnFabClickListener) {
-//            mFABCoordinator.setListener((FABCoordinator.OnFabClickListener) fragment);
-//        }
-
+        mFABCoordinator.setListener(fragment);
         showButtons(true);
     }
 
@@ -306,10 +292,10 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     /**
      * Change the dialer status (collapse/expand)
      *
-     * @param isExpanded
+     * @param expand
      */
-    public void setDialerExpanded(boolean isExpanded) {
-        if (isExpanded) {
+    public void expandDialer(boolean expand) {
+        if (expand) {
             BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
             BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -319,10 +305,10 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     /**
      * Extend/Collapse the appbar_main according to given parameter
      *
-     * @param collapse
+     * @param expand
      */
-    public void collapseAppBar(boolean collapse) {
-        mAppBarLayout.setExpanded(!collapse);
+    public void expandAppBar(boolean expand) {
+        mAppBarLayout.setExpanded(expand);
     }
 
     /**
@@ -338,61 +324,4 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
             mLeftButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
         else mLeftButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
     }
-
-    // -- FABCoordinator.OnFabClickListener -- //
-
-    @Override
-    public int[] getIconsResources() {
-        switch (mViewPager.getCurrentItem()) {
-            case 1:
-                return new int[]{
-                        R.drawable.ic_dialpad_black_24dp,
-                        R.drawable.ic_search_black_24dp
-                };
-            case 2:
-                return new int[]{
-                        R.drawable.ic_add_black_24dp,
-                        -1 //This means no FAB at all
-                };
-            default:
-                return new int[]{-1, -1};
-        }
-    }
-
-    @Override
-    public void onRightClick() {
-        switch (mViewPager.getCurrentItem()) {
-            case 1:
-                mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
-                break;
-            case 2:
-                new ImportSpreadsheetDialog.Builder(this.getSupportFragmentManager())
-                        .onImportListener((ImportSpreadsheetDialog.OnImportListener) getCurrentFragment())
-                        .show(new ImportSpreadsheetDialog());
-                break;
-            default:
-                new ImportSpreadsheetDialog.Builder(this.getSupportFragmentManager())
-                        .onImportListener((ImportSpreadsheetDialog.OnImportListener) getCurrentFragment())
-                        .show(new ImportSpreadsheetDialog());
-                break;
-        }
-    }
-
-    @Override
-    public void onLeftClick() {
-        switch (mViewPager.getCurrentItem()) {
-            case 1:
-                boolean isOpened = isSearchBarVisible();
-                toggleSearchBar(!isOpened);
-                if (isOpened)
-                    mRightButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
-                else mRightButton.setBackgroundColor(getResources().getColor(R.color.white));
-                break;
-            case 2:
-                break;
-            default:
-                break;
-        }
-    }
-
 }

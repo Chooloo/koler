@@ -20,6 +20,7 @@ import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
+import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -35,6 +36,8 @@ import butterknife.BindView;
  */
 public class ContactsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
+        FABCoordinator.FABDrawableCoordination,
+        FABCoordinator.OnFABClickListener,
         View.OnScrollChangeListener,
         ContactsAdapter.OnContactSelectedListener{
 
@@ -63,8 +66,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
-
-    OnFabsClickListener mOnFabsClickListener;
 
     @Override
     protected void onCreateView() {
@@ -148,6 +149,26 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
+    @Override
+    public void onRightClick() {
+        ((MainActivity) getActivity()).expandAppBar(true);
+    }
+
+    @Override
+    public void onLeftClick() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        boolean isOpened = mainActivity.isSearchBarVisible();
+        mainActivity.toggleSearchBar(!isOpened);
+    }
+
+    @Override
+    public int[] getIconsResources() {
+        return new int[]{
+                R.drawable.ic_dialpad_black_24dp,
+                R.drawable.ic_search_black_24dp
+        };
+    }
+
     private void tryRunningLoader() {
         if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
             runLoader();
@@ -206,16 +227,5 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         if (normPhoneNumber == null) return;
 //        mSharedDialViewModel.setNumber(normPhoneNumber);
         CallManager.call(this.getContext(), normPhoneNumber);
-    }
-
-    public void setClickListener(OnFabsClickListener onFabsClickListener){
-        this.mOnFabsClickListener = onFabsClickListener;
-    }
-
-    public interface OnFabsClickListener {
-
-        void onRightContactsFabClick();
-
-        void onLeftContactsFabClick();
     }
 }

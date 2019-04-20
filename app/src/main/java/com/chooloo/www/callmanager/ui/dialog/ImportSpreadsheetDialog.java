@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+
 import com.afollestad.materialdialogs.BaseDialogFragment;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
@@ -22,9 +26,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,6 +81,8 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
             dismiss();
         };
 
+        MaterialDialog.SingleButtonCallback onNegative = (dialog, which) -> dialog.dismiss();
+
         return new MaterialDialog.Builder(getContext())
                 .customView(customView, false)
                 .title("Import contacts from spreadsheet")
@@ -87,6 +90,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
                 .negativeText("Cancel")
                 .autoDismiss(false)
                 .onPositive(onPositive)
+                .onNegative(onNegative)
                 .build();
     }
 

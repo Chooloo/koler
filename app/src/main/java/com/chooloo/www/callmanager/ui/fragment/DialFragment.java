@@ -51,7 +51,7 @@ public class DialFragment extends BaseFragment {
 
             @Override
             public boolean onSingleTapUp(View v) {
-                ((MainActivity) DialFragment.this.getActivity()).setDialerExpanded(true);
+                ((MainActivity) DialFragment.this.getActivity()).expandDialer(true);
                 return true;
             }
         };

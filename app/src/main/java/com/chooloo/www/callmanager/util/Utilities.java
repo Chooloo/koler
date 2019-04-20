@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -64,7 +64,7 @@ public class Utilities {
         return false;
     }
 
-    public static void askForPermissions(Activity activity, String[] permissions) {
+    public static void askForPermissions(FragmentActivity activity, String[] permissions) {
         activity.requestPermissions(permissions, PERMISSION_RC);
     }
 
@@ -216,7 +216,7 @@ public class Utilities {
      * @param phoneNum destination phone number (where to send the sms to)
      * @param msg      the content message of the sms
      */
-    public static void sendSMS(Activity activity, String phoneNum, String msg) {
+    public static void sendSMS(FragmentActivity activity, String phoneNum, String msg) {
         if (ContextCompat.checkSelfPermission(activity, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             try {
                 SmsManager smsManager = SmsManager.getDefault();

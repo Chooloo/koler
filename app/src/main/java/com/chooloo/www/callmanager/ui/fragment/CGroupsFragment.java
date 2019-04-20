@@ -23,8 +23,9 @@ import java.io.File;
 
 public class CGroupsFragment extends AbsRecyclerViewFragment implements
         ImportSpreadsheetDialog.OnImportListener,
-        FABCoordinator.OnFabClickListener,
-        OnItemClickListener{
+        FABCoordinator.OnFABClickListener,
+        FABCoordinator.FABDrawableCoordination,
+        OnItemClickListener {
 
     private CGroupsViewModel mViewModel;
 
@@ -47,11 +48,42 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
         mViewModel.getContactsLists().observe(this, cgroups -> {
-            if (mAdapter.getItemCount() == 0) {
                 mAdapter.setData(cgroups);
-            }
         });
     }
+
+    // -- FABCoordinator -- //
+
+    @Override
+    public int[] getIconsResources() {
+        return new int[]{
+                R.drawable.ic_add_black_24dp,
+                -1 //This means no FAB at all
+        };
+    }
+
+    @Override
+    public void onRightClick() {
+        new ImportSpreadsheetDialog.Builder(getChildFragmentManager())
+                .onImportListener(this)
+                .show(new ImportSpreadsheetDialog());
+    }
+
+    @Override
+    public void onLeftClick() {
+    }
+
+    // - Adapter - //
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
+        CGroup cGroup = (CGroup) data;
+        Intent intent = new Intent(getContext(), CGroupActivity.class);
+        intent.putExtra(CGroupActivity.EXTRA_LIST_ID, cGroup.getListId());
+        startActivity(intent);
+    }
+
+    // - Dialog - //
 
     @Override
     public void onImport(CGroup list, File excelFile, int nameColIndex, int numberColIndex) {
@@ -76,35 +108,5 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         task.setOnProgressListener(onProgressListener);
         task.setOnFinishListener(onFinishListener);
         task.execute();
-    }
-
-    // -- FABCoordniator.OnFabClickListener -- //
-
-    @Override
-    public int[] getIconsResources() {
-        return new int[]{
-                R.drawable.ic_add_black_24dp,
-                -1 //This means no FAB at all
-        };
-    }
-
-    @Override
-    public void onRightClick() {
-        new ImportSpreadsheetDialog.Builder(getFragmentManager())
-                .onImportListener(this)
-                .show(new ImportSpreadsheetDialog());
-    }
-
-    @Override
-    public void onLeftClick() {
-
-    }
-
-    @Override
-    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
-        CGroup cGroup = (CGroup) data;
-        Intent intent = new Intent(getContext(), CGroupActivity.class);
-        intent.putExtra(CGroupActivity.EXTRA_LIST_ID, cGroup.getListId());
-        startActivity(intent);
     }
 }
