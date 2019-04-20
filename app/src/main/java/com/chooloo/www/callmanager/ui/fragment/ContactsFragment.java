@@ -22,8 +22,8 @@ import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.bla.CallManager;
+import com.chooloo.www.callmanager.util.bla.Utilities;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

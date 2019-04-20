@@ -4,8 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog;
 
-import com.chooloo.www.callmanager.adapter.RecentsAdapter;
-import com.chooloo.www.callmanager.util.ContactUtils;
+import com.chooloo.www.callmanager.util.bla.ContactUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

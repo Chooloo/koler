@@ -28,8 +28,8 @@ import com.chooloo.www.callmanager.ui.fragment.DialFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.ui.fragment.SharedSearchViewModel;
-import com.chooloo.www.callmanager.util.PreferenceUtils;
-import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.bla.PreferenceUtils;
+import com.chooloo.www.callmanager.util.bla.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -45,8 +45,8 @@ import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
-import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
-import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
+import static com.chooloo.www.callmanager.util.bla.Utilities.askForPermissions;
+import static com.chooloo.www.callmanager.util.bla.Utilities.checkPermissionGranted;
 
 public class MainActivity extends AbsSearchBarActivity {
 

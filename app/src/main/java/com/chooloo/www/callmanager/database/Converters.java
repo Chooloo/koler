@@ -1,6 +1,6 @@
 package com.chooloo.www.callmanager.database;
 
-import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.bla.Utilities;
 
 import java.util.Arrays;
 import java.util.List;

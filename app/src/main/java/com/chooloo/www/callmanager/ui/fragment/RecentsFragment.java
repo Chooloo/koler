@@ -3,29 +3,20 @@ package com.chooloo.www.callmanager.ui.fragment;
 import android.Manifest;
 import android.app.Dialog;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.view.View;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.ContactUtils;
-import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.bla.CallManager;
+import com.chooloo.www.callmanager.util.bla.ContactUtils;
+import com.chooloo.www.callmanager.util.bla.Utilities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,29 +25,16 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
-import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.Utilities;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
-import timber.log.Timber;
-
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,

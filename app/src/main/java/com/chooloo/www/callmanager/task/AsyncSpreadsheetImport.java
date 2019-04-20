@@ -9,7 +9,7 @@ import com.chooloo.www.callmanager.database.dao.CGroupDao;
 import com.chooloo.www.callmanager.database.dao.ContactDao;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.bla.Utilities;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;

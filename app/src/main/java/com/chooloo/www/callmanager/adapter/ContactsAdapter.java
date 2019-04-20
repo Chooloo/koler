@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
-import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.util.bla.Utilities;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
