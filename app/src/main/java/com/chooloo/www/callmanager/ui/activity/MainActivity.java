@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
+import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
 import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
@@ -131,7 +134,7 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getApplicationContext(), "You are in page " + position, Toast.LENGTH_SHORT).show();
+                syncFABAndFragment();
             }
 
             @Override
@@ -140,8 +143,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
             }
         });
         mSmartTabLayout.setViewPager(mViewPager);
-
-        // - View Models - //
 
         // Search Bar View Model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
@@ -196,10 +197,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     }
 
     // -- Overrides -- //
-
-    public void makeMes() {
-        Toast.makeText(this, "bla bla", Toast.LENGTH_SHORT);
-    }
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
@@ -273,14 +270,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
         syncFABAndFragment();
     }
 
-    @Override
-    public int[] getIconsResources() {
-        return new int[]{
-                R.drawable.ic_dialpad_black_24dp,
-                R.drawable.ic_search_black_24dp
-        };
-    }
-
     // -- OnClicks -- //
 
     @OnClick(R.id.right_button)
@@ -291,19 +280,6 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     @OnClick(R.id.left_button)
     public void fabLeftClick() {
         mFABCoordinator.performLeftClick();
-    }
-
-    @Override
-    public void onRightClick() {
-        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
-
-    @Override
-    public void onLeftClick() {
-        boolean isOpened = isSearchBarVisible();
-        toggleSearchBar(!isOpened);
-        if (isOpened) mRightButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
-        else mRightButton.setBackgroundColor(getResources().getColor(R.color.white));
     }
 
     // -- Fragments -- //
@@ -320,28 +296,19 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
         else return currentFragment;
     }
 
-//    private Fragment getCurrentFragment() {
-//        int position = mViewPager.getCurrentItem();
-//        NavHostFragment navHostFragment = (NavHostFragment) mAdapterViewPager.getItem(position);
-//        List<Fragment> fragmentList = navHostFragment.getChildFragmentManager().getFragments();
-//        if (fragmentList == null || fragmentList.isEmpty()) {
-//            return null;
-//        } else {
-//            return fragmentList.get(0);
-//        }
-//    }
-
     public void syncFABAndFragment() {
         Fragment fragment = getCurrentFragment();
-        if (fragment == null || fragment instanceof ContactsFragment) {
-            mFABCoordinator.setListener(this);
-        } else if (fragment instanceof FABCoordinator.OnFabClickListener) {
-            mFABCoordinator.setListener((FABCoordinator.OnFabClickListener) fragment);
-        }
+//        if (fragment instanceof ContactsFragment) {
+        mFABCoordinator.setListener(this);
+//        } else
+//        if (fragment instanceof FABCoordinator.OnFabClickListener) {
+//            mFABCoordinator.setListener((FABCoordinator.OnFabClickListener) fragment);
+//        }
+
         showButtons(true);
     }
 
-    // -- Other -- //
+    // -- UI -- //
 
     /**
      * Change the dialer status (collapse/expand)
@@ -378,4 +345,61 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
             mLeftButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
         else mLeftButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
     }
+
+    // -- FABCoordinator.OnFabClickListener -- //
+
+    @Override
+    public int[] getIconsResources() {
+        switch (mViewPager.getCurrentItem()) {
+            case 1:
+                return new int[]{
+                        R.drawable.ic_dialpad_black_24dp,
+                        R.drawable.ic_search_black_24dp
+                };
+            case 2:
+                return new int[]{
+                        R.drawable.ic_add_black_24dp,
+                        -1 //This means no FAB at all
+                };
+            default:
+                return new int[]{-1, -1};
+        }
+    }
+
+    @Override
+    public void onRightClick() {
+        switch (mViewPager.getCurrentItem()) {
+            case 1:
+                mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_EXPANDED);
+                break;
+            case 2:
+                new ImportSpreadsheetDialog.Builder(this.getSupportFragmentManager())
+                        .onImportListener((ImportSpreadsheetDialog.OnImportListener) getCurrentFragment())
+                        .show(new ImportSpreadsheetDialog());
+                break;
+            default:
+                new ImportSpreadsheetDialog.Builder(this.getSupportFragmentManager())
+                        .onImportListener((ImportSpreadsheetDialog.OnImportListener) getCurrentFragment())
+                        .show(new ImportSpreadsheetDialog());
+                break;
+        }
+    }
+
+    @Override
+    public void onLeftClick() {
+        switch (mViewPager.getCurrentItem()) {
+            case 1:
+                boolean isOpened = isSearchBarVisible();
+                toggleSearchBar(!isOpened);
+                if (isOpened)
+                    mRightButton.setBackgroundColor(getResources().getColor(R.color.red_phone));
+                else mRightButton.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }
+    }
+
 }

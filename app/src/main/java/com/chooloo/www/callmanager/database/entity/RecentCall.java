@@ -69,7 +69,8 @@ public class RecentCall {
     }
 
     public String getCallerName() {
-        return this.mCaller.getName();
+        if(this.mCaller != null) return this.mCaller.getName();
+        else return null;
     }
 
     public String getCallerNumber() {

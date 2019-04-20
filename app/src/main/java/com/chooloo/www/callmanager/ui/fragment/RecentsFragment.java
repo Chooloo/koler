@@ -9,6 +9,7 @@ import android.provider.CallLog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -30,7 +31,7 @@ import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        RecentsAdapter.OnChildClickListener {
+        RecentsAdapter.OnChildClickListener{
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";

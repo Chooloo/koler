@@ -81,7 +81,6 @@ public class Contact {
     public Contact(String name, @NonNull String phoneNumber, @Nullable String photoUri) {
         this.name = name;
         this.photoUri = photoUri;
-
         this.phoneNumbers = new ArrayList<>();
         this.phoneNumbers.add(phoneNumber);
     }
@@ -90,7 +89,6 @@ public class Contact {
     public Contact(Cursor cursor) {
         this.name = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY));
         this.photoUri = cursor.getString(cursor.getColumnIndex(Phone.PHOTO_THUMBNAIL_URI));
-
         this.phoneNumbers = new ArrayList<>();
         this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(Phone.NUMBER)));
     }

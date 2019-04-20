@@ -25,8 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import static androidx.recyclerview.widget.RecyclerView.HORIZONTAL;
 
 public class CGroupsFragment extends AbsRecyclerViewFragment implements
-        ImportSpreadsheetDialog.OnImportListener,
-        FABCoordinator.OnFabClickListener {
+        ImportSpreadsheetDialog.OnImportListener {
 
     private CGroupsViewModel mViewModel;
 
@@ -83,27 +82,5 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         task.setOnProgressListener(onProgressListener);
         task.setOnFinishListener(onFinishListener);
         task.execute();
-    }
-
-    // -- FABCoordniator.OnFabClickListener -- //
-
-    @Override
-    public int[] getIconsResources() {
-        return new int[]{
-                R.drawable.ic_add_black_24dp,
-                -1 //This means no FAB at all
-        };
-    }
-
-    @Override
-    public void onRightClick() {
-        new ImportSpreadsheetDialog.Builder(getFragmentManager())
-                .onImportListener(this)
-                .show(new ImportSpreadsheetDialog());
-    }
-
-    @Override
-    public void onLeftClick() {
-
     }
 }

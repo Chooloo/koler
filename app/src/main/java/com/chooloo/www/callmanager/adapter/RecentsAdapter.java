@@ -39,18 +39,24 @@ public class RecentsAdapter extends CursorRecyclerViewAdapter<RecentsAdapter.Rec
         RecentCall recentCall = new RecentCall(this.mContext, cursor);
 
         String phoneNumber = recentCall.getCallerNumber();
+
         viewHolder.time.setText(recentCall.getCallDateString());
 
         if (recentCall.getCallerName() != null) viewHolder.name.setText(recentCall.getCallerName());
-        else viewHolder.name.setText(phoneNumber);
+        else viewHolder.name.setText(recentCall.getCallerNumber());
 
-        if (recentCall.getCaller().getPhotoUri() == null) {
+        if (recentCall.getCaller() == null) {
             viewHolder.photo.setVisibility(View.GONE);
             viewHolder.photoPlaceholder.setVisibility(View.VISIBLE);
         } else {
-            viewHolder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
-            viewHolder.photo.setVisibility(View.VISIBLE);
-            viewHolder.photoPlaceholder.setVisibility(View.GONE);
+            if (recentCall.getCaller().getPhotoUri() == null) {
+                viewHolder.photo.setVisibility(View.GONE);
+                viewHolder.photoPlaceholder.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
+                viewHolder.photo.setVisibility(View.VISIBLE);
+                viewHolder.photoPlaceholder.setVisibility(View.GONE);
+            }
         }
 
         if (mOnChildClickListener != null) {
