@@ -16,7 +16,9 @@
 
     <!-- Bubble -->
     <dimen name="bubble_tab_height">32dp</dimen>
-    <dimen name="bubble_top_bottom_padding">4dp</dimen>
+    <dimen name="bubble_vertical_padding">4dp</dimen>
+    <dimen name="bubble_horizontal_padding">32dp</dimen>
+
     <dimen name="bubble_corner_radius">16dp</dimen>
     <dimen name="bubble_border_width">0.75dp</dimen>
 
