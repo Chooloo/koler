@@ -1,24 +1,32 @@
 package com.chooloo.www.callmanager.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperViewHolder;
-import com.chooloo.www.callmanager.adapter.helper.OnItemSelectedListener;
-import com.chooloo.www.callmanager.adapter.helper.OnStartDragListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
+import com.chooloo.www.callmanager.database.AppDatabase;
+import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,18 +35,22 @@ import butterknife.ButterKnife;
 public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdapter.ContactHolder>
         implements SimpleItemTouchHelperCallback.ItemTouchHelperAdapter {
 
-    private Context mContext;
+    private AppCompatActivity mContext;
+    private DataRepository mRepository;
+
     private List<Contact> mData;
 
     private boolean mEditModeEnabled = false;
 
-    private OnStartDragListener mOnDragListener;
-    private OnItemSelectedListener mSelectedListener;
+    private RecyclerView mRecyclerView;
+    private ItemTouchHelperListener mItemTouchHelperListener;
 
-    public CGroupDetailsAdapter(Context context, OnStartDragListener dragListener, OnItemSelectedListener selectedListener) {
+    public CGroupDetailsAdapter(AppCompatActivity context, RecyclerView recyclerView, ItemTouchHelperListener itemTouchHelperListener) {
         mContext = context;
-        mSelectedListener = selectedListener;
-        mOnDragListener = dragListener;
+        mRecyclerView = recyclerView;
+        mItemTouchHelperListener = itemTouchHelperListener;
+
+        mRepository = DataRepository.getInstance(AppDatabase.getDatabase(mContext));
     }
 
     @NonNull
@@ -60,20 +72,18 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         holder.dragHandle.setOnTouchListener((v, event) -> {
             if (event.getActionMasked() ==
                     MotionEvent.ACTION_DOWN) {
-                mOnDragListener.onStartDrag(holder);
+                mItemTouchHelperListener.onStartDrag(holder);
             }
             return false;
         });
 
-        holder.removeItem.setOnClickListener(v -> {
+        holder.removeItem.setOnClickListener(v -> onItemDismiss(holder.getAdapterPosition()));
 
-        });
-
-        int visibility;
-        if (mEditModeEnabled) visibility = View.VISIBLE;
-        else visibility = View.GONE;
-        holder.dragHandle.setVisibility(visibility);
-        holder.removeItem.setVisibility(visibility);
+        ConstraintLayout itemRoot = (ConstraintLayout) holder.itemView;
+        ConstraintSet set = new ConstraintSet();
+        int layoutId = mEditModeEnabled ? R.layout.item_contact_editable_modified : R.layout.item_contact_editable;
+        set.load(mContext, layoutId);
+        set.applyTo(itemRoot);
     }
 
     @Override
@@ -84,14 +94,44 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
 
     @Override
     public void onItemMove(int fromPosition, int toPosition) {
+
+        //Switch in database
+        Contact firstContact = mData.get(fromPosition);
+        Contact secondContact = mData.get(toPosition);
+        long temp = firstContact.getContactId();
+        firstContact.setContactId(secondContact.getContactId());
+        secondContact.setContactId(temp);
+        mRepository.update(firstContact, secondContact);
+
+        //Switch in list - has to be this way for smooth dragging
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mData, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mData, i, i - 1);
+            }
+        }
+
         notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
     public void onItemDismiss(int position) {
+        //Remove in database
+        long id = mData.get(position).getContactId();
+
+        //Remove in list
+        mData.remove(position);
+
+        mRepository.removeContact(id);
+
+        notifyItemRemoved(position);
     }
 
     public void setData(List<Contact> data) {
+        if (mData != null) return;
         mData = data;
         notifyDataSetChanged();
     }
@@ -99,10 +139,15 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
     public void enableEditMode(boolean enable) {
         if (mEditModeEnabled == enable) return;
         mEditModeEnabled = enable;
-        notifyDataSetChanged();
+
+        //Animate all the RecyclerView items:
+        for(int i = 0; i < getItemCount(); i++) {
+            ContactHolder holder = (ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(i);
+            if (holder != null) holder.animate();
+        }
     }
 
-    class ContactHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
+    public class ContactHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
         @BindView(R.id.item_photo) ImageView image;
         @BindView(R.id.item_name_text) TextView name;
@@ -119,12 +164,24 @@ public class CGroupDetailsAdapter extends RecyclerView.Adapter<CGroupDetailsAdap
         @Override
         public void onItemSelected() {
             enableEditMode(true);
-            if (mSelectedListener != null) mSelectedListener.onItemSelected(this);
+            if (mItemTouchHelperListener != null) mItemTouchHelperListener.onItemSelected(this);
         }
 
         @Override
         public void onItemClear() {
-            itemView.setElevation(0f);
+        }
+
+        public void animate() {
+            ConstraintLayout itemRoot = (ConstraintLayout) itemView;
+            ConstraintSet set = new ConstraintSet();
+            set.clone(itemRoot);
+
+            Transition transition = new AutoTransition();
+            transition.setInterpolator(new OvershootInterpolator());
+            TransitionManager.beginDelayedTransition(itemRoot, transition);
+            int layoutId = mEditModeEnabled ? R.layout.item_contact_editable_modified : R.layout.item_contact_editable;
+            set.load(mContext, layoutId);
+            set.applyTo(itemRoot);
         }
     }
 }

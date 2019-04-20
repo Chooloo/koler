@@ -44,23 +44,25 @@ public class RecentCall {
 
     public RecentCall(Context context, Cursor cursor) {
         this.mContext = context;
-        this.mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-        this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, this.mNumber);
-        this.mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
-        this.mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
+        mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
+        if (mNumber != null) {
+            mCaller = ContactUtils.getContactByPhoneNumber(context, mNumber);
+        }
+        mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
+        mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
         int callType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
         switch (callType) {
             case 0:
-                this.mCallType = mOutgoingCall;
+                mCallType = mOutgoingCall;
                 break;
             case 1:
-                this.mCallType = mIncomingCall;
+                mCallType = mIncomingCall;
                 break;
             case 2:
-                this.mCallType = mMissedCall;
+                mCallType = mMissedCall;
                 break;
             default:
-                this.mCallType = null;
+                mCallType = null;
         }
     }
 

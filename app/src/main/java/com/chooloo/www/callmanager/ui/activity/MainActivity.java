@@ -16,6 +16,13 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
@@ -23,7 +30,6 @@ import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.DialFragment;
-import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.ui.fragment.SharedSearchViewModel;
@@ -31,26 +37,13 @@ import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import java.util.List;
 import java.util.Objects;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import github.chenupt.springindicator.SpringIndicator;
 import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
@@ -236,7 +229,7 @@ public class MainActivity extends AbsSearchBarActivity implements FABCoordinator
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.settings:
+            case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;

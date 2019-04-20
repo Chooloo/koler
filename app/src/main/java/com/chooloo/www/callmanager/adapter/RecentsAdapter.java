@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
@@ -45,18 +48,14 @@ public class RecentsAdapter extends CursorRecyclerViewAdapter<RecentsAdapter.Rec
         if (recentCall.getCallerName() != null) viewHolder.name.setText(recentCall.getCallerName());
         else viewHolder.name.setText(recentCall.getCallerNumber());
 
-        if (recentCall.getCaller() == null) {
+        Contact caller = recentCall.getCaller();
+        if (caller != null && caller.getPhotoUri() != null) {
+            viewHolder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
+            viewHolder.photo.setVisibility(View.VISIBLE);
+            viewHolder.photoPlaceholder.setVisibility(View.GONE);
+        } else {
             viewHolder.photo.setVisibility(View.GONE);
             viewHolder.photoPlaceholder.setVisibility(View.VISIBLE);
-        } else {
-            if (recentCall.getCaller().getPhotoUri() == null) {
-                viewHolder.photo.setVisibility(View.GONE);
-                viewHolder.photoPlaceholder.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
-                viewHolder.photo.setVisibility(View.VISIBLE);
-                viewHolder.photoPlaceholder.setVisibility(View.GONE);
-            }
         }
 
         if (mOnChildClickListener != null) {

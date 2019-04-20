@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,8 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupDetailsAdapter;
-import com.chooloo.www.callmanager.adapter.helper.OnItemSelectedListener;
-import com.chooloo.www.callmanager.adapter.helper.OnStartDragListener;
+import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.CallManager;
@@ -28,8 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CGroupActivity extends AbsAppBarActivity implements
-        OnItemSelectedListener,
-        OnStartDragListener {
+        ItemTouchHelperListener {
 
     public static final String EXTRA_LIST_ID = "list_id";
 
@@ -64,7 +63,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.dismiss:
+                case R.id.action_dismiss:
                     mAdapter.enableEditMode(false);
                     mode.finish(); // Action picked, so close the CAB
                     return true;
@@ -76,6 +75,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             mActionMode = null;
+            getWindow().setStatusBarColor(Color.WHITE);
         }
     };
 
@@ -94,7 +94,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         long listId = intent.getLongExtra(EXTRA_LIST_ID, -1);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new CGroupDetailsAdapter(this, this, this);
+        mAdapter = new CGroupDetailsAdapter(this, mRecyclerView, this);
         mRecyclerView.setAdapter(mAdapter);
 
         ItemTouchHelper.Callback callback =
@@ -123,21 +123,55 @@ public class CGroupActivity extends AbsAppBarActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit: {
+                startActionMode();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @OnClick(R.id.fab_auto_call)
     public void autoCall(View view) {
         CallManager.startAutoCalling(mContacts, this, 0);
     }
 
     @Override
-    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
+    public void onItemSelected(RecyclerView.ViewHolder holder) {
+        startActionMode();
     }
 
     @Override
-    public void onItemSelected(RecyclerView.ViewHolder holder) {
-        if (mActionMode != null) return;
+    public void onStartDrag(RecyclerView.ViewHolder holder) {
+        mItemTouchHelper.startDrag(holder);
+    }
 
+    @Override
+    public void onStartSwipe(RecyclerView.ViewHolder holder) {
+        mItemTouchHelper.startSwipe(holder);
+    }
+
+    private void startActionMode() {
+        if (mActionMode != null) return;
         // Start the CAB using the ActionMode.Callback defined above
         mActionMode = startSupportActionMode(mActionModeCallback);
+
+        mAdapter.enableEditMode(true);
+        getWindow().setStatusBarColor(getColor(R.color.grey_100));
     }
 }

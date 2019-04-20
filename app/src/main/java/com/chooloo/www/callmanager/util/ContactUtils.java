@@ -7,9 +7,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import com.chooloo.www.callmanager.database.entity.Contact;
-
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+
+import com.chooloo.www.callmanager.database.entity.Contact;
 
 public class ContactUtils {
 
@@ -21,7 +22,9 @@ public class ContactUtils {
      *
      * @return the contact's name
      */
-    public static Contact getContactByPhoneNumber(Context context, String phoneNumber) {
+    public static Contact getContactByPhoneNumber(@NonNull Context context, @NonNull String phoneNumber) {
+
+        if (phoneNumber.isEmpty()) return null;
 
         //Check for permission to read contacts
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
