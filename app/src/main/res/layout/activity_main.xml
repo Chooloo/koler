@@ -19,8 +19,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="wrap_content"/>
 
     <!-- Dialer Fragment -->
     <fragment
@@ -45,7 +45,8 @@
         android:layout_marginBottom="@dimen/default_padding"
         app:layout_anchor="@+id/main_dialer_fragment"
         app:layout_anchorGravity="left|bottom"
-        tools:src="@drawable/ic_search_black_24dp" />
+        tools:src="@drawable/ic_search_black_24dp"
+        tools:ignore="RtlHardcoded" />
 
     <!-- Right Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -57,6 +58,7 @@
         android:layout_marginBottom="@dimen/default_padding"
         app:layout_anchor="@+id/main_dialer_fragment"
         app:layout_anchorGravity="right|bottom"
-        tools:src="@drawable/ic_dialpad_black_24dp" />
+        tools:src="@drawable/ic_dialpad_black_24dp"
+        tools:ignore="RtlHardcoded" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
