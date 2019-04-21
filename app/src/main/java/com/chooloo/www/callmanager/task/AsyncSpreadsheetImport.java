@@ -5,8 +5,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.chooloo.www.callmanager.database.AppDatabase;
-import com.chooloo.www.callmanager.database.dao.CGroupDao;
-import com.chooloo.www.callmanager.database.dao.ContactDao;
+import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -41,7 +40,7 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
 
     private int status = STATUS_SUCCESSFUL;
 
-    private CGroup mDatabaseList;
+    private CGroup mCGroup;
 
     private OnProgressListener mOnProgressListener;
     private OnFinishListener mOnFinishListener;
@@ -54,18 +53,18 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
      * @param excelFile      The file to import contacts from.
      * @param nameColIndex   The contact's name column index.
      * @param numberColIndex The contact's number column index.
-     * @param databaseList   A list to import the data into. Can be empty (not in the database).
+     * @param CGroup   A list to import the data into. Can be empty (not in the database).
      */
     public AsyncSpreadsheetImport(@NotNull Context context,
                                   @NotNull File excelFile,
                                   int nameColIndex,
                                   int numberColIndex,
-                                  @NotNull CGroup databaseList) {
+                                  @NotNull CGroup CGroup) {
         mContext = context;
         mExcelFile = excelFile;
         mNameColIndex = nameColIndex;
         mNumberColIndex = numberColIndex;
-        mDatabaseList = databaseList;
+        mCGroup = CGroup;
     }
 
     public void setOnProgressListener(OnProgressListener listener) {
@@ -79,23 +78,20 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
     @Override
     protected List<Contact> doInBackground(Void... voids) {
 
-        long listId = mDatabaseList.getListId();
-        AppDatabase db = AppDatabase.getDatabase(mContext);
+        long listId = mCGroup.getListId();
+        DataRepository repository = DataRepository.getInstance(AppDatabase.getDatabase(mContext));
 
-        //TODO use a repository
-        CGroupDao cgroupDao = db.getCGroupDao();
         if (listId == 0) { //If this list isn't in the database
-            listId = cgroupDao.insert(mDatabaseList);
+            listId = repository.insertCGroups(mCGroup)[0];
         }
 
         List<Contact> contacts = fetchContacts(listId);
         if (contacts == null) {
-            cgroupDao.deleteById(listId);
+            repository.deleteCGroup(listId);
             return null;
         }
 
-        ContactDao contactDao = db.getContactDao();
-        contactDao.insert(contacts);
+        repository.insertContacts(contacts);
 
         return contacts;
     }

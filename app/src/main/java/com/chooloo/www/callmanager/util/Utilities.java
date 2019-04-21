@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.CallLog;
@@ -122,6 +123,10 @@ public class Utilities {
      */
     public static float convertPixelsToDp(Context context, float px) {
         return px / (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    public static boolean isInUIThread() {
+        return Looper.getMainLooper().isCurrentThread();
     }
 
     /**

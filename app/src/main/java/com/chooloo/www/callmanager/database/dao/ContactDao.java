@@ -14,7 +14,7 @@ import java.util.List;
 public interface ContactDao {
 
     @Insert
-    void insert(Contact contact);
+    void insert(Contact... contacts);
 
     @Insert
     void insert(List<Contact> contacts);

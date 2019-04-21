@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.List;
 
@@ -29,6 +30,25 @@ public class DataRepository {
 
     private DataRepository(final AppDatabase database) {
         mDatabase = database;
+    }
+
+    // - Insert - //
+
+    public long[] insertCGroups(CGroup... cGroup) {
+        if (Utilities.isInUIThread()) {
+            //TODO start in thread
+            return null;
+        } else {
+            return mDatabase.getCGroupDao().insert(cGroup);
+        }
+    }
+
+    public void insertContacts(List<Contact> contacts) {
+        if (Utilities.isInUIThread()) {
+            //TODO start in thread
+        } else {
+            mDatabase.getContactDao().insert(contacts);
+        }
     }
 
     // - Update - //
