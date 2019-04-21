@@ -39,7 +39,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         FABCoordinator.FABDrawableCoordination,
         FABCoordinator.OnFABClickListener,
         View.OnScrollChangeListener,
-        ContactsAdapter.OnContactSelectedListener{
+        ContactsAdapter.OnContactSelectedListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
@@ -149,17 +149,17 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
+    // -- FABCoordinator.OnFabClickListener -- //
+
     @Override
     public void onRightClick() {
-        ((MainActivity) getActivity()).expandAppBar(true);
+        ((MainActivity) getActivity()).expandDialer(true);
     }
 
     @Override
-    public void onLeftClick() {
-        MainActivity mainActivity = (MainActivity) getActivity();
-        boolean isOpened = mainActivity.isSearchBarVisible();
-        mainActivity.toggleSearchBar(!isOpened);
-    }
+    public void onLeftClick() { ((MainActivity) getActivity()).toggleSearchBar(); }
+
+    // -- FABCoordinator.FABDrawableCoordinator -- //
 
     @Override
     public int[] getIconsResources() {
@@ -225,7 +225,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onContactSelected(String normPhoneNumber) {
         if (normPhoneNumber == null) return;
-//        mSharedDialViewModel.setNumber(normPhoneNumber);
         CallManager.call(this.getContext(), normPhoneNumber);
     }
 }

@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contact_popup_layout"
     android:layout_width="300dp"
-    android:layout_height="500dp"
+    android:layout_height="200dp"
     android:background="@drawable/dialer_background"
-    android:minWidth="150dp"
-    android:minHeight="200dp"
     android:orientation="vertical"
     android:padding="20dp">
 

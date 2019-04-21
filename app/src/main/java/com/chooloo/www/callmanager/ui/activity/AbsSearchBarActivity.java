@@ -49,6 +49,18 @@ public class AbsSearchBarActivity extends AbsAppBarActivity {
         ft.commit();
     }
 
+    /**
+     * Toggles the search bar according to the current state
+     */
+    public void toggleSearchBar() {
+        toggleSearchBar(!isSearchBarVisible());
+    }
+
+    /**
+     * Weither the search bar is visible or not
+     *
+     * @return
+     */
     public boolean isSearchBarVisible() {
         return mSearchBarContainer.getVisibility() == View.VISIBLE;
     }

@@ -301,4 +301,21 @@ public class Utilities {
         cursor.close();
         return recentCalls;
     }
+
+    /**
+     * Checks wither the text given is numeric or not
+     * @param text
+     * @return true/false
+     */
+    public static boolean checkNumeric(String text) {
+        boolean numeric = true;
+
+        try {
+            Double num = Double.parseDouble(text);
+        } catch (NumberFormatException e) {
+            numeric = false;
+        }
+
+        return numeric;
+    }
 }

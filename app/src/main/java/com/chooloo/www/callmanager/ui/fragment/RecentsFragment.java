@@ -34,24 +34,27 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        View.OnScrollChangeListener,
-        OnItemClickListener,
-        OnItemLongClickListener {
+        View.OnScrollChangeListener, OnItemClickListener, OnItemLongClickListener {
 
+    // Constents
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_CONTACT_NAME = "contact_name";
 
+    // View Models
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
     LinearLayoutManager mLayoutManager;
     RecentsAdapter mRecentsAdapter;
 
+    // ViewBinds
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
 
@@ -71,10 +74,11 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
                         }
                     }
                 };
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecentsAdapter = new RecentsAdapter(getContext(), null, null, null);
-        mRecyclerView.setAdapter(mRecentsAdapter);
+        mRecentsAdapter = new RecentsAdapter(getContext(), null, this, this);
 
+        // mRecyclerView
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mRecentsAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -97,6 +101,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             }
         });
 
+        // mRefreshLayout
         mRefreshLayout.setOnRefreshListener(() -> {
             LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
             tryRunningLoader();
@@ -136,6 +141,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         super.onResume();
         tryRunningLoader();
     }
+
+    // -- Loader -- //
 
     private void tryRunningLoader() {
         if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
@@ -206,11 +213,14 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         mRecentsAdapter.changeCursor(null);
     }
 
+    // -- UI Listeners -- //
+
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
     }
 
+    @Override
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
         RecentCall recentCall = (RecentCall) data;
         CallManager.call(this.getContext(), recentCall.getCallerNumber());
@@ -218,12 +228,15 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
-        TextView contactNameText;
-        contactNameText = (TextView) holder.itemView.findViewById(R.id.item_name_text);
-        String contactName = contactNameText.getText().toString();
-        showContactPopup(ContactUtils.getContactByName(getContext(), contactName));
+        RecentCall recentCall = (RecentCall) data;
+        showContactPopup(ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber()));
     }
 
+    /**
+     * Shows a pop up window (dialog) with the contact's information
+     *
+     * @param contact
+     */
     private void showContactPopup(Contact contact) {
 
         // Initiate the dialog

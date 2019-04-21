@@ -171,17 +171,6 @@ public class MainActivity extends AbsSearchBarActivity {
         //Initialize FABCoordinator
         mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
         syncFABAndFragment();
-
-//        //Listen for keyboard state changes
-//        KeyboardVisibilityEvent.setEventListener(
-//                this,
-//                isOpen -> {
-//                    if (!isOpen) { //If hides
-//                        toggleSearchBar(false);
-//                    }
-//                }
-//        );
-
     }
 
     // -- Overrides -- //
