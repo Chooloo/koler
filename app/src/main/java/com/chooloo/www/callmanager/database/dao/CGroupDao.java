@@ -1,19 +1,19 @@
 package com.chooloo.www.callmanager.database.dao;
 
-import com.chooloo.www.callmanager.database.entity.CGroup;
-
-import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.chooloo.www.callmanager.database.entity.CGroup;
+
+import java.util.List;
+
 @Dao
 public interface CGroupDao {
 
     @Insert
-    long insert (CGroup list);
+    long[] insert (CGroup... lists);
 
     @Query("DELETE FROM cgroup_table")
     int deleteAll();
