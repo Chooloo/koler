@@ -14,6 +14,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupsAdapter;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.CGroupActivity;
@@ -21,6 +22,7 @@ import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -43,13 +45,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
             @Override
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                 super.onLayoutChildren(recycler, state);
-                if (mAdapter.getItemCount() > 0) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mEmptyState.setVisibility(View.GONE);
-                } else {
-                    mRecyclerView.setVisibility(View.GONE);
-                    mEmptyState.setVisibility(View.VISIBLE);
-                }
+
             }
         };
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -66,9 +62,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(CGroupsViewModel.class);
-        mViewModel.getContactsLists().observe(this, cgroups -> {
-                mAdapter.setData(cgroups);
-        });
+        mViewModel.getContactsLists().observe(this, this::setData);
     }
 
     // -- FABCoordinator -- //
@@ -127,5 +121,16 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         task.setOnProgressListener(onProgressListener);
         task.setOnFinishListener(onFinishListener);
         task.execute();
+    }
+
+    private void setData(List<CGroupAndItsContacts> cGroups) {
+        mAdapter.setData(cGroups);
+        if (cGroups.size() > 0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyState.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyState.setVisibility(View.VISIBLE);
+        }
     }
 }
