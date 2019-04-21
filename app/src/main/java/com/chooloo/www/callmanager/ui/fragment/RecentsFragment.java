@@ -21,7 +21,6 @@ import com.chooloo.www.callmanager.util.Utilities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -42,14 +41,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         View.OnScrollChangeListener, OnItemClickListener, OnItemLongClickListener {
 
-    // Constents
     private static final int LOADER_ID = 1;
-    private static final String ARG_PHONE_NUMBER = "phone_number";
-    private static final String ARG_CONTACT_NAME = "contact_name";
-
-    // View Models
-    private SharedDialViewModel mSharedDialViewModel;
-    private SharedSearchViewModel mSharedSearchViewModel;
 
     LinearLayoutManager mLayoutManager;
     RecentsAdapter mRecentsAdapter;
@@ -79,27 +71,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         // mRecyclerView
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mRecentsAdapter);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        mSharedDialViewModel.setIsOutOfFocus(false);
-                        break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING:
-                        mSharedDialViewModel.setIsOutOfFocus(true);
-                        mSharedSearchViewModel.setIsFocused(false);
-                        break;
-                    case RecyclerView.SCROLL_STATE_SETTLING:
-                        mSharedDialViewModel.setIsOutOfFocus(true);
-                        mSharedSearchViewModel.setIsFocused(false);
-                        break;
-                    default:
-                        mSharedDialViewModel.setIsOutOfFocus(false);
-                }
-            }
-        });
 
         // mRefreshLayout
         mRefreshLayout.setOnRefreshListener(() -> {
@@ -117,22 +88,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        mSharedDialViewModel.getNumber().observe(this, s -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_PHONE_NUMBER, s);
-                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
-            }
-        });
-        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
-        mSharedSearchViewModel.getText().observe(this, t -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_CONTACT_NAME, t);
-                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
-            }
-        });
         tryRunningLoader();
     }
 
@@ -173,23 +128,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         };
         String SELECTION = null;
         String ORDER = CallLog.Calls.DATE + " DESC";
-
-
-        // Check if a specific name/number is required
-        String contactName = null;
-        String phoneNumber = null;
-
-        if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
-            phoneNumber = args.getString(ARG_PHONE_NUMBER);
-        } else if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
-            contactName = args.getString(ARG_CONTACT_NAME);
-        }
-
-        if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            SELECTION = CallLog.Calls.NUMBER + " = " + phoneNumber;
-        } else if (contactName != null && !contactName.isEmpty()) {
-            SELECTION = CallLog.Calls.CACHED_NAME + " = " + contactName;
-        }
 
         // Return cursor
         return new CursorLoader(

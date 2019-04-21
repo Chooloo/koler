@@ -44,6 +44,7 @@
         android:layout_marginTop="@dimen/bubble_vertical_padding"
         android:layout_marginEnd="@dimen/bubble_horizontal_padding"
         android:layout_marginBottom="@dimen/bubble_vertical_padding"
+        android:background="@android:color/transparent"
         app:layout_scrollFlags="scroll|snap|enterAlways"
         app:stl_clickable="true"
         app:stl_defaultTabBackground="@drawable/bubble_background"

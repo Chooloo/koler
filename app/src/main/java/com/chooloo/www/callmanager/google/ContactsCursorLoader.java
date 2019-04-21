@@ -77,6 +77,7 @@ public final class ContactsCursorLoader extends CursorLoader {
         } else if (contactName != null && !contactName.isEmpty()) {
             builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
             builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
+
         } else {
             builder = Phone.CONTENT_URI.buildUpon();
         }

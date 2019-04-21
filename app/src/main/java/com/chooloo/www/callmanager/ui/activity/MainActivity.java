@@ -122,6 +122,7 @@ public class MainActivity extends AbsSearchBarActivity {
 
             @Override
             public void onPageSelected(int position) {
+                if (isSearchBarVisible()) toggleSearchBar();
                 syncFABAndFragment();
             }
 
@@ -263,6 +264,7 @@ public class MainActivity extends AbsSearchBarActivity {
 
     /**
      * Returns the currently displayed fragment. Based on <a href="this">https://stackoverflow.com/a/18611036/5407365</a> answer
+     *
      * @return Fragment
      */
     private Fragment getCurrentFragment() {
