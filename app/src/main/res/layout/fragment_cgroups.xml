@@ -17,4 +17,11 @@
         tools:listitem="@layout/item_contact">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <include
+        android:id="@+id/empty_state"
+        layout="@layout/page_empty_state"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="411dp"
+        tools:layout_editor_absoluteY="731dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

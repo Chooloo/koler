@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,6 +22,8 @@ import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 
 import java.io.File;
 
+import butterknife.BindView;
+
 public class CGroupsFragment extends AbsRecyclerViewFragment implements
         ImportSpreadsheetDialog.OnImportListener,
         FABCoordinator.OnFABClickListener,
@@ -29,11 +32,27 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     private CGroupsViewModel mViewModel;
 
+    private LinearLayoutManager mLayoutManager;
     private CGroupsAdapter mAdapter;
+
+    @BindView(R.id.empty_state) View mEmptyState;
 
     @Override
     protected void onCreateView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        mLayoutManager = new LinearLayoutManager(getContext()) {
+            @Override
+            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                super.onLayoutChildren(recycler, state);
+                if (mAdapter.getItemCount() > 0) {
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mEmptyState.setVisibility(View.GONE);
+                } else {
+                    mRecyclerView.setVisibility(View.GONE);
+                    mEmptyState.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CGroupsAdapter(getContext(), null, this);
         mRecyclerView.setAdapter(mAdapter);
     }
