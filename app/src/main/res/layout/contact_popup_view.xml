@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contact_popup_layout"
+    android:layout_width="300dp"
+    android:layout_height="500dp"
+    android:background="@drawable/dialer_background"
+    android:minWidth="150dp"
+    android:minHeight="200dp"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+    <TextView
+        android:id="@+id/contact_popup_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contact_popup_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Phone Number"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/contact_popup_name"
+        app:layout_constraintTop_toBottomOf="@+id/contact_popup_name" />
+
+    <TextView
+        android:id="@+id/contact_popup_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Phone Number"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintStart_toStartOf="@+id/contact_popup_number_title"
+        app:layout_constraintTop_toBottomOf="@+id/contact_popup_number_title" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView5"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="30dp"-->
+    <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"-->
+    <!--android:text="TextView"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/textView4"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/textView4" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView6"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:text="TextView"-->
+    <!--android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"-->
+    <!--app:layout_constraintStart_toStartOf="@+id/textView5"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/textView5" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
