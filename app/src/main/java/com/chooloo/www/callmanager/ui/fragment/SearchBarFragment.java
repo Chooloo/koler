@@ -7,21 +7,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
-import com.chooloo.www.callmanager.util.Utilities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
-import butterknife.OnClick;
-import butterknife.Optional;
 
 public class SearchBarFragment extends BaseFragment {
 

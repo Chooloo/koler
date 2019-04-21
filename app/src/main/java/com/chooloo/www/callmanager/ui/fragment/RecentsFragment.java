@@ -1,21 +1,26 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.CallLog;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -24,16 +29,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
-import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import butterknife.BindView;
 
@@ -212,15 +211,44 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
     }
 
-    @Override
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
         RecentCall recentCall = (RecentCall) data;
         CallManager.call(this.getContext(), recentCall.getCallerNumber());
-
     }
 
     @Override
     public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
-        // TODO make a pop window with the contact's details
+        TextView contactNameText;
+        contactNameText = (TextView) holder.itemView.findViewById(R.id.item_name_text);
+        String contactName = contactNameText.getText().toString();
+        showContactPopup(ContactUtils.getContactByName(getContext(), contactName));
+    }
+
+    private void showContactPopup(Contact contact) {
+
+        // Initiate the dialog
+        Dialog contactDialog = new Dialog(getContext());
+        contactDialog.setContentView(R.layout.contact_popup_view);
+
+        // Views declarations
+        TextView contactName;
+        TextView contactNumber;
+        ConstraintLayout popupLayout;
+
+        contactName = (TextView) contactDialog.findViewById(R.id.contact_popup_name);
+        contactNumber = (TextView) contactDialog.findViewById(R.id.contact_popup_number);
+        popupLayout = (ConstraintLayout) contactDialog.findViewById(R.id.contact_popup_layout);
+
+        if (contact.getName() != null)
+            contactName.setText(contact.getName());
+        else contactName.setText(contact.getMainPhoneNumber());
+
+        contactNumber.setText(contact.getMainPhoneNumber());
+        popupLayout.setElevation(20);
+
+        contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        contactDialog.show();
+
     }
 }
+
