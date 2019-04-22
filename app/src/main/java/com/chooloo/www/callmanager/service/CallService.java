@@ -12,7 +12,9 @@ public class CallService extends InCallService {
     @Override
     public void onCallAdded(Call call) {
         super.onCallAdded(call);
-        startActivity(new Intent(this, OngoingCallActivity.class));
+        Intent intent = new Intent(this, OngoingCallActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         CallManager.sCall = call;
     }
 
