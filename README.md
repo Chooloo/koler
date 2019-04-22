@@ -1,35 +1,33 @@
-# Call Manager (we really need to come up with a name)
-Dialer and Incoming call UI, with unique and actually usefull options.
+# Koler
+A uniquely stylized phone app, with customizable features - for Android. </br>
+<a href='https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+ <img alt='Get it on Google Play'
+      src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'
+      height="80"/>
+</a>
 
-# Dialer
-The main app includes a dialer with contacts.
-The dialer also include a dedicated page for contacts.
+# Features
+## Call Interface
+Our ongoing call UI makes everything easier.
+Its uses swipes and minimalistic design, making everything more beautiful, intuitive, yet still productive.
 
-# Incoming Call UI
-When incoming call is.... coming, The app deploys a UI that makes everything easier.
-Using swipes and minimalism, making everything more beatiful and intuitive.
-When someone calls you, before you answer you can:
-* Reject with a sms
-* Reject with a timer
-* Answer with a timer
-When in an active call you can:
-* Use keypad
-* Reject with timer
-* Mute, speaker, add call and all that bla bla
+In an incoming call, you can do the following before answering:
+* Reject and send the call an SMS
+* Reject in a specified amount of seconds
+* Answer in a specified amount of seconds
 
-# Swipes
+In an ongoing call you can:
+* Reject in a specified amount of seconds
+
+## Swipes
 The app's main goal is to be more intuitive and comfortable,  
-For that reason, the swipes are the main way of controlling the app,  
-making it way more comfortable, faster and nice looking.  
+For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
   * ### Dialer
-    * __Call__            - swipe up  
-    * __Delete number__   - swipe left  
-    * __Collapse dialer__ - swipe on the contacts list  
+    * __Call__            - Swipe up  
+    * __Delete number__   - Swipe left  
+    * __Collapse dialer__ - Swipe on the contacts list  
   * ### Incoming Call
     * __Open keypad__     - Swipe up   
     * __Reject/End__      - Swipe left  
     * __Answer__          - Swipe right 
-    * __Send sms__        - Swipe up on sms screen  
-   
- 
-Please use it 
+    * __Send sms__        - Swipe up on the send SMS overlay

@@ -36,7 +36,8 @@ public class ContactUtils {
         if (cursor.moveToFirst()) {
             contact = new Contact(cursor.getString(0), phoneNumber, cursor.getString(1));
         } else {
-            return null;
+            contact = new Contact(null, phoneNumber, null);
+            return contact;
         }
         cursor.close();
 
