@@ -39,7 +39,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CALL_LOG;
@@ -85,9 +84,6 @@ public class MainActivity extends AbsSearchBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
-
-        // Init timber
-        Timber.plant(new Timber.DebugTree());
 
         // Bind variables
         ButterKnife.bind(this);
