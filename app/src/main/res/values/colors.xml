@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <color name="ic_launcher_background">#ED4F4F</color>
+    <color name="ic_launcher_background">#EC134E</color>
 
     <color name="colorPrimary">@color/white</color>
     <color name="colorPrimaryDark">@color/grey_50</color>
     <color name="colorAccent">@color/ic_launcher_background</color>
-    <color name="colorBackground">@color/grey_50</color>
 
     <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>
@@ -27,6 +26,7 @@
     <color name="green_phone_70_trans">#B366BB6A</color>
     <color name="green_phone_semi_trans">#8066BB6A</color>
     <color name="green_phone_light">#BFDBC0</color>
+
     <!-- Red -->
     <color name="red_phone">#ef5350</color>
     <color name="red_phone_70_trans">#B3EF5350</color>

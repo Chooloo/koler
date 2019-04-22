@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/empty_image"
         android:layout_width="264dp"
-        android:layout_height="264dp"
-        android:scaleType="centerCrop"
+        android:layout_height="196dp"
+        android:scaleType="fitCenter"
         android:tint="@color/grey_400"
         app:layout_constraintBottom_toTopOf="@+id/empty_title"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_koli_sad" />
 
     <TextView
         android:id="@+id/empty_title"

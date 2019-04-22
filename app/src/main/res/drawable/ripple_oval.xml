@@ -4,7 +4,7 @@
     <item android:id="@android:id/mask">
         <shape android:shape="oval">
             <!--Needs to have a solid in order to work - doesn't matter which color-->
-            <solid android:color="@color/colorBackground" />
+            <solid android:color="@color/white" />
         </shape>
     </item>
     <item>
