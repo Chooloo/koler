@@ -27,12 +27,6 @@ import static android.provider.ContactsContract.Contacts;
 
 public final class ContactsCursorLoader extends CursorLoader {
 
-    public static final int CONTACT_ID = 0;
-    public static final int CONTACT_DISPLAY_NAME = 1;
-    public static final int CONTACT_PHOTO_ID = 2;
-    public static final int CONTACT_PHOTO_URI = 3;
-    public static final int CONTACT_NUMBER = 4;
-
     public static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
             new String[]{
                     Phone._ID, // 0
@@ -57,12 +51,12 @@ public final class ContactsCursorLoader extends CursorLoader {
     }
 
     private static String getWhere(Context context) {
-        String where = getProjection(context)[CONTACT_DISPLAY_NAME] + " IS NOT NULL" +
-                " AND " + Contacts.HAS_PHONE_NUMBER + "=1" +
-                " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%'" +
-                " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%tachyon%'";
-
-        return where;
+        return  "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
+                " OR " + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" + ")" +
+                " AND " + Phone.HAS_PHONE_NUMBER + "=1" +
+                " AND (" + ContactsContract.RawContacts.ACCOUNT_NAME + " IS NULL" +
+                " OR ( " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%'" +
+                " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%tachyon%'" + "))";
     }
 
     private static String getSortKey(Context context) {
