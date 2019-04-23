@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <item android:drawable="@color/ic_launcher_background" />
+    <item android:bottom="64dp">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/icon_full_144" />
+    </item>
+    <item android:bottom="64dp">
+        <bitmap
+            android:gravity="bottom|center_horizontal"
+            android:src="@drawable/logo_made_by"
+            android:tint="@color/white"
+            android:alpha="0.75"/>
+    </item>
+</layer-list>

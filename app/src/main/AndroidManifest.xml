@@ -28,7 +28,7 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/SplashTheme">
 
             <!-- From Google's Dialer App -->
             <intent-filter>
