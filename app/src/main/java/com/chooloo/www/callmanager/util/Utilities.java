@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
+import android.telecom.TelecomManager;
 import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -43,7 +45,9 @@ import static android.Manifest.permission.SEND_SMS;
 
 public class Utilities {
 
+    public static final int DEFAULT_DIALER_RC = 11;
     public static final int PERMISSION_RC = 10;
+
     public static Locale sLocale;
 
     public static final long LONG_VIBRATE_LENGTH = 500;
@@ -58,6 +62,18 @@ public class Utilities {
         }
     }
 
+    public static boolean checkDefaultDialer(FragmentActivity activity) {
+        // Prompt the user with a dialog to select this app to be the default phone app
+        String packageName = activity.getApplication().getPackageName();
+        if (!activity.getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
+            Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
+                    .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName);
+            activity.startActivityForResult(intent, DEFAULT_DIALER_RC);
+            return false;
+        }
+        return true;
+    }
+
     public static boolean checkPermissionGranted(Context context, String permission) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(
@@ -65,7 +81,7 @@ public class Utilities {
                 == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static boolean checkPermissionGranted(String permission, String[] permissions, int[] grantResults) {
+    public static boolean checkPermissionGranted(String permission, int[] grantResults) {
         List<String> permList = Arrays.asList(permission);
         if (permList.contains(permission)) {
             int index = permList.indexOf(permission);

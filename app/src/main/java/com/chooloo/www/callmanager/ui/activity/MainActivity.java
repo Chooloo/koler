@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.telecom.TelecomManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -13,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -32,17 +32,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.CALL_PHONE;
-import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
-import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
+import static android.Manifest.permission.WRITE_CONTACTS;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class MainActivity extends AbsSearchBarActivity {
@@ -87,17 +84,8 @@ public class MainActivity extends AbsSearchBarActivity {
         // Bind variables
         ButterKnife.bind(this);
 
-        // Prompt the user with a dialog to select this app to be the default phone app
-        String packageName = getApplicationContext().getPackageName();
-        if (!Objects.requireNonNull(getSystemService(TelecomManager.class)).getDefaultDialerPackage().equals(packageName)) {
-            startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
-                    .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
-        }
-
-        // Ask for permissions
-        if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS) || !checkPermissionGranted(this, READ_CALL_LOG)) {
-            askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS, READ_CALL_LOG});
-        }
+        boolean isDefaultDialer = Utilities.checkDefaultDialer(this);
+        if (isDefaultDialer) askForPermissions();
 
         // Fragments
         mDialerFragment = DialerFragment.newInstance(true);
@@ -237,6 +225,26 @@ public class MainActivity extends AbsSearchBarActivity {
     public void onBackPressed() {
         super.onBackPressed();
         syncFABAndFragment();
+    }
+
+    // -- Permissions -- //
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Utilities.DEFAULT_DIALER_RC) {
+            askForPermissions();
+        }
+    }
+
+    private void askForPermissions() {
+        // Ask for permissions
+        if (!checkPermissionGranted(this, CALL_PHONE) ||
+                !checkPermissionGranted(this, SEND_SMS) ||
+                !checkPermissionGranted(this, READ_CONTACTS) ||
+                !checkPermissionGranted(this, WRITE_CONTACTS)) {
+            Utilities.askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS, READ_CONTACTS, WRITE_CONTACTS});
+        }
     }
 
     // -- OnClicks -- //

@@ -10,14 +10,6 @@ import android.provider.CallLog;
 import android.view.View;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.RecentsAdapter;
-import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.ContactUtils;
-import com.chooloo.www.callmanager.util.Utilities;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,12 +20,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
-
-import org.w3c.dom.Text;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.ContactUtils;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import butterknife.BindView;
 
@@ -100,7 +97,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     // -- Loader -- //
 
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CALL_LOG)) {
             runLoader();
         }
     }
