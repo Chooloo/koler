@@ -1,0 +1,199 @@
+apply plugin: 'com.android.library'
+
+// required by POM
+version = "${rootProject.ext.releaseVersionName}"
+group = "com.tzutalin.dlib-android-app"
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "${rootProject.ext.androidBuildToolsVersion}"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "${rootProject.ext.releaseVersionName}"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android {
+        lintOptions {
+            abortOnError false
+        }
+    }
+
+    // Use prebilt *.so. Don't run ndk-build
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ["src/main/jniLibs"]
+        }
+    }
+
+}
+
+configurations {
+    javadocDeps
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:${rootProject.ext.androidSupportSdkVersion}"
+    javadocDeps "com.android.support:appcompat-v7:${rootProject.ext.androidSupportSdkVersion}"
+    compile "com.android.support:support-annotations:${rootProject.ext.androidSupportSdkVersion}"
+    javadocDeps "com.android.support:support-annotations:${rootProject.ext.androidSupportSdkVersion}"
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+    }
+}
+apply plugin: 'com.jakewharton.hugo'
+
+// call regular ndk-build(.cmd) script from app directory
+def GetNDKDir()  {
+    def localProperties = new Properties()
+
+    def NDK_SEARCH_VARS = ['ANDROID_NDK_HOME', 'ANDROID_NDK_ROOT', 'NDKROOT', 'NDKHOME']
+    def ndk_path = null
+
+    def lim = (Os.isFamily(Os.FAMILY_WINDOWS)) ? '\\' : '/'
+
+    // Search Local.Properties file
+    try {
+        localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def ndkDir = localProperties.getProperty('ndk.dir')
+        ndk_path = ndkDir != null ? ndkDir + lim : null;
+    } catch (java.io.FileNotFoundException e) {
+        println 'local.properties file not found'
+    }
+
+    // Search env var
+    if (ndk_path == null){
+        for (String var : NDK_SEARCH_VARS) {
+            def v = System.getenv(var)
+
+            if (v != null) {
+                ndk_path = v + lim
+                println "found in System Environment *$var = " + ndk_path
+                break
+            }
+        }
+    } else {
+        println 'found in local.properties *NDK_PATH = ' + ndk_path
+    }
+
+    if (ndk_path == null) {
+        println 'No NDK_PATH found'
+        ndk_path = ''
+    }
+    return ndk_path
+}
+
+def NDKCommand() {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        return GetNDKDir() + "ndk-build.cmd"
+    } else {
+        return GetNDKDir() + "ndk-build"
+    }
+}
+
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+def siteUrl = 'https://github.com/tzutalin/dlib-android-app'      // Homepage URL of the library
+def gitUrl = 'https://github.com/tzutalin/dlib-android-app.git'   // Git repository URL
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                name 'An Android library to wrap dlib library'
+                url siteUrl
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'tzutalin'
+                        name 'tzutalin'
+                        email 'tzu.ta.lin@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+    classpath += configurations.javadocDeps
+}
+
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+generateJavadocsJar.dependsOn generateJavadocs
+
+artifacts {
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}
+
+Properties properties = new Properties()
+if(project.rootProject.file('local.properties').isFile()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    bintray {
+        user = properties.getProperty("bintray.user")
+        key = properties.getProperty("bintray.apikey")
+
+        configurations = ['archives']
+        pkg {
+            repo = "maven"
+            name = "dlib-android-app"
+            version {
+                name = "${rootProject.ext.releaseVersionName}"
+                desc = 'An Android library to wrap dlib library'
+                released  = new Date()
+                vcsTag = "${rootProject.ext.releaseVersionName}"
+            }
+
+            websiteUrl = siteUrl
+            vcsUrl = gitUrl
+            licenses = ["Apache-2.0"]
+            publish = true
+        }
+        configurations = ['archives']
+    }
+}

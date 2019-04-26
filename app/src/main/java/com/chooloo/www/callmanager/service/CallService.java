@@ -9,6 +9,10 @@ import com.chooloo.www.callmanager.ui.activity.OngoingCallActivity;
 
 public class CallService extends InCallService {
 
+    /**
+     * When call has been added
+     * @param call
+     */
     @Override
     public void onCallAdded(Call call) {
         super.onCallAdded(call);
@@ -18,6 +22,10 @@ public class CallService extends InCallService {
         CallManager.sCall = call;
     }
 
+    /**
+     * When call has been removed
+     * @param call
+     */
     @Override
     public void onCallRemoved(Call call) {
         super.onCallRemoved(call);

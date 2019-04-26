@@ -28,15 +28,14 @@ import butterknife.ButterKnife;
 public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHolder> {
 
     private Context mContext;
-
     private List<CGroupAndItsContacts> mData;
     private DataRepository mRepository;
-
     private OnItemClickListener mOnItemClickListener;
 
     public CGroupsAdapter(Context context,
                           List<CGroupAndItsContacts> data,
                           OnItemClickListener onItemClickListener) {
+
         mContext = context;
         mData = data;
         mOnItemClickListener = onItemClickListener;
@@ -57,14 +56,18 @@ public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHo
         CGroupAndItsContacts cgroupAndItsContacts = mData.get(position);
 
         List<String> names = new ArrayList<>();
+
         for (Contact contact : cgroupAndItsContacts.getContacts()) {
             names.add(contact.getName());
         }
+
         String namesStr = Utilities.joinStringsWithSeparator(names, ", ");
 
+        // Set texts
         holder.name.setText(cgroupAndItsContacts.getCgroup().getName());
         holder.number.setText(namesStr);
 
+        // Set onClick/LongClick listeners
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(holder, cgroupAndItsContacts.getCgroup()));
         }
@@ -92,6 +95,10 @@ public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHo
         return mData.size();
     }
 
+    /**
+     * Sets the data
+     * @param data
+     */
     public void setData(List<CGroupAndItsContacts> data) {
         mData = data;
         notifyDataSetChanged();

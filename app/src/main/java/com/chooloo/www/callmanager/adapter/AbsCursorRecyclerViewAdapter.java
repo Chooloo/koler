@@ -39,6 +39,11 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
 
     private DataSetObserver mDataSetObserver;
 
+    /**
+     * Constructor
+     * @param context
+     * @param cursor
+     */
     public AbsCursorRecyclerViewAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
@@ -50,10 +55,18 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
         }
     }
 
+    /**
+     * Returns the cursor
+     * @return
+     */
     public Cursor getCursor() {
         return mCursor;
     }
 
+    /**
+     * Returns the cursors counts
+     * @return
+     */
     @Override
     public int getItemCount() {
         if (mDataValid && mCursor != null) {
@@ -62,6 +75,11 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
         return 0;
     }
 
+    /**
+     * Returns an item id by position
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {

@@ -23,9 +23,17 @@ import butterknife.ButterKnife;
 
 public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.RecentCallHolder> {
 
+    // Click listeners
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
+    /**
+     * Constructor
+     * @param context
+     * @param cursor
+     * @param onItemClickListener
+     * @param onItemLongClickListener
+     */
     public RecentsAdapter(Context context,
                           Cursor cursor,
                           OnItemClickListener onItemClickListener,
@@ -47,8 +55,10 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         RecentCall recentCall = new RecentCall(this.mContext, cursor);
 
         String phoneNumber = recentCall.getCallerNumber();
+
         holder.time.setText(recentCall.getCallDateString());
 
+        // Check for name
         if (recentCall.getCallerName() != null) holder.name.setText(recentCall.getCallerName());
         else holder.name.setText(phoneNumber);
 
@@ -62,6 +72,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
             holder.photoPlaceholder.setVisibility(View.VISIBLE);
         }
 
+        // Set click listeners
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(holder, recentCall));
         }
@@ -82,8 +93,8 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
 
         @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
         @BindView(R.id.item_photo) ImageView photo;
-        @BindView(R.id.item_name_text) TextView name;
-        @BindView(R.id.item_number_text) TextView time;
+        @BindView(R.id.item_big_text) TextView name;
+        @BindView(R.id.item_small_text) TextView time;
 
         /**
          * Constructor

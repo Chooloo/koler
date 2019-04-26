@@ -36,32 +36,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         super(context, cursor);
     }
 
-    @Override
-    public void changeCursor(Cursor cursor) {
-        super.changeCursor(cursor);
-        mHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
-        mCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
-        if (mCounts != null) {
-            int sum = 0;
-            for (int count : mCounts) {
-                sum += count;
-            }
-            if (sum != cursor.getCount()) {
-                Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
-            }
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        int count = super.getItemCount();
-        // Manually insert the header if one exists.
-        if (mHeader != ContactsFragment.Header.NONE) {
-            count++;
-        }
-        return count;
-    }
-
     @NonNull
     @Override
     public ContactHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -90,6 +64,32 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     }
 
     @Override
+    public void changeCursor(Cursor cursor) {
+        super.changeCursor(cursor);
+        mHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
+        mCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
+        if (mCounts != null) {
+            int sum = 0;
+            for (int count : mCounts) {
+                sum += count;
+            }
+            if (sum != cursor.getCount()) {
+                Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
+            }
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        int count = super.getItemCount();
+        // Manually insert the header if one exists.
+        if (mHeader != ContactsFragment.Header.NONE) {
+            count++;
+        }
+        return count;
+    }
+
+    @Override
     public String getHeaderString(int position) {
         if (mHeader != ContactsFragment.Header.NONE) {
             if (position == 0) {
@@ -105,10 +105,18 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         return mHeaders[index];
     }
 
+    /**
+     * Sets the onContactSelectedListener by a given one
+     *
+     * @param onContactSelectedListener
+     */
     public void setOnContactSelectedListener(OnContactSelectedListener onContactSelectedListener) {
         mOnContactSelectedListener = onContactSelectedListener;
     }
 
+    /**
+     * The interface for the onContactSelectedListener
+     */
     public interface OnContactSelectedListener {
         void onContactSelected(String normPhoneNumber);
     }
@@ -117,8 +125,8 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
         @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
         @BindView(R.id.item_photo) ImageView photo;
-        @BindView(R.id.item_name_text) TextView name;
-        @BindView(R.id.item_number_text) TextView number;
+        @BindView(R.id.item_big_text) TextView name;
+        @BindView(R.id.item_small_text) TextView number;
 
         /**
          * Constructor

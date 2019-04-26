@@ -130,12 +130,20 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
         notifyItemRemoved(position);
     }
 
+    /**
+     * Sets the data by a given Contact List
+     * @param data
+     */
     public void setData(List<Contact> data) {
         if (mData != null) return;
         mData = data;
         notifyDataSetChanged();
     }
 
+    /**
+     * Ummm... Enables edit mode
+     * @param enable true/false
+     */
     public void enableEditMode(boolean enable) {
         if (mEditModeEnabled == enable) return;
         mEditModeEnabled = enable;
@@ -171,6 +179,9 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
         public void onItemClear() {
         }
 
+        /**
+         * Animates the ContactHolder
+         */
         public void animate() {
             ConstraintLayout itemRoot = (ConstraintLayout) itemView;
             ConstraintSet set = new ConstraintSet();

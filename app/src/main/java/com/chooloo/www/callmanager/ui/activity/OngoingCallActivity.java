@@ -48,6 +48,7 @@ import androidx.core.content.ContextCompat;
 import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -318,6 +319,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Starts call timer (answer)
+     *
      * @param view
      */
     @OnClick(R.id.button_floating_answer_call_timer)
@@ -329,6 +331,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Turns on mute according to current state (if already on/off)
+     *
      * @param view
      */
     @OnClick(R.id.button_mute)
@@ -344,6 +347,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Turns on/off the speaker according to current state (if already on/off)
+     *
      * @param view
      */
     @OnClick(R.id.button_speaker)
@@ -354,6 +358,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Puts the call on hold
+     *
      * @param view
      */
     @OnClick(R.id.button_hold)
@@ -375,6 +380,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Cancel the call timer
+     *
      * @param view
      */
     @OnClick(R.id.button_cancel_timer)
@@ -384,6 +390,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Set the sms overlay (from which you can send sms)
+     *
      * @param view
      */
     @OnClick(R.id.button_floating_send_sms)
@@ -395,6 +402,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Send sms
+     *
      * @param view
      */
     @OnClick(R.id.button_send_sms)
@@ -407,6 +415,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Cancel sms overlay
+     *
      * @param view
      */
     @OnClick(R.id.button_cancel_sms)
@@ -416,6 +425,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     /**
      * Changes the color of the icon according to button status (activated or not)
+     *
      * @param view
      */
     @OnClick({R.id.button_speaker, R.id.button_hold, R.id.button_mute})
