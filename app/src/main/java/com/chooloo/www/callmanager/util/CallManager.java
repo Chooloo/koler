@@ -7,6 +7,8 @@ import android.telecom.Call;
 import android.telecom.VideoProfile;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.activity.OngoingCallActivity;
 import com.chooloo.www.callmanager.util.validation.Validator;
@@ -15,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
 
 public class CallManager {
@@ -99,6 +100,10 @@ public class CallManager {
             if (hold) sCall.hold();
             else sCall.unhold();
         }
+    }
+
+    public static void keypad(char c) {
+        sCall.playDtmfTone(c);
     }
 
     /**

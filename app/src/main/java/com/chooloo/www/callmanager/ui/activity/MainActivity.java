@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.telecom.TelecomManager;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -24,7 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
-import com.chooloo.www.callmanager.ui.fragment.DialFragment;
+import com.chooloo.www.callmanager.ui.fragment.DialerFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
 import com.chooloo.www.callmanager.ui.fragment.SharedSearchViewModel;
@@ -57,10 +55,10 @@ public class MainActivity extends AbsSearchBarActivity {
     FABCoordinator mFABCoordinator;
 
     // Fragments
-    DialFragment mDialFragment;
+    DialerFragment mDialerFragment;
     SearchBarFragment mSearchBarFragment;
 
-    BottomSheetBehavior mBottomSheetBehaviour;
+    BottomSheetBehavior mBottomSheetBehavior;
 
     FragmentPagerAdapter mAdapterViewPager;
 
@@ -68,9 +66,8 @@ public class MainActivity extends AbsSearchBarActivity {
 
     // Views
     @BindView(R.id.appbar) View mAppBar;
-    @BindView(R.id.main_dialer_fragment) View mDialerFragmentLayout;
+    @BindView(R.id.dialer_fragment) View mDialerView;
     // Layouts
-    @BindView(R.id.top_dialer) RelativeLayout mTopDialer;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
     // Buttons
     @BindView(R.id.right_button) FloatingActionButton mRightButton;
@@ -85,6 +82,7 @@ public class MainActivity extends AbsSearchBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PreferenceUtils.getInstance(this);
+        Utilities.setUpLocale(this);
 
         // Bind variables
         ButterKnife.bind(this);
@@ -94,19 +92,18 @@ public class MainActivity extends AbsSearchBarActivity {
         if (!Objects.requireNonNull(getSystemService(TelecomManager.class)).getDefaultDialerPackage().equals(packageName)) {
             startActivity(new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                     .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName));
-
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Utilities.sLocale = getResources().getSystem().getConfiguration().getLocales().get(0);
-        } else {
-            Utilities.sLocale = getResources().getSystem().getConfiguration().locale;
         }
 
         // Ask for permissions
         if (!checkPermissionGranted(this, CALL_PHONE) || !checkPermissionGranted(this, SEND_SMS) || !checkPermissionGranted(this, READ_CALL_LOG)) {
             askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS, READ_CALL_LOG});
         }
+
+        // Fragments
+        mDialerFragment = DialerFragment.newInstance(true);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.dialer_fragment, mDialerFragment)
+                .commit();
 
         mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
@@ -142,15 +139,15 @@ public class MainActivity extends AbsSearchBarActivity {
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
             if (b) {
-                mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
 
         // - Bottom Sheet Behavior - //
 
-        mBottomSheetBehaviour = BottomSheetBehavior.from(mDialerFragmentLayout); // Set the bottom sheet behaviour
-        mBottomSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
-        mBottomSheetBehaviour.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView); // Set the bottom sheet behaviour
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
                 if (i == BottomSheetBehavior.STATE_HIDDEN || i == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -175,10 +172,7 @@ public class MainActivity extends AbsSearchBarActivity {
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
-        // Set this class as the listener for the fragments
-        if (fragment instanceof DialFragment) {
-            mDialFragment = (DialFragment) fragment;
-        } else if (fragment instanceof SearchBarFragment) {
+        if (fragment instanceof SearchBarFragment) {
             mSearchBarFragment = (SearchBarFragment) fragment;
         }
     }
@@ -284,9 +278,9 @@ public class MainActivity extends AbsSearchBarActivity {
      */
     public void expandDialer(boolean expand) {
         if (expand) {
-            BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_EXPANDED);
+            BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
-            BottomSheetBehavior.from(mDialerFragmentLayout).setState(BottomSheetBehavior.STATE_COLLAPSED);
+            BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 

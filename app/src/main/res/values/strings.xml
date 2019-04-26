@@ -38,6 +38,7 @@
     <string name="hint_name">Name</string>
     <string name="hint_name_column">Name column</string>
     <string name="hint_number_column">Number column</string>
+    <string name="hint_phone_number">phone number</string>
 
     <!--Errors-->
     <string name="error_name">Must be a non empty string</string>

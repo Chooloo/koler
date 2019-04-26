@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.util.CallManager;
@@ -16,17 +19,19 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
-public class DialFragment extends BaseFragment {
+public class DialerFragment extends BaseFragment {
 
-    SharedDialViewModel mViewModel;
+    public static final String ARG_DIALER = "dialer";
+
+    private SharedDialViewModel mViewModel;
     private String mNumberText = "";
     private AsYouTypeFormatter mAsYouTypeFormatter;
+
+    private boolean mIsDialer = true;
 
     // Edit Texts
     @BindView(R.id.text_number_input) TextView mNumberView;
@@ -39,23 +44,41 @@ public class DialFragment extends BaseFragment {
     // Layouts
     @BindView(R.id.table_numbers) TableLayout mNumbersTable;
 
+    public static DialerFragment newInstance(boolean isDialer) {
+        Bundle args = new Bundle();
+        args.putBoolean(ARG_DIALER, isDialer);
+        DialerFragment fragment = new DialerFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreateView() {
+        Bundle args = getArguments();
+        if (args == null)
+            throw new IllegalArgumentException("You must create this fragment with newInstance()");
+        mIsDialer = args.getBoolean(ARG_DIALER);
 
-        AllPurposeTouchListener swipeToDelListener = new AllPurposeTouchListener(getContext()) {
-            @Override
-            public void onSwipeLeft() {
-                delNum(mDelButton);
-            }
+        if (!mIsDialer) {
+            mCallButton.setVisibility(View.GONE);
+            mDelButton.setVisibility(View.GONE);
+            mNumberView.setHint("");
+        } else {
+            AllPurposeTouchListener swipeToDelListener = new AllPurposeTouchListener(getContext()) {
+                @Override
+                public void onSwipeLeft() {
+                    delNum(mDelButton);
+                }
 
-            @Override
-            public boolean onSingleTapUp(View v) {
-                ((MainActivity) DialFragment.this.getActivity()).expandDialer(true);
-                return true;
-            }
-        };
-        mNumberView.setOnTouchListener(swipeToDelListener);
+                @Override
+                public boolean onSingleTapUp(View v) {
+                    ((MainActivity) DialerFragment.this.getActivity()).expandDialer(true);
+                    return true;
+                }
+            };
+            mNumberView.setOnTouchListener(swipeToDelListener);
+        }
     }
 
     @Override
@@ -93,8 +116,7 @@ public class DialFragment extends BaseFragment {
         else if (id.contains("chip_hex")) toAdd = '#';
         else toAdd = id.charAt(4);
 
-        mNumberText += toAdd;
-        setNumber(mAsYouTypeFormatter.inputDigit(toAdd));
+        setNumber(inputDigit(toAdd));
     }
 
     /**
@@ -105,10 +127,14 @@ public class DialFragment extends BaseFragment {
         if (mNumberText.length() <= 0) return;
         vibrate();
         mNumberText = mNumberText.substring(0, mNumberText.length() - 1);
-        mAsYouTypeFormatter.clear();
-        for (int i = 0; i < mNumberText.length(); i++) {
-            String s = mAsYouTypeFormatter.inputDigit(mNumberText.charAt(i));
-            if (i == mNumberText.length() - 1) setNumber(s);
+
+        if (mIsDialer) { // Rebuild the formatter
+            mAsYouTypeFormatter.clear();
+
+            for (int i = 0; i < mNumberText.length(); i++) {
+                String s = mAsYouTypeFormatter.inputDigit(mNumberText.charAt(i));
+                if (i == mNumberText.length() - 1) setNumber(s);
+            }
         }
 
         if (mNumberText.length() == 0) {
@@ -124,7 +150,6 @@ public class DialFragment extends BaseFragment {
         mNumberText = "";
         mAsYouTypeFormatter.clear();
         setNumber("");
-        vibrate();
         return true;
     }
 
@@ -133,15 +158,15 @@ public class DialFragment extends BaseFragment {
      */
     @OnLongClick(R.id.chip1)
     public boolean startVoiceMail(View view) {
-        vibrate();
+        if (!mIsDialer) return false;
         return CallManager.callVoicemail(this.getContext());
     }
 
     @OnLongClick(R.id.chip0)
     public boolean addPlus(View view) {
-        vibrate();
+        if (!mIsDialer) return false;
         mNumberText += "+";
-        setNumber(mAsYouTypeFormatter.inputDigit('+'));
+        setNumber(inputDigit('+'));
         return true;
     }
 
@@ -154,6 +179,14 @@ public class DialFragment extends BaseFragment {
     }
 
     // -- Setters -- //
+
+    private String inputDigit(char c) {
+        mNumberText += c;
+        if (mIsDialer)
+            return mAsYouTypeFormatter.inputDigit(c);
+        else
+            return mNumberText;
+    }
 
     public void setNumber(String number, boolean updateAll) {
         if (updateAll) {

@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -48,6 +49,14 @@ public class Utilities {
     public static final long LONG_VIBRATE_LENGTH = 500;
     public static final long SHORT_VIBRATE_LENGTH = 20;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
+
+    public static void setUpLocale(@NonNull Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Utilities.sLocale = context.getResources().getSystem().getConfiguration().getLocales().get(0);
+        } else {
+            Utilities.sLocale = context.getResources().getSystem().getConfiguration().locale;
+        }
+    }
 
     public static boolean checkPermissionGranted(Context context, String permission) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M

@@ -21,21 +21,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
-import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
-import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.PreferenceUtils;
-import com.chooloo.www.callmanager.util.Stopwatch;
-import com.chooloo.www.callmanager.util.Utilities;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
@@ -45,9 +30,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
+
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
+import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
+import com.chooloo.www.callmanager.ui.fragment.DialerFragment;
+import com.chooloo.www.callmanager.ui.fragment.SharedDialViewModel;
+import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.Stopwatch;
+import com.chooloo.www.callmanager.util.Utilities;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -65,11 +70,20 @@ public class OngoingCallActivity extends AppCompatActivity {
     private static final int TIME_UPDATE = 2;
     private static final int REFRESH_RATE = 100;
 
+    // Fragments
+    private DialerFragment mDialerFragment;
+
+    // ViewModels
+    private SharedDialViewModel mSharedDialViewModel;
+
+    // BottomSheet
+    BottomSheetBehavior mBottomSheetBehavior;
+
     // Current states
     boolean mIsCallingUI = false;
     boolean mIsCreatingUI = true;
 
-    // Instances of local classes
+    // Utilities
     Stopwatch mCallTimer = new Stopwatch();
     Callback mCallback = new Callback();
     ActionTimer mActionTimer = new ActionTimer();
@@ -88,6 +102,10 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Handlers
     Handler mCallTimeHandler = new CallTimeHandler();
+
+    // Swipes Listeners
+    AllPurposeTouchListener mSmsOverlaySwipeListener;
+    AllPurposeTouchListener mIncomingCallSwipeListener;
 
     // Edit Texts
     @BindView(R.id.edit_sms) TextInputEditText mEditSms;
@@ -125,6 +143,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
+    @BindView(R.id.dialer_fragment) View mDialerLayout;
     @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
@@ -132,15 +151,12 @@ public class OngoingCallActivity extends AppCompatActivity {
     @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
     @Nullable ViewGroup mCurrentOverlay = null;
 
-    // Swipes Listeners
-    AllPurposeTouchListener mSmsOverlaySwipeListener;
-    AllPurposeTouchListener mIncomingCallSwipeListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ongoing_call);
         PreferenceUtils.getInstance(this);
+        Utilities.setUpLocale(this);
 
         ButterKnife.bind(this);
 
@@ -182,6 +198,12 @@ public class OngoingCallActivity extends AppCompatActivity {
 
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+
+        // Fragments
+        mDialerFragment = DialerFragment.newInstance(false);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.dialer_fragment, mDialerFragment)
+                .commit();
 
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
@@ -272,6 +294,18 @@ public class OngoingCallActivity extends AppCompatActivity {
                 mSendSmsOverlay.setOnTouchListener(null);
             }
         };
+
+        // Instantiate ViewModels
+        mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getNumber().observe(this, s -> {
+            if (s != null && !s.isEmpty()) {
+                char c = s.charAt(s.length() - 1);
+                CallManager.keypad(c);
+            }
+        });
+
+        mBottomSheetBehavior = BottomSheetBehavior.from(mDialerLayout); // Set the bottom sheet behaviour
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
     }
 
     @Override
@@ -365,6 +399,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     //TODO add functionality to the Keypad button
     @OnClick(R.id.button_keypad)
     public void toggleKeypad(View view) {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     //TODO add functionality to the Add call button

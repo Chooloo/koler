@@ -23,12 +23,10 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!-- Dialer Fragment -->
-    <fragment
-        android:id="@+id/main_dialer_fragment"
-        android:name="com.chooloo.www.callmanager.ui.fragment.DialFragment"
+    <FrameLayout
+        android:id="@+id/dialer_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag="main_dialer_tag"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"
@@ -43,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/main_dialer_fragment"
+        app:layout_anchor="@+id/dialer_fragment"
         app:layout_anchorGravity="left|bottom"
         tools:ignore="RtlHardcoded"
         tools:src="@drawable/ic_search_black_24dp" />
@@ -56,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/default_padding"
         android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/main_dialer_fragment"
+        app:layout_anchor="@+id/dialer_fragment"
         app:layout_anchorGravity="right|bottom"
         tools:ignore="RtlHardcoded"
         tools:src="@drawable/ic_dialpad_black_24dp" />
