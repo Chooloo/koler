@@ -1,5 +1,7 @@
 # Koler
-A uniquely stylized phone app, with customizable features - for Android. </br>
+A uniquely stylized phone app, designed with the user in mind, 
+Believe us we want to make it good, we use it ourselfs.
+for Android. </br>
 
 <img src="https://github.com/Chooloo/call_manage/blob/master/art/screenshots.png" height="250">
 
@@ -10,7 +12,11 @@ A uniquely stylized phone app, with customizable features - for Android. </br>
 </a>
 
 # Features
-## Call Interface
+## Design
+One of the main parts in this app is the design.
+Making it intuitive and comfortable.
+
+## In Call Interface
 Our ongoing call UI makes everything easier.
 Its uses swipes and minimalistic design, making everything more beautiful, intuitive, yet still productive.
 
@@ -24,10 +30,10 @@ In an ongoing call you can:
 
 ## Swipes
 The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
-  * ### Dialer
+  * <!-- ### Dialer
     * __Call__            - Swipe up  
     * __Delete number__   - Swipe left  
-    * __Collapse dialer__ - Swipe on the contacts list  
+    * __Collapse dialer__ - Swipe on the contacts list  -->
   * ### Incoming Call
     * __Open keypad__     - Swipe up   
     * __Reject/End__      - Swipe left  
@@ -35,7 +41,7 @@ The app's main goal is to be more intuitive and comfortable. For that reason, th
     * __Send sms__        - Swipe up on the send SMS overlay
 
 
-# Downloads
+# GET THE APP
 
 You can get it on Google Play Store:  
 `The app is currently removed from Google Play Store because of annoying Permission Declaration Form nonsense`
