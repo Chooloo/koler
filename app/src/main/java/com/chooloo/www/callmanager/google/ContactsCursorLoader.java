@@ -27,6 +27,9 @@ import static android.provider.ContactsContract.Contacts;
 
 public final class ContactsCursorLoader extends CursorLoader {
 
+    /**
+     * Cursor selection string
+     */
     public static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
             new String[]{
                     Phone._ID, // 0
@@ -36,6 +39,12 @@ public final class ContactsCursorLoader extends CursorLoader {
                     Phone.NUMBER, // 4
             };
 
+    /**
+     * Constructor
+     * @param context
+     * @param phoneNumber String
+     * @param contactName String
+     */
     public ContactsCursorLoader(Context context, String phoneNumber, String contactName) {
         super(
                 context,
@@ -46,12 +55,24 @@ public final class ContactsCursorLoader extends CursorLoader {
                 getSortKey(context) + " ASC");
     }
 
+    /**
+     * Returns the projection string
+     *
+     * @param context
+     * @return String
+     */
     private static String[] getProjection(Context context) {
         return CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY;
     }
 
+    /**
+     * Get a filter string
+     *
+     * @param context
+     * @return String
+     */
     private static String getWhere(Context context) {
-        return  "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
+        return "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
                 " OR " + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" + ")" +
                 " AND " + Phone.HAS_PHONE_NUMBER + "=1" +
                 " AND (" + ContactsContract.RawContacts.ACCOUNT_NAME + " IS NULL" +
@@ -63,6 +84,13 @@ public final class ContactsCursorLoader extends CursorLoader {
         return Contacts.SORT_KEY_PRIMARY;
     }
 
+    /**
+     * Builds contact uri by given name and phone number
+     *
+     * @param phoneNumber
+     * @param contactName
+     * @return Builder.build()
+     */
     private static Uri buildUri(String phoneNumber, String contactName) {
         Uri.Builder builder;
         if (phoneNumber != null && !phoneNumber.isEmpty()) {

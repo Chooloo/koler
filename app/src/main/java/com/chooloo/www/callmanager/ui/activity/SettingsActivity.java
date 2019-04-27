@@ -13,7 +13,7 @@ import androidx.preference.PreferenceFragmentCompat;
 //TODO add more settings
 //TODO add icons
 public class SettingsActivity extends AppCompatActivity {
-    
+
     private static final String TAG_FRAGMENT = "fragment";
 
     private Fragment mFragment;
@@ -27,6 +27,8 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment, mFragment, TAG_FRAGMENT)
                 .commit();
+
+        getSupportActionBar().setElevation(0);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

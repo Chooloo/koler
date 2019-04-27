@@ -36,8 +36,10 @@ import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
 
+    // Constants
     public static final String TAG = "import_spreadsheet";
 
+    // BindViews
     @BindView(R.id.edit_name) TextInputEditText mEditName;
     @BindView(R.id.edit_path) TextInputEditText mEditPath;
     @BindView(R.id.edit_name_index) TextInputEditText mEditNameIndex;
@@ -94,6 +96,8 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
                 .build();
     }
 
+    // -- Overrides -- //
+
     @Override
     public void onRequestPermissionsResult(
             int requestCode, String[] permissions, int[] grantResults) {
@@ -121,23 +125,6 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         }
     }
 
-    @OnClick(R.id.button_choose_file)
-    public void chooseFile(View view) {
-        showFileChooser();
-    }
-
-    private void showFileChooser() {
-        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-            return;
-        }
-
-        new FileChooserDialog.Builder(getFragmentManager())
-                .onFileSelected(this)
-                .extensionsFilter(".xls")
-                .goUpLabel("...")
-                .show(new FileChooserDialog());
-    }
 
     @Override
     public void onFileSelection(FileChooserDialog dialog, File file) {
@@ -148,6 +135,15 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     public void onFileChooserDismissed(FileChooserDialog dialog) {
 
     }
+
+    // -- OnClicks -- //
+
+    @OnClick(R.id.button_choose_file)
+    public void chooseFile(View view) {
+        showFileChooser();
+    }
+
+    // -- OnTextChangeds -- //
 
     @OnTextChanged(value = R.id.edit_name, callback = OnTextChanged.Callback.TEXT_CHANGED)
     public void onEditName(Editable editable) {
@@ -168,6 +164,28 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         validateColumnIndex(editable, mEditNameIndex);
     }
 
+
+    /**
+     * Shows a file chooser for the excel file
+     */
+    private void showFileChooser() {
+        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
+            return;
+        }
+
+        new FileChooserDialog.Builder(getFragmentManager())
+                .onFileSelected(this)
+                .extensionsFilter(".xls")
+                .goUpLabel("...")
+                .show(new FileChooserDialog());
+    }
+
+    /**
+     * Validates column index lol
+     * @param editable
+     * @param view
+     */
     private void validateColumnIndex(Editable editable, TextInputEditText view) {
         if (!Validator.validateColumnIndex(editable.toString())) {
             view.setError(getString(R.string.error_column_index));

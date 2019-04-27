@@ -271,6 +271,9 @@ public class MainActivity extends AbsSearchBarActivity {
                 .findFragmentByTag("android:switcher:" + R.id.view_pager + ":" + mViewPager.getCurrentItem());
     }
 
+    /**
+     * Apply the FABCoordinator to the current fragment
+     */
     public void syncFABAndFragment() {
         Fragment fragment = getCurrentFragment();
         mFABCoordinator.setListener(fragment);

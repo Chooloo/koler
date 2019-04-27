@@ -20,20 +20,38 @@ public class CGroupViewModel extends AndroidViewModel {
     private long mListId;
     private LiveData<List<Contact>> mContacts;
 
+    /**
+     * Constructor
+     * @param application
+     */
     public CGroupViewModel(@NonNull Application application) {
         super(application);
         mRepository = DataRepository.getInstance(AppDatabase.getDatabase(application.getApplicationContext()));
     }
 
+    /**
+     * Sets the list id by a given long
+     * @param listId
+     */
     public void setListId(long listId) {
         mListId = listId;
         mContacts = mRepository.getContactsInList(listId);
     }
 
+    /**
+     * Returns a list of the contact
+     *
+     * @return
+     */
     public LiveData<List<Contact>> getContacts() {
         return mContacts;
     }
 
+    /**
+     * Returns a list of the CGroup
+     *
+     * @return
+     */
     public LiveData<List<CGroup>> getCGroup() {
         return mRepository.getCGroup(mListId);
     }

@@ -119,7 +119,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
     protected void onStart() {
         super.onStart();
 
-        //We want a back button
+        // We want a back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -166,6 +166,10 @@ public class CGroupActivity extends AbsAppBarActivity implements
         mItemTouchHelper.startSwipe(holder);
     }
 
+    /**
+     * Activates action mode
+     * I dont know wtf that means but thats what it does
+     */
     private void startActionMode() {
         if (mActionMode != null) return;
         // Start the CAB using the ActionMode.Callback defined above

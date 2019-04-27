@@ -29,6 +29,7 @@ import timber.log.Timber;
 
 public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contact>> {
 
+    // Constants
     public static final int STATUS_SUCCESSFUL = 0;
     public static final int STATUS_FAILED = 1;
     public static final int STATUS_FILE_NOT_FOUND = 2;
@@ -53,7 +54,7 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
      * @param excelFile      The file to import contacts from.
      * @param nameColIndex   The contact's name column index.
      * @param numberColIndex The contact's number column index.
-     * @param CGroup   A list to import the data into. Can be empty (not in the database).
+     * @param CGroup         A list to import the data into. Can be empty (not in the database).
      */
     public AsyncSpreadsheetImport(@NotNull Context context,
                                   @NotNull File excelFile,
@@ -67,10 +68,20 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
         mCGroup = CGroup;
     }
 
+    /**
+     * Sets onProgressListener
+     *
+     * @param listener
+     */
     public void setOnProgressListener(OnProgressListener listener) {
         mOnProgressListener = listener;
     }
 
+    /**
+     * Sets onFinishListener
+     *
+     * @param listener
+     */
     public void setOnFinishListener(OnFinishListener listener) {
         mOnFinishListener = listener;
     }
@@ -96,6 +107,31 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
         return contacts;
     }
 
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        int rowsRead = values[0];
+        if (mOnProgressListener != null) mOnProgressListener.onProgress(rowsRead, mRowCount);
+    }
+
+    @Override
+    protected void onPostExecute(List<Contact> contacts) {
+        if (status == STATUS_FAILED) {
+            Toast.makeText(mContext, "Couldn't find contacts in the spreadsheet specified", Toast.LENGTH_LONG).show();
+            Timber.w("Couldn't find contacts in %s at the columns %d and %d", mExcelFile.getPath(), mNameColIndex, mNumberColIndex);
+        } else if (status == STATUS_FILE_NOT_FOUND) {
+            Toast.makeText(mContext, "Couldn't find the file specified", Toast.LENGTH_SHORT).show();
+        }
+
+        if (mOnFinishListener != null) mOnFinishListener.onFinish(status);
+    }
+
+    /**
+     * Fetches contacts by list id
+     *
+     * @param listId
+     * @return List<Contact>
+     */
     private List<Contact> fetchContacts(long listId) {
         List<Contact> contacts = new ArrayList<>();
         try {
@@ -145,24 +181,6 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
             return null;
         }
         return contacts;
-    }
-
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-        int rowsRead = values[0];
-        if (mOnProgressListener != null) mOnProgressListener.onProgress(rowsRead, mRowCount);
-    }
-
-    @Override
-    protected void onPostExecute(List<Contact> contacts) {
-        if (status == STATUS_FAILED) {
-            Toast.makeText(mContext, "Couldn't find contacts in the spreadsheet specified", Toast.LENGTH_LONG).show();
-            Timber.w("Couldn't find contacts in %s at the columns %d and %d", mExcelFile.getPath(), mNameColIndex, mNumberColIndex);
-        } else if (status == STATUS_FILE_NOT_FOUND) {
-            Toast.makeText(mContext, "Couldn't find the file specified", Toast.LENGTH_SHORT).show();
-        }
-
-        if (mOnFinishListener != null) mOnFinishListener.onFinish(status);
     }
 
     public interface OnProgressListener {
