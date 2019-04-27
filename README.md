@@ -1,7 +1,7 @@
 # Koler
 A uniquely stylized phone app, designed with the user in mind.
 Believe us we want to make it good, we use it ourselfs.
-\nIts for Android. </br>
+Its for Android. </br>
 
 <img src="https://github.com/Chooloo/call_manage/blob/master/art/screenshots.png" height="250">
 
