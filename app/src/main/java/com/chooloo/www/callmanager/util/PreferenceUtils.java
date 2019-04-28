@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
-import com.chooloo.www.callmanager.R;
-
 import androidx.annotation.StringRes;
+
+import com.chooloo.www.callmanager.R;
 
 /*
  * A Singleton for managing your SharedPreferences.
@@ -34,6 +34,7 @@ public class PreferenceUtils {
         sDefaultValues.put(R.string.pref_reject_call_timer_key, context.getString(R.string.pref_reject_call_timer_default_value));
         sDefaultValues.put(R.string.pref_answer_call_timer_key, context.getString(R.string.pref_answer_call_timer_default_value));
         sDefaultValues.put(R.string.pref_is_first_instance_key, context.getResources().getBoolean(R.bool.pref_is_first_instance_default_value));
+        sDefaultValues.put(R.string.pref_last_version_key, -1);
     }
 
     public static PreferenceUtils getInstance(Context context) {

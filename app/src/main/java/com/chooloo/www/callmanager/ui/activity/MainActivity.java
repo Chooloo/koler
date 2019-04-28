@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
@@ -37,12 +38,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.CALL_PHONE;
+import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
-import static android.Manifest.permission.WRITE_CONTACTS;
-import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 
 public class MainActivity extends AbsSearchBarActivity {
+
+    private static final String TAG_CHANGELOG_DIALOG = "changelog";
+    private static final String[] PERMISSIONS = {CALL_PHONE, READ_CALL_LOG, SEND_SMS, READ_CONTACTS};
 
     // View Models
     SharedDialViewModel mSharedDialViewModel;
@@ -81,11 +84,15 @@ public class MainActivity extends AbsSearchBarActivity {
         PreferenceUtils.getInstance(this);
         Utilities.setUpLocale(this);
 
+        // Check if first instance
+        boolean isFirstInstance = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key);
+        if (!isFirstInstance) checkVersion();
+
         // Bind variables
         ButterKnife.bind(this);
 
         boolean isDefaultDialer = Utilities.checkDefaultDialer(this);
-        if (isDefaultDialer) askForPermissions();
+        if (isDefaultDialer) checkPermissions(null);
 
         // Fragments
         mDialerFragment = DialerFragment.newInstance(true);
@@ -165,25 +172,6 @@ public class MainActivity extends AbsSearchBarActivity {
         }
     }
 
-    /**
-     * Triggered when the user gives some kind of a permission
-     * (Usually through a permission dialog)
-     *
-     * @param requestCode
-     * @param permissions  the permissions given
-     * @param grantResults
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        boolean isFirstInstance = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key);
-
-        // If this is the first time the user opens the app
-        if (isFirstInstance) {
-            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, true);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_actions, menu);
@@ -227,24 +215,50 @@ public class MainActivity extends AbsSearchBarActivity {
         syncFABAndFragment();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Check for first instance
+        boolean isFirstInstance = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key);
+
+        if (isFirstInstance) {
+            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, false);
+        }
+    }
+
     // -- Permissions -- //
+
+    private void checkVersion() {
+        int lastVersionCode = PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key);
+        if (lastVersionCode < BuildConfig.VERSION_CODE) {
+            PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
+            new ChangelogDialog().show(getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Utilities.DEFAULT_DIALER_RC) {
-            askForPermissions();
+            checkPermissions(null);
         }
     }
 
-    private void askForPermissions() {
-        // Ask for permissions
-        if (!checkPermissionGranted(this, CALL_PHONE) ||
-                !checkPermissionGranted(this, SEND_SMS) ||
-                !checkPermissionGranted(this, READ_CONTACTS) ||
-                !checkPermissionGranted(this, WRITE_CONTACTS)) {
-            Utilities.askForPermissions(this, new String[]{CALL_PHONE, READ_CONTACTS, SEND_SMS, READ_CONTACTS, WRITE_CONTACTS});
+    private void checkPermissions(@Nullable int[] grantResults) {
+        if (
+                (grantResults != null && Utilities.checkPermissionsGranted(grantResults)) ||
+                Utilities.checkPermissionsGranted(this, PERMISSIONS)) { //If granted
+            checkVersion();
+        } else {
+            Utilities.askForPermissions(this, PERMISSIONS);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        checkPermissions(grantResults);
     }
 
     // -- OnClicks -- //

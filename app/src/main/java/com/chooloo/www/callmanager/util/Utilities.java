@@ -34,7 +34,6 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -50,6 +49,7 @@ public class Utilities {
 
     public static Locale sLocale;
 
+    // Constants
     public static final long LONG_VIBRATE_LENGTH = 500;
     public static final long SHORT_VIBRATE_LENGTH = 20;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
@@ -74,6 +74,12 @@ public class Utilities {
         return true;
     }
 
+    /**
+     * Checks for granted permission but by a single string (single permission)
+     *
+     * @param permission
+     * @return boolean
+     */
     public static boolean checkPermissionGranted(Context context, String permission) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(
@@ -81,15 +87,41 @@ public class Utilities {
                 == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static boolean checkPermissionGranted(String permission, int[] grantResults) {
-        List<String> permList = Arrays.asList(permission);
-        if (permList.contains(permission)) {
-            int index = permList.indexOf(permission);
-            return grantResults[index] == PackageManager.PERMISSION_GRANTED;
+    /**
+     * Check for permissions by a given list
+     *
+     * @param permissions
+     * @return boolean
+     */
+    public static boolean checkPermissionsGranted(Context context, String[] permissions) {
+        for (String permission : permissions) {
+            if (!checkPermissionGranted(context, permission)) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
+    /**
+     * Check for permissions by a given list
+     *
+     * @param grantResults
+     * @return boolean
+     */
+    public static boolean checkPermissionsGranted(int[] grantResults) {
+        for (int result : grantResults) {
+            if (result == PackageManager.PERMISSION_DENIED)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Asks for permissions by a given list
+     *
+     * @param activity
+     * @param permissions
+     */
     public static void askForPermissions(FragmentActivity activity, String[] permissions) {
         activity.requestPermissions(permissions, PERMISSION_RC);
     }
@@ -150,6 +182,11 @@ public class Utilities {
         return px / (dpi(context) / DisplayMetrics.DENSITY_DEFAULT);
     }
 
+    /**
+     * Returns whither currently in UI thread
+     *
+     * @return boolean
+     */
     public static boolean isInUIThread() {
         return Looper.getMainLooper().isCurrentThread();
     }
@@ -229,6 +266,13 @@ public class Utilities {
         return PhoneNumberUtil.normalizeDiallableCharsOnly(phoneNumber);
     }
 
+    /**
+     * Builds a string without the separators
+     *
+     * @param list
+     * @param separator
+     * @return String
+     */
     public static String joinStringsWithSeparator(@NotNull List<String> list, @NotNull String separator) {
         if (list.size() == 0) return "";
         StringBuilder builder = new StringBuilder();
@@ -263,12 +307,24 @@ public class Utilities {
         }
     }
 
+    /**
+     * Returns whither the device has an active navigation bar
+     *
+     * @param context
+     * @return boolean
+     */
     public static boolean hasNavBar(Context context) {
         Resources resources = context.getResources();
         int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
         return id > 0 && resources.getBoolean(id);
     }
 
+    /**
+     * Returns the navigation bar height
+     *
+     * @param context
+     * @return int
+     */
     public static int navBarHeight(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
@@ -278,6 +334,13 @@ public class Utilities {
         return 0;
     }
 
+    /**
+     * Toggles the keyboard according to given parameter (boolean)
+     *
+     * @param context
+     * @param view
+     * @param isToOpen
+     */
     public static void toggleKeyboard(Context context, View view, boolean isToOpen) {
         if (isToOpen) {
             InputMethodManager imm = (InputMethodManager)
@@ -289,6 +352,12 @@ public class Utilities {
         }
     }
 
+    /**
+     * Returns a list of the recent calls
+     *
+     * @param context
+     * @return ArrayList<RecentCall>
+     */
     public ArrayList<RecentCall> getRecentCalls(Context context) {
 
         ArrayList<RecentCall> recentCalls = new ArrayList<RecentCall>();
@@ -334,6 +403,7 @@ public class Utilities {
 
     /**
      * Checks wither the text given is numeric or not
+     *
      * @param text
      * @return true/false
      */
