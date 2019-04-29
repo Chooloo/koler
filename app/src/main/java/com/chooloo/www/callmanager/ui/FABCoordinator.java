@@ -11,11 +11,22 @@ public class FABCoordinator {
     private FloatingActionButton mLeftFAB;
     private OnFABClickListener mListener;
 
+    /**
+     * Constructor
+     *
+     * @param rightFAB right action button on the screen
+     * @param leftFAB left action button on the screen
+     */
     public FABCoordinator(FloatingActionButton rightFAB, FloatingActionButton leftFAB) {
         mRightFAB = rightFAB;
         mLeftFAB = leftFAB;
     }
 
+    /**
+     * Sets the listener by a given fragment
+     * (the given fragment needs to be an instance of the OnFABClickListener)
+     * @param fragment
+     */
     public void setListener(Fragment fragment) {
         if (!(fragment instanceof OnFABClickListener) || !(fragment instanceof FABDrawableCoordination)) {
             mListener = null;
@@ -44,19 +55,33 @@ public class FABCoordinator {
         mListener = (OnFABClickListener) fragment;
     }
 
+    /**
+     * Clicks on the right FAB
+     */
     public void performRightClick() {
         if (mListener != null) mListener.onRightClick();
     }
 
+    /**
+     * Clicks on the left FAB
+     */
     public void performLeftClick() {
         if (mListener != null) mListener.onLeftClick();
     }
 
+    /**
+     * OnFABClickListener to implement in the target fragment
+     */
     public interface OnFABClickListener {
         void onRightClick();
+
         void onLeftClick();
     }
 
+    /**
+     * FABDrawableCoordination
+     * Gets the required resources for the FABs
+     */
     public interface FABDrawableCoordination {
         @DrawableRes
         int[] getIconsResources();

@@ -14,9 +14,16 @@ import com.chooloo.www.callmanager.database.entity.Contact;
 
 public class ContactUtils {
 
+    // Constants
     public static final Contact UNKNOWN = new Contact("Unknown", "", null);
     public static final Contact VOICEMAIL = new Contact("Voicemail", "", null);
 
+    /**
+     * Returns a contact by a given phone number
+     * @param context
+     * @param phoneNumber
+     * @return Contact
+     */
     public static Contact getContactByPhoneNumber(@NonNull Context context, @NonNull String phoneNumber) {
 
         if (phoneNumber.isEmpty()) return null;
@@ -44,6 +51,14 @@ public class ContactUtils {
         return contact;
     }
 
+    /**
+     * Returns a contact by a given name
+     * (almost identical to the previous method (above) but filters the name instead of
+     * the phone number)
+     * @param context
+     * @param name
+     * @return Contact
+     */
     public static Contact getContactByName(@NonNull Context context, @NonNull String name) {
 
         if (name.isEmpty()) return null;

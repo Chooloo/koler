@@ -7,9 +7,15 @@ import android.view.View;
 
 public class AllPurposeTouchListener implements View.OnTouchListener {
 
+    // Constants
     private final GestureDetector mGestureDetector;
     private final GestureListener mGestureListener;
 
+    /**
+     * Constructor
+     *
+     * @param ctx
+     */
     public AllPurposeTouchListener(Context ctx) {
         mGestureListener = new GestureListener();
         mGestureDetector = new GestureDetector(ctx, mGestureListener);
@@ -23,6 +29,7 @@ public class AllPurposeTouchListener implements View.OnTouchListener {
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
+        // Constants
         private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
@@ -50,10 +57,14 @@ public class AllPurposeTouchListener implements View.OnTouchListener {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
             boolean result = false;
+
             try {
+
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
+
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
@@ -71,10 +82,13 @@ public class AllPurposeTouchListener implements View.OnTouchListener {
                     }
                     result = true;
                 }
+
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+
             return result;
+
         }
 
         public void setView(View view) {
@@ -105,7 +119,8 @@ public class AllPurposeTouchListener implements View.OnTouchListener {
         return false;
     }
 
-    public void onLongPress(View v) {}
+    public void onLongPress(View v) {
+    }
 
     /**
      * If the user swipes right

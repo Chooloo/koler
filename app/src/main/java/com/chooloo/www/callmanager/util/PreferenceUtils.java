@@ -19,6 +19,7 @@ import com.chooloo.www.callmanager.R;
  * preferences at the same time.
  */
 public class PreferenceUtils {
+
     private static PreferenceUtils sSharedPrefs;
     private Context mContext;
     private SharedPreferences mPref;
@@ -27,6 +28,10 @@ public class PreferenceUtils {
 
     private static final SparseArray<Object> sDefaultValues = new SparseArray<>();
 
+    /**
+     * Constructor
+     * @param context
+     */
     private PreferenceUtils(Context context) {
         mPref = PreferenceManager.getDefaultSharedPreferences(context);
         mContext = context;

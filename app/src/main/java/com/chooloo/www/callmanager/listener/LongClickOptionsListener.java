@@ -35,10 +35,17 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     private LongClickRunnable mRunnable = new LongClickRunnable();
     private Handler mHandler = new Handler();
 
-    // List
+    // Lists
     private List<FloatingActionButton> mFloatingButtons = new ArrayList<>();
     private List<TextView> mActionsText = new ArrayList<>();
 
+    /**
+     * Constructor
+     * @param context
+     * @param fabView
+     * @param onNormalClick
+     * @param overlayChangeListener
+     */
     public LongClickOptionsListener(@NotNull Context context,
                                     @NotNull ViewGroup fabView,
                                     @NotNull View.OnClickListener onNormalClick,
@@ -63,25 +70,25 @@ public class LongClickOptionsListener implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                mIsCanceled = false; //This is no longer canceled
+                mIsCanceled = false; // This is no longer canceled
 
-                //Start the timer for long click
+                // Start the timer for long click
                 if (!mRunnable.isFinished) {
                     mHandler.postDelayed(mRunnable, LONG_PRESS_TIMEOUT);
                 }
                 break;
-            case MotionEvent.ACTION_MOVE: //Perform the right action based on pointer's location
+            case MotionEvent.ACTION_MOVE: // Perform the right action based on pointer's location
                 Rect outRect = new Rect();
                 v.getDrawingRect(outRect);
                 int x = (int) event.getX();
                 int y = (int) event.getY();
 
-                //If pointer not inside the button
+                // If pointer not inside the button
                 if (!outRect.contains(x, y)) {
                     int rawX = (int) event.getRawX();
                     int rawY = (int) event.getRawY();
 
-                    //Cycle through each action button and check if the pointer is ints vicinity
+                    // Cycle through each action button and check if the pointer is ints vicinity
                     for (FloatingActionButton action : mFloatingButtons) {
                         if (Utilities.inViewInBounds(action, rawX, rawY, 8)) {
                             highlightFAB(action, true);
@@ -96,7 +103,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                 int rawY = (int) event.getRawY();
 
                 boolean actionPerformed = false;
-                //Cycle through each action button and check if the pointer is in its vicinity
+                // Cycle through each action button and check if the pointer is in its vicinity
                 for (FloatingActionButton action : mFloatingButtons) {
                     if (Utilities.inViewInBounds(action, rawX, rawY, 16)) {
                         action.performClick();
@@ -104,7 +111,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
                     }
                 }
 
-                //Perform a normal click if this wasn't a long click
+                // Perform a normal click if this wasn't a long click
                 if (!actionPerformed && !mRunnable.isFinished && Utilities.inViewInBounds(v, rawX, rawY, 0)) {
                     mOnNormalClick.onClick(v);
                 }

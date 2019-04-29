@@ -9,6 +9,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import androidx.annotation.CallSuper;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +32,11 @@ public abstract class AbsAppBarActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
     }
 
+    /**
+     * Set the label of the appbar by a given string
+     *
+     * @param label
+     */
     protected void setLabel(String label) {
         mTextTitle.setText(label);
     }
