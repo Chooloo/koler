@@ -16,6 +16,7 @@ import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
@@ -188,6 +189,11 @@ public class DialerFragment extends BaseFragment {
             return mNumberText;
     }
 
+    /**
+     * Sets the given number in the input box
+     * @param number
+     * @param updateAll
+     */
     public void setNumber(String number, boolean updateAll) {
         if (updateAll) {
             mNumberText = number;
@@ -216,6 +222,9 @@ public class DialerFragment extends BaseFragment {
 
     // -- Utils -- //
 
+    /**
+     * Makes the phone vibrate
+     */
     private void vibrate() {
         Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
     }

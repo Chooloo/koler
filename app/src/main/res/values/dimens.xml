@@ -33,6 +33,7 @@
     <!-- List Items -->
     <dimen name="divider_sides_margin">8dp</dimen>
     <dimen name="item_contact_padding">14dp</dimen>
+    <dimen name="item_contact_topbot_padding">6dp</dimen>
     <dimen name="item_padding_and_icon">38dp</dimen>
     <dimen name="item_height">64dp</dimen>
 

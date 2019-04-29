@@ -46,7 +46,6 @@
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:hint="@string/hint_phone_number"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
             android:textColor="@color/green_phone"

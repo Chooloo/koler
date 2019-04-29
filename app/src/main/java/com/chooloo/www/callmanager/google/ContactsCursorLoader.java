@@ -27,6 +27,9 @@ import static android.provider.ContactsContract.Contacts;
 
 public final class ContactsCursorLoader extends CursorLoader {
 
+    public static String CURSOR_NAME_COLUMN = Phone.DISPLAY_NAME_PRIMARY;
+    public static String CURSOR_NUMBER_COLUMN = Phone.NUMBER;
+
     /**
      * Cursor selection string
      */
@@ -108,4 +111,5 @@ public final class ContactsCursorLoader extends CursorLoader {
         builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
         return builder.build();
     }
+
 }
