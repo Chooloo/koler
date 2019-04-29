@@ -21,6 +21,8 @@ import com.chooloo.www.callmanager.database.entity.RecentCall;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.view.View.GONE;
+
 public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.RecentCallHolder> {
 
     // Click listeners
@@ -29,6 +31,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
 
     /**
      * Constructor
+     *
      * @param context
      * @param cursor
      * @param onItemClickListener
@@ -52,23 +55,28 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
 
     @Override
     public void onBindViewHolder(RecentCallHolder holder, Cursor cursor) {
+
+        holder.letterText.setVisibility(GONE);
+        // Get information
         RecentCall recentCall = new RecentCall(this.mContext, cursor);
-
+        String callerName = recentCall.getCallerName();
         String phoneNumber = recentCall.getCallerNumber();
+        String date = recentCall.getCallDateString();
 
-        holder.time.setText(recentCall.getCallDateString());
+        // Set date
+        holder.time.setText(date);
 
-        // Check for name
-        if (recentCall.getCallerName() != null) holder.name.setText(recentCall.getCallerName());
+        // Set display name (phone number/name)
+        if (callerName != null) holder.name.setText(callerName);
         else holder.name.setText(phoneNumber);
 
         Contact caller = recentCall.getCaller();
         if (caller != null && caller.getPhotoUri() != null) {
             holder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
             holder.photo.setVisibility(View.VISIBLE);
-            holder.photoPlaceholder.setVisibility(View.GONE);
+            holder.photoPlaceholder.setVisibility(GONE);
         } else {
-            holder.photo.setVisibility(View.GONE);
+            holder.photo.setVisibility(GONE);
             holder.photoPlaceholder.setVisibility(View.VISIBLE);
         }
 
@@ -95,6 +103,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         @BindView(R.id.item_photo) ImageView photo;
         @BindView(R.id.item_big_text) TextView name;
         @BindView(R.id.item_small_text) TextView time;
+        @BindView(R.id.letter_text) TextView letterText;
 
         /**
          * Constructor

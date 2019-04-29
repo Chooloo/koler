@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
+import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;

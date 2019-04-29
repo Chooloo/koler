@@ -24,6 +24,8 @@ import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -61,6 +63,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
+    // View Binds
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
     @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
 
@@ -83,11 +86,12 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                         }
                     }
                 };
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mContactsAdapter = new ContactsAdapter(getContext(), null);
-        mRecyclerView.setAdapter(mContactsAdapter);
 
+        mContactsAdapter = new ContactsAdapter(getContext(), null);
         mContactsAdapter.setOnContactSelectedListener(this);
+
+        mRecyclerView.setAdapter(mContactsAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -116,10 +120,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.red_phone));
     }
 
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_contacts;
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -143,46 +143,32 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
+
+    // -- Overrides -- //
+
     @Override
     public void onResume() {
         super.onResume();
         tryRunningLoader();
     }
 
-    // -- FABCoordinator.OnFabClickListener -- //
-
     @Override
-    public void onRightClick() {
-        ((MainActivity) getActivity()).expandDialer(true);
+    protected int layoutId() {
+        return R.layout.fragment_contacts;
     }
 
     @Override
-    public void onLeftClick() { ((MainActivity) getActivity()).toggleSearchBar(); }
-
-    // -- FABCoordinator.FABDrawableCoordinator -- //
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+    }
 
     @Override
-    public int[] getIconsResources() {
-        return new int[]{
-                R.drawable.ic_dialpad_black_24dp,
-                R.drawable.ic_search_black_24dp
-        };
+    public void onContactSelected(String normPhoneNumber) {
+        if (normPhoneNumber == null) return;
+        CallManager.call(this.getContext(), normPhoneNumber);
     }
 
-    private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
-            runLoader();
-        }
-    }
-
-    private void runLoader() {
-        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
-    }
-
-    private boolean isLoaderRunning() {
-        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
-        return loader != null;
-    }
+    // -- Loader -- //
 
     @NonNull
     @Override
@@ -212,19 +198,53 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mContactsAdapter.changeCursor(null);
     }
 
-    @Override
-    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+    /**
+     * Checks for the required permission in order to run the loader
+     */
+    private void tryRunningLoader() {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
+            runLoader();
+        }
     }
 
     /**
-     * Call the contact on click
-     *
-     * @param normPhoneNumber
+     * Runs the loader
      */
-    @Override
-    public void onContactSelected(String normPhoneNumber) {
-        if (normPhoneNumber == null) return;
-        CallManager.call(this.getContext(), normPhoneNumber);
+    private void runLoader() {
+        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
     }
+
+    /**
+     * Checks whither the loader is currently running
+     * (meaning the page is refreshing)
+     *
+     * @return boolean
+     */
+    private boolean isLoaderRunning() {
+        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
+        return loader != null;
+    }
+
+    // -- FABCoordinator.OnFabClickListener -- //
+
+    @Override
+    public void onRightClick() {
+        ((MainActivity) getActivity()).expandDialer(true);
+    }
+
+    @Override
+    public void onLeftClick() {
+        ((MainActivity) getActivity()).toggleSearchBar();
+    }
+
+    // -- FABCoordinator.FABDrawableCoordinator -- //
+
+    @Override
+    public int[] getIconsResources() {
+        return new int[]{
+                R.drawable.ic_dialpad_black_24dp,
+                R.drawable.ic_search_black_24dp
+        };
+    }
+
 }
