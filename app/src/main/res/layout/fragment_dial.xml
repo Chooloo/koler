@@ -5,7 +5,7 @@
     android:id="@+id/dialer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
+    android:background="@drawable/dialer_background"
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -21,7 +21,6 @@
         android:layout_height="@dimen/phone_number_input_height"
         android:layout_marginLeft="@dimen/default_edge_padding"
         android:layout_marginRight="@dimen/default_edge_padding"
-        android:background="@drawable/dialer_background"
         android:elevation="@dimen/dialer_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +36,7 @@
             android:layout_marginStart="18dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_call_black_24dp"
-            android:tint="@color/red_phone" />
+            android:tint="@color/colorAccent" />
 
         <TextView
             android:id="@+id/text_number_input"
@@ -75,7 +74,6 @@
         android:layout_marginTop="@dimen/default_edge_padding"
         android:layout_marginRight="@dimen/default_edge_padding"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/dialer_background"
         android:elevation="@dimen/dialer_elevation"
         android:weightSum="4"
         app:layout_constraintBottom_toBottomOf="parent"
