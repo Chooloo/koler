@@ -32,6 +32,9 @@
 
     <!-- Send Button -->
     <Button
+        android:backgroundTint="@color/white"
+        android:elevation="5dp"
+        android:textColor="@color/colorAccent"
         android:id="@+id/button_send_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
