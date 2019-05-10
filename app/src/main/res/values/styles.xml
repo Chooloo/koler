@@ -77,7 +77,7 @@
     <style name="ActionButton" parent="Widget.Design.FloatingActionButton">
         <item name="borderWidth">0.3dp</item>
         <item name="android:backgroundTint">@color/white</item>
-        <item name="tint">@color/red_phone</item>
-        <item name="rippleColor">@color/red_phone</item>
+        <item name="tint">@color/colorAccent</item>
+        <item name="rippleColor">@color/colorAccent</item>
     </style>
 </resources>

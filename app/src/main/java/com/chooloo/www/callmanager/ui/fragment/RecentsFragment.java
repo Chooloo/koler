@@ -74,7 +74,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
             tryRunningLoader();
         });
-        mRefreshLayout.setColorSchemeColors(getContext().getColor(R.color.red_phone));
+        mRefreshLayout.setColorSchemeColors(getContext().getColor(R.color.colorAccent));
     }
 
     @Override

@@ -58,7 +58,7 @@
         app:stl_dividerThickness="0dp"
         app:stl_drawDecorationAfterTab="false"
         app:stl_indicatorAlwaysInCenter="false"
-        app:stl_indicatorColor="@color/default_pic_color"
+        app:stl_indicatorColor="@color/colorAccent"
         app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
         app:stl_indicatorGravity="center"
         app:stl_indicatorInFront="true"

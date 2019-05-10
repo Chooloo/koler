@@ -62,14 +62,15 @@
 
     <!-- Letter Text -->
     <TextView
-        android:textDirection="ltr"
         android:id="@+id/letter_text"
-        android:textColor="@color/colorAccent"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="A"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/colorPrimaryDark"
+        android:textDirection="ltr"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
