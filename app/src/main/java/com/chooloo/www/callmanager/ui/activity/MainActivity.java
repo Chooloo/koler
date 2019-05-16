@@ -38,13 +38,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.CALL_PHONE;
+import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
 
 public class MainActivity extends AbsSearchBarActivity {
 
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
-    private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS};
+    private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
 
     // View Models
     SharedDialViewModel mSharedDialViewModel;
