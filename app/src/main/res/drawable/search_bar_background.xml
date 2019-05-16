@@ -4,5 +4,5 @@
 
     <corners android:radius="@dimen/bubble_corner_radius" />
 
-    <solid android:color="@color/grey_50" />
+    <solid android:color="@color/grey_100" />
 </shape>

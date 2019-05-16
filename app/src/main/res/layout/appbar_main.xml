@@ -27,15 +27,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <FrameLayout
-        android:id="@+id/search_bar_container"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone" />
-
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/view_pager_tab"
         android:layout_width="match_parent"
@@ -71,5 +62,15 @@
         app:stl_titleOffset="24dp"
         app:stl_underlineColor="#4D000000"
         app:stl_underlineThickness="0dp" />
+
+    <FrameLayout
+        android:id="@+id/search_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="0dp"
+        android:visibility="gone" />
 
 </com.google.android.material.appbar.AppBarLayout>
