@@ -144,7 +144,7 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
-    @BindView(R.id.dialer_fragment) View mDialerLayout;
+    @BindView(R.id.dialer_fragment) View mDialerFrame;
     @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
@@ -187,6 +187,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
             mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
             mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
+            mDialerFrame.setPadding(0, 0, 0, navBarHeight);
         }
 
         // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
@@ -305,7 +306,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             }
         });
 
-        mBottomSheetBehavior = BottomSheetBehavior.from(mDialerLayout); // Set the bottom sheet behaviour
+        mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
     }
 

@@ -42,6 +42,7 @@
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"
+        android:background="@color/dialer_background"
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dial" />
 
