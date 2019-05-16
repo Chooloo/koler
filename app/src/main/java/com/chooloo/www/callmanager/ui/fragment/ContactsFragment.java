@@ -3,7 +3,9 @@ package com.chooloo.www.callmanager.ui.fragment;
 import android.Manifest;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -70,8 +72,14 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
 
+    @Nullable
     @Override
-    protected void onCreateView() {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_contacts, container, false);
+    }
+
+    @Override
+    protected void onFragmentReady() {
         mLayoutManager =
                 new LinearLayoutManager(getContext()) {
                     @Override
@@ -150,11 +158,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     public void onResume() {
         super.onResume();
         tryRunningLoader();
-    }
-
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_contacts;
     }
 
     @Override

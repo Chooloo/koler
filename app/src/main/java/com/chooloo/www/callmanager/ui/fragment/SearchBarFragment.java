@@ -1,23 +1,25 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
-import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsBaseFragment;
+import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
+
 import butterknife.BindView;
 
-public class SearchBarFragment extends BaseFragment {
+public class SearchBarFragment extends AbsBaseFragment {
 
     SharedSearchViewModel mSearchViewModel;
 
@@ -29,16 +31,19 @@ public class SearchBarFragment extends BaseFragment {
 
     public @BindView(R.id.search_input) EditText mSearchInput;
 
-    @SuppressLint("ClickableViewAccessibility")
+    @Nullable
     @Override
-    protected void onCreateView() {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_search_bar, container, false);
+    }
+
+    @Override
+    protected void onFragmentReady() {
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
         mInputParams = mSearchInput.getLayoutParams();
 
         mSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
@@ -69,11 +74,6 @@ public class SearchBarFragment extends BaseFragment {
                 }
             }
         });
-    }
-
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_search_bar;
     }
 
     public void setFocus() {

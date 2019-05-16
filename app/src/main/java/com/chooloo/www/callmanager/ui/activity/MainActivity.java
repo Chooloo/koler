@@ -225,8 +225,6 @@ public class MainActivity extends AbsSearchBarActivity {
         }
     }
 
-    // -- Permissions -- //
-
     private void checkVersion() {
         int lastVersionCode = PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key);
         if (lastVersionCode < BuildConfig.VERSION_CODE) {
@@ -235,6 +233,7 @@ public class MainActivity extends AbsSearchBarActivity {
         }
     }
 
+    // -- Permissions -- //
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

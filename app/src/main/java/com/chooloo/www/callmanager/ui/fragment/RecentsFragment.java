@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.CallLog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,8 +49,14 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
 
+    @Nullable
     @Override
-    protected void onCreateView() {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_recents, container, false);
+    }
+
+    @Override
+    protected void onFragmentReady() {
         mLayoutManager =
                 new LinearLayoutManager(getContext()) {
                     @Override
@@ -75,11 +83,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             tryRunningLoader();
         });
         mRefreshLayout.setColorSchemeColors(getContext().getColor(R.color.colorAccent));
-    }
-
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_recents;
     }
 
     @Override

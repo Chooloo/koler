@@ -2,18 +2,21 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
-import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsBaseFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
@@ -24,7 +27,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
-public class DialerFragment extends BaseFragment {
+public class DialerFragment extends AbsBaseFragment {
 
     public static final String ARG_DIALER = "dialer";
 
@@ -53,9 +56,15 @@ public class DialerFragment extends BaseFragment {
         return fragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_dial, container, false);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    protected void onCreateView() {
+    protected void onFragmentReady() {
         Bundle args = getArguments();
         if (args == null)
             throw new IllegalArgumentException("You must create this fragment with newInstance()");
@@ -80,11 +89,6 @@ public class DialerFragment extends BaseFragment {
             };
             mNumberView.setOnTouchListener(swipeToDelListener);
         }
-    }
-
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_dial;
     }
 
     @Override

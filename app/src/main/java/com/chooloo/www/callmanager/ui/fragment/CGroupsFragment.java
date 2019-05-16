@@ -2,8 +2,11 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,8 +43,14 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     @BindView(R.id.empty_state) View mEmptyState;
 
+    @Nullable
     @Override
-    protected void onCreateView() {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_cgroups, container, false);
+    }
+
+    @Override
+    protected void onFragmentReady() {
         mLayoutManager = new LinearLayoutManager(getContext()) {
             @Override
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
@@ -52,11 +61,6 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CGroupsAdapter(getContext(), null, this);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected int layoutId() {
-        return R.layout.fragment_cgroups;
     }
 
     @Override
