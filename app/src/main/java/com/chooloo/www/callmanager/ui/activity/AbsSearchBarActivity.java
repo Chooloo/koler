@@ -4,13 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 
 public class AbsSearchBarActivity extends AbsAppBarActivity {
@@ -57,7 +58,7 @@ public class AbsSearchBarActivity extends AbsAppBarActivity {
     }
 
     /**
-     * Weither the search bar is visible or not
+     * Whether the search bar is visible or not
      *
      * @return
      */

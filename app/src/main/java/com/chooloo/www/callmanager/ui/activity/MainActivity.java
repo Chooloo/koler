@@ -144,11 +144,7 @@ public class MainActivity extends AbsSearchBarActivity {
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
-                if (i == BottomSheetBehavior.STATE_HIDDEN || i == BottomSheetBehavior.STATE_COLLAPSED) {
-                    showButtons(true);
-                } else {
-                    showButtons(false);
-                }
+                updateButtons(i);
             }
 
             @Override
@@ -162,13 +158,17 @@ public class MainActivity extends AbsSearchBarActivity {
         syncFABAndFragment();
     }
 
-    // -- Overrides -- //
-
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
         if (fragment instanceof SearchBarFragment) {
             mSearchBarFragment = (SearchBarFragment) fragment;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        syncFABAndFragment();
     }
 
     @Override
@@ -289,7 +289,7 @@ public class MainActivity extends AbsSearchBarActivity {
     public void syncFABAndFragment() {
         Fragment fragment = getCurrentFragment();
         mFABCoordinator.setListener(fragment);
-        showButtons(true);
+        updateButtons();
     }
 
     // -- UI -- //
@@ -316,6 +316,18 @@ public class MainActivity extends AbsSearchBarActivity {
         mAppBarLayout.setExpanded(expand);
     }
 
+    public void updateButtons() {
+        updateButtons(mBottomSheetBehavior.getState());
+    }
+
+    public void updateButtons(int bottomSheetState) {
+        if (bottomSheetState == BottomSheetBehavior.STATE_HIDDEN || bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED) {
+            showButtons(true);
+        } else {
+            showButtons(false);
+        }
+    }
+
     /**
      * Animate action buttons
      *
@@ -328,8 +340,7 @@ public class MainActivity extends AbsSearchBarActivity {
                 v.animate().scaleX(1).scaleY(1).setDuration(100).start();
                 v.setClickable(true);
                 v.setFocusable(true);
-            }
-            else {
+            } else {
                 v.animate().scaleX(0).scaleY(0).setDuration(100).start();
                 v.setClickable(false);
                 v.setFocusable(false);
