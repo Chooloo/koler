@@ -17,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import timber.log.Timber;
 
 public class CallManager {
@@ -105,7 +103,9 @@ public class CallManager {
     }
 
     public static void keypad(char c) {
-        sCall.playDtmfTone(c);
+        if (sCall != null) {
+            sCall.playDtmfTone(c);
+        }
     }
 
     /**
