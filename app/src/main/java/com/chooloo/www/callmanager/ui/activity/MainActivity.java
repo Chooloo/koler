@@ -25,10 +25,10 @@ import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.fragment.DialerFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
-import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -247,7 +247,7 @@ public class MainActivity extends AbsSearchBarActivity {
     private void checkPermissions(@Nullable int[] grantResults) {
         if (
                 (grantResults != null && Utilities.checkPermissionsGranted(grantResults)) ||
-                Utilities.checkPermissionsGranted(this, PERMISSIONS)) { //If granted
+                        Utilities.checkPermissionsGranted(this, PERMISSIONS)) { //If granted
             checkVersion();
         } else {
             Utilities.askForPermissions(this, PERMISSIONS);
@@ -323,11 +323,18 @@ public class MainActivity extends AbsSearchBarActivity {
      * @param isShow animate to visible/invisible
      */
     public void showButtons(boolean isShow) {
-        if (isShow && mRightButton.isEnabled())
-            mRightButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
-        else mRightButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
-        if (isShow && mLeftButton.isEnabled())
-            mLeftButton.animate().scaleX(1).scaleY(1).setDuration(100).start();
-        else mLeftButton.animate().scaleX(0).scaleY(0).setDuration(100).start();
+        View[] buttons = {mRightButton, mLeftButton};
+        for (View v : buttons) {
+            if (isShow && v.isEnabled()) {
+                v.animate().scaleX(1).scaleY(1).setDuration(100).start();
+                v.setClickable(true);
+                v.setFocusable(true);
+            }
+            else {
+                v.animate().scaleX(0).scaleY(0).setDuration(100).start();
+                v.setClickable(false);
+                v.setFocusable(false);
+            }
+        }
     }
 }
