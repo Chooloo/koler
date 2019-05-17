@@ -100,9 +100,11 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                     }
                 };
 
+        // The list adapter
         mContactsAdapter = new ContactsAdapter(getContext(), null);
         mContactsAdapter.setOnContactSelectedListener(this);
 
+        // Recycle View
         mRecyclerView.setAdapter(mContactsAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -126,6 +128,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             }
         });
 
+        // Refresh Layout
         mRefreshLayout.setOnRefreshListener(() -> {
             LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, null, ContactsFragment.this);
             tryRunningLoader();
@@ -139,6 +142,8 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Dialer View Model
         mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mSharedDialViewModel.getNumber().observe(this, s -> {
             if (isLoaderRunning()) {
@@ -147,6 +152,8 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
+
+        // Search Bar View Model
         mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getText().observe(this, t -> {
             if (isLoaderRunning()) {
@@ -155,11 +162,9 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
+
         tryRunningLoader();
     }
-
-
-    // -- Overrides -- //
 
     @Override
     public void onResume() {

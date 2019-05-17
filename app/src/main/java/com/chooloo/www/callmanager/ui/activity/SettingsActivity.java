@@ -46,9 +46,10 @@ public class SettingsActivity extends AppCompatActivity {
             };
 
             ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
-            ListPreference answerCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_answer_call_timer_key));
             rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
+
+            ListPreference answerCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_answer_call_timer_key));
             answerCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             answerCallTimerPreference.setSummary(answerCallTimerPreference.getEntry());
 

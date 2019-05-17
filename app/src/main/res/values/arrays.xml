@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Call Timer Preferences -->
+    <string-array name="pref_call_timer_entries">
+        <item>10 seconds</item>
+        <item>5 seconds</item>
+        <item>3 seconds</item>
+    </string-array>
+
     <string-array name="pref_call_timer_entry_values">
         <item>10</item>
         <item>5</item>
         <item>3</item>
     </string-array>
 
-    <string-array name="pref_call_timer_entries">
-        <item>10 seconds</item>
-        <item>5 seconds</item>
-        <item>3 seconds</item>
+
+    <!-- Default Page Preference -->
+    <string-array name="pref_default_page_entries">
+        <item>Recents</item>
+        <item>Contacts</item>
+        <item>Excel</item>
     </string-array>
 
     <string-array name="pref_default_page_entry_values">
@@ -18,13 +27,7 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-
-    <string-array name="pref_default_page_entries">
-        <item>Recents</item>
-        <item>Contacts</item>
-        <item>Excel</item>
-    </string-array>
-
+    
     <string-array name="dialog_long_click_cgroup_options">
         <item>Delete this list</item>
     </string-array>

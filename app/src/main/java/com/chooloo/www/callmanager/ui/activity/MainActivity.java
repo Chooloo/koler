@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +49,11 @@ public class MainActivity extends AbsSearchBarActivity {
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
     private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
 
+    // Intent
+    Intent mIntent;
+    String mIntentAction;
+    String mIntentType;
+
     // View Models
     SharedDialViewModel mSharedDialViewModel;
     SharedSearchViewModel mSharedSearchViewModel;
@@ -76,12 +83,14 @@ public class MainActivity extends AbsSearchBarActivity {
     @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
+    // -- Overrides -- //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        PreferenceUtils.getInstance(this);
+        setContentView(R.layout.activity_main); // Set the layout
+        PreferenceUtils.getInstance(this); // Get the preferences
         Utilities.setUpLocale(this);
 
         // Check if first instance
@@ -91,19 +100,19 @@ public class MainActivity extends AbsSearchBarActivity {
         // Bind variables
         ButterKnife.bind(this);
 
+        // Check wither this app was set as the default dialer
         boolean isDefaultDialer = Utilities.checkDefaultDialer(this);
         if (isDefaultDialer) checkPermissions(null);
 
-        // Fragments
+        // Add the dialer fragment
         mDialerFragment = DialerFragment.newInstance(true);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialer_fragment, mDialerFragment)
                 .commit();
 
+        // View Pager
         mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
-        int defaultPage = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_default_page_key));
-        mViewPager.setCurrentItem(defaultPage);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -138,9 +147,13 @@ public class MainActivity extends AbsSearchBarActivity {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
+        mSharedDialViewModel.getNumber().observe(this, n -> {
+            if (n == null || n.length() == 0) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            }
+        });
 
-        // - Bottom Sheet Behavior - //
-
+        // Bottom Sheet Behavior
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -155,9 +168,16 @@ public class MainActivity extends AbsSearchBarActivity {
             }
         });
 
-        //Initialize FABCoordinator
+        // Initialize FABCoordinator
         mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
         syncFABAndFragment();
+
+        // Set default page
+        int pagePreference = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_default_page_key));
+        mViewPager.setCurrentItem(pagePreference);
+
+        // Check for intents from others apps
+        checkIncomingIntent();
     }
 
     @Override
@@ -190,9 +210,6 @@ public class MainActivity extends AbsSearchBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Clear focus on touch outside for all EditText inputs.
-     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -227,31 +244,11 @@ public class MainActivity extends AbsSearchBarActivity {
         }
     }
 
-    private void checkVersion() {
-        int lastVersionCode = PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key);
-        if (lastVersionCode < BuildConfig.VERSION_CODE) {
-            PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
-            new ChangelogDialog().show(getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
-        }
-    }
-
-    // -- Permissions -- //
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Utilities.DEFAULT_DIALER_RC) {
             checkPermissions(null);
-        }
-    }
-
-    private void checkPermissions(@Nullable int[] grantResults) {
-        if (
-                (grantResults != null && Utilities.checkPermissionsGranted(grantResults)) ||
-                        Utilities.checkPermissionsGranted(this, PERMISSIONS)) { //If granted
-            checkVersion();
-        } else {
-            Utilities.askForPermissions(this, PERMISSIONS);
         }
     }
 
@@ -347,6 +344,61 @@ public class MainActivity extends AbsSearchBarActivity {
                 v.setClickable(false);
                 v.setFocusable(false);
             }
+        }
+    }
+
+    // -- Utilities -- //
+
+    private void checkPermissions(@Nullable int[] grantResults) {
+        if (
+                (grantResults != null && Utilities.checkPermissionsGranted(grantResults)) ||
+                        Utilities.checkPermissionsGranted(this, PERMISSIONS)) { //If granted
+            checkVersion();
+        } else {
+            Utilities.askForPermissions(this, PERMISSIONS);
+        }
+    }
+
+    /**
+     * Check for the app version
+     */
+    private void checkVersion() {
+        int lastVersionCode = PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key);
+        if (lastVersionCode < BuildConfig.VERSION_CODE) {
+            PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
+            new ChangelogDialog().show(getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
+        }
+    }
+
+    // -- Other -- //
+
+    /**
+     * Checking for incoming intents from other applications
+     */
+    private void checkIncomingIntent() {
+        mIntent = getIntent();
+        mIntentAction = mIntent.getAction();
+        mIntentType = mIntent.getType();
+
+        if (Intent.ACTION_VIEW.equals(mIntentAction)) {
+            handleViewIntent(mIntent);
+        }
+    }
+
+    /**
+     * Handle a VIEW intent (For example when you click a number in whatsapp)
+     *
+     * @param intent
+     */
+    private void handleViewIntent(Intent intent) {
+        String sharedText = intent.getData().toString();
+        String number = "";
+        if (sharedText.contains("tel:")) {
+            number = sharedText.substring(4, sharedText.length() - 1);
+        }
+        if (number != null) {
+            mSharedDialViewModel.setNumber(number);
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
 }

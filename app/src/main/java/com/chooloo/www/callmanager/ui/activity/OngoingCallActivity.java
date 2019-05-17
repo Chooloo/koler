@@ -306,6 +306,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             }
         });
 
+        // Bottom Sheet Behaviour
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
     }

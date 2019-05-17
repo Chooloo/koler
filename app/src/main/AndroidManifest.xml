@@ -31,6 +31,23 @@
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
 
+            <!-- For receiving intents -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
             <!-- From Google's Dialer App -->
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
@@ -77,8 +94,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.CGroupActivity"
-            android:parentActivityName=".ui.activity.MainActivity"/>
+        <activity
+            android:name=".ui.activity.CGroupActivity"
+            android:parentActivityName=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"

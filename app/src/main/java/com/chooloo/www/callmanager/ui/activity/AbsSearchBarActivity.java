@@ -7,14 +7,18 @@ import android.widget.FrameLayout;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import butterknife.BindView;
 
 public class AbsSearchBarActivity extends AbsAppBarActivity {
+
+    SharedSearchViewModel mSharedSearchViewModel;
 
     SearchBarFragment mSearchBarFragment;
 
@@ -28,6 +32,13 @@ public class AbsSearchBarActivity extends AbsAppBarActivity {
         mSearchBarFragment = new SearchBarFragment();
         // Replace the placeholder with the new fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
+
+        mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
+        mSharedSearchViewModel.getIsFocused().observe(this, f -> {
+            if (!f && mSharedSearchViewModel.getText().getValue().length() == 0) {
+                toggleSearchBar(false);
+            }
+        });
     }
 
     /**

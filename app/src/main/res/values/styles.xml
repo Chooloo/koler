@@ -29,7 +29,7 @@
     <style name="AppTheme.TransparentStatusBar" parent="AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
-    
+
     <!-- AppBar Overlay -->
     <style name="ActionMode" parent="Widget.AppCompat.ActionMode">
         <item name="background">@color/grey_100</item>
