@@ -30,7 +30,7 @@ In an ongoing call you can:
 
 ## Swipes
 The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
-  * <!-- ### Dialer
+  <!-- * ### Dialer
     * __Call__            - Swipe up  
     * __Delete number__   - Swipe left  
     * __Collapse dialer__ - Swipe on the contacts list  -->
