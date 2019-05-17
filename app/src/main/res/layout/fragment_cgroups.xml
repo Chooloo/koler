@@ -21,7 +21,5 @@
     <include
         android:id="@+id/empty_state"
         layout="@layout/page_empty_state"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="411dp"
-        tools:layout_editor_absoluteY="731dp" />
+        android:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

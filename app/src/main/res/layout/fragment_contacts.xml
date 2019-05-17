@@ -63,4 +63,9 @@
             android:src="@drawable/fast_scroller_scroll_bar" />
     </com.chooloo.www.callmanager.google.FastScroller>
 
+    <include
+        android:id="@+id/empty_state"
+        layout="@layout/page_empty_state"
+        android:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -72,6 +73,10 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
 
+    @BindView(R.id.empty_state) View mEmptyState;
+    @BindView(R.id.empty_title) TextView mEmptyTitle;
+    @BindView(R.id.empty_desc) TextView mEmptyDesc;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,8 +131,10 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             tryRunningLoader();
         });
         mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
-    }
 
+        mEmptyTitle.setText(R.string.empty_contact_title);
+        mEmptyDesc.setText(R.string.empty_contact_desc);
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -191,14 +198,25 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        mContactsAdapter.changeCursor(data);
-        mFastScroller.setup(mContactsAdapter, mLayoutManager);
-        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
+        setData(data);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mContactsAdapter.changeCursor(null);
+    }
+
+    private void setData(Cursor data) {
+        mContactsAdapter.changeCursor(data);
+        mFastScroller.setup(mContactsAdapter, mLayoutManager);
+        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
+        if (data != null && data.getCount() > 0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyState.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyState.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -249,5 +267,4 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 R.drawable.ic_search_black_24dp
         };
     }
-
 }

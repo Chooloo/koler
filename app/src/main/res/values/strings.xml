@@ -53,6 +53,16 @@
 
     <string name="dialog_changelog_title">Changelog</string>
 
+    <!--Empty-->
+    <string name="empty_cgroups_title">Nothing here… yet</string>
+    <string name="empty_cgroups_desc">You can try to add something</string>
+
+    <string name="empty_contact_title">No contact matching search query found</string>
+    <string name="empty_contact_desc" />
+
+    <string name="empty_recents_title">No recent calls</string>
+    <string name="empty_recents_desc" />
+
     <!--Other-->
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>

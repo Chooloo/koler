@@ -19,16 +19,19 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.16000003"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/ic_koli_sad" />
 
     <TextView
         android:id="@+id/empty_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="8dp"
-        android:text="Nothing here... yet"
+        android:gravity="center"
+        android:text="@string/empty_cgroups_title"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,14 +41,15 @@
 
     <TextView
         android:id="@+id/empty_desc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="You can try to add something"
+        android:gravity="center"
+        android:text="@string/empty_cgroups_desc"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/empty_title"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/empty_title"
         app:layout_constraintTop_toBottomOf="@+id/empty_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

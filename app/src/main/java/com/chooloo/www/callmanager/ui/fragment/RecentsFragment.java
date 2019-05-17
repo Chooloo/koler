@@ -49,6 +49,10 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
 
+    @BindView(R.id.empty_state) View mEmptyState;
+    @BindView(R.id.empty_title) TextView mEmptyTitle;
+    @BindView(R.id.empty_desc) TextView mEmptyDesc;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,6 +87,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             tryRunningLoader();
         });
         mRefreshLayout.setColorSchemeColors(getContext().getColor(R.color.colorAccent));
+
+        mEmptyTitle.setText(R.string.empty_recents_title);
+        mEmptyDesc.setText(R.string.empty_recents_desc);
     }
 
     @Override
@@ -141,14 +148,25 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        mRecentsAdapter.changeCursor(data);
-        mFastScroller.setup(mRecentsAdapter, mLayoutManager);
-        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
+        setData(data);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mRecentsAdapter.changeCursor(null);
+    }
+
+    private void setData(Cursor data) {
+        mRecentsAdapter.changeCursor(data);
+        mFastScroller.setup(mRecentsAdapter, mLayoutManager);
+        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
+        if (data != null && data.getCount() > 0) {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyState.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyState.setVisibility(View.VISIBLE);
+        }
     }
 
     // -- UI Listeners -- //
