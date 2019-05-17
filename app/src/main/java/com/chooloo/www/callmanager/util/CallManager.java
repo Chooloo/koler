@@ -105,6 +105,7 @@ public class CallManager {
     public static void keypad(char c) {
         if (sCall != null) {
             sCall.playDtmfTone(c);
+            sCall.stopDtmfTone();
         }
     }
 
