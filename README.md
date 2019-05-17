@@ -40,7 +40,6 @@ The app's main goal is to be more intuitive and comfortable. For that reason, th
     * __Answer__          - Swipe right 
     * __Send sms__        - Swipe up on the send SMS overlay
 
-
 # GET THE APP
 
  * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
