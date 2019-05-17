@@ -2,16 +2,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:key="@string/pref_reject_call_timer_key"
-        android:title="@string/pref_reject_call_timer_title"
+        android:defaultValue="@string/pref_reject_call_timer_default_value"
         android:entries="@array/pref_call_timer_entries"
         android:entryValues="@array/pref_call_timer_entry_values"
-        android:defaultValue="@string/pref_reject_call_timer_default_value" />
+        android:key="@string/pref_reject_call_timer_key"
+        android:title="@string/pref_reject_call_timer_title" />
 
     <ListPreference
-        android:key="@string/pref_answer_call_timer_key"
-        android:title="@string/pref_answer_call_timer_title"
+        android:defaultValue="@string/pref_answer_call_timer_default_value"
         android:entries="@array/pref_call_timer_entries"
         android:entryValues="@array/pref_call_timer_entry_values"
-        android:defaultValue="@string/pref_answer_call_timer_default_value" />
+        android:key="@string/pref_answer_call_timer_key"
+        android:title="@string/pref_answer_call_timer_title" />
+
+    <ListPreference
+        android:defaultValue="@string/pref_default_page_default_value"
+        android:entries="@array/pref_default_page_entries"
+        android:entryValues="@array/pref_default_page_entry_values"
+        android:key="@string/pref_default_page_key"
+        android:title="@string/pref_default_page_title" />
 </PreferenceScreen>

@@ -2,13 +2,13 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.os.Bundle;
 
-import com.chooloo.www.callmanager.R;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.chooloo.www.callmanager.R;
 
 //TODO add more settings
 //TODO add icons
@@ -39,8 +39,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             //Init preferences
             Preference.OnPreferenceChangeListener listChangeListener = (preference, newValue) -> {
-                String[] entries = getResources().getStringArray(R.array.pref_call_timer_entries);
                 ListPreference listPreference = (ListPreference) preference;
+                CharSequence[] entries = listPreference.getEntries();
                 listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
                 return true;
             };
@@ -51,6 +51,10 @@ public class SettingsActivity extends AppCompatActivity {
             rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
             answerCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             answerCallTimerPreference.setSummary(answerCallTimerPreference.getEntry());
+
+            ListPreference defaultPagePreference = (ListPreference) findPreference(getString(R.string.pref_default_page_key));
+            defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
+            defaultPagePreference.setSummary(defaultPagePreference.getEntry());
         }
     }
 }

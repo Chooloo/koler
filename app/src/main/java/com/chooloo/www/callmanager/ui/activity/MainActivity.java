@@ -102,7 +102,8 @@ public class MainActivity extends AbsSearchBarActivity {
 
         mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
-        mViewPager.setCurrentItem(0);
+        int defaultPage = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_default_page_key));
+        mViewPager.setCurrentItem(defaultPage);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

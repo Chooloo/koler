@@ -12,7 +12,19 @@
         <item>5 seconds</item>
         <item>3 seconds</item>
     </string-array>
-    
+
+    <string-array name="pref_default_page_entry_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="pref_default_page_entries">
+        <item>Recents</item>
+        <item>Contacts</item>
+        <item>Excel</item>
+    </string-array>
+
     <string-array name="dialog_long_click_cgroup_options">
         <item>Delete this list</item>
     </string-array>
