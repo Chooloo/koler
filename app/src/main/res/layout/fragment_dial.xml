@@ -13,8 +13,19 @@
     android:outlineSpotShadowColor="@color/green_phone"
     tools:context=".ui.fragment.DialerFragment">
 
-    <!-- Number Input Field -->
+    <ImageView
+        android:id="@+id/swipe_down_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@color/grey_400"
+        android:padding="0dp"
+        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Number Input Field -->
     <RelativeLayout
         android:id="@+id/top_dialer"
         android:layout_width="0dp"
@@ -24,7 +35,7 @@
         android:elevation="@dimen/dialer_elevation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/swipe_down_view">
 
         <ImageView
             android:id="@+id/button_call"

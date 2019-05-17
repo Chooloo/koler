@@ -243,20 +243,9 @@ public class OngoingCallActivity extends AppCompatActivity {
         mRejectButton.setOnTouchListener(mRejectLongClickListener);
         mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
 
-        //Hide all overlays
-        mActionTimerOverlay.setAlpha(0.0f);
-        mAnswerCallOverlay.setAlpha(0.0f);
-        mRejectCallOverlay.setAlpha(0.0f);
-        mSendSmsOverlay.setAlpha(0.0f);
-
-        // hide buttons
-        mFloatingRejectCallTimerButton.hide();
-        mFloatingAnswerCallTimerButton.hide();
-        mFloatingCancelOverlayButton.hide();
-        mFloatingSendSMSButton.hide();
-        mFloatingCancelSMS.hide();
-        mFloatingCancelTimerButton.hide();
-        mSendSmsButton.setVisibility(View.GONE);
+        // Hide
+        hideOverlays();
+        hideButtons();
 
         // Set the correct text for the TextView
         String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
@@ -311,6 +300,8 @@ public class OngoingCallActivity extends AppCompatActivity {
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
     }
 
+    // -- Overrides -- //
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -318,6 +309,14 @@ public class OngoingCallActivity extends AppCompatActivity {
         //Listen for call state changes
         CallManager.registerCallback(mCallback);
         updateUI(CallManager.getState());
+    }
+
+    /**
+     * To disable back button
+     */
+    @Override
+    public void onBackPressed() {
+
     }
 
     @Override
@@ -617,6 +616,31 @@ public class OngoingCallActivity extends AppCompatActivity {
                 v.setFocusable(false);
             }
         }
+    }
+
+    /**
+     * Hide all buttons
+     */
+    private void hideButtons(){
+        // hide buttons
+        mFloatingRejectCallTimerButton.hide();
+        mFloatingAnswerCallTimerButton.hide();
+        mFloatingCancelOverlayButton.hide();
+        mFloatingSendSMSButton.hide();
+        mFloatingCancelSMS.hide();
+        mFloatingCancelTimerButton.hide();
+        mSendSmsButton.setVisibility(View.GONE);
+    }
+
+    /**
+     * Hide all overlays
+     */
+    private void hideOverlays(){
+        //Hide all overlays
+        mActionTimerOverlay.setAlpha(0.0f);
+        mAnswerCallOverlay.setAlpha(0.0f);
+        mRejectCallOverlay.setAlpha(0.0f);
+        mSendSmsOverlay.setAlpha(0.0f);
     }
 
     // -- Overlays -- //
