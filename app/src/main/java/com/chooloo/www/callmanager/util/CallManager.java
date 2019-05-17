@@ -36,10 +36,10 @@ public class CallManager {
      * @param number
      */
     public static void call(@NotNull Context context, @NotNull String number) {
-        Timber.i("Trying to call: " + number);
+        Timber.i("Trying to call: %s", number);
         try {
             // Set the data for the call
-            String uri = "tel:" + number;
+            String uri = "tel:" + Uri.encode(number);
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
             // Start the call
             context.startActivity(callIntent);
