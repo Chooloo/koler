@@ -43,7 +43,5 @@ The app's main goal is to be more intuitive and comfortable. For that reason, th
 
 # GET THE APP
 
-You can get it on Google Play Store:  
-`The app is currently removed from Google Play Store because of annoying Permission Declaration Form nonsense`
-
-Or download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
+ * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
+ * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
