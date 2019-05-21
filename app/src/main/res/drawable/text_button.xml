@@ -4,7 +4,7 @@
 
     <corners android:radius="60dp" />
 
-    <solid android:color="@color/dialer_background" />
+    <solid android:color="@color/dialpad_background" />
 
     <size
         android:width="50dp"

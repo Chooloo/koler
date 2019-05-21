@@ -39,7 +39,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
-import com.chooloo.www.callmanager.ui.fragment.DialerFragment;
+import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Stopwatch;
@@ -72,7 +72,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     private static final int REFRESH_RATE = 100;
 
     // Fragments
-    private DialerFragment mDialerFragment;
+    private DialpadFragment mDialpadFragment;
 
     // ViewModels
     private SharedDialViewModel mSharedDialViewModel;
@@ -202,9 +202,9 @@ public class OngoingCallActivity extends AppCompatActivity {
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
         // Fragments
-        mDialerFragment = DialerFragment.newInstance(false);
+        mDialpadFragment = DialpadFragment.newInstance(false);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialer_fragment, mDialerFragment)
+                .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
 
         // Display the information about the caller
@@ -266,6 +266,13 @@ public class OngoingCallActivity extends AppCompatActivity {
             @Override
             public void onSwipeLeft() {
                 endCall();
+            }
+
+            @Override
+            public void onSwipeTop() {
+                if (mKeypadButton.isShown()) {
+                    mKeypadButton.performClick();
+                }
             }
         };
         mOngoingCallLayout.setOnTouchListener(mIncomingCallSwipeListener);
@@ -621,7 +628,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Hide all buttons
      */
-    private void hideButtons(){
+    private void hideButtons() {
         // hide buttons
         mFloatingRejectCallTimerButton.hide();
         mFloatingAnswerCallTimerButton.hide();
@@ -635,7 +642,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     /**
      * Hide all overlays
      */
-    private void hideOverlays(){
+    private void hideOverlays() {
         //Hide all overlays
         mActionTimerOverlay.setAlpha(0.0f);
         mAnswerCallOverlay.setAlpha(0.0f);

@@ -10,6 +10,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.chooloo.www.callmanager.R;
 
+import java.util.List;
+
 //TODO add more settings
 //TODO add icons
 public class SettingsActivity extends AppCompatActivity {
@@ -56,6 +58,14 @@ public class SettingsActivity extends AppCompatActivity {
             ListPreference defaultPagePreference = (ListPreference) findPreference(getString(R.string.pref_default_page_key));
             defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
             defaultPagePreference.setSummary(defaultPagePreference.getEntry());
+
+            ListPreference isSilentPreference = (ListPreference) findPreference(getString(R.string.pref_is_silent_key));
+            isSilentPreference.setOnPreferenceChangeListener(listChangeListener);
+            isSilentPreference.setSummary(isSilentPreference.getEntry());
+
+            ListPreference isNoVibratePreference = (ListPreference) findPreference(getString(R.string.pref_is_no_vibrate_key));
+            isNoVibratePreference.setOnPreferenceChangeListener(listChangeListener);
+            isNoVibratePreference.setSummary(isNoVibratePreference.getEntry());
         }
     }
 }

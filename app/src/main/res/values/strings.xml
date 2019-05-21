@@ -20,10 +20,18 @@
     <string name="pref_answer_call_timer_key">answer_call_timer</string>
     <string name="pref_answer_call_timer_title">Answer call timer</string>
     <string name="pref_answer_call_timer_default_value">10</string>
-    
+
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Default page</string>
     <string name="pref_default_page_default_value">1</string>
+
+    <string name="pref_is_silent_key">is_silent</string>
+    <string name="pref_is_silent_title">Silent</string>
+    <string name="pref_is_silent_default_value">false</string>
+
+    <string name="pref_is_no_vibrate_key">is_no_vibrate</string>
+    <string name="pref_is_no_vibrate_title">Vibrate?</string>
+    <string name="pref_is_no_vibrate_default_value">false</string>
 
     <string name="pref_is_first_instance_key">first_instance</string>
     <string name="pref_last_version_key">last_version</string>
@@ -71,5 +79,32 @@
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>
     <string name="answer_timer_indicator">Answering in</string>
+
+    <!-- Dialpad View -->
+    <string name="dialpad_0_number">0</string>
+    <string name="dialpad_1_number">1</string>
+    <string name="dialpad_2_number">2</string>
+    <string name="dialpad_3_number">3</string>
+    <string name="dialpad_4_number">4</string>
+    <string name="dialpad_5_number">5</string>
+    <string name="dialpad_6_number">6</string>
+    <string name="dialpad_7_number">7</string>
+    <string name="dialpad_8_number">8</string>
+    <string name="dialpad_9_number">9</string>
+    <string name="dialpad_star_number">*</string>
+    <string name="dialpad_pound_number">#</string>
+
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Voicmail</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters"></string>
+    <string name="dialpad_pound_letters"></string>
 
 </resources>

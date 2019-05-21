@@ -21,4 +21,19 @@
         android:entryValues="@array/pref_default_page_entry_values"
         android:key="@string/pref_default_page_key"
         android:title="@string/pref_default_page_title" />
+
+    <ListPreference
+        android:defaultValue="false"
+        android:entries="@array/pref_is_silent_entries"
+        android:entryValues="@array/pref_is_silent_entry_values"
+        android:key="@string/pref_is_silent_key"
+        android:title="@string/pref_is_silent_title" />
+
+    <ListPreference
+        android:defaultValue="false"
+        android:entries="@array/pref_is_no_vibrate_entries"
+        android:entryValues="@array/pref_is_no_vibrate_entry_values"
+        android:key="@string/pref_is_no_vibrate_key"
+        android:title="@string/pref_is_no_vibrate_title" />
+
 </PreferenceScreen>

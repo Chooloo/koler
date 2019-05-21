@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- A layout representing a single key in the dialpad -->
+<com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DialpadKey">
+
+    <LinearLayout style="@style/DialpadKeyInnerLayout">
+
+        <TextView
+            android:id="@+id/dialpad_key_number"
+            style="@style/DialpadKeyNumber"
+            android:text="n" />
+
+        <TextView
+            android:id="@+id/dialpad_key_letters"
+            style="@style/DialpadKeyLetters"
+            android:text="number" />
+
+    </LinearLayout>
+
+</com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton>

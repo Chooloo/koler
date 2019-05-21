@@ -41,8 +41,7 @@ public class CallManager {
             // Set the data for the call
             String uri = "tel:" + Uri.encode(number);
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
-            // Start the call
-            context.startActivity(callIntent);
+            context.startActivity(callIntent); // Start the call
         } catch (SecurityException e) {
             Timber.e(e, "Couldn't call %s", number);
         }
@@ -102,6 +101,11 @@ public class CallManager {
         }
     }
 
+    /**
+     * Open keypad
+     *
+     * @param c
+     */
     public static void keypad(char c) {
         if (sCall != null) {
             sCall.playDtmfTone(c);
@@ -142,6 +146,13 @@ public class CallManager {
 
     // -- Auto-Calling -- //
 
+    /**
+     * Start the auto calling on the list of contacts
+     *
+     * @param list          a list of contacts
+     * @param context       the context
+     * @param startPosition the start position from which to start calling
+     */
     public static void startAutoCalling(@NotNull List<Contact> list, @NotNull AppCompatActivity context, int startPosition) {
         sIsAutoCalling = true;
         sAutoCallPosition = startPosition;
@@ -150,6 +161,11 @@ public class CallManager {
         nextCall(context);
     }
 
+    /**
+     * Go to the next call
+     *
+     * @param context
+     */
     public static void nextCall(@NotNull Context context) {
         if (sAutoCallingContactsList != null && sAutoCallPosition < sAutoCallingContactsList.size()) {
             String phoneNumber = sAutoCallingContactsList.get(sAutoCallPosition).getMainPhoneNumber();
@@ -165,11 +181,19 @@ public class CallManager {
         }
     }
 
+    /**
+     * Finish the loop
+     */
     public static void finishAutoCall() {
         sIsAutoCalling = false;
         sAutoCallPosition = 0;
     }
 
+    /**
+     * Check wither is currently auto calling
+     *
+     * @return
+     */
     public static boolean isAutoCalling() {
         return sIsAutoCalling;
     }

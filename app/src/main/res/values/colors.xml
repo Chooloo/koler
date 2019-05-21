@@ -43,8 +43,8 @@
 
     <color name="caller_text_color">@color/icon_active_light</color>
 
-    <color name="dialer_background">@color/white</color>
-    <color name="dialer_text">#388E3C</color>
+    <color name="dialpad_background">@color/white</color>
+    <color name="dialpad_text">#388E3C</color>
 
     <color name="default_pic_color">@color/colorAccent</color>
 

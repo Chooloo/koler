@@ -25,7 +25,7 @@ import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
-import com.chooloo.www.callmanager.ui.fragment.DialerFragment;
+import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -62,7 +62,7 @@ public class MainActivity extends AbsSearchBarActivity {
     FABCoordinator mFABCoordinator;
 
     // Fragments
-    DialerFragment mDialerFragment;
+    DialpadFragment mDialpadFragment;
     SearchBarFragment mSearchBarFragment;
 
     BottomSheetBehavior mBottomSheetBehavior;
@@ -104,12 +104,6 @@ public class MainActivity extends AbsSearchBarActivity {
         boolean isDefaultDialer = Utilities.checkDefaultDialer(this);
         if (isDefaultDialer) checkPermissions(null);
 
-        // Add the dialer fragment
-        mDialerFragment = DialerFragment.newInstance(true);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialer_fragment, mDialerFragment)
-                .commit();
-
         // View Pager
         mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
@@ -149,7 +143,7 @@ public class MainActivity extends AbsSearchBarActivity {
         });
         mSharedDialViewModel.getNumber().observe(this, n -> {
             if (n == null || n.length() == 0) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
 
@@ -175,6 +169,12 @@ public class MainActivity extends AbsSearchBarActivity {
         // Set default page
         int pagePreference = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_default_page_key));
         mViewPager.setCurrentItem(pagePreference);
+
+        // Add the dialer fragment
+        mDialpadFragment = DialpadFragment.newInstance(true);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.dialer_fragment, mDialpadFragment)
+                .commit();
 
         // Check for intents from others apps
         checkIncomingIntent();

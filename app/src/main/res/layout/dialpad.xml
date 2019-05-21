@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Dialpad keys -->
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialpad"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layoutDirection="ltr"
+    android:stretchColumns="*">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton
+            android:id="@+id/key_1"
+            style="@style/DialpadKey">
+
+            <LinearLayout style="@style/DialpadKeyInnerLayout">
+
+                <TextView
+                    android:id="@+id/dialpad_key_number"
+                    style="@style/DialpadKeyNumber"
+                    android:text="n" />
+
+                <ImageView
+                    android:id="@+id/dialpad_key_voicemail"
+                    style="@style/DialpadKeyLetters"
+                    android:layout_width="18dp"
+                    android:baselineAlignBottom="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/ic_voicemail_black_24dp" />
+            </LinearLayout>
+
+        </com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton>
+
+        <include
+            android:id="@+id/key_2"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_3"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <include
+            android:id="@+id/key_4"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_5"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_6"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <include
+            android:id="@+id/key_7"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_8"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_9"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <include
+            android:id="@+id/key_star"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_0"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+        <include
+            android:id="@+id/key_hex"
+            style="@style/DialpadKey"
+            layout="@layout/dialpad_key" />
+
+    </TableRow>
+
+</TableLayout>

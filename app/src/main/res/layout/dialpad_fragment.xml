@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- The Dialpad View (the whole view, including the edit text) -->
+<com.chooloo.www.callmanager.ui.widgets.DialpadView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialpad_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/dialpad_background"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.DialpadFragment">
+
+    <ImageView
+        android:id="@+id/swipe_down_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@color/grey_400"
+        android:padding="0dp"
+        android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+
+    <!-- Number Input Field -->
+    <LinearLayout
+        android:id="@+id/top_dialer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/phone_number_input_height"
+        android:elevation="@dimen/dialer_elevation"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/top_dialpad_side_padding"
+        android:paddingEnd="@dimen/top_dialpad_side_padding">
+
+        <ImageButton
+            android:id="@+id/button_call"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_call_black_24dp"
+            android:tint="@color/colorAccent" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DigitsEditText
+            android:id="@+id/digits_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cursorVisible="false"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/button_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_backspace_black_24dp"
+            android:tint="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+
+    <include layout="@layout/dialpad" />
+
+</com.chooloo.www.callmanager.ui.widgets.DialpadView>
