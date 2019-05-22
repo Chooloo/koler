@@ -20,7 +20,7 @@
     <string name="pref_answer_call_timer_key">answer_call_timer</string>
     <string name="pref_answer_call_timer_title">Answer call timer</string>
     <string name="pref_answer_call_timer_default_value">10</string>
-    
+
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Default page</string>
     <string name="pref_default_page_default_value">1</string>

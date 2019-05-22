@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -25,6 +24,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".ui.activity.AboutActivity"></activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
@@ -77,8 +77,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.CGroupActivity"
-            android:parentActivityName=".ui.activity.MainActivity"/>
+        <activity
+            android:name=".ui.activity.CGroupActivity"
+            android:parentActivityName=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
