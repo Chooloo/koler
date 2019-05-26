@@ -120,7 +120,7 @@ public class DialpadView extends LinearLayout {
         digits.setClickable(canBeEdited);
         digits.setLongClickable(canBeEdited);
         digits.setFocusableInTouchMode(canBeEdited);
-        digits.setCursorVisible(false);
+        digits.setCursorVisible(canBeEdited);
     }
 
     /**

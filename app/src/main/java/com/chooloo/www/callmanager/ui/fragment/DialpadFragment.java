@@ -110,9 +110,6 @@ public class DialpadFragment extends AbsBaseFragment {
         super.onCreate(savedInstanceState);
         PreferenceUtils.getInstance(getContext());
         Utilities.setUpLocale(getContext());
-
-//        mIsSilent = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_silent_key);
-//        mIsNotVibrate = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_no_vibrate_key);
     }
 
     @Nullable
@@ -505,5 +502,9 @@ public class DialpadFragment extends AbsBaseFragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         mIsSilent = Boolean.parseBoolean(sp.getString(getString(R.string.pref_is_silent_key), "false"));
         mIsNotVibrate = Boolean.parseBoolean(sp.getString(getString(R.string.pref_is_no_vibrate_key), "false"));
+    }
+
+    public void setDigitsCanBeEdited(boolean canBeEdited) {
+        mDialpadView.setDigitsCanBeEdited(canBeEdited);
     }
 }

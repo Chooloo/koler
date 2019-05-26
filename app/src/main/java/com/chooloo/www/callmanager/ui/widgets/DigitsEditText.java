@@ -14,7 +14,7 @@ public class DigitsEditText extends EditText {
     public DigitsEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        setShowSoftInputOnFocus(false);
+        setShowSoftInputOnFocus(true);
     }
 
     @Override

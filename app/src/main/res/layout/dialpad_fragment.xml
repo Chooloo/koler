@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:backgroundTint="@color/grey_400"
-        android:padding="0dp"
         android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
     <!-- Number Input Field -->
@@ -32,9 +31,11 @@
 
         <ImageButton
             android:id="@+id/button_call"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_call_black_24dp"
             android:tint="@color/colorAccent" />
 
@@ -44,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:focusableInTouchMode="true"
             android:freezesText="true"
             android:gravity="center"
@@ -58,7 +59,7 @@
 
         <ImageButton
             android:id="@+id/button_delete"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_backspace_black_24dp"

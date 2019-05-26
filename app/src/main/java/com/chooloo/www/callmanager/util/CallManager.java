@@ -37,9 +37,11 @@ public class CallManager {
      */
     public static void call(@NotNull Context context, @NotNull String number) {
         Timber.i("Trying to call: %s", number);
+        String uri;
         try {
             // Set the data for the call
-            String uri = "tel:" + Uri.encode(number);
+            if (number.contains("#")) uri = "tel: " + Uri.encode(number);
+            else uri = "tel: " + number;
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
             context.startActivity(callIntent); // Start the call
         } catch (SecurityException e) {

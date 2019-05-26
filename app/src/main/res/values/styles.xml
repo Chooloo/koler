@@ -89,6 +89,7 @@
         <item name="android:soundEffectsEnabled">false</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="DialpadKeyInnerLayout">

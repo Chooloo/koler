@@ -21,8 +21,7 @@
 
                 <TextView
                     android:id="@+id/dialpad_key_number"
-                    style="@style/DialpadKeyNumber"
-                    android:text="n" />
+                    style="@style/DialpadKeyNumber" />
 
                 <ImageView
                     android:id="@+id/dialpad_key_voicemail"
@@ -31,6 +30,7 @@
                     android:baselineAlignBottom="true"
                     android:scaleType="fitStart"
                     android:src="@drawable/ic_voicemail_black_24dp" />
+
             </LinearLayout>
 
         </com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton>

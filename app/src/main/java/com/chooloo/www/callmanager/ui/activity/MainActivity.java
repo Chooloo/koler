@@ -175,6 +175,7 @@ public class MainActivity extends AbsSearchBarActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
+        mDialpadFragment.setDigitsCanBeEdited(true);
 
         // Check for intents from others apps
         checkIncomingIntent();

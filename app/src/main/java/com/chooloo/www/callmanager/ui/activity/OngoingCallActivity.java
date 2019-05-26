@@ -206,6 +206,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
+        mDialpadFragment.setDigitsCanBeEdited(false);
 
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
@@ -305,6 +306,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Bottom Sheet Behaviour
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
+
     }
 
     // -- Overrides -- //
