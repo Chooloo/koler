@@ -2,16 +2,17 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,11 +44,13 @@ import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
+import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 public class MainActivity extends AbsSearchBarActivity {
 
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
     private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
+    boolean mIsBiometric;
 
     // Intent
     Intent mIntent;
@@ -68,6 +71,7 @@ public class MainActivity extends AbsSearchBarActivity {
     BottomSheetBehavior mBottomSheetBehavior;
 
     FragmentPagerAdapter mAdapterViewPager;
+    BiometricPrompt mBiometricPrompt;
 
     // - View Binds - //
 
@@ -175,10 +179,11 @@ public class MainActivity extends AbsSearchBarActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
-        mDialpadFragment.setDigitsCanBeEdited(true);
 
         // Check for intents from others apps
         checkIncomingIntent();
+
+        showBiometricPrompt(this);
     }
 
     @Override
@@ -402,4 +407,5 @@ public class MainActivity extends AbsSearchBarActivity {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
+
 }

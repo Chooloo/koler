@@ -28,27 +28,6 @@
         <item>2</item>
     </string-array>
 
-    <!-- Boolean Preference -->
-    <string-array name="pref_is_silent_entries">
-        <item>YAS</item>
-        <item>NAH</item>
-    </string-array>
-
-    <string-array name="pref_is_silent_entry_values">
-        <item>true</item>
-        <item>false</item>
-    </string-array>
-
-    <string-array name="pref_is_no_vibrate_entries">
-        <item>YAS</item>
-        <item>NAH</item>
-    </string-array>
-
-    <string-array name="pref_is_no_vibrate_entry_values">
-        <item>true</item>
-        <item>false</item>
-    </string-array>
-
     <string-array name="dialog_long_click_cgroup_options">
         <item>Delete this list</item>
     </string-array>

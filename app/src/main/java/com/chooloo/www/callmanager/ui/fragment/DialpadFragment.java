@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -203,7 +204,6 @@ public class DialpadFragment extends AbsBaseFragment {
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
             R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex})
     public void addChar(View view) {
-
         switch (view.getId()) {
             case R.id.key_1: {
                 keyPressed(KeyEvent.KEYCODE_1);
@@ -500,11 +500,27 @@ public class DialpadFragment extends AbsBaseFragment {
      */
     private void updatePreferences() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mIsSilent = Boolean.parseBoolean(sp.getString(getString(R.string.pref_is_silent_key), "false"));
-        mIsNotVibrate = Boolean.parseBoolean(sp.getString(getString(R.string.pref_is_no_vibrate_key), "false"));
+        mIsSilent = sp.getBoolean(getString(R.string.pref_is_silent_key), false);
+        mIsNotVibrate = sp.getBoolean(getString(R.string.pref_is_no_vibrate_key), false);
     }
 
     public void setDigitsCanBeEdited(boolean canBeEdited) {
-        mDialpadView.setDigitsCanBeEdited(canBeEdited);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDialpadView.setDigitsCanBeEdited(canBeEdited);
+            }
+        }, 2000);
+    }
+
+    public void setShowVoicemailButton(boolean show) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDialpadView.setShowVoicemailButton(show);
+            }
+        }, 2000);
     }
 }

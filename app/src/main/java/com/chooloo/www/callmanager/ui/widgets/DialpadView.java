@@ -86,18 +86,18 @@ public class DialpadView extends LinearLayout {
         TextView lettersView;
 
         for (int i = 0; i < buttonIds.length; i++) {
-            dialpadKey = (DialpadKeyButton) findViewById(buttonIds[i]);
-            numberView = (TextView) dialpadKey.findViewById(R.id.dialpad_key_number);
-            lettersView = (TextView) dialpadKey.findViewById(R.id.dialpad_key_letters);
+            dialpadKey = findViewById(buttonIds[i]);
+            numberView = dialpadKey.findViewById(R.id.dialpad_key_number);
+            lettersView = dialpadKey.findViewById(R.id.dialpad_key_letters);
             final String numberString = resources.getString(numberIds[i]);
-            if (i != 1) {
-                numberView.setText(numberString);
-                numberView.setElegantTextHeight(false);
-            }
+            numberView.setText(numberString);
+            numberView.setElegantTextHeight(false);
             if (lettersView != null) {
                 lettersView.setText(resources.getString(letterIds[i]));
             }
         }
+
+        setDigitsCanBeEdited(true);
     }
 
     public void setShowVoicemailButton(boolean show) {
@@ -116,7 +116,9 @@ public class DialpadView extends LinearLayout {
     public void setDigitsCanBeEdited(boolean canBeEdited) {
         View deleteButton = findViewById(R.id.button_delete);
         deleteButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
-        EditText digits = (EditText) findViewById(R.id.digits_edit_text);
+        View callButton = findViewById(R.id.button_call);
+        callButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
+        EditText digits = (DigitsEditText) findViewById(R.id.digits_edit_text);
         digits.setClickable(canBeEdited);
         digits.setLongClickable(canBeEdited);
         digits.setFocusableInTouchMode(canBeEdited);

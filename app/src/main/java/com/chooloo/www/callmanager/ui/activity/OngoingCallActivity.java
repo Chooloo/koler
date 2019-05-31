@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +60,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
+
+import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
@@ -207,6 +211,7 @@ public class OngoingCallActivity extends AppCompatActivity {
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
         mDialpadFragment.setDigitsCanBeEdited(false);
+        mDialpadFragment.setShowVoicemailButton(false);
 
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
@@ -307,6 +312,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
 
+        showBiometricPrompt(this);
     }
 
     // -- Overrides -- //

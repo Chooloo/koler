@@ -51,4 +51,6 @@
     <dimen name="dialpad_key_letters_width">50dp</dimen>
     <dimen name="dialpad_key_letters_text_size">10dp</dimen>
     <dimen name="top_dialpad_side_padding">30dp</dimen>
+
+    <dimen name="shadow_length">10dp</dimen>
 </resources>

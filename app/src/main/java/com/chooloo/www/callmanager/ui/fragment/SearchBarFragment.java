@@ -79,4 +79,5 @@ public class SearchBarFragment extends AbsBaseFragment {
     public void setFocus() {
         mSearchInput.requestFocus();
     }
+
 }

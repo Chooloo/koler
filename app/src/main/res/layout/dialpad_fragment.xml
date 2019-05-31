@@ -7,28 +7,35 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/dialpad_background"
     android:orientation="vertical"
     tools:context=".ui.fragment.DialpadFragment">
 
-    <ImageView
-        android:id="@+id/swipe_down_view"
+    <!--<ImageView-->
+    <!--android:id="@+id/swipe_down_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:backgroundTint="@color/grey_400"-->
+    <!--android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />-->
+
+    <!--Dialpad Shadow-->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:backgroundTint="@color/grey_400"
-        android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />
+        android:layout_height="@dimen/shadow_length"
+        android:background="@drawable/shadow_fade_up" />
 
     <!-- Number Input Field -->
     <LinearLayout
         android:id="@+id/top_dialer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_number_input_height"
-        android:elevation="@dimen/dialer_elevation"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
+        android:paddingTop="10dp"
         android:paddingEnd="@dimen/top_dialpad_side_padding">
 
+        <!-- Call Button -->
         <ImageButton
             android:id="@+id/button_call"
             android:layout_width="50dp"
@@ -39,6 +46,7 @@
             android:src="@drawable/ic_call_black_24dp"
             android:tint="@color/colorAccent" />
 
+        <!-- Edit Text -->
         <com.chooloo.www.callmanager.ui.widgets.DigitsEditText
             android:id="@+id/digits_edit_text"
             android:layout_width="0dp"
@@ -57,6 +65,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
 
+        <!-- Delete Button -->
         <ImageButton
             android:id="@+id/button_delete"
             android:layout_width="50dp"

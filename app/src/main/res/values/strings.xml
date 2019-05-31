@@ -13,6 +13,11 @@
     <string name="action_send_sms">Reject and send SMS</string>
 
     <!--Preferences-->
+    <string name="pref_category_call">Call</string>
+    <string name="pref_category_pages">Pages</string>
+    <string name="pref_category_noise">Noise</string>
+    <string name="pref_category_scurity">Security</string>
+
     <string name="pref_reject_call_timer_key">end_call_timer</string>
     <string name="pref_reject_call_timer_title">End call timer</string>
     <string name="pref_reject_call_timer_default_value">10</string>
@@ -27,15 +32,15 @@
 
     <string name="pref_is_silent_key">is_silent</string>
     <string name="pref_is_silent_title">Silent</string>
-    <string name="pref_is_silent_default_value">false</string>
 
     <string name="pref_is_no_vibrate_key">is_no_vibrate</string>
     <string name="pref_is_no_vibrate_title">Vibrate?</string>
-    <string name="pref_is_no_vibrate_default_value">false</string>
 
     <string name="pref_is_first_instance_key">first_instance</string>
     <string name="pref_last_version_key">last_version</string>
 
+    <string name="pref_is_biometric_key">is_biometric</string>
+    <string name="pref_is_biometric_title">Use Biometrics</string>
     <!--Arguments-->
     <string name="arg_list_id">list_id</string>
 
@@ -107,4 +112,12 @@
     <string name="dialpad_star_letters"></string>
     <string name="dialpad_pound_letters"></string>
 
+    <!-- Dialogs -->
+    <string name="fingerprint_title">Biometric login</string>
+    <string name="fingerprint_message">Log in using your biometric credential</string>
+
+    <string name="password_title">Password Login</string>
+    <string name="password_message">Log in with your password</string>
+
+    <string name="cancel_button">Cancel</string>
 </resources>

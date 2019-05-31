@@ -91,6 +91,12 @@ dependencies {
     // SmartTabLayout
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
 
+    // Android Biometrics
+    implementation 'androidx.biometric:biometric:1.0.0-alpha04'
+
+    // Fingerprint
+    implementation 'me.aflak.libraries:fingerprint:2.5.3'
+
     //Test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

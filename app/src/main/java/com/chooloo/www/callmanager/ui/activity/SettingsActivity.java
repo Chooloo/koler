@@ -1,12 +1,15 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
 
@@ -47,6 +50,12 @@ public class SettingsActivity extends AppCompatActivity {
                 return true;
             };
 
+            Preference.OnPreferenceChangeListener switchChangeListener = (preference, newValue) -> {
+                SwitchPreference switchPreference = (SwitchPreference) preference;
+                switchPreference.setSummary(switchPreference.getSummary());
+                return true;
+            };
+
             ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
             rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
@@ -59,13 +68,15 @@ public class SettingsActivity extends AppCompatActivity {
             defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
             defaultPagePreference.setSummary(defaultPagePreference.getEntry());
 
-            ListPreference isSilentPreference = (ListPreference) findPreference(getString(R.string.pref_is_silent_key));
-            isSilentPreference.setOnPreferenceChangeListener(listChangeListener);
-            isSilentPreference.setSummary(isSilentPreference.getEntry());
+//            SwitchPreference isSilentPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_silent_key));
+//            isSilentPreference.setOnPreferenceChangeListener(switchChangeListener);
+//
+//            SwitchPreference isNoVibratePreference = (SwitchPreference) findPreference(getString(R.string.pref_is_no_vibrate_key));
+//            isNoVibratePreference.setOnPreferenceChangeListener(switchChangeListener);
 
-            ListPreference isNoVibratePreference = (ListPreference) findPreference(getString(R.string.pref_is_no_vibrate_key));
-            isNoVibratePreference.setOnPreferenceChangeListener(listChangeListener);
-            isNoVibratePreference.setSummary(isNoVibratePreference.getEntry());
+            SwitchPreference isBiometricPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_biometric_key));
+            isBiometricPreference.setOnPreferenceChangeListener(switchChangeListener);
         }
+
     }
 }

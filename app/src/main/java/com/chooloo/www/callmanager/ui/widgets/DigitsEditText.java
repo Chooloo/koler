@@ -15,6 +15,7 @@ public class DigitsEditText extends EditText {
         super(context, attrs);
         setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         setShowSoftInputOnFocus(true);
+        setTextIsSelectable(true);
     }
 
     @Override
