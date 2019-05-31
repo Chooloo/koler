@@ -74,6 +74,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     private static final int TIME_STOP = 0;
     private static final int TIME_UPDATE = 2;
     private static final int REFRESH_RATE = 100;
+    private static int mState;
 
     // Fragments
     private DialpadFragment mDialpadFragment;
@@ -312,7 +313,9 @@ public class OngoingCallActivity extends AppCompatActivity {
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
 
-        showBiometricPrompt(this);
+        if (mState == Call.STATE_RINGING) {
+            showBiometricPrompt(this);
+        }
     }
 
     // -- Overrides -- //
@@ -556,6 +559,7 @@ public class OngoingCallActivity extends AppCompatActivity {
         mStatusText.setText(statusTextRes);
         if (state != Call.STATE_RINGING) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
+        mState = state;
     }
 
     /**

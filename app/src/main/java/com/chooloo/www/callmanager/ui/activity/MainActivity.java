@@ -167,7 +167,7 @@ public class MainActivity extends AbsSearchBarActivity {
         });
 
         // Initialize FABCoordinator
-        mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
+        mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton, this);
         syncFABAndFragment();
 
         // Set default page

@@ -71,8 +71,8 @@ public class DialpadFragment extends AbsBaseFragment {
 
     // Booleans
     private boolean mIsDialer = true;
-    private boolean mIsSilent = false;
-    private boolean mIsNotVibrate = false;
+    private boolean mIsSilent = true;
+    private boolean mIsNotVibrate = true;
 
     // Tone
     private ToneGenerator mToneGenerator;
@@ -500,8 +500,9 @@ public class DialpadFragment extends AbsBaseFragment {
      */
     private void updatePreferences() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mIsSilent = sp.getBoolean(getString(R.string.pref_is_silent_key), false);
-        mIsNotVibrate = sp.getBoolean(getString(R.string.pref_is_no_vibrate_key), false);
+        // TODO remember those preferences
+//        mIsSilent = sp.getBoolean(getString(R.string.pref_is_silent_key), false);
+//        mIsNotVibrate = sp.getBoolean(getString(R.string.pref_is_no_vibrate_key), false);
     }
 
     public void setDigitsCanBeEdited(boolean canBeEdited) {
