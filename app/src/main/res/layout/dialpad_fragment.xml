@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- The Dialpad View (the whole view, including the edit text) -->
+<com.chooloo.www.callmanager.ui.widgets.DialpadView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialpad_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.DialpadFragment">
+
+    <!--<ImageView-->
+    <!--android:id="@+id/swipe_down_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:backgroundTint="@color/grey_400"-->
+    <!--android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />-->
+
+    <!--Dialpad Shadow-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/shadow_length"
+        android:background="@drawable/shadow_fade_up" />
+
+    <!-- Number Input Field -->
+    <LinearLayout
+        android:id="@+id/top_dialer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/phone_number_input_height"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/top_dialpad_side_padding"
+        android:paddingTop="10dp"
+        android:paddingEnd="@dimen/top_dialpad_side_padding">
+
+        <!-- Call Button -->
+        <ImageButton
+            android:id="@+id/button_call"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_call_black_24dp"
+            android:tint="@color/colorAccent" />
+
+        <!-- Edit Text -->
+        <com.chooloo.www.callmanager.ui.widgets.DigitsEditText
+            android:id="@+id/digits_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cursorVisible="true"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <!-- Delete Button -->
+        <ImageButton
+            android:id="@+id/button_delete"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_backspace_black_24dp"
+            android:tint="@color/colorPrimaryDark" />
+
+    </LinearLayout>
+
+    <include layout="@layout/dialpad" />
+
+</com.chooloo.www.callmanager.ui.widgets.DialpadView>

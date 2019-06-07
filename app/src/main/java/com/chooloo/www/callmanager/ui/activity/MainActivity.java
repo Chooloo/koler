@@ -2,16 +2,17 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +26,7 @@ import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
-import com.chooloo.www.callmanager.ui.fragment.DialerFragment;
+import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -43,11 +44,13 @@ import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
+import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 public class MainActivity extends AbsSearchBarActivity {
 
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
     private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
+    boolean mIsBiometric;
 
     // Intent
     Intent mIntent;
@@ -62,12 +65,13 @@ public class MainActivity extends AbsSearchBarActivity {
     FABCoordinator mFABCoordinator;
 
     // Fragments
-    DialerFragment mDialerFragment;
+    DialpadFragment mDialpadFragment;
     SearchBarFragment mSearchBarFragment;
 
     BottomSheetBehavior mBottomSheetBehavior;
 
     FragmentPagerAdapter mAdapterViewPager;
+    BiometricPrompt mBiometricPrompt;
 
     // - View Binds - //
 
@@ -103,12 +107,6 @@ public class MainActivity extends AbsSearchBarActivity {
         // Check wither this app was set as the default dialer
         boolean isDefaultDialer = Utilities.checkDefaultDialer(this);
         if (isDefaultDialer) checkPermissions(null);
-
-        // Add the dialer fragment
-        mDialerFragment = DialerFragment.newInstance(true);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialer_fragment, mDialerFragment)
-                .commit();
 
         // View Pager
         mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
@@ -149,7 +147,7 @@ public class MainActivity extends AbsSearchBarActivity {
         });
         mSharedDialViewModel.getNumber().observe(this, n -> {
             if (n == null || n.length() == 0) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
             }
         });
 
@@ -169,15 +167,23 @@ public class MainActivity extends AbsSearchBarActivity {
         });
 
         // Initialize FABCoordinator
-        mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton);
+        mFABCoordinator = new FABCoordinator(mRightButton, mLeftButton, this);
         syncFABAndFragment();
 
         // Set default page
         int pagePreference = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_default_page_key));
         mViewPager.setCurrentItem(pagePreference);
 
+        // Add the dialer fragment
+        mDialpadFragment = DialpadFragment.newInstance(true);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.dialer_fragment, mDialpadFragment)
+                .commit();
+
         // Check for intents from others apps
         checkIncomingIntent();
+
+        showBiometricPrompt(this);
     }
 
     @Override
@@ -401,4 +407,5 @@ public class MainActivity extends AbsSearchBarActivity {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
+
 }

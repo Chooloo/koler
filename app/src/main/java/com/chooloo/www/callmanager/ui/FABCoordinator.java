@@ -1,8 +1,12 @@
 package com.chooloo.www.callmanager.ui;
 
+import android.content.Context;
+import android.view.View;
+
 import androidx.annotation.DrawableRes;
 import androidx.fragment.app.Fragment;
 
+import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FABCoordinator {
@@ -10,21 +14,24 @@ public class FABCoordinator {
     private FloatingActionButton mRightFAB;
     private FloatingActionButton mLeftFAB;
     private OnFABClickListener mListener;
+    private Context mContext;
 
     /**
      * Constructor
      *
      * @param rightFAB right action button on the screen
-     * @param leftFAB left action button on the screen
+     * @param leftFAB  left action button on the screen
      */
-    public FABCoordinator(FloatingActionButton rightFAB, FloatingActionButton leftFAB) {
+    public FABCoordinator(FloatingActionButton rightFAB, FloatingActionButton leftFAB, Context context) {
         mRightFAB = rightFAB;
         mLeftFAB = leftFAB;
+        mContext = context;
     }
 
     /**
      * Sets the listener by a given fragment
      * (the given fragment needs to be an instance of the OnFABClickListener)
+     *
      * @param fragment
      */
     public void setListener(Fragment fragment) {
@@ -53,6 +60,7 @@ public class FABCoordinator {
 
         //Set the listener;
         mListener = (OnFABClickListener) fragment;
+
     }
 
     /**

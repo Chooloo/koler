@@ -31,7 +31,7 @@
         app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
-        tools:layout="@layout/fragment_dial" />
+        tools:layout="@layout/dialpad_fragment" />
 
     <!-- Left Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -6,8 +6,8 @@ android {
         applicationId "com.chooloo.www.callmanager"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 26
-        versionName "0.2.9"
+        versionCode 27
+        versionName "0.3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -90,6 +90,12 @@ dependencies {
 
     // SmartTabLayout
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
+
+    // Android Biometrics
+    implementation 'androidx.biometric:biometric:1.0.0-alpha04'
+
+    // Fingerprint
+    implementation 'me.aflak.libraries:fingerprint:2.5.3'
 
     //Test
     testImplementation 'junit:junit:4.12'

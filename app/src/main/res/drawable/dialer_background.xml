@@ -7,7 +7,7 @@
         android:topLeftRadius="@dimen/bubble_corner_radius"
         android:topRightRadius="@dimen/bubble_corner_radius" />
 
-    <solid android:color="@color/dialer_background" />
+    <solid android:color="@color/dialpad_background" />
 
     <!--<stroke-->
         <!--android:width="@dimen/bubble_border_width"-->

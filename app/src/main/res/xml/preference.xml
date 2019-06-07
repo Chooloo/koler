@@ -1,24 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
-        android:defaultValue="@string/pref_reject_call_timer_default_value"
-        android:entries="@array/pref_call_timer_entries"
-        android:entryValues="@array/pref_call_timer_entry_values"
-        android:key="@string/pref_reject_call_timer_key"
-        android:title="@string/pref_reject_call_timer_title" />
+    <PreferenceCategory android:title="@string/pref_category_call">
 
-    <ListPreference
-        android:defaultValue="@string/pref_answer_call_timer_default_value"
-        android:entries="@array/pref_call_timer_entries"
-        android:entryValues="@array/pref_call_timer_entry_values"
-        android:key="@string/pref_answer_call_timer_key"
-        android:title="@string/pref_answer_call_timer_title" />
+        <ListPreference
+            android:defaultValue="@string/pref_reject_call_timer_default_value"
+            android:entries="@array/pref_call_timer_entries"
+            android:entryValues="@array/pref_call_timer_entry_values"
+            android:key="@string/pref_reject_call_timer_key"
+            android:title="@string/pref_reject_call_timer_title" />
 
-    <ListPreference
-        android:defaultValue="@string/pref_default_page_default_value"
-        android:entries="@array/pref_default_page_entries"
-        android:entryValues="@array/pref_default_page_entry_values"
-        android:key="@string/pref_default_page_key"
-        android:title="@string/pref_default_page_title" />
+        <ListPreference
+            android:defaultValue="@string/pref_answer_call_timer_default_value"
+            android:entries="@array/pref_call_timer_entries"
+            android:entryValues="@array/pref_call_timer_entry_values"
+            android:key="@string/pref_answer_call_timer_key"
+            android:title="@string/pref_answer_call_timer_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_pages">
+
+        <ListPreference
+            android:defaultValue="@string/pref_default_page_default_value"
+            android:entries="@array/pref_default_page_entries"
+            android:entryValues="@array/pref_default_page_entry_values"
+            android:key="@string/pref_default_page_key"
+            android:title="@string/pref_default_page_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_noise">
+
+        <SwitchPreference
+            android:enabled="false"
+            android:title="@string/pref_is_silent_title" />
+        <!--android:defaultValue="false"-->
+        <!--android:key="@string/pref_is_silent_key"-->
+
+        <SwitchPreference
+            android:enabled="false"
+            android:title="@string/pref_is_no_vibrate_title" />
+        <!--android:defaultValue="false"-->
+        <!--android:key="@string/pref_is_no_vibrate_key"-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_scurity">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_is_biometric_key"
+            android:title="@string/pref_is_biometric_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
