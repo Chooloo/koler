@@ -133,7 +133,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, null, ContactsFragment.this);
             tryRunningLoader();
         });
-        mRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
 
         mEmptyTitle.setText(R.string.empty_contact_title);
         mEmptyDesc.setText(R.string.empty_contact_desc);

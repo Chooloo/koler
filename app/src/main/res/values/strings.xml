@@ -13,6 +13,11 @@
     <string name="action_send_sms">Reject and send SMS</string>
 
     <!--Preferences-->
+    <string name="pref_category_look_and_feel">Look and Feel</string>
+    <string name="pref_app_theme_key">app_theme</string>
+    <string name="pref_app_theme_title">App Theme</string>
+    <string name="pref_app_theme_default_value">light;pink</string>
+
     <string name="pref_category_call">Call</string>
     <string name="pref_category_pages">Pages</string>
     <string name="pref_category_noise">Noise</string>

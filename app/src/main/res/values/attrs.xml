@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="iconColor" format="reference" />
+    <attr name="secondaryAccentColor" format="reference" />
+
+    <attr name="overlayColor" format="reference" />
+</resources>

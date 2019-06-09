@@ -39,7 +39,7 @@
         android:id="@+id/dialer_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dialpad_background"
+        android:background="?attr/colorPrimary"
         app:behavior_hideable="true"
         app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"

@@ -5,7 +5,6 @@
     android:id="@+id/dialpad"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:layoutDirection="ltr"
     android:stretchColumns="*">
 
@@ -31,6 +30,7 @@
                     android:layout_height="14dp"
                     android:baselineAlignBottom="true"
                     android:scaleType="fitStart"
+                    android:tint="?attr/iconColor"
                     android:src="@drawable/ic_voicemail_black_24dp" />
 
             </LinearLayout>

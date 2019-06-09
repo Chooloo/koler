@@ -19,7 +19,6 @@ import butterknife.BindView;
 public class AbsSearchBarActivity extends AbsAppBarActivity {
 
     SharedSearchViewModel mSharedSearchViewModel;
-
     SearchBarFragment mSearchBarFragment;
 
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;

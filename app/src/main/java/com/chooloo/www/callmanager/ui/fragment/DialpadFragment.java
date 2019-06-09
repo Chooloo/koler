@@ -2,30 +2,20 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.telephony.TelephonyManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
+import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,28 +26,20 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsBaseFragment;
-import com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton;
 import com.chooloo.www.callmanager.ui.widgets.DialpadView;
 import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
-import com.google.i18n.phonenumbers.AsYouTypeFormatter;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
-import java.security.Key;
 import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
-import timber.log.Timber;
 
 import static android.telephony.PhoneNumberUtils.WAIT;
-import static android.telephony.PhoneNumberUtils.formatNumber;
-import static com.chooloo.www.callmanager.BuildConfig.DEBUG;
-import static com.chooloo.www.callmanager.util.Utilities.formatPhoneNumber;
 
 public class DialpadFragment extends AbsBaseFragment {
 
@@ -91,8 +73,8 @@ public class DialpadFragment extends AbsBaseFragment {
     @BindView(R.id.digits_edit_text) DigitsEditText mDigits;
 
     // Buttons
-    @BindView(R.id.button_call) ImageButton mCallButton;
-    @BindView(R.id.button_delete) ImageButton mDelButton;
+    @BindView(R.id.button_call) ImageView mCallButton;
+    @BindView(R.id.button_delete) ImageView mDelButton;
 
     // Layouts
     @BindView(R.id.dialpad) TableLayout mNumbersTable;
@@ -116,8 +98,7 @@ public class DialpadFragment extends AbsBaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View fragmentView = inflater.inflate(R.layout.dialpad_fragment, container,
-                false);
+        final View fragmentView = inflater.inflate(R.layout.dialpad_fragment, container, false);
         fragmentView.buildLayer();
         return fragmentView;
     }
