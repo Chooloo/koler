@@ -29,6 +29,8 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
+import com.chooloo.www.callmanager.ui.FABCoordinator;
+import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
@@ -38,6 +40,8 @@ import butterknife.BindView;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
+        FABCoordinator.FABDrawableCoordination,
+        FABCoordinator.OnFABClickListener,
         View.OnScrollChangeListener, OnItemClickListener, OnItemLongClickListener {
 
     private static final int LOADER_ID = 1;
@@ -58,6 +62,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recents, container, false);
     }
+
+    // -- Overrides -- //
 
     @Override
     protected void onFragmentReady() {
@@ -86,7 +92,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
             tryRunningLoader();
         });
-        mRefreshLayout.setColorSchemeColors(getContext().getColor(R.color.colorAccent));
 
         mEmptyTitle.setText(R.string.empty_recents_title);
         mEmptyDesc.setText(R.string.empty_recents_desc);
@@ -102,6 +107,28 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     public void onResume() {
         super.onResume();
         tryRunningLoader();
+    }
+
+    @Override
+    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
+        RecentCall recentCall = (RecentCall) data;
+        CallManager.call(this.getContext(), recentCall.getCallerNumber());
+    }
+
+    @Override
+    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
+        RecentCall recentCall = (RecentCall) data;
+        showContactPopup(ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber()));
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        mRecentsAdapter.changeCursor(null);
     }
 
     // -- Loader -- //
@@ -151,11 +178,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         setData(data);
     }
 
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mRecentsAdapter.changeCursor(null);
-    }
-
     private void setData(Cursor data) {
         mRecentsAdapter.changeCursor(data);
         mFastScroller.setup(mRecentsAdapter, mLayoutManager);
@@ -169,24 +191,29 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         }
     }
 
-    // -- UI Listeners -- //
+    // -- FABCoordinator.OnFabClickListener -- //
 
     @Override
-    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+    public void onRightClick() {
+        ((MainActivity) getActivity()).expandDialer(true);
     }
 
     @Override
-    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
-        RecentCall recentCall = (RecentCall) data;
-        CallManager.call(this.getContext(), recentCall.getCallerNumber());
+    public void onLeftClick() {
+        ((MainActivity) getActivity()).toggleSearchBar();
     }
 
+    // -- FABCoordinator.FABDrawableCoordinator -- //
+
     @Override
-    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
-        RecentCall recentCall = (RecentCall) data;
-        showContactPopup(ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber()));
+    public int[] getIconsResources() {
+        return new int[]{
+                R.drawable.ic_dialpad_black_24dp,
+                R.drawable.ic_search_black_24dp
+        };
     }
+
+    // -- Other -- //
 
     /**
      * Shows a pop up window (dialog) with the contact's information

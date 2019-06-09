@@ -62,22 +62,31 @@ public class AllPurposeTouchListener implements View.OnTouchListener {
 
             try {
 
+                // The difference in the Y position
                 float diffY = e2.getY() - e1.getY();
+                // The difference in the X position
                 float diffX = e2.getX() - e1.getX();
 
                 if (Math.abs(diffX) > Math.abs(diffY)) {
+                    // The fling is horizontal
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        // The fling is actually a fling
                         if (diffX > 0) {
+                            // The fling is to the right (the difference in the position is positive)
                             onSwipeRight();
                         } else {
+                            // The fling is to the left (the difference in the position is negative)
                             onSwipeLeft();
                         }
                         result = true;
                     }
                 } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    // The fling is vertical and is actually a fling
                     if (diffY > 0) {
+                        // The fling is downwards
                         onSwipeBottom();
                     } else {
+                        // The fling is upwards
                         onSwipeTop();
                     }
                     result = true;

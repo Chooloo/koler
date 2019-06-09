@@ -14,6 +14,8 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -21,7 +23,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar"
+        android:theme="@style/AppTheme.Light.Pink.NoActionBar"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".ui.activity.AboutActivity"></activity>
@@ -30,6 +32,23 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+
+            <!-- For receiving intents -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
 
             <!-- From Google's Dialer App -->
             <intent-filter>
@@ -84,11 +103,11 @@
             android:name=".ui.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TransparentStatusBar" />
+            android:theme="@style/AppTheme.Light.Pink.TransparentStatusBar" />
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:label="@string/activity_settings"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.Light.Pink" />
 
         <service
             android:name=".service.CallService"

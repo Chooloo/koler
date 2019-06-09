@@ -1,39 +1,9 @@
 <resources>
 
-    <style name="SplashTheme" parent="AppTheme">
+    <style name="SplashTheme" parent="AppTheme.Light.Green">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:statusBarColor">@color/ic_launcher_background</item>
         <item name="android:windowLightStatusBar">false</item>
-    </style>
-
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-
-        <item name="actionModeStyle">@style/ActionMode</item>
-        <item name="windowActionModeOverlay">true</item>
-    </style>
-
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.TransparentStatusBar" parent="AppTheme.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-    
-    <!-- AppBar Overlay -->
-    <style name="ActionMode" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/grey_100</item>
-        <item name="height">@dimen/action_bar_size</item>
     </style>
 
     <!-- Text Button (A button with text in it *gets a seizure*)-->
@@ -48,7 +18,6 @@
 
     <!-- List View -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
-        <item name="background">@color/white</item>
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:paddingTop">@dimen/default_spacing_padding</item>
@@ -75,9 +44,41 @@
     </style>
 
     <style name="ActionButton" parent="Widget.Design.FloatingActionButton">
-        <item name="borderWidth">0.3dp</item>
-        <item name="android:backgroundTint">@color/white</item>
-        <item name="tint">@color/colorAccent</item>
-        <item name="rippleColor">@color/colorAccent</item>
+        <item name="android:tint">@color/white</item>
     </style>
+
+    <!-- Dialer Button -->
+
+    <style name="DialpadKey">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/dialpad_key_height</item>
+        <item name="android:soundEffectsEnabled">false</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="DialpadKeyInnerLayout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="DialpadKeyNumber">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dialpad_key_number_text_size</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="DialpadKeyLetters">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/dialpad_key_letters_text_size</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
 </resources>

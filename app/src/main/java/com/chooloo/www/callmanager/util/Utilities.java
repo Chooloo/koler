@@ -226,7 +226,6 @@ public class Utilities {
      */
     public static void toggleViewActivation(View view) {
         view.setActivated(!view.isActivated());
-
     }
 
     /**
@@ -418,4 +417,5 @@ public class Utilities {
 
         return numeric;
     }
+
 }

@@ -49,7 +49,7 @@
             android:layout_toLeftOf="@+id/fast_scroller_scroll_bar"
             android:background="@drawable/fast_scroller_container_background"
             android:gravity="center"
-            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textColor="@android:color/primary_text_dark"
             android:textSize="48sp"
             android:visibility="gone" />
 

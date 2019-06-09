@@ -1,28 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="pref_call_timer_entry_values">
-        <item>10</item>
-        <item>5</item>
-        <item>3</item>
+    <!-- App Theme Preferences -->
+    <string-array name="pref_app_theme_entries">
+        <item>Light Pinkish</item>
+        <item>Light Greenish</item>
+        <item>Dark Pinkish</item>
+        <item>Dark Greenish</item>
+        <item>AMOLED Pinkish</item>
+        <item>AMOLED Greenish</item>
     </string-array>
 
+    <string-array name="pref_app_theme_entry_values">
+        <item>light;pink</item>
+        <item>light;green</item>
+        <item>dark;pink</item>
+        <item>dark;green</item>
+        <item>amoled;pink</item>
+        <item>amoled;green</item>
+    </string-array>
+
+    <!-- Call Timer Preferences -->
     <string-array name="pref_call_timer_entries">
         <item>10 seconds</item>
         <item>5 seconds</item>
         <item>3 seconds</item>
     </string-array>
 
-    <string-array name="pref_default_page_entry_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+    <string-array name="pref_call_timer_entry_values">
+        <item>10</item>
+        <item>5</item>
+        <item>3</item>
     </string-array>
 
+
+    <!-- Default Page Preference -->
     <string-array name="pref_default_page_entries">
         <item>Recents</item>
         <item>Contacts</item>
         <item>Excel</item>
+    </string-array>
+
+    <string-array name="pref_default_page_entry_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
     <string-array name="dialog_long_click_cgroup_options">
@@ -39,9 +61,9 @@
     </string-array>
 
     <string-array name="indicator_colors">
-        <item>@color/colorAccent</item>
-        <item>@color/colorAccent</item>
-        <item>@color/colorAccent</item>
-        <item>@color/colorAccent</item>
+        <item>?attr/colorAccent</item>
+        <item>?attr/colorAccent</item>
+        <item>?attr/colorAccent</item>
+        <item>?attr/colorAccent</item>
     </string-array>
 </resources>

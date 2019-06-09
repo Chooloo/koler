@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/overlay_action_timer"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overlay_action_timer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/semi_white"
+    android:background="?attr/overlayColor"
     android:orientation="vertical">
 
     <!-- Time Indicator Text -->
@@ -41,9 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:tooltipText="@string/action_cancel"
         android:clickable="true"
         android:tint="@android:color/white"
+        android:tooltipText="@string/action_cancel"
         app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="@+id/text_action_time_left"
         app:layout_constraintHorizontal_bias="0.494"
