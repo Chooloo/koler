@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
+    android:background="?attr/colorPrimary"
     android:orientation="vertical"
     tools:context=".ui.fragment.DialpadFragment">
 
@@ -22,6 +23,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/shadow_length"
+        android:alpha="0.15"
         android:background="@drawable/shadow_fade_up" />
 
     <!-- Number Input Field -->
@@ -29,14 +31,14 @@
         android:id="@+id/top_dialer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_number_input_height"
-        android:background="@color/white"
+        android:background="?attr/colorPrimary"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
         android:paddingTop="10dp"
         android:paddingEnd="@dimen/top_dialpad_side_padding">
 
         <!-- Call Button -->
-        <ImageButton
+        <ImageView
             android:id="@+id/button_call"
             android:layout_width="50dp"
             android:layout_height="match_parent"
@@ -44,7 +46,7 @@
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_call_black_24dp"
-            android:tint="@color/colorAccent" />
+            android:tint="?attr/colorAccent" />
 
         <!-- Edit Text -->
         <com.chooloo.www.callmanager.ui.widgets.DigitsEditText
@@ -62,17 +64,18 @@
             android:singleLine="true"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="@color/colorAccent"
+            android:textColor="?attr/colorAccent"
             android:textSize="20sp" />
 
         <!-- Delete Button -->
-        <ImageButton
+        <ImageView
             android:id="@+id/button_delete"
             android:layout_width="50dp"
-            android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_backspace_black_24dp"
-            android:tint="@color/colorPrimaryDark" />
+            android:tint="?attr/iconColor"
+            android:layout_height="match_parent"
+            android:scaleType="center"/>
 
     </LinearLayout>
 

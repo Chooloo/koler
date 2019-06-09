@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/semi_white">
+    android:background="?attr/overlayColor">
 
     <!-- Answer Timer-->
     <TextView
@@ -16,7 +16,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/action_reject_call_timer"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/colorAccent"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/button_floating_answer_call_timer"
         app:layout_constraintEnd_toEndOf="@+id/button_floating_answer_call_timer"
@@ -61,7 +61,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/action_cancel"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/colorAccent"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/button_floating_cancel_overlay"
         app:layout_constraintStart_toEndOf="@+id/button_floating_cancel_overlay"

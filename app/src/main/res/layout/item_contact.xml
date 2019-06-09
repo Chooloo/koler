@@ -13,7 +13,7 @@
         android:id="@+id/frameLayout"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="@dimen/item_contact_padding"
+        android:layout_marginEnd="19dp"
         android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:tint="@color/default_pic_color"
+            android:scaleType="fitCenter"
+            android:tint="?attr/secondaryAccentColor"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -69,7 +70,7 @@
         android:text="A"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?attr/secondaryAccentColor"
         android:textDirection="ltr"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"

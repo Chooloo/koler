@@ -20,6 +20,7 @@ import com.chooloo.www.callmanager.adapter.helper.ItemTouchHelperListener;
 import com.chooloo.www.callmanager.adapter.helper.SimpleItemTouchHelperCallback;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.ThemeUtils;
 
 import java.util.List;
 
@@ -84,6 +85,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_cgroup);
         ButterKnife.bind(this);
 

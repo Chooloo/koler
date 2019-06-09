@@ -5,7 +5,7 @@
     android:id="@+id/overlay_send_sms"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/semi_white">
+    android:background="?attr/overlayColor">
 
     <!-- Message Input -->
 
@@ -34,7 +34,7 @@
     <Button
         android:backgroundTint="@color/white"
         android:elevation="5dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/colorAccent"
         android:id="@+id/button_send_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

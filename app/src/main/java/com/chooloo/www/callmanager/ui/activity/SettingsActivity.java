@@ -1,23 +1,19 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
-
-import java.util.List;
+import com.chooloo.www.callmanager.util.ThemeUtils;
 
 //TODO add more settings
 //TODO add icons
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AbsThemeActivity {
 
     private static final String TAG_FRAGMENT = "fragment";
 
@@ -26,6 +22,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_settings);
 
         mFragment = new SettingsFragment();
@@ -43,6 +40,16 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.preference, rootKey);
 
             //Init preferences
+            Preference.OnPreferenceChangeListener themeChangeListener = (preference, newValue) -> {
+                ListPreference listPreference = (ListPreference) preference;
+                CharSequence[] entries = listPreference.getEntries();
+                listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
+
+                getActivity().finish();
+                startActivity(getActivity().getIntent());
+                return true;
+            };
+
             Preference.OnPreferenceChangeListener listChangeListener = (preference, newValue) -> {
                 ListPreference listPreference = (ListPreference) preference;
                 CharSequence[] entries = listPreference.getEntries();
@@ -55,6 +62,10 @@ public class SettingsActivity extends AppCompatActivity {
                 switchPreference.setSummary(switchPreference.getSummary());
                 return true;
             };
+
+            ListPreference appThemePreference = (ListPreference) findPreference(getString(R.string.pref_app_theme_key));
+            appThemePreference.setOnPreferenceChangeListener(themeChangeListener);
+            appThemePreference.setSummary(appThemePreference.getEntry());
 
             ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
             rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
@@ -77,6 +88,5 @@ public class SettingsActivity extends AppCompatActivity {
             SwitchPreference isBiometricPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_biometric_key));
             isBiometricPreference.setOnPreferenceChangeListener(switchChangeListener);
         }
-
     }
 }

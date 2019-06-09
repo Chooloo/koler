@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -12,7 +11,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.telecom.Call;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +26,6 @@ import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
@@ -45,6 +42,7 @@ import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Stopwatch;
+import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -55,7 +53,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -65,7 +62,7 @@ import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPromp
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends AppCompatActivity {
+public class OngoingCallActivity extends AbsThemeActivity {
 
     private static final long END_CALL_MILLIS = 1500;
 
@@ -160,6 +157,7 @@ public class OngoingCallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setThemeType(ThemeUtils.TYPE_TRANSPARENT_STATUS_BAR);
         setContentView(R.layout.activity_ongoing_call);
         PreferenceUtils.getInstance(this);
         Utilities.setUpLocale(this);
@@ -532,26 +530,26 @@ public class OngoingCallActivity extends AppCompatActivity {
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE: // Ongoing
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
+//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
 //                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.green_phone_semi_trans));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED: // Ended
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
+//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
 //                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.red_phone_semi_trans));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING: // Incoming
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
+//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 showBiometricPrompt(this);
                 break;
             case Call.STATE_DIALING: // Outgoing
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
+//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING: // Connecting (probably outgoing)
-                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
+//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING: // On Hold
