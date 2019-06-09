@@ -50,7 +50,6 @@ public class MainActivity extends AbsSearchBarActivity {
 
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
     private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
-    boolean mIsBiometric;
 
     // Intent
     Intent mIntent;

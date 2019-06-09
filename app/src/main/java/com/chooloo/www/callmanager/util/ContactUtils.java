@@ -17,9 +17,11 @@ public class ContactUtils {
     // Constants
     public static final Contact UNKNOWN = new Contact("Unknown", "", null);
     public static final Contact VOICEMAIL = new Contact("Voicemail", "", null);
+    public static final Contact ERROR = new Contact("Error", "", null);
 
     /**
      * Returns a contact by a given phone number
+     *
      * @param context
      * @param phoneNumber
      * @return Contact
@@ -55,6 +57,7 @@ public class ContactUtils {
      * Returns a contact by a given name
      * (almost identical to the previous method (above) but filters the name instead of
      * the phone number)
+     *
      * @param context
      * @param name
      * @return Contact

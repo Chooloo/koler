@@ -195,6 +195,9 @@ public class OngoingCallActivity extends AppCompatActivity {
             mDialerFrame.setPadding(0, 0, 0, navBarHeight);
         }
 
+        // Display caller information
+        displayInformation();
+
         // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
         try {
             field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
@@ -213,16 +216,6 @@ public class OngoingCallActivity extends AppCompatActivity {
                 .commit();
         mDialpadFragment.setDigitsCanBeEdited(false);
         mDialpadFragment.setShowVoicemailButton(false);
-
-        // Display the information about the caller
-        Contact callerContact = CallManager.getDisplayContact(this);
-        if (callerContact.getName() != null && !callerContact.getName().isEmpty())
-            mCallerText.setText(callerContact.getName());
-        if (callerContact.getPhotoUri() != null && !callerContact.getName().isEmpty()) {
-            mPlaceholderImage.setVisibility(View.INVISIBLE);
-            mPhotoImage.setVisibility(View.VISIBLE);
-            mPhotoImage.setImageURI(Uri.parse(callerContact.getPhotoUri()));
-        }
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
@@ -312,10 +305,6 @@ public class OngoingCallActivity extends AppCompatActivity {
         // Bottom Sheet Behaviour
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
-
-        if (mState == Call.STATE_RINGING) {
-            showBiometricPrompt(this);
-        }
     }
 
     // -- Overrides -- //
@@ -519,6 +508,21 @@ public class OngoingCallActivity extends AppCompatActivity {
 
     // -- UI -- //
 
+    private void displayInformation() {
+        // Display the information about the caller
+        Contact callerContact = CallManager.getDisplayContact(this);
+        if (!callerContact.getName().isEmpty()) {
+            if (callerContact.getName() != null) mCallerText.setText(callerContact.getName());
+            if (callerContact.getPhotoUri() != null) {
+                mPlaceholderImage.setVisibility(View.INVISIBLE);
+                mPhotoImage.setVisibility(View.VISIBLE);
+                mPhotoImage.setImageURI(Uri.parse(callerContact.getPhotoUri()));
+            }
+        } else {
+            mCallerText.setText(callerContact.getMainPhoneNumber());
+        }
+    }
+
     /**
      * Updates the ui given the call state
      *
@@ -540,6 +544,7 @@ public class OngoingCallActivity extends AppCompatActivity {
             case Call.STATE_RINGING: // Incoming
                 mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_incoming;
+                showBiometricPrompt(this);
                 break;
             case Call.STATE_DIALING: // Outgoing
                 mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
