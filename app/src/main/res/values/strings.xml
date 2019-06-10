@@ -2,6 +2,8 @@
     <string name="app_name">Koler</string>
     <string name="company">Chooloo</string>
     <string name="support_email">choolookulu@gmail.com</string>
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
 
     <!--Activities-->
     <string name="activity_ongoing_call">Ongoing Call</string>

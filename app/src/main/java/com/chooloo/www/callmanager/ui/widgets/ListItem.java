@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.chooloo.www.callmanager.R;
 
@@ -18,8 +18,10 @@ import butterknife.ButterKnife;
 
 public class ListItem extends ConstraintLayout {
 
+    private boolean mIsSingleLine;
+
     @BindView(R.id.item_title) TextView mTitleText;
-    @Nullable @BindView(R.id.item_desc) TextView mDescText;
+    @BindView(R.id.item_desc) TextView mDescText;
     @BindView(R.id.item_image) ImageView mIcon;
 
     public ListItem(Context context, AttributeSet attrs) {
@@ -30,14 +32,44 @@ public class ListItem extends ConstraintLayout {
         Drawable src = a.getDrawable(R.styleable.ListItem_src);
         a.recycle();
 
-        boolean isSingleLine = desc == null || desc.isEmpty();
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        if (isSingleLine) inflater.inflate(R.layout.item_single_line, this, true);
-        else inflater.inflate(R.layout.item_two_line, this, true);
+        setClickable(true);
+        setFocusable(true);
+
+        LayoutInflater.from(getContext()).inflate(R.layout.item_two_line, this, true);
+        mIsSingleLine = desc == null || desc.isEmpty();
+        changeLineCount(mIsSingleLine);
 
         ButterKnife.bind(this);
+
+        setTitle(title);
+        if (!mIsSingleLine) setDescription(desc);
+        setIcon(src);
+    }
+
+    private void changeLineCount(boolean isSingleLine) {
+        if (mIsSingleLine && isSingleLine) return;
+
+        ConstraintSet set = new ConstraintSet();
+        if (isSingleLine) set.load(getContext(), R.layout.item_single_line);
+        else set.load(getContext(), R.layout.item_two_line);
+        set.applyTo(this);
+        mIsSingleLine = isSingleLine;
+    }
+
+    public void setTitle(String title) {
         mTitleText.setText(title);
-        if (!isSingleLine) mDescText.setText(desc);
-        mIcon.setImageDrawable(src);
+    }
+
+    public void setDescription(String description) {
+        if (description == null) {
+            changeLineCount(true);
+        } else {
+            mDescText.setText(description);
+            changeLineCount(false);
+        }
+    }
+
+    public void setIcon(Drawable drawable) {
+        mIcon.setImageDrawable(drawable);
     }
 }

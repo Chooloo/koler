@@ -29,16 +29,16 @@
             android:layout_marginTop="16dp"
             app:description="@string/about_bugs_desc"
             app:layout_constraintTop_toBottomOf="@+id/header_title"
-            app:src="@drawable/ic_info_outline_black_24dp"
+            app:src="@drawable/ic_bug_report_black_24dp"
             app:title="@string/about_bugs_title" />
 
         <com.chooloo.www.callmanager.ui.widgets.ListItem
             android:id="@+id/about_rate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/about_bugs"
-            app:src="@drawable/ic_history_black_24dp"
             app:description="@string/about_rate_desc"
+            app:layout_constraintTop_toBottomOf="@+id/about_bugs"
+            app:src="@drawable/ic_star_black_24dp"
             app:title="@string/about_rate_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
