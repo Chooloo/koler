@@ -9,9 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.util.Utilities;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,23 +37,12 @@ public class ListItem extends ConstraintLayout {
 
         LayoutInflater.from(getContext()).inflate(R.layout.item_two_line, this, true);
         mIsSingleLine = desc == null || desc.isEmpty();
-        changeLineCount(mIsSingleLine);
 
         ButterKnife.bind(this);
 
         setTitle(title);
-        if (!mIsSingleLine) setDescription(desc);
+        setDescription(desc);
         setIcon(src);
-    }
-
-    private void changeLineCount(boolean isSingleLine) {
-        if (mIsSingleLine && isSingleLine) return;
-
-        ConstraintSet set = new ConstraintSet();
-        if (isSingleLine) set.load(getContext(), R.layout.item_single_line);
-        else set.load(getContext(), R.layout.item_two_line);
-        set.applyTo(this);
-        mIsSingleLine = isSingleLine;
     }
 
     public void setTitle(String title) {
@@ -61,11 +50,13 @@ public class ListItem extends ConstraintLayout {
     }
 
     public void setDescription(String description) {
-        if (description == null) {
-            changeLineCount(true);
+        if (description == null || description.isEmpty()) {
+            mDescText.setVisibility(GONE);
+            setMinHeight((int) Utilities.convertDpToPixel(getContext(), 56.0f));
         } else {
             mDescText.setText(description);
-            changeLineCount(false);
+            mDescText.setVisibility(VISIBLE);
+            setMinHeight((int) Utilities.convertDpToPixel(getContext(), 72.0f));
         }
     }
 

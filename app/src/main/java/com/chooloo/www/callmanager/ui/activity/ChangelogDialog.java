@@ -23,6 +23,8 @@ import java.io.InputStreamReader;
  * A dialog to display the latest features and improvements added to the app.
  * Copied from <a href="https://github.com/kabouzeid/Phonograph"</a>
  */
+//TODO Move to dialog
+//TODO adapt to theme
 public class ChangelogDialog extends DialogFragment {
 
     @SuppressLint("InflateParams")
