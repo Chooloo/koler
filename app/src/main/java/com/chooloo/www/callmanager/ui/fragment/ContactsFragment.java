@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -156,6 +157,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getText().observe(this, t -> {
             if (isLoaderRunning()) {
+                Toast.makeText(getContext(), "New search " + t, Toast.LENGTH_SHORT);
                 Bundle args = new Bundle();
                 args.putString(ARG_CONTACT_NAME, t);
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
@@ -196,8 +198,8 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             contactName = args.getString(ARG_CONTACT_NAME);
         }
 
-        ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), phoneNumber, contactName);
-        return cursorLoader;
+            ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), phoneNumber, contactName);
+            return cursorLoader;
     }
 
     @Override

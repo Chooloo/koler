@@ -210,22 +210,31 @@ public class CallManager {
      */
     public static Contact getDisplayContact(Context context) {
 
-        if (sCall == null) return ContactUtils.UNKNOWN;
+        String uri = null;
 
-        String uri = sCall.getDetails().getHandle().toString(); // Callers details
+        if (sCall.getState() == Call.STATE_DIALING) {
+            Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
+        }
+        if (sCall.getDetails().getHandle() != null)
+            uri = sCall.getDetails().getHandle().toString(); // Callers details
 
-        if (uri.contains("voicemail")) // If uri contains 'voicemail' this is a... voicemail dah
-            return ContactUtils.VOICEMAIL;
+        if (uri.isEmpty() || uri == null) return ContactUtils.UNKNOWN;
+
+        // If uri contains 'voicemail' this is a... voicemail dah
+        if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;
 
         String telephoneNumber = null;
 
-        if (uri.contains("tel")) // If uri contains 'tel' this is a normal number
-            telephoneNumber = uri.replace("tel:", "");
+        // If uri contains 'tel' this is a normal number
+        if (uri.contains("tel:")) telephoneNumber = uri.replace("tel:", "");
+
+        if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
 
         if (telephoneNumber == null || telephoneNumber.isEmpty())
             return ContactUtils.UNKNOWN; // Unknown number
 
         Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
+
         if (contact == null)
             return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 

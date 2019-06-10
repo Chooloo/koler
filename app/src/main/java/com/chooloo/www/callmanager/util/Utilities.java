@@ -40,12 +40,17 @@ import java.util.Locale;
 
 import timber.log.Timber;
 
+import static android.Manifest.permission.CALL_PHONE;
+import static android.Manifest.permission.READ_CALL_LOG;
+import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
 
 public class Utilities {
 
     public static final int DEFAULT_DIALER_RC = 11;
     public static final int PERMISSION_RC = 10;
+    public static final String[] MUST_HAVE_PERMISSIONS = {CALL_PHONE, READ_CONTACTS, READ_CALL_LOG};
+    public static final String[] OPTIONAL_PERMISSIONS = {SEND_SMS};
 
     public static Locale sLocale;
 
@@ -114,6 +119,10 @@ public class Utilities {
                 return false;
         }
         return true;
+    }
+
+    public static void askForPermission(FragmentActivity activity, String permission) {
+        askForPermissions(activity, new String[]{permission});
     }
 
     /**
