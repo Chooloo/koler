@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="SplashTheme" parent="AppTheme.Light.Pink">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:navigationBarColor">@color/ic_launcher_background</item>
+        <item name="android:statusBarColor">@color/ic_launcher_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
     <!--Light-->
     <style name="AppTheme.Light.Pink" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/color_primary_light</item>

@@ -1,11 +1,4 @@
 <resources>
-
-    <style name="SplashTheme" parent="AppTheme.Light.Green">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="android:statusBarColor">@color/ic_launcher_background</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
-
     <!-- Text Button (A button with text in it *gets a seizure*)-->
     <style name="DialButton">
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
