@@ -235,7 +235,7 @@ public class CallManager {
 
         Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
 
-        if (contact == null)
+        if (contact == null || contact.getName() == null || contact.getName().isEmpty())
             return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 
         return contact;

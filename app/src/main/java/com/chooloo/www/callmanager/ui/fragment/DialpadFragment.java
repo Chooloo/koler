@@ -47,6 +47,7 @@ public class DialpadFragment extends AbsBaseFragment {
     public static final String ARG_DIALER = "dialer";
 
     // Text
+    private OnKeyDownListener mOnKeyDownListener = null;
     private SharedDialViewModel mViewModel;
     private String mNumberText = "";
     private PhoneNumberFormattingTextWatcher mPhoneNumberFormattingTextWatcher;
@@ -345,6 +346,7 @@ public class DialpadFragment extends AbsBaseFragment {
         KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
         // Add the digit to mDigits
         mDigits.onKeyDown(keyCode, event);
+        if (mOnKeyDownListener != null) mOnKeyDownListener.onKeyPressed(keyCode, event);
 
         // If the cursor is at the end of the text we hide it.
         final int length = mDigits.length();
@@ -504,5 +506,13 @@ public class DialpadFragment extends AbsBaseFragment {
                 mDialpadView.setShowVoicemailButton(show);
             }
         }, 2000);
+    }
+
+    public void setOnKeyDownListener(OnKeyDownListener onKeyDownListener) {
+        mOnKeyDownListener = onKeyDownListener;
+    }
+
+    public interface OnKeyDownListener {
+        void onKeyPressed(int keyCode, KeyEvent event);
     }
 }

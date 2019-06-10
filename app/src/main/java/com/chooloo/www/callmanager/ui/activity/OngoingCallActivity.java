@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.telecom.Call;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -63,7 +64,7 @@ import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPromp
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends AbsThemeActivity {
+public class OngoingCallActivity extends AbsThemeActivity implements DialpadFragment.OnKeyDownListener {
 
     private static final long END_CALL_MILLIS = 1500;
 
@@ -215,6 +216,7 @@ public class OngoingCallActivity extends AbsThemeActivity {
                 .commit();
         mDialpadFragment.setDigitsCanBeEdited(false);
         mDialpadFragment.setShowVoicemailButton(false);
+        mDialpadFragment.setOnKeyDownListener(this);
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
@@ -347,6 +349,10 @@ public class OngoingCallActivity extends AbsThemeActivity {
         }
     }
 
+    @Override
+    public void onKeyPressed(int keyCode, KeyEvent event) {
+        CallManager.keypad((char) event.getUnicodeChar());
+    }
     // -- On Clicks -- //
 
     //TODO silence the ringing
