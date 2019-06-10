@@ -15,14 +15,14 @@ public class RecentCall {
     private Context mContext;
     private Contact mCaller;
     private String mNumber;
-    private String mCallType;
+    private int mCallType;
     private String mCallDuration;
     private Date mCallDate;
 
     // Call Types
-    public static final String mOutgoingCall = "OUTGOING_CALL";
-    public static final String mIncomingCall = "INCOMING_CALL";
-    public static final String mMissedCall = "MISSED_CALL";
+    public static final int mOutgoingCall = CallLog.Calls.OUTGOING_TYPE;
+    public static final int mIncomingCall = CallLog.Calls.INCOMING_TYPE;
+    public static final int mMissedCall = CallLog.Calls.MISSED_TYPE;
 
     /**
      * Constructor
@@ -36,7 +36,7 @@ public class RecentCall {
         this.mContext = context;
         this.mNumber = number;
         this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, number);
-        this.mCallType = getTypeByInt(type);
+        this.mCallType = type;
         this.mCallDuration = duration;
         this.mCallDate = date;
     }
@@ -50,19 +50,7 @@ public class RecentCall {
         mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
         mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
         int callType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
-        switch (callType) {
-            case 0:
-                mCallType = mOutgoingCall;
-                break;
-            case 1:
-                mCallType = mIncomingCall;
-                break;
-            case 2:
-                mCallType = mMissedCall;
-                break;
-            default:
-                mCallType = null;
-        }
+        mCallType = callType;
     }
 
     public Contact getCaller() {
@@ -70,7 +58,7 @@ public class RecentCall {
     }
 
     public String getCallerName() {
-        if(this.mCaller != null) return this.mCaller.getName();
+        if (this.mCaller != null) return this.mCaller.getName();
         else return null;
     }
 
@@ -78,7 +66,7 @@ public class RecentCall {
         return this.mNumber;
     }
 
-    public String getCallType() {
+    public int getCallType() {
         return this.mCallType;
     }
 
@@ -94,18 +82,5 @@ public class RecentCall {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
         String dateString = simpleDateFormat.format(this.mCallDate);
         return dateString;
-    }
-
-    private String getTypeByInt(int type) {
-        switch (type) {
-            case CallLog.Calls.OUTGOING_TYPE:
-                return RecentCall.mOutgoingCall;
-            case CallLog.Calls.INCOMING_TYPE:
-                return RecentCall.mIncomingCall;
-            case CallLog.Calls.MISSED_TYPE:
-                return RecentCall.mMissedCall;
-            default:
-                return null;
-        }
     }
 }
