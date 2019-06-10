@@ -101,10 +101,13 @@
     <string name="about_support_title">Support</string>
 
     <string name="about_bugs_title">Report Bugs</string>
-    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page</string>
+    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page.</string>
 
     <string name="about_rate_title">Rate</string>
-    <string name="about_rate_desc">If you like the app, leave a positive feedback</string>
+    <string name="about_rate_desc">If you like the app, leave a positive feedback.</string>
+
+    <string name="about_donate_desc">If you think we deserve to get paid for our work, leave a few dollars here.</string>
+    <string name="about_donate_title">Donate</string>
 
     <!--Other-->
     <string name="name_unknown">Unknown</string>

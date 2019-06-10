@@ -16,6 +16,12 @@ public class AbsThemeActivity extends AppCompatActivity {
     private @ThemeType int mThemeType;
 
     @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
     @CallSuper
     protected void onStart() {
         super.onStart();
