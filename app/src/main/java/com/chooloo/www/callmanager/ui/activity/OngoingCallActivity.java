@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
@@ -352,9 +353,9 @@ public class OngoingCallActivity extends AbsThemeActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // The user gave permission to send sms
-        // we know it's a SEND_SMS permission because that's currently the only option in this activity
-        sendSMS(mFloatingSendSMSButton);
+        if (requestCode == Utilities.PERMISSION_RC && Utilities.checkPermissionsGranted(grantResults)) {
+            setSmsOverlay(mFloatingSendSMSButton);
+        }
     }
 
     // -- On Clicks -- //
@@ -447,9 +448,13 @@ public class OngoingCallActivity extends AbsThemeActivity {
      */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
-        setOverlay(mSendSmsOverlay);
-        mSendSmsButton.setVisibility(View.VISIBLE);
-        mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
+        if (Utilities.checkPermissionGranted(this, Manifest.permission.SEND_SMS)) {
+            setOverlay(mSendSmsOverlay);
+            mSendSmsButton.setVisibility(View.VISIBLE);
+            mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
+        } else {
+            Utilities.askForPermission(this, Manifest.permission.SEND_SMS);
+        }
     }
 
     /**

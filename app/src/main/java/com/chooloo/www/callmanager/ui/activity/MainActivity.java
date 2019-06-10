@@ -39,16 +39,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.Manifest.permission.CALL_PHONE;
-import static android.Manifest.permission.READ_CALL_LOG;
-import static android.Manifest.permission.READ_CONTACTS;
-import static android.Manifest.permission.SEND_SMS;
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 public class MainActivity extends AbsSearchBarActivity {
 
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
-    private static final String[] PERMISSIONS = {CALL_PHONE, SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
     boolean mIsBiometric;
 
     // Intent
@@ -357,10 +352,10 @@ public class MainActivity extends AbsSearchBarActivity {
     private void checkPermissions(@Nullable int[] grantResults) {
         if (
                 (grantResults != null && Utilities.checkPermissionsGranted(grantResults)) ||
-                        Utilities.checkPermissionsGranted(this, PERMISSIONS)) { //If granted
+                        Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS)) { //If granted
             checkVersion();
         } else {
-            Utilities.askForPermissions(this, PERMISSIONS);
+            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
         }
     }
 
