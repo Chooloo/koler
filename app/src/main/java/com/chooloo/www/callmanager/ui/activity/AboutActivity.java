@@ -63,4 +63,10 @@ public class AboutActivity extends AbsThemeActivity {
         intent.setData(Uri.parse("market://details?id=" + getApplication().getPackageName()));
         startActivity(intent);
     }
+
+    @OnClick(R.id.about_donate)
+    public void openDonation(View v) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donation_link)));
+        startActivity(intent);
+    }
 }
