@@ -399,11 +399,11 @@ public class MainActivity extends AbsSearchBarActivity {
         String number = "";
         if (sharedText.contains("tel:")) {
             number = sharedText.substring(4, sharedText.length() - 1);
-        }
-        if (number != null) {
-            mSharedDialViewModel.setNumber(number);
-            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+            if (number != null) {
+                mSharedDialViewModel.setNumber(number);
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
         }
     }
-
 }

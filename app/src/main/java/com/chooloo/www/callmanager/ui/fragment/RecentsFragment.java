@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -28,13 +30,17 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
+import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.google.FastScroller;
+import com.chooloo.www.callmanager.google.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import butterknife.BindView;
 
@@ -45,9 +51,15 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         View.OnScrollChangeListener, OnItemClickListener, OnItemLongClickListener {
 
     private static final int LOADER_ID = 1;
+    private static final String ARG_PHONE_NUMBER = "phone_number";
+    private static final String ARG_CONTACT_NAME = "contact_name";
 
     LinearLayoutManager mLayoutManager;
     RecentsAdapter mRecentsAdapter;
+
+    // View Models
+    private SharedDialViewModel mSharedDialViewModel;
+    private SharedSearchViewModel mSharedSearchViewModel;
 
     // ViewBinds
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
@@ -100,6 +112,27 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // Dialer View Model
+        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getNumber().observe(this, s -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_PHONE_NUMBER, s);
+                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
+            }
+        });
+
+        // Search Bar View Model
+        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
+        mSharedSearchViewModel.getText().observe(this, t -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_CONTACT_NAME, t);
+                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
+            }
+        });
+
         tryRunningLoader();
     }
 
@@ -126,10 +159,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         showContactPopup(ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber()));
     }
 
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mRecentsAdapter.changeCursor(null);
-    }
 
     // -- Loader -- //
 
@@ -152,30 +181,26 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
-        // Strings
-        final String[] PROJECTION = new String[]{
-                CallLog.Calls._ID,
-                CallLog.Calls.NUMBER,
-                CallLog.Calls.DATE,
-                CallLog.Calls.DURATION,
-                CallLog.Calls.TYPE,
-        };
-        String SELECTION = null;
-        String ORDER = CallLog.Calls.DATE + " DESC";
+        String contactName = null;
+        String phoneNumber = null;
+        if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
+            phoneNumber = args.getString(ARG_PHONE_NUMBER);
+        } else if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
+            contactName = args.getString(ARG_CONTACT_NAME);
+        }
 
-        // Return cursor
-        return new CursorLoader(
-                getContext(),
-                CallLog.Calls.CONTENT_URI,
-                PROJECTION,
-                SELECTION,
-                null,
-                ORDER);
+        RecentsCursorLoader recentsCursorLoader = new RecentsCursorLoader(getContext(), phoneNumber, contactName);
+        return recentsCursorLoader;
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         setData(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        mRecentsAdapter.changeCursor(null);
     }
 
     private void setData(Cursor data) {
@@ -231,9 +256,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         TextView contactNumber;
         ConstraintLayout popupLayout;
 
-        contactName = (TextView) contactDialog.findViewById(R.id.contact_popup_name);
-        contactNumber = (TextView) contactDialog.findViewById(R.id.contact_popup_number);
-        popupLayout = (ConstraintLayout) contactDialog.findViewById(R.id.contact_popup_layout);
+        contactName = contactDialog.findViewById(R.id.contact_popup_name);
+        contactNumber = contactDialog.findViewById(R.id.contact_popup_number);
+        popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
 
         if (contact.getName() != null)
             contactName.setText(contact.getName());

@@ -71,14 +71,29 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         else holder.name.setText(phoneNumber);
 
         Contact caller = recentCall.getCaller();
-        if (caller != null && caller.getPhotoUri() != null) {
-            holder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
-            holder.photo.setVisibility(View.VISIBLE);
-            holder.photoPlaceholder.setVisibility(GONE);
-        } else {
-            holder.photo.setVisibility(GONE);
-            holder.photoPlaceholder.setVisibility(View.VISIBLE);
+        holder.photo.setVisibility(View.VISIBLE);
+        holder.photoPlaceholder.setVisibility(GONE);
+        switch (recentCall.getCallType()) {
+            case RecentCall.mIncomingCall:
+                holder.photo.setImageResource(R.drawable.ic_call_received_black_24dp);
+                break;
+            case RecentCall.mOutgoingCall:
+                holder.photo.setImageResource(R.drawable.ic_call_made_black_24dp);
+                break;
+            case RecentCall.mMissedCall:
+                holder.photo.setImageResource(R.drawable.ic_call_missed_black_24dp);
+                break;
+            default:
+                break;
         }
+//        if (caller != null && caller.getPhotoUri() != null) {
+//            holder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
+//            holder.photo.setVisibility(View.VISIBLE);
+//            holder.photoPlaceholder.setVisibility(GONE);
+//        } else {
+//            holder.photo.setVisibility(GONE);
+//            holder.photoPlaceholder.setVisibility(View.VISIBLE);
+//        }
 
         // Set click listeners
         if (mOnItemClickListener != null) {
