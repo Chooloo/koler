@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/AboutCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/header_icon"
+            android:layout_width="128dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:tint="?attr/iconColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_logo" />
+
+        <com.chooloo.www.callmanager.ui.widgets.ListItem
+            android:id="@+id/about_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/header_icon"
+            app:src="@drawable/ic_email_black_24dp"
+            app:description="@string/support_email"
+            app:title="Write an Email" />
+
+        <com.chooloo.www.callmanager.ui.widgets.ListItem
+            android:id="@+id/about_roei"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/about_email"
+            app:src="@drawable/ic_person_black_24dp"
+            app:title="Roei Edri" />
+
+        <com.chooloo.www.callmanager.ui.widgets.ListItem
+            android:id="@+id/about_ido"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/about_roei"
+            app:src="@drawable/ic_person_black_24dp"
+            app:title="Ido Fang Bentov" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

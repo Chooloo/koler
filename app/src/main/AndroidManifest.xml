@@ -26,7 +26,6 @@
         android:theme="@style/AppTheme.Light.Pink.NoActionBar"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.AboutActivity"></activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
@@ -107,6 +106,10 @@
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:label="@string/activity_settings"
+            android:theme="@style/AppTheme.Light.Pink" />
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:label="@string/activity_about"
             android:theme="@style/AppTheme.Light.Pink" />
 
         <service

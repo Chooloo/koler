@@ -4,4 +4,10 @@
     <attr name="secondaryAccentColor" format="reference" />
 
     <attr name="overlayColor" format="reference" />
+
+    <declare-styleable name="ListItem">
+        <attr name="title" format="string" localization="suggested" />
+        <attr name="description" format="string" localization="suggested" />
+        <attr name="src" format="reference" />
+    </declare-styleable>
 </resources>

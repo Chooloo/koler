@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/AboutCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Support"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="?android:textColorPrimary"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/header_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.chooloo.www.callmanager.ui.widgets.ListItem
+            android:id="@+id/about_bugs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:description="Report any issues or request new features on our GitHub page"
+            app:layout_constraintTop_toBottomOf="@+id/header_title"
+            app:src="@drawable/ic_info_outline_black_24dp"
+            app:title="Report Bugs" />
+
+        <com.chooloo.www.callmanager.ui.widgets.ListItem
+            android:id="@+id/about_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/about_bugs"
+            app:src="@drawable/ic_history_black_24dp"
+            app:description="If you like the app, leave a positive feedback"
+            app:title="Rate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

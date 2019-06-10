@@ -8,5 +8,11 @@
         android:title="Settings"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_about"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        android:title="About"
+        app:showAsAction="never" />
+
 </menu>
 

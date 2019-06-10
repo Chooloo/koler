@@ -30,7 +30,7 @@ public class SettingsActivity extends AbsThemeActivity {
                 .replace(R.id.fragment, mFragment, TAG_FRAGMENT)
                 .commit();
 
-        getSupportActionBar().setElevation(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
