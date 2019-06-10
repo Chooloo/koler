@@ -39,6 +39,7 @@ public final class RecentsCursorLoader extends CursorLoader {
                     CallLog.Calls.DATE,
                     CallLog.Calls.DURATION,
                     CallLog.Calls.TYPE,
+                    CallLog.Calls.CACHED_NAME
             };
 
     private static String RECENTS_ORDER = CallLog.Calls.DATE + " DESC";

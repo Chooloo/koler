@@ -13,7 +13,7 @@ public class RecentCall {
 
     // Attributes
     private Context mContext;
-    private Contact mCaller;
+    private String mCallerName;
     private String mNumber;
     private int mCallType;
     private String mCallDuration;
@@ -35,7 +35,7 @@ public class RecentCall {
     public RecentCall(Context context, String number, int type, String duration, Date date) {
         this.mContext = context;
         this.mNumber = number;
-        this.mCaller = ContactUtils.getContactByPhoneNumber(this.mContext, number);
+        this.mCallerName = ContactUtils.getContactByPhoneNumber(this.mContext, number).getName();
         this.mCallType = type;
         this.mCallDuration = duration;
         this.mCallDate = date;
@@ -44,8 +44,10 @@ public class RecentCall {
     public RecentCall(Context context, Cursor cursor) {
         this.mContext = context;
         mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-        if (mNumber != null) {
-            mCaller = ContactUtils.getContactByPhoneNumber(context, mNumber);
+        String callerName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
+        if ((callerName == null || callerName.isEmpty()) && mNumber != null) {
+            Contact contact = ContactUtils.getContactByPhoneNumber(context, mNumber);
+            if (contact != null) mCallerName = contact.getName();
         }
         mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
         mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
@@ -53,13 +55,8 @@ public class RecentCall {
         mCallType = callType;
     }
 
-    public Contact getCaller() {
-        return this.mCaller;
-    }
-
     public String getCallerName() {
-        if (this.mCaller != null) return this.mCaller.getName();
-        else return null;
+        return this.mCallerName;
     }
 
     public String getCallerNumber() {
