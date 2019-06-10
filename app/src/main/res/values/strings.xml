@@ -88,6 +88,22 @@
     <string name="empty_recents_title">No recent calls</string>
     <string name="empty_recents_desc" />
 
+    <!--About-->
+    <string name="about_version_title">Version</string>
+    <string name="about_changelog_title">Changelog</string>
+    <string name="about_source_title">Github Source</string>
+    <string name="about_email_title">Write an Email</string>
+    <string name="about_roei_title">Roei Edri</string>
+    <string name="about_ido_title">Ido Fang Bentov</string>
+
+    <string name="about_support_title">Support</string>
+
+    <string name="about_bugs_title">Report Bugs</string>
+    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page</string>
+
+    <string name="about_rate_title">Rate</string>
+    <string name="about_rate_desc">If you like the app, leave a positive feedback</string>
+
     <!--Other-->
     <string name="name_unknown">Unknown</string>
     <string name="reject_timer_indicator">Call ends in</string>
