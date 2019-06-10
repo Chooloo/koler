@@ -45,5 +45,4 @@ The app's main goal is to be more intuitive and comfortable. For that reason, th
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
  
 ## Support
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QWN2GW6AGEYCY&source=url)
-
+<a href="https://paypal.me/chooloo?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
