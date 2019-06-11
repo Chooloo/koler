@@ -571,7 +571,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
                 break;
         }
         mStatusText.setText(statusTextRes);
-        if (state != Call.STATE_RINGING) switchToCallingUI();
+        if (state != Call.STATE_RINGING && state != Call.STATE_DISCONNECTED) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
         mState = state;
     }
