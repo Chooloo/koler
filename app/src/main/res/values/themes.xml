@@ -13,6 +13,7 @@
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="colorAccent">@color/color_accent_pink</item>
+        <item name="dialogBackgroundColor">?attr/colorPrimary</item>
 
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
@@ -40,6 +41,7 @@
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="dialogBackgroundColor">@color/grey_800</item>
 
         <item name="secondaryAccentColor">?attr/colorAccent</item>
         <item name="iconColor">@color/icon_active_dark</item>
@@ -55,6 +57,7 @@
     <!--AMOLED-->
     <style name="AppTheme.AMOLED.Pink" parent="AppTheme.Dark.Pink">
         <item name="colorPrimary">@color/color_primary_amoled</item>
+        <item name="dialogBackgroundColor">?attr/colorPrimary</item>
 
         <item name="secondaryAccentColor">?attr/colorAccent</item>
         <item name="iconColor">@color/icon_active_dark</item>

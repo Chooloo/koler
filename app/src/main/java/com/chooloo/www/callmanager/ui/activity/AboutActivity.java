@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.widgets.ListItem;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 

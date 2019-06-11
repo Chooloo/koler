@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.activity;
+package com.chooloo.www.callmanager.ui.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,7 +24,6 @@ import java.io.InputStreamReader;
  * A dialog to display the latest features and improvements added to the app.
  * Copied from <a href="https://github.com/kabouzeid/Phonograph"</a>
  */
-//TODO Move to dialog
 //TODO adapt to theme
 public class ChangelogDialog extends DialogFragment {
 
@@ -62,13 +62,16 @@ public class ChangelogDialog extends DialogFragment {
 
             //Get theme attributes
             TypedValue background = new TypedValue();
-            getContext().getTheme().resolveAttribute(android.R.attr.windowBackground, background, true);
+            getContext().getTheme().resolveAttribute(R.attr.dialogBackgroundColor, background, true);
 
-            TypedValue textColorPrimary = new TypedValue();
-            getContext().getTheme().resolveAttribute(android.R.attr.textColorPrimary, textColorPrimary, true);
+            TypedValue textColorPrimaryAttr = new TypedValue();
+            getContext().getTheme().resolveAttribute(android.R.attr.textColorPrimary, textColorPrimaryAttr, true);
+
+            int colorRes = textColorPrimaryAttr.resourceId != 0 ? textColorPrimaryAttr.resourceId : textColorPrimaryAttr.data;
+            int textColorPrimary = ContextCompat.getColor(getContext(), colorRes);
 
             final String backgroundColor = colorToHex(background.data);
-            final String textColor = colorToHex(textColorPrimary.data);
+            final String textColor = colorToHex(textColorPrimary);
 
             //Load the html
             webView.loadData(buf.toString()
