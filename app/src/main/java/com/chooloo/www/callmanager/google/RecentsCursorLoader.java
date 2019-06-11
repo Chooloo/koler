@@ -24,8 +24,6 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.loader.content.CursorLoader;
 
-import static android.provider.ContactsContract.Contacts;
-
 public final class RecentsCursorLoader extends CursorLoader {
 
     public static String CURSOR_NAME_COLUMN = Phone.DISPLAY_NAME_PRIMARY;
@@ -41,11 +39,10 @@ public final class RecentsCursorLoader extends CursorLoader {
                     CallLog.Calls.DATE,
                     CallLog.Calls.DURATION,
                     CallLog.Calls.TYPE,
+                    CallLog.Calls.CACHED_NAME
             };
 
     private static String RECENTS_ORDER = CallLog.Calls.DATE + " DESC";
-
-    private static String RECENTS_SELECTION = null;
 
     /**
      * Constructor
@@ -59,19 +56,17 @@ public final class RecentsCursorLoader extends CursorLoader {
                 context,
                 buildUri(phoneNumber, contactName),
                 RECENTS_PROJECTION_DISPLAY_NAME_PRIMARY,
-                RECENTS_SELECTION,
+                getSelection(contactName, phoneNumber),
                 null,
                 RECENTS_ORDER);
     }
 
-    /**
-     * Returns the projection string
-     *
-     * @param context
-     * @return String
-     */
-    private static String[] getProjection(Context context) {
-        return RECENTS_PROJECTION_DISPLAY_NAME_PRIMARY;
+    private static String getSelection(String contactName, String phoneNumber) {
+        if (contactName != null && !contactName.isEmpty())
+            return CallLog.Calls.CACHED_NAME + " LIKE '%" + contactName + "%'";
+        else if (phoneNumber != null && !phoneNumber.isEmpty())
+            return CallLog.Calls.NUMBER + " LIKE '%" + phoneNumber + "%'";
+        else return null;
     }
 
     /**
@@ -86,9 +81,6 @@ public final class RecentsCursorLoader extends CursorLoader {
         if (phoneNumber != null && !phoneNumber.isEmpty()) {
             builder = Uri.withAppendedPath(CallLog.Calls.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
             builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
-        } else if (contactName != null && !contactName.isEmpty()) {
-            builder = Uri.withAppendedPath(CallLog.Calls.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
         } else {
             builder = CallLog.Calls.CONTENT_URI.buildUpon();
         }

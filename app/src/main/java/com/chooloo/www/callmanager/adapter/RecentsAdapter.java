@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 
 import butterknife.BindView;
@@ -69,7 +68,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         if (callerName != null) holder.name.setText(callerName);
         else holder.name.setText(phoneNumber);
 
-        Contact caller = recentCall.getCaller();
         holder.photo.setVisibility(View.VISIBLE);
         holder.photoPlaceholder.setVisibility(GONE);
         switch (recentCall.getCallType()) {
@@ -85,14 +83,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
             default:
                 break;
         }
-//        if (caller != null && caller.getPhotoUri() != null) {
-//            holder.photo.setImageURI(Uri.parse(recentCall.getCaller().getPhotoUri()));
-//            holder.photo.setVisibility(View.VISIBLE);
-//            holder.photoPlaceholder.setVisibility(GONE);
-//        } else {
-//            holder.photo.setVisibility(GONE);
-//            holder.photoPlaceholder.setVisibility(View.VISIBLE);
-//        }
 
         // Set click listeners
         if (mOnItemClickListener != null) {

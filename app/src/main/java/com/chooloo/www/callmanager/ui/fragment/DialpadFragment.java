@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -138,11 +140,27 @@ public class DialpadFragment extends AbsBaseFragment {
         mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mViewModel.getNumber().observe(this, s -> {
             if (!s.equals(mNumberText)) {
-                setNumber(s);
+//                setNumber(s);
             }
         });
         mPhoneNumberFormattingTextWatcher = new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry());
         mDigits.addTextChangedListener(mPhoneNumberFormattingTextWatcher);
+        mDigits.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mViewModel.setNumber(mDigits.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override

@@ -185,7 +185,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         String phoneNumber = null;
         if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
             phoneNumber = args.getString(ARG_PHONE_NUMBER);
-        } else if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
+        }
+        if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
             contactName = args.getString(ARG_CONTACT_NAME);
         }
 

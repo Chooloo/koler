@@ -32,7 +32,7 @@
 
     <!-- List Items -->
     <dimen name="divider_sides_margin">8dp</dimen>
-    <dimen name="item_contact_padding">14dp</dimen>
+    <dimen name="item_contact_padding">18dp</dimen>
     <dimen name="item_contact_topbot_padding">6dp</dimen>
     <dimen name="item_padding_and_icon">38dp</dimen>
     <dimen name="item_height">64dp</dimen>
@@ -53,4 +53,7 @@
     <dimen name="top_dialpad_side_padding">30dp</dimen>
 
     <dimen name="shadow_length">10dp</dimen>
+
+    <!-- About activity -->
+    <dimen name="about_page_padding">10dp</dimen>
 </resources>

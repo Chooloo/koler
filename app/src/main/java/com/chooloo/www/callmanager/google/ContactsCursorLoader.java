@@ -23,6 +23,8 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.loader.content.CursorLoader;
 
+import timber.log.Timber;
+
 import static android.provider.ContactsContract.Contacts;
 
 public final class ContactsCursorLoader extends CursorLoader {
@@ -44,6 +46,7 @@ public final class ContactsCursorLoader extends CursorLoader {
 
     /**
      * Constructor
+     *
      * @param context
      * @param phoneNumber String
      * @param contactName String
