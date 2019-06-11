@@ -773,6 +773,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         CountDownTimer mTimer = null;
         boolean mIsRejecting = true;
 
+        int oldVolume;
+
         private void setData(long millisInFuture, boolean isRejecting) {
             mIsRejecting = isRejecting;
             @ColorRes int textColorRes;
@@ -801,14 +803,14 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
                 @Override
                 public void onFinish() {
-                    if (mIsRejecting) endCall();
-                    else activateCall();
-                    removeOverlay();
+                    end();
                 }
             };
         }
 
         private void start() {
+            oldVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_RING);
+            mAudioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
             if (mTimer != null) mTimer.start();
             else Timber.w("Couldn't start action timer (timer is null)");
 
@@ -819,6 +821,18 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
             if (mTimer != null) mTimer.cancel();
             else Timber.w("Couldn't cancel action timer (timer is null)");
 
+            finalEndCommonMan();
+        }
+
+        private void end() {
+            if (mIsRejecting) endCall();
+            else activateCall();
+
+            finalEndCommonMan();
+        }
+
+        private void finalEndCommonMan() {
+            mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
             removeOverlay();
         }
     }
