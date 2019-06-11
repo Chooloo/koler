@@ -56,14 +56,17 @@ public final class RecentsCursorLoader extends CursorLoader {
                 context,
                 buildUri(phoneNumber, contactName),
                 RECENTS_PROJECTION_DISPLAY_NAME_PRIMARY,
-                getRecentsSelection(contactName),
+                getSelection(contactName, phoneNumber),
                 null,
                 RECENTS_ORDER);
     }
 
-    private static String getRecentsSelection(String contactName) {
-        if (contactName == null || contactName.isEmpty()) return null;
-        else return CallLog.Calls.CACHED_NAME + " LIKE '%" + contactName + "%'";
+    private static String getSelection(String contactName, String phoneNumber) {
+        if (contactName != null && !contactName.isEmpty())
+            return CallLog.Calls.CACHED_NAME + " LIKE '%" + contactName + "%'";
+        else if (phoneNumber != null && !phoneNumber.isEmpty())
+            return CallLog.Calls.NUMBER + " LIKE '%" + phoneNumber + "%'";
+        else return null;
     }
 
     /**

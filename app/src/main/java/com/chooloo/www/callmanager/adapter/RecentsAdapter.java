@@ -83,14 +83,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
             default:
                 break;
         }
-//        if (caller != null && caller.getPhotoUri() != null) {
-//            holder.photo.setImageURI(Uri.parse(recentCall.getCallerName().getPhotoUri()));
-//            holder.photo.setVisibility(View.VISIBLE);
-//            holder.photoPlaceholder.setVisibility(GONE);
-//        } else {
-//            holder.photo.setVisibility(GONE);
-//            holder.photoPlaceholder.setVisibility(View.VISIBLE);
-//        }
 
         // Set click listeners
         if (mOnItemClickListener != null) {

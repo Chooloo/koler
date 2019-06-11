@@ -9,6 +9,8 @@ import com.chooloo.www.callmanager.util.ContactUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import timber.log.Timber;
+
 public class RecentCall {
 
     // Attributes
@@ -48,11 +50,12 @@ public class RecentCall {
         if ((callerName == null || callerName.isEmpty()) && mNumber != null) {
             Contact contact = ContactUtils.getContactByPhoneNumber(context, mNumber);
             if (contact != null) mCallerName = contact.getName();
+        } else {
+            mCallerName = callerName;
         }
         mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
         mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
-        int callType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
-        mCallType = callType;
+        mCallType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
     }
 
     public String getCallerName() {

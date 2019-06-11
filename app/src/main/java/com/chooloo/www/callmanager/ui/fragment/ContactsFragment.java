@@ -35,6 +35,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 /**
  * A {@link androidx.fragment.app.Fragment} that is heavily influenced by
@@ -157,7 +158,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getText().observe(this, t -> {
             if (isLoaderRunning()) {
-                Toast.makeText(getContext(), "New search " + t, Toast.LENGTH_SHORT);
                 Bundle args = new Bundle();
                 args.putString(ARG_CONTACT_NAME, t);
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
@@ -194,12 +194,13 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         String phoneNumber = null;
         if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
             phoneNumber = args.getString(ARG_PHONE_NUMBER);
-        } else if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
+        }
+        if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
             contactName = args.getString(ARG_CONTACT_NAME);
         }
 
-            ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), phoneNumber, contactName);
-            return cursorLoader;
+        ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), phoneNumber, contactName);
+        return cursorLoader;
     }
 
     @Override
