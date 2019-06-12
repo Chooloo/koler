@@ -30,7 +30,7 @@ public class AboutActivity extends AbsThemeActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mVersionItem.setDescription("v" + BuildConfig.VERSION_NAME);
+        mVersionItem.setDescription("" + BuildConfig.VERSION_NAME);
     }
 
     @OnClick(R.id.about_changelog)
