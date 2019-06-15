@@ -15,6 +15,11 @@
     <PreferenceCategory android:title="@string/pref_category_call">
 
         <ListPreference
+            android:defaultValue="@string/pref_sim_select_default_value"
+            android:key="@string/pref_sim_select_key"
+            android:title="@string/pref_sim_select_title" />
+
+        <ListPreference
             android:defaultValue="@string/pref_reject_call_timer_default_value"
             android:entries="@array/pref_call_timer_entries"
             android:entryValues="@array/pref_call_timer_entry_values"

@@ -29,6 +29,12 @@
     <string name="pref_category_noise">Noise</string>
     <string name="pref_category_scurity">Security</string>
 
+    <string name="pref_sim_select_key">sim_select</string>
+    <string name="pref_sim_select_title">Sim Selection</string>
+    <string name="pref_sim_select_default_value">0</string>
+    <string name="pref_sim_select_ask_entry">Ask Each Time</string>
+    <string name="pref_sim_select_disabled">Sim selection disabled due to one sim card</string>
+
     <string name="pref_reject_call_timer_key">end_call_timer</string>
     <string name="pref_reject_call_timer_title">End call timer</string>
     <string name="pref_reject_call_timer_default_value">10</string>

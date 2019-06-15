@@ -3,12 +3,16 @@ package com.chooloo.www.callmanager.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.preference.PreferenceCategory;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.activity.OngoingCallActivity;
 import com.chooloo.www.callmanager.util.validation.Validator;
@@ -26,6 +30,7 @@ public class CallManager {
     private static boolean sIsAutoCalling = false;
     private static List<Contact> sAutoCallingContactsList = null;
     private static int sAutoCallPosition = 0;
+    private static SubscriptionManager mSubscriptionManager;
 
     // -- Call Actions -- //
 
@@ -43,9 +48,25 @@ public class CallManager {
             if (number.contains("#")) uri = "tel: " + Uri.encode(number);
             else uri = "tel: " + number;
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+            int simCard = getSimSelection(context);
+            if (simCard != -1) {
+                callIntent.putExtra("simSlot", simCard);
+                Timber.i("simCard " + simCard);
+            }
             context.startActivity(callIntent); // Start the call
         } catch (SecurityException e) {
             Timber.e(e, "Couldn't call %s", number);
+        }
+    }
+
+    public static int getSimSelection(Context context) {
+        PreferenceUtils.getInstance(context);
+        try {
+            int simCard = PreferenceUtils.getInstance().getInt(R.string.pref_sim_select_key);
+            Timber.i("sim card: " + simCard);
+            return simCard;
+        } catch (NullPointerException e) {
+            return -1;
         }
     }
 

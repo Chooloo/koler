@@ -1,6 +1,8 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.os.Bundle;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
@@ -10,6 +12,17 @@ import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.ThemeUtils;
+import com.chooloo.www.callmanager.util.Utilities;
+
+import org.apache.poi.xdgf.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.internal.Utils;
+import timber.log.Timber;
+
+import static android.Manifest.permission.READ_PHONE_STATE;
 
 //TODO add more settings
 //TODO add icons
@@ -31,6 +44,7 @@ public class SettingsActivity extends AbsThemeActivity {
                 .commit();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -87,6 +101,39 @@ public class SettingsActivity extends AbsThemeActivity {
 
             SwitchPreference isBiometricPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_biometric_key));
             isBiometricPreference.setOnPreferenceChangeListener(switchChangeListener);
+
+            ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
+            simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
+            simSelectionPreference.setSummary(simSelectionPreference.getEntry());
+
+            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
+                Utilities.askForPermission(getActivity(), READ_PHONE_STATE);
+            }
+
+            int simCount = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList().size();
+
+            if (simCount == 1) {
+                simSelectionPreference.setTitle(getString(R.string.pref_sim_select_disabled));
+                simSelectionPreference.setEnabled(false);
+            } else {
+                List<CharSequence> simsEntries = new ArrayList<>();
+
+                List<SubscriptionInfo> subscriptionInfoList = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList();
+
+                for (int i = 0; i < simCount; i++) {
+                    SubscriptionInfo si = subscriptionInfoList.get(i);
+                    Timber.i("Sim info " + i + " : " + si.getDisplayName());
+                    simsEntries.add(si.getDisplayName());
+                }
+
+
+                CharSequence[] simsEntriesList = simsEntries.toArray(new CharSequence[simsEntries.size()]);
+                simSelectionPreference.setEntries(simsEntriesList);
+//                simsEntries.add(getString(R.string.pref_sim_select_ask_entry));
+//                CharSequence[] simsEntryValues = {"0", "1", "2"};
+                CharSequence[] simsEntryValues = {"0", "1"};
+                simSelectionPreference.setEntryValues(simsEntryValues);
+            }
         }
     }
 }
