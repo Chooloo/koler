@@ -215,8 +215,11 @@ public class CallManager {
         if (sCall.getState() == Call.STATE_DIALING) {
             Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
         }
-        if (sCall.getDetails().getHandle() != null)
+
+        if (sCall.getDetails().getHandle() != null) {
             uri = sCall.getDetails().getHandle().toString(); // Callers details
+            Timber.i("Display Contact: " + uri);
+        }
 
         if (uri.isEmpty() || uri == null) return ContactUtils.UNKNOWN;
 

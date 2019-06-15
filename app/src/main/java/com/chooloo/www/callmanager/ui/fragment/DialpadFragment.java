@@ -126,11 +126,12 @@ public class DialpadFragment extends AbsBaseFragment {
 
                 @Override
                 public boolean onSingleTapUp(View v) {
-                    ((MainActivity) DialpadFragment.this.getActivity()).expandDialer(true);
+//                    ((MainActivity) DialpadFragment.this.getActivity()).expandDialer(true);
                     return true;
                 }
             };
-            mDigits.setOnTouchListener(swipeToDelListener);
+            // TODO wtf should we do with all the swipes shit
+//            mDigits.setOnTouchListener(swipeToDelListener);
         }
     }
 
