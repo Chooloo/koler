@@ -3,10 +3,8 @@ package com.chooloo.www.callmanager.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.preference.PreferenceCategory;
 import android.telecom.Call;
 import android.telecom.VideoProfile;
-import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.widget.Toast;
 
@@ -238,11 +236,11 @@ public class CallManager {
         }
 
         if (sCall.getDetails().getHandle() != null) {
-            uri = sCall.getDetails().getHandle().toString(); // Callers details
+            uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
             Timber.i("Display Contact: " + uri);
         }
 
-        if (uri.isEmpty() || uri == null) return ContactUtils.UNKNOWN;
+        if (uri != null && uri.isEmpty()) return ContactUtils.UNKNOWN;
 
         // If uri contains 'voicemail' this is a... voicemail dah
         if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;
@@ -252,14 +250,14 @@ public class CallManager {
         // If uri contains 'tel' this is a normal number
         if (uri.contains("tel:")) telephoneNumber = uri.replace("tel:", "");
 
-        if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
-
         if (telephoneNumber == null || telephoneNumber.isEmpty())
             return ContactUtils.UNKNOWN; // Unknown number
 
+        if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
+
         Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
 
-        if (contact == null || contact.getName() == null || contact.getName().isEmpty())
+        if (contact == null || contact.getName().isEmpty())
             return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 
         return contact;
