@@ -10,7 +10,7 @@ import com.chooloo.www.callmanager.util.ThemeUtils;
 
 import static com.chooloo.www.callmanager.util.ThemeUtils.ThemeType;
 
-public class AbsThemeActivity extends AppCompatActivity {
+public abstract class AbsThemeActivity extends AppCompatActivity {
 
     private @StyleRes int mThemeStyle = -1;
     private @ThemeType int mThemeType;

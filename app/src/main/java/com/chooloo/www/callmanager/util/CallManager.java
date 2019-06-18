@@ -49,7 +49,7 @@ public class CallManager {
             int simCard = getSimSelection(context);
             if (simCard != -1) {
                 callIntent.putExtra("simSlot", simCard);
-                Timber.i("simCard " + simCard);
+                Timber.i("simCard %s", simCard);
             }
             context.startActivity(callIntent); // Start the call
         } catch (SecurityException e) {
@@ -61,7 +61,7 @@ public class CallManager {
         PreferenceUtils.getInstance(context);
         try {
             int simCard = PreferenceUtils.getInstance().getInt(R.string.pref_sim_select_key);
-            Timber.i("sim card: " + simCard);
+            Timber.i("sim card: %s", simCard);
             return simCard;
         } catch (NullPointerException e) {
             return -1;

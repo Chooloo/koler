@@ -2,14 +2,14 @@ package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.renderscript.ScriptGroup;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
-public class DigitsEditText extends EditText {
+import androidx.appcompat.widget.AppCompatEditText;
+
+public class DigitsEditText extends AppCompatEditText {
 
     public DigitsEditText(Context context, AttributeSet attrs) {
         super(context, attrs);

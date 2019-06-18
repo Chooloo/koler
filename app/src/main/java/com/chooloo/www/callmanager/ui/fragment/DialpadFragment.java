@@ -11,7 +11,6 @@ import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
-import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsBaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadView;
 import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
@@ -40,6 +38,7 @@ import java.util.HashSet;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import timber.log.Timber;
 
 import static android.telephony.PhoneNumberUtils.WAIT;
 
@@ -174,7 +173,7 @@ public class DialpadFragment extends AbsBaseFragment {
                 try {
                     mToneGenerator = new ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME);
                 } catch (RuntimeException e) {
-                    Log.w(TAG, "Exception caught while creating local tone generator: " + e);
+                    Timber.tag(TAG).w("Exception caught while creating local tone generator: " + e);
                     mToneGenerator = null;
                 }
             }
@@ -418,7 +417,7 @@ public class DialpadFragment extends AbsBaseFragment {
         }
         synchronized (mToneGeneratorLock) {
             if (mToneGenerator == null) {
-                Log.w(TAG, "playTone: mToneGenerator == null, tone: " + tone);
+                Timber.tag(TAG).w("playTone: mToneGenerator == null, tone: " + tone);
                 return;
             }
             // Start the new tone (will stop any playing tone)
@@ -440,7 +439,7 @@ public class DialpadFragment extends AbsBaseFragment {
         // if local tone playback is disabled, just return.
         synchronized (mToneGeneratorLock) {
             if (mToneGenerator == null) {
-                Log.w(TAG, "stopTone: mToneGenerator == null");
+                Timber.tag(TAG).w("stopTone: mToneGenerator == null");
                 return;
             }
             mToneGenerator.stopTone();

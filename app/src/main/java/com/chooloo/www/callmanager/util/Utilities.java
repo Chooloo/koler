@@ -85,7 +85,7 @@ public class Utilities {
      * @param permission
      * @return boolean
      */
-    public static boolean checkPermissionGranted(Context context, String permission) {
+    public static boolean checkPermissionsGranted(Context context, String permission) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && ContextCompat.checkSelfPermission(
                 context, permission)
@@ -100,7 +100,7 @@ public class Utilities {
      */
     public static boolean checkPermissionsGranted(Context context, String[] permissions) {
         for (String permission : permissions) {
-            if (!checkPermissionGranted(context, permission)) {
+            if (!checkPermissionsGranted(context, permission)) {
                 return false;
             }
         }
@@ -302,7 +302,7 @@ public class Utilities {
         if (ContextCompat.checkSelfPermission(activity, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
-                Timber.i("Sending sms to phone number: " + CallManager.getDisplayContact(activity).getMainPhoneNumber());
+                Timber.i("Sending sms to phone number: %s", CallManager.getDisplayContact(activity).getMainPhoneNumber());
                 smsManager.sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
                 Toast.makeText(activity, "Message Sent", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {

@@ -32,15 +32,15 @@
 
     <!-- Send Button -->
     <Button
-        android:backgroundTint="@color/white"
-        android:elevation="5dp"
-        android:textColor="?attr/colorAccent"
         android:id="@+id/button_send_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/white"
+        android:elevation="5dp"
         android:gravity="center"
         android:text="Send"
+        android:textColor="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -51,11 +51,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:clickable="true"
+        android:focusable="true"
         android:tint="@android:color/white"
         android:tooltipText="@string/action_cancel"
         app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="@+id/input_sms"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_clear_black_24dp" />
+        app:srcCompat="@drawable/ic_clear_black_24dp"
+        tools:targetApi="o" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

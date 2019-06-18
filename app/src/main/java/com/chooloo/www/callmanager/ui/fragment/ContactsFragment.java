@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -35,7 +34,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
-import timber.log.Timber;
 
 /**
  * A {@link androidx.fragment.app.Fragment} that is heavily influenced by
@@ -230,7 +228,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
      * Checks for the required permission in order to run the loader
      */
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
             runLoader();
         }
     }
