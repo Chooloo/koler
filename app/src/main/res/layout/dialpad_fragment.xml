@@ -28,7 +28,6 @@
 
     <!-- Number Input Field -->
     <LinearLayout
-        android:id="@+id/top_dialer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_number_input_height"
         android:background="?attr/colorPrimary"
@@ -75,7 +74,7 @@
             android:src="@drawable/ic_backspace_black_24dp"
             android:tint="?attr/iconColor"
             android:layout_height="match_parent"
-            android:scaleType="center"/>
+            android:scaleType="center" />
 
     </LinearLayout>
 

@@ -29,8 +29,8 @@ public abstract class AbsThemeActivity extends AppCompatActivity {
     }
 
     protected void setThemeType(@ThemeType int type) {
-       mThemeType = type;
-       updateTheme();
+        mThemeType = type;
+        updateTheme();
     }
 
     protected void updateTheme() {

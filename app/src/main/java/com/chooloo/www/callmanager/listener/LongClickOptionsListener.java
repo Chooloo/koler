@@ -41,6 +41,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
     /**
      * Constructor
+     *
      * @param context
      * @param fabView
      * @param onNormalClick
@@ -154,7 +155,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
      * Highlight or unhighlight a given button
      *
      * @param actionButton the button to highlight or unhighlight
-     * @param highlight whether to highlight
+     * @param highlight    whether to highlight
      */
     private void highlightFAB(FloatingActionButton actionButton, boolean highlight) {
         actionButton.setHovered(highlight);
@@ -200,6 +201,7 @@ public class LongClickOptionsListener implements View.OnTouchListener {
 
         /**
          * Remove the given view
+         *
          * @param view the overlay
          */
         void removeOverlay(@NotNull ViewGroup view);

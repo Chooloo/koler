@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:lines="1"
-            android:scrollHorizontally="true"/>
+            android:scrollHorizontally="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView

@@ -306,7 +306,7 @@ public class Utilities {
                 smsManager.sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
                 Toast.makeText(activity, "Message Sent", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Toast.makeText(activity, e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
                 Toast.makeText(activity, "Oh shit I can't send the message... Sorry", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }

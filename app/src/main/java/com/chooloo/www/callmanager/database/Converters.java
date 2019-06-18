@@ -1,11 +1,11 @@
 package com.chooloo.www.callmanager.database;
 
+import androidx.room.TypeConverter;
+
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.room.TypeConverter;
 
 public class Converters {
 

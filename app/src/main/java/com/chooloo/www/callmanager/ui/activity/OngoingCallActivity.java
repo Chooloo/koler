@@ -139,10 +139,13 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @BindView(R.id.button_send_sms) Button mSendSmsButton;
 
     // Floating Action Buttons
-    @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
-    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
+    @BindView(R.id.button_floating_reject_call_timer)
+    FloatingActionButton mFloatingRejectCallTimerButton;
+    @BindView(R.id.button_floating_answer_call_timer)
+    FloatingActionButton mFloatingAnswerCallTimerButton;
     @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
-    @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
+    @BindView(R.id.button_floating_cancel_overlay)
+    FloatingActionButton mFloatingCancelOverlayButton;
     @BindView(R.id.button_cancel_sms) FloatingActionButton mFloatingCancelSMS;
     @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
 

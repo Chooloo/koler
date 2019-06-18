@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.InCallService;
 
-import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.ui.activity.OngoingCallActivity;
+import com.chooloo.www.callmanager.util.CallManager;
 
 public class CallService extends InCallService {
 
     /**
      * When call has been added
+     *
      * @param call
      */
     @Override
@@ -24,6 +25,7 @@ public class CallService extends InCallService {
 
     /**
      * When call has been removed
+     *
      * @param call
      */
     @Override

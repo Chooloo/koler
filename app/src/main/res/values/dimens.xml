@@ -6,13 +6,11 @@
     <dimen name="default_spacing_padding">8dp</dimen>
 
     <!-- Action Bar-->
-    <dimen name="app_bar_corner_radius">16dp</dimen>
     <dimen name="action_bar_size">48dp</dimen>
 
     <!-- Button -->
     <dimen name="flat_button_size">64dp</dimen>
     <dimen name="flat_button_padding">16dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
 
     <!-- Bubble -->
     <dimen name="bubble_tab_height">32dp</dimen>
@@ -20,21 +18,16 @@
     <dimen name="bubble_horizontal_padding">32dp</dimen>
 
     <dimen name="bubble_corner_radius">16dp</dimen>
-    <dimen name="bubble_border_width">0.75dp</dimen>
 
     <!-- Fabs -->
     <dimen name="fab_and_bottom_padding">88dp</dimen>
-    <dimen name="fab_margins">24dp</dimen>
 
     <!-- Dialer -->
     <dimen name="phone_number_input_height">64dp</dimen>
-    <dimen name="dialer_elevation">1dp</dimen>
 
     <!-- List Items -->
-    <dimen name="divider_sides_margin">8dp</dimen>
     <dimen name="item_contact_padding">18dp</dimen>
     <dimen name="item_contact_topbot_padding">6dp</dimen>
-    <dimen name="item_padding_and_icon">38dp</dimen>
     <dimen name="item_height">64dp</dimen>
 
     <!-- FastScroller -->
@@ -46,9 +39,7 @@
 
     <!-- Dialpad -->
     <dimen name="dialpad_key_height">80dp</dimen>
-    <dimen name="dialpad_key_number_width">20dp</dimen>
     <dimen name="dialpad_key_number_text_size">30dp</dimen>
-    <dimen name="dialpad_key_letters_width">50dp</dimen>
     <dimen name="dialpad_key_letters_text_size">10dp</dimen>
     <dimen name="top_dialpad_side_padding">30dp</dimen>
 

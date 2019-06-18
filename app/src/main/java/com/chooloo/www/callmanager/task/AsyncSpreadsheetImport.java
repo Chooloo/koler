@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.task;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -34,7 +35,9 @@ public class AsyncSpreadsheetImport extends AsyncTask<Void, Integer, List<Contac
     public static final int STATUS_FAILED = 1;
     public static final int STATUS_FILE_NOT_FOUND = 2;
 
+    @SuppressLint("StaticFieldLeak")
     private Context mContext;
+
     private File mExcelFile;
     private int mNameColIndex;
     private int mNumberColIndex;

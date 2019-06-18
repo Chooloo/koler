@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.dialog;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -53,6 +54,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         super.onCreateDialog(savedInstanceState);
 
         //Let's create the custom view
+        @SuppressLint("InflateParams")
         View customView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_import_spreadsheet, null, false);
         ButterKnife.bind(this, customView);
 
@@ -183,6 +185,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
     /**
      * Validates column index lol
+     *
      * @param editable
      * @param view
      */

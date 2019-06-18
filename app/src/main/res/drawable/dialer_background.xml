@@ -10,7 +10,7 @@
     <solid android:color="?attr/colorPrimary" />
 
     <!--<stroke-->
-        <!--android:width="@dimen/bubble_border_width"-->
-        <!--android:color="@color/soft_shadow" />-->
+    <!--android:width="@dimen/bubble_border_width"-->
+    <!--android:color="@color/soft_shadow" />-->
 
 </shape>

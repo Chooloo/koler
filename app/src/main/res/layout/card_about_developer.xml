@@ -39,7 +39,6 @@
             app:title="@string/about_roei_title" />
 
         <com.chooloo.www.callmanager.ui.widgets.ListItem
-            android:id="@+id/about_ido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/about_roei"

@@ -53,7 +53,6 @@
         app:srcCompat="@drawable/ic_clear_black_24dp" />
 
     <TextView
-        android:id="@+id/text_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

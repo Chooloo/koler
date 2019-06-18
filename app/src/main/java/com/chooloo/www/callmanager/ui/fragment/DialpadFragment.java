@@ -173,7 +173,7 @@ public class DialpadFragment extends AbsBaseFragment {
                 try {
                     mToneGenerator = new ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME);
                 } catch (RuntimeException e) {
-                    Timber.tag(TAG).w("Exception caught while creating local tone generator: " + e);
+                    Timber.tag(TAG).w(e, "Exception caught while creating local tone generator");
                     mToneGenerator = null;
                 }
             }
@@ -304,8 +304,7 @@ public class DialpadFragment extends AbsBaseFragment {
     @OnLongClick(R.id.key_0)
     public boolean addPlus(View view) {
         keyPressed(KeyEvent.KEYCODE_PLUS);
-        if (!mIsDialer) return false;
-        return true;
+        return mIsDialer;
     }
 
     /**
@@ -478,7 +477,7 @@ public class DialpadFragment extends AbsBaseFragment {
             // preceding char is ';' (WAIT)
             if (digits.charAt(start - 1) == WAIT) return false;
             // next char is ';' (WAIT)
-            if ((digits.length() > end) && (digits.charAt(end) == WAIT)) return false;
+            return (digits.length() <= end) || (digits.charAt(end) != WAIT);
         }
         return true;
     }

@@ -45,6 +45,7 @@ public class FastScroller extends RelativeLayout {
 
     /**
      * Constructor
+     *
      * @param context
      * @param attrs
      */
@@ -101,6 +102,7 @@ public class FastScroller extends RelativeLayout {
 
     /**
      * Sets the position of the recycler view by a given number (y)
+     *
      * @param y
      */
     private void setRecyclerViewPosition(float y) {
@@ -120,6 +122,7 @@ public class FastScroller extends RelativeLayout {
 
     /**
      * Returns a float in range [0, 1] which represents the position of the scroller.
+     *
      * @param y
      * @return float
      */
@@ -135,6 +138,7 @@ public class FastScroller extends RelativeLayout {
 
     /**
      * Returns the value in range of scrolling
+     *
      * @param min
      * @param max
      * @param value
@@ -147,6 +151,7 @@ public class FastScroller extends RelativeLayout {
 
     /**
      * Updated the scroll bar position
+     *
      * @param recyclerView
      */
     public void updateContainerAndScrollBarPosition(RecyclerView recyclerView) {
@@ -160,6 +165,7 @@ public class FastScroller extends RelativeLayout {
 
     /**
      * Sets the scroll bar position by a given number
+     *
      * @param y
      */
     private void setContainerAndScrollBarPosition(float y) {

@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -20,7 +21,9 @@ import com.chooloo.www.callmanager.R;
  */
 public class PreferenceUtils {
 
+    @SuppressLint("StaticFieldLeak")
     private static PreferenceUtils sSharedPrefs;
+
     private Context mContext;
     private SharedPreferences mPref;
     private SharedPreferences.Editor mEditor;
@@ -30,6 +33,7 @@ public class PreferenceUtils {
 
     /**
      * Constructor
+     *
      * @param context
      */
     private PreferenceUtils(Context context) {
@@ -113,6 +117,7 @@ public class PreferenceUtils {
         return mPref.getLong(mContext.getString(key), (long) getDefaultValue(key));
     }
 
+    @SuppressLint("CommitPrefEdits")
     public void edit() {
         mBulkUpdate = true;
         mEditor = mPref.edit();
@@ -124,6 +129,7 @@ public class PreferenceUtils {
         mEditor = null;
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void doEdit() {
         if (!mBulkUpdate && mEditor == null) {
             mEditor = mPref.edit();

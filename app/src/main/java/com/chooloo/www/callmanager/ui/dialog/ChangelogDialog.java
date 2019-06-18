@@ -19,6 +19,7 @@ import com.chooloo.www.callmanager.R;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * A dialog to display the latest features and improvements added to the app.
@@ -54,7 +55,7 @@ public class ChangelogDialog extends DialogFragment {
             // Load from change_log.html in the assets folder
             StringBuilder buf = new StringBuilder();
             InputStream html = getActivity().getAssets().open("changelog.html");
-            BufferedReader in = new BufferedReader(new InputStreamReader(html, "UTF-8"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(html, StandardCharsets.UTF_8));
             String str;
             while ((str = in.readLine()) != null)
                 buf.append(str);
@@ -75,8 +76,8 @@ public class ChangelogDialog extends DialogFragment {
 
             //Load the html
             webView.loadData(buf.toString()
-                    .replace("{#background-color}", backgroundColor)
-                    .replace("{#text-color}", textColor)
+                            .replace("{#background-color}", backgroundColor)
+                            .replace("{#text-color}", textColor)
                     , "text/html", "UTF-8");
         } catch (Throwable e) {
             webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>", "text/html", "UTF-8");

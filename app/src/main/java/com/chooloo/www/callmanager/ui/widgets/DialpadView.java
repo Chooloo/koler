@@ -23,15 +23,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.chooloo.www.callmanager.R;
-
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
 
 import butterknife.BindView;
 

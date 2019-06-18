@@ -1,12 +1,10 @@
 package com.chooloo.www.callmanager.ui;
 
 import android.content.Context;
-import android.view.View;
 
 import androidx.annotation.DrawableRes;
 import androidx.fragment.app.Fragment;
 
-import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FABCoordinator {

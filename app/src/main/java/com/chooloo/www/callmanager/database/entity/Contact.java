@@ -3,11 +3,6 @@ package com.chooloo.www.callmanager.database.entity;
 import android.database.Cursor;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
-import com.chooloo.www.callmanager.util.Utilities;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -16,6 +11,11 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import com.chooloo.www.callmanager.util.Utilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(tableName = "contact_table",
         indices = {@Index("list_id")},

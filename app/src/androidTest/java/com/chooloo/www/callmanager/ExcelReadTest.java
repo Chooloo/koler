@@ -3,6 +3,9 @@ package com.chooloo.www.callmanager;
 import android.content.Context;
 import android.content.res.AssetManager;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -14,9 +17,6 @@ import org.junit.runner.RunWith;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -52,7 +52,7 @@ public class ExcelReadTest {
 
         int rowsCount = 0;
         Iterator<Row> iterable1 = sheet1.rowIterator();
-        while((iterable1).hasNext()) {
+        while ((iterable1).hasNext()) {
             rowsCount++;
             Row row = iterable1.next();
             String jesus = row.getCell(1).getStringCellValue();

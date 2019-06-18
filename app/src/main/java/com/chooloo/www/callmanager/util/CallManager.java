@@ -237,7 +237,7 @@ public class CallManager {
 
         if (sCall.getDetails().getHandle() != null) {
             uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
-            Timber.i("Display Contact: " + uri);
+            Timber.i("Display Contact: %s", uri);
         }
 
         if (uri != null && uri.isEmpty()) return ContactUtils.UNKNOWN;

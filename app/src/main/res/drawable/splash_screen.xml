@@ -12,6 +12,6 @@
             android:gravity="bottom|center_horizontal"
             android:src="@drawable/logo_made_by"
             android:tint="@color/white"
-            android:alpha="0.75"/>
+            android:alpha="0.75" />
     </item>
 </layer-list>
