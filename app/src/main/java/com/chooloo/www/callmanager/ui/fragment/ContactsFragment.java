@@ -20,8 +20,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.google.FastScroller;
+import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
@@ -47,20 +47,17 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         ContactsAdapter.OnContactSelectedListener {
 
     private static final int LOADER_ID = 1;
-    private static final String ARG_PHONE_NUMBER = "phone_number";
-    private static final String ARG_CONTACT_NAME = "contact_name";
+    private static final String ARG_SEARCH_PHONE_NUMBER = "phone_number";
+    private static final String ARG_SEARCH_CONTACT_NAME = "contact_name";
 
     /**
      * An enum for the different types of headers that be inserted at position 0 in the list.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({Header.NONE, Header.ADD_CONTACT})
+    @IntDef({Header.NONE, Header.STAR})
     public @interface Header {
         int NONE = 0;
-        /**
-         * Header that allows the user to add a new contact.
-         */
-        int ADD_CONTACT = 1;
+        int STAR = 1;
     }
 
     private SharedDialViewModel mSharedDialViewModel;
@@ -148,7 +145,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedDialViewModel.getNumber().observe(this, s -> {
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
-                args.putString(ARG_PHONE_NUMBER, s);
+                args.putString(ARG_SEARCH_PHONE_NUMBER, s);
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
@@ -158,7 +155,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedSearchViewModel.getText().observe(this, t -> {
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
-                args.putString(ARG_CONTACT_NAME, t);
+                args.putString(ARG_SEARCH_CONTACT_NAME, t);
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
@@ -229,16 +226,23 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
-        String contactName = null;
-        String phoneNumber = null;
-        if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
-            phoneNumber = args.getString(ARG_PHONE_NUMBER);
+        String searchContactName = null;
+        String searchPhoneNumber = null;
+        if (args != null && args.containsKey(ARG_SEARCH_PHONE_NUMBER)) {
+            searchPhoneNumber = args.getString(ARG_SEARCH_PHONE_NUMBER);
         }
-        if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
-            contactName = args.getString(ARG_CONTACT_NAME);
+        if (args != null && args.containsKey(ARG_SEARCH_CONTACT_NAME)) {
+            searchContactName = args.getString(ARG_SEARCH_CONTACT_NAME);
         }
 
-        ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), phoneNumber, contactName);
+        boolean isSearchContactNameEmpty = searchContactName == null || searchContactName.isEmpty();
+        boolean isSearchPhoneNumberEmpty = searchPhoneNumber == null || searchPhoneNumber.isEmpty();
+        FavoritesAndContactsLoader cursorLoader = new FavoritesAndContactsLoader(getContext(), searchPhoneNumber, searchContactName);
+        if (!isSearchContactNameEmpty || !isSearchPhoneNumberEmpty) { //Don't show favorites if the user is searching for a contact
+            cursorLoader.setLoadFavorites(false);
+        } else {
+            cursorLoader.setLoadFavorites(true);
+        }
         return cursorLoader;
     }
 

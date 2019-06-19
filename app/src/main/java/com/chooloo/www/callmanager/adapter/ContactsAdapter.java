@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -89,15 +90,32 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     @Override
     public void changeCursor(Cursor cursor) {
         super.changeCursor(cursor);
-        mHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
-        mCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
-        if (mCounts != null) {
-            int sum = 0;
-            for (int count : mCounts) {
-                sum += count;
-            }
-            if (sum != cursor.getCount()) {
-                Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
+
+        String[] tempHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
+        int[] tempCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
+
+        int favoritesCount = cursor.getExtras().getInt(FavoritesAndContactsLoader.FAVORITES_COUNT);
+
+        if (favoritesCount == 0) {
+            mHeaders = tempHeaders;
+            mCounts = tempCounts;
+        } else {
+            mHeaders = new String[(tempHeaders != null ? tempHeaders.length : 0) + 1];
+            mHeaders[0] = "★";
+            System.arraycopy(tempHeaders, 0, mHeaders, 1, mHeaders.length - 1);
+
+            mCounts = new int[tempCounts.length + 1];
+            mCounts[0] = favoritesCount;
+            System.arraycopy(tempCounts, 0, mCounts, 1, mCounts.length - 1);
+
+            if (mCounts != null) {
+                int sum = 0;
+                for (int count : mCounts) {
+                    sum += count;
+                }
+                if (sum != cursor.getCount()) {
+                    Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
+                }
             }
         }
     }
@@ -114,15 +132,12 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
     @Override
     public String getHeaderString(int position) {
-        if (mHeader != ContactsFragment.Header.NONE) {
-            if (position == 0) {
-                return "+";
-            }
-            position--;
-        }
         int index = -1;
         int sum = 0;
         while (sum <= position) {
+            if (index + 1 >= mCounts.length) {//Index is bigger than headers list size
+                return "?";
+            }
             sum += mCounts[++index];
         }
         return mHeaders[index];
