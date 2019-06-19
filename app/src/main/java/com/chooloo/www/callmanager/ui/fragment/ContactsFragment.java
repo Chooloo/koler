@@ -69,6 +69,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     // View Binds
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
     @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.item_header) TextView mAnchoredHeader;
 
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
@@ -171,9 +172,49 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
+    /*
+     * When our recycler view updates, we need to ensure that our row headers and anchored header
+     * are in the correct state.
+     *
+     * The general rule is, when the row headers are shown, our anchored header is hidden. When the
+     * recycler view is scrolling through a sublist that has more than one element, we want to show
+     * out anchored header, to create the illusion that our row header has been anchored. In all
+     * other situations, we want to hide the anchor because that means we are transitioning between
+     * two sublists.
+     */
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+        int firstCompletelyVisible = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+        if (firstCompletelyVisible == RecyclerView.NO_POSITION) {
+            // No items are visible, so there are no headers to update.
+            return;
+        }
+        String anchoredHeaderString = mContactsAdapter.getHeaderString(firstCompletelyVisible);
+
+        // If the user swipes to the top of the list very quickly, there is some strange behavior
+        // between this method updating headers and adapter#onBindViewHolder updating headers.
+        // To overcome this, we refresh the headers to ensure they are correct.
+        if (firstVisibleItem == firstCompletelyVisible && firstVisibleItem == 0) {
+            mContactsAdapter.refreshHeaders();
+            mAnchoredHeader.setVisibility(View.INVISIBLE);
+        } else {
+            if (mContactsAdapter.getHeaderString(firstVisibleItem).equals(anchoredHeaderString)) {
+                mAnchoredHeader.setText(anchoredHeaderString);
+                mAnchoredHeader.setVisibility(View.VISIBLE);
+                getContactHolder(firstVisibleItem).getHeaderView().setVisibility(View.INVISIBLE);
+                getContactHolder(firstCompletelyVisible).getHeaderView().setVisibility(View.INVISIBLE);
+            } else {
+                mAnchoredHeader.setVisibility(View.INVISIBLE);
+                getContactHolder(firstVisibleItem).getHeaderView().setVisibility(View.VISIBLE);
+                getContactHolder(firstCompletelyVisible).getHeaderView().setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private ContactsAdapter.ContactHolder getContactHolder(int position) {
+        return ((ContactsAdapter.ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
     }
 
     @Override

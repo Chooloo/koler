@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -25,10 +25,9 @@ import timber.log.Timber;
 
 public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.ContactHolder> {
 
-    private final static int VIEW_TYPE_ITEM = 0;
-    private final static int VIEW_TYPE_SEPERATOR = 1;
-
     private OnContactSelectedListener mOnContactSelectedListener;
+
+    private final ArrayMap<ContactHolder, Integer> holderMap = new ArrayMap<>();
 
     private @ContactsFragment.Header int mHeader = ContactsFragment.Header.NONE;
     // List of contact sublist mHeaders
@@ -56,17 +55,11 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     @Override
     public void onBindViewHolder(ContactHolder viewHolder, Cursor cursor) {
 
-        // Check for separator
-        String separator = checkSeparator(cursor);
-
-        if (separator != null) {
-            viewHolder.letterText.setText(separator.toUpperCase());
-            viewHolder.letterText.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.letterText.setVisibility(View.INVISIBLE);
-        }
+        int position = cursor.getPosition();
+        holderMap.put(viewHolder, position);
 
         // Display the contact's information
+        String header = getHeaderString(position);
         Contact contact = new Contact(cursor);
         String contactName = contact.getName();
         String contactNumber = contact.getMainPhoneNumber();
@@ -87,6 +80,10 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         if (mOnContactSelectedListener != null) {
             viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(contactNumber));
         }
+
+        boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));
+        viewHolder.header.setText(header);
+        viewHolder.header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -131,6 +128,17 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         return mHeaders[index];
     }
 
+    @Override
+    public void refreshHeaders() {
+        for (ContactHolder holder : holderMap.keySet()) {
+            int position = holderMap.get(holder);
+            boolean showHeader =
+                    position == 0 || !getHeaderString(position).equals(getHeaderString(position - 1));
+            int visibility = showHeader ? View.VISIBLE : View.INVISIBLE;
+            holder.getHeaderView().setVisibility(visibility);
+        }
+    }
+
     /**
      * Sets the onContactSelectedListener by a given one
      *
@@ -141,54 +149,19 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     }
 
     /**
-     * If both previous and current contact in cursor start with the same letter
-     * return null (No separator needed) else return the first letter of the current contact
-     *
-     * @param cursor
-     * @return
-     */
-    public String checkSeparator(Cursor cursor) {
-
-        // Variables
-        char[] nameArray;
-        char[] previousNameArray;
-        String name;
-        String previousName;
-        int nameIndex = cursor.getColumnIndex(ContactsCursorLoader.CURSOR_NAME_COLUMN);
-
-        // Get current data in cursor
-        name = cursor.getString(nameIndex);
-        nameArray = name.toCharArray();
-
-        if (cursor.getPosition() == 0) return String.valueOf(nameArray[0]);
-
-        // Get the previous data in cursor
-        cursor.moveToPrevious();
-        previousName = cursor.getString(nameIndex);
-        cursor.moveToNext();
-        previousNameArray = previousName.toCharArray();
-
-        if (nameArray[0] == previousNameArray[0]) return null;
-        else {
-            return String.valueOf(nameArray[0]);
-        }
-
-    }
-
-    /**
      * The interface for the onContactSelectedListener
      */
     public interface OnContactSelectedListener {
         void onContactSelected(String normPhoneNumber);
     }
 
-    class ContactHolder extends RecyclerView.ViewHolder {
+    public class ContactHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
         @BindView(R.id.item_photo) ImageView photo;
         @BindView(R.id.item_big_text) TextView name;
         @BindView(R.id.item_small_text) TextView number;
-        @BindView(R.id.letter_text) TextView letterText;
+        @BindView(R.id.item_header) TextView header;
 
         /**
          * Constructor
@@ -198,6 +171,10 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public TextView getHeaderView() {
+            return header;
         }
     }
 }

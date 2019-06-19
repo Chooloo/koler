@@ -1,8 +1,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="@dimen/item_two_line_height"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
@@ -10,6 +9,16 @@
     android:paddingBottom="@dimen/item_contact_topbot_padding">
 
     <!-- Caller Pic -->
+    <include
+        android:id="@+id/item_header"
+        layout="@layout/item_header"
+        android:layout_width="@dimen/header_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="50dp"
@@ -49,7 +58,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/frameLayout"
-        app:layout_constraintStart_toEndOf="@+id/letter_text"
+        app:layout_constraintStart_toEndOf="@+id/item_header"
         app:layout_constraintTop_toTopOf="@+id/frameLayout" />
 
     <!-- Phone Number Text -->
@@ -63,19 +72,6 @@
         app:layout_constraintTop_toBottomOf="@+id/item_big_text" />
 
     <!-- Letter Text -->
-    <TextView
-        android:id="@+id/letter_text"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        tools:text="A"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textColor="?attr/secondaryAccentColor"
-        android:textDirection="ltr"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

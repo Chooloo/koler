@@ -31,24 +31,13 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
 
 public class FastScroller extends RelativeLayout {
-
     private final int touchTargetWidth;
-
     private AbsFastScrollerAdapter adapter;
     private LinearLayoutManager layoutManager;
-
-    private boolean dragStarted;
-
-    // Views
     private TextView container;
     private View scrollBar;
+    private boolean dragStarted;
 
-    /**
-     * Constructor
-     *
-     * @param context
-     * @param attrs
-     */
     public FastScroller(Context context, AttributeSet attrs) {
         super(context, attrs);
         touchTargetWidth =
@@ -74,7 +63,6 @@ public class FastScroller extends RelativeLayout {
         if (!dragStarted && getWidth() - touchTargetWidth - event.getX() > 0) {
             return super.onTouchEvent(event);
         }
-
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 dragStarted = true;
@@ -100,32 +88,16 @@ public class FastScroller extends RelativeLayout {
         return dragStarted;
     }
 
-    /**
-     * Sets the position of the recycler view by a given number (y)
-     *
-     * @param y
-     */
     private void setRecyclerViewPosition(float y) {
         final int itemCount = adapter.getItemCount();
         float scrolledPosition = getScrolledPercentage(y) * (float) itemCount;
         int targetPos = getValueInRange(0, itemCount - 1, (int) scrolledPosition);
         layoutManager.scrollToPositionWithOffset(targetPos, 0);
-
-        String header = adapter.getHeaderString(targetPos);
-        if (header == null) {
-            container.setVisibility(INVISIBLE);
-        } else {
-            container.setVisibility(VISIBLE);
-            container.setText(header);
-        }
+        container.setText(adapter.getHeaderString(targetPos));
+        adapter.refreshHeaders();
     }
 
-    /**
-     * Returns a float in range [0, 1] which represents the position of the scroller.
-     *
-     * @param y
-     * @return float
-     */
+    // Returns a float in range [0, 1] which represents the position of the scroller.
     private float getScrolledPercentage(float y) {
         if (scrollBar.getY() == 0) {
             return 0f;
@@ -136,24 +108,11 @@ public class FastScroller extends RelativeLayout {
         }
     }
 
-    /**
-     * Returns the value in range of scrolling
-     *
-     * @param min
-     * @param max
-     * @param value
-     * @return int
-     */
     private int getValueInRange(int min, int max, int value) {
         int minimum = Math.max(min, value);
         return Math.min(minimum, max);
     }
 
-    /**
-     * Updated the scroll bar position
-     *
-     * @param recyclerView
-     */
     public void updateContainerAndScrollBarPosition(RecyclerView recyclerView) {
         if (!scrollBar.isSelected()) {
             int verticalScrollOffset = recyclerView.computeVerticalScrollOffset();
@@ -163,11 +122,6 @@ public class FastScroller extends RelativeLayout {
         }
     }
 
-    /**
-     * Sets the scroll bar position by a given number
-     *
-     * @param y
-     */
     private void setContainerAndScrollBarPosition(float y) {
         int scrollBarHeight = scrollBar.getHeight();
         int containerHeight = container.getHeight();

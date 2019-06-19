@@ -101,13 +101,18 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         return null;
     }
 
+    @Override
+    public void refreshHeaders() {
+
+    }
+
     class RecentCallHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
         @BindView(R.id.item_photo) ImageView photo;
         @BindView(R.id.item_big_text) TextView name;
         @BindView(R.id.item_small_text) TextView time;
-        @BindView(R.id.letter_text) TextView letterText;
+        @BindView(R.id.item_header) TextView letterText;
 
         /**
          * Constructor
