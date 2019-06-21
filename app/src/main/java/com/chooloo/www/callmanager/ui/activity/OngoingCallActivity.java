@@ -773,7 +773,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         CountDownTimer mTimer = null;
         boolean mIsRejecting = true;
 
-        int oldVolume;
+        Integer oldVolume;
 
         private void setData(long millisInFuture, boolean isRejecting) {
             mIsRejecting = isRejecting;
@@ -832,7 +832,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         }
 
         private void finalEndCommonMan() {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
+            if(oldVolume != null) mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
             removeOverlay();
         }
     }
