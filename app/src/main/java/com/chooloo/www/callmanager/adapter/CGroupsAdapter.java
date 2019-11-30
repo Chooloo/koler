@@ -97,6 +97,7 @@ public class CGroupsAdapter extends RecyclerView.Adapter<CGroupsAdapter.CGroupHo
 
     /**
      * Sets the data
+     *
      * @param data
      */
     public void setData(List<CGroupAndItsContacts> data) {

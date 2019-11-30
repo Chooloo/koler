@@ -132,6 +132,7 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
 
     /**
      * Sets the data by a given Contact List
+     *
      * @param data
      */
     public void setData(List<Contact> data) {
@@ -142,6 +143,7 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
 
     /**
      * Ummm... Enables edit mode
+     *
      * @param enable true/false
      */
     public void enableEditMode(boolean enable) {
@@ -149,7 +151,7 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
         mEditModeEnabled = enable;
 
         //Animate all the RecyclerView items:
-        for(int i = 0; i < getItemCount(); i++) {
+        for (int i = 0; i < getItemCount(); i++) {
             ContactHolder holder = (ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(i);
             if (holder != null) holder.animate();
         }

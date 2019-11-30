@@ -1,9 +1,9 @@
 package com.chooloo.www.callmanager.database.entity;
 
-import java.util.List;
-
 import androidx.room.Embedded;
 import androidx.room.Relation;
+
+import java.util.List;
 
 public class CGroupAndItsContacts {
 

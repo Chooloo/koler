@@ -13,7 +13,7 @@ import java.util.List;
 public interface CGroupDao {
 
     @Insert
-    long[] insert (CGroup... lists);
+    long[] insert(CGroup... lists);
 
     @Query("DELETE FROM cgroup_table")
     int deleteAll();

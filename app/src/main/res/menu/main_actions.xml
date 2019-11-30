@@ -5,13 +5,13 @@
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Settings"
+        android:title="@string/action_settings"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_info_outline_black_24dp"
-        android:title="About"
+        android:title="@string/action_about"
         app:showAsAction="never" />
 
 </menu>

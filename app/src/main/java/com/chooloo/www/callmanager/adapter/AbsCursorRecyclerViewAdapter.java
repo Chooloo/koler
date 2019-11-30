@@ -41,6 +41,7 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
 
     /**
      * Constructor
+     *
      * @param context
      * @param cursor
      */
@@ -57,6 +58,7 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
 
     /**
      * Returns the cursor
+     *
      * @return
      */
     public Cursor getCursor() {
@@ -65,6 +67,7 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
 
     /**
      * Returns the cursors counts
+     *
      * @return
      */
     @Override
@@ -77,6 +80,7 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
 
     /**
      * Returns an item id by position
+     *
      * @param position
      * @return
      */

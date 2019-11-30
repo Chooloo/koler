@@ -1,9 +1,11 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -14,12 +16,9 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import org.apache.poi.xdgf.util.Util;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.internal.Utils;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
@@ -77,18 +76,22 @@ public class SettingsActivity extends AbsThemeActivity {
                 return true;
             };
 
+            //App theme
             ListPreference appThemePreference = (ListPreference) findPreference(getString(R.string.pref_app_theme_key));
             appThemePreference.setOnPreferenceChangeListener(themeChangeListener);
             appThemePreference.setSummary(appThemePreference.getEntry());
 
+            //End call timer
             ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
             rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
 
+            //Answer call timer
             ListPreference answerCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_answer_call_timer_key));
             answerCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             answerCallTimerPreference.setSummary(answerCallTimerPreference.getEntry());
 
+            //Default page
             ListPreference defaultPagePreference = (ListPreference) findPreference(getString(R.string.pref_default_page_key));
             defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
             defaultPagePreference.setSummary(defaultPagePreference.getEntry());
@@ -99,33 +102,52 @@ public class SettingsActivity extends AbsThemeActivity {
 //            SwitchPreference isNoVibratePreference = (SwitchPreference) findPreference(getString(R.string.pref_is_no_vibrate_key));
 //            isNoVibratePreference.setOnPreferenceChangeListener(switchChangeListener);
 
+            //Biometrics
             SwitchPreference isBiometricPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_biometric_key));
             isBiometricPreference.setOnPreferenceChangeListener(switchChangeListener);
 
+            //Sim selection
             ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
             simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
-            simSelectionPreference.setSummary(simSelectionPreference.getEntry());
 
-            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
+            if (!Utilities.checkPermissionsGranted(getContext(), READ_PHONE_STATE)) {
                 Utilities.askForPermission(getActivity(), READ_PHONE_STATE);
+            } else {
+                setupSimSelection();
+            }
+        }
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == Utilities.PERMISSION_RC && Utilities.checkPermissionsGranted(grantResults)) {
+                setupSimSelection();
+            }
+        }
+
+        private void setupSimSelection() {
+            if (!Utilities.checkPermissionsGranted(getContext(), READ_PHONE_STATE)) {
+                Timber.w("READ_PHONE_STATE permission was not granted");
+                return;
             }
 
-            int simCount = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList().size();
+            ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
+
+            @SuppressLint("MissingPermission")
+            List<SubscriptionInfo> subscriptionInfoList = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList();
+            int simCount = subscriptionInfoList.size();
 
             if (simCount == 1) {
-                simSelectionPreference.setTitle(getString(R.string.pref_sim_select_disabled));
+                simSelectionPreference.setSummary(getString(R.string.pref_sim_select_disabled));
                 simSelectionPreference.setEnabled(false);
             } else {
                 List<CharSequence> simsEntries = new ArrayList<>();
-
-                List<SubscriptionInfo> subscriptionInfoList = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList();
 
                 for (int i = 0; i < simCount; i++) {
                     SubscriptionInfo si = subscriptionInfoList.get(i);
                     Timber.i("Sim info " + i + " : " + si.getDisplayName());
                     simsEntries.add(si.getDisplayName());
                 }
-
 
                 CharSequence[] simsEntriesList = simsEntries.toArray(new CharSequence[simsEntries.size()]);
                 simSelectionPreference.setEntries(simsEntriesList);

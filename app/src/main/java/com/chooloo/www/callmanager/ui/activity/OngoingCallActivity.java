@@ -139,10 +139,13 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @BindView(R.id.button_send_sms) Button mSendSmsButton;
 
     // Floating Action Buttons
-    @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
-    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
+    @BindView(R.id.button_floating_reject_call_timer)
+    FloatingActionButton mFloatingRejectCallTimerButton;
+    @BindView(R.id.button_floating_answer_call_timer)
+    FloatingActionButton mFloatingAnswerCallTimerButton;
     @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
-    @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
+    @BindView(R.id.button_floating_cancel_overlay)
+    FloatingActionButton mFloatingCancelOverlayButton;
     @BindView(R.id.button_cancel_sms) FloatingActionButton mFloatingCancelSMS;
     @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
 
@@ -447,7 +450,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
-        if (Utilities.checkPermissionGranted(this, Manifest.permission.SEND_SMS)) {
+        if (Utilities.checkPermissionsGranted(this, Manifest.permission.SEND_SMS)) {
             setOverlay(mSendSmsOverlay);
             mSendSmsButton.setVisibility(View.VISIBLE);
             mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
@@ -777,7 +780,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         CountDownTimer mTimer = null;
         boolean mIsRejecting = true;
 
-        int oldVolume;
+        Integer oldVolume;
 
         private void setData(long millisInFuture, boolean isRejecting) {
             mIsRejecting = isRejecting;
@@ -836,7 +839,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         }
 
         private void finalEndCommonMan() {
-            mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
+            if(oldVolume != null) mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
             removeOverlay();
         }
     }

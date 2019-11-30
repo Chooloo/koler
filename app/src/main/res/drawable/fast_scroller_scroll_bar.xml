@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  ~ Copyright (C) 2017 The Android Open Source Project
  ~
  ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,18 +14,18 @@
  ~ limitations under the License
  -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:state_selected="true">
-    <shape android:shape="rectangle">
-      <solid android:color="?android:attr/colorAccent"/>
-      <size android:height="32dp" android:width="4dp"/>
-      <corners android:radius="2dp"/>
-    </shape>
-  </item>
-  <item>
-    <shape android:shape="rectangle">
-      <solid android:color="?android:attr/textColorSecondary"/>
-      <size android:height="32dp" android:width="4dp"/>
-      <corners android:radius="2dp"/>
-    </shape>
-  </item>
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="?android:attr/colorAccent" />
+            <size android:height="32dp" android:width="4dp" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="?android:attr/textColorSecondary" />
+            <size android:height="32dp" android:width="4dp" />
+            <corners android:radius="2dp" />
+        </shape>
+    </item>
 </selector>

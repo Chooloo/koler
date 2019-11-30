@@ -12,7 +12,8 @@ public class ThemeUtils {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TYPE_NORMAL, TYPE_NO_ACTION_BAR, TYPE_TRANSPARENT_STATUS_BAR})
-    public @interface ThemeType{}
+    public @interface ThemeType {
+    }
 
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_NO_ACTION_BAR = 1;
@@ -21,9 +22,12 @@ public class ThemeUtils {
     public static @StyleRes
     int themeFromId(String themeId, @ThemeType int type) {
         switch (type) {
-            case TYPE_NORMAL: return themeNormalFromId(themeId);
-            case TYPE_NO_ACTION_BAR: return themeNoActionBarFromId(themeId);
-            case TYPE_TRANSPARENT_STATUS_BAR: return themeTransparentStatusBarFromId(themeId);
+            case TYPE_NORMAL:
+                return themeNormalFromId(themeId);
+            case TYPE_NO_ACTION_BAR:
+                return themeNoActionBarFromId(themeId);
+            case TYPE_TRANSPARENT_STATUS_BAR:
+                return themeTransparentStatusBarFromId(themeId);
         }
         return themeNormalFromId(themeId);
     }
@@ -31,12 +35,18 @@ public class ThemeUtils {
     public static @StyleRes
     int themeNormalFromId(String themeId) {
         switch (themeId) {
-            case "light;pink": return R.style.AppTheme_Light_Pink;
-            case "light;green": return R.style.AppTheme_Light_Green;
-            case "dark;pink": return R.style.AppTheme_Dark_Pink;
-            case "dark;green": return R.style.AppTheme_Dark_Green;
-            case "amoled;pink": return R.style.AppTheme_AMOLED_Pink;
-            case "amoled;green": return R.style.AppTheme_AMOLED_Green;
+            case "light;pink":
+                return R.style.AppTheme_Light_Pink;
+            case "light;green":
+                return R.style.AppTheme_Light_Green;
+            case "dark;pink":
+                return R.style.AppTheme_Dark_Pink;
+            case "dark;green":
+                return R.style.AppTheme_Dark_Green;
+            case "amoled;pink":
+                return R.style.AppTheme_AMOLED_Pink;
+            case "amoled;green":
+                return R.style.AppTheme_AMOLED_Green;
         }
         return R.style.AppTheme_Light_Pink;
     }
@@ -44,12 +54,18 @@ public class ThemeUtils {
     public static @StyleRes
     int themeNoActionBarFromId(String themeId) {
         switch (themeId) {
-            case "light;pink": return R.style.AppTheme_Light_Pink_NoActionBar;
-            case "light;green": return R.style.AppTheme_Light_Green_NoActionBar;
-            case "dark;pink": return R.style.AppTheme_Dark_Pink_NoActionBar;
-            case "dark;green": return R.style.AppTheme_Dark_Green_NoActionBar;
-            case "amoled;pink": return R.style.AppTheme_AMOLED_Pink_NoActionBar;
-            case "amoled;green": return R.style.AppTheme_AMOLED_Green_NoActionBar;
+            case "light;pink":
+                return R.style.AppTheme_Light_Pink_NoActionBar;
+            case "light;green":
+                return R.style.AppTheme_Light_Green_NoActionBar;
+            case "dark;pink":
+                return R.style.AppTheme_Dark_Pink_NoActionBar;
+            case "dark;green":
+                return R.style.AppTheme_Dark_Green_NoActionBar;
+            case "amoled;pink":
+                return R.style.AppTheme_AMOLED_Pink_NoActionBar;
+            case "amoled;green":
+                return R.style.AppTheme_AMOLED_Green_NoActionBar;
         }
         return R.style.AppTheme_Light_Pink_NoActionBar;
     }
@@ -57,12 +73,18 @@ public class ThemeUtils {
     public static @StyleRes
     int themeTransparentStatusBarFromId(String themeId) {
         switch (themeId) {
-            case "light;pink": return R.style.AppTheme_Light_Pink_TransparentStatusBar;
-            case "light;green": return R.style.AppTheme_Light_Green_TransparentStatusBar;
-            case "dark;pink": return R.style.AppTheme_Dark_Pink_TransparentStatusBar;
-            case "dark;green": return R.style.AppTheme_Dark_Green_TransparentStatusBar;
-            case "amoled;pink": return R.style.AppTheme_AMOLED_Pink_TransparentStatusBar;
-            case "amoled;green": return R.style.AppTheme_AMOLED_Green_TransparentStatusBar;
+            case "light;pink":
+                return R.style.AppTheme_Light_Pink_TransparentStatusBar;
+            case "light;green":
+                return R.style.AppTheme_Light_Green_TransparentStatusBar;
+            case "dark;pink":
+                return R.style.AppTheme_Dark_Pink_TransparentStatusBar;
+            case "dark;green":
+                return R.style.AppTheme_Dark_Green_TransparentStatusBar;
+            case "amoled;pink":
+                return R.style.AppTheme_AMOLED_Pink_TransparentStatusBar;
+            case "amoled;green":
+                return R.style.AppTheme_AMOLED_Green_TransparentStatusBar;
         }
         return R.style.AppTheme_Light_Pink_TransparentStatusBar;
     }

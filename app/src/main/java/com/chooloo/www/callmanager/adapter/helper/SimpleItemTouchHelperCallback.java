@@ -93,7 +93,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
         //To avoid elevation conflicts with the Lollipop+ implementation, we will always inform the super that we aren't active
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, false);
-        if (isCurrentlyActive && !isElevated ) {
+        if (isCurrentlyActive && !isElevated) {
             updateElevation(recyclerView, viewHolder, true);
         }
     }
@@ -103,8 +103,8 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
      * or decreasing by the specified amount
      *
      * @param recyclerView The recyclerView to use when calculating the new elevation
-     * @param holder The ViewHolder to increase or decrease the elevation for
-     * @param elevate True if the <code>holder</code> should have it's elevation increased
+     * @param holder       The ViewHolder to increase or decrease the elevation for
+     * @param elevate      True if the <code>holder</code> should have it's elevation increased
      */
     protected void updateElevation(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder holder, boolean elevate) {
         if (elevate) {

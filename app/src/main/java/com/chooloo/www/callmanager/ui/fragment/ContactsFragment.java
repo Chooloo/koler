@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -21,8 +20,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.google.FastScroller;
+import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
@@ -35,7 +34,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
-import timber.log.Timber;
 
 /**
  * A {@link androidx.fragment.app.Fragment} that is heavily influenced by
@@ -49,20 +47,17 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         ContactsAdapter.OnContactSelectedListener {
 
     private static final int LOADER_ID = 1;
-    private static final String ARG_PHONE_NUMBER = "phone_number";
-    private static final String ARG_CONTACT_NAME = "contact_name";
+    private static final String ARG_SEARCH_PHONE_NUMBER = "phone_number";
+    private static final String ARG_SEARCH_CONTACT_NAME = "contact_name";
 
     /**
      * An enum for the different types of headers that be inserted at position 0 in the list.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({Header.NONE, Header.ADD_CONTACT})
+    @IntDef({Header.NONE, Header.STAR})
     public @interface Header {
         int NONE = 0;
-        /**
-         * Header that allows the user to add a new contact.
-         */
-        int ADD_CONTACT = 1;
+        int STAR = 1;
     }
 
     private SharedDialViewModel mSharedDialViewModel;
@@ -71,6 +66,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     // View Binds
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
     @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.item_header) TextView mAnchoredHeader;
 
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
@@ -149,7 +145,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedDialViewModel.getNumber().observe(this, s -> {
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
-                args.putString(ARG_PHONE_NUMBER, s);
+                args.putString(ARG_SEARCH_PHONE_NUMBER, s);
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
@@ -159,7 +155,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedSearchViewModel.getText().observe(this, t -> {
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
-                args.putString(ARG_CONTACT_NAME, t);
+                args.putString(ARG_SEARCH_CONTACT_NAME, t);
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
@@ -173,9 +169,49 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
+    /*
+     * When our recycler view updates, we need to ensure that our row headers and anchored header
+     * are in the correct state.
+     *
+     * The general rule is, when the row headers are shown, our anchored header is hidden. When the
+     * recycler view is scrolling through a sublist that has more than one element, we want to show
+     * out anchored header, to create the illusion that our row header has been anchored. In all
+     * other situations, we want to hide the anchor because that means we are transitioning between
+     * two sublists.
+     */
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+        int firstCompletelyVisible = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+        if (firstCompletelyVisible == RecyclerView.NO_POSITION) {
+            // No items are visible, so there are no headers to update.
+            return;
+        }
+        String anchoredHeaderString = mContactsAdapter.getHeaderString(firstCompletelyVisible);
+
+        // If the user swipes to the top of the list very quickly, there is some strange behavior
+        // between this method updating headers and adapter#onBindViewHolder updating headers.
+        // To overcome this, we refresh the headers to ensure they are correct.
+        if (firstVisibleItem == firstCompletelyVisible && firstVisibleItem == 0) {
+            mContactsAdapter.refreshHeaders();
+            mAnchoredHeader.setVisibility(View.INVISIBLE);
+        } else {
+            if (mContactsAdapter.getHeaderString(firstVisibleItem).equals(anchoredHeaderString)) {
+                mAnchoredHeader.setText(anchoredHeaderString);
+                mAnchoredHeader.setVisibility(View.VISIBLE);
+                getContactHolder(firstVisibleItem).getHeaderView().setVisibility(View.INVISIBLE);
+                getContactHolder(firstCompletelyVisible).getHeaderView().setVisibility(View.INVISIBLE);
+            } else {
+                mAnchoredHeader.setVisibility(View.INVISIBLE);
+                getContactHolder(firstVisibleItem).getHeaderView().setVisibility(View.VISIBLE);
+                getContactHolder(firstCompletelyVisible).getHeaderView().setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private ContactsAdapter.ContactHolder getContactHolder(int position) {
+        return ((ContactsAdapter.ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
     }
 
     @Override
@@ -190,16 +226,23 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
-        String contactName = null;
-        String phoneNumber = null;
-        if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
-            phoneNumber = args.getString(ARG_PHONE_NUMBER);
+        String searchContactName = null;
+        String searchPhoneNumber = null;
+        if (args != null && args.containsKey(ARG_SEARCH_PHONE_NUMBER)) {
+            searchPhoneNumber = args.getString(ARG_SEARCH_PHONE_NUMBER);
         }
-        if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
-            contactName = args.getString(ARG_CONTACT_NAME);
+        if (args != null && args.containsKey(ARG_SEARCH_CONTACT_NAME)) {
+            searchContactName = args.getString(ARG_SEARCH_CONTACT_NAME);
         }
 
-        ContactsCursorLoader cursorLoader = new ContactsCursorLoader(getContext(), phoneNumber, contactName);
+        boolean isSearchContactNameEmpty = searchContactName == null || searchContactName.isEmpty();
+        boolean isSearchPhoneNumberEmpty = searchPhoneNumber == null || searchPhoneNumber.isEmpty();
+        FavoritesAndContactsLoader cursorLoader = new FavoritesAndContactsLoader(getContext(), searchPhoneNumber, searchContactName);
+        if (!isSearchContactNameEmpty || !isSearchPhoneNumberEmpty) { //Don't show favorites if the user is searching for a contact
+            cursorLoader.setLoadFavorites(false);
+        } else {
+            cursorLoader.setLoadFavorites(true);
+        }
         return cursorLoader;
     }
 
@@ -230,7 +273,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
      * Checks for the required permission in order to run the loader
      */
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
             runLoader();
         }
     }

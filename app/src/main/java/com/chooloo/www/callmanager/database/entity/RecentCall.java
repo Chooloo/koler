@@ -6,10 +6,8 @@ import android.provider.CallLog;
 
 import com.chooloo.www.callmanager.util.ContactUtils;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
-
-import timber.log.Timber;
 
 public class RecentCall {
 
@@ -79,8 +77,7 @@ public class RecentCall {
     }
 
     public String getCallDateString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
-        String dateString = simpleDateFormat.format(this.mCallDate);
-        return dateString;
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        return dateFormat.format(this.mCallDate);
     }
 }

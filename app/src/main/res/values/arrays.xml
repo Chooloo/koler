@@ -50,20 +50,4 @@
     <string-array name="dialog_long_click_cgroup_options">
         <item>Delete this list</item>
     </string-array>
-
-    <string-array name="contacts_placeholders">
-        <item>Bla</item>
-        <item>Bla</item>
-        <item>Bla</item>
-        <item>Bla</item>
-        <item>Bla</item>
-        <item>Bla</item>
-    </string-array>
-
-    <string-array name="indicator_colors">
-        <item>?attr/colorAccent</item>
-        <item>?attr/colorAccent</item>
-        <item>?attr/colorAccent</item>
-        <item>?attr/colorAccent</item>
-    </string-array>
 </resources>

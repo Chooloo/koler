@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.dialog;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
-import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
+import static com.chooloo.www.callmanager.util.Utilities.checkPermissionsGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
 
@@ -53,6 +54,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
         super.onCreateDialog(savedInstanceState);
 
         //Let's create the custom view
+        @SuppressLint("InflateParams")
         View customView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_import_spreadsheet, null, false);
         ButterKnife.bind(this, customView);
 
@@ -169,7 +171,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
      * Shows a file chooser for the excel file
      */
     private void showFileChooser() {
-        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (!checkPermissionsGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
             askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
             return;
         }
@@ -183,6 +185,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
 
     /**
      * Validates column index lol
+     *
      * @param editable
      * @param view
      */

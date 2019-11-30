@@ -41,7 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:clickable="true"
         android:tint="@android:color/white"
         android:tooltipText="@string/action_cancel"
         app:fabSize="normal"
@@ -49,7 +48,8 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/text_action_time_left"
         app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
-        app:srcCompat="@drawable/ic_clear_black_24dp" />
+        app:srcCompat="@drawable/ic_clear_black_24dp"
+        tools:targetApi="o" />
 
     <!-- Guidelines -->
     <androidx.constraintlayout.widget.Guideline

@@ -5,6 +5,6 @@
     <item
         android:id="@+id/action_dismiss"
         android:icon="@drawable/ic_clear_black_24dp"
-        android:title="Dismiss"
+        android:title="@string/action_dismiss"
         app:showAsAction="always" />
 </menu>

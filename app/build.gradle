@@ -38,7 +38,7 @@ dependencies {
     implementation 'androidx.arch.core:core-common:2.0.1'
     implementation 'androidx.arch.core:core-runtime:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
@@ -53,9 +53,9 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:2.0.0"
 
     //Room
-    implementation "androidx.room:room-runtime:2.0.0"
-    annotationProcessor "androidx.room:room-compiler:2.0.0"
-    testImplementation "androidx.room:room-testing:2.0.0"
+    implementation "androidx.room:room-runtime:2.1.0"
+    annotationProcessor "androidx.room:room-compiler:2.1.0"
+    testImplementation "androidx.room:room-testing:2.1.0"
 
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
@@ -99,11 +99,11 @@ dependencies {
 
     //Test
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test:core:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
     androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
 }

@@ -23,11 +23,9 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.loader.content.CursorLoader;
 
-import timber.log.Timber;
-
 import static android.provider.ContactsContract.Contacts;
 
-public final class ContactsCursorLoader extends CursorLoader {
+public class ContactsCursorLoader extends CursorLoader {
 
     public static String CURSOR_NAME_COLUMN = Phone.DISPLAY_NAME_PRIMARY;
     public static String CURSOR_NUMBER_COLUMN = Phone.NUMBER;

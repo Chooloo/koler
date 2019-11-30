@@ -16,7 +16,7 @@ import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import butterknife.BindView;
 
-public class AbsSearchBarActivity extends AbsAppBarActivity {
+public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
 
     SharedSearchViewModel mSharedSearchViewModel;
     SearchBarFragment mSearchBarFragment;

@@ -2,16 +2,16 @@ package com.chooloo.www.callmanager.ui.activity;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
 import com.chooloo.www.callmanager.database.AppDatabase;
 import com.chooloo.www.callmanager.database.DataRepository;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 public class CGroupViewModel extends AndroidViewModel {
 
@@ -22,6 +22,7 @@ public class CGroupViewModel extends AndroidViewModel {
 
     /**
      * Constructor
+     *
      * @param application
      */
     public CGroupViewModel(@NonNull Application application) {
@@ -31,6 +32,7 @@ public class CGroupViewModel extends AndroidViewModel {
 
     /**
      * Sets the list id by a given long
+     *
      * @param listId
      */
     public void setListId(long listId) {

@@ -4,17 +4,19 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 public class DialpadKeyButton extends FrameLayout {
 
-    /** Whether this view is currently in the long-hover state. */
+    /**
+     * Whether this view is currently in the long-hover state.
+     */
     private Boolean mLongHovered;
 
     private OnPressedListener mOnPressedListener;
 
     /**
      * Constructor
+     *
      * @param context
      * @param attrs
      */
@@ -25,6 +27,7 @@ public class DialpadKeyButton extends FrameLayout {
 
     /**
      * Set OnPressedListener
+     *
      * @param onPressedListener
      */
     public void setOnPressedListener(OnPressedListener onPressedListener) {
@@ -32,7 +35,7 @@ public class DialpadKeyButton extends FrameLayout {
     }
 
     public interface OnPressedListener {
-        public void onPressed(View view, boolean pressed);
+        void onPressed(View view, boolean pressed);
     }
 
     @Override

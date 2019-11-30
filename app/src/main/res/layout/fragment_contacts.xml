@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ContactsFragment">
 
+    <include
+        android:id="@+id/item_header"
+        layout="@layout/item_header"
+        android:layout_width="@dimen/header_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/contacts_refresh_layout"
         android:layout_width="match_parent"

@@ -2,6 +2,7 @@
 
 <!-- Dialpad keys -->
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialpad"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,7 +22,7 @@
                 <TextView
                     android:id="@+id/dialpad_key_number"
                     style="@style/DialpadKeyNumber"
-                    android:text="n" />
+                    tools:text="n" />
 
                 <ImageView
                     android:id="@+id/dialpad_key_voicemail"

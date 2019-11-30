@@ -12,4 +12,6 @@ public abstract class AbsFastScrollerAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     public abstract String getHeaderString(int position);
+
+    public abstract void refreshHeaders();
 }
