@@ -427,4 +427,12 @@ public class Utilities {
         return numeric;
     }
 
+    /**
+     * Returns only the numbers from a string (removes special characters and spaces
+     * @param string
+     * @return string
+     */
+    public static String getOnlyNumbers(String string) {
+        return string.replaceAll("[^0-9]", "");
+    }
 }

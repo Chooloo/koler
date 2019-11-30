@@ -324,7 +324,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     @Override
     public void onBackPressed() {
+        // In case the dialpad is opened, pressing the back button will close it
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
+        // You cant press the back button in order to get out of the call
     }
 
     @Override

@@ -35,6 +35,8 @@ import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 
+import org.apache.poi.xdgf.util.Util;
+
 import java.util.HashSet;
 
 import butterknife.BindView;
@@ -140,10 +142,12 @@ public class DialpadFragment extends AbsBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mViewModel.getNumber().observe(this, s -> {
-            if (!s.equals(mNumberText)) {
+            if (!s.equals(Utilities.getOnlyNumbers(mDigits.getText().toString()))) {
 //                setNumber(s);
             }
         });
+
+        // Formats the phone number text in realtime
         mPhoneNumberFormattingTextWatcher = new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry());
         mDigits.addTextChangedListener(mPhoneNumberFormattingTextWatcher);
         mDigits.addTextChangedListener(new TextWatcher() {
@@ -274,7 +278,7 @@ public class DialpadFragment extends AbsBaseFragment {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        CallManager.call(this.getContext(), mNumberText);
+        CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
     }
 
     @OnClick(R.id.digits_edit_text)
@@ -363,8 +367,11 @@ public class DialpadFragment extends AbsBaseFragment {
         }
         vibrate();
         KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+
         // Add the digit to mDigits
         mDigits.onKeyDown(keyCode, event);
+
+        // An option for an outer response
         if (mOnKeyDownListener != null) mOnKeyDownListener.onKeyPressed(keyCode, event);
 
         // If the cursor is at the end of the text we hide it.
