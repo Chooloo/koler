@@ -65,6 +65,7 @@
         app:srcCompat="@drawable/ic_sms_black_24dp" />
 
     <TextView
+        android:id="@+id/button_floating_send_sms_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -92,6 +93,7 @@
         app:srcCompat="@drawable/ic_clear_black_24dp" />
 
     <TextView
+        android:id="@+id/button_floating_cancel_overlay_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

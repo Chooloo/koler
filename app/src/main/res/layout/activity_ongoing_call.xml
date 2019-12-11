@@ -8,7 +8,9 @@
     android:fitsSystemWindows="true">
 
     <!-- OnGoingCall Layout -->
-    <include layout="@layout/on_going_call" />
+    <include
+        android:id="@+id/ongoing_call_layout"
+        layout="@layout/on_going_call" />
 
     <!-- Reject Options -->
     <include
