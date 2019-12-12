@@ -186,8 +186,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
         ButterKnife.bind(this);
 
-        checkForIntent();
-
         // This activity needs to show even if the screen is off or locked
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -329,24 +327,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
     }
-
-    /**
-     * Check for an incoming intent, most likely from the notification buttons
-     */
-    public void checkForIntent() {
-        // Check for intents
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        if (ACTION_ANSWER.equals(action) && type != null) {
-            activateCall();
-        } else if (ACTION_HANGUP.equals(action) && type != null) {
-            endCall();
-        } else {
-
-        }
-    }
-
+    
     // -- Overrides -- //
 
     @Override
