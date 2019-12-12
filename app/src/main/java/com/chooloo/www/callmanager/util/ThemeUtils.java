@@ -1,5 +1,9 @@
 package com.chooloo.www.callmanager.util;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.TypedValue;
+
 import androidx.annotation.IntDef;
 import androidx.annotation.StyleRes;
 
@@ -87,5 +91,16 @@ public class ThemeUtils {
                 return R.style.AppTheme_AMOLED_Green_TransparentStatusBar;
         }
         return R.style.AppTheme_Light_Pink_TransparentStatusBar;
+    }
+
+    public static int getAccentColor(Context context) {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{R.attr.secondaryAccentColor});
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
+        return color;
     }
 }

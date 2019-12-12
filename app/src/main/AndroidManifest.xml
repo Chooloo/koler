@@ -127,6 +127,13 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <receiver android:name=".listener.NotificationActionReceiver">
+            <intent-filter>
+                <action android:name="ANSWER" />
+                <action android:name="HANGUP" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

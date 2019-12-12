@@ -3,7 +3,12 @@ package com.chooloo.www.callmanager.ui.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -30,6 +35,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.transition.ChangeBounds;
@@ -40,6 +47,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
+import com.chooloo.www.callmanager.listener.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
@@ -60,20 +68,29 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
 public class OngoingCallActivity extends AbsThemeActivity implements DialpadFragment.OnKeyDownListener {
 
+    // Finals
     private static final long END_CALL_MILLIS = 1500;
+    private static final String CHANNEL_ID = "notification";
+    private static final int NOTIFICATION_ID = 42069;
+    public static final String ACTION_ANSWER = "ANSWER";
+    public static final String ACTION_HANGUP = "HANGUP";
 
     // Handler variables
     private static final int TIME_START = 1;
     private static final int TIME_STOP = 0;
     private static final int TIME_UPDATE = 2;
     private static final int REFRESH_RATE = 100;
+
+    // Call State
     private static int mState;
+    private static String mStateText;
 
     // Fragments
     private DialpadFragment mDialpadFragment;
@@ -84,7 +101,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     // BottomSheet
     BottomSheetBehavior mBottomSheetBehavior;
 
-    // Current states
+    //  Current states
     boolean mIsCallingUI = false;
     boolean mIsCreatingUI = true;
 
@@ -168,6 +185,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         Utilities.setUpLocale(this);
 
         ButterKnife.bind(this);
+
+        checkForIntent();
 
         // This activity needs to show even if the screen is off or locked
         Window window = getWindow();
@@ -311,6 +330,23 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
     }
 
+    /**
+     * Check for an incoming intent, most likely from the notification buttons
+     */
+    public void checkForIntent() {
+        // Check for intents
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        if (ACTION_ANSWER.equals(action) && type != null) {
+            activateCall();
+        } else if (ACTION_HANGUP.equals(action) && type != null) {
+            endCall();
+        } else {
+
+        }
+    }
+
     // -- Overrides -- //
 
     @Override
@@ -346,6 +382,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
         mActionTimer.cancel();
         releaseWakeLock();
+        cancelNotification();
     }
 
     @Override
@@ -548,26 +585,19 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         @StringRes int statusTextRes;
         switch (state) {
             case Call.STATE_ACTIVE: // Ongoing
-//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.ongoing_call_background));
-//                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.green_phone_semi_trans));
                 statusTextRes = R.string.status_call_active;
                 break;
             case Call.STATE_DISCONNECTED: // Ended
-//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.rejected_call_background));
-//                mOngoingCallLayout.setBackgroundColor(getResources().getColor(R.color.red_phone_semi_trans));
                 statusTextRes = R.string.status_call_disconnected;
                 break;
             case Call.STATE_RINGING: // Incoming
-//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_incoming;
                 showBiometricPrompt(this);
                 break;
             case Call.STATE_DIALING: // Outgoing
-//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_CONNECTING: // Connecting (probably outgoing)
-//                mOngoingCallLayout.setBackground(getDrawable(R.drawable.outgoing_call_background));
                 statusTextRes = R.string.status_call_dialing;
                 break;
             case Call.STATE_HOLDING: // On Hold
@@ -581,6 +611,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         if (state != Call.STATE_RINGING && state != Call.STATE_DISCONNECTED) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
         mState = state;
+        mStateText = getString(statusTextRes);
     }
 
     /**
@@ -608,6 +639,9 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mSpeakerButton.setVisibility(View.VISIBLE);
         mAddCallButton.setVisibility(View.VISIBLE);
         moveRejectButtonToMiddle();
+
+        createNotificationChannel();
+        createNotification();
     }
 
     /**
@@ -839,7 +873,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         }
 
         private void finalEndCommonMan() {
-            if(oldVolume != null) mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
+            if (oldVolume != null)
+                mAudioManager.setStreamVolume(AudioManager.STREAM_RING, oldVolume, 0);
             removeOverlay();
         }
     }
@@ -901,4 +936,75 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
             }
         }
     }
+
+    // -- Notification -- //
+    public void createNotification() {
+
+        Contact callerContact = CallManager.getDisplayContact(this);
+        String callerName = callerContact.getName();
+
+        Intent touchNotification = new Intent(this, OngoingCallActivity.class);
+        touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, touchNotification, 0);
+
+        // Answer Button Intent
+        Intent answerIntent = new Intent(this, NotificationActionReceiver.class);
+        answerIntent.setAction(ACTION_ANSWER);
+        answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+        PendingIntent answerPendingIntent = PendingIntent.getBroadcast(this, 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        // Hangup Button Intent
+        Intent hangupIntent = new Intent(this, NotificationActionReceiver.class);
+        hangupIntent.setAction(ACTION_HANGUP);
+        hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+        PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.icon_full_144)
+                .setContentTitle(callerName)
+                .setContentText(mStateText)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setColor(ThemeUtils.getAccentColor(this))
+                .setOngoing(true)
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
+                .setAutoCancel(true);
+
+        // Adding the action buttons
+        builder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
+        builder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    /**
+     * Creates the notification channel
+     * Which allows and manages the displaying of the notification
+     */
+    public void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    /**
+     * Removes the notification
+     */
+    public void cancelNotification() {
+        String ns = this.NOTIFICATION_SERVICE;
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(ns);
+        notificationManager.cancel(NOTIFICATION_ID);
+    }
+
 }

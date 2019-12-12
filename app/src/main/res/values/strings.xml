@@ -152,4 +152,10 @@
     <string name="password_title">Password Login</string>
     <string name="password_message">Log in with your password</string>
 
+    <!-- Notification -->
+    <string name="active_call_notification_text">Is calling...</string>
+    <string name="channel_name">notification</string>
+    <string name="channel_description">On Going Call</string>
+    <string name="action_answer">Answer</string>
+    <string name="action_hangup">Hang Up</string>
 </resources>
