@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +53,6 @@ public class DialpadFragment extends AbsBaseFragment {
     // Text
     private OnKeyDownListener mOnKeyDownListener = null;
     private SharedDialViewModel mViewModel;
-    private String mNumberText = "";
     private PhoneNumberFormattingTextWatcher mPhoneNumberFormattingTextWatcher;
 
     // Booleans
@@ -277,7 +277,11 @@ public class DialpadFragment extends AbsBaseFragment {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
+        if (Utilities.getOnlyNumbers(mDigits.getText().toString()) == "" || mDigits.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
+        } else {
+            CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
+        }
     }
 
     @OnClick(R.id.digits_edit_text)
@@ -388,9 +392,8 @@ public class DialpadFragment extends AbsBaseFragment {
      * @param number
      */
     public void setNumber(String number) {
-        mNumberText = number;
         mDigits.setText(number);
-        mViewModel.setNumber(mNumberText);
+        mViewModel.setNumber(number);
     }
 
     // -- Utils -- //

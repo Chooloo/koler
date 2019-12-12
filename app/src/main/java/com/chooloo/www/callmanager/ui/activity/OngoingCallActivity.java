@@ -129,6 +129,10 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     AllPurposeTouchListener mSmsOverlaySwipeListener;
     AllPurposeTouchListener mIncomingCallSwipeListener;
 
+    // Notification
+    NotificationCompat.Builder mBuilder;
+    NotificationManager mNotificationManager;
+
     // Edit Texts
     @BindView(R.id.edit_sms) TextInputEditText mEditSms;
 
@@ -326,8 +330,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         // Bottom Sheet Behaviour
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
+
+        createNotificationChannel();
+        createNotification();
     }
-    
+
     // -- Overrides -- //
 
     @Override
@@ -593,6 +600,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         if (state == Call.STATE_DISCONNECTED) endCall();
         mState = state;
         mStateText = getString(statusTextRes);
+        mBuilder.setContentText(mStateText);
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     /**
@@ -620,9 +629,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mSpeakerButton.setVisibility(View.VISIBLE);
         mAddCallButton.setVisibility(View.VISIBLE);
         moveRejectButtonToMiddle();
-
-        createNotificationChannel();
-        createNotification();
     }
 
     /**
@@ -940,7 +946,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
         PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+        mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.icon_full_144)
                 .setContentTitle(callerName)
                 .setContentText(mStateText)
@@ -952,11 +958,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
                 .setAutoCancel(true);
 
         // Adding the action buttons
-        builder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
-        builder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
+        mBuilder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
+        mBuilder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     /**
@@ -974,8 +980,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            mNotificationManager = getSystemService(NotificationManager.class);
+            mNotificationManager.createNotificationChannel(channel);
         }
     }
 
