@@ -11,6 +11,7 @@
     <string name="activity_about">About</string>
 
     <!--Action buttons-->
+    <string name="action_add_contact">Add Contact</string>
     <string name="action_settings">Settings</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_reject_call_timer">Reject in</string>
@@ -81,9 +82,7 @@
 
     <!--Dialog-->
     <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\' fields are in:</string>
-
     <string name="dialog_long_click_cgroup_title">What would you like to do?</string>
-
     <string name="dialog_changelog_title">Changelog</string>
 
     <!--Empty-->
@@ -160,4 +159,8 @@
     <string name="channel_description">On Going Call</string>
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hang Up</string>
+
+    <!-- Buttons -->
+    <string name="button_enable_contact_permission">Enable contacts</string>
+
 </resources>

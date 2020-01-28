@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.IntDef;
@@ -30,10 +31,17 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
+import org.apache.poi.xdgf.util.Util;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A {@link androidx.fragment.app.Fragment} that is heavily influenced by
@@ -71,6 +79,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
 
+    @BindView(R.id.enable_contacts_btn) Button mEnableContactsButton;
     @BindView(R.id.empty_state) View mEmptyState;
     @BindView(R.id.empty_title) TextView mEmptyTitle;
     @BindView(R.id.empty_desc) TextView mEmptyDesc;
@@ -83,6 +92,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onFragmentReady() {
+        checkShowButton();
         mLayoutManager =
                 new LinearLayoutManager(getContext()) {
                     @Override
@@ -159,6 +169,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
             }
         });
+
 
         tryRunningLoader();
     }
@@ -270,11 +281,23 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     }
 
     /**
+     * Checking whither to show the "enable contacts" button
+     */
+    public void checkShowButton() {
+        if (Utilities.checkPermissionsGranted(getContext(), READ_CONTACTS)) {
+            mEnableContactsButton.setVisibility(View.GONE);
+        } else {
+            mEnableContactsButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
      * Checks for the required permission in order to run the loader
      */
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), Manifest.permission.READ_CONTACTS)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CONTACTS)) {
             runLoader();
+            mEnableContactsButton.setVisibility(View.GONE);
         }
     }
 
@@ -294,6 +317,17 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     private boolean isLoaderRunning() {
         Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
         return loader != null;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        tryRunningLoader();
+    }
+
+    @OnClick(R.id.enable_contacts_btn)
+    public void askForContactsPermission() {
+        Utilities.askForPermission(getActivity(), READ_CONTACTS);
     }
 
     // -- FABCoordinator.OnFabClickListener -- //

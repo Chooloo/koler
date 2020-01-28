@@ -231,10 +231,13 @@ public class CallManager {
 
         String uri = null;
 
-        if (sCall.getState() == Call.STATE_DIALING) {
-            Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
+        try {
+            if (sCall.getState() == Call.STATE_DIALING) {
+                Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
+            }
+        } catch (NullPointerException e) {
         }
-
+        
         if (sCall.getDetails().getHandle() != null) {
             uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
             Timber.i("Display Contact: %s", uri);

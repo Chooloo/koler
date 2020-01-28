@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -39,6 +40,8 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
+import butterknife.OnTouch;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
@@ -62,22 +65,26 @@ public class MainActivity extends AbsSearchBarActivity {
     // Fragments
     DialpadFragment mDialpadFragment;
     SearchBarFragment mSearchBarFragment;
-
-    BottomSheetBehavior mBottomSheetBehavior;
-
     FragmentPagerAdapter mAdapterViewPager;
+
+    // Other
+    BottomSheetBehavior mBottomSheetBehavior;
     BiometricPrompt mBiometricPrompt;
+    Menu mMenu;
 
     // - View Binds - //
 
     // Views
     @BindView(R.id.appbar) View mAppBar;
     @BindView(R.id.dialer_fragment) View mDialerView;
+
     // Layouts
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
+
     // Buttons
     @BindView(R.id.right_button) FloatingActionButton mRightButton;
     @BindView(R.id.left_button) FloatingActionButton mLeftButton;
+
     // Other
     @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
@@ -143,6 +150,9 @@ public class MainActivity extends AbsSearchBarActivity {
         mSharedDialViewModel.getNumber().observe(this, n -> {
             if (n == null || n.length() == 0) {
 //                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                toggleAddContactAction(false);
+            } else {
+                toggleAddContactAction(true);
             }
         });
 
@@ -197,12 +207,18 @@ public class MainActivity extends AbsSearchBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_actions, menu);
+        mMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_add_contact: {
+                String number = mSharedDialViewModel.getNumber().getValue();
+                Utilities.addContactIntent(this, number);
+                return true;
+            }
             case R.id.action_settings: {
                 Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -273,9 +289,7 @@ public class MainActivity extends AbsSearchBarActivity {
     }
 
     @OnClick(R.id.left_button)
-    public void fabLeftClick() {
-        mFABCoordinator.performLeftClick();
-    }
+    public void fabLeftClick() { mFABCoordinator.performLeftClick(); }
 
     // -- Fragments -- //
 
@@ -306,6 +320,7 @@ public class MainActivity extends AbsSearchBarActivity {
      * @param expand
      */
     public void expandDialer(boolean expand) {
+
         if (expand) {
             BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
@@ -362,7 +377,7 @@ public class MainActivity extends AbsSearchBarActivity {
                         Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS)) { //If granted
             checkVersion();
         } else {
-            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
+//            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
         }
     }
 
@@ -409,4 +424,12 @@ public class MainActivity extends AbsSearchBarActivity {
             }
         }
     }
+
+    private void toggleAddContactAction(boolean isShow) {
+        if (mMenu != null) {
+            MenuItem addContact = mMenu.findItem(R.id.action_add_contact);
+            addContact.setVisible(isShow);
+        }
+    }
+
 }

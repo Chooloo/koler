@@ -5,6 +5,7 @@
     <string-array name="pref_app_theme_entries">
         <item>Light Pinkish</item>
         <item>Light Greenish</item>
+        <item>Light Creemish</item>
         <item>Dark Pinkish</item>
         <item>Dark Greenish</item>
         <item>AMOLED Pinkish</item>
@@ -14,6 +15,7 @@
     <string-array name="pref_app_theme_entry_values">
         <item>light;pink</item>
         <item>light;green</item>
+        <item>light;cream</item>
         <item>dark;pink</item>
         <item>dark;green</item>
         <item>amoled;pink</item>

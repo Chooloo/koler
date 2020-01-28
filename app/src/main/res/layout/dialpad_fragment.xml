@@ -23,8 +23,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/shadow_length"
-        android:alpha="0.15"
-        android:background="@drawable/shadow_fade_up" />
+        android:alpha="0.04"
+        android:background="@drawable/shadow_fade_up"
+        android:backgroundTint="@android:color/transparent" />
 
     <!-- Number Input Field -->
     <LinearLayout
@@ -33,7 +34,6 @@
         android:background="?attr/colorPrimary"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
-        android:paddingTop="10dp"
         android:paddingEnd="@dimen/top_dialpad_side_padding">
 
         <!-- Call Button -->
@@ -70,11 +70,11 @@
         <ImageView
             android:id="@+id/button_delete"
             android:layout_width="50dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_backspace_black_24dp"
-            android:tint="?attr/iconColor"
             android:layout_height="match_parent"
-            android:scaleType="center" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="center"
+            android:src="@drawable/ic_backspace_black_24dp"
+            android:tint="?attr/iconColor" />
 
     </LinearLayout>
 

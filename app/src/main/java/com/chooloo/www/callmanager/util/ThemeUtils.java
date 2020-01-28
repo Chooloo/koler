@@ -43,6 +43,8 @@ public class ThemeUtils {
                 return R.style.AppTheme_Light_Pink;
             case "light;green":
                 return R.style.AppTheme_Light_Green;
+            case "light;cream":
+                return R.style.AppTheme_Light_Cream;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink;
             case "dark;green":
@@ -62,6 +64,8 @@ public class ThemeUtils {
                 return R.style.AppTheme_Light_Pink_NoActionBar;
             case "light;green":
                 return R.style.AppTheme_Light_Green_NoActionBar;
+            case "light;cream":
+                return R.style.AppTheme_Light_Cream_NoActionBar;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink_NoActionBar;
             case "dark;green":
@@ -81,6 +85,8 @@ public class ThemeUtils {
                 return R.style.AppTheme_Light_Pink_TransparentStatusBar;
             case "light;green":
                 return R.style.AppTheme_Light_Green_TransparentStatusBar;
+            case "light;cream":
+                return R.style.AppTheme_Light_Cream_TransparentStatusBar;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink_TransparentStatusBar;
             case "dark;green":

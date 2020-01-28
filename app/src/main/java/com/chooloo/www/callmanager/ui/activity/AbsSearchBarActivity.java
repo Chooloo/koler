@@ -18,6 +18,8 @@ import butterknife.BindView;
 
 public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
 
+    private static boolean mToggled;
+
     SharedSearchViewModel mSharedSearchViewModel;
     SearchBarFragment mSearchBarFragment;
 
@@ -29,8 +31,11 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
 
         // Create a new search bar fragment
         mSearchBarFragment = new SearchBarFragment();
+
         // Replace the placeholder with the new fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
+
+        mToggled = false;
 
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getIsFocused().observe(this, f -> {
@@ -48,11 +53,13 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
         if (isShow) {
+            mToggled = true;
             mSearchBarContainer.setVisibility(View.VISIBLE);
             ft.show(mSearchBarFragment);
             mSearchBarFragment.setFocus();
             Utilities.toggleKeyboard(this, mSearchBarFragment.mSearchInput, true);
         } else {
+            mToggled = false;
             mSearchBarContainer.setVisibility(View.GONE);
             ft.hide(mSearchBarFragment);
             Utilities.toggleKeyboard(this, mSearchBarFragment.mSearchInput, false);
@@ -64,7 +71,7 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
      * Toggles the search bar according to the current state
      */
     public void toggleSearchBar() {
-        toggleSearchBar(!isSearchBarVisible());
+        toggleSearchBar(!mToggled);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -429,10 +430,31 @@ public class Utilities {
 
     /**
      * Returns only the numbers from a string (removes special characters and spaces
+     *
      * @param string
      * @return string
      */
     public static String getOnlyNumbers(String string) {
+
         return string.replaceAll("[^0-9]", "");
+    }
+
+    /**
+     * Opens 'Add Contact' dialog from default os
+     *
+     * @param number
+     */
+    public static void addContactIntent(Activity activity, String number) {
+        // Initiate intent
+        Intent addContactIntent = new Intent(Intent.ACTION_INSERT);
+        addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+
+        // Insert number
+        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
+
+        // Unique number to return when done with intent
+        int PICK_CONTACT = 100;
+
+        activity.startActivityForResult(addContactIntent, PICK_CONTACT);
     }
 }

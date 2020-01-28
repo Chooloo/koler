@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_add_contact"
+        android:icon="@drawable/ic_person_add_black_24dp"
+        android:title="@string/action_add_contact"
+        android:visible="false"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/action_settings"

@@ -18,6 +18,7 @@ public class RecentCall {
     private int mCallType;
     private String mCallDuration;
     private Date mCallDate;
+    private int mCount;
 
     // Call Types
     public static final int mOutgoingCall = CallLog.Calls.OUTGOING_TYPE;
@@ -54,6 +55,9 @@ public class RecentCall {
         mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
         mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
         mCallType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
+        int position = cursor.getPosition();
+        mCount = checkNextMutliple(cursor);
+        cursor.moveToPosition(position);
     }
 
     public String getCallerName() {
@@ -77,7 +81,21 @@ public class RecentCall {
     }
 
     public String getCallDateString() {
-        DateFormat dateFormat = DateFormat.getDateInstance();
+        DateFormat dateFormat = DateFormat.getDateTimeInstance();
         return dateFormat.format(this.mCallDate);
+    }
+
+    public int getCount() {
+        return this.mCount;
+    }
+
+    public int checkNextMutliple(Cursor cursor) {
+        int count = 1;
+        while (true) {
+            cursor.moveToNext();
+            if (cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).equals(mNumber))
+                count++;
+            else return count;
+        }
     }
 }

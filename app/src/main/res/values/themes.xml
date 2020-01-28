@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SplashTheme" parent="AppTheme.Light.Pink">
+    <style name="SplashTheme" parent="AppTheme.Light">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:navigationBarColor">@color/ic_launcher_background</item>
         <item name="android:statusBarColor">@color/ic_launcher_background</item>
@@ -9,10 +9,10 @@
     </style>
 
     <!--Light-->
-    <style name="AppTheme.Light.Pink" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
-        <item name="colorAccent">@color/color_accent_pink</item>
+        <item name="colorAccent">@color/color_accent_default</item>
         <item name="dialogBackgroundColor">?attr/colorPrimary</item>
 
         <item name="android:windowBackground">?attr/colorPrimary</item>
@@ -32,10 +32,10 @@
     </style>
 
     <!--Dark-->
-    <style name="AppTheme.Dark.Pink" parent="Theme.MaterialComponents.Bridge">
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Bridge">
         <item name="colorPrimary">@color/color_primary_dark</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
-        <item name="colorAccent">@color/color_accent_pink</item>
+        <item name="colorAccent">@color/color_accent_default</item>
 
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowBackground">?attr/colorPrimary</item>
@@ -55,7 +55,7 @@
     </style>
 
     <!--AMOLED-->
-    <style name="AppTheme.AMOLED.Pink" parent="AppTheme.Dark.Pink">
+    <style name="AppTheme.AMOLED" parent="AppTheme.Dark.Pink">
         <item name="colorPrimary">@color/color_primary_amoled</item>
         <item name="dialogBackgroundColor">?attr/colorPrimary</item>
 
@@ -70,19 +70,46 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <!-- Pink (default)-->
+    <style name="AppTheme.Light.Pink" parent="Theme.MaterialComponents.Light">
+        <item name="colorAccent">@color/color_accent_pink</item>
+    </style>
+
+    <style name="AppTheme.Dark.Pink" parent="Theme.MaterialComponents.Bridge">
+        <item name="colorAccent">@color/color_accent_pink</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Pink" parent="AppTheme.AMOLED"></style>
+
     <!--Greenish-->
-    <style name="AppTheme.Light.Green" parent="AppTheme.Light.Pink">
+    <style name="AppTheme.Light.Green" parent="AppTheme.Light">
         <item name="colorAccent">@color/color_accent_green</item>
         <item name="secondaryAccentColor">?attr/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Dark.Green" parent="AppTheme.Dark.Pink">
+    <style name="AppTheme.Dark.Green" parent="AppTheme.Dark">
         <item name="colorAccent">@color/color_accent_green</item>
         <item name="secondaryAccentColor">?attr/colorAccent</item>
     </style>
 
-    <style name="AppTheme.AMOLED.Green" parent="AppTheme.AMOLED.Pink">
+    <style name="AppTheme.AMOLED.Green" parent="AppTheme.AMOLED">
         <item name="colorAccent">@color/color_accent_green</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
+
+    <!-- Creemish -->
+    <style name="AppTheme.Light.Cream" parent="AppTheme.Light">
+        <item name="colorAccent">@color/color_accent_cream</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dark.Cream" parent="AppTheme.Dark">
+        <item name="colorAccent">@color/color_accent_cream</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Cream" parent="AppTheme.AMOLED">
+        <item name="colorAccent">@color/color_accent_cream</item>
         <item name="secondaryAccentColor">?attr/colorAccent</item>
     </style>
 
@@ -93,6 +120,11 @@
     </style>
 
     <style name="AppTheme.Light.Green.NoActionBar" parent="AppTheme.Light.Green">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Light.Cream.NoActionBar" parent="AppTheme.Light.Cream">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -123,6 +155,10 @@
     </style>
 
     <style name="AppTheme.Light.Green.TransparentStatusBar" parent="AppTheme.Light.Green.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.Light.Cream.TransparentStatusBar" parent="AppTheme.Light.Cream.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

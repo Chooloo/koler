@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
+import com.chooloo.www.callmanager.ui.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,19 +57,39 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
     public void onBindViewHolder(RecentCallHolder holder, Cursor cursor) {
 
         holder.letterText.setVisibility(GONE);
-        // Get information
+
+        // Get the recent call
         RecentCall recentCall = new RecentCall(this.mContext, cursor);
+
+        // Get information
         String callerName = recentCall.getCallerName();
         String phoneNumber = recentCall.getCallerNumber();
         String date = recentCall.getCallDateString();
+        int count = recentCall.getCount();
+        String stringCount = String.valueOf(count);
+
+        if (cursor.getPosition() != 0) {
+            cursor.moveToPosition(cursor.getPosition() - 1);
+            // Check if there are more of the same number ahead
+            RecentCall nextCall = new RecentCall(this.mContext, cursor);
+            if (nextCall.getCount() > 1) {
+//                holder.itemView.setVisibility(GONE);
+            }
+        }
 
         // Set date
         holder.time.setText(date);
 
-        // Set display name (phone number/name)
-        if (callerName != null) holder.name.setText(callerName);
-        else holder.name.setText(phoneNumber);
+        // Set display name (phone number / name)
+        if (count > 1) {
+            callerName += (" (" + stringCount + ")");
+//            holder.photo.setVisibility(GONE);
+        }
+        if (callerName != null) {
+            holder.name.setText(callerName);
+        } else holder.name.setText(phoneNumber);
 
+        // Set image
         holder.photo.setVisibility(View.VISIBLE);
         holder.photoPlaceholder.setVisibility(GONE);
         switch (recentCall.getCallType()) {
@@ -94,6 +116,8 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
                 return true;
             });
         }
+
+
     }
 
     @Override
