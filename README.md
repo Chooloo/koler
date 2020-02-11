@@ -1,7 +1,7 @@
 # Koler
-A uniquely stylized phone app, designed with the user in mind.
-Believe us we want to make it good, we use it ourselfs.
-Its for Android. </br>
+A uniquely stylized phone app for Android, designed with the user in mind.
+Believe us we want to make it good, as we use it ourselves.
+</br>
 
 <img src="https://github.com/Chooloo/call_manage/blob/master/art/screenshots.png" height="250">
 
@@ -13,23 +13,23 @@ Its for Android. </br>
 
 ## Features
 ### Design
-One of the main parts in this app is the design.
-Making it intuitive and comfortable.
+One of the main features of the app is the design.
+Its goal it to make the app intuitive and comfortable.
 
 ### In Call Interface
 Our ongoing call UI makes everything easier.
-Its uses swipes and minimalistic design, making everything more beautiful, intuitive, yet still productive.
+It uses swipes and minimalistic design, making everything more beautiful, intuitive, yet still productive.
 
 In an incoming call, you can do the following before answering:
-* Reject and send the call an SMS
+* Reject and send the caller an SMS
 * Reject in a specified amount of seconds
 * Answer in a specified amount of seconds
 
 In an ongoing call you can:
-* Reject in a specified amount of seconds
+* Hang-up in a specified amount of seconds
 
 ### Swipes
-The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
+The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, resulting in a smoother user experience.
   <!-- * ### Dialer
     * __Call__            - Swipe up  
     * __Delete number__   - Swipe left  
