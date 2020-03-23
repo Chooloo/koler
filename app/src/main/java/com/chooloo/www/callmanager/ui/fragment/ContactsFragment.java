@@ -75,6 +75,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
     @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.item_header) TextView mAnchoredHeader;
+    @BindView(R.id.item_add_contact) View mAddContact;
 
     LinearLayoutManager mLayoutManager;
     ContactsAdapter mContactsAdapter;
@@ -153,6 +154,11 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         // Dialer View Model
         mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mSharedDialViewModel.getNumber().observe(this, s -> {
+            if (s != null && s.length() > 0) {
+                mAddContact.setVisibility(View.VISIBLE);
+            } else {
+                mAddContact.setVisibility(View.GONE);
+            }
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
                 args.putString(ARG_SEARCH_PHONE_NUMBER, s);
@@ -330,6 +336,12 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         Utilities.askForPermission(getActivity(), READ_CONTACTS);
     }
 
+    @OnClick(R.id.item_add_contact)
+    public void addContact() {
+        String number = mSharedDialViewModel.getNumber().getValue();
+        Utilities.addContactIntent(getActivity(), number);
+    }
+
     // -- FABCoordinator.OnFabClickListener -- //
 
     @Override
@@ -351,4 +363,5 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 R.drawable.ic_search_black_24dp
         };
     }
+
 }

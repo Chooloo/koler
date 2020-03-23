@@ -21,7 +21,6 @@
     <string name="action_edit">Edit</string>
     <string name="action_about">About</string>
     <string name="action_feature_request">Feature Request</string>
-
     <!--Preferences-->
     <string name="pref_category_look_and_feel">Look and Feel</string>
     <string name="pref_app_theme_key">app_theme</string>

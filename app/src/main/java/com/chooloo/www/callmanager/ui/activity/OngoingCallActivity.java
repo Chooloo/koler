@@ -601,7 +601,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         if (state != Call.STATE_RINGING && state != Call.STATE_DISCONNECTED) switchToCallingUI();
         if (state == Call.STATE_DISCONNECTED) endCall();
         mState = state;
-        mStateText = getString(statusTextRes);
+        mStateText = getResources().getString(statusTextRes);
         mBuilder.setContentText(mStateText);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }

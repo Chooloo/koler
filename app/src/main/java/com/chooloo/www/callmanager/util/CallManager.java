@@ -231,19 +231,20 @@ public class CallManager {
 
         String uri = null;
 
-        try {
-            if (sCall.getState() == Call.STATE_DIALING) {
-                Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
-            }
-        } catch (NullPointerException e) {
-        }
-        
+//        try {
+//            if (sCall.getState() == Call.STATE_DIALING) {
+//                Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
+//            }
+//        } catch (NullPointerException e) {
+//        }
+
         if (sCall.getDetails().getHandle() != null) {
             uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
             Timber.i("Display Contact: %s", uri);
         }
 
-        if (uri != null && uri.isEmpty()) return ContactUtils.UNKNOWN;
+        if (uri != null) if (uri.isEmpty()) return ContactUtils.UNKNOWN;
+//        else return ContactUtils.UNKNOWN;
 
         // If uri contains 'voicemail' this is a... voicemail dah
         if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;

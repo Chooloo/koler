@@ -289,7 +289,9 @@ public class MainActivity extends AbsSearchBarActivity {
     }
 
     @OnClick(R.id.left_button)
-    public void fabLeftClick() { mFABCoordinator.performLeftClick(); }
+    public void fabLeftClick() {
+        mFABCoordinator.performLeftClick();
+    }
 
     // -- Fragments -- //
 

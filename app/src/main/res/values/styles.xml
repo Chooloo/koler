@@ -16,7 +16,6 @@
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:text">Big Text</item>
         <item name="android:maxLines">1</item>
-        <!--<item name="android:ellipsize">end</item>-->
     </style>
 
     <style name="ListItemText.Small">

@@ -2,6 +2,7 @@
 <resources>
     <color name="ic_launcher_background">@color/color_accent_pink</color>
 
+    <!-- Themes -->
     <color name="color_primary_light">@color/white</color>
     <color name="color_primary_dark">@color/grey_850</color>
     <color name="color_primary_amoled">@color/black</color>
@@ -28,9 +29,7 @@
     <!-- Greys -->
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_400">#BDBDBD</color>
-
     <color name="grey_800">#424242</color>
-
     <color name="grey_850">#303030</color>
     <color name="semi_grey_850">#DA303030</color>
 

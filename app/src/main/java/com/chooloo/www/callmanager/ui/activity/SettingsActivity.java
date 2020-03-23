@@ -76,22 +76,22 @@ public class SettingsActivity extends AbsThemeActivity {
                 return true;
             };
 
-            //App theme
+            // App theme
             ListPreference appThemePreference = (ListPreference) findPreference(getString(R.string.pref_app_theme_key));
             appThemePreference.setOnPreferenceChangeListener(themeChangeListener);
             appThemePreference.setSummary(appThemePreference.getEntry());
 
-            //End call timer
+            // End call timer
             ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
             rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
 
-            //Answer call timer
+            // Answer call timer
             ListPreference answerCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_answer_call_timer_key));
             answerCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             answerCallTimerPreference.setSummary(answerCallTimerPreference.getEntry());
 
-            //Default page
+            // Default page
             ListPreference defaultPagePreference = (ListPreference) findPreference(getString(R.string.pref_default_page_key));
             defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
             defaultPagePreference.setSummary(defaultPagePreference.getEntry());
@@ -102,11 +102,11 @@ public class SettingsActivity extends AbsThemeActivity {
 //            SwitchPreference isNoVibratePreference = (SwitchPreference) findPreference(getString(R.string.pref_is_no_vibrate_key));
 //            isNoVibratePreference.setOnPreferenceChangeListener(switchChangeListener);
 
-            //Biometrics
+            // Biometrics
             SwitchPreference isBiometricPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_biometric_key));
             isBiometricPreference.setOnPreferenceChangeListener(switchChangeListener);
 
-            //Sim selection
+            // Sim selection
             ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
             simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
 
