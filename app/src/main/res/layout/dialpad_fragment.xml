@@ -31,7 +31,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_number_input_height"
-        android:background="?attr/colorPrimary"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
         android:paddingEnd="@dimen/top_dialpad_side_padding">

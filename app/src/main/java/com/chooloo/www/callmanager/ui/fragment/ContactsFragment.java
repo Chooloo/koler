@@ -39,6 +39,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -88,12 +89,16 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_contacts, container, false);
+        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     protected void onFragmentReady() {
+
         checkShowButton();
+
         mLayoutManager =
                 new LinearLayoutManager(getContext()) {
                     @Override

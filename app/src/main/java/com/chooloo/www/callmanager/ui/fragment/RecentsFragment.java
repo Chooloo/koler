@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,11 @@ import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
+import butterknife.OnClick;
+
+import static android.Manifest.permission.READ_CALL_LOG;
+import static android.Manifest.permission.READ_CONTACTS;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -60,7 +66,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     // ViewBinds
     @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
-
+    @BindView(R.id.enable_recents_btn) Button mEnableCallLogButton;
     @BindView(R.id.empty_state) View mEmptyState;
     @BindView(R.id.empty_title) TextView mEmptyTitle;
     @BindView(R.id.empty_desc) TextView mEmptyDesc;
@@ -75,6 +81,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onFragmentReady() {
+
+        checkShowButton();
+
         mLayoutManager =
                 new LinearLayoutManager(getContext()) {
                     @Override
@@ -97,8 +106,10 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
         // mRefreshLayout
         mRefreshLayout.setOnRefreshListener(() -> {
-            LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
-            tryRunningLoader();
+            if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
+                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
+                tryRunningLoader();
+            }
         });
 
         mEmptyTitle.setText(R.string.empty_recents_title);
@@ -159,8 +170,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     // -- Loader -- //
 
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), Manifest.permission.READ_CALL_LOG)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
             runLoader();
+            mEnableCallLogButton.setVisibility(View.GONE);
         }
     }
 
@@ -211,6 +223,24 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             mRecyclerView.setVisibility(View.GONE);
             mEmptyState.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Checking whither to show the "enable contacts" button
+     */
+    public void checkShowButton() {
+        if (Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
+            mEnableCallLogButton.setVisibility(View.GONE);
+        } else {
+            mEnableCallLogButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // -- On Clicks -- //
+
+    @OnClick(R.id.enable_recents_btn)
+    public void askForCallLogPermission() {
+        Utilities.askForPermission(getActivity(), READ_CALL_LOG);
     }
 
     // -- FABCoordinator.OnFabClickListener -- //

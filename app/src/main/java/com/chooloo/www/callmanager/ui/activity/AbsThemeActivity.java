@@ -1,5 +1,8 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.content.res.Resources;
+import android.widget.Toast;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
+
+import timber.log.Timber;
 
 import static com.chooloo.www.callmanager.util.ThemeUtils.ThemeType;
 
@@ -36,7 +41,7 @@ public abstract class AbsThemeActivity extends AppCompatActivity {
     protected void updateTheme() {
         String theme = PreferenceUtils.getInstance(this).getString(R.string.pref_app_theme_key);
         int newThemeStyle = ThemeUtils.themeFromId(theme, mThemeType);
-
+        Timber.i("Theme updating to: " + theme);
         boolean isInOnCreate = mThemeStyle == -1;
 
         if (mThemeStyle != newThemeStyle) {
@@ -48,5 +53,11 @@ public abstract class AbsThemeActivity extends AppCompatActivity {
                 startActivity(getIntent());
             }
         }
+    }
+
+    @Override
+    public void setTheme(int resid) {
+        Resources.Theme theme = super.getTheme();
+        theme.applyStyle(resid, true);
     }
 }

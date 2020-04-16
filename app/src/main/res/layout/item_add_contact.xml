@@ -11,7 +11,7 @@
 
     <!-- Caller Pic -->
     <ImageView
-        android:id="@+id/item_header"
+        android:id="@+id/add_contact_icon"
         android:layout_width="@dimen/header_width"
         android:layout_height="@dimen/header_width"
         android:layout_marginStart="16dp"
@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/item_contact_padding"
         android:text="@string/action_add_contact"
-        app:layout_constraintBottom_toBottomOf="@id/item_header"
-        app:layout_constraintStart_toEndOf="@+id/item_header"
-        app:layout_constraintTop_toTopOf="@+id/item_header" />
+        app:layout_constraintBottom_toBottomOf="@id/add_contact_icon"
+        app:layout_constraintStart_toEndOf="@+id/add_contact_icon"
+        app:layout_constraintTop_toTopOf="@+id/add_contact_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

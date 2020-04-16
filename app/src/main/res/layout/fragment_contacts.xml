@@ -6,13 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ContactsFragment">
 
-    <include
+    <LinearLayout
         android:id="@+id/included_item_contact"
-        layout="@layout/item_add_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/item_add_contact" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/enable_contacts_btn"
@@ -27,7 +32,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/item_header"
         layout="@layout/item_header"
         android:layout_width="@dimen/header_width"
         android:layout_height="wrap_content"

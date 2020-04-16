@@ -162,5 +162,6 @@
 
     <!-- Buttons -->
     <string name="button_enable_contact_permission">Enable contacts</string>
+    <string name="button_enable_recents_permission">Enable Call Log</string>
 
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/pref_category_look_and_feel">
 
@@ -35,7 +36,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_pages">
+    <PreferenceCategory
+        android:title="@string/pref_category_pages"
+        app:iconSpaceReserved="false">
 
         <ListPreference
             android:defaultValue="@string/pref_default_page_default_value"
@@ -46,7 +49,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_noise">
+    <PreferenceCategory
+        android:title="@string/pref_category_noise"
+        app:iconSpaceReserved="false">
 
         <SwitchPreference
             android:enabled="false"
@@ -62,7 +67,9 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_category_scurity">
+    <PreferenceCategory
+        android:title="@string/pref_category_scurity"
+        app:iconSpaceReserved="false">
 
         <SwitchPreference
             android:defaultValue="false"

@@ -48,5 +48,4 @@
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/dialpad_fragment" />
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -71,11 +71,12 @@
     </style>
 
     <!-- Pink (default)-->
-    <style name="AppTheme.Light.Pink" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme.Light.Pink" parent="AppTheme.Light">
         <item name="colorAccent">@color/color_accent_pink</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Dark.Pink" parent="Theme.MaterialComponents.Bridge">
+    <style name="AppTheme.Dark.Pink" parent="AppTheme.Dark">
         <item name="colorAccent">@color/color_accent_pink</item>
     </style>
 

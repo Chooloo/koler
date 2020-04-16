@@ -19,6 +19,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.telecom.Call;
 import android.view.KeyEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -235,7 +236,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
-        // Fragments
+        // Dialpad Fragment
         mDialpadFragment = DialpadFragment.newInstance(false);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialer_fragment, mDialpadFragment)
