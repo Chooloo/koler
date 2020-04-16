@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.util;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.util.TypedValue;
 
@@ -97,6 +98,20 @@ public class ThemeUtils {
                 return R.style.AppTheme_AMOLED_Green_TransparentStatusBar;
         }
         return R.style.AppTheme_Light_Pink_TransparentStatusBar;
+    }
+
+    public static boolean isNightModeOn(Context context) {
+        int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                // Night mode is not active, we're using the light theme
+                return false;
+            case Configuration.UI_MODE_NIGHT_YES:
+                // Night mode is active, we're using dark theme
+                return true;
+            default:
+                return false;
+        }
     }
 
     public static int getAccentColor(Context context) {

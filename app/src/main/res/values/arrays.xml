@@ -2,24 +2,30 @@
 <resources>
 
     <!-- App Theme Preferences -->
+    <string-array name="pref_app_color_entries">
+        <item>Pinkish</item>
+        <item>Greenish</item>
+        <item>Creemish</item>
+    </string-array>
+
     <string-array name="pref_app_theme_entries">
-        <item>Light Pinkish</item>
-        <item>Light Greenish</item>
-        <item>Light Creemish</item>
-        <item>Dark Pinkish</item>
-        <item>Dark Greenish</item>
-        <item>AMOLED Pinkish</item>
-        <item>AMOLED Greenish</item>
+        <item>Light</item>
+        <item>Dark</item>
+        <item>AMOLED</item>
+        <item>System Default</item>
+    </string-array>
+
+    <string-array name="pref_app_color_entry_values">
+        <item>pink</item>
+        <item>green</item>
+        <item>cream</item>
     </string-array>
 
     <string-array name="pref_app_theme_entry_values">
-        <item>light;pink</item>
-        <item>light;green</item>
-        <item>light;cream</item>
-        <item>dark;pink</item>
-        <item>dark;green</item>
-        <item>amoled;pink</item>
-        <item>amoled;green</item>
+        <item>light</item>
+        <item>dark</item>
+        <item>amoled</item>
+        <item>@string/pref_system_entry_value</item>
     </string-array>
 
     <!-- Call Timer Preferences -->

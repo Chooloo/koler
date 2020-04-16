@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.widget.Toast;
 
@@ -38,8 +39,28 @@ public abstract class AbsThemeActivity extends AppCompatActivity {
         updateTheme();
     }
 
+    /**
+     * Sets the theme of the app by preferences
+     * <p>
+     * Yes i know the way it works is a bit messy and can be cleaner but thats the quickest solution
+     * i had for auto detecting system theme and i really dont have time for this
+     */
     protected void updateTheme() {
+
         String theme = PreferenceUtils.getInstance(this).getString(R.string.pref_app_theme_key);
+        String color = PreferenceUtils.getInstance(this).getString(R.string.pref_app_color_key);
+
+        // If theme supposed to match device theme
+        if (theme.equals(getString(R.string.pref_system_entry_value))) {
+            theme = ThemeUtils.isNightModeOn(this) ? "dark" : "light";
+        }
+
+        Timber.i("Theme is: " + theme);
+        Timber.i("Color is: " + color);
+
+        // theme supposed to be "--theme--;--color--"
+        theme = theme + ";" + color;
+
         int newThemeStyle = ThemeUtils.themeFromId(theme, mThemeType);
         Timber.i("Theme updating to: " + theme);
         boolean isInOnCreate = mThemeStyle == -1;

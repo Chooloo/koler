@@ -53,6 +53,16 @@ public class SettingsActivity extends AbsThemeActivity {
             setPreferencesFromResource(R.xml.preference, rootKey);
 
             //Init preferences
+            Preference.OnPreferenceChangeListener colorChangeListener = (preference, newValue) -> {
+                ListPreference listPreference = (ListPreference) preference;
+                CharSequence[] entries = listPreference.getEntries();
+                listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
+
+                getActivity().finish();
+                startActivity(getActivity().getIntent());
+                return true;
+            };
+
             Preference.OnPreferenceChangeListener themeChangeListener = (preference, newValue) -> {
                 ListPreference listPreference = (ListPreference) preference;
                 CharSequence[] entries = listPreference.getEntries();
@@ -75,6 +85,11 @@ public class SettingsActivity extends AbsThemeActivity {
                 switchPreference.setSummary(switchPreference.getSummary());
                 return true;
             };
+
+            // App Color
+            ListPreference appColorPreference = (ListPreference) findPreference(getString(R.string.pref_app_color_key));
+            appColorPreference.setOnPreferenceChangeListener(colorChangeListener);
+            appColorPreference.setSummary(appColorPreference.getEntry());
 
             // App theme
             ListPreference appThemePreference = (ListPreference) findPreference(getString(R.string.pref_app_theme_key));

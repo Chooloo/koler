@@ -24,9 +24,14 @@
 
     <!--Preferences-->
     <string name="pref_category_look_and_feel">Look and Feel</string>
+
     <string name="pref_app_theme_key">app_theme</string>
     <string name="pref_app_theme_title">App Theme</string>
-    <string name="pref_app_theme_default_value">light;pink</string>
+    <string name="pref_app_theme_default_value">light</string>
+
+    <string name="pref_app_color_key">app_color</string>
+    <string name="pref_app_color_title">App Color</string>
+    <string name="pref_app_color_default_value">pink</string>
 
     <string name="pref_category_call">Call</string>
     <string name="pref_category_pages">Pages</string>
@@ -59,6 +64,8 @@
 
     <string name="pref_is_biometric_key">is_biometric</string>
     <string name="pref_is_biometric_title">Use Biometrics</string>
+
+    <string name="pref_system_entry_value">system</string>
     <!--Arguments-->
 
     <!--Call State-->
