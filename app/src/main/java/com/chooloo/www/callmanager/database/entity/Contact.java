@@ -14,6 +14,7 @@ import androidx.room.PrimaryKey;
 
 import com.chooloo.www.callmanager.util.Utilities;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,7 +157,16 @@ public class Contact {
      */
     public String getMainPhoneNumber() {
         if (phoneNumbers.isEmpty()) return null;
-        return phoneNumbers.get(0);
+        String phoneNumber = phoneNumbers.get(0);
+
+        // Try decoding it just in case
+        try {
+            phoneNumber = java.net.URLDecoder.decode(phoneNumber, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // The number cant be decoded so its probably not needed anyway
+        }
+
+        return phoneNumber;
     }
 
     /**

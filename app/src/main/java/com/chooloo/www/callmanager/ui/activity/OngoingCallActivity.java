@@ -62,6 +62,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -555,8 +557,17 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     private void displayInformation() {
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
-        if (!callerContact.getName().isEmpty()) {
-            if (callerContact.getName() != null) mCallerText.setText(callerContact.getName());
+        String callerName = callerContact.getName();
+        if (!callerName.isEmpty()) {
+
+            // Try decoding it just in case
+            try {
+                callerName = java.net.URLDecoder.decode(callerContact.getName(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                // The name cant be decoded so its probably not needed anyway
+            }
+
+            if (callerName != null) mCallerText.setText(callerName);
             if (callerContact.getPhotoUri() != null) {
                 mPlaceholderImage.setVisibility(View.INVISIBLE);
                 mPhotoImage.setVisibility(View.VISIBLE);
