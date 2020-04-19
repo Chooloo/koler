@@ -134,7 +134,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     public String getHeaderString(int position) {
         int index = -1;
         int sum = 0;
-        while (sum <= position) {
+        while (sum < position) {
             if (index + 1 >= mCounts.length) {//Index is bigger than headers list size
                 return "?";
             }

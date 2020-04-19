@@ -238,35 +238,40 @@ public class CallManager {
 //        } catch (NullPointerException e) {
 //        }
 
-        if (sCall.getDetails().getHandle() != null) {
-            uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
-            Timber.i("Display Contact: %s", uri);
-        }
+        try {
+            if (sCall.getDetails().getHandle() != null) {
+                uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
+                Timber.i("Display Contact: %s", uri);
+            }
 
-        if (uri != null) if (uri.isEmpty()) return ContactUtils.UNKNOWN;
+            if (uri != null) if (uri.isEmpty()) return ContactUtils.UNKNOWN;
 //        else return ContactUtils.UNKNOWN;
 
-        // If uri contains 'voicemail' this is a... voicemail dah
-        if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;
+            // If uri contains 'voicemail' this is a... voicemail dah
+            if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;
 
-        String telephoneNumber = null;
+            String telephoneNumber = null;
 
-        // If uri contains 'tel' this is a normal number
-        if (uri.contains("tel:")) telephoneNumber = uri.replace("tel:", "");
+            // If uri contains 'tel' this is a normal number
+            if (uri.contains("tel:")) telephoneNumber = uri.replace("tel:", "");
 
-        if (telephoneNumber == null || telephoneNumber.isEmpty())
-            return ContactUtils.UNKNOWN; // Unknown number
+            if (telephoneNumber == null || telephoneNumber.isEmpty())
+                return ContactUtils.UNKNOWN; // Unknown number
 
-        if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
+            if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
 
-        Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
+            Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
 
-        if (contact == null)
-            return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
-        else if (contact.getName() == null)
-            return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
+            if (contact == null)
+                return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
+            else if (contact.getName() == null)
+                return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
 
-        return contact;
+            return contact;
+        } catch (Exception e) {
+            // quick way to handle the errors, just return unknown
+            return ContactUtils.UNKNOWN;
+        }
     }
 
     /**

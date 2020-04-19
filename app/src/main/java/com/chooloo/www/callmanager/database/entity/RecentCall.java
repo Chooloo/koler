@@ -92,10 +92,15 @@ public class RecentCall {
     public int checkNextMutliple(Cursor cursor) {
         int count = 1;
         while (true) {
-            cursor.moveToNext();
-            if (cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).equals(mNumber))
-                count++;
-            else return count;
+            try {
+                cursor.moveToNext();
+                if (cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).equals(mNumber))
+                    count++;
+                else return count;
+            } catch (Exception e) {
+                // probably index out of bounds exception
+                return count;
+            }
         }
     }
 }
