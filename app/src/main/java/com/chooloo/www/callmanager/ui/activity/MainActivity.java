@@ -16,6 +16,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,6 +29,7 @@ import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
+import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -84,6 +86,7 @@ public class MainActivity extends AbsSearchBarActivity {
     // Buttons
     @BindView(R.id.right_button) FloatingActionButton mRightButton;
     @BindView(R.id.left_button) FloatingActionButton mLeftButton;
+    @BindView(R.id.add_contact_fab_button) FloatingActionButton mAddContactButton;
 
     // Other
     @BindView(R.id.view_pager) ViewPager mViewPager;
@@ -123,6 +126,14 @@ public class MainActivity extends AbsSearchBarActivity {
             public void onPageSelected(int position) {
                 if (isSearchBarVisible()) toggleSearchBar();
                 syncFABAndFragment();
+                switch (position) {
+                    case 1:
+                        showView(mAddContactButton, true);
+                        break;
+                    default:
+                        showView(mAddContactButton, false);
+                        break;
+                }
             }
 
             @Override
@@ -149,7 +160,6 @@ public class MainActivity extends AbsSearchBarActivity {
         });
         mSharedDialViewModel.getNumber().observe(this, n -> {
             if (n == null || n.length() == 0) {
-//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 toggleAddContactAction(false);
             } else {
                 toggleAddContactAction(true);
@@ -188,6 +198,8 @@ public class MainActivity extends AbsSearchBarActivity {
         // Check for intents from others apps
         checkIncomingIntent();
 
+        mAddContactButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_black_24dp));
+
         showBiometricPrompt(this);
     }
 
@@ -216,7 +228,7 @@ public class MainActivity extends AbsSearchBarActivity {
         switch (item.getItemId()) {
             case R.id.action_add_contact: {
                 String number = mSharedDialViewModel.getNumber().getValue();
-                Utilities.addContactIntent(this, number);
+                ContactUtils.addContactIntent(this, number);
                 return true;
             }
             case R.id.action_settings: {
@@ -293,6 +305,12 @@ public class MainActivity extends AbsSearchBarActivity {
         mFABCoordinator.performLeftClick();
     }
 
+    @OnClick(R.id.add_contact_fab_button)
+    public void addContact() {
+        String number = mSharedDialViewModel.getNumber().getValue();
+        ContactUtils.addContactIntent(this, number);
+    }
+
     // -- Fragments -- //
 
     /**
@@ -346,8 +364,10 @@ public class MainActivity extends AbsSearchBarActivity {
     public void updateButtons(int bottomSheetState) {
         if (bottomSheetState == BottomSheetBehavior.STATE_HIDDEN || bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED) {
             showButtons(true);
+            if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, true);
         } else {
             showButtons(false);
+            if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, false);
         }
     }
 
@@ -359,15 +379,25 @@ public class MainActivity extends AbsSearchBarActivity {
     public void showButtons(boolean isShow) {
         View[] buttons = {mRightButton, mLeftButton};
         for (View v : buttons) {
-            if (isShow && v.isEnabled()) {
-                v.animate().scaleX(1).scaleY(1).setDuration(100).start();
-                v.setClickable(true);
-                v.setFocusable(true);
-            } else {
-                v.animate().scaleX(0).scaleY(0).setDuration(100).start();
-                v.setClickable(false);
-                v.setFocusable(false);
-            }
+            showView(v, isShow);
+        }
+    }
+
+    /**
+     * Animate view
+     *
+     * @param isShow
+     * @param v
+     */
+    public void showView(View v, boolean isShow) {
+        if (isShow && v.isEnabled()) {
+            v.animate().scaleX(1).scaleY(1).setDuration(100).start();
+            v.setClickable(true);
+            v.setFocusable(true);
+        } else {
+            v.animate().scaleX(0).scaleY(0).setDuration(100).start();
+            v.setClickable(false);
+            v.setFocusable(false);
         }
     }
 

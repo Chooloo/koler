@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -282,14 +284,41 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         TextView contactName;
         TextView contactNumber;
         ConstraintLayout popupLayout;
+        ImageButton callButton;
+        ImageButton editButton;
+        ImageButton deleteButton;
+        ImageButton infoButton;
+        ImageButton addButton;
 
         contactName = contactDialog.findViewById(R.id.contact_popup_name);
         contactNumber = contactDialog.findViewById(R.id.contact_popup_number);
         popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
+        callButton = contactDialog.findViewById(R.id.contact_popup_button_call);
+        editButton = contactDialog.findViewById(R.id.contact_popup_button_edit);
+        deleteButton = contactDialog.findViewById(R.id.contact_popup_button_delete);
+        infoButton = contactDialog.findViewById(R.id.contact_popup_button_info);
+        addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
 
-        if (contact.getName() != null)
+        callButton.setOnClickListener(v -> {
+            CallManager.call(this.getContext(), contact.getMainPhoneNumber());
+        });
+
+        editButton.setOnClickListener(v -> {
+            ContactUtils.openContactToEditById(getActivity(), contact.getContactId());
+        });
+
+        infoButton.setOnClickListener(v -> {
+            ContactUtils.openContactByNumber(getActivity(), contact.getMainPhoneNumber());
+        });
+
+        if (contact.getName() != null) {
             contactName.setText(contact.getName());
-        else contactName.setText(contact.getMainPhoneNumber());
+            infoButton.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.VISIBLE);
+        } else {
+            contactName.setText(contact.getMainPhoneNumber());
+            addButton.setVisibility(View.VISIBLE);
+        }
 
         contactNumber.setText(contact.getMainPhoneNumber());
         popupLayout.setElevation(20);

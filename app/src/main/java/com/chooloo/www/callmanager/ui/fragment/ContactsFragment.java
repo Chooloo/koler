@@ -27,6 +27,7 @@ import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
@@ -344,7 +345,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @OnClick(R.id.item_add_contact)
     public void addContact() {
         String number = mSharedDialViewModel.getNumber().getValue();
-        Utilities.addContactIntent(getActivity(), number);
+        ContactUtils.addContactIntent(getActivity(), number);
     }
 
     // -- FABCoordinator.OnFabClickListener -- //

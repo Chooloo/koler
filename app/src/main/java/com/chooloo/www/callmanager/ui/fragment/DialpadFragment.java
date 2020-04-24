@@ -280,7 +280,8 @@ public class DialpadFragment extends AbsBaseFragment {
         if (Utilities.getOnlyNumbers(mDigits.getText().toString()) == "" || mDigits.getText().toString().isEmpty()) {
             Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
         } else {
-            CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
+//            CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
+            CallManager.call(this.getContext(), mDigits.getText().toString());
         }
     }
 

@@ -74,13 +74,17 @@ public class Utilities {
     public static boolean checkDefaultDialer(FragmentActivity activity) {
         // Prompt the user with a dialog to select this app to be the default phone app
         String packageName = activity.getApplication().getPackageName();
-        if (!activity.getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
-            Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
-                    .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName);
-            activity.startActivityForResult(intent, DEFAULT_DIALER_RC);
+        try {
+            if (!activity.getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
+                Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
+                        .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName);
+                activity.startActivityForResult(intent, DEFAULT_DIALER_RC);
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
     /**
@@ -439,25 +443,7 @@ public class Utilities {
      */
     public static String getOnlyNumbers(String string) {
 
-        return string.replaceAll("[^0-9]", "");
+        return string.replaceAll("[^0-9#*]", "");
     }
 
-    /**
-     * Opens 'Add Contact' dialog from default os
-     *
-     * @param number
-     */
-    public static void addContactIntent(Activity activity, String number) {
-        // Initiate intent
-        Intent addContactIntent = new Intent(Intent.ACTION_INSERT);
-        addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
-
-        // Insert number
-        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
-
-        // Unique number to return when done with intent
-        int PICK_CONTACT = 100;
-
-        activity.startActivityForResult(addContactIntent, PICK_CONTACT);
-    }
 }

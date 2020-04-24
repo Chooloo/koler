@@ -1,16 +1,22 @@
 package com.chooloo.www.callmanager.util;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.chooloo.www.callmanager.database.entity.Contact;
+
+import timber.log.Timber;
 
 public class ContactUtils {
 
@@ -86,5 +92,90 @@ public class ContactUtils {
         cursor.close();
 
         return contact;
+    }
+
+    /**
+     * Opens 'Add Contact' dialog from default os
+     *
+     * @param number
+     */
+    public static void addContactIntent(Activity activity, String number) {
+        // Initiate intent
+        Intent addContactIntent = new Intent(Intent.ACTION_INSERT);
+        addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+
+        // Insert number
+        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
+
+        // Unique number to return when done with intent
+        int PICK_CONTACT = 100;
+
+        activity.startActivityForResult(addContactIntent, PICK_CONTACT);
+    }
+
+    /**
+     * Opens a contact in the default contacts app by a given number
+     *
+     * @param activity
+     * @param number
+     */
+    public static void openContactByNumber(Activity activity, String number) {
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+        String[] projection = new String[]{ContactsContract.PhoneLookup._ID};
+
+        Cursor cur = activity.getContentResolver().query(uri, projection, null, null, null);
+
+        // if other contacts have that phone as well, we simply take the first contact found.
+        if (cur != null && cur.moveToNext()) {
+            Long id = cur.getLong(0);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(id));
+            intent.setData(contactUri);
+            activity.startActivity(intent);
+
+            cur.close();
+        }
+    }
+
+    /**
+     * Open contact in default contacts app by the contact's id
+     *
+     * @param activity
+     * @param contactId
+     */
+    public static void openContactById(Activity activity, long contactId) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactId));
+            intent.setData(uri);
+            activity.startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Oops there was a problem trying to open the contact :(", Toast.LENGTH_SHORT).show();
+            Timber.i("ERROR: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Open contact edit page in default contacts app by contact's id
+     *
+     * @param activity
+     * @param contactId
+     */
+    public static void openContactToEditById(Activity activity, long contactId) {
+        try {
+            Uri mUri = ContentUris.withAppendedId(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    contactId);
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setDataAndType(mUri, ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+            intent.putExtra("finishActivityOnSaveCompleted", true);
+
+            //add the below line
+            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivityForResult(intent, 1);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Oops there was a problem trying to open the contact :(", Toast.LENGTH_SHORT).show();
+            Timber.i("ERROR: " + e.getMessage());
+        }
     }
 }

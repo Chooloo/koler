@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ContactsFragment">
 
+    <!-- Needs to be in a layout so we can use both ids -->
     <LinearLayout
         android:id="@+id/included_item_contact"
         android:layout_width="wrap_content"
@@ -57,7 +58,6 @@
             tools:listitem="@layout/item_contact">
 
         </androidx.recyclerview.widget.RecyclerView>
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <!--A piece of code from google's default Dial App-->

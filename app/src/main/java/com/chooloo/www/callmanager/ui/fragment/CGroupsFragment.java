@@ -76,7 +76,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
     public int[] getIconsResources() {
         return new int[]{
                 R.drawable.ic_add_black_24dp,
-                -1 //This means no FAB at all
+                -1, //This means no FAB at all
         };
     }
 
