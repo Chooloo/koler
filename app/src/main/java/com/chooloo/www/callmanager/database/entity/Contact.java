@@ -179,7 +179,9 @@ public class Contact {
      * @return String
      */
     public String getMainPhoneNumber() {
-        if (phoneNumbers.isEmpty()) return null;
+        if (phoneNumbers == null) return null;
+        else if (phoneNumbers.isEmpty()) return null;
+
         String phoneNumber = phoneNumbers.get(0);
 
         // Try decoding it just in case

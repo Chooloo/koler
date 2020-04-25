@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     app:elevation="0dp">
 
+    <!-- Tool bar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -21,12 +22,12 @@
             android:layout_gravity="start"
             android:paddingLeft="@dimen/default_edge_padding"
             android:paddingRight="@dimen/default_edge_padding"
-            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             tools:text="@string/app_name" />
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- Tab layout -->
     <com.ogaclejapan.smarttablayout.SmartTabLayout
         android:id="@+id/view_pager_tab"
         android:layout_width="match_parent"
@@ -62,14 +63,11 @@
         app:stl_underlineColor="#4D000000"
         app:stl_underlineThickness="0dp" />
 
+    <!-- Search bar container -->
     <FrameLayout
         android:id="@+id/search_bar_container"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="0dp"
+        android:layout_height="wrap_content"
         android:visibility="gone" />
 
 </com.google.android.material.appbar.AppBarLayout>

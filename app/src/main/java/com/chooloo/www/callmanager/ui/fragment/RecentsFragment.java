@@ -121,10 +121,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
         // mRefreshLayout
         mRefreshLayout.setOnRefreshListener(() -> {
-            if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
-                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
-                tryRunningLoader();
-            }
+            LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
+            tryRunningLoader();
         });
 
         mEmptyTitle.setText(R.string.empty_recents_title);
@@ -290,7 +288,20 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
      */
     private void showRecentPopup(RecentCall recentCall) {
 
-        Contact contact = ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber());
+        Contact contact;
+//        if (recentCall.getCallerNumber() != null) {
+//            Timber.i("Caller name: %s ", recentCall.getCallerName());
+//            if (recentCall.getCallerName() != null)
+//                contact = ContactUtils.getContactByName(getContext(), recentCall.getCallerName());
+//            else
+//                contact = ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber());
+//        } else {
+//            contact = null;
+//        }
+
+        if (recentCall.getCallerName() != null)
+            contact = ContactUtils.getContactByName(getContext(), recentCall.getCallerName());
+        else contact = new Contact(null, recentCall.getCallerNumber(), null);
 
         // Initiate the dialog
         Dialog contactDialog = new Dialog(getContext());
@@ -308,6 +319,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         ImageButton deleteButton;
         ImageButton infoButton;
         ImageButton addButton;
+        ImageButton smsButton;
 
         popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
 
@@ -323,42 +335,58 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         deleteButton = contactDialog.findViewById(R.id.contact_popup_button_delete);
         infoButton = contactDialog.findViewById(R.id.contact_popup_button_info);
         addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
+        smsButton = contactDialog.findViewById(R.id.contact_popup_button_sms);
 
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
             contactNumber.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
             infoButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
+            if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
+                contactPhoto.setVisibility(View.GONE);
+                contactPhotoPlaceholder.setVisibility(View.VISIBLE);
+            } else {
+                contactPhoto.setVisibility(View.VISIBLE);
+                contactPhotoPlaceholder.setVisibility(View.GONE);
+                contactPhoto.setImageURI(Uri.parse(contact.getPhotoUri()));
+            }
         } else {
             infoButton.setVisibility(View.GONE);
             editButton.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
             contactName.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
             contactNumber.setVisibility(View.GONE);
+
+            contactPhoto.setVisibility(View.GONE);
+            contactPhotoPlaceholder.setVisibility(View.VISIBLE);
         }
 
         contactDate.setVisibility(View.VISIBLE);
         contactDate.setText(recentCall.getCallDateString());
 
-        if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
-            contactPhoto.setVisibility(View.GONE);
-            contactPhotoPlaceholder.setVisibility(View.VISIBLE);
-        } else {
-            contactPhoto.setVisibility(View.VISIBLE);
-            contactPhotoPlaceholder.setVisibility(View.GONE);
-            contactPhoto.setImageURI(Uri.parse(contact.getPhotoUri()));
+        // -- Click Listeners -- //
+        if (contact.getName() != null) {
+
+            editButton.setOnClickListener(v -> {
+                ContactUtils.openContactToEditById(getActivity(), contact.getContactId());
+            });
+
+            infoButton.setOnClickListener(v -> {
+                ContactUtils.openContactById(getActivity(), contact.getContactId());
+            });
+
         }
+
+        addButton.setOnClickListener(v -> {
+            ContactUtils.addContactIntent(getActivity(), recentCall.getCallerNumber());
+        });
+
+        smsButton.setOnClickListener(v -> {
+            Utilities.openSmsWithNumber(getActivity(), recentCall.getCallerNumber());
+        });
 
         callButton.setOnClickListener(v -> {
             CallManager.call(this.getContext(), contact.getMainPhoneNumber());
-        });
-
-        editButton.setOnClickListener(v -> {
-            ContactUtils.openContactToEditById(getActivity(), contact.getContactId());
-        });
-
-        infoButton.setOnClickListener(v -> {
-            ContactUtils.openContactById(getActivity(), contact.getContactId());
         });
 
         deleteButton.setOnClickListener(v -> {
@@ -373,10 +401,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
                 Utilities.askForPermission(getActivity(), WRITE_CALL_LOG);
                 contactDialog.dismiss();
             }
-        });
-
-        addButton.setOnClickListener(v -> {
-            ContactUtils.addContactIntent(getActivity(), recentCall.getCallerNumber());
         });
 
         popupLayout.setElevation(20);

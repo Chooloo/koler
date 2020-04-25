@@ -11,8 +11,8 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="20dp"
         android:focusableInTouchMode="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/contact_popup_photo_placeholder"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:tint="?attr/secondaryAccentColor"
@@ -31,8 +31,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/contact_popup_photo"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
             android:layout_gravity="center"
             android:visibility="gone"
             app:civ_border_width="0dp" />
@@ -80,7 +80,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -94,6 +94,13 @@
             style="@style/ContactPopup.Button"
             android:src="@drawable/ic_call_black_24dp"
             android:tint="@color/green_phone" />
+
+        <!-- Call Button -->
+        <ImageButton
+            android:id="@+id/contact_popup_button_sms"
+            style="@style/ContactPopup.Button"
+            android:src="@drawable/ic_sms_black_24dp"
+            android:tint="@color/circle_success" />
 
         <!-- Edit Button -->
         <ImageButton
@@ -124,7 +131,7 @@
             style="@style/ContactPopup.Button"
             android:src="@drawable/ic_delete_black_18dp"
             android:tint="@color/red_phone" />
-        
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

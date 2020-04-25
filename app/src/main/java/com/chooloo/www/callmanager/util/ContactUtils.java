@@ -7,14 +7,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.PhoneLookup;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.loader.content.Loader;
 
 import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.google.ContactsCursorLoader;
+
+import java.sql.Time;
 
 import timber.log.Timber;
 
@@ -42,21 +50,17 @@ public class ContactUtils {
             return null;
         }
 
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-        String[] projection = new String[]{ContactsContract.PhoneLookup.CONTACT_ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.PHOTO_URI};
-        Contact contact;
+        // Build uri
+        Cursor cursor = new ContactsCursorLoader(context, phoneNumber, null).loadInBackground();
+        if (cursor == null) return new Contact(null, phoneNumber, null);
 
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        if (cursor == null) return null;
+        // Return
         if (cursor.moveToFirst()) {
-            contact = new Contact(cursor.getLong(0), cursor.getString(1), phoneNumber, cursor.getString(1));
+            return new Contact(cursor);
         } else {
-            contact = new Contact(-1, null, phoneNumber, null);
-            return contact;
+            cursor.close();
+            return new Contact(null, phoneNumber, null);
         }
-        cursor.close();
-
-        return contact;
     }
 
     /**
@@ -78,20 +82,16 @@ public class ContactUtils {
             return null;
         }
 
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(name));
-        String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.PHOTO_URI};
-        Contact contact;
+        // Build uri
+        Cursor cursor = new ContactsCursorLoader(context, null, name).loadInBackground();
+        if (cursor == null) return new Contact(name, null);
 
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        if (cursor == null) return null;
-        if (cursor.moveToFirst()) {
-            contact = new Contact(cursor.getString(0), name, cursor.getString(1));
-        } else {
-            return null;
+        // Return
+        if (cursor.moveToFirst()) return new Contact(cursor);
+        else {
+            cursor.close();
+            return new Contact(name, null);
         }
-        cursor.close();
-
-        return contact;
     }
 
     /**
@@ -120,8 +120,8 @@ public class ContactUtils {
      * @param number
      */
     public static void openContactByNumber(Activity activity, String number) {
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        String[] projection = new String[]{ContactsContract.PhoneLookup._ID};
+        Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+        String[] projection = new String[]{PhoneLookup._ID};
 
         Cursor cur = activity.getContentResolver().query(uri, projection, null, null, null);
 

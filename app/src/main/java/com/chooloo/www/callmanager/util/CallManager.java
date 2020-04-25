@@ -48,7 +48,7 @@ public class CallManager {
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
             int simCard = getSimSelection(context);
             if (simCard != -1) {
-                callIntent.putExtra("simSlot", simCard);
+                callIntent.putExtra("com.android.phone.extra.slot", simCard);
                 Timber.i("simCard %s", simCard);
             }
             context.startActivity(callIntent); // Start the call

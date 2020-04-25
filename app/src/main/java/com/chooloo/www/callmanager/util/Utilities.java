@@ -448,4 +448,17 @@ public class Utilities {
         return string.replaceAll("[^0-9#*]", "");
     }
 
+    /**
+     * Opens a new sms with a given number filled in
+     *
+     * @param activity
+     * @param number
+     */
+    public static void openSmsWithNumber(Activity activity, String number) {
+        if (activity == null) return;
+        Uri uri = Uri.parse(String.format("smsto:%s", number));
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        activity.startActivity(smsIntent);
+    }
+
 }

@@ -73,11 +73,10 @@
 
         <ImageView
             android:id="@+id/item_recent_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:tint="?attr/secondaryAccentColor"
             android:visibility="gone"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 

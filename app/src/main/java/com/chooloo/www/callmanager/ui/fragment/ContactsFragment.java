@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
+import butterknife.internal.Utils;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.WRITE_CONTACTS;
@@ -422,6 +424,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         ImageButton deleteButton;
         ImageButton infoButton;
         ImageButton addButton;
+        ImageButton smsButton;
 
         popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
 
@@ -437,6 +440,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         deleteButton = contactDialog.findViewById(R.id.contact_popup_button_delete);
         infoButton = contactDialog.findViewById(R.id.contact_popup_button_info);
         addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
+        smsButton = contactDialog.findViewById(R.id.contact_popup_button_sms);
 
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
@@ -470,6 +474,10 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
         infoButton.setOnClickListener(v -> {
             ContactUtils.openContactById(getActivity(), contact.getContactId());
+        });
+
+        smsButton.setOnClickListener(v -> {
+            Utilities.openSmsWithNumber(getActivity(), contact.getMainPhoneNumber());
         });
 
         deleteButton.setOnClickListener(v -> {
