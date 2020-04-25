@@ -13,6 +13,7 @@ public class RecentCall {
 
     // Attributes
     private Context mContext;
+    private long mCallId;
     private String mCallerName;
     private String mNumber;
     private int mCallType;
@@ -44,6 +45,7 @@ public class RecentCall {
 
     public RecentCall(Context context, Cursor cursor) {
         this.mContext = context;
+        this.mCallId = cursor.getLong(cursor.getColumnIndex(CallLog.Calls._ID));
         mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
         String callerName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
         if ((callerName == null || callerName.isEmpty()) && mNumber != null) {
@@ -59,6 +61,8 @@ public class RecentCall {
         mCount = checkNextMutliple(cursor);
         cursor.moveToPosition(position);
     }
+
+    public long getCallId() { return this.mCallId; }
 
     public String getCallerName() {
         return this.mCallerName;

@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CallLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.chooloo.www.callmanager.util.Utilities.PERMISSION_RC;
@@ -360,13 +362,16 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         });
 
         deleteButton.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
-                ContactUtils.deleteContactById(getActivity(), contact.getContactId());
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALL_LOG) == PERMISSION_GRANTED) {
+                String queryString = "_ID=" + recentCall.getCallId();
+                getActivity().getContentResolver().delete(CallLog.Calls.CONTENT_URI, queryString, null);
+                tryRunningLoader();
+                Toast.makeText(getContext(), "Call log deleted", Toast.LENGTH_SHORT).show();
                 contactDialog.dismiss();
             } else {
                 Toast.makeText(getContext(), "I dont have the permission", Toast.LENGTH_LONG).show();
+                Utilities.askForPermission(getActivity(), WRITE_CALL_LOG);
                 contactDialog.dismiss();
-                ActivityCompat.requestPermissions(getActivity(), new String[]{WRITE_CONTACTS}, 2);
             }
         });
 

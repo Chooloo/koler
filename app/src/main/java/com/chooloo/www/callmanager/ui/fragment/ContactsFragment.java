@@ -479,7 +479,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
             } else {
                 Toast.makeText(getContext(), "I dont have the permission", Toast.LENGTH_LONG).show();
                 contactDialog.dismiss();
-                ActivityCompat.requestPermissions(getActivity(), new String[]{WRITE_CONTACTS}, 2);
             }
         });
 
