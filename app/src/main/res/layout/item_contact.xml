@@ -12,7 +12,7 @@
         android:id="@+id/item_header_included"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -68,6 +68,17 @@
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:tint="?attr/secondaryAccentColor"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+        <ImageView
+            android:id="@+id/item_recent_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:tint="?attr/secondaryAccentColor"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView

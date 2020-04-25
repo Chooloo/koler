@@ -18,6 +18,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 @Entity(tableName = "contact_table",
         indices = {@Index("list_id")},
         foreignKeys = @ForeignKey(entity = CGroup.class,
@@ -86,8 +88,29 @@ public class Contact {
         this.phoneNumbers.add(phoneNumber);
     }
 
+    /**
+     * Contact constructor
+     * Accepts a name, one phone number and an image
+     *
+     * @param id          the contact's id
+     * @param name        the contact's name
+     * @param phoneNumber the contact's phone number
+     * @param photoUri    the contact's image
+     */
+    @Ignore
+    public Contact(long id, String name, @NonNull String phoneNumber, @Nullable String photoUri) {
+        this.contactId = id;
+        this.name = name;
+        this.photoUri = photoUri;
+        this.phoneNumbers = new ArrayList<>();
+        this.phoneNumbers.add(phoneNumber);
+    }
+
+
     @Ignore
     public Contact(Cursor cursor) {
+        this.contactId = cursor.getLong(cursor.getColumnIndex(Phone.CONTACT_ID));
+        Timber.i("CONTACT_ID: " + this.contactId);
         this.name = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY));
         this.photoUri = cursor.getString(cursor.getColumnIndex(Phone.PHOTO_THUMBNAIL_URI));
         this.phoneNumbers = new ArrayList<>();

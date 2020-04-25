@@ -17,6 +17,7 @@ import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.telecom.TelecomManager;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -289,7 +290,8 @@ public class Utilities {
      * @param separator
      * @return String
      */
-    public static String joinStringsWithSeparator(@NotNull List<String> list, @NotNull String separator) {
+    public static String joinStringsWithSeparator
+    (@NotNull List<String> list, @NotNull String separator) {
         if (list.size() == 0) return "";
         StringBuilder builder = new StringBuilder();
         for (String str : list) {

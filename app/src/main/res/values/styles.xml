@@ -77,7 +77,7 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:layout_weight">1</item>
         <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 

@@ -43,15 +43,15 @@ public class ContactUtils {
         }
 
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
-        String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.PHOTO_URI};
+        String[] projection = new String[]{ContactsContract.PhoneLookup.CONTACT_ID, ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup.PHOTO_URI};
         Contact contact;
 
         Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
         if (cursor == null) return null;
         if (cursor.moveToFirst()) {
-            contact = new Contact(cursor.getString(0), phoneNumber, cursor.getString(1));
+            contact = new Contact(cursor.getLong(0), cursor.getString(1), phoneNumber, cursor.getString(1));
         } else {
-            contact = new Contact(null, phoneNumber, null);
+            contact = new Contact(-1, null, phoneNumber, null);
             return contact;
         }
         cursor.close();
@@ -160,10 +160,12 @@ public class ContactUtils {
      * Open contact edit page in default contacts app by contact's id
      *
      * @param activity
-     * @param contactId
+     * @param number
      */
-    public static void openContactToEditById(Activity activity, long contactId) {
+    public static void openContactToEditByNumber(Activity activity, String number) {
         try {
+            long contactId = ContactUtils.getContactByPhoneNumber(activity, number).getContactId();
+            Timber.i("CONTACT ID: " + contactId);
             Uri mUri = ContentUris.withAppendedId(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     contactId);
             Intent intent = new Intent(Intent.ACTION_EDIT);
@@ -177,5 +179,38 @@ public class ContactUtils {
             Toast.makeText(activity, "Oops there was a problem trying to open the contact :(", Toast.LENGTH_SHORT).show();
             Timber.i("ERROR: " + e.getMessage());
         }
+    }
+
+    /**
+     * Open contact edit page in default contacts app by contact's id
+     *
+     * @param activity
+     * @param contactId
+     */
+    public static void openContactToEditById(Activity activity, long contactId) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_EDIT, ContactsContract.Contacts.CONTENT_URI);
+            Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
+            intent.setData(contactUri);
+            intent.putExtra("finishActivityOnSaveCompleted", true);
+            //add the below line
+            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+            activity.startActivityForResult(intent, 1);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Oops there was a problem trying to open the contact :(", Toast.LENGTH_SHORT).show();
+            Timber.i("ERROR: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Deletes contact by id
+     *
+     * @param activity
+     * @param contactId
+     */
+    public static void deleteContactById(Activity activity, long contactId) {
+        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(contactId));
+        int deleted = activity.getContentResolver().delete(uri, null, null);
+        Toast.makeText(activity, "Contact Deleted", Toast.LENGTH_LONG).show();
     }
 }

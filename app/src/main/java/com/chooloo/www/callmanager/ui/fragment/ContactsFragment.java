@@ -1,17 +1,27 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -21,6 +31,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
+import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
@@ -42,8 +56,11 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.WRITE_CONTACTS;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 /**
  * A {@link androidx.fragment.app.Fragment} that is heavily influenced by
@@ -54,7 +71,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         FABCoordinator.FABDrawableCoordination,
         FABCoordinator.OnFABClickListener,
         View.OnScrollChangeListener,
-        ContactsAdapter.OnContactSelectedListener {
+        ContactsAdapter.OnContactSelectedListener, OnItemClickListener, OnItemLongClickListener {
 
     private static final int LOADER_ID = 1;
     private static final String ARG_SEARCH_PHONE_NUMBER = "phone_number";
@@ -116,7 +133,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 };
 
         // The list adapter
-        mContactsAdapter = new ContactsAdapter(getContext(), null);
+        mContactsAdapter = new ContactsAdapter(getContext(), null, this, this);
         mContactsAdapter.setOnContactSelectedListener(this);
 
         // Recycle View
@@ -360,6 +377,18 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         ((MainActivity) getActivity()).toggleSearchBar();
     }
 
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
+        Contact contact = (Contact) data;
+        showContactPopup(contact);
+    }
+
+    @Override
+    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
+
+    }
+
+
     // -- FABCoordinator.FABDrawableCoordinator -- //
 
     @Override
@@ -370,4 +399,94 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         };
     }
 
+    /**
+     * Shows a pop up window (dialog) with the contact's information
+     *
+     * @param contact
+     */
+    private void showContactPopup(Contact contact) {
+
+        // Initiate the dialog
+        Dialog contactDialog = new Dialog(getContext());
+        contactDialog.setContentView(R.layout.contact_popup_view);
+
+        // Views declarations
+        TextView contactName;
+        TextView contactNumber;
+        TextView contactDate;
+        ImageView contactPhoto;
+        ImageView contactPhotoPlaceholder;
+        ConstraintLayout popupLayout;
+        ImageButton callButton;
+        ImageButton editButton;
+        ImageButton deleteButton;
+        ImageButton infoButton;
+        ImageButton addButton;
+
+        popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
+
+        contactPhoto = contactDialog.findViewById(R.id.contact_popup_photo);
+        contactPhotoPlaceholder = contactDialog.findViewById(R.id.contact_popup_photo_placeholder);
+
+        contactName = contactDialog.findViewById(R.id.contact_popup_name);
+        contactNumber = contactDialog.findViewById(R.id.contact_popup_number);
+        contactDate = contactDialog.findViewById(R.id.contact_popup_date);
+
+        callButton = contactDialog.findViewById(R.id.contact_popup_button_call);
+        editButton = contactDialog.findViewById(R.id.contact_popup_button_edit);
+        deleteButton = contactDialog.findViewById(R.id.contact_popup_button_delete);
+        infoButton = contactDialog.findViewById(R.id.contact_popup_button_info);
+        addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
+
+        if (contact.getName() != null) {
+            contactName.setText(contact.getName());
+            contactNumber.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+            infoButton.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.VISIBLE);
+        } else {
+            infoButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
+            addButton.setVisibility(View.VISIBLE);
+            contactName.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+            contactNumber.setVisibility(View.GONE);
+        }
+
+        if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
+            contactPhoto.setVisibility(View.GONE);
+            contactPhotoPlaceholder.setVisibility(View.VISIBLE);
+        } else {
+            contactPhoto.setVisibility(View.VISIBLE);
+            contactPhotoPlaceholder.setVisibility(View.GONE);
+            contactPhoto.setImageURI(Uri.parse(contact.getPhotoUri()));
+        }
+
+        callButton.setOnClickListener(v -> {
+            CallManager.call(this.getContext(), contact.getMainPhoneNumber());
+        });
+
+        editButton.setOnClickListener(v -> {
+            ContactUtils.openContactToEditById(getActivity(), contact.getContactId());
+        });
+
+        infoButton.setOnClickListener(v -> {
+            ContactUtils.openContactById(getActivity(), contact.getContactId());
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
+                ContactUtils.deleteContactById(getActivity(), contact.getContactId());
+                contactDialog.dismiss();
+            } else {
+                Toast.makeText(getContext(), "I dont have the permission", Toast.LENGTH_LONG).show();
+                contactDialog.dismiss();
+                ActivityCompat.requestPermissions(getActivity(), new String[]{WRITE_CONTACTS}, 2);
+            }
+        });
+
+        popupLayout.setElevation(20);
+
+        contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        contactDialog.show();
+
+    }
 }

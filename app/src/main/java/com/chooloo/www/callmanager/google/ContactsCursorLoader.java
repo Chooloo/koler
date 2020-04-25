@@ -35,7 +35,7 @@ public class ContactsCursorLoader extends CursorLoader {
      */
     public static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
             new String[]{
-                    Phone._ID, // 0
+                    Phone.CONTACT_ID, // 0
                     Phone.DISPLAY_NAME_PRIMARY, // 1
                     Phone.PHOTO_ID, // 2
                     Phone.PHOTO_THUMBNAIL_URI, // 3

@@ -231,13 +231,6 @@ public class CallManager {
 
         String uri = null;
 
-//        try {
-//            if (sCall.getState() == Call.STATE_DIALING) {
-//                Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
-//            }
-//        } catch (NullPointerException e) {
-//        }
-
         try {
             if (sCall.getDetails().getHandle() != null) {
                 uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details

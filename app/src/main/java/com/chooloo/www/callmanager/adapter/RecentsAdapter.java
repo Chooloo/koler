@@ -133,10 +133,10 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
     class RecentCallHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
-        @BindView(R.id.item_photo) ImageView photo;
         @BindView(R.id.item_big_text) TextView name;
         @BindView(R.id.item_small_text) TextView time;
         @BindView(R.id.item_header) TextView letterText;
+        @BindView(R.id.item_recent_photo) ImageView photo;
 
         /**
          * Constructor
@@ -146,6 +146,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         public RecentCallHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            photo.setVisibility(View.VISIBLE);
         }
     }
 }

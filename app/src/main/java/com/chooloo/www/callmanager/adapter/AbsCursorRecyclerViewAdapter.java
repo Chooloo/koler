@@ -20,6 +20,7 @@ package com.chooloo.www.callmanager.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.provider.ContactsContract;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,11 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
         mContext = context;
         mCursor = cursor;
         mDataValid = cursor != null;
-        mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
+        try {
+            mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
+        } catch (IllegalArgumentException e) {
+            mRowIdColumn = mDataValid ? mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID) : -1;
+        }
         mDataSetObserver = new NotifyingDataSetObserver();
         if (mCursor != null) {
             mCursor.registerDataSetObserver(mDataSetObserver);
@@ -139,7 +144,11 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
             if (mDataSetObserver != null) {
                 mCursor.registerDataSetObserver(mDataSetObserver);
             }
-            mRowIdColumn = newCursor.getColumnIndexOrThrow("_id");
+            try {
+                mRowIdColumn = newCursor.getColumnIndexOrThrow("_id");
+            } catch (IllegalArgumentException e) {
+                mRowIdColumn = newCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
+            }
             mDataValid = true;
             notifyDataSetChanged();
         } else {

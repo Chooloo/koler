@@ -3,69 +3,113 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contact_popup_layout"
-    android:layout_width="300dp"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
     android:background="@drawable/dialer_background"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="15dp">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:focusableInTouchMode="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/contact_popup_photo_placeholder"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:tint="?attr/secondaryAccentColor"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/contact_popup_photo"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:civ_border_width="0dp" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/contact_popup_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frameLayout"
         tools:text="Jesus" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/contact_popup_number_title"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/contact_popup_name"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/contact_popup_name"-->
-    <!--        tools:text="Phone Number:" />-->
 
     <TextView
         android:id="@+id/contact_popup_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-        app:layout_constraintStart_toStartOf="@+id/contact_popup_name"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_popup_name"
         tools:text="+972 999 888 7777" />
 
+    <TextView
+        android:id="@+id/contact_popup_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_popup_number"
+        tools:text="+972 999 888 7777" />
+
+    <!-- call, edit, delete, info, add -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_popup_number">
+        app:layout_constraintTop_toBottomOf="@id/contact_popup_date">
 
+        <!-- Call Button -->
         <ImageButton
             android:id="@+id/contact_popup_button_call"
             style="@style/ContactPopup.Button"
             android:src="@drawable/ic_call_black_24dp"
             android:tint="@color/green_phone" />
 
+        <!-- Edit Button -->
         <ImageButton
             android:id="@+id/contact_popup_button_edit"
             style="@style/ContactPopup.Button"
             android:src="@drawable/ic_edit_black_24dp"
             android:tint="@color/color_accent_pink" />
 
+        <!-- Delete Button -->
         <ImageButton
             android:id="@+id/contact_popup_button_delete"
             style="@style/ContactPopup.Button"
             android:src="@drawable/ic_delete_black_18dp"
             android:tint="@color/red_phone" />
 
+        <!-- Info Button -->
         <ImageButton
             android:id="@+id/contact_popup_button_info"
             style="@style/ContactPopup.Button"
@@ -73,6 +117,7 @@
             android:tint="@color/grey_400"
             android:visibility="gone" />
 
+        <!-- Add Button -->
         <ImageButton
             android:id="@+id/contact_popup_button_add"
             style="@style/ContactPopup.Button"
