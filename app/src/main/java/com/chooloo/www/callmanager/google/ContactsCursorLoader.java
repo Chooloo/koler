@@ -40,6 +40,7 @@ public class ContactsCursorLoader extends CursorLoader {
                     Phone.PHOTO_ID, // 2
                     Phone.PHOTO_THUMBNAIL_URI, // 3
                     Phone.NUMBER, // 4
+                    Phone.STARRED
             };
 
     /**

@@ -39,5 +39,5 @@
     <!-- Red -->
     <color name="red_phone">#ef5350</color>
 
-    <!-- Background Colors-->
+    <color name="star_yellow">#FFEB3B</color>
 </resources>

@@ -17,9 +17,12 @@ import com.chooloo.www.callmanager.util.validation.Validator;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.security.Permission;
 import java.util.List;
 
 import timber.log.Timber;
+
+import static android.Manifest.permission.CALL_PHONE;
 
 public class CallManager {
 
@@ -39,7 +42,6 @@ public class CallManager {
      * @param number
      */
     public static void call(@NotNull Context context, @NotNull String number) {
-        Timber.i("Trying to call: %s", number);
         String uri;
         try {
             // Set the data for the call
@@ -54,6 +56,8 @@ public class CallManager {
             context.startActivity(callIntent); // Start the call
         } catch (SecurityException e) {
             Timber.e(e, "Couldn't call %s", number);
+        } catch (NullPointerException e) {
+            Toast.makeText(context, "Couldnt make a call, no phone number", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -238,7 +242,6 @@ public class CallManager {
             }
 
             if (uri != null) if (uri.isEmpty()) return ContactUtils.UNKNOWN;
-//        else return ContactUtils.UNKNOWN;
 
             // If uri contains 'voicemail' this is a... voicemail dah
             if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;
@@ -250,8 +253,8 @@ public class CallManager {
 
             if (telephoneNumber == null || telephoneNumber.isEmpty())
                 return ContactUtils.UNKNOWN; // Unknown number
-
-            if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
+            else if (telephoneNumber.contains(" "))
+                telephoneNumber = telephoneNumber.replace(" ", "");
 
             Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
 

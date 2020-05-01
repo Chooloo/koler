@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -54,13 +55,11 @@ public class ContactUtils {
         Cursor cursor = new ContactsCursorLoader(context, phoneNumber, null).loadInBackground();
         if (cursor == null) return new Contact(null, phoneNumber, null);
 
-        // Return
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst())
             return new Contact(cursor);
-        } else {
-            cursor.close();
-            return new Contact(null, phoneNumber, null);
-        }
+
+        cursor.close();
+        return new Contact(null, phoneNumber, null);
     }
 
     /**
@@ -212,5 +211,21 @@ public class ContactUtils {
         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(contactId));
         int deleted = activity.getContentResolver().delete(uri, null, null);
         Toast.makeText(activity, "Contact Deleted", Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Sets the contact's favorite status by a given boolean (yes/no)
+     *
+     * @param activity
+     * @param contactId
+     * @param isSetFavorite
+     */
+    public static void setContactIsFavorite(Activity activity, String contactId, boolean isSetFavorite) {
+        int num = isSetFavorite ? 1 : 0;
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            ContentValues v = new ContentValues();
+            v.put(ContactsContract.Contacts.STARRED, num);
+            activity.getContentResolver().update(ContactsContract.Contacts.CONTENT_URI, v, ContactsContract.Contacts._ID + "=?", new String[]{contactId + ""});
+        }
     }
 }

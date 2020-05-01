@@ -38,6 +38,7 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,8 +55,8 @@ public class Utilities {
 
     public static final int DEFAULT_DIALER_RC = 11;
     public static final int PERMISSION_RC = 10;
-    public static final String[] MUST_HAVE_PERMISSIONS = {CALL_PHONE, READ_CONTACTS, READ_CALL_LOG};
-    public static final String[] OPTIONAL_PERMISSIONS = {SEND_SMS};
+    public static final String[] MUST_HAVE_PERMISSIONS = {CALL_PHONE};
+    public static final String[] OPTIONAL_PERMISSIONS = {SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
 
     public static Locale sLocale;
 
@@ -141,8 +142,9 @@ public class Utilities {
      * @param permissions
      */
     public static void askForPermissions(FragmentActivity activity, String[] permissions) {
-        activity.requestPermissions(permissions, PERMISSION_RC);
+        ActivityCompat.requestPermissions(activity, permissions, PERMISSION_RC);
     }
+
 
     /**
      * Vibrate the phone for {@code DEFAULT_VIBRATE_LENGTH} milliseconds

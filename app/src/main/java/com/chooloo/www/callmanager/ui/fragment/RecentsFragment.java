@@ -59,6 +59,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.view.View.GONE;
 import static com.chooloo.www.callmanager.util.Utilities.PERMISSION_RC;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
@@ -109,7 +110,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
                             mFastScroller.setVisibility(View.VISIBLE);
                             mRecyclerView.setOnScrollChangeListener(RecentsFragment.this);
                         } else {
-                            mFastScroller.setVisibility(View.GONE);
+                            mFastScroller.setVisibility(GONE);
                         }
                     }
                 };
@@ -186,7 +187,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     private void tryRunningLoader() {
         if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
             runLoader();
-            mEnableCallLogButton.setVisibility(View.GONE);
+            mEnableCallLogButton.setVisibility(GONE);
         }
     }
 
@@ -232,9 +233,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
         if (data != null && data.getCount() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyState.setVisibility(View.GONE);
+            mEmptyState.setVisibility(GONE);
         } else {
-            mRecyclerView.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(GONE);
             mEmptyState.setVisibility(View.VISIBLE);
         }
     }
@@ -244,7 +245,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
      */
     public void checkShowButton() {
         if (Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
-            mEnableCallLogButton.setVisibility(View.GONE);
+            mEnableCallLogButton.setVisibility(GONE);
         } else {
             mEnableCallLogButton.setVisibility(View.VISIBLE);
         }
@@ -308,18 +309,10 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         contactDialog.setContentView(R.layout.contact_popup_view);
 
         // Views declarations
-        TextView contactName;
-        TextView contactNumber;
-        TextView contactDate;
-        ImageView contactPhoto;
-        ImageView contactPhotoPlaceholder;
         ConstraintLayout popupLayout;
-        ImageButton callButton;
-        ImageButton editButton;
-        ImageButton deleteButton;
-        ImageButton infoButton;
-        ImageButton addButton;
-        ImageButton smsButton;
+        TextView contactName, contactNumber, contactDate;
+        ImageView contactPhoto, contactPhotoPlaceholder;
+        ImageButton callButton, editButton, deleteButton, infoButton, addButton, smsButton, favButton;
 
         popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
 
@@ -337,27 +330,29 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
         smsButton = contactDialog.findViewById(R.id.contact_popup_button_sms);
 
+        contactDialog.findViewById(R.id.contact_popup_button_fav).setVisibility(GONE);
+
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
             contactNumber.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
             infoButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
             if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
-                contactPhoto.setVisibility(View.GONE);
+                contactPhoto.setVisibility(GONE);
                 contactPhotoPlaceholder.setVisibility(View.VISIBLE);
             } else {
                 contactPhoto.setVisibility(View.VISIBLE);
-                contactPhotoPlaceholder.setVisibility(View.GONE);
+                contactPhotoPlaceholder.setVisibility(GONE);
                 contactPhoto.setImageURI(Uri.parse(contact.getPhotoUri()));
             }
         } else {
-            infoButton.setVisibility(View.GONE);
-            editButton.setVisibility(View.GONE);
+            infoButton.setVisibility(GONE);
+            editButton.setVisibility(GONE);
             addButton.setVisibility(View.VISIBLE);
             contactName.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
-            contactNumber.setVisibility(View.GONE);
+            contactNumber.setVisibility(GONE);
 
-            contactPhoto.setVisibility(View.GONE);
+            contactPhoto.setVisibility(GONE);
             contactPhotoPlaceholder.setVisibility(View.VISIBLE);
         }
 

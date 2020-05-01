@@ -5,6 +5,7 @@
     android:id="@+id/ongoing_call_layout_a"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
     tools:context=".ui.activity.OngoingCallActivity">
 
@@ -210,7 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="40dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@color/green_phone"
@@ -227,7 +228,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="40dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@color/red_phone"
@@ -238,7 +239,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="36dp" />
 
-    <!-- Guidelines -->
+    <TextView
+        android:id="@+id/ongoing_call_more_actions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hold_for_actions"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reject_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

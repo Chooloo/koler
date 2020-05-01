@@ -558,6 +558,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         // Display the information about the caller
         Contact callerContact = CallManager.getDisplayContact(this);
         String callerName = callerContact.getName();
+
         if (!callerName.isEmpty()) {
 
             // Try decoding it just in case
@@ -615,7 +616,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mState = state;
         mStateText = getResources().getString(statusTextRes);
         mBuilder.setContentText(mStateText);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        try {
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        } catch (NullPointerException e) {
+            // Notifications not supported by the device's android version
+        }
     }
 
     /**
@@ -650,11 +655,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     private void moveRejectButtonToMiddle() {
         ConstraintSet ongoingSet = new ConstraintSet();
+
         ongoingSet.clone(mOngoingCallLayout);
         ongoingSet.connect(R.id.reject_btn, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.END);
         ongoingSet.connect(R.id.reject_btn, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.START);
         ongoingSet.setHorizontalBias(R.id.reject_btn, 0.5f);
-
         ongoingSet.setMargin(R.id.reject_btn, ConstraintSet.END, 0);
 
         ConstraintSet overlaySet = new ConstraintSet();
@@ -939,51 +944,53 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     }
 
     // -- Notification -- //
-    public void createNotification() {
+    private void createNotification() {
 
-        Contact callerContact = CallManager.getDisplayContact(this);
-        String callerName = callerContact.getName();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Contact callerContact = CallManager.getDisplayContact(this);
+            String callerName = callerContact.getName();
 
-        Intent touchNotification = new Intent(this, OngoingCallActivity.class);
-        touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, touchNotification, 0);
+            Intent touchNotification = new Intent(this, OngoingCallActivity.class);
+            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, touchNotification, 0);
 
-        // Answer Button Intent
-        Intent answerIntent = new Intent(this, NotificationActionReceiver.class);
-        answerIntent.setAction(ACTION_ANSWER);
-        answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-        PendingIntent answerPendingIntent = PendingIntent.getBroadcast(this, 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            // Answer Button Intent
+            Intent answerIntent = new Intent(this, NotificationActionReceiver.class);
+            answerIntent.setAction(ACTION_ANSWER);
+            answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+            PendingIntent answerPendingIntent = PendingIntent.getBroadcast(this, 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        // Hangup Button Intent
-        Intent hangupIntent = new Intent(this, NotificationActionReceiver.class);
-        hangupIntent.setAction(ACTION_HANGUP);
-        hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-        PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            // Hangup Button Intent
+            Intent hangupIntent = new Intent(this, NotificationActionReceiver.class);
+            hangupIntent.setAction(ACTION_HANGUP);
+            hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+            PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.icon_full_144)
-                .setContentTitle(callerName)
-                .setContentText(mStateText)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setColor(ThemeUtils.getAccentColor(this))
-                .setOngoing(true)
-                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
-                .setAutoCancel(true);
+            mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.icon_full_144)
+                    .setContentTitle(callerName)
+                    .setContentText(mStateText)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setColor(ThemeUtils.getAccentColor(this))
+                    .setOngoing(true)
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
+                    .setAutoCancel(true);
 
-        // Adding the action buttons
-        mBuilder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
-        mBuilder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
+            // Adding the action buttons
+            mBuilder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
+            mBuilder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        }
     }
 
     /**
      * Creates the notification channel
      * Which allows and manages the displaying of the notification
      */
-    public void createNotificationChannel() {
+    private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

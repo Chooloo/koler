@@ -51,15 +51,21 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
     public Cursor loadInBackground() {
         List<Cursor> cursors = new ArrayList<>();
         int favoritesCount = 0;
-        if (mLoadFavorites) {
-            Cursor favoritesCursor = loadFavoritesContacts();
-            cursors.add(favoritesCursor);
-            favoritesCount = favoritesCursor.getCount();
+        try {
+            if (mLoadFavorites) {
+                Cursor favoritesCursor = loadFavoritesContacts();
+                cursors.add(favoritesCursor);
+                favoritesCount = favoritesCursor.getCount();
+            }
+        } catch (NullPointerException e) {
+            favoritesCount = 0;
         }
+
         final Cursor contactsCursor = loadContacts();
         cursors.add(contactsCursor);
 
-        int finalFavoritesCount = favoritesCount;
+        final int finalFavoritesCount = favoritesCount;
+
         return new MergeCursor(cursors.toArray(new Cursor[0])) {
             @Override
             public Bundle getExtras() {
@@ -101,7 +107,6 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
      */
     private static Uri buildFavoritesUri() {
         Uri.Builder builder = Phone.CONTENT_URI.buildUpon();
-
         builder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");
         builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
         return builder.build();

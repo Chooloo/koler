@@ -409,7 +409,7 @@ public class MainActivity extends AbsSearchBarActivity {
                         Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS)) { //If granted
             checkVersion();
         } else {
-//            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
+            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
         }
     }
 

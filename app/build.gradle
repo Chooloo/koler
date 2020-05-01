@@ -4,10 +4,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.chooloo.www.callmanager"
-        minSdkVersion 23
+        minSdkVersion 25
         targetSdkVersion 28
-        versionCode 33
-        versionName "v0.4.0"
+        versionCode 35
+        versionName "v0.5.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {

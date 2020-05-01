@@ -45,6 +45,9 @@ public class Contact {
 
     @Ignore private String photoUri; // No need to save this to the database
 
+    @ColumnInfo(name = "is_favorite")
+    private boolean isFavorite;
+
     /**
      * Contact constructor
      * Accepts a name and a list of numbers (without an image)
@@ -115,6 +118,7 @@ public class Contact {
         this.photoUri = cursor.getString(cursor.getColumnIndex(Phone.PHOTO_THUMBNAIL_URI));
         this.phoneNumbers = new ArrayList<>();
         this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(Phone.NUMBER)));
+        this.isFavorite = "1".equals(cursor.getString(cursor.getColumnIndex(Phone.STARRED)));
     }
 
     /**
@@ -231,12 +235,32 @@ public class Contact {
     }
 
     /**
+     * Returns wither the contact is a favorite contact
+     *
+     * @return
+     */
+    public boolean getIsFavorite() {
+        return isFavorite;
+    }
+
+    /**
+     * Makes the contact favorite/not favorite
+     *
+     * @param isFavorite
+     * @return
+     */
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
+    /**
      * Returns the contact's details in a string
      *
      * @return a string representing the contact
      */
     @NonNull
     @Override
+
     public String toString() {
         return String.format(Utilities.sLocale, "id: %d, list_id: %d, name: %s, numbers: %s", contactId, listId, name, this.phoneNumbers.toString());
     }

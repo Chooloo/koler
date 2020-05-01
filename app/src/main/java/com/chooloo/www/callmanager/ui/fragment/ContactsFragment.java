@@ -2,12 +2,15 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +62,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.internal.Utils;
+import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.WRITE_CONTACTS;
@@ -413,18 +417,10 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         contactDialog.setContentView(R.layout.contact_popup_view);
 
         // Views declarations
-        TextView contactName;
-        TextView contactNumber;
-        TextView contactDate;
-        ImageView contactPhoto;
-        ImageView contactPhotoPlaceholder;
         ConstraintLayout popupLayout;
-        ImageButton callButton;
-        ImageButton editButton;
-        ImageButton deleteButton;
-        ImageButton infoButton;
-        ImageButton addButton;
-        ImageButton smsButton;
+        TextView contactName, contactNumber, contactDate;
+        ImageView contactPhoto, contactPhotoPlaceholder;
+        ImageButton callButton, editButton, deleteButton, infoButton, addButton, smsButton, favButton;
 
         popupLayout = contactDialog.findViewById(R.id.contact_popup_layout);
 
@@ -441,12 +437,15 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         infoButton = contactDialog.findViewById(R.id.contact_popup_button_info);
         addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
         smsButton = contactDialog.findViewById(R.id.contact_popup_button_sms);
+        favButton = contactDialog.findViewById(R.id.contact_popup_button_fav);
 
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
             contactNumber.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
             infoButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
+            if (contact.getIsFavorite())
+                favButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_black_24dp));
         } else {
             infoButton.setVisibility(View.GONE);
             editButton.setVisibility(View.GONE);
@@ -465,6 +464,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         }
 
         callButton.setOnClickListener(v -> {
+            Timber.i("MAIN PHONE NUMBER: " + contact.getMainPhoneNumber());
             CallManager.call(this.getContext(), contact.getMainPhoneNumber());
         });
 
@@ -478,6 +478,23 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
         smsButton.setOnClickListener(v -> {
             Utilities.openSmsWithNumber(getActivity(), contact.getMainPhoneNumber());
+        });
+
+        favButton.setOnClickListener(v -> {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                if (contact.getIsFavorite()) {
+                    contact.setIsFavorite(false);
+                    favButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_outline_black_24dp));
+                    ContactUtils.setContactIsFavorite(getActivity(), Long.toString(contact.getContactId()), false);
+                } else {
+                    contact.setIsFavorite(true);
+                    favButton.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_star_black_24dp));
+                    ContactUtils.setContactIsFavorite(getActivity(), Long.toString(contact.getContactId()), true);
+                }
+            } else {
+                Utilities.askForPermission(getActivity(), WRITE_CONTACTS);
+                Toast.makeText(getContext(), "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
+            }
         });
 
         deleteButton.setOnClickListener(v -> {

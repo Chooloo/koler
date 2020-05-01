@@ -5,6 +5,9 @@
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
 
+    <!-- Info -->
+    <string name="hold_for_actions">Hold Buttons For More Actions</string>
+
     <!--Activities-->
     <string name="activity_ongoing_call">Ongoing Call</string>
     <string name="activity_settings">Settings</string>

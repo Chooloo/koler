@@ -62,7 +62,9 @@ public class RecentCall {
         cursor.moveToPosition(position);
     }
 
-    public long getCallId() { return this.mCallId; }
+    public long getCallId() {
+        return this.mCallId;
+    }
 
     public String getCallerName() {
         return this.mCallerName;
@@ -85,8 +87,10 @@ public class RecentCall {
     }
 
     public String getCallDateString() {
-        DateFormat dateFormat = DateFormat.getDateTimeInstance();
-        return dateFormat.format(this.mCallDate);
+        android.text.format.DateFormat dateFormat = new android.text.format.DateFormat();
+        return dateFormat.format("yy ", this.mCallDate).toString() +
+                new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(dateFormat.format("MM", this.mCallDate).toString()) - 1] +
+                dateFormat.format(" dd, hh:mm", this.mCallDate).toString();
     }
 
     public int getCount() {

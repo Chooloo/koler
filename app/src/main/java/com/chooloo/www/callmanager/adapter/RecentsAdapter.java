@@ -17,6 +17,9 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
+import com.chooloo.www.callmanager.util.RelativeTime;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,7 +67,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         // Get information
         String callerName = recentCall.getCallerName();
         String phoneNumber = recentCall.getCallerNumber();
-        String date = recentCall.getCallDateString();
+        Date date = recentCall.getCallDate();
         int count = recentCall.getCount();
         String stringCount = String.valueOf(count);
 
@@ -78,7 +81,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         }
 
         // Set date
-        holder.time.setText(date);
+        holder.time.setText(RelativeTime.getTimeAgo(date.getTime()));
 
         // Set display name (phone number / name)
         if (count > 1) {
