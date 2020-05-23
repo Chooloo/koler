@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +45,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnTouch;
+import timber.log.Timber;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
@@ -114,7 +116,7 @@ public class MainActivity extends AbsSearchBarActivity {
         if (isDefaultDialer) checkPermissions(null);
 
         // View Pager
-        mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
+        mAdapterViewPager = new CustomPagerAdapter(this, getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -434,7 +436,7 @@ public class MainActivity extends AbsSearchBarActivity {
         mIntentAction = mIntent.getAction();
         mIntentType = mIntent.getType();
 
-        if (Intent.ACTION_VIEW.equals(mIntentAction)) {
+        if (mIntentAction == Intent.ACTION_DIAL || mIntentAction == Intent.ACTION_VIEW) {
             handleViewIntent(mIntent);
         }
     }
@@ -446,16 +448,19 @@ public class MainActivity extends AbsSearchBarActivity {
      */
     private void handleViewIntent(Intent intent) {
         String sharedText = intent.getData().toString();
-        String number = "";
+        Timber.i("Phone from intent: " + sharedText);
+        sharedText = sharedText.replaceAll("\\s", "");
         if (sharedText.contains("tel:")) {
-            number = sharedText.substring(4, sharedText.length() - 1);
-
+            String number = sharedText.replace("tel:", "");
             if (number != null) {
                 mSharedDialViewModel.setNumber(number);
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
+        } else {
+            Toast.makeText(this, "No phone number detected", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void toggleAddContactAction(boolean isShow) {
         if (mMenu != null) {

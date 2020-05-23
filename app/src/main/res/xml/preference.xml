@@ -22,6 +22,7 @@
 
     <PreferenceCategory android:title="@string/pref_category_call">
 
+
         <ListPreference
             android:defaultValue="@string/pref_sim_select_default_value"
             android:key="@string/pref_sim_select_key"

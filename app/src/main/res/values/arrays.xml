@@ -3,16 +3,16 @@
 
     <!-- App Theme Preferences -->
     <string-array name="pref_app_color_entries">
-        <item>Pinkish</item>
-        <item>Greenish</item>
-        <item>Creemish</item>
+        <item>@string/color_pink</item>
+        <item>@string/color_green</item>
+        <item>@string/color_cream</item>
     </string-array>
 
     <string-array name="pref_app_theme_entries">
-        <item>Light</item>
-        <item>Dark</item>
-        <item>AMOLED</item>
-        <item>System Default</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_amoled</item>
+        <item>@string/theme_auto</item>
     </string-array>
 
     <string-array name="pref_app_color_entry_values">
@@ -44,9 +44,9 @@
 
     <!-- Default Page Preference -->
     <string-array name="pref_default_page_entries">
-        <item>Recents</item>
-        <item>Contacts</item>
-        <item>Excel</item>
+        <item>@string/recents</item>
+        <item>@string/contacts</item>
+        <item>@string/excel</item>
     </string-array>
 
     <string-array name="pref_default_page_entry_values">

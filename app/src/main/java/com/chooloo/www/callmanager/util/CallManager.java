@@ -47,6 +47,7 @@ public class CallManager {
             // Set the data for the call
             if (number.contains("#")) uri = "tel: " + Uri.encode(number);
             else uri = "tel: " + number;
+
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
             int simCard = getSimSelection(context);
             if (simCard != -1) {
@@ -237,7 +238,7 @@ public class CallManager {
 
         try {
             if (sCall.getDetails().getHandle() != null) {
-                uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
+                uri = Uri.decode(sCall.getDetails().getHandle().toString()); // Callers details
                 Timber.i("Display Contact: %s", uri);
             }
 

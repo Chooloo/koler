@@ -1,4 +1,20 @@
 <resources>
+    <!-- Arrays -->
+    <string name="contacts">Contacts</string>
+    <string name="recents">Recents</string>
+    <string name="excel">Excel</string>
+
+    <!-- Colors -->
+    <string name="color_pink">Pinkish</string>
+    <string name="color_green">Greenish</string>
+    <string name="color_cream">Creamish</string>
+
+    <!-- Themes -->
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_amoled">AMOLED</string>
+    <string name="theme_auto">System Default</string>
+
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
@@ -69,7 +85,6 @@
     <string name="pref_is_biometric_title">Use Biometrics</string>
 
     <string name="pref_system_entry_value">system</string>
-    <!--Arguments-->
 
     <!--Call State-->
     <string name="status_call_disconnected">Call ended</string>

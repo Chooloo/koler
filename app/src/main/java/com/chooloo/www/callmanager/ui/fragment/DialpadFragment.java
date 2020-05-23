@@ -142,7 +142,7 @@ public class DialpadFragment extends AbsBaseFragment {
         mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mViewModel.getNumber().observe(this, s -> {
             if (!s.equals(Utilities.getOnlyNumbers(mDigits.getText().toString()))) {
-//                setNumber(s);
+                setNumber(s);
             }
         });
 

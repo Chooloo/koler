@@ -113,6 +113,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         if (mOnItemClickListener != null) {
             holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(holder, recentCall));
         }
+
         if (mOnItemLongClickListener != null) {
             holder.itemView.setOnLongClickListener(v -> {
                 mOnItemLongClickListener.onItemLongClick(holder, recentCall);

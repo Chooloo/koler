@@ -6,8 +6,8 @@ android {
         applicationId "com.chooloo.www.callmanager"
         minSdkVersion 25
         targetSdkVersion 28
-        versionCode 35
-        versionName "v0.5.1"
+        versionCode 36
+        versionName "v0.5.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
