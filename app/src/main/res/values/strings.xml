@@ -117,6 +117,12 @@
     <string name="empty_contact_title">No contact matching search query found</string>
     <string name="empty_contact_desc" />
 
+    <string name="empty_contact_persmission_title">No contacts permissions</string>
+    <string name="empty_contact_persmission_desc">Enable permission to access contacts</string>
+
+    <string name="empty_recents_persmission_title">No Recents permissions</string>
+    <string name="empty_recents_persmission_desc">Enable call log to access recents</string>
+
     <string name="empty_recents_title">No recent calls</string>
     <string name="empty_recents_desc" />
 

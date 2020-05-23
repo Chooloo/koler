@@ -247,6 +247,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         if (Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
             mEnableCallLogButton.setVisibility(GONE);
         } else {
+            mEmptyTitle.setText(R.string.empty_recents_persmission_title);
+            mEmptyDesc.setText(R.string.empty_recents_persmission_desc);
             mEnableCallLogButton.setVisibility(View.VISIBLE);
         }
     }
@@ -290,15 +292,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     private void showRecentPopup(RecentCall recentCall) {
 
         Contact contact;
-//        if (recentCall.getCallerNumber() != null) {
-//            Timber.i("Caller name: %s ", recentCall.getCallerName());
-//            if (recentCall.getCallerName() != null)
-//                contact = ContactUtils.getContactByName(getContext(), recentCall.getCallerName());
-//            else
-//                contact = ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber());
-//        } else {
-//            contact = null;
-//        }
 
         if (recentCall.getCallerName() != null)
             contact = ContactUtils.getContactByName(getContext(), recentCall.getCallerName());

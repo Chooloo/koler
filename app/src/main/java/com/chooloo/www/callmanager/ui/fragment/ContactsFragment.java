@@ -174,6 +174,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
         mEmptyTitle.setText(R.string.empty_contact_title);
         mEmptyDesc.setText(R.string.empty_contact_desc);
+
     }
 
     @Override
@@ -322,6 +323,8 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         if (Utilities.checkPermissionsGranted(getContext(), READ_CONTACTS)) {
             mEnableContactsButton.setVisibility(View.GONE);
         } else {
+            mEmptyTitle.setText(R.string.empty_contact_persmission_title);
+            mEmptyDesc.setText(R.string.empty_contact_persmission_desc);
             mEnableContactsButton.setVisibility(View.VISIBLE);
         }
     }

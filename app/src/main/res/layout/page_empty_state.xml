@@ -8,48 +8,40 @@
     android:visibility="gone"
     tools:visibility="visible">
 
-    <ImageView
-        android:id="@+id/empty_image"
-        android:layout_width="264dp"
-        android:layout_height="196dp"
-        android:scaleType="fitCenter"
-        android:tint="@color/grey_400"
-        app:layout_constraintBottom_toTopOf="@+id/empty_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.16000003"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/ic_koli_sad" />
-
-    <TextView
-        android:id="@+id/empty_title"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="@string/empty_cgroups_title"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/empty_image" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/empty_desc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="@string/empty_cgroups_desc"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintEnd_toEndOf="@+id/empty_title"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/empty_title"
-        app:layout_constraintTop_toBottomOf="@+id/empty_title" />
+        <ImageView
+            android:id="@+id/empty_image"
+            android:layout_width="260dp"
+            android:layout_height="200dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/grey_400"
+            app:srcCompat="@drawable/ic_koli_sad" />
 
+        <TextView
+            android:id="@+id/empty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center"
+            android:text="@string/empty_cgroups_title"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+        <TextView
+            android:id="@+id/empty_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/empty_cgroups_desc"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

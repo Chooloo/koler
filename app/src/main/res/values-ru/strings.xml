@@ -120,6 +120,12 @@
     <string name="empty_contact_title">Не найдено контактов, соответствующих поисковому запросу</string>
     <string name="empty_contact_desc" />
 
+    <string name="empty_contact_persmission_title">Нет разрешений для контактов</string>
+    <string name="empty_contact_persmission_desc">Включить разрешение на доступ к контактам</string>
+
+    <string name="empty_recents_persmission_title">Нет последних разрешений</string>
+    <string name="empty_recents_persmission_desc">Включить журнал вызовов для доступа к последним</string>
+
     <string name="empty_recents_title">Нет недавних звонков</string>
     <string name="empty_recents_desc" />
 
