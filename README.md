@@ -1,7 +1,6 @@
 # Koler
-A uniquely stylized phone app, designed with the user in mind.
-Believe us we want to make it good, we use it ourselfs.
-Its for Android. </br>
+A uniquely styled phone app for android, designed with the user in mind.
+Believe us, we want to make it good - we use it ourselves.
 
 <img src="https://github.com/Chooloo/call_manage/blob/master/art/screenshots.png" height="250">
 
@@ -13,32 +12,32 @@ Its for Android. </br>
 
 ## Features
 ### Design
-One of the main parts in this app is the design.
-Making it intuitive and comfortable.
+One of the main parts of Koler is it's design.
+We aim to make it as intuitive and as comfortable as possible.
 
 ### In Call Interface
-Our ongoing call UI makes everything easier.
-Its uses swipes and minimalistic design, making everything more beautiful, intuitive, yet still productive.
+Koler's in-call UI makes everything simple.
+Its uses swipes and has a minimalistic design, making everything beautiful and intuitive, yet productive.
 
 In an incoming call, you can do the following before answering:
 * Reject and send the call an SMS
 * Reject in a specified amount of seconds
 * Answer in a specified amount of seconds
 
-In an ongoing call you can:
+In the call you can:
 * Reject in a specified amount of seconds
 
 ### Swipes
-The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
+Koler's main goal is to be intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
   <!-- * ### Dialer
     * __Call__            - Swipe up  
     * __Delete number__   - Swipe left  
     * __Collapse dialer__ - Swipe on the contacts list  -->
-  * ### Incoming Call
-    * __Open keypad__     - Swipe up   
-    * __Reject/End__      - Swipe left  
-    * __Answer__          - Swipe right 
-    * __Send sms__        - Swipe up on the send SMS overlay
+- ### For incoming calls
+    - __Open keypad__     - Swipe up   
+    - __Reject/End__      - Swipe left  
+    - __Answer__          - Swipe right 
+    - __Send sms__        - Swipe up on the send SMS overlay
 
 ## GET THE APP
  * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
