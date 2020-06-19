@@ -2,11 +2,14 @@ package com.chooloo.www.callmanager.util;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.TypedValue;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.StyleRes;
+import androidx.core.content.ContextCompat;
 
 import com.chooloo.www.callmanager.R;
 
@@ -42,18 +45,22 @@ public class ThemeUtils {
         switch (themeId) {
             case "light;pink":
                 return R.style.AppTheme_Light_Pink;
-            case "light;green":
-                return R.style.AppTheme_Light_Green;
             case "light;cream":
                 return R.style.AppTheme_Light_Cream;
+            case "light;green":
+                return R.style.AppTheme_Light_Green;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink;
             case "dark;green":
                 return R.style.AppTheme_Dark_Green;
+            case "dark;cream":
+                return R.style.AppTheme_Dark_Cream;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink;
             case "amoled;green":
                 return R.style.AppTheme_AMOLED_Green;
+            case "amoled;cream":
+                return R.style.AppTheme_AMOLED_Cream;
         }
         return R.style.AppTheme_Light_Pink;
     }
@@ -71,10 +78,14 @@ public class ThemeUtils {
                 return R.style.AppTheme_Dark_Pink_NoActionBar;
             case "dark;green":
                 return R.style.AppTheme_Dark_Green_NoActionBar;
+            case "dark;cream":
+                return R.style.AppTheme_Dark_Cream;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink_NoActionBar;
             case "amoled;green":
                 return R.style.AppTheme_AMOLED_Green_NoActionBar;
+            case "amoled;cream":
+                return R.style.AppTheme_AMOLED_Cream;
         }
         return R.style.AppTheme_Light_Pink_NoActionBar;
     }
@@ -92,14 +103,23 @@ public class ThemeUtils {
                 return R.style.AppTheme_Dark_Pink_TransparentStatusBar;
             case "dark;green":
                 return R.style.AppTheme_Dark_Green_TransparentStatusBar;
+            case "dark;cream":
+                return R.style.AppTheme_Dark_Cream;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink_TransparentStatusBar;
             case "amoled;green":
                 return R.style.AppTheme_AMOLED_Green_TransparentStatusBar;
+            case "amoled;cream":
+                return R.style.AppTheme_AMOLED_Cream;
         }
         return R.style.AppTheme_Light_Pink_TransparentStatusBar;
     }
 
+    /**
+     * Check if night mode is on by system
+     * @param context
+     * @return is on / not
+     */
     public static boolean isNightModeOn(Context context) {
         int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switch (currentNightMode) {
@@ -114,14 +134,16 @@ public class ThemeUtils {
         }
     }
 
+    /**
+     * Return current accent color
+     * @param context
+     * @return color int value
+     */
     public static int getAccentColor(Context context) {
         TypedValue typedValue = new TypedValue();
-
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{R.attr.secondaryAccentColor});
         int color = a.getColor(0, 0);
-
         a.recycle();
-
         return color;
     }
 }
