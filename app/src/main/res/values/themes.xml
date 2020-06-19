@@ -140,12 +140,22 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Dark.Cream.NoActionBar" parent="AppTheme.Dark.Cream">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.AMOLED.Pink.NoActionBar" parent="AppTheme.AMOLED.Pink">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AMOLED.Green.NoActionBar" parent="AppTheme.AMOLED.Green">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Cream.NoActionBar" parent="AppTheme.AMOLED.Cream">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -171,11 +181,19 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="AppTheme.Dark.Cream.TransparentStatusBar" parent="AppTheme.Dark.Cream.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="AppTheme.AMOLED.Pink.TransparentStatusBar" parent="AppTheme.AMOLED.Pink.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="AppTheme.AMOLED.Green.TransparentStatusBar" parent="AppTheme.AMOLED.Green.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Cream.TransparentStatusBar" parent="AppTheme.AMOLED.Cream.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

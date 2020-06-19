@@ -79,13 +79,13 @@ public class ThemeUtils {
             case "dark;green":
                 return R.style.AppTheme_Dark_Green_NoActionBar;
             case "dark;cream":
-                return R.style.AppTheme_Dark_Cream;
+                return R.style.AppTheme_Dark_Cream_NoActionBar;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink_NoActionBar;
             case "amoled;green":
                 return R.style.AppTheme_AMOLED_Green_NoActionBar;
             case "amoled;cream":
-                return R.style.AppTheme_AMOLED_Cream;
+                return R.style.AppTheme_AMOLED_Cream_NoActionBar;
         }
         return R.style.AppTheme_Light_Pink_NoActionBar;
     }
@@ -104,13 +104,13 @@ public class ThemeUtils {
             case "dark;green":
                 return R.style.AppTheme_Dark_Green_TransparentStatusBar;
             case "dark;cream":
-                return R.style.AppTheme_Dark_Cream;
+                return R.style.AppTheme_Dark_Cream_TransparentStatusBar;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink_TransparentStatusBar;
             case "amoled;green":
                 return R.style.AppTheme_AMOLED_Green_TransparentStatusBar;
             case "amoled;cream":
-                return R.style.AppTheme_AMOLED_Cream;
+                return R.style.AppTheme_AMOLED_Cream_TransparentStatusBar;
         }
         return R.style.AppTheme_Light_Pink_TransparentStatusBar;
     }
