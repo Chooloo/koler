@@ -63,16 +63,9 @@ public class SearchBarFragment extends AbsBaseFragment {
             }
         };
         mSearchInput.addTextChangedListener(mTextWatcher);
-
-        mSearchInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    mSearchViewModel.setIsFocused(true);
-                } else {
-                    mSearchViewModel.setIsFocused(false);
-                }
-            }
+        mSearchInput.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) mSearchViewModel.setIsFocused(true);
+            else mSearchViewModel.setIsFocused(false);
         });
     }
 

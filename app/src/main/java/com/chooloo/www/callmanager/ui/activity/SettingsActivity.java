@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -125,7 +126,7 @@ public class SettingsActivity extends AbsThemeActivity {
             ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
             simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
 
-            if (!Utilities.checkPermissionsGranted(getContext(), READ_PHONE_STATE)) {
+            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
                 Utilities.askForPermission(getActivity(), READ_PHONE_STATE);
             } else {
                 setupSimSelection();
@@ -141,8 +142,8 @@ public class SettingsActivity extends AbsThemeActivity {
         }
 
         private void setupSimSelection() {
-            if (!Utilities.checkPermissionsGranted(getContext(), READ_PHONE_STATE)) {
-                Timber.w("READ_PHONE_STATE permission was not granted");
+            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
+                Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
                 return;
             }
 

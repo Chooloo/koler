@@ -27,6 +27,10 @@ import java.sql.Time;
 
 import timber.log.Timber;
 
+import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.WRITE_CONTACTS;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 public class ContactUtils {
 
     // Constants
@@ -42,24 +46,17 @@ public class ContactUtils {
      * @return Contact
      */
     public static Contact getContactByPhoneNumber(@NonNull Context context, @NonNull String phoneNumber) {
-
+        // if no number, return null
         if (phoneNumber.isEmpty()) return null;
-
-        //Check for permission to read contacts
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            //Don't prompt the user now, they are getting a call
-            return null;
-        }
-
-        // Build uri
+        // check for permission to read contacts
+        if (Utilities.checkPermissionGranted(context, READ_CONTACTS)) return null;
+        // get contacts cursor
         Cursor cursor = new ContactsCursorLoader(context, phoneNumber, null).loadInBackground();
+        // if cursor null, there is no contact, return only with number
         if (cursor == null) return new Contact(null, phoneNumber, null);
-
-        if (cursor.moveToFirst())
-            return new Contact(cursor);
-
-        cursor.close();
-        return new Contact(null, phoneNumber, null);
+        // there is a match, return the first one
+        cursor.moveToFirst();
+        return new Contact(cursor);
     }
 
     /**
@@ -72,25 +69,17 @@ public class ContactUtils {
      * @return Contact
      */
     public static Contact getContactByName(@NonNull Context context, @NonNull String name) {
-
+        // if no name return null
         if (name.isEmpty()) return null;
-
-        //Check for permission to read contacts
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            //Don't prompt the user now, they are getting a call
-            return null;
-        }
-
-        // Build uri
+        // check for permission to read contacts
+        if (Utilities.checkPermissionGranted(context, READ_CONTACTS)) return null;
+        // get contacts cursor
         Cursor cursor = new ContactsCursorLoader(context, null, name).loadInBackground();
+        // no results, return only with a name
         if (cursor == null) return new Contact(name, null);
-
-        // Return
-        if (cursor.moveToFirst()) return new Contact(cursor);
-        else {
-            cursor.close();
-            return new Contact(name, null);
-        }
+        // there is a match, return the first one
+        cursor.moveToFirst();
+        return new Contact(cursor);
     }
 
     /**
@@ -99,17 +88,11 @@ public class ContactUtils {
      * @param number
      */
     public static void addContactIntent(Activity activity, String number) {
-        // Initiate intent
-        Intent addContactIntent = new Intent(Intent.ACTION_INSERT);
-        addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE);
-
-        // Insert number
-        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, number);
-
-        // Unique number to return when done with intent
-        int PICK_CONTACT = 100;
-
-        activity.startActivityForResult(addContactIntent, PICK_CONTACT);
+        Intent addContactIntent = new Intent(Intent.ACTION_INSERT); // initiate intent
+        addContactIntent.setType(ContactsContract.Contacts.CONTENT_TYPE); // add type
+        addContactIntent.putExtra(ContactsContract.Intents.Insert.PHONE, number); // add number
+        int PICK_CONTACT = 100; // Unique number to return when done with intent
+        activity.startActivityForResult(addContactIntent, PICK_CONTACT); // start intent
     }
 
     /**
@@ -121,20 +104,14 @@ public class ContactUtils {
     public static void openContactByNumber(Activity activity, String number) {
         Uri uri = Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
         String[] projection = new String[]{PhoneLookup._ID};
+        Cursor cursor = activity.getContentResolver().query(uri, projection, null, null, null);
 
-        Cursor cur = activity.getContentResolver().query(uri, projection, null, null, null);
-
-        // if other contacts have that phone as well, we simply take the first contact found.
-        if (cur != null && cur.moveToNext()) {
-            Long id = cur.getLong(0);
-
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri contactUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(id));
-            intent.setData(contactUri);
-            activity.startActivity(intent);
-
-            cur.close();
+        // if cursor isn't empty, take the first result
+        if (cursor != null && cursor.moveToNext()) {
+            Long id = cursor.getLong(0);
+            openContactById(activity, id);
         }
+        cursor.close(); // close the mf cursor
     }
 
     /**
@@ -145,6 +122,7 @@ public class ContactUtils {
      */
     public static void openContactById(Activity activity, long contactId) {
         try {
+            // new intent to view contact in contacts
             Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contactId));
             intent.setData(uri);
@@ -164,19 +142,16 @@ public class ContactUtils {
     public static void openContactToEditByNumber(Activity activity, String number) {
         try {
             long contactId = ContactUtils.getContactByPhoneNumber(activity, number).getContactId();
-            Timber.i("CONTACT ID: " + contactId);
-            Uri mUri = ContentUris.withAppendedId(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            Uri uri = ContentUris.withAppendedId(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     contactId);
             Intent intent = new Intent(Intent.ACTION_EDIT);
-            intent.setDataAndType(mUri, ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+            intent.setDataAndType(uri, ContactsContract.Contacts.CONTENT_ITEM_TYPE);
             intent.putExtra("finishActivityOnSaveCompleted", true);
-
             //add the below line
-            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivityForResult(intent, 1);
         } catch (Exception e) {
             Toast.makeText(activity, "Oops there was a problem trying to open the contact :(", Toast.LENGTH_SHORT).show();
-            Timber.i("ERROR: " + e.getMessage());
         }
     }
 
@@ -189,15 +164,13 @@ public class ContactUtils {
     public static void openContactToEditById(Activity activity, long contactId) {
         try {
             Intent intent = new Intent(Intent.ACTION_EDIT, ContactsContract.Contacts.CONTENT_URI);
-            Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
-            intent.setData(contactUri);
+            intent.setData(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId));
             intent.putExtra("finishActivityOnSaveCompleted", true);
-            //add the below line
-            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //add the below line?
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
             activity.startActivityForResult(intent, 1);
         } catch (Exception e) {
             Toast.makeText(activity, "Oops there was a problem trying to open the contact :(", Toast.LENGTH_SHORT).show();
-            Timber.i("ERROR: " + e.getMessage());
         }
     }
 
@@ -209,7 +182,7 @@ public class ContactUtils {
      */
     public static void deleteContactById(Activity activity, long contactId) {
         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(contactId));
-        int deleted = activity.getContentResolver().delete(uri, null, null);
+        activity.getContentResolver().delete(uri, null, null);
         Toast.makeText(activity, "Contact Deleted", Toast.LENGTH_LONG).show();
     }
 
@@ -221,8 +194,8 @@ public class ContactUtils {
      * @param isSetFavorite
      */
     public static void setContactIsFavorite(Activity activity, String contactId, boolean isSetFavorite) {
-        int num = isSetFavorite ? 1 : 0;
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+        int num = isSetFavorite ? 1 : 0; // convert boolean to num
+        if (Utilities.checkPermissionGranted(activity, WRITE_CONTACTS)) {
             ContentValues v = new ContentValues();
             v.put(ContactsContract.Contacts.STARRED, num);
             activity.getContentResolver().update(ContactsContract.Contacts.CONTENT_URI, v, ContactsContract.Contacts._ID + "=?", new String[]{contactId + ""});

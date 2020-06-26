@@ -185,7 +185,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     // -- Loader -- //
 
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG)) {
             runLoader();
             mEnableCallLogButton.setVisibility(GONE);
         }
@@ -203,18 +203,13 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-
         String contactName = null;
         String phoneNumber = null;
-        if (args != null && args.containsKey(ARG_PHONE_NUMBER)) {
+        if (args != null && args.containsKey(ARG_PHONE_NUMBER))
             phoneNumber = args.getString(ARG_PHONE_NUMBER);
-        }
-        if (args != null && args.containsKey(ARG_CONTACT_NAME)) {
+        if (args != null && args.containsKey(ARG_CONTACT_NAME))
             contactName = args.getString(ARG_CONTACT_NAME);
-        }
-
-        RecentsCursorLoader recentsCursorLoader = new RecentsCursorLoader(getContext(), phoneNumber, contactName);
-        return recentsCursorLoader;
+        return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
     }
 
     @Override
@@ -244,7 +239,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
      * Checking whither to show the "enable contacts" button
      */
     public void checkShowButton() {
-        if (Utilities.checkPermissionsGranted(getContext(), READ_CALL_LOG)) {
+        if (Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG)) {
             mEnableCallLogButton.setVisibility(GONE);
         } else {
             mEmptyTitle.setText(R.string.empty_recents_persmission_title);

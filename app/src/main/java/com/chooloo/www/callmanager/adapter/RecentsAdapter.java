@@ -58,7 +58,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
 
     @Override
     public void onBindViewHolder(RecentCallHolder holder, Cursor cursor) {
-
         holder.letterText.setVisibility(GONE);
 
         // Get the recent call
@@ -71,26 +70,17 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         int count = recentCall.getCount();
         String stringCount = String.valueOf(count);
 
-        if (cursor.getPosition() != 0) {
-            cursor.moveToPosition(cursor.getPosition() - 1);
-            // Check if there are more of the same number ahead
-            RecentCall nextCall = new RecentCall(this.mContext, cursor);
-            if (nextCall.getCount() > 1) {
-//                holder.itemView.setVisibility(GONE);
-            }
-        }
+        if (cursor.getPosition() != 0) cursor.moveToPosition(cursor.getPosition() - 1);
+        // TODO Check if there are more of the same number ahead
 
         // Set date
         holder.time.setText(RelativeTime.getTimeAgo(date.getTime()));
 
         // Set display name (phone number / name)
-        if (count > 1) {
-            callerName += (" (" + stringCount + ")");
-//            holder.photo.setVisibility(GONE);
-        }
-        if (callerName != null) {
-            holder.name.setText(callerName);
-        } else holder.name.setText(phoneNumber);
+        if (count > 1) callerName += (" (" + stringCount + ")");
+
+        if (callerName != null) holder.name.setText(callerName);
+        else holder.name.setText(phoneNumber);
 
         // Set image
         holder.photo.setVisibility(View.VISIBLE);
@@ -110,9 +100,8 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         }
 
         // Set click listeners
-        if (mOnItemClickListener != null) {
+        if (mOnItemClickListener != null)
             holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(holder, recentCall));
-        }
 
         if (mOnItemLongClickListener != null) {
             holder.itemView.setOnLongClickListener(v -> {

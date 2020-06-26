@@ -33,6 +33,7 @@ import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodels.SharedIntentViewModel;
 
 import org.apache.poi.xdgf.util.Util;
 
@@ -53,6 +54,7 @@ public class DialpadFragment extends AbsBaseFragment {
     // Text
     private OnKeyDownListener mOnKeyDownListener = null;
     private SharedDialViewModel mViewModel;
+    private SharedIntentViewModel mSharedIntentViewModel;
     private PhoneNumberFormattingTextWatcher mPhoneNumberFormattingTextWatcher;
 
     // Booleans
@@ -140,10 +142,9 @@ public class DialpadFragment extends AbsBaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        mViewModel.getNumber().observe(this, s -> {
-            if (!s.equals(Utilities.getOnlyNumbers(mDigits.getText().toString()))) {
-                setNumber(s);
-            }
+        mSharedIntentViewModel = ViewModelProviders.of(getActivity()).get(SharedIntentViewModel.class);
+        mSharedIntentViewModel.getData().observe(this, d -> {
+            setNumber(d);
         });
 
         // Formats the phone number text in realtime
@@ -277,19 +278,16 @@ public class DialpadFragment extends AbsBaseFragment {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        if (Utilities.getOnlyNumbers(mDigits.getText().toString()) == "" || mDigits.getText().toString().isEmpty()) {
+        if (Utilities.getOnlyNumbers(mDigits.getText().toString()) == "" || mDigits.getText().toString().isEmpty())
             Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
-        } else {
-//            CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
+        else
             CallManager.call(this.getContext(), mDigits.getText().toString());
-        }
+//            CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
     }
 
     @OnClick(R.id.digits_edit_text)
     public void onDigitsClick(View view) {
-        if (!isDigitsEmpty()) {
-            mDigits.setCursorVisible(true);
-        }
+        if (!isDigitsEmpty()) mDigits.setCursorVisible(true);
     }
 
     /**
@@ -418,20 +416,14 @@ public class DialpadFragment extends AbsBaseFragment {
         // call, rather than keeping a local flag that's updated in
         // onResume(), since it's possible to toggle silent mode without
         // leaving the current activity (via the ENDCALL-longpress menu.)
-        AudioManager audioManager =
-                (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
         int ringerMode = audioManager.getRingerMode();
-        if ((ringerMode == AudioManager.RINGER_MODE_SILENT)
-                || (ringerMode == AudioManager.RINGER_MODE_VIBRATE)) {
+        if ((ringerMode == AudioManager.RINGER_MODE_SILENT) ||
+                (ringerMode == AudioManager.RINGER_MODE_VIBRATE))
             return;
-        }
         synchronized (mToneGeneratorLock) {
-            if (mToneGenerator == null) {
-                Timber.tag(TAG).w("playTone: mToneGenerator == null, tone: " + tone);
-                return;
-            }
-            // Start the new tone (will stop any playing tone)
-            mToneGenerator.startTone(tone, durationMs);
+            if (mToneGenerator == null) return;
+            mToneGenerator.startTone(tone, durationMs); // Start the new tone (will stop any playing tone)
         }
     }
 
@@ -518,21 +510,15 @@ public class DialpadFragment extends AbsBaseFragment {
 
     public void setDigitsCanBeEdited(boolean canBeEdited) {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDialpadView.setDigitsCanBeEdited(canBeEdited);
-            }
+        handler.postDelayed(() -> {
+            mDialpadView.setDigitsCanBeEdited(canBeEdited);
         }, 2000);
     }
 
     public void setShowVoicemailButton(boolean show) {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDialpadView.setShowVoicemailButton(show);
-            }
+        handler.postDelayed(() -> {
+            mDialpadView.setShowVoicemailButton(show);
         }, 2000);
     }
 

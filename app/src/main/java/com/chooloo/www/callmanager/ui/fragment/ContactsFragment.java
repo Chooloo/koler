@@ -320,7 +320,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
      * Checking whither to show the "enable contacts" button
      */
     public void checkShowButton() {
-        if (Utilities.checkPermissionsGranted(getContext(), READ_CONTACTS)) {
+        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS)) {
             mEnableContactsButton.setVisibility(View.GONE);
         } else {
             mEmptyTitle.setText(R.string.empty_contact_persmission_title);
@@ -333,7 +333,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
      * Checks for the required permission in order to run the loader
      */
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(getContext(), READ_CONTACTS)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CONTACTS)) {
             runLoader();
             mEnableContactsButton.setVisibility(View.GONE);
         }

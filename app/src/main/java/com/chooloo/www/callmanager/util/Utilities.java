@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -15,9 +14,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
-import android.provider.MediaStore;
 import android.telecom.TelecomManager;
-import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -37,8 +34,6 @@ import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,27 +52,26 @@ public class Utilities {
     public static final int PERMISSION_RC = 10;
     public static final String[] MUST_HAVE_PERMISSIONS = {CALL_PHONE};
     public static final String[] OPTIONAL_PERMISSIONS = {SEND_SMS, READ_CONTACTS, READ_CALL_LOG};
-
-    public static Locale sLocale;
-
-    // Constants
     public static final long LONG_VIBRATE_LENGTH = 500;
     public static final long SHORT_VIBRATE_LENGTH = 20;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
+    public static Locale sLocale;
 
     public static void setUpLocale(@NonNull Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Utilities.sLocale = context.getResources().getSystem().getConfiguration().getLocales().get(0);
-        } else {
-            Utilities.sLocale = context.getResources().getSystem().getConfiguration().locale;
-        }
+        Utilities.sLocale = context.getResources().getSystem().getConfiguration().getLocales().get(0);
     }
 
+    /**
+     * Check if koler is set as the default dialer app
+     *
+     * @param activity
+     * @return boolean
+     */
     public static boolean checkDefaultDialer(FragmentActivity activity) {
-        // Prompt the user with a dialog to select this app to be the default phone app
         String packageName = activity.getApplication().getPackageName();
         try {
             if (!activity.getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {
+                // Prompt the user with a dialog to select this app to be the default phone app
                 Intent intent = new Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
                         .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName);
                 activity.startActivityForResult(intent, DEFAULT_DIALER_RC);
@@ -92,54 +86,58 @@ public class Utilities {
     /**
      * Checks for granted permission but by a single string (single permission)
      *
-     * @param permission
-     * @return boolean
+     * @param context    from what context is being called
+     * @param permission permission to check if granted
+     * @return is permission granted / not
      */
-    public static boolean checkPermissionsGranted(Context context, String permission) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(
-                context, permission)
-                == PackageManager.PERMISSION_GRANTED;
+    public static boolean checkPermissionGranted(Context context, String permission) {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
      * Check for permissions by a given list
+     * Return true *only* if all of the given permissions are granted
      *
-     * @param permissions
-     * @return boolean
+     * @param context     from where the function is being called
+     * @param permissions permission to check if granted
+     * @return boolean is permissions granted / not
      */
     public static boolean checkPermissionsGranted(Context context, String[] permissions) {
         for (String permission : permissions) {
-            if (!checkPermissionsGranted(context, permission)) {
-                return false;
-            }
+            if (!checkPermissionGranted(context, permission)) return false;
         }
         return true;
     }
 
     /**
-     * Check for permissions by a given list
+     * Check is premissions granted by grant results list
+     * Return true only if all permissions were granted
      *
-     * @param grantResults
-     * @return boolean
+     * @param grantResults permissions grant results
+     * @return boolean is all granted / not
      */
     public static boolean checkPermissionsGranted(int[] grantResults) {
         for (int result : grantResults) {
-            if (result == PackageManager.PERMISSION_DENIED)
-                return false;
+            if (result == PackageManager.PERMISSION_DENIED) return false;
         }
         return true;
     }
 
+    /**
+     * Ask user for a specific permission
+     *
+     * @param activity   the activity that is calling the function
+     * @param permission permission to ask the user for
+     */
     public static void askForPermission(FragmentActivity activity, String permission) {
         askForPermissions(activity, new String[]{permission});
     }
 
     /**
-     * Asks for permissions by a given list
+     * Asks user for permissions by a given list
      *
-     * @param activity
-     * @param permissions
+     * @param activity    the activity that is calling the function
+     * @param permissions permissions to ask the user for
      */
     public static void askForPermissions(FragmentActivity activity, String[] permissions) {
         ActivityCompat.requestPermissions(activity, permissions, PERMISSION_RC);
@@ -161,11 +159,9 @@ public class Utilities {
     public static void vibrate(@NotNull Context context, long millis) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator == null) return;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             vibrator.vibrate(VibrationEffect.createOneShot(millis, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            vibrator.vibrate(millis);
-        }
+        else vibrator.vibrate(millis);
     }
 
     /**
@@ -255,10 +251,8 @@ public class Utilities {
      * @return the formatted number
      */
     public static String formatPhoneNumber(String phoneNumber) {
-
         if (phoneNumber == null) return null;
         phoneNumber = normalizePhoneNumber(phoneNumber);
-
         Phonenumber.PhoneNumber formattedNumber = null;
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
 
@@ -266,21 +260,24 @@ public class Utilities {
             formattedNumber = phoneUtil.parse(phoneNumber, sLocale.getCountry());
         } catch (NumberParseException e) {
             Timber.w(e);
+            return phoneNumber;
         }
 
-        // return the number
-        if (formattedNumber == null) return phoneNumber;
-        else {
-            PhoneNumberUtil.PhoneNumberFormat format;
-            if (phoneUtil.getRegionCodeForCountryCode(formattedNumber.getCountryCode()).equals(sLocale.getCountry()))
-                format = PhoneNumberUtil.PhoneNumberFormat.NATIONAL;
-            else
-                format = PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL;
+        PhoneNumberUtil.PhoneNumberFormat format;
+        if (phoneUtil.getRegionCodeForCountryCode(formattedNumber.getCountryCode()).equals(sLocale.getCountry()))
+            format = PhoneNumberUtil.PhoneNumberFormat.NATIONAL;
+        else
+            format = PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL;
 
-            return phoneUtil.format(formattedNumber, format);
-        }
+        return phoneUtil.format(formattedNumber, format);
     }
 
+    /**
+     * Return a normalized number
+     *
+     * @param phoneNumber number to normalize
+     * @return the number, normalized
+     */
     public static String normalizePhoneNumber(String phoneNumber) {
         return PhoneNumberUtil.normalizeDiallableCharsOnly(phoneNumber);
     }
@@ -313,14 +310,10 @@ public class Utilities {
     public static void sendSMS(FragmentActivity activity, String phoneNum, String msg) {
         if (ContextCompat.checkSelfPermission(activity, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             try {
-                SmsManager smsManager = SmsManager.getDefault();
-                Timber.i("Sending sms to phone number: %s", CallManager.getDisplayContact(activity).getMainPhoneNumber());
-                smsManager.sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
+                SmsManager.getDefault().sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
                 Toast.makeText(activity, "Message Sent", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG).show();
                 Toast.makeText(activity, "Oh shit I can't send the message... Sorry", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
             }
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{SEND_SMS}, 1);
@@ -348,9 +341,7 @@ public class Utilities {
     public static int navBarHeight(Context context) {
         Resources resources = context.getResources();
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            return resources.getDimensionPixelSize(resourceId);
-        }
+        if (resourceId > 0) return resources.getDimensionPixelSize(resourceId);
         return 0;
     }
 
@@ -362,14 +353,10 @@ public class Utilities {
      * @param isToOpen
      */
     public static void toggleKeyboard(Context context, View view, boolean isToOpen) {
-        if (isToOpen) {
-            InputMethodManager imm = (InputMethodManager)
-                    context.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
-        } else {
-            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (isToOpen) imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        else
             imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-        }
     }
 
     /**
@@ -379,9 +366,7 @@ public class Utilities {
      * @return ArrayList<RecentCall>
      */
     public ArrayList<RecentCall> getRecentCalls(Context context) {
-
         ArrayList<RecentCall> recentCalls = new ArrayList<RecentCall>();
-
         Uri queryUri = android.provider.CallLog.Calls.CONTENT_URI;
 
         final String[] PROJECTION = new String[]{
@@ -404,17 +389,15 @@ public class Utilities {
         int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
 
         while (cursor.moveToNext()) {
-
-            // Get the details
+            // get the details
             String callerName = cursor.getString(title);
-            String phNumber = cursor.getString(number);
+            String phoneNumber = cursor.getString(number);
             String callType = cursor.getString(type);
             Date callDate = new Date(cursor.getLong(date));
             String callDuration = cursor.getString(duration);
-
             int callTypeCode = Integer.parseInt(callType);
-
-            RecentCall recentCall = new RecentCall(context, phNumber, callTypeCode, callDuration, callDate);
+            // create a new RecentCall
+            RecentCall recentCall = new RecentCall(context, phoneNumber, callTypeCode, callDuration, callDate);
             recentCalls.add(recentCall);
         }
         cursor.close();
@@ -427,26 +410,22 @@ public class Utilities {
      * @param text
      * @return true/false
      */
-    public static boolean checkNumeric(String text) {
-        boolean numeric = true;
-
+    public static boolean isNumeric(String text) {
         try {
-            Double num = Double.parseDouble(text);
+            Double.parseDouble(text);
+            return true;
         } catch (NumberFormatException e) {
-            numeric = false;
+            return false;
         }
-
-        return numeric;
     }
 
     /**
      * Returns only the numbers from a string (removes special characters and spaces
      *
-     * @param string
-     * @return string
+     * @param string the string to get all the numbers from
+     * @return string the numbers extracted from the given string
      */
     public static String getOnlyNumbers(String string) {
-
         return string.replaceAll("[^0-9#*]", "");
     }
 
