@@ -129,7 +129,7 @@
     <!--About-->
     <string name="about_version_title">Version</string>
     <string name="about_changelog_title">Changelog</string>
-    <string name="about_source_title">Github Source</string>
+    <string name="about_source_title">GitHub Source</string>
     <string name="about_email_title">Write an Email</string>
     <string name="about_roei_title">Roei Edri</string>
     <string name="about_ido_title">Ido Fang Bentov</string>
@@ -165,7 +165,7 @@
     <string name="dialpad_pound_number">#</string>
 
     <string name="dialpad_0_letters">+</string>
-    <string name="dialpad_1_letters">Voicmail</string>
+    <string name="dialpad_1_letters">Voicemail</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
     <string name="dialpad_4_letters">GHI</string>
