@@ -53,7 +53,7 @@
     <string name="pref_app_color_default_value">pink</string>
 
     <string name="pref_category_call">Call</string>
-    <string name="pref_category_pages">Pages</string>
+    <string name="pref_category_pages">Panels</string>
     <string name="pref_category_noise">Noise</string>
     <string name="pref_category_scurity">Security</string>
 
@@ -63,15 +63,15 @@
     <string name="pref_sim_select_disabled">Sim selection disabled due to one sim card</string>
 
     <string name="pref_reject_call_timer_key">end_call_timer</string>
-    <string name="pref_reject_call_timer_title">End call timer</string>
+    <string name="pref_reject_call_timer_title">Reject call action timer</string>
     <string name="pref_reject_call_timer_default_value">10</string>
 
     <string name="pref_answer_call_timer_key">answer_call_timer</string>
-    <string name="pref_answer_call_timer_title">Answer call timer</string>
+    <string name="pref_answer_call_timer_title">Answer call action timer</string>
     <string name="pref_answer_call_timer_default_value">10</string>
 
     <string name="pref_default_page_key">default_page</string>
-    <string name="pref_default_page_title">Default page</string>
+    <string name="pref_default_page_title">Default panel</string>
     <string name="pref_default_page_default_value">1</string>
 
     <string name="pref_is_silent_title">Silent</string>
@@ -117,11 +117,11 @@
     <string name="empty_contact_title">No contact matching search query found</string>
     <string name="empty_contact_desc" />
 
-    <string name="empty_contact_persmission_title">No contacts permissions</string>
-    <string name="empty_contact_persmission_desc">Enable permission to access contacts</string>
+    <string name="empty_contact_persmission_title">No Contacts permissions</string>
+    <string name="empty_contact_persmission_desc">Enable phone contacts permissions to access Contacts</string>
 
     <string name="empty_recents_persmission_title">No Recents permissions</string>
-    <string name="empty_recents_persmission_desc">Enable call log to access recents</string>
+    <string name="empty_recents_persmission_desc">Enable phone call log permissions to access Recents</string>
 
     <string name="empty_recents_title">No recent calls</string>
     <string name="empty_recents_desc" />
@@ -146,7 +146,7 @@
     <string name="about_donate_title">Donate</string>
 
     <!--Other-->
-    <string name="reject_timer_indicator">Call ends in</string>
+    <string name="reject_timer_indicator">Rejecting in</string>
     <string name="answer_timer_indicator">Answering in</string>
     <string name="button_send">Send</string>
 
@@ -192,7 +192,7 @@
     <string name="action_hangup">Hang Up</string>
 
     <!-- Buttons -->
-    <string name="button_enable_contact_permission">Enable contacts</string>
+    <string name="button_enable_contact_permission">Enable Contacts</string>
     <string name="button_enable_recents_permission">Enable Call Log</string>
 
 </resources>
