@@ -37,6 +37,7 @@ public class ContactUtils {
     public static final Contact UNKNOWN = new Contact("Unknown", "", null);
     public static final Contact VOICEMAIL = new Contact("Voicemail", "", null);
     public static final Contact ERROR = new Contact("Error", "", null);
+    public static final Contact PRIVATE = new Contact("Private Number", "", null);
 
     /**
      * Returns a contact by a given phone number
@@ -47,13 +48,14 @@ public class ContactUtils {
      */
     public static Contact getContactByPhoneNumber(@NonNull Context context, @NonNull String phoneNumber) {
         // if no number, return null
-        if (phoneNumber.isEmpty()) return null;
+        if (phoneNumber.isEmpty()) return PRIVATE;
         // check for permission to read contacts
-        if (Utilities.checkPermissionGranted(context, READ_CONTACTS)) return null;
+        if (!Utilities.checkPermissionGranted(context, READ_CONTACTS)) return UNKNOWN;
         // get contacts cursor
         Cursor cursor = new ContactsCursorLoader(context, phoneNumber, null).loadInBackground();
         // if cursor null, there is no contact, return only with number
-        if (cursor == null) return new Contact(null, phoneNumber, null);
+        if (cursor == null || cursor.getCount() == 0)
+            return new Contact(phoneNumber, phoneNumber, null);
         // there is a match, return the first one
         cursor.moveToFirst();
         return new Contact(cursor);
@@ -70,7 +72,7 @@ public class ContactUtils {
      */
     public static Contact getContactByName(@NonNull Context context, @NonNull String name) {
         // if no name return null
-        if (name.isEmpty()) return null;
+        if (name.isEmpty()) return PRIVATE;
         // check for permission to read contacts
         if (Utilities.checkPermissionGranted(context, READ_CONTACTS)) return null;
         // get contacts cursor

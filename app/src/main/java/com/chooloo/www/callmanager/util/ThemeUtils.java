@@ -43,18 +43,24 @@ public class ThemeUtils {
     public static @StyleRes
     int themeNormalFromId(String themeId) {
         switch (themeId) {
+            case "light;blue":
+                return R.style.AppTheme_Light_Blue;
             case "light;pink":
                 return R.style.AppTheme_Light_Pink;
             case "light;cream":
                 return R.style.AppTheme_Light_Cream;
             case "light;green":
                 return R.style.AppTheme_Light_Green;
+            case "dark;blue":
+                return R.style.AppTheme_Dark_Blue;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink;
             case "dark;green":
                 return R.style.AppTheme_Dark_Green;
             case "dark;cream":
                 return R.style.AppTheme_Dark_Cream;
+            case "amoled;blue":
+                return R.style.AppTheme_AMOLED_Blue;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink;
             case "amoled;green":
@@ -68,18 +74,24 @@ public class ThemeUtils {
     public static @StyleRes
     int themeNoActionBarFromId(String themeId) {
         switch (themeId) {
+            case "light;blue":
+                return R.style.AppTheme_Light_Blue_NoActionBar;
             case "light;pink":
                 return R.style.AppTheme_Light_Pink_NoActionBar;
             case "light;green":
                 return R.style.AppTheme_Light_Green_NoActionBar;
             case "light;cream":
                 return R.style.AppTheme_Light_Cream_NoActionBar;
+            case "dark;blue":
+                return R.style.AppTheme_Dark_Blue_NoActionBar;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink_NoActionBar;
             case "dark;green":
                 return R.style.AppTheme_Dark_Green_NoActionBar;
             case "dark;cream":
                 return R.style.AppTheme_Dark_Cream_NoActionBar;
+            case "amoled;blue":
+                return R.style.AppTheme_AMOLED_Blue_NoActionBar;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink_NoActionBar;
             case "amoled;green":
@@ -93,18 +105,24 @@ public class ThemeUtils {
     public static @StyleRes
     int themeTransparentStatusBarFromId(String themeId) {
         switch (themeId) {
+            case "light;blue":
+                return R.style.AppTheme_Light_Blue_TransparentStatusBar;
             case "light;pink":
                 return R.style.AppTheme_Light_Pink_TransparentStatusBar;
             case "light;green":
                 return R.style.AppTheme_Light_Green_TransparentStatusBar;
             case "light;cream":
                 return R.style.AppTheme_Light_Cream_TransparentStatusBar;
+            case "dark;blue":
+                return R.style.AppTheme_Dark_Blue_TransparentStatusBar;
             case "dark;pink":
                 return R.style.AppTheme_Dark_Pink_TransparentStatusBar;
             case "dark;green":
                 return R.style.AppTheme_Dark_Green_TransparentStatusBar;
             case "dark;cream":
                 return R.style.AppTheme_Dark_Cream_TransparentStatusBar;
+            case "amoled;blue":
+                return R.style.AppTheme_AMOLED_Blue_TransparentStatusBar;
             case "amoled;pink":
                 return R.style.AppTheme_AMOLED_Pink_TransparentStatusBar;
             case "amoled;green":
@@ -117,6 +135,7 @@ public class ThemeUtils {
 
     /**
      * Check if night mode is on by system
+     *
      * @param context
      * @return is on / not
      */
@@ -136,6 +155,7 @@ public class ThemeUtils {
 
     /**
      * Return current accent color
+     *
      * @param context
      * @return color int value
      */
