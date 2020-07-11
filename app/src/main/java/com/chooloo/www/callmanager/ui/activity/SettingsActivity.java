@@ -126,11 +126,8 @@ public class SettingsActivity extends AbsThemeActivity {
             ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
             simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
 
-            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
-                Utilities.askForPermission(getActivity(), READ_PHONE_STATE);
-            } else {
-                setupSimSelection();
-            }
+            Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE, true);
+            setupSimSelection();
         }
 
         @Override
@@ -142,7 +139,7 @@ public class SettingsActivity extends AbsThemeActivity {
         }
 
         private void setupSimSelection() {
-            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
+            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE, true)) {
                 Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
                 return;
             }

@@ -61,6 +61,19 @@ public class Contact {
     }
 
     /**
+     * Get only name and phone number
+     * Add the phoneNumber for a list of phone numbers for the sake of consistancy
+     *
+     * @param name
+     * @param phoneNumber
+     */
+    public Contact(String name, @Nullable String phoneNumber) {
+        this.name = name;
+        this.phoneNumbers = new ArrayList<String>();
+        this.phoneNumbers.add(phoneNumber);
+    }
+
+    /**
      * Contact constructor
      * Accepts a name, a list of numbers and an image
      *

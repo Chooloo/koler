@@ -244,7 +244,7 @@ public class CallManager {
         // check if number is a voice mail
         if (number.contains("voicemail")) return ContactUtils.VOICEMAIL;
         // get the contact
-        Contact contact = ContactUtils.getContactByPhoneNumber(context, number); // get the contacts with the number
+        Contact contact = ContactUtils.getContact(context, number, null); // get the contacts with the number
         if (contact == null) return new Contact(number, number, null); // return a number contact
         else return contact; // contact is valid, return it
     }

@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionsGranted;
@@ -172,11 +173,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
      * Shows a file chooser for the excel file
      */
     private void showFileChooser() {
-        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
-            return;
-        }
-
+        checkPermissionGranted(getActivity(), READ_EXTERNAL_STORAGE, true);
         new FileChooserDialog.Builder(getFragmentManager())
                 .onFileSelected(this)
                 .extensionsFilter(".xls")

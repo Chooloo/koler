@@ -2,15 +2,12 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +35,6 @@ import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
@@ -50,18 +46,12 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
-import org.apache.poi.xdgf.util.Util;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
-import butterknife.internal.Utils;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -320,7 +310,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
      * Checking whither to show the "enable contacts" button
      */
     public void checkShowButton() {
-        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS)) {
+        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, false)) {
             mEnableContactsButton.setVisibility(View.GONE);
         } else {
             mEmptyTitle.setText(R.string.empty_contact_persmission_title);
@@ -333,7 +323,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
      * Checks for the required permission in order to run the loader
      */
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CONTACTS)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, true)) {
             runLoader();
             mEnableContactsButton.setVisibility(View.GONE);
         }
@@ -371,7 +361,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @OnClick(R.id.item_add_contact)
     public void addContact() {
         String number = mSharedDialViewModel.getNumber().getValue();
-        ContactUtils.addContactIntent(getActivity(), number);
+        ContactUtils.openAddContact(getActivity(), number);
     }
 
     // -- FABCoordinator.OnFabClickListener -- //
@@ -472,11 +462,11 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         });
 
         editButton.setOnClickListener(v -> {
-            ContactUtils.openContactToEditById(getActivity(), contact.getContactId());
+            ContactUtils.openContactToEdit(getActivity(), contact.getContactId());
         });
 
         infoButton.setOnClickListener(v -> {
-            ContactUtils.openContactById(getActivity(), contact.getContactId());
+            ContactUtils.openContact(getActivity(), contact.getContactId());
         });
 
         smsButton.setOnClickListener(v -> {
@@ -502,7 +492,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
         deleteButton.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
-                ContactUtils.deleteContactById(getActivity(), contact.getContactId());
+                ContactUtils.deleteContact(getActivity(), contact.getContactId());
                 contactDialog.dismiss();
             } else {
                 Toast.makeText(getContext(), "I dont have the permission", Toast.LENGTH_LONG).show();

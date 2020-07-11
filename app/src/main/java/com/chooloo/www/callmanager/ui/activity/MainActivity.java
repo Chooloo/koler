@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.hardware.biometrics.BiometricPrompt;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -44,14 +42,10 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
-import butterknife.OnTouch;
-import timber.log.Timber;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
@@ -228,7 +222,7 @@ public class MainActivity extends AbsSearchBarActivity {
         switch (item.getItemId()) {
             case R.id.action_add_contact: {
                 String number = mSharedDialViewModel.getNumber().getValue();
-                ContactUtils.addContactIntent(this, number);
+                ContactUtils.openAddContact(this, number);
                 return true;
             }
             case R.id.action_settings: {
@@ -305,7 +299,7 @@ public class MainActivity extends AbsSearchBarActivity {
     @OnClick(R.id.add_contact_fab_button)
     public void addContact() {
         String number = mSharedDialViewModel.getNumber().getValue();
-        ContactUtils.addContactIntent(this, number);
+        ContactUtils.openAddContact(this, number);
     }
 
     // -- Fragments -- //
@@ -397,7 +391,7 @@ public class MainActivity extends AbsSearchBarActivity {
 
     private void checkPermissions(@Nullable int[] grantResults) {
         if (grantResults != null && Utilities.checkPermissionsGranted(grantResults) ||
-                Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS))
+                Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS, false))
             checkVersion();
         else
             Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);

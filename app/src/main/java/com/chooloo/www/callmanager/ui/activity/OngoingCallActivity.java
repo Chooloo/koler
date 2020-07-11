@@ -468,7 +468,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
-        if (Utilities.checkPermissionGranted(this, Manifest.permission.SEND_SMS)) {
+        if (Utilities.checkPermissionGranted(this, Manifest.permission.SEND_SMS, true)) {
             setOverlay(mSendSmsOverlay);
             mSendSmsButton.setVisibility(View.VISIBLE);
             mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);

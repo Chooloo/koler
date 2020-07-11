@@ -2,8 +2,6 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -18,12 +16,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.WrapperListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
@@ -50,17 +46,12 @@ import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import butterknife.BindView;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CALL_LOG;
-import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.WRITE_CALL_LOG;
-import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.view.View.GONE;
-import static com.chooloo.www.callmanager.util.Utilities.PERMISSION_RC;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -185,7 +176,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     // -- Loader -- //
 
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG)) {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG, true)) {
             runLoader();
             mEnableCallLogButton.setVisibility(GONE);
         }
@@ -239,7 +230,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
      * Checking whither to show the "enable contacts" button
      */
     public void checkShowButton() {
-        if (Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG)) {
+        if (Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG, false)) {
             mEnableCallLogButton.setVisibility(GONE);
         } else {
             mEmptyTitle.setText(R.string.empty_recents_persmission_title);
@@ -288,7 +279,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
         Contact contact;
         if (recentCall.getCallerName() != null)
-            contact = ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber());
+            contact = ContactUtils.getContact(getContext(), recentCall.getCallerNumber(), null);
         else contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
 
         // Initiate the dialog
@@ -350,17 +341,17 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         if (contact.getName() != null) {
 
             editButton.setOnClickListener(v -> {
-                ContactUtils.openContactToEditById(getActivity(), contact.getContactId());
+                ContactUtils.openContactToEdit(getActivity(), contact.getContactId());
             });
 
             infoButton.setOnClickListener(v -> {
-                ContactUtils.openContactById(getActivity(), contact.getContactId());
+                ContactUtils.openContact(getActivity(), contact.getContactId());
             });
 
         }
 
         addButton.setOnClickListener(v -> {
-            ContactUtils.addContactIntent(getActivity(), recentCall.getCallerNumber());
+            ContactUtils.openAddContact(getActivity(), recentCall.getCallerNumber());
         });
 
         smsButton.setOnClickListener(v -> {

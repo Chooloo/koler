@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -84,29 +85,34 @@ public class Utilities {
     }
 
     /**
+     * Check for permissions by a given list
+     * Return true *only* if all of the given permissions are granted
+     *
+     * @param activity    from where the function is being called
+     * @param permissions permission to check if granted
+     * @param askForIt    whether to ask the user for the ungranted permissions
+     * @return boolean is permissions granted / not
+     */
+    public static boolean checkPermissionsGranted(Activity activity, String[] permissions, boolean askForIt) {
+        for (String permission : permissions) {
+            if (!checkPermissionGranted(activity, permission, askForIt)) return false;
+        }
+        return true;
+    }
+
+    /**
      * Checks for granted permission but by a single string (single permission)
      *
      * @param context    from what context is being called
      * @param permission permission to check if granted
+     * @param askForIt   whether to ask the user for the ungranted permissions
      * @return is permission granted / not
      */
-    public static boolean checkPermissionGranted(Context context, String permission) {
-        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    /**
-     * Check for permissions by a given list
-     * Return true *only* if all of the given permissions are granted
-     *
-     * @param context     from where the function is being called
-     * @param permissions permission to check if granted
-     * @return boolean is permissions granted / not
-     */
-    public static boolean checkPermissionsGranted(Context context, String[] permissions) {
-        for (String permission : permissions) {
-            if (!checkPermissionGranted(context, permission)) return false;
-        }
-        return true;
+    public static boolean checkPermissionGranted(Context context, String permission, boolean askForIt) {
+        boolean isGranted = (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED);
+        if (askForIt && !isGranted && context instanceof Activity)
+            askForPermission((Activity) context, permission);
+        return isGranted;
     }
 
     /**
@@ -129,7 +135,7 @@ public class Utilities {
      * @param activity   the activity that is calling the function
      * @param permission permission to ask the user for
      */
-    public static void askForPermission(FragmentActivity activity, String permission) {
+    public static void askForPermission(Activity activity, String permission) {
         askForPermissions(activity, new String[]{permission});
     }
 
@@ -139,7 +145,7 @@ public class Utilities {
      * @param activity    the activity that is calling the function
      * @param permissions permissions to ask the user for
      */
-    public static void askForPermissions(FragmentActivity activity, String[] permissions) {
+    public static void askForPermissions(Activity activity, String[] permissions) {
         ActivityCompat.requestPermissions(activity, permissions, PERMISSION_RC);
     }
 

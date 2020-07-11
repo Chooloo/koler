@@ -37,7 +37,7 @@ public class RecentCall {
     public RecentCall(Context context, String number, int type, String duration, Date date) {
         this.mContext = context;
         this.mNumber = number;
-        this.mCallerName = ContactUtils.getContactByPhoneNumber(this.mContext, number).getName();
+        this.mCallerName = ContactUtils.getContact(this.mContext, number, null).getName();
         this.mCallType = type;
         this.mCallDuration = duration;
         this.mCallDate = date;
@@ -49,7 +49,7 @@ public class RecentCall {
         mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
         String callerName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
         if ((callerName == null || callerName.isEmpty()) && mNumber != null) {
-            Contact contact = ContactUtils.getContactByPhoneNumber(context, mNumber);
+            Contact contact = ContactUtils.getContact(context, mNumber, null);
             if (contact != null) mCallerName = contact.getName();
         } else {
             mCallerName = callerName;
