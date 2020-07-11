@@ -8,6 +8,7 @@
     <string name="excel">Excel</string>
 
     <!-- Colors -->
+    <string name="color_blue">синий</string>
     <string name="color_pink">розовый</string>
     <string name="color_green">зеленый</string>
     <string name="color_cream">крем</string>

@@ -3,6 +3,7 @@
 
     <!-- App Theme Preferences -->
     <string-array name="pref_app_color_entries">
+        <item>@string/color_blue</item>
         <item>@string/color_pink</item>
         <item>@string/color_green</item>
         <item>@string/color_cream</item>
@@ -16,6 +17,7 @@
     </string-array>
 
     <string-array name="pref_app_color_entry_values">
+        <item>blue</item>
         <item>pink</item>
         <item>green</item>
         <item>cream</item>

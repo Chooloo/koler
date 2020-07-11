@@ -8,6 +8,7 @@
     <string name="excel">Dial</string>
 
     <!-- Colors -->
+    <string name="color_blue">azul</string>
     <string name="color_pink">Rosa</string>
     <string name="color_green">Verde</string>
     <string name="color_cream">Crema</string>
@@ -140,7 +141,8 @@
     <string name="about_support_title">Soporte</string>
 
     <string name="about_bugs_title">Reportar errores</string>.
-    <string name="about_bugs_desc">Notifica cualquier problema o solicita nuevas funciones en nuestra página de GitHub</string>.
+    <string name="about_bugs_desc">Notifica cualquier problema o solicita nuevas funciones en nuestra página de GitHub</string>
+    .
 
     <string name="about_rate_title">Tasa</string>
     <string name="about_rate_desc">Si te gusta la aplicación, deja un comentario positivo.</string>

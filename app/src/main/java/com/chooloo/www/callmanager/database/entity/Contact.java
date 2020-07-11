@@ -146,7 +146,7 @@ public class Contact {
      */
     @NonNull
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**

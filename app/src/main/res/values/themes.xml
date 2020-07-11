@@ -70,6 +70,22 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <!-- Blue (default) -->
+    <style name="AppTheme.Light.Blue" parent="AppTheme.Light">
+        <item name="colorAccent">@color/color_accent_blue</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Dark.Blue" parent="AppTheme.Dark">
+        <item name="colorAccent">@color/color_accent_blue</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Blue" parent="AppTheme.AMOLED">
+        <item name="colorAccent">@color/color_accent_blue</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
+
     <!-- Pink (default)-->
     <style name="AppTheme.Light.Pink" parent="AppTheme.Light">
         <item name="colorAccent">@color/color_accent_pink</item>
@@ -78,9 +94,13 @@
 
     <style name="AppTheme.Dark.Pink" parent="AppTheme.Dark">
         <item name="colorAccent">@color/color_accent_pink</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
     </style>
 
-    <style name="AppTheme.AMOLED.Pink" parent="AppTheme.AMOLED"></style>
+    <style name="AppTheme.AMOLED.Pink" parent="AppTheme.AMOLED">
+        <item name="colorAccent">@color/color_accent_pink</item>
+        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    </style>
 
     <!--Greenish-->
     <style name="AppTheme.Light.Green" parent="AppTheme.Light">
@@ -115,6 +135,11 @@
     </style>
 
     <!--No action bar-->
+    <style name="AppTheme.Light.Blue.NoActionBar" parent="AppTheme.Light.Blue">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.Light.Pink.NoActionBar" parent="AppTheme.Light.Pink">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -130,6 +155,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Dark.Blue.NoActionBar" parent="AppTheme.Dark.Blue">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="AppTheme.Dark.Pink.NoActionBar" parent="AppTheme.Dark.Pink">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -141,6 +171,11 @@
     </style>
 
     <style name="AppTheme.Dark.Cream.NoActionBar" parent="AppTheme.Dark.Cream">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Blue.NoActionBar" parent="AppTheme.AMOLED.Blue">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -161,6 +196,10 @@
     </style>
 
     <!--Transparent status bar-->
+    <style name="AppTheme.Light.Blue.TransparentStatusBar" parent="AppTheme.Light.Blue.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="AppTheme.Light.Pink.TransparentStatusBar" parent="AppTheme.Light.Pink.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
@@ -173,6 +212,10 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="AppTheme.Dark.Blue.TransparentStatusBar" parent="AppTheme.Dark.Blue.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
     <style name="AppTheme.Dark.Pink.TransparentStatusBar" parent="AppTheme.Dark.Pink.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
@@ -182,6 +225,10 @@
     </style>
 
     <style name="AppTheme.Dark.Cream.TransparentStatusBar" parent="AppTheme.Dark.Cream.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.AMOLED.Blue.TransparentStatusBar" parent="AppTheme.AMOLED.Blue.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

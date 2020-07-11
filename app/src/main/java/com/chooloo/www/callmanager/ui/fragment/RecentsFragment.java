@@ -287,10 +287,9 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     private void showRecentPopup(RecentCall recentCall) {
 
         Contact contact;
-
         if (recentCall.getCallerName() != null)
-            contact = ContactUtils.getContactByName(getContext(), recentCall.getCallerName());
-        else contact = new Contact(null, recentCall.getCallerNumber(), null);
+            contact = ContactUtils.getContactByPhoneNumber(getContext(), recentCall.getCallerNumber());
+        else contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
 
         // Initiate the dialog
         Dialog contactDialog = new Dialog(getContext());
