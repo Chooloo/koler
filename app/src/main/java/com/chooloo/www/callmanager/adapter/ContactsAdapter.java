@@ -73,12 +73,9 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         // Display the contact's information
         String header = getHeaderString(position);
         Contact contact = new Contact(cursor);
-        String contactName = contact.getName();
-        String contactNumber = contact.getMainPhoneNumber();
-        String formattedNumber = Utilities.formatPhoneNumber(contactNumber);
 
-        viewHolder.name.setText(contactName);
-        viewHolder.number.setText(formattedNumber);
+        viewHolder.name.setText(contact.getName());
+        viewHolder.number.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
 
         if (contact.getPhotoUri() == null) {
             viewHolder.photo.setVisibility(View.GONE);
@@ -89,18 +86,17 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
             viewHolder.photo.setImageURI(Uri.parse(contact.getPhotoUri()));
         }
 
-        if (mOnContactSelectedListener != null) {
-            viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(contactNumber));
-        }
+        if (mOnContactSelectedListener != null)
+            viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(contact.getMainPhoneNumber()));
 
         boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));
         viewHolder.header.setText(header);
         viewHolder.header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
 
         // Set click listeners
-        if (mOnItemClickListener != null) {
+        if (mOnItemClickListener != null)
             viewHolder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(viewHolder, contact));
-        }
+
         if (mOnItemLongClickListener != null) {
             viewHolder.itemView.setOnLongClickListener(v -> {
                 mOnItemLongClickListener.onItemLongClick(viewHolder, contact);
@@ -133,12 +129,9 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
             if (mCounts != null) {
                 int sum = 0;
-                for (int count : mCounts) {
-                    sum += count;
-                }
-                if (sum != cursor.getCount()) {
+                for (int count : mCounts) sum += count;
+                if (sum != cursor.getCount())
                     Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
-                }
             }
         }
     }
@@ -147,9 +140,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     public int getItemCount() {
         int count = super.getItemCount();
         // Manually insert the header if one exists.
-        if (mHeader != ContactsFragment.Header.NONE) {
-            count++;
-        }
+        if (mHeader != ContactsFragment.Header.NONE) count++;
         return count;
     }
 
@@ -158,9 +149,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         int index = -1;
         int sum = 0;
         while (sum <= position) {
-            if (index + 1 >= mCounts.length) {//Index is bigger than headers list size
-                return "?";
-            }
+            if (index + 1 >= mCounts.length) return "?"; // index is bigger than headers list size
             sum += mCounts[++index];
         }
         return mHeaders[index];

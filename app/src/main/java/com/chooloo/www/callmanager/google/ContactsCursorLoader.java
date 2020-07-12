@@ -23,18 +23,11 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.loader.content.CursorLoader;
 
-import com.chooloo.www.callmanager.database.entity.Contact;
-
-import timber.log.Timber;
-
 import static android.provider.ContactsContract.Contacts;
 
 public class ContactsCursorLoader extends CursorLoader {
 
-    public static String CURSOR_NAME_COLUMN = Phone.DISPLAY_NAME_PRIMARY;
-    public static String CURSOR_NUMBER_COLUMN = Phone.NUMBER;
-
-    // Indexes
+    // Columns
     public static String COLUMN_ID = Contacts._ID;
     public static String COLUMN_NAME = Contacts.DISPLAY_NAME_PRIMARY;
     public static String COLUMN_THUMBNAIL = Contacts.PHOTO_THUMBNAIL_URI;
@@ -45,8 +38,9 @@ public class ContactsCursorLoader extends CursorLoader {
 
     /**
      * Cursor selection string
+     * Columns to load
      */
-    private static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
+    private static final String[] CONTACTS_PROJECTION =
             new String[]{
                     COLUMN_ID,
                     COLUMN_NAME,
@@ -58,7 +52,7 @@ public class ContactsCursorLoader extends CursorLoader {
     /**
      * Constructor
      *
-     * @param context
+     * @param context     calling context
      * @param phoneNumber String
      * @param contactName String
      */
@@ -66,16 +60,18 @@ public class ContactsCursorLoader extends CursorLoader {
         super(
                 context,
                 buildUri(),
-                CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY,
+                CONTACTS_PROJECTION,
                 getSelection(phoneNumber, contactName),
                 null,
                 CONTACTS_ORDER);
     }
 
     /**
-     * Get a filter string
+     * Return a selection query for the cursor
+     * According to given name and phone number
+     * By default they're set to "", if they're not null, than they'le be set to their value
      *
-     * @return String
+     * @return String sql style
      */
     private static String getSelection(String phoneNumber, String contactName) {
         if (phoneNumber == null) phoneNumber = "";

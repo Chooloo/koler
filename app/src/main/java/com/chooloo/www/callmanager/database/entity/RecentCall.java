@@ -3,28 +3,37 @@ package com.chooloo.www.callmanager.database.entity;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.CallLog;
+import android.provider.ContactsContract;
 
 import com.chooloo.www.callmanager.util.ContactUtils;
 
-import java.text.DateFormat;
 import java.util.Date;
+
+import static android.provider.CallLog.*;
+import static android.provider.CallLog.Calls.*;
+import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_CACHED_NAME;
+import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_DATE;
+import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_DURATION;
+import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_ID;
+import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_NUMBER;
+import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_TYPE;
 
 public class RecentCall {
 
     // Attributes
     private Context mContext;
-    private long mCallId;
-    private String mCallerName;
-    private String mNumber;
-    private int mCallType;
-    private String mCallDuration;
-    private Date mCallDate;
-    private int mCount;
+    private long callId;
+    private String callerName;
+    private String number;
+    private int callType;
+    private String callDuration;
+    private Date callDate;
+    private int count;
 
     // Call Types
-    public static final int mOutgoingCall = CallLog.Calls.OUTGOING_TYPE;
-    public static final int mIncomingCall = CallLog.Calls.INCOMING_TYPE;
-    public static final int mMissedCall = CallLog.Calls.MISSED_TYPE;
+    public static final int mOutgoingCall = OUTGOING_TYPE;
+    public static final int mIncomingCall = INCOMING_TYPE;
+    public static final int mMissedCall = MISSED_TYPE;
 
     /**
      * Constructor
@@ -36,79 +45,84 @@ public class RecentCall {
      */
     public RecentCall(Context context, String number, int type, String duration, Date date) {
         this.mContext = context;
-        this.mNumber = number;
-        this.mCallerName = ContactUtils.getContact(this.mContext, number, null).getName();
-        this.mCallType = type;
-        this.mCallDuration = duration;
-        this.mCallDate = date;
+        this.number = number;
+        this.callerName = ContactUtils.getContact(context, number, null).getName();
+        this.callType = type;
+        this.callDuration = duration;
+        this.callDate = date;
     }
 
     public RecentCall(Context context, Cursor cursor) {
         this.mContext = context;
-        this.mCallId = cursor.getLong(cursor.getColumnIndex(CallLog.Calls._ID));
-        mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
-        String callerName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
-        if ((callerName == null || callerName.isEmpty()) && mNumber != null) {
-            Contact contact = ContactUtils.getContact(context, mNumber, null);
-            if (contact != null) mCallerName = contact.getName();
-        } else {
-            mCallerName = callerName;
-        }
-        mCallDuration = cursor.getString(cursor.getColumnIndex(CallLog.Calls.DURATION));
-        mCallDate = new Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE)));
-        mCallType = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE));
-        int position = cursor.getPosition();
-        mCount = checkNextMutliple(cursor);
-        cursor.moveToPosition(position);
+        this.callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+        this.number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
+        this.callerName = ContactUtils.getContact(context, this.number, null).getName();
+        this.callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
+        this.callDate = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+        this.callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
+        this.count = checkNextMutliple(cursor);
+        cursor.moveToPosition(cursor.getPosition());
     }
 
     public long getCallId() {
-        return this.mCallId;
+        return this.callId;
     }
 
     public String getCallerName() {
-        return this.mCallerName;
+        return this.callerName;
     }
 
     public String getCallerNumber() {
-        return this.mNumber;
+        return this.number;
     }
 
     public int getCallType() {
-        return this.mCallType;
+        return this.callType;
     }
 
     public String getCallDuration() {
-        return this.mCallDuration;
+        return this.callDuration;
     }
 
     public Date getCallDate() {
-        return this.mCallDate;
-    }
-
-    public String getCallDateString() {
-        android.text.format.DateFormat dateFormat = new android.text.format.DateFormat();
-        return dateFormat.format("yy ", this.mCallDate).toString() +
-                new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(dateFormat.format("MM", this.mCallDate).toString()) - 1] +
-                dateFormat.format(" dd, hh:mm", this.mCallDate).toString();
+        return this.callDate;
     }
 
     public int getCount() {
-        return this.mCount;
+        return this.count;
     }
 
+    /**
+     * Return a string representing the date of the call relatively to the current time
+     *
+     * @return String
+     */
+    public String getCallDateString() {
+        android.text.format.DateFormat dateFormat = new android.text.format.DateFormat();
+        return dateFormat.format("yy ", this.callDate).toString() +
+                new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(dateFormat.format("MM", this.callDate).toString()) - 1] +
+                dateFormat.format(" dd, hh:mm", this.callDate).toString();
+    }
+
+    /**
+     * Check how many calls from the same contact are there from the current entry
+     *
+     * @param cursor
+     * @return Amount of the calls from the same contact in a row
+     */
     public int checkNextMutliple(Cursor cursor) {
         int count = 1;
         while (true) {
             try {
                 cursor.moveToNext();
-                if (cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).equals(mNumber))
+                if (cursor.getString(cursor.getColumnIndex(NUMBER)).equals(number)) {
                     count++;
-                else return count;
+                    continue;
+                }
             } catch (Exception e) {
                 // probably index out of bounds exception
-                return count;
             }
+            return count;
         }
     }
 }

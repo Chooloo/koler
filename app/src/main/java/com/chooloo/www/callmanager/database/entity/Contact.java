@@ -135,7 +135,6 @@ public class Contact {
     @Ignore
     public Contact(Cursor cursor) {
         this.contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-        Timber.i("CONTACT_ID: " + this.contactId);
         this.name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
         this.photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
         this.phoneNumbers = new ArrayList<>();
@@ -153,15 +152,6 @@ public class Contact {
     }
 
     /**
-     * Sets the contact's id by a given id
-     *
-     * @param contactId
-     */
-    public void setContactId(long contactId) {
-        this.contactId = contactId;
-    }
-
-    /**
      * Returns the contact's name
      *
      * @return String of the name
@@ -169,15 +159,6 @@ public class Contact {
     @NonNull
     public String getName() {
         return this.name;
-    }
-
-    /**
-     * Sets the contact's name by a given String
-     *
-     * @param name
-     */
-    public void setName(@NonNull String name) {
-        this.name = name;
     }
 
     /**
@@ -191,23 +172,12 @@ public class Contact {
     }
 
     /**
-     * Sets the contact's phone numbers by a given list of strings
-     *
-     * @param phoneNumbers
-     */
-    public void setPhoneNumbers(@NonNull List<String> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
-    }
-
-    /**
      * Returns the contact's main phone number
      *
      * @return String
      */
     public String getMainPhoneNumber() {
-        if (phoneNumbers == null) return null;
-        else if (phoneNumbers.isEmpty()) return null;
-
+        if (phoneNumbers.isEmpty()) return null;
         String phoneNumber = phoneNumbers.get(0);
 
         // Try decoding it just in case
@@ -221,6 +191,15 @@ public class Contact {
     }
 
     /**
+     * Returns the contact's image (Uri)
+     *
+     * @return String
+     */
+    public String getPhotoUri() {
+        return photoUri;
+    }
+
+    /**
      * Returns the contact's list id
      *
      * @return long
@@ -230,21 +209,39 @@ public class Contact {
     }
 
     /**
-     * Sets the contact's list id by a given number
+     * Returns wither the contact is a favorite contact
      *
-     * @param listId
+     * @return
      */
-    public void setListId(long listId) {
-        this.listId = listId;
+    public boolean getIsFavorite() {
+        return isFavorite;
     }
 
     /**
-     * Returns the contact's image (Uri)
+     * Sets the contact's id by a given id
      *
-     * @return String
+     * @param contactId
      */
-    public String getPhotoUri() {
-        return photoUri;
+    public void setContactId(long contactId) {
+        this.contactId = contactId;
+    }
+
+    /**
+     * Sets the contact's name by a given String
+     *
+     * @param name
+     */
+    public void setName(@NonNull String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the contact's phone numbers by a given list of strings
+     *
+     * @param phoneNumbers
+     */
+    public void setPhoneNumbers(@NonNull List<String> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
     }
 
     /**
@@ -257,12 +254,12 @@ public class Contact {
     }
 
     /**
-     * Returns wither the contact is a favorite contact
+     * Sets the contact's list id by a given number
      *
-     * @return
+     * @param listId
      */
-    public boolean getIsFavorite() {
-        return isFavorite;
+    public void setListId(long listId) {
+        this.listId = listId;
     }
 
     /**
@@ -282,19 +279,21 @@ public class Contact {
      */
     @NonNull
     @Override
-
     public String toString() {
         return String.format(Utilities.sLocale, "id: %d, list_id: %d, name: %s, numbers: %s", contactId, listId, name, this.phoneNumbers.toString());
     }
 
+    /**
+     * Check if self equals a given Contact object
+     *
+     * @param obj
+     * @return boolean is equals / not
+     */
     @Override
     public boolean equals(@Nullable Object obj) {
         if (super.equals(obj)) return true;
-        if (obj instanceof Contact) {
-            Contact c = (Contact) obj;
-            return (name.equals(c.getName()) &&
-                    phoneNumbers.equals(c.getPhoneNumbers()));
-        }
-        return false;
+        if (!(obj instanceof Contact)) return false;
+        Contact c = (Contact) obj;
+        return (name.equals(c.getName()) && phoneNumbers.equals(c.getPhoneNumbers()));
     }
 }
