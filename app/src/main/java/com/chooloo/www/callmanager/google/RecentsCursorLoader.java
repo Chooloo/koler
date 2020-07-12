@@ -19,7 +19,7 @@ package com.chooloo.www.callmanager.google;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.CallLog;
+import android.provider.CallLog.Calls;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.util.Log;
@@ -33,20 +33,27 @@ public final class RecentsCursorLoader extends CursorLoader {
     public static String CURSOR_NAME_COLUMN = Phone.DISPLAY_NAME_PRIMARY;
     public static String CURSOR_NUMBER_COLUMN = Phone.NUMBER;
 
+    public static String COLUMN_ID = Calls._ID;
+    public static String COLUMN_NUMBER = Calls.NUMBER;
+    public static String COLUMN_DATE = Calls.DATE;
+    public static String COLUMN_DURATION = Calls.DURATION;
+    public static String COLUMN_TYPE = Calls.TYPE;
+    public static String COLUMN_CACHED_NAME = Calls.CACHED_NAME;
+
     /**
      * Cursor selection string
      */
-    public static String[] RECENTS_PROJECTION_DISPLAY_NAME_PRIMARY =
+    private static String[] RECENTS_PROJECTION_DISPLAY_NAME_PRIMARY =
             new String[]{
-                    CallLog.Calls._ID,
-                    CallLog.Calls.NUMBER,
-                    CallLog.Calls.DATE,
-                    CallLog.Calls.DURATION,
-                    CallLog.Calls.TYPE,
-                    CallLog.Calls.CACHED_NAME
+                    COLUMN_ID,
+                    COLUMN_NUMBER,
+                    COLUMN_DATE,
+                    COLUMN_DURATION,
+                    COLUMN_TYPE,
+                    COLUMN_CACHED_NAME
             };
 
-    private static String RECENTS_ORDER = CallLog.Calls.DATE + " DESC";
+    private static String RECENTS_ORDER = COLUMN_DATE + " DESC";
 
     /**
      * Constructor
@@ -58,7 +65,7 @@ public final class RecentsCursorLoader extends CursorLoader {
     public RecentsCursorLoader(Context context, String phoneNumber, String contactName) {
         super(
                 context,
-                buildUri(phoneNumber, contactName),
+                Calls.CONTENT_URI.buildUpon().build(),
                 RECENTS_PROJECTION_DISPLAY_NAME_PRIMARY,
                 getSelection(contactName, phoneNumber),
                 null,
@@ -66,30 +73,10 @@ public final class RecentsCursorLoader extends CursorLoader {
     }
 
     private static String getSelection(String contactName, String phoneNumber) {
-        if (contactName != null && !contactName.isEmpty())
-            return CallLog.Calls.CACHED_NAME + " LIKE '%" + contactName + "%'";
-        else if (phoneNumber != null && !phoneNumber.isEmpty())
-            return CallLog.Calls.NUMBER + " LIKE '%" + phoneNumber + "%'";
-        else return null;
+        if (contactName == null) contactName = "";
+        if (phoneNumber == null) phoneNumber = "";
+        return COLUMN_CACHED_NAME + " LIKE '%" + contactName + "%' AND " +
+                COLUMN_NUMBER + " LIKE '%" + phoneNumber + "%'";
     }
 
-    /**
-     * Builds contact uri by given name and phone number
-     *
-     * @param phoneNumber
-     * @param contactName
-     * @return Builder.build()
-     */
-    private static Uri buildUri(String phoneNumber, String contactName) {
-        Uri.Builder builder;
-        if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            builder = Uri.withAppendedPath(CallLog.Calls.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
-        } else {
-            builder = CallLog.Calls.CONTENT_URI.buildUpon();
-        }
-
-        return builder.build();
-    }
-    
 }

@@ -16,7 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.provider.ContactsContract;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -35,6 +37,7 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
+import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.google.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
@@ -44,6 +47,9 @@ import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -63,28 +69,37 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_CONTACT_NAME = "contact_name";
 
-    LinearLayoutManager mLayoutManager;
-    RecentsAdapter mRecentsAdapter;
+    /**
+     * An enum for the different types of headers that be inserted at position 0 in the list.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ContactsFragment.Header.NONE, ContactsFragment.Header.STAR})
+    public @interface Header {
+        int NONE = 0;
+        int STAR = 1;
+    }
 
     // View Models
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
     // ViewBinds
-    @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
+    @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.enable_recents_btn) Button mEnableCallLogButton;
+    //    @BindView(R.id.item_header) TextView mAnchoredHeader;
     @BindView(R.id.empty_state) View mEmptyState;
     @BindView(R.id.empty_title) TextView mEmptyTitle;
     @BindView(R.id.empty_desc) TextView mEmptyDesc;
+
+    LinearLayoutManager mLayoutManager;
+    RecentsAdapter mRecentsAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_recents, container, false);
     }
-
-    // -- Overrides -- //
 
     @Override
     protected void onFragmentReady() {
@@ -131,7 +146,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
                 args.putString(ARG_PHONE_NUMBER, s);
-                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
             }
         });
 
@@ -141,7 +156,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
                 args.putString(ARG_CONTACT_NAME, t);
-                LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, args, RecentsFragment.this);
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
             }
         });
 
@@ -194,12 +209,8 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String contactName = null;
-        String phoneNumber = null;
-        if (args != null && args.containsKey(ARG_PHONE_NUMBER))
-            phoneNumber = args.getString(ARG_PHONE_NUMBER);
-        if (args != null && args.containsKey(ARG_CONTACT_NAME))
-            contactName = args.getString(ARG_CONTACT_NAME);
+        String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
+        String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
         return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
     }
 

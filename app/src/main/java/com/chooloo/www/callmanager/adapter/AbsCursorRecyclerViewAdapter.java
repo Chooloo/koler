@@ -24,6 +24,8 @@ import android.provider.ContactsContract;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chooloo.www.callmanager.database.entity.Contact;
+
 /**
  * Created by skyfishjy on 10/31/14.
  */
@@ -40,6 +42,8 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
 
     private DataSetObserver mDataSetObserver;
 
+    public abstract void onBindViewHolder(VH viewHolder, Cursor cursor);
+
     /**
      * Constructor
      *
@@ -50,15 +54,15 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
         mContext = context;
         mCursor = cursor;
         mDataValid = cursor != null;
+
         try {
-            mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
+            mRowIdColumn = mDataValid ? mCursor.getColumnIndex(ContactsContract.Contacts._ID) : -1;
         } catch (IllegalArgumentException e) {
             mRowIdColumn = mDataValid ? mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID) : -1;
         }
+
         mDataSetObserver = new NotifyingDataSetObserver();
-        if (mCursor != null) {
-            mCursor.registerDataSetObserver(mDataSetObserver);
-        }
+        if (mCursor != null) mCursor.registerDataSetObserver(mDataSetObserver);
     }
 
     /**
@@ -91,9 +95,8 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
      */
     @Override
     public long getItemId(int position) {
-        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {
+        if (mDataValid && mCursor != null && mCursor.moveToPosition(position))
             return mCursor.getLong(mRowIdColumn);
-        }
         return 0;
     }
 
@@ -102,16 +105,13 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
         super.setHasStableIds(true);
     }
 
-    public abstract void onBindViewHolder(VH viewHolder, Cursor cursor);
 
     @Override
     public void onBindViewHolder(VH viewHolder, int position) {
-        if (!mDataValid) {
+        if (!mDataValid)
             throw new IllegalStateException("this should only be called when the cursor is valid");
-        }
-        if (!mCursor.moveToPosition(position)) {
+        if (!mCursor.moveToPosition(position))
             throw new IllegalStateException("couldn't move cursor to position " + position);
-        }
         onBindViewHolder(viewHolder, mCursor);
     }
 
@@ -121,9 +121,7 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
      */
     public void changeCursor(Cursor cursor) {
         Cursor old = swapCursor(cursor);
-        if (old != null) {
-            old.close();
-        }
+        if (old != null) old.close();
     }
 
     /**
@@ -132,20 +130,17 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
      * closed.
      */
     private Cursor swapCursor(Cursor newCursor) {
-        if (newCursor == mCursor) {
-            return null;
-        }
+        if (newCursor == mCursor) return null; // cursor hasn't changed
+
         final Cursor oldCursor = mCursor;
-        if (oldCursor != null && mDataSetObserver != null) {
+        if (oldCursor != null && mDataSetObserver != null)
             oldCursor.unregisterDataSetObserver(mDataSetObserver);
-        }
+
         mCursor = newCursor;
         if (mCursor != null) {
-            if (mDataSetObserver != null) {
-                mCursor.registerDataSetObserver(mDataSetObserver);
-            }
+            if (mDataSetObserver != null) mCursor.registerDataSetObserver(mDataSetObserver);
             try {
-                mRowIdColumn = newCursor.getColumnIndexOrThrow("_id");
+                mRowIdColumn = newCursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID);
             } catch (IllegalArgumentException e) {
                 mRowIdColumn = newCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
             }

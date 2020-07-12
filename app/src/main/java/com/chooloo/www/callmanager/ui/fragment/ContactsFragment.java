@@ -70,8 +70,8 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         ContactsAdapter.OnContactSelectedListener, OnItemClickListener, OnItemLongClickListener {
 
     private static final int LOADER_ID = 1;
-    private static final String ARG_SEARCH_PHONE_NUMBER = "phone_number";
-    private static final String ARG_SEARCH_CONTACT_NAME = "contact_name";
+    private static final String ARG_PHONE_NUMBER = "phone_number";
+    private static final String ARG_CONTACT_NAME = "contact_name";
 
     /**
      * An enum for the different types of headers that be inserted at position 0 in the list.
@@ -83,26 +83,28 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         int STAR = 1;
     }
 
+    // View Models
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
     // View Binds
     @BindView(R.id.fast_scroller) FastScroller mFastScroller;
     @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.enable_contacts_btn) Button mEnableContactsButton;
     @BindView(R.id.item_header) TextView mAnchoredHeader;
     @BindView(R.id.item_add_contact) View mAddContact;
-
-    LinearLayoutManager mLayoutManager;
-    ContactsAdapter mContactsAdapter;
-
-    @BindView(R.id.enable_contacts_btn) Button mEnableContactsButton;
     @BindView(R.id.empty_state) View mEmptyState;
     @BindView(R.id.empty_title) TextView mEmptyTitle;
     @BindView(R.id.empty_desc) TextView mEmptyDesc;
 
+    LinearLayoutManager mLayoutManager;
+    ContactsAdapter mContactsAdapter;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return inflater.inflate(R.layout.fragment_contacts, container, false);
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -164,7 +166,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
         mEmptyTitle.setText(R.string.empty_contact_title);
         mEmptyDesc.setText(R.string.empty_contact_desc);
-
     }
 
     @Override
@@ -174,15 +175,12 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         // Dialer View Model
         mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mSharedDialViewModel.getNumber().observe(this, s -> {
-            if (s != null && s.length() > 0) {
-                mAddContact.setVisibility(View.VISIBLE);
-            } else {
-                mAddContact.setVisibility(View.GONE);
-            }
+            if (s != null && s.length() > 0) mAddContact.setVisibility(View.VISIBLE);
+            else mAddContact.setVisibility(View.GONE);
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
-                args.putString(ARG_SEARCH_PHONE_NUMBER, s);
-                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
+                args.putString(ARG_PHONE_NUMBER, s);
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
             }
         });
 
@@ -191,11 +189,10 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mSharedSearchViewModel.getText().observe(this, t -> {
             if (isLoaderRunning()) {
                 Bundle args = new Bundle();
-                args.putString(ARG_SEARCH_CONTACT_NAME, t);
-                LoaderManager.getInstance(ContactsFragment.this).restartLoader(LOADER_ID, args, ContactsFragment.this);
+                args.putString(ARG_CONTACT_NAME, t);
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
             }
         });
-
 
         tryRunningLoader();
     }
@@ -254,7 +251,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onContactSelected(String normPhoneNumber) {
         if (normPhoneNumber == null) return;
-        CallManager.call(this.getContext(), normPhoneNumber);
+        CallManager.call(getContext(), normPhoneNumber);
     }
 
     // -- Loader -- //
@@ -262,25 +259,9 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-
-        String searchContactName = null;
-        String searchPhoneNumber = null;
-        if (args != null && args.containsKey(ARG_SEARCH_PHONE_NUMBER)) {
-            searchPhoneNumber = args.getString(ARG_SEARCH_PHONE_NUMBER);
-        }
-        if (args != null && args.containsKey(ARG_SEARCH_CONTACT_NAME)) {
-            searchContactName = args.getString(ARG_SEARCH_CONTACT_NAME);
-        }
-
-        boolean isSearchContactNameEmpty = searchContactName == null || searchContactName.isEmpty();
-        boolean isSearchPhoneNumberEmpty = searchPhoneNumber == null || searchPhoneNumber.isEmpty();
-        FavoritesAndContactsLoader cursorLoader = new FavoritesAndContactsLoader(getContext(), searchPhoneNumber, searchContactName);
-        if (!isSearchContactNameEmpty || !isSearchPhoneNumberEmpty) { //Don't show favorites if the user is searching for a contact
-            cursorLoader.setLoadFavorites(false);
-        } else {
-            cursorLoader.setLoadFavorites(true);
-        }
-        return cursorLoader;
+        String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
+        String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
+        return new FavoritesAndContactsLoader(getContext(), phoneNumber, contactName);
     }
 
     @Override
@@ -297,13 +278,10 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mContactsAdapter.changeCursor(data);
         mFastScroller.setup(mContactsAdapter, mLayoutManager);
         if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
-        if (data != null && data.getCount() > 0) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyState.setVisibility(View.GONE);
-        } else {
-            mRecyclerView.setVisibility(View.GONE);
-            mEmptyState.setVisibility(View.VISIBLE);
-        }
+
+        boolean isDataExist = data != null && data.getCount() > 0;
+        mRecyclerView.setVisibility(isDataExist ? View.VISIBLE : View.GONE);
+        mEmptyState.setVisibility(isDataExist ? View.GONE : View.VISIBLE);
     }
 
     /**

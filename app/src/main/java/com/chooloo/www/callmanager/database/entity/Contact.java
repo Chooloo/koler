@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.database.entity;
 
 import android.database.Cursor;
+import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,21 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 import timber.log.Timber;
+
+import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_ID;
+import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_NAME;
+import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_NUMBER;
+import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_STARRED;
+import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_THUMBNAIL;
 
 @Entity(tableName = "contact_table",
         indices = {@Index("list_id")},
@@ -125,13 +134,13 @@ public class Contact {
 
     @Ignore
     public Contact(Cursor cursor) {
-        this.contactId = cursor.getLong(cursor.getColumnIndex(Phone.CONTACT_ID));
+        this.contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         Timber.i("CONTACT_ID: " + this.contactId);
-        this.name = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY));
-        this.photoUri = cursor.getString(cursor.getColumnIndex(Phone.PHOTO_THUMBNAIL_URI));
+        this.name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+        this.photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
         this.phoneNumbers = new ArrayList<>();
-        this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(Phone.NUMBER)));
-        this.isFavorite = "1".equals(cursor.getString(cursor.getColumnIndex(Phone.STARRED)));
+        this.phoneNumbers.add(cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER)));
+        this.isFavorite = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
     }
 
     /**
