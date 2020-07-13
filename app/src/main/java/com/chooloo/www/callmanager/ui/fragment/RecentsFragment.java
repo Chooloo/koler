@@ -372,16 +372,5 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
     }
 
-    // -- Other -- //
-
-    /**
-     * An enum for the different types of headers that be inserted at position 0 in the list.
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ContactsFragment.Header.NONE, ContactsFragment.Header.STAR})
-    public @interface Header {
-        int NONE = 0;
-        int STAR = 1;
-    }
 }
 

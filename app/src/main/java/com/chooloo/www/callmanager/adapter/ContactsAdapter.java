@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,9 @@ import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.util.Utilities;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +40,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
     private final ArrayMap<ContactHolder, Integer> holderMap = new ArrayMap<>();
 
-    private @ContactsFragment.Header int mHeader = ContactsFragment.Header.NONE;
     // List of contact sublist mHeaders
     private String[] mHeaders = new String[0];
     // Number of contacts that correspond to each mHeader in {@code mHeaders}.
@@ -136,14 +139,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
                     Timber.e("Count sum (%d) != mCursor count (%d).", sum, cursor.getCount());
             }
         }
-    }
-
-    @Override
-    public int getItemCount() {
-        int count = super.getItemCount();
-        // Manually insert the header if one exists.
-        if (mHeader != ContactsFragment.Header.NONE) count++;
-        return count;
     }
 
     @Override

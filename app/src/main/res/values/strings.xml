@@ -112,6 +112,8 @@
     <string name="dialog_changelog_title">Changelog</string>
 
     <!--Empty-->
+    <string name="no_matches_to_search">No search matches</string>
+
     <string name="empty_cgroups_title">Nothing here… yet</string>
     <string name="empty_cgroups_desc">You can try to add something</string>
 
@@ -193,6 +195,7 @@
     <string name="action_hangup">Hang Up</string>
 
     <!-- Buttons -->
+    <string name="enable_permission">Enable Permission</string>
     <string name="button_enable_contact_permission">Enable contacts</string>
     <string name="button_enable_recents_permission">Enable Call Log</string>
 

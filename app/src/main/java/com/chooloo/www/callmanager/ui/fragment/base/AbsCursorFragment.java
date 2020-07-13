@@ -1,5 +1,6 @@
-package com.chooloo.www.callmanager.ui.fragment;
+package com.chooloo.www.callmanager.ui.fragment.base;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,14 +21,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
-import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
-import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
-import com.chooloo.www.callmanager.database.entity.RecentCall;
+import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
-import com.chooloo.www.callmanager.ui.FABCoordinator;
-import com.chooloo.www.callmanager.ui.activity.MainActivity;
-import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
@@ -35,54 +31,44 @@ import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
-import static android.Manifest.permission.READ_CALL_LOG;
-
-public class BaseCursorFragment extends AbsRecyclerViewFragment implements
+public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        FABCoordinator.FABDrawableCoordination,
-        FABCoordinator.OnFABClickListener,
-        View.OnScrollChangeListener,
-        OnItemClickListener,
-        OnItemLongClickListener {
+        View.OnScrollChangeListener {
 
+    // Constants
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_CONTACT_NAME = "contact_name";
 
-    private SharedDialViewModel mSharedDialViewModel;
-    private SharedSearchViewModel mSharedSearchViewModel;
-    private LinearLayoutManager mLayoutManager;
-    private AbsFastScrollerAdapter mAdapter;
-    private String mRequiredPermission;
-
-    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
+    // Bind Views
+    @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
     @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.enable_permission_btn) Button mEnablePermissionButton;
-    @BindView(R.id.item_header) TextView mAnchoredHeader;
-    @BindView(R.id.empty_state) View mEmptyState;
-    @BindView(R.id.empty_title) TextView mEmptyTitle;
-    @BindView(R.id.empty_desc) TextView mEmptyDesc;
+    @BindView(R.id.item_header) protected TextView mAnchoredHeader;
+    @BindView(R.id.empty_state) protected View mEmptyState;
+    @BindView(R.id.empty_title) protected TextView mEmptyTitle;
+    @BindView(R.id.empty_desc) protected TextView mEmptyDesc;
 
-    @LayoutRes
-    private int mLayoutID;
+    // Variables
+    protected Context mContext;
+    protected AbsFastScrollerAdapter mAdapter;
+    protected LinearLayoutManager mLayoutManager;
+    protected String mRequiredPermission;
+    private SharedDialViewModel mSharedDialViewModel;
+    private SharedSearchViewModel mSharedSearchViewModel;
+    private boolean mIsPermissionGranted = false;
 
-    BaseCursorFragment(AbsFastScrollerAdapter adapter, String requiredPermission) {
-        this.mAdapter = adapter;
-        this.mRequiredPermission = requiredPermission;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_items, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected AbsCursorFragment(Context context) {
+        mContext = context;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void onFragmentReady() {
+        mIsPermissionGranted = Utilities.checkPermissionGranted(mContext, mRequiredPermission, false);
+
+        togglePermissionButton();
 
         // dialer View Model
         mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
@@ -104,27 +90,23 @@ public class BaseCursorFragment extends AbsRecyclerViewFragment implements
             }
         });
 
-        tryRunningLoader();
-    }
-
-    @Override
-    protected void onFragmentReady() {
+        // layout manger
         mLayoutManager =
-                new LinearLayoutManager(getContext()) {
+                new LinearLayoutManager(mContext) {
                     @Override
                     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                         super.onLayoutChildren(recycler, state);
                         int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
                         if (mAdapter.getItemCount() > itemsShown) {
                             mFastScroller.setVisibility(View.VISIBLE);
-                            mRecyclerView.setOnScrollChangeListener(BaseCursorFragment.this);
+                            mRecyclerView.setOnScrollChangeListener(AbsCursorFragment.this);
                         } else {
                             mFastScroller.setVisibility(View.GONE);
                         }
                     }
                 };
 
-        // Recycle View
+        // recycle view
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -148,11 +130,13 @@ public class BaseCursorFragment extends AbsRecyclerViewFragment implements
             }
         });
 
-        // Refresh Layout
+        // refresh layout
         mRefreshLayout.setOnRefreshListener(() -> {
-            LoaderManager.getInstance(BaseCursorFragment.this).restartLoader(LOADER_ID, null, BaseCursorFragment.this);
+            LoaderManager.getInstance(AbsCursorFragment.this).restartLoader(LOADER_ID, null, AbsCursorFragment.this);
             tryRunningLoader();
         });
+
+        tryRunningLoader();
     }
 
     @Override
@@ -161,53 +145,8 @@ public class BaseCursorFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
-    /*
-     * When our recycler view updates, we need to ensure that our row headers and anchored header
-     * are in the correct state.
-     *
-     * The general rule is, when the row headers are shown, our anchored header is hidden. When the
-     * recycler view is scrolling through a sublist that has more than one element, we want to show
-     * out anchored header, to create the illusion that our row header has been anchored. In all
-     * other situations, we want to hide the anchor because that means we are transitioning between
-     * two sublists.
-     */
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
-        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-        int firstCompletelyVisible = mLayoutManager.findFirstCompletelyVisibleItemPosition();
-        if (firstCompletelyVisible == RecyclerView.NO_POSITION) {
-            // No items are visible, so there are no headers to update.
-            return;
-        }
-        String anchoredHeaderString = mAdapter.getHeaderString(firstCompletelyVisible);
-
-        // If the user swipes to the top of the list very quickly, there is some strange behavior
-        // between this method updating headers and adapter#onBindViewHolder updating headers.
-        // To overcome this, we refresh the headers to ensure they are correct.
-        if (firstVisibleItem == firstCompletelyVisible && firstVisibleItem == 0) {
-            mAdapter.refreshHeaders();
-            mAnchoredHeader.setVisibility(View.INVISIBLE);
-        } else {
-            if (mAdapter.getHeaderString(firstVisibleItem).equals(anchoredHeaderString)) {
-                mAnchoredHeader.setText(anchoredHeaderString);
-                mAnchoredHeader.setVisibility(View.VISIBLE);
-                getContactHolder(firstVisibleItem).getHeaderView().setVisibility(View.INVISIBLE);
-                getContactHolder(firstCompletelyVisible).getHeaderView().setVisibility(View.INVISIBLE);
-            } else {
-                mAnchoredHeader.setVisibility(View.INVISIBLE);
-                getContactHolder(firstVisibleItem).getHeaderView().setVisibility(View.VISIBLE);
-                getContactHolder(firstCompletelyVisible).getHeaderView().setVisibility(View.VISIBLE);
-            }
-        }
-    }
-
-    @Override
-    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
-    }
-
-    @Override
-    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
     }
 
     @NonNull
@@ -215,7 +154,7 @@ public class BaseCursorFragment extends AbsRecyclerViewFragment implements
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
         String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
-        return new FavoritesAndContactsLoader(getContext(), phoneNumber, contactName);
+        return new FavoritesAndContactsLoader(mContext, phoneNumber, contactName);
     }
 
     @Override
@@ -229,26 +168,32 @@ public class BaseCursorFragment extends AbsRecyclerViewFragment implements
     }
 
     @Override
-    public void onRightClick() {
-
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mIsPermissionGranted = Utilities.checkPermissionGranted(mContext, mRequiredPermission, false);
+        togglePermissionButton();
+        tryRunningLoader();
     }
 
+    @Nullable
     @Override
-    public void onLeftClick() {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_items, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
-    @Override
-    public int[] getIconsResources() {
-        return new int[]{};
+    // -- On Click -- //
+
+    @OnClick(R.id.enable_permission_btn)
+    public void enablePermissionClick() {
+        Utilities.askForPermission(getActivity(), mRequiredPermission);
     }
 
     // -- Loader -- //
 
     private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), mRequiredPermission, true)) {
-            runLoader();
-            mEnablePermissionButton.setVisibility(View.GONE);
-        }
+        if (!isLoaderRunning() && mIsPermissionGranted) runLoader();
     }
 
     private void runLoader() {
@@ -276,18 +221,8 @@ public class BaseCursorFragment extends AbsRecyclerViewFragment implements
     /**
      * Checking whither to show the "enable contacts" button
      */
-    public void checkShowButton() {
-        if (Utilities.checkPermissionGranted(getContext(), mRequiredPermission, false)) {
-            mEnablePermissionButton.setVisibility(View.GONE);
-        } else {
-            mEmptyTitle.setText(R.string.empty_recents_persmission_title);
-            mEmptyDesc.setText(R.string.empty_recents_persmission_desc);
-            mEnablePermissionButton.setVisibility(View.VISIBLE);
-        }
+    public void togglePermissionButton() {
+        mEnablePermissionButton.setVisibility(mIsPermissionGranted ? View.GONE : View.VISIBLE);
     }
 
-    @OnClick(R.id.enable_permission_btn)
-    public void askForCallLogPermission() {
-        Utilities.askForPermission(getActivity(), mRequiredPermission);
-    }
 }
