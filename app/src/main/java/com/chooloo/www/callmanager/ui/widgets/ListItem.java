@@ -35,7 +35,7 @@ public class ListItem extends ConstraintLayout {
         setClickable(true);
         setFocusable(true);
 
-        LayoutInflater.from(getContext()).inflate(R.layout.item_two_line, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.list_item_two_line, this, true);
         mIsSingleLine = desc == null || desc.isEmpty();
 
         ButterKnife.bind(this);

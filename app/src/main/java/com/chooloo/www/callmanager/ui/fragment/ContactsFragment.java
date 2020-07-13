@@ -72,48 +72,52 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_CONTACT_NAME = "contact_name";
-
-    /**
-     * An enum for the different types of headers that be inserted at position 0 in the list.
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({Header.NONE, Header.STAR})
-    public @interface Header {
-        int NONE = 0;
-        int STAR = 1;
-    }
-
+    // View Binds
+    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
+    @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.enable_permission_btn) Button mEnablePermissionButton;
+    @BindView(R.id.item_header) TextView mAnchoredHeader;
+    @BindView(R.id.empty_state) View mEmptyState;
+    @BindView(R.id.empty_title) TextView mEmptyTitle;
+    @BindView(R.id.empty_desc) TextView mEmptyDesc;
+    LinearLayoutManager mLayoutManager;
+    ContactsAdapter mContactsAdapter;
     // View Models
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
-    // View Binds
-    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
-    @BindView(R.id.contacts_refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.enable_contacts_btn) Button mEnableContactsButton;
-    @BindView(R.id.item_header) TextView mAnchoredHeader;
-    @BindView(R.id.item_add_contact) View mAddContact;
-    @BindView(R.id.empty_state) View mEmptyState;
-    @BindView(R.id.empty_title) TextView mEmptyTitle;
-    @BindView(R.id.empty_desc) TextView mEmptyDesc;
-
-    LinearLayoutManager mLayoutManager;
-    ContactsAdapter mContactsAdapter;
-
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_contacts, container, false);
-        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Dialer View Model
+        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
+        mSharedDialViewModel.getNumber().observe(this, s -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_PHONE_NUMBER, s);
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
+            }
+        });
+
+        // Search Bar View Model
+        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
+        mSharedSearchViewModel.getText().observe(this, t -> {
+            if (isLoaderRunning()) {
+                Bundle args = new Bundle();
+                args.putString(ARG_CONTACT_NAME, t);
+                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
+            }
+        });
+
+        tryRunningLoader();
     }
 
     @Override
     protected void onFragmentReady() {
 
         checkShowButton();
+        mEnablePermissionButton.setText(getString(R.string.button_enable_contact_permission));
 
         mLayoutManager =
                 new LinearLayoutManager(getContext()) {
@@ -169,35 +173,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // Dialer View Model
-        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        mSharedDialViewModel.getNumber().observe(this, s -> {
-            if (s != null && s.length() > 0) mAddContact.setVisibility(View.VISIBLE);
-            else mAddContact.setVisibility(View.GONE);
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_PHONE_NUMBER, s);
-                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
-            }
-        });
-
-        // Search Bar View Model
-        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
-        mSharedSearchViewModel.getText().observe(this, t -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_CONTACT_NAME, t);
-                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
-            }
-        });
-
-        tryRunningLoader();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         tryRunningLoader();
@@ -244,17 +219,11 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         }
     }
 
-    private ContactsAdapter.ContactHolder getContactHolder(int position) {
-        return ((ContactsAdapter.ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
-    }
-
     @Override
     public void onContactSelected(String normPhoneNumber) {
         if (normPhoneNumber == null) return;
         CallManager.call(getContext(), normPhoneNumber);
     }
-
-    // -- Loader -- //
 
     @NonNull
     @Override
@@ -274,56 +243,7 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         mContactsAdapter.changeCursor(null);
     }
 
-    private void setData(Cursor data) {
-        mContactsAdapter.changeCursor(data);
-        mFastScroller.setup(mContactsAdapter, mLayoutManager);
-        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
-
-        boolean isDataExist = data != null && data.getCount() > 0;
-        mRecyclerView.setVisibility(isDataExist ? View.VISIBLE : View.GONE);
-        mEmptyState.setVisibility(isDataExist ? View.GONE : View.VISIBLE);
-    }
-
-    /**
-     * Checking whither to show the "enable contacts" button
-     */
-    public void checkShowButton() {
-        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, false)) {
-            mEnableContactsButton.setVisibility(View.GONE);
-        } else {
-            mEmptyTitle.setText(R.string.empty_contact_persmission_title);
-            mEmptyDesc.setText(R.string.empty_contact_persmission_desc);
-            mEnableContactsButton.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * Checks for the required permission in order to run the loader
-     */
-    private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, true)) {
-            runLoader();
-            mEnableContactsButton.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * Runs the loader
-     */
-    private void runLoader() {
-        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
-    }
-
-    /**
-     * Checks whither the loader is currently running
-     * (meaning the page is refreshing)
-     *
-     * @return boolean
-     */
-    private boolean isLoaderRunning() {
-        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
-        return loader != null;
-    }
+    // -- Loader -- //
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -331,18 +251,14 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         tryRunningLoader();
     }
 
-    @OnClick(R.id.enable_contacts_btn)
-    public void askForContactsPermission() {
-        Utilities.askForPermission(getActivity(), READ_CONTACTS);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return inflater.inflate(R.layout.fragment_contacts, container, false);
+        View view = inflater.inflate(R.layout.fragment_items, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
-
-    @OnClick(R.id.item_add_contact)
-    public void addContact() {
-        String number = mSharedDialViewModel.getNumber().getValue();
-        ContactUtils.openAddContact(getActivity(), number);
-    }
-
-    // -- FABCoordinator.OnFabClickListener -- //
 
     @Override
     public void onRightClick() {
@@ -365,9 +281,6 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
 
     }
 
-
-    // -- FABCoordinator.FABDrawableCoordinator -- //
-
     @Override
     public int[] getIconsResources() {
         return new int[]{
@@ -375,6 +288,71 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
                 R.drawable.ic_search_black_24dp
         };
     }
+
+    private ContactsAdapter.ContactHolder getContactHolder(int position) {
+        return ((ContactsAdapter.ContactHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
+    }
+
+    private void setData(Cursor data) {
+        mContactsAdapter.changeCursor(data);
+        mFastScroller.setup(mContactsAdapter, mLayoutManager);
+        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
+
+        boolean isDataExist = data != null && data.getCount() > 0;
+        mRecyclerView.setVisibility(isDataExist ? View.VISIBLE : View.GONE);
+        mEmptyState.setVisibility(isDataExist ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * Checking whither to show the "enable contacts" button
+     */
+    public void checkShowButton() {
+        if (Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, false)) {
+            mEnablePermissionButton.setVisibility(View.GONE);
+        } else {
+            mEmptyTitle.setText(R.string.empty_contact_persmission_title);
+            mEmptyDesc.setText(R.string.empty_contact_persmission_desc);
+            mEnablePermissionButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // -- FABCoordinator.OnFabClickListener -- //
+
+    /**
+     * Checks for the required permission in order to run the loader
+     */
+    private void tryRunningLoader() {
+        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, true)) {
+            runLoader();
+            mEnablePermissionButton.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Runs the loader
+     */
+    private void runLoader() {
+        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
+    }
+
+    /**
+     * Checks whither the loader is currently running
+     * (meaning the page is refreshing)
+     *
+     * @return boolean
+     */
+    private boolean isLoaderRunning() {
+        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
+        return loader != null;
+    }
+
+    @OnClick(R.id.enable_permission_btn)
+    public void askForContactsPermission() {
+        Utilities.askForPermission(getActivity(), READ_CONTACTS);
+    }
+
+
+    // -- FABCoordinator.FABDrawableCoordinator -- //
 
     /**
      * Shows a pop up window (dialog) with the contact's information
@@ -483,5 +461,15 @@ public class ContactsFragment extends AbsRecyclerViewFragment implements
         contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         contactDialog.show();
 
+    }
+
+    /**
+     * An enum for the different types of headers that be inserted at position 0 in the list.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({Header.NONE, Header.STAR})
+    public @interface Header {
+        int NONE = 0;
+        int STAR = 1;
     }
 }

@@ -9,6 +9,8 @@ import com.chooloo.www.callmanager.util.ContactUtils;
 
 import java.util.Date;
 
+import timber.log.Timber;
+
 import static android.provider.CallLog.*;
 import static android.provider.CallLog.Calls.*;
 import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_CACHED_NAME;
@@ -56,7 +58,9 @@ public class RecentCall {
         this.mContext = context;
         this.callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         this.number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
+        Timber.i("Recent Call Number: " + this.number);
         this.callerName = ContactUtils.getContact(context, this.number, null).getName();
+        Timber.i("Recent Call Name: " + this.callerName);
         this.callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
         this.callDate = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
         this.callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));

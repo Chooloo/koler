@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +15,6 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.util.RelativeTime;
 
 import java.util.Date;
@@ -52,7 +50,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
     @NonNull
     @Override
     public RecentCallHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_contact, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
         return new RecentCallHolder(v);
     }
 
@@ -71,7 +69,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         String stringCount = String.valueOf(count);
 
         if (cursor.getPosition() != 0) cursor.moveToPosition(cursor.getPosition() - 1);
-        // TODO Check if there are more of the same number ahead
 
         // Set date
         holder.time.setText(RelativeTime.getTimeAgo(date.getTime()));

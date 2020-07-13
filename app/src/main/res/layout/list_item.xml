@@ -19,7 +19,7 @@
 
         <!-- Caller Pic -->
         <include
-            layout="@layout/item_header"
+            layout="@layout/list_item_header"
             android:layout_width="@dimen/header_width"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

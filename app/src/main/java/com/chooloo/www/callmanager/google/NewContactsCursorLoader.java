@@ -24,23 +24,26 @@ import android.telephony.PhoneNumberUtils;
 
 import androidx.loader.content.CursorLoader;
 
+import com.chooloo.www.callmanager.database.entity.Contact;
+
 import static android.provider.ContactsContract.Contacts;
 
-public class ContactsCursorLoader extends CursorLoader {
+public class NewContactsCursorLoader extends CursorLoader {
 
     // Columns
     public static String COLUMN_ID = Contacts._ID;
     public static String COLUMN_NAME = Contacts.DISPLAY_NAME_PRIMARY;
     public static String COLUMN_THUMBNAIL = Contacts.PHOTO_THUMBNAIL_URI;
-    public static String COLUMN_NUMBER = Phone.NUMBER;
+    public static String COLUMN_NUMBER = Phone.NORMALIZED_NUMBER;
     public static String COLUMN_STARRED = Phone.STARRED;
 
     private static String CONTACTS_ORDER = Contacts.SORT_KEY_PRIMARY + " ASC";
 
     /**
      * Cursor selection string
+     * Columns to load
      */
-    public static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
+    private static final String[] CONTACTS_PROJECTION =
             new String[]{
                     COLUMN_ID,
                     COLUMN_NAME,
@@ -52,58 +55,51 @@ public class ContactsCursorLoader extends CursorLoader {
     /**
      * Constructor
      *
-     * @param context
+     * @param context     calling context
      * @param phoneNumber String
      * @param contactName String
      */
-    public ContactsCursorLoader(Context context, String phoneNumber, String contactName) {
+    public NewContactsCursorLoader(Context context, String phoneNumber, String contactName) {
         super(
                 context,
-                buildUri(phoneNumber, contactName),
-                CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY,
-                getWhere(context),
+                buildUri(),
+                CONTACTS_PROJECTION,
+                getSelection(phoneNumber, contactName),
                 null,
                 CONTACTS_ORDER);
     }
 
-
     /**
-     * Get a filter string
+     * Return a selection query for the cursor
+     * According to given name and phone number
+     * By default they're set to "", if they're not null, than they'le be set to their value
      *
-     * @param context
-     * @return String
+     * @return String sql style
      */
-    private static String getWhere(Context context) {
-        return "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
-                " OR " + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" + ")" +
-                " AND " + Phone.HAS_PHONE_NUMBER + "=1" +
+    private static String getSelection(String phoneNumber, String contactName) {
+        phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
+        if (phoneNumber == null) phoneNumber = "";
+        if (contactName == null) contactName = "";
+        return "((" + COLUMN_NAME + " IS NOT NULL" +
+                " AND " + COLUMN_NAME + " LIKE '%" + contactName + "%')" +
+                " OR (" + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" +
+                " AND " + Phone.DISPLAY_NAME_ALTERNATIVE + " LIKE '%" + contactName + "%'))" +
+                " AND " + COLUMN_NUMBER + " LIKE '%" + phoneNumber + "%'" +
+                " AND " + Contacts.HAS_PHONE_NUMBER + "=1" +
                 " AND (" + ContactsContract.RawContacts.ACCOUNT_NAME + " IS NULL" +
                 " OR ( " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%'" +
                 " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%tachyon%'" + "))";
     }
 
-
     /**
-     * Builds contact uri by given name and phone number
+     * Builds contact uri with appropriate queries parameters
      *
-     * @param phoneNumber
-     * @param contactName
      * @return Builder.build()
      */
-    private static Uri buildUri(String phoneNumber, String contactName) {
-        phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
+    private static Uri buildUri() {
         Uri.Builder builder = Phone.CONTENT_URI.buildUpon();
-
-        if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
-        }
-
-        if (contactName != null && !contactName.isEmpty()) {
-            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
-        }
-
+        builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
+        builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
         builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
         builder.appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");
         return builder.build();

@@ -60,7 +60,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
     @NonNull
     @Override
     public ContactHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.item_contact, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
         return new ContactHolder(v);
     }
 
@@ -70,13 +70,20 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         int position = cursor.getPosition();
         holderMap.put(viewHolder, position);
 
-        // Display the contact's information
+        // display the contact's information
         String header = getHeaderString(position);
         Contact contact = new Contact(cursor);
 
+        // set texts
         viewHolder.name.setText(contact.getName());
         viewHolder.number.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
 
+        // set header
+        boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));
+        viewHolder.header.setText(header);
+        viewHolder.header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
+
+        // set photo
         if (contact.getPhotoUri() == null) {
             viewHolder.photo.setVisibility(View.GONE);
             viewHolder.photoPlaceholder.setVisibility(View.VISIBLE);
@@ -86,14 +93,10 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
             viewHolder.photo.setImageURI(Uri.parse(contact.getPhotoUri()));
         }
 
+        // Set click listeners
         if (mOnContactSelectedListener != null)
             viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(contact.getMainPhoneNumber()));
 
-        boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));
-        viewHolder.header.setText(header);
-        viewHolder.header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
-
-        // Set click listeners
         if (mOnItemClickListener != null)
             viewHolder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(viewHolder, contact));
 
@@ -112,7 +115,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
         String[] tempHeaders = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
         int[] tempCounts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
-
         int favoritesCount = cursor.getExtras().getInt(FavoritesAndContactsLoader.FAVORITES_COUNT);
 
         if (favoritesCount == 0) {

@@ -56,7 +56,7 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
     @NonNull
     @Override
     public ContactHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_contact_editable, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_editable, parent, false);
         ContactHolder holder = new ContactHolder(view);
         return holder;
     }
@@ -81,7 +81,7 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
 
         ConstraintLayout itemRoot = (ConstraintLayout) holder.itemView;
         ConstraintSet set = new ConstraintSet();
-        int layoutId = mEditModeEnabled ? R.layout.item_contact_editable_modified : R.layout.item_contact_editable;
+        int layoutId = mEditModeEnabled ? R.layout.list_item_editable_modified : R.layout.list_item_editable;
         set.load(mContext, layoutId);
         set.applyTo(itemRoot);
     }
@@ -192,7 +192,7 @@ public class SingleCGroupAdapter extends RecyclerView.Adapter<SingleCGroupAdapte
             Transition transition = new AutoTransition();
             transition.setInterpolator(new OvershootInterpolator());
             TransitionManager.beginDelayedTransition(itemRoot, transition);
-            int layoutId = mEditModeEnabled ? R.layout.item_contact_editable_modified : R.layout.item_contact_editable;
+            int layoutId = mEditModeEnabled ? R.layout.list_item_editable_modified : R.layout.list_item_editable;
             set.load(mContext, layoutId);
             set.applyTo(itemRoot);
         }

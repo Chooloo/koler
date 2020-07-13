@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.provider.ContactsContract;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -37,7 +36,6 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.google.FastScroller;
-import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.google.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
@@ -57,7 +55,6 @@ import butterknife.OnClick;
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static android.view.View.GONE;
 
 public class RecentsFragment extends AbsRecyclerViewFragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -68,72 +65,24 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     private static final int LOADER_ID = 1;
     private static final String ARG_PHONE_NUMBER = "phone_number";
     private static final String ARG_CONTACT_NAME = "contact_name";
-
-    /**
-     * An enum for the different types of headers that be inserted at position 0 in the list.
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ContactsFragment.Header.NONE, ContactsFragment.Header.STAR})
-    public @interface Header {
-        int NONE = 0;
-        int STAR = 1;
-    }
-
+    // ViewBinds
+    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
+    @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.enable_permission_btn) Button mEnablePermissionButton;
+    //    @BindView(R.id.list_item_header) TextView mAnchoredHeader;
+    @BindView(R.id.empty_state) View mEmptyState;
+    @BindView(R.id.empty_title) TextView mEmptyTitle;
+    @BindView(R.id.empty_desc) TextView mEmptyDesc;
+    LinearLayoutManager mLayoutManager;
+    RecentsAdapter mRecentsAdapter;
     // View Models
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
 
-    // ViewBinds
-    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
-    @BindView(R.id.recents_refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.enable_recents_btn) Button mEnableCallLogButton;
-    //    @BindView(R.id.item_header) TextView mAnchoredHeader;
-    @BindView(R.id.empty_state) View mEmptyState;
-    @BindView(R.id.empty_title) TextView mEmptyTitle;
-    @BindView(R.id.empty_desc) TextView mEmptyDesc;
-
-    LinearLayoutManager mLayoutManager;
-    RecentsAdapter mRecentsAdapter;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recents, container, false);
-    }
-
-    @Override
-    protected void onFragmentReady() {
-
-        checkShowButton();
-
-        mLayoutManager =
-                new LinearLayoutManager(getContext()) {
-                    @Override
-                    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                        super.onLayoutChildren(recycler, state);
-                        int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-                        if (mRecentsAdapter.getItemCount() > itemsShown) {
-                            mFastScroller.setVisibility(View.VISIBLE);
-                            mRecyclerView.setOnScrollChangeListener(RecentsFragment.this);
-                        } else {
-                            mFastScroller.setVisibility(GONE);
-                        }
-                    }
-                };
-        mRecentsAdapter = new RecentsAdapter(getContext(), null, this, this);
-
-        // mRecyclerView
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mRecentsAdapter);
-
-        // mRefreshLayout
-        mRefreshLayout.setOnRefreshListener(() -> {
-            LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
-            tryRunningLoader();
-        });
-
-        mEmptyTitle.setText(R.string.empty_recents_title);
-        mEmptyDesc.setText(R.string.empty_recents_desc);
+        return inflater.inflate(R.layout.fragment_items, container, false);
     }
 
     @Override
@@ -164,6 +113,41 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     }
 
     @Override
+    protected void onFragmentReady() {
+
+        checkShowButton();
+
+        mLayoutManager =
+                new LinearLayoutManager(getContext()) {
+                    @Override
+                    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                        super.onLayoutChildren(recycler, state);
+                        int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
+                        if (mRecentsAdapter.getItemCount() > itemsShown) {
+                            mFastScroller.setVisibility(View.VISIBLE);
+                            mRecyclerView.setOnScrollChangeListener(RecentsFragment.this);
+                        } else {
+                            mFastScroller.setVisibility(View.GONE);
+                        }
+                    }
+                };
+        mRecentsAdapter = new RecentsAdapter(getContext(), null, this, this);
+
+        // mRecyclerView
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mRecentsAdapter);
+
+        // mRefreshLayout
+        mRefreshLayout.setOnRefreshListener(() -> {
+            LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
+            tryRunningLoader();
+        });
+
+        mEmptyTitle.setText(R.string.empty_recents_title);
+        mEmptyDesc.setText(R.string.empty_recents_desc);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         tryRunningLoader();
@@ -187,13 +171,49 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 //        showRecentPopup(recentCall);
     }
 
+    @NonNull
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
+        String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
+        return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
+    }
+
 
     // -- Loader -- //
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
+        setData(data);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        mRecentsAdapter.changeCursor(null);
+    }
+
+    @Override
+    public void onRightClick() {
+        ((MainActivity) getActivity()).expandDialer(true);
+    }
+
+    @Override
+    public void onLeftClick() {
+        ((MainActivity) getActivity()).toggleSearchBar();
+    }
+
+    @Override
+    public int[] getIconsResources() {
+        return new int[]{
+                R.drawable.ic_dialpad_black_24dp,
+                R.drawable.ic_search_black_24dp
+        };
+    }
 
     private void tryRunningLoader() {
         if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG, true)) {
             runLoader();
-            mEnableCallLogButton.setVisibility(GONE);
+            mEnablePermissionButton.setVisibility(View.GONE);
         }
     }
 
@@ -206,33 +226,15 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         return loader != null;
     }
 
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
-        String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
-        return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        setData(data);
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mRecentsAdapter.changeCursor(null);
-    }
-
     private void setData(Cursor data) {
         mRecentsAdapter.changeCursor(data);
         mFastScroller.setup(mRecentsAdapter, mLayoutManager);
         if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
         if (data != null && data.getCount() > 0) {
             mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyState.setVisibility(GONE);
+            mEmptyState.setVisibility(View.GONE);
         } else {
-            mRecyclerView.setVisibility(GONE);
+            mRecyclerView.setVisibility(View.GONE);
             mEmptyState.setVisibility(View.VISIBLE);
         }
     }
@@ -242,44 +244,20 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
      */
     public void checkShowButton() {
         if (Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG, false)) {
-            mEnableCallLogButton.setVisibility(GONE);
+            mEnablePermissionButton.setVisibility(View.GONE);
         } else {
             mEmptyTitle.setText(R.string.empty_recents_persmission_title);
             mEmptyDesc.setText(R.string.empty_recents_persmission_desc);
-            mEnableCallLogButton.setVisibility(View.VISIBLE);
+            mEnablePermissionButton.setVisibility(View.VISIBLE);
         }
     }
 
-    // -- On Clicks -- //
-
-    @OnClick(R.id.enable_recents_btn)
+    @OnClick(R.id.enable_permission_btn)
     public void askForCallLogPermission() {
         Utilities.askForPermission(getActivity(), READ_CALL_LOG);
     }
 
-    // -- FABCoordinator.OnFabClickListener -- //
-
-    @Override
-    public void onRightClick() {
-        ((MainActivity) getActivity()).expandDialer(true);
-    }
-
-    @Override
-    public void onLeftClick() {
-        ((MainActivity) getActivity()).toggleSearchBar();
-    }
-
     // -- FABCoordinator.FABDrawableCoordinator -- //
-
-    @Override
-    public int[] getIconsResources() {
-        return new int[]{
-                R.drawable.ic_dialpad_black_24dp,
-                R.drawable.ic_search_black_24dp
-        };
-    }
-
-    // -- Other -- //
 
     /**
      * Shows a pop up window (dialog) with the contact's information
@@ -319,7 +297,7 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         addButton = contactDialog.findViewById(R.id.contact_popup_button_add);
         smsButton = contactDialog.findViewById(R.id.contact_popup_button_sms);
 
-        contactDialog.findViewById(R.id.contact_popup_button_fav).setVisibility(GONE);
+        contactDialog.findViewById(R.id.contact_popup_button_fav).setVisibility(View.GONE);
 
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
@@ -327,21 +305,21 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
             infoButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
             if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
-                contactPhoto.setVisibility(GONE);
+                contactPhoto.setVisibility(View.GONE);
                 contactPhotoPlaceholder.setVisibility(View.VISIBLE);
             } else {
                 contactPhoto.setVisibility(View.VISIBLE);
-                contactPhotoPlaceholder.setVisibility(GONE);
+                contactPhotoPlaceholder.setVisibility(View.GONE);
                 contactPhoto.setImageURI(Uri.parse(contact.getPhotoUri()));
             }
         } else {
-            infoButton.setVisibility(GONE);
-            editButton.setVisibility(GONE);
+            infoButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
             contactName.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
-            contactNumber.setVisibility(GONE);
+            contactNumber.setVisibility(View.GONE);
 
-            contactPhoto.setVisibility(GONE);
+            contactPhoto.setVisibility(View.GONE);
             contactPhotoPlaceholder.setVisibility(View.VISIBLE);
         }
 
@@ -392,6 +370,18 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         contactDialog.show();
 
+    }
+
+    // -- Other -- //
+
+    /**
+     * An enum for the different types of headers that be inserted at position 0 in the list.
+     */
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ContactsFragment.Header.NONE, ContactsFragment.Header.STAR})
+    public @interface Header {
+        int NONE = 0;
+        int STAR = 1;
     }
 }
 
