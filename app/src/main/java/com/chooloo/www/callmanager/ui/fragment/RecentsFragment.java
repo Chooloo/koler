@@ -2,32 +2,25 @@ package com.chooloo.www.callmanager.ui.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CallLog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
@@ -35,137 +28,44 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.google.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
-import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class RecentsFragment extends AbsRecyclerViewFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>,
+public class RecentsFragment extends AbsCursorFragment implements
         FABCoordinator.FABDrawableCoordination,
         FABCoordinator.OnFABClickListener,
-        View.OnScrollChangeListener, OnItemClickListener, OnItemLongClickListener {
+        OnItemClickListener,
+        OnItemLongClickListener {
 
-    private static final int LOADER_ID = 1;
-    private static final String ARG_PHONE_NUMBER = "phone_number";
-    private static final String ARG_CONTACT_NAME = "contact_name";
-    // ViewBinds
-    @BindView(R.id.fast_scroller) FastScroller mFastScroller;
-    @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.enable_permission_btn) Button mEnablePermissionButton;
-    //    @BindView(R.id.list_item_header) TextView mAnchoredHeader;
-    @BindView(R.id.empty_state) View mEmptyState;
-    @BindView(R.id.empty_title) TextView mEmptyTitle;
-    @BindView(R.id.empty_desc) TextView mEmptyDesc;
-    LinearLayoutManager mLayoutManager;
-    RecentsAdapter mRecentsAdapter;
-    // View Models
-    private SharedDialViewModel mSharedDialViewModel;
-    private SharedSearchViewModel mSharedSearchViewModel;
+    public static final String[] REQUIRED_PERMISSIONS = {READ_CALL_LOG, WRITE_CALL_LOG};
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_items, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // Dialer View Model
-        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        mSharedDialViewModel.getNumber().observe(this, s -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_PHONE_NUMBER, s);
-                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
-            }
-        });
-
-        // Search Bar View Model
-        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
-        mSharedSearchViewModel.getText().observe(this, t -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_CONTACT_NAME, t);
-                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
-            }
-        });
-
-        tryRunningLoader();
+    public RecentsFragment(Context context) {
+        super(context);
+        mAdapter = new RecentsAdapter(mContext, null, this, this);
+        mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 
     @Override
     protected void onFragmentReady() {
-
-        checkShowButton();
-
-        mLayoutManager =
-                new LinearLayoutManager(getContext()) {
-                    @Override
-                    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                        super.onLayoutChildren(recycler, state);
-                        int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-                        if (mRecentsAdapter.getItemCount() > itemsShown) {
-                            mFastScroller.setVisibility(View.VISIBLE);
-                            mRecyclerView.setOnScrollChangeListener(RecentsFragment.this);
-                        } else {
-                            mFastScroller.setVisibility(View.GONE);
-                        }
-                    }
-                };
-        mRecentsAdapter = new RecentsAdapter(getContext(), null, this, this);
-
-        // mRecyclerView
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mRecentsAdapter);
-
-        // mRefreshLayout
-        mRefreshLayout.setOnRefreshListener(() -> {
-            LoaderManager.getInstance(RecentsFragment.this).restartLoader(LOADER_ID, null, RecentsFragment.this);
-            tryRunningLoader();
-        });
-
-        mEmptyTitle.setText(R.string.empty_recents_title);
-        mEmptyDesc.setText(R.string.empty_recents_desc);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        tryRunningLoader();
+        if (!Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
+            this.mEmptyTitle.setText(getString(R.string.empty_recents_persmission_title));
+            this.mEmptyDesc.setText(getString(R.string.empty_recents_persmission_desc));
+        }
+        super.onFragmentReady();
     }
 
     @Override
     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
-    }
-
-    @Override
-    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
-        RecentCall recentCall = (RecentCall) data;
-        showRecentPopup(recentCall);
-    }
-
-    @Override
-    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
     }
 
     @NonNull
@@ -176,17 +76,14 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
     }
 
-
-    // -- Loader -- //
-
     @Override
-    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
-        setData(data);
+    public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
+        RecentCall recentCall = (RecentCall) data;
+        showRecentPopup(recentCall);
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-        mRecentsAdapter.changeCursor(null);
+    public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
     }
 
     @Override
@@ -207,55 +104,6 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         };
     }
 
-    private void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG, true)) {
-            runLoader();
-            mEnablePermissionButton.setVisibility(View.GONE);
-        }
-    }
-
-    private void runLoader() {
-        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
-    }
-
-    private boolean isLoaderRunning() {
-        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
-        return loader != null;
-    }
-
-    private void setData(Cursor data) {
-        mRecentsAdapter.changeCursor(data);
-        mFastScroller.setup(mRecentsAdapter, mLayoutManager);
-        if (mRefreshLayout.isRefreshing()) mRefreshLayout.setRefreshing(false);
-        if (data != null && data.getCount() > 0) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mEmptyState.setVisibility(View.GONE);
-        } else {
-            mRecyclerView.setVisibility(View.GONE);
-            mEmptyState.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * Checking whither to show the "enable contacts" button
-     */
-    public void checkShowButton() {
-        if (Utilities.checkPermissionGranted(getContext(), READ_CALL_LOG, false)) {
-            mEnablePermissionButton.setVisibility(View.GONE);
-        } else {
-            mEmptyTitle.setText(R.string.empty_recents_persmission_title);
-            mEmptyDesc.setText(R.string.empty_recents_persmission_desc);
-            mEnablePermissionButton.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @OnClick(R.id.enable_permission_btn)
-    public void askForCallLogPermission() {
-        Utilities.askForPermission(getActivity(), READ_CALL_LOG);
-    }
-
-    // -- FABCoordinator.FABDrawableCoordinator -- //
-
     /**
      * Shows a pop up window (dialog) with the contact's information
      *
@@ -265,11 +113,11 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
 
         Contact contact;
         if (recentCall.getCallerName() != null)
-            contact = ContactUtils.getContact(getContext(), recentCall.getCallerNumber(), null);
+            contact = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null);
         else contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
 
         // Initiate the dialog
-        Dialog contactDialog = new Dialog(getContext());
+        Dialog contactDialog = new Dialog(mContext);
         contactDialog.setContentView(R.layout.contact_popup_view);
 
         // Views declarations
@@ -345,18 +193,18 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         });
 
         callButton.setOnClickListener(v -> {
-            CallManager.call(this.getContext(), contact.getMainPhoneNumber());
+            CallManager.call(this.mContext, contact.getMainPhoneNumber());
         });
 
         deleteButton.setOnClickListener(v -> {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALL_LOG) == PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALL_LOG) == PERMISSION_GRANTED) {
                 String queryString = "_ID=" + recentCall.getCallId();
                 getActivity().getContentResolver().delete(CallLog.Calls.CONTENT_URI, queryString, null);
                 tryRunningLoader();
-                Toast.makeText(getContext(), "Call log deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Call log deleted", Toast.LENGTH_SHORT).show();
                 contactDialog.dismiss();
             } else {
-                Toast.makeText(getContext(), "I dont have the permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "I dont have the permission", Toast.LENGTH_LONG).show();
                 Utilities.askForPermission(getActivity(), WRITE_CALL_LOG);
                 contactDialog.dismiss();
             }
@@ -368,6 +216,4 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
         contactDialog.show();
 
     }
-
 }
-

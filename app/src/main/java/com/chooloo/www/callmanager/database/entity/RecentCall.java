@@ -119,14 +119,11 @@ public class RecentCall {
         while (true) {
             try {
                 cursor.moveToNext();
-                if (cursor.getString(cursor.getColumnIndex(NUMBER)).equals(number)) {
-                    count++;
-                    continue;
-                }
-            } catch (Exception e) {
-                // probably index out of bounds exception
+                if (cursor.getString(cursor.getColumnIndex(NUMBER)).equals(number)) count++;
+                else return count;
+            } catch (Exception e) { // probably index out of bounds exception
+                return count;
             }
-            return count;
         }
     }
 }

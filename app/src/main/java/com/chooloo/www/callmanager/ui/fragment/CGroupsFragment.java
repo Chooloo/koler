@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,11 +38,15 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
         OnItemClickListener {
 
     private CGroupsViewModel mViewModel;
-
+    private Context mContext;
     private LinearLayoutManager mLayoutManager;
     private CGroupsAdapter mAdapter;
 
     @BindView(R.id.empty_state) View mEmptyState;
+
+    public CGroupsFragment(Context context) {
+        mContext = context;
+    }
 
     @Nullable
     @Override
@@ -51,7 +56,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onFragmentReady() {
-        mLayoutManager = new LinearLayoutManager(getContext()) {
+        mLayoutManager = new LinearLayoutManager(mContext) {
             @Override
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                 super.onLayoutChildren(recycler, state);
@@ -59,7 +64,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
             }
         };
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new CGroupsAdapter(getContext(), null, this);
+        mAdapter = new CGroupsAdapter(mContext, null, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -96,7 +101,7 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
         CGroup cGroup = (CGroup) data;
-        Intent intent = new Intent(getContext(), CGroupActivity.class);
+        Intent intent = new Intent(mContext, CGroupActivity.class);
         intent.putExtra(CGroupActivity.EXTRA_LIST_ID, cGroup.getListId());
         startActivity(intent);
     }
@@ -105,12 +110,12 @@ public class CGroupsFragment extends AbsRecyclerViewFragment implements
 
     @Override
     public void onImport(CGroup list, File excelFile, int nameColIndex, int numberColIndex) {
-        MaterialDialog progressDialog = new MaterialDialog.Builder(getContext())
+        MaterialDialog progressDialog = new MaterialDialog.Builder(mContext)
                 .progress(false, 0, true)
                 .progressNumberFormat("%1d/%2d")
                 .show();
 
-        AsyncSpreadsheetImport task = new AsyncSpreadsheetImport(getContext(),
+        AsyncSpreadsheetImport task = new AsyncSpreadsheetImport(mContext,
                 excelFile,
                 nameColIndex,
                 numberColIndex,

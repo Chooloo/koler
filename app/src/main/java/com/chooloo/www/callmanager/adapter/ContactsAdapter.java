@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,17 +19,14 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
-import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
+import com.chooloo.www.callmanager.ui.ListItemHolder;
 import com.chooloo.www.callmanager.util.Utilities;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
-public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.ContactHolder> {
+public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
     // Click listeners
     private OnItemClickListener mOnItemClickListener;
@@ -38,7 +34,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
     private OnContactSelectedListener mOnContactSelectedListener;
 
-    private final ArrayMap<ContactHolder, Integer> holderMap = new ArrayMap<>();
+    private final ArrayMap<ListItemHolder, Integer> holderMap = new ArrayMap<>();
 
     // List of contact sublist mHeaders
     private String[] mHeaders = new String[0];
@@ -62,24 +58,23 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
     @NonNull
     @Override
-    public ContactHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
-        return new ContactHolder(v);
+        return new ListItemHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(ContactHolder viewHolder, Cursor cursor) {
+    public void onBindViewHolder(ListItemHolder viewHolder, Cursor cursor) {
 
-        int position = cursor.getPosition();
-        holderMap.put(viewHolder, position);
-
-        // display the contact's information
-        String header = getHeaderString(position);
         Contact contact = new Contact(cursor);
 
+        int position = cursor.getPosition();
+        String header = getHeaderString(position);
+        holderMap.put(viewHolder, position);
+
         // set texts
-        viewHolder.name.setText(contact.getName());
-        viewHolder.number.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+        viewHolder.bigText.setText(contact.getName());
+        viewHolder.smallText.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
 
         // set header
         boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));
@@ -154,12 +149,12 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
 
     @Override
     public void refreshHeaders() {
-        for (ContactHolder holder : holderMap.keySet()) {
+        for (ListItemHolder holder : holderMap.keySet()) {
             int position = holderMap.get(holder);
             boolean showHeader =
                     position == 0 || !getHeaderString(position).equals(getHeaderString(position - 1));
             int visibility = showHeader ? View.VISIBLE : View.INVISIBLE;
-            holder.getHeaderView().setVisibility(visibility);
+            holder.header.setVisibility(visibility);
         }
     }
 
@@ -177,29 +172,5 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
      */
     public interface OnContactSelectedListener {
         void onContactSelected(String normPhoneNumber);
-    }
-
-    public class ContactHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
-        @BindView(R.id.item_photo) ImageView photo;
-        @BindView(R.id.item_big_text) TextView name;
-        @BindView(R.id.item_small_text) TextView number;
-        @BindView(R.id.item_header) TextView header;
-
-        /**
-         * Constructor
-         *
-         * @param itemView the layout view
-         */
-        public ContactHolder(@NonNull View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            photo.setVisibility(View.VISIBLE);
-        }
-
-        public TextView getHeaderView() {
-            return header;
-        }
     }
 }

@@ -250,6 +250,13 @@ public class MainActivity extends AbsSearchBarActivity {
         syncFABAndFragment();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Utilities.DEFAULT_DIALER_RC) {
+        }
+    }
+
     // -- OnClicks -- //
 
     @OnClick(R.id.right_button)
