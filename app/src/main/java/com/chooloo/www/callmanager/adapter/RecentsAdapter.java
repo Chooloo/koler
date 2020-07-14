@@ -5,11 +5,8 @@ import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
@@ -19,11 +16,6 @@ import com.chooloo.www.callmanager.ui.ListItemHolder;
 import com.chooloo.www.callmanager.util.RelativeTime;
 
 import java.util.Date;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static android.view.View.GONE;
 
 public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
@@ -51,8 +43,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
     @NonNull
     @Override
     public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
-        return new ListItemHolder(v);
+        return new ListItemHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false));
     }
 
     @Override
@@ -67,7 +58,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         Date date = recentCall.getCallDate();
 
         // hide header
-        holder.header.setVisibility(GONE);
+        holder.header.setVisibility(View.GONE);
 
         // set name
         holder.bigText.setText(callerName != null ? callerName : phoneNumber);
@@ -77,7 +68,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
         // set image
         holder.photo.setVisibility(View.VISIBLE);
-        holder.photoPlaceholder.setVisibility(GONE);
+        holder.photoPlaceholder.setVisibility(View.GONE);
 
         // append calls in a row count
         if (recentCall.getCount() > 1)
@@ -95,6 +86,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
                 holder.photo.setImageResource(R.drawable.ic_call_missed_black_24dp);
                 break;
             default:
+                holder.photo.setVisibility(View.GONE);
                 break;
         }
 

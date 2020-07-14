@@ -31,7 +31,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
     // Click listeners
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
-
     private OnContactSelectedListener mOnContactSelectedListener;
 
     private final ArrayMap<ListItemHolder, Integer> holderMap = new ArrayMap<>();
@@ -66,8 +65,10 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
     @Override
     public void onBindViewHolder(ListItemHolder viewHolder, Cursor cursor) {
 
+        // get the contact from the cursor
         Contact contact = new Contact(cursor);
 
+        // some settings
         int position = cursor.getPosition();
         String header = getHeaderString(position);
         holderMap.put(viewHolder, position);
