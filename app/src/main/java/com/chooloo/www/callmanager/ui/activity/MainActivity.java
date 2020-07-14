@@ -104,17 +104,11 @@ public class MainActivity extends AbsSearchBarActivity {
         setContentView(R.layout.activity_main); // set the layout
         PreferenceUtils.getInstance(this); // get the preferences
         Utilities.setUpLocale(this);
-
-        // Check if first instance
-        boolean isFirstInstance = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key);
-        if (!isFirstInstance) checkVersion();
-
-        // Bind variables
         ButterKnife.bind(this);
 
-        // Check wither this app was set as the default dialer
-        boolean isDefaultDialer = Utilities.checkDefaultDialer(this);
-        if (isDefaultDialer) checkPermissions(null);
+
+        Utilities.checkDefaultDialer(this);
+        showNewVersionDialog();
 
         // View Pager
         mAdapterViewPager = new CustomPagerAdapter(this, getSupportFragmentManager());
@@ -122,7 +116,6 @@ public class MainActivity extends AbsSearchBarActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -135,7 +128,6 @@ public class MainActivity extends AbsSearchBarActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -145,17 +137,13 @@ public class MainActivity extends AbsSearchBarActivity {
         // Search Bar View Model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getIsFocused().observe(this, f -> {
-            if (f) {
-                expandAppBar(true);
-            }
+            if (f) expandAppBar(true);
         });
 
         // Dial View Model
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsOutOfFocus().observe(this, b -> {
-            if (b) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
+            if (b) mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         });
         mSharedDialViewModel.getNumber().observe(this, n -> {
             if (n == null || n.length() == 0) toggleAddContactAction(false);
@@ -262,28 +250,6 @@ public class MainActivity extends AbsSearchBarActivity {
         syncFABAndFragment();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // check if first instance
-        if (PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key))
-            PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, false);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Utilities.DEFAULT_DIALER_RC) {
-            checkPermissions(null);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        checkPermissions(grantResults);
-    }
-
     // -- OnClicks -- //
 
     @OnClick(R.id.right_button)
@@ -350,13 +316,9 @@ public class MainActivity extends AbsSearchBarActivity {
     }
 
     public void updateButtons(int bottomSheetState) {
-        if (bottomSheetState == BottomSheetBehavior.STATE_HIDDEN || bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED) {
-            showButtons(true);
-            if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, true);
-        } else {
-            showButtons(false);
-            if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, false);
-        }
+        boolean isShow = bottomSheetState == BottomSheetBehavior.STATE_HIDDEN || bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED;
+        showButtons(isShow);
+        if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, isShow);
     }
 
     /**
@@ -389,20 +351,18 @@ public class MainActivity extends AbsSearchBarActivity {
 
     // -- Utilities -- //
 
-    private void checkPermissions(@Nullable int[] grantResults) {
+    private void checkPermissions(@Nullable int[] grantResults, boolean askForIt) {
         if (grantResults != null && Utilities.checkPermissionsGranted(grantResults) ||
                 Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS, false))
-            checkVersion();
-        else
-            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
+            showNewVersionDialog();
+        else if (askForIt) Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
     }
 
     /**
-     * Check for the app version
+     * If user using a new version of the app, show the new version dialog
      */
-    private void checkVersion() {
-        int lastVersionCode = PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key);
-        if (lastVersionCode < BuildConfig.VERSION_CODE) {
+    private void showNewVersionDialog() {
+        if (PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key) < BuildConfig.VERSION_CODE) {
             PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
             new ChangelogDialog().show(getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
         }

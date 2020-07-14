@@ -162,13 +162,10 @@ public class RecentsFragment extends AbsRecyclerViewFragment implements
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
         RecentCall recentCall = (RecentCall) data;
         showRecentPopup(recentCall);
-//        CallManager.call(this.getContext(), recentCall.getCallerNumber());
     }
 
     @Override
     public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
-//        RecentCall recentCall = (RecentCall) data;
-//        showRecentPopup(recentCall);
     }
 
     @NonNull

@@ -12,6 +12,7 @@ import com.chooloo.www.callmanager.ui.fragment.CGroupsFragment;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.ui.fragment.ContactsTryFragment;
 import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
+import com.chooloo.www.callmanager.ui.fragment.RecentsTryFragment;
 
 public class CustomPagerAdapter extends FragmentPagerAdapter {
 
@@ -54,7 +55,7 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new RecentsFragment();
+                return new RecentsTryFragment(mContext);
             case 1:
                 return new ContactsTryFragment(mContext);
             case 2:

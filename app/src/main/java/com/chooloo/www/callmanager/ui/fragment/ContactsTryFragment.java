@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -43,17 +42,17 @@ public class ContactsTryFragment extends AbsCursorFragment implements
         OnItemClickListener,
         OnItemLongClickListener {
 
-    public static final String REQUIRED_PERMISSION = READ_CONTACTS;
+    public static final String[] REQUIRED_PERMISSIONS = {READ_CONTACTS};
 
     public ContactsTryFragment(Context context) {
         super(context);
         mAdapter = new ContactsAdapter(mContext, null, this, this);
-        mRequiredPermission = REQUIRED_PERMISSION;
+        mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 
     @Override
     protected void onFragmentReady() {
-        if (!Utilities.checkPermissionGranted(mContext, REQUIRED_PERMISSION, false)) {
+        if (!Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
             this.mEmptyTitle.setText(R.string.empty_contact_persmission_title);
             this.mEmptyDesc.setText(R.string.empty_contact_persmission_desc);
         }
@@ -99,15 +98,6 @@ public class ContactsTryFragment extends AbsCursorFragment implements
         }
     }
 
-    @Override
-    public void onRightClick() {
-        ((MainActivity) getActivity()).expandDialer(true);
-    }
-
-    @Override
-    public void onLeftClick() {
-        ((MainActivity) getActivity()).toggleSearchBar();
-    }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
@@ -117,7 +107,16 @@ public class ContactsTryFragment extends AbsCursorFragment implements
 
     @Override
     public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
+    }
 
+    @Override
+    public void onRightClick() {
+        ((MainActivity) getActivity()).expandDialer(true);
+    }
+
+    @Override
+    public void onLeftClick() {
+        ((MainActivity) getActivity()).toggleSearchBar();
     }
 
     @Override

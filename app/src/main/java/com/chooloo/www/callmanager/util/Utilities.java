@@ -88,15 +88,14 @@ public class Utilities {
      * Check for permissions by a given list
      * Return true *only* if all of the given permissions are granted
      *
-     * @param activity    from where the function is being called
+     * @param context     from where the function is being called
      * @param permissions permission to check if granted
      * @param askForIt    whether to ask the user for the ungranted permissions
      * @return boolean is permissions granted / not
      */
-    public static boolean checkPermissionsGranted(Activity activity, String[] permissions, boolean askForIt) {
-        for (String permission : permissions) {
-            if (!checkPermissionGranted(activity, permission, askForIt)) return false;
-        }
+    public static boolean checkPermissionsGranted(Context context, String[] permissions, boolean askForIt) {
+        for (String permission : permissions)
+            if (!checkPermissionGranted(context, permission, askForIt)) return false;
         return true;
     }
 
@@ -123,9 +122,8 @@ public class Utilities {
      * @return boolean is all granted / not
      */
     public static boolean checkPermissionsGranted(int[] grantResults) {
-        for (int result : grantResults) {
+        for (int result : grantResults)
             if (result == PackageManager.PERMISSION_DENIED) return false;
-        }
         return true;
     }
 

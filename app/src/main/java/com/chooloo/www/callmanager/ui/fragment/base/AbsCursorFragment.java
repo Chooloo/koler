@@ -21,7 +21,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
-import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 import com.chooloo.www.callmanager.google.FastScroller;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -55,10 +54,9 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     protected Context mContext;
     protected AbsFastScrollerAdapter mAdapter;
     protected LinearLayoutManager mLayoutManager;
-    protected String mRequiredPermission;
+    protected String[] mRequiredPermissions;
     private SharedDialViewModel mSharedDialViewModel;
     private SharedSearchViewModel mSharedSearchViewModel;
-    private boolean mIsPermissionGranted = false;
 
     protected AbsCursorFragment(Context context) {
         mContext = context;
@@ -66,8 +64,6 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onFragmentReady() {
-        mIsPermissionGranted = Utilities.checkPermissionGranted(mContext, mRequiredPermission, false);
-
         togglePermissionButton();
 
         // dialer View Model
@@ -142,7 +138,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        tryRunningLoader();
+//        tryRunningLoader();
     }
 
     @Override
@@ -170,7 +166,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mIsPermissionGranted = Utilities.checkPermissionGranted(mContext, mRequiredPermission, false);
+        Timber.i("GOT PERMISSIONS");
         togglePermissionButton();
         tryRunningLoader();
     }
@@ -187,13 +183,15 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
 
     @OnClick(R.id.enable_permission_btn)
     public void enablePermissionClick() {
-        Utilities.askForPermission(getActivity(), mRequiredPermission);
+        Toast.makeText(mContext, "Click click " + mRequiredPermissions[0], Toast.LENGTH_SHORT).show();
+        requestPermissions(mRequiredPermissions, 1);
     }
 
     // -- Loader -- //
 
-    private void tryRunningLoader() {
-        if (!isLoaderRunning() && mIsPermissionGranted) runLoader();
+    protected void tryRunningLoader() {
+        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false))
+            runLoader();
     }
 
     private void runLoader() {
@@ -201,8 +199,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     }
 
     private boolean isLoaderRunning() {
-        Loader loader = LoaderManager.getInstance(this).getLoader(LOADER_ID);
-        return loader != null;
+        return LoaderManager.getInstance(this).getLoader(LOADER_ID) != null;
     }
 
     private void setData(Cursor data) {
@@ -222,7 +219,9 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
      * Checking whither to show the "enable contacts" button
      */
     public void togglePermissionButton() {
-        mEnablePermissionButton.setVisibility(mIsPermissionGranted ? View.GONE : View.VISIBLE);
+        boolean isPermissionGranted = Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false);
+        Timber.i("IS PERMISSION GRANTED: " + isPermissionGranted);
+        mEnablePermissionButton.setVisibility(isPermissionGranted ? View.GONE : View.VISIBLE);
     }
 
 }
