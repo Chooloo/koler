@@ -60,6 +60,10 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         // hide header
         holder.header.setVisibility(View.GONE);
 
+        // append calls in a row count
+        if (recentCall.getCount() > 1)
+            callerName += (" (" + recentCall.getCount() + ")");
+
         // set name
         holder.bigText.setText(callerName != null ? callerName : phoneNumber);
 
@@ -69,10 +73,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         // set image
         holder.photo.setVisibility(View.VISIBLE);
         holder.photoPlaceholder.setVisibility(View.GONE);
-
-        // append calls in a row count
-        if (recentCall.getCount() > 1)
-            callerName += (" (" + recentCall.getCount() + ")");
 
         // set call type icon
         switch (recentCall.getCallType()) {
