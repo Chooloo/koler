@@ -35,11 +35,12 @@ public class ContactsCursorLoader extends CursorLoader {
      */
     public static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
             new String[]{
-                    Phone._ID, // 0
-                    Phone.DISPLAY_NAME_PRIMARY, // 1
+                    Phone.CONTACT_ID, // 0
+                    Phone.DISPLAY_NAME, // 1
                     Phone.PHOTO_ID, // 2
                     Phone.PHOTO_THUMBNAIL_URI, // 3
                     Phone.NUMBER, // 4
+                    Phone.STARRED
             };
 
     /**
@@ -96,15 +97,14 @@ public class ContactsCursorLoader extends CursorLoader {
      * @return Builder.build()
      */
     private static Uri buildUri(String phoneNumber, String contactName) {
-        Uri.Builder builder;
+        Uri.Builder builder = Phone.CONTENT_URI.buildUpon();
         if (phoneNumber != null && !phoneNumber.isEmpty()) {
             builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
             builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
-        } else if (contactName != null && !contactName.isEmpty()) {
+        }
+        if (contactName != null && !contactName.isEmpty()) {
             builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
             builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
-        } else {
-            builder = Phone.CONTENT_URI.buildUpon();
         }
 
         builder.appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");

@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
@@ -25,6 +27,10 @@ import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.ContactHolder> {
+
+    // Click listeners
+    private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
 
     private OnContactSelectedListener mOnContactSelectedListener;
 
@@ -42,8 +48,13 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
      * @param context
      * @param cursor
      */
-    public ContactsAdapter(Context context, Cursor cursor) {
+    public ContactsAdapter(Context context,
+                           Cursor cursor,
+                           OnItemClickListener onItemClickListener,
+                           OnItemLongClickListener onItemLongClickListener) {
         super(context, cursor);
+        mOnItemClickListener = onItemClickListener;
+        mOnItemLongClickListener = onItemLongClickListener;
     }
 
     @NonNull
@@ -85,6 +96,18 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));
         viewHolder.header.setText(header);
         viewHolder.header.setVisibility(showHeader ? View.VISIBLE : View.INVISIBLE);
+
+        // Set click listeners
+        if (mOnItemClickListener != null) {
+            viewHolder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(viewHolder, contact));
+        }
+        if (mOnItemLongClickListener != null) {
+            viewHolder.itemView.setOnLongClickListener(v -> {
+                mOnItemLongClickListener.onItemLongClick(viewHolder, contact);
+                return true;
+            });
+        }
+
     }
 
     @Override
@@ -186,6 +209,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ContactsAdapter.Cont
         public ContactHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            photo.setVisibility(View.VISIBLE);
         }
 
         public TextView getHeaderView() {

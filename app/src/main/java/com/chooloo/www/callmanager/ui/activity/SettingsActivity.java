@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -53,6 +54,16 @@ public class SettingsActivity extends AbsThemeActivity {
             setPreferencesFromResource(R.xml.preference, rootKey);
 
             //Init preferences
+            Preference.OnPreferenceChangeListener colorChangeListener = (preference, newValue) -> {
+                ListPreference listPreference = (ListPreference) preference;
+                CharSequence[] entries = listPreference.getEntries();
+                listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
+
+                getActivity().finish();
+                startActivity(getActivity().getIntent());
+                return true;
+            };
+
             Preference.OnPreferenceChangeListener themeChangeListener = (preference, newValue) -> {
                 ListPreference listPreference = (ListPreference) preference;
                 CharSequence[] entries = listPreference.getEntries();
@@ -76,22 +87,27 @@ public class SettingsActivity extends AbsThemeActivity {
                 return true;
             };
 
-            //App theme
+            // App Color
+            ListPreference appColorPreference = (ListPreference) findPreference(getString(R.string.pref_app_color_key));
+            appColorPreference.setOnPreferenceChangeListener(colorChangeListener);
+            appColorPreference.setSummary(appColorPreference.getEntry());
+
+            // App theme
             ListPreference appThemePreference = (ListPreference) findPreference(getString(R.string.pref_app_theme_key));
             appThemePreference.setOnPreferenceChangeListener(themeChangeListener);
             appThemePreference.setSummary(appThemePreference.getEntry());
 
-            //End call timer
+            // End call timer
             ListPreference rejectCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_reject_call_timer_key));
             rejectCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             rejectCallTimerPreference.setSummary(rejectCallTimerPreference.getEntry());
 
-            //Answer call timer
+            // Answer call timer
             ListPreference answerCallTimerPreference = (ListPreference) findPreference(getString(R.string.pref_answer_call_timer_key));
             answerCallTimerPreference.setOnPreferenceChangeListener(listChangeListener);
             answerCallTimerPreference.setSummary(answerCallTimerPreference.getEntry());
 
-            //Default page
+            // Default page
             ListPreference defaultPagePreference = (ListPreference) findPreference(getString(R.string.pref_default_page_key));
             defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
             defaultPagePreference.setSummary(defaultPagePreference.getEntry());
@@ -102,15 +118,15 @@ public class SettingsActivity extends AbsThemeActivity {
 //            SwitchPreference isNoVibratePreference = (SwitchPreference) findPreference(getString(R.string.pref_is_no_vibrate_key));
 //            isNoVibratePreference.setOnPreferenceChangeListener(switchChangeListener);
 
-            //Biometrics
+            // Biometrics
             SwitchPreference isBiometricPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_biometric_key));
             isBiometricPreference.setOnPreferenceChangeListener(switchChangeListener);
 
-            //Sim selection
+            // Sim selection
             ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
             simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
 
-            if (!Utilities.checkPermissionsGranted(getContext(), READ_PHONE_STATE)) {
+            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
                 Utilities.askForPermission(getActivity(), READ_PHONE_STATE);
             } else {
                 setupSimSelection();
@@ -126,8 +142,8 @@ public class SettingsActivity extends AbsThemeActivity {
         }
 
         private void setupSimSelection() {
-            if (!Utilities.checkPermissionsGranted(getContext(), READ_PHONE_STATE)) {
-                Timber.w("READ_PHONE_STATE permission was not granted");
+            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE)) {
+                Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
                 return;
             }
 

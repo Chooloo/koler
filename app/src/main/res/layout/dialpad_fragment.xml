@@ -11,14 +11,6 @@
     android:orientation="vertical"
     tools:context=".ui.fragment.DialpadFragment">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/swipe_down_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@android:color/transparent"-->
-    <!--android:backgroundTint="@color/grey_400"-->
-    <!--android:src="@drawable/ic_keyboard_arrow_down_black_24dp" />-->
-
     <!--Dialpad Shadow-->
     <View
         android:layout_width="match_parent"
@@ -31,7 +23,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_number_input_height"
-        android:background="?attr/colorPrimary"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
         android:paddingEnd="@dimen/top_dialpad_side_padding">

@@ -5,6 +5,7 @@
     android:id="@+id/ongoing_call_layout_a"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
     tools:context=".ui.activity.OngoingCallActivity">
 
@@ -63,8 +64,8 @@
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
         android:textAlignment="center"
-        android:textColor="?attr/iconColor"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="?attr/iconColor"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/text_status"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +100,7 @@
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="62dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
@@ -196,6 +197,7 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/reject_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_keypad"
@@ -209,7 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="40dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@color/green_phone"
@@ -226,7 +228,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="40dp"
         android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@color/red_phone"
@@ -237,7 +239,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="36dp" />
 
-    <!-- Guidelines -->
+    <TextView
+        android:id="@+id/ongoing_call_more_actions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hold_for_actions"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reject_btn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

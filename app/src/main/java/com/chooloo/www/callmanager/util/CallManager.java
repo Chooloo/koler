@@ -17,9 +17,14 @@ import com.chooloo.www.callmanager.util.validation.Validator;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.security.Permission;
 import java.util.List;
 
 import timber.log.Timber;
+
+import static android.Manifest.permission.CALL_PHONE;
 
 public class CallManager {
 
@@ -39,31 +44,33 @@ public class CallManager {
      * @param number
      */
     public static void call(@NotNull Context context, @NotNull String number) {
-        Timber.i("Trying to call: %s", number);
-        String uri;
         try {
-            // Set the data for the call
-            if (number.contains("#")) uri = "tel: " + Uri.encode(number);
-            else uri = "tel: " + number;
-            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(uri));
+            // Create call intent
+            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
+            // Handle sim card selection
             int simCard = getSimSelection(context);
-            if (simCard != -1) {
-                callIntent.putExtra("simSlot", simCard);
-                Timber.i("simCard %s", simCard);
-            }
-            context.startActivity(callIntent); // Start the call
+            if (simCard != -1) callIntent.putExtra("com.android.phone.extra.slot", simCard);
+            // Start the call
+            context.startActivity(callIntent);
         } catch (SecurityException e) {
-            Timber.e(e, "Couldn't call %s", number);
+            Toast.makeText(context, "Couldn't make a call due to security reasons", Toast.LENGTH_LONG).show();
+        } catch (NullPointerException e) {
+            Toast.makeText(context, "Couldnt make a call, no phone number", Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * Get sim selection from preferences
+     *
+     * @param context
+     * @return number of selected sim
+     */
     public static int getSimSelection(Context context) {
-        PreferenceUtils.getInstance(context);
         try {
-            int simCard = PreferenceUtils.getInstance().getInt(R.string.pref_sim_select_key);
-            Timber.i("sim card: %s", simCard);
-            return simCard;
+            // try getting the sim selection preference
+            return PreferenceUtils.getInstance(context).getInt(R.string.pref_sim_select_key);
         } catch (NullPointerException e) {
+            Toast.makeText(context, "Couldn't get sim selection", Toast.LENGTH_LONG).show();
             return -1;
         }
     }
@@ -73,9 +80,8 @@ public class CallManager {
      */
     public static boolean callVoicemail(Context context) {
         try {
-            Uri uri = Uri.parse("voicemail:1");
-            Intent voiceMail = new Intent(Intent.ACTION_CALL, uri);
-            context.startActivity(voiceMail);
+            // try calling voicemail
+            context.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1")));
             return true;
         } catch (SecurityException e) {
             Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
@@ -228,44 +234,19 @@ public class CallManager {
      * @return String - phone number, or voicemail. if not recognized, return null.
      */
     public static Contact getDisplayContact(Context context) {
-
-        String uri = null;
-
+        String number;
+        // try getting the number of the other side of the call
         try {
-            if (sCall.getState() == Call.STATE_DIALING) {
-                Toast.makeText(context, "Dialing", Toast.LENGTH_LONG).show();
-            }
-        } catch (NullPointerException e) {
+            number = URLDecoder.decode(sCall.getDetails().getHandle().toString(), "utf-8").replace("tel:", "");
+        } catch (Exception e) {
+            return ContactUtils.UNKNOWN;
         }
-        
-        if (sCall.getDetails().getHandle() != null) {
-            uri = Uri.decode(sCall.getDetails().getHandle().toString());// Callers details
-            Timber.i("Display Contact: %s", uri);
-        }
-
-        if (uri != null && uri.isEmpty()) return ContactUtils.UNKNOWN;
-
-        // If uri contains 'voicemail' this is a... voicemail dah
-        if (uri.contains("voicemail")) return ContactUtils.VOICEMAIL;
-
-        String telephoneNumber = null;
-
-        // If uri contains 'tel' this is a normal number
-        if (uri.contains("tel:")) telephoneNumber = uri.replace("tel:", "");
-
-        if (telephoneNumber == null || telephoneNumber.isEmpty())
-            return ContactUtils.UNKNOWN; // Unknown number
-
-        if (telephoneNumber.contains(" ")) telephoneNumber = telephoneNumber.replace(" ", "");
-
-        Contact contact = ContactUtils.getContactByPhoneNumber(context, telephoneNumber); // Get the contacts with the number
-
-        if (contact == null)
-            return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
-        else if (contact.getName() == null)
-            return new Contact(telephoneNumber, telephoneNumber, null); // No known contacts for the number, return the number
-
-        return contact;
+        // check if number is a voice mail
+        if (number.contains("voicemail")) return ContactUtils.VOICEMAIL;
+        // get the contact
+        Contact contact = ContactUtils.getContactByPhoneNumber(context, number); // get the contacts with the number
+        if (contact == null) return new Contact(number, number, null); // return a number contact
+        else return contact; // contact is valid, return it
     }
 
     /**
@@ -274,7 +255,7 @@ public class CallManager {
      * @return Call.State
      */
     public static int getState() {
-        if (sCall == null) return Call.STATE_DISCONNECTED;
+        if (sCall == null) return Call.STATE_DISCONNECTED; // if no call, return disconnected
         return sCall.getState();
     }
 }

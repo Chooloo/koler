@@ -8,16 +8,48 @@
     android:paddingTop="@dimen/item_contact_topbot_padding"
     android:paddingBottom="@dimen/item_contact_topbot_padding">
 
-    <!-- Caller Pic -->
-    <include
-        android:id="@+id/item_header"
-        layout="@layout/item_header"
-        android:layout_width="@dimen/header_width"
+    <LinearLayout
+        android:id="@+id/item_header_included"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Caller Pic -->
+        <include
+            layout="@layout/item_header"
+            android:layout_width="@dimen/header_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <!-- Name Text -->
+    <TextView
+        android:id="@+id/item_big_text"
+        style="@style/ListItemText.Big"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_contact_padding"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/frameLayout"
+        app:layout_constraintStart_toEndOf="@+id/item_header_included"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+
+    <!-- Phone Number Text -->
+    <TextView
+        android:id="@+id/item_small_text"
+        style="@style/ListItemText.Small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/item_big_text"
+        app:layout_constraintStart_toStartOf="@+id/item_big_text"
+        app:layout_constraintTop_toBottomOf="@+id/item_big_text" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -36,6 +68,16 @@
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:tint="?attr/secondaryAccentColor"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+        <ImageView
+            android:id="@+id/item_recent_photo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -47,29 +89,6 @@
             app:civ_border_width="0dp" />
 
     </FrameLayout>
-
-    <!-- Name Text -->
-    <TextView
-        android:id="@+id/item_big_text"
-        style="@style/ListItemText.Big"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/item_contact_padding"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/frameLayout"
-        app:layout_constraintStart_toEndOf="@+id/item_header"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
-
-    <!-- Phone Number Text -->
-    <TextView
-        android:id="@+id/item_small_text"
-        style="@style/ListItemText.Small"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/item_big_text"
-        app:layout_constraintStart_toStartOf="@+id/item_big_text"
-        app:layout_constraintTop_toBottomOf="@+id/item_big_text" />
 
     <!-- Letter Text -->
 

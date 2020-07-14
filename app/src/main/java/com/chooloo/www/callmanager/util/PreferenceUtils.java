@@ -49,17 +49,14 @@ public class PreferenceUtils {
     }
 
     public static PreferenceUtils getInstance(Context context) {
-        if (sSharedPrefs == null) {
+        if (sSharedPrefs == null)
             sSharedPrefs = new PreferenceUtils(context.getApplicationContext());
-        }
         return sSharedPrefs;
     }
 
     public static PreferenceUtils getInstance() {
-        if (sSharedPrefs != null) {
+        if (sSharedPrefs != null)
             return sSharedPrefs;
-        }
-
         throw new IllegalArgumentException("Should use getInstance(Context) at least once before using this method.");
     }
 

@@ -11,6 +11,11 @@ Believe us we want to make it good, as we use it ourselves.
       height="80"/>
 </a>
 
+## Support Availablity
+We are aware the app needs more support and updates, due to feature requests and minor bugs
+We are currently not fully availale for supporting the app though we'll do our best to slowly push updates and add requested feature
+So feel free to contact us for every little thing
+
 ## Features
 ### Design
 One of the main features of the app is the design.
@@ -29,7 +34,7 @@ In an ongoing call you can:
 * Hang-up in a specified amount of seconds
 
 ### Swipes
-The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, resulting in a smoother user experience.
+The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
   <!-- * ### Dialer
     * __Call__            - Swipe up  
     * __Delete number__   - Swipe left  
@@ -40,6 +45,19 @@ The app's main goal is to be more intuitive and comfortable. For that reason, th
     * __Answer__          - Swipe right 
     * __Send sms__        - Swipe up on the send SMS overlay
 
+### Call Actions
+In Koler you can interact with incoming calls in new ways
+  * ### Timer action
+  You can answer and decline using a timer which you can modify in the settings
+  * ### Sms decline
+  Decling the call while sending an SMS
+
+### Excel Page
+Another great feature in Koler is the ability to import and manage calls using an excel file
+Koler offers a comfortable and simple UI for managing and editing a list of contacts
+The Excel feature also offers the ability to call the list of imported contacts one by one
+Great for people who call a lot of people one by one
+ 
 ## GET THE APP
  * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")

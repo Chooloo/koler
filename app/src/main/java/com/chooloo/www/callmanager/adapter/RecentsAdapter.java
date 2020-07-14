@@ -17,6 +17,9 @@ import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
+import com.chooloo.www.callmanager.util.RelativeTime;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +58,6 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
 
     @Override
     public void onBindViewHolder(RecentCallHolder holder, Cursor cursor) {
-
         holder.letterText.setVisibility(GONE);
 
         // Get the recent call
@@ -64,30 +66,21 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         // Get information
         String callerName = recentCall.getCallerName();
         String phoneNumber = recentCall.getCallerNumber();
-        String date = recentCall.getCallDateString();
+        Date date = recentCall.getCallDate();
         int count = recentCall.getCount();
         String stringCount = String.valueOf(count);
 
-        if (cursor.getPosition() != 0) {
-            cursor.moveToPosition(cursor.getPosition() - 1);
-            // Check if there are more of the same number ahead
-            RecentCall nextCall = new RecentCall(this.mContext, cursor);
-            if (nextCall.getCount() > 1) {
-//                holder.itemView.setVisibility(GONE);
-            }
-        }
+        if (cursor.getPosition() != 0) cursor.moveToPosition(cursor.getPosition() - 1);
+        // TODO Check if there are more of the same number ahead
 
         // Set date
-        holder.time.setText(date);
+        holder.time.setText(RelativeTime.getTimeAgo(date.getTime()));
 
         // Set display name (phone number / name)
-        if (count > 1) {
-            callerName += (" (" + stringCount + ")");
-//            holder.photo.setVisibility(GONE);
-        }
-        if (callerName != null) {
-            holder.name.setText(callerName);
-        } else holder.name.setText(phoneNumber);
+        if (count > 1) callerName += (" (" + stringCount + ")");
+
+        if (callerName != null) holder.name.setText(callerName);
+        else holder.name.setText(phoneNumber);
 
         // Set image
         holder.photo.setVisibility(View.VISIBLE);
@@ -107,9 +100,9 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         }
 
         // Set click listeners
-        if (mOnItemClickListener != null) {
+        if (mOnItemClickListener != null)
             holder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(holder, recentCall));
-        }
+
         if (mOnItemLongClickListener != null) {
             holder.itemView.setOnLongClickListener(v -> {
                 mOnItemLongClickListener.onItemLongClick(holder, recentCall);
@@ -133,10 +126,10 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
     class RecentCallHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_photo_placeholder) ImageView photoPlaceholder;
-        @BindView(R.id.item_photo) ImageView photo;
         @BindView(R.id.item_big_text) TextView name;
         @BindView(R.id.item_small_text) TextView time;
         @BindView(R.id.item_header) TextView letterText;
+        @BindView(R.id.item_recent_photo) ImageView photo;
 
         /**
          * Constructor
@@ -146,6 +139,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<RecentsAdapter.Recent
         public RecentCallHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            photo.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -13,7 +13,7 @@ import com.chooloo.www.callmanager.database.dao.ContactDao;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.Contact;
 
-@Database(entities = {CGroup.class, Contact.class}, version = 3)
+@Database(entities = {CGroup.class, Contact.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 

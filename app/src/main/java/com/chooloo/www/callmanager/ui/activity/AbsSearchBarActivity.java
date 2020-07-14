@@ -28,15 +28,12 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Create a new search bar fragment
+        // create a new search bar fragment
         mSearchBarFragment = new SearchBarFragment();
-
-        // Replace the placeholder with the new fragment
+        // replace the placeholder with the new fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
-
         mToggled = false;
-
+        // set search view model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getIsFocused().observe(this, f -> {
             if (!f && mSharedSearchViewModel.getText().getValue().length() == 0) {
@@ -49,8 +46,7 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
      * Toggles the search bar according to it's current state
      */
     public void toggleSearchBar(boolean isShow) {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
         if (isShow) {
             mToggled = true;
@@ -77,7 +73,7 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
     /**
      * Whether the search bar is visible or not
      *
-     * @return
+     * @return is search bar visible or not
      */
     public boolean isSearchBarVisible() {
         return mSearchBarContainer.getVisibility() == View.VISIBLE;

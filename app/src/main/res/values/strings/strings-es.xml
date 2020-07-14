@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="contacts">Contactos</string>
+    <string name="recents">Recientes</string>
+    <string name="excel">Dial</string>
+
+    <string name="color_pink">Rosa</string>
+    <string name="color_green">Verde</string>
+    <string name="color_cream">Crema</string>
+
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Oscuro</string>
+    <string name="theme_amoled">AMOLED</string>
+    <string name="theme_auto">Tema automático</string>
+
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+
+    <string name="hold_for_actions">Mantener presionado para más acciones</string>
+
+    <string name="activity_ongoing_call">Llamada entrante</string>
+    <string name="activity_settings">Ajustes</string>
+    <string name="activity_about">Aceca de</string>
+
+    <string name="action_add_contact">Añadir contacto</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_reject_call_timer">Rechazar en</string>
+    <string name="action_send_sms">Enviar mensaje SMS</string>
+
+    <string name="action_dismiss">Desatender</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_about">Acerca de</string>
+    <string name="action_feature_request">Solicitar característica</string>
+
+    <string name="pref_category_look_and_feel">Look and Feel</string>
+
+    <string name="pref_app_theme_key">app_theme</string>
+    <string name="pref_app_theme_title">Tema de la app</string>
+    <string name="pref_app_theme_default_value">light</string>
+
+    <string name="pref_app_color_key">app_color</string>
+    <string name="pref_app_color_title">Color de app</string>
+    <string name="pref_app_color_default_value">pink</string>
+
+    <string name="pref_category_call">Llamada</string>
+    <string name="pref_category_pages">Página</string>
+    <string name="pref_category_noise">Ruido</string>
+    <string name="pref_category_scurity">Seguridad</string>
+
+    <string name="pref_sim_select_key">sim_select</string>
+    <string name="pref_sim_select_title">Selección de SIM</string>
+    <string name="pref_sim_select_default_value">0</string>
+    <string name="pref_sim_select_disabled">Selección de SIM desactivada al detectar un solo chip</string>
+
+    <string name="pref_reject_call_timer_key">end_call_timer</string>
+    <string name="pref_reject_call_timer_title">Tiempo para terminar llamada</string>
+    <string name="pref_reject_call_timer_default_value">10</string>
+
+    <string name="pref_answer_call_timer_key">answer_call_timer</string>
+    <string name="pref_answer_call_timer_title">Tiempo para responder llamada</string>
+    <string name="pref_answer_call_timer_default_value">10</string>
+
+    <string name="pref_default_page_key">default_page</string>
+    <string name="pref_default_page_title">Página predeterminada</string>
+    <string name="pref_default_page_default_value">1</string>
+
+    <string name="pref_is_silent_title">Silenciar</string>
+
+    <string name="pref_is_no_vibrate_title">¿Vibrar?</string>
+
+    <string name="pref_is_first_instance_key">first_instance</string>
+    <string name="pref_last_version_key">last_version</string>
+
+    <string name="pref_is_biometric_key">is_biometric</string>
+    <string name="pref_is_biometric_title">Usar la biometría</string>
+
+    <string name="pref_system_entry_value">system</string>
+
+    <string name="status_call_disconnected">Llamada finalizada</string>
+    <string name="status_call_incoming">Está llamando</string>
+    <string name="status_call_active">Llamada en progreso</string>
+    <string name="status_call_dialing">Marcando…</string>
+    <string name="status_call_holding">Llamada en espera</string>
+
+    <string name="hint_path">Pista</string>
+    <string name="hint_name">Nombre</string>
+    <string name="hint_name_column">Nombre de la columna</string>
+    <string name="hint_number_column">Número de columna</string>
+    <string name="hint_sms_message">Mensajería</string>
+
+    <string name="error_name">La línea no debe estar vacía</string>
+    <string name="error_column_index">Debe ser un número entero aceptable</string>
+    <string name="please_enter_a_number">Por favor, introduzca el número primero</string>
+
+    <string name="dialog_columns_info">Introduzca los índices de las columnas que contienen los siguientes campos de contacto:</string>
+    <string name="dialog_long_click_cgroup_title">¿Qué te gustaría hacer?</string>
+    <string name="dialog_changelog_title">Lista de cambios</string>
+
+    <string name="empty_cgroups_title">No hay nada aquí... por ahora</string>
+    <string name="empty_cgroups_desc">Puedes probar algo que añadir</string>
+
+    <string name="empty_contact_title">No se encontraron contactos que coincidan con la búsqueda</string>
+    <string name="empty_contact_desc" />
+
+    <string name="empty_contact_persmission_title">Sin permiso de contactos</string>
+    <string name="empty_contact_persmission_desc">Activa los permisos para ver los contactos</string>
+
+    <string name="empty_recents_persmission_title">Sin permiso de recientes</string>
+    <string name="empty_recents_persmission_desc">Habilitar el registro de llamadas para acceder a los recientes</string>
+
+    <string name="empty_recents_title">Sin llamadas recientes</string>
+    <string name="empty_recents_desc" />
+
+    <string name="about_version_title">Versión</string>
+    <string name="about_changelog_title">Lista de cambios</string>
+    <string name="about_source_title">Fuente de Github</string>
+    <string name="about_email_title">Escribir un Email</string>
+    <string name="about_roei_title">Roei Edri</string>
+    <string name="about_ido_title">Ido Fang Bentov</string>
+
+    <string name="about_support_title">Soporte</string>
+
+    <string name="about_bugs_title">Reportar errores</string>.
+    <string name="about_bugs_desc">Notifica cualquier problema o solicita nuevas funciones en nuestra página de GitHub</string>.
+
+    <string name="about_rate_title">Tasa</string>
+    <string name="about_rate_desc">Si te gusta la aplicación, deja un comentario positivo.</string>
+
+    <string name="about_donate_desc">Si crees que merecemos un obsequio por nuestro trabajo, deja unos cuantos dólares aquí.</string>
+    <string name="about_donate_title">Donar</string>
+
+    <string name="reject_timer_indicator">La llamada termina en</string>
+    <string name="answer_timer_indicator">Respuesta en</string>
+    <string name="button_send">Enviar</string>
+
+    <string name="dialpad_0_number">0</string>
+    <string name="dialpad_1_number">1</string>
+    <string name="dialpad_2_number">2</string>
+    <string name="dialpad_3_number">3</string>
+    <string name="dialpad_4_number">4</string>
+    <string name="dialpad_5_number">5</string>
+    <string name="dialpad_6_number">6</string>
+    <string name="dialpad_7_number">7</string>
+    <string name="dialpad_8_number">8</string>
+    <string name="dialpad_9_number">9</string>
+    <string name="dialpad_star_number">*</string>
+    <string name="dialpad_pound_number">#</string>
+
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Voicmail</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters"></string>
+    <string name="dialpad_pound_letters"></string>
+
+    <string name="fingerprint_title">Acceso biométrico</string>
+    <string name="fingerprint_message">Accede con tu credencial biométrica</string>
+
+    <string name="password_title">Acceso por contraseña</string>
+    <string name="password_message">Accede con tu contraseña</string>
+
+    <string name="active_call_notification_text">Está llamando...</string>
+    <string name="channel_name">notificación</string>
+    <string name="channel_description">Llamada en marcha</string>
+    <string name="action_answer">Respuesta</string>
+    <string name="action_hangup">Hang Up</string>
+
+    <string name="button_enable_contact_permission">Activar permiso de contactos</string>
+</resources>

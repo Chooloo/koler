@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
+    android:paddingStart="30dp"
+    android:paddingTop="13dp"
+    android:paddingEnd="30dp"
+    android:paddingBottom="10dp"
     tools:context=".ui.fragment.SearchBarFragment">
 
     <EditText
         android:id="@+id/search_input"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/search_bar_background"
-        android:paddingStart="15dp"
-        android:paddingTop="2dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="2dp"
+        android:inputType="textPersonName"
+        android:padding="7dp"
         android:textAlignment="center"
-        android:textColor="?attr/secondaryAccentColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:inputType="textPersonName" />
+        android:textColor="?attr/secondaryAccentColor" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

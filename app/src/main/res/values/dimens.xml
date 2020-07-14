@@ -26,7 +26,7 @@
     <dimen name="phone_number_input_height">64dp</dimen>
 
     <!-- List Items -->
-    <dimen name="item_contact_padding">18dp</dimen>
+    <dimen name="item_contact_padding">15dp</dimen>
     <dimen name="item_contact_topbot_padding">6dp</dimen>
     <dimen name="item_height">64dp</dimen>
 

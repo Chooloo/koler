@@ -6,19 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.ContactsFragment">
 
+    <!-- Needs to be in a layout so we can use both ids -->
+    <LinearLayout
+        android:id="@+id/included_item_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/item_add_contact" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/enable_contacts_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@color/color_accent_default"
+        android:layout_margin="30dp"
+        android:background="?attr/colorAccent"
         android:text="@string/button_enable_contact_permission"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/item_header"
         layout="@layout/item_header"
         android:layout_width="@dimen/header_width"
         android:layout_height="wrap_content"
@@ -30,10 +44,10 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/contacts_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/included_item_contact">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -44,7 +58,6 @@
             tools:listitem="@layout/item_contact">
 
         </androidx.recyclerview.widget.RecyclerView>
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <!--A piece of code from google's default Dial App-->

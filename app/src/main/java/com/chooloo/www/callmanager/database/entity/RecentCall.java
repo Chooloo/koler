@@ -13,6 +13,7 @@ public class RecentCall {
 
     // Attributes
     private Context mContext;
+    private long mCallId;
     private String mCallerName;
     private String mNumber;
     private int mCallType;
@@ -44,6 +45,7 @@ public class RecentCall {
 
     public RecentCall(Context context, Cursor cursor) {
         this.mContext = context;
+        this.mCallId = cursor.getLong(cursor.getColumnIndex(CallLog.Calls._ID));
         mNumber = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER));
         String callerName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME));
         if ((callerName == null || callerName.isEmpty()) && mNumber != null) {
@@ -58,6 +60,10 @@ public class RecentCall {
         int position = cursor.getPosition();
         mCount = checkNextMutliple(cursor);
         cursor.moveToPosition(position);
+    }
+
+    public long getCallId() {
+        return this.mCallId;
     }
 
     public String getCallerName() {
@@ -81,8 +87,10 @@ public class RecentCall {
     }
 
     public String getCallDateString() {
-        DateFormat dateFormat = DateFormat.getDateTimeInstance();
-        return dateFormat.format(this.mCallDate);
+        android.text.format.DateFormat dateFormat = new android.text.format.DateFormat();
+        return dateFormat.format("yy ", this.mCallDate).toString() +
+                new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(dateFormat.format("MM", this.mCallDate).toString()) - 1] +
+                dateFormat.format(" dd, hh:mm", this.mCallDate).toString();
     }
 
     public int getCount() {
@@ -92,10 +100,15 @@ public class RecentCall {
     public int checkNextMutliple(Cursor cursor) {
         int count = 1;
         while (true) {
-            cursor.moveToNext();
-            if (cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).equals(mNumber))
-                count++;
-            else return count;
+            try {
+                cursor.moveToNext();
+                if (cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)).equals(mNumber))
+                    count++;
+                else return count;
+            } catch (Exception e) {
+                // probably index out of bounds exception
+                return count;
+            }
         }
     }
 }

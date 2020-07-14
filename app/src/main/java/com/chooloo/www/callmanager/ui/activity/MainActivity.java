@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.hardware.biometrics.BiometricPrompt;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Menu;
@@ -12,10 +13,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,20 +31,27 @@ import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
+import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodels.SharedIntentViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 import butterknife.OnTouch;
+import timber.log.Timber;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
@@ -58,6 +68,7 @@ public class MainActivity extends AbsSearchBarActivity {
     // View Models
     SharedDialViewModel mSharedDialViewModel;
     SharedSearchViewModel mSharedSearchViewModel;
+    SharedIntentViewModel mSharedIntentViewModel;
 
     //Coordinator
     FABCoordinator mFABCoordinator;
@@ -84,6 +95,7 @@ public class MainActivity extends AbsSearchBarActivity {
     // Buttons
     @BindView(R.id.right_button) FloatingActionButton mRightButton;
     @BindView(R.id.left_button) FloatingActionButton mLeftButton;
+    @BindView(R.id.add_contact_fab_button) FloatingActionButton mAddContactButton;
 
     // Other
     @BindView(R.id.view_pager) ViewPager mViewPager;
@@ -94,9 +106,9 @@ public class MainActivity extends AbsSearchBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR);
-        setContentView(R.layout.activity_main);
-        PreferenceUtils.getInstance(this); // Get the preferences
+        setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR); // set theme
+        setContentView(R.layout.activity_main); // set the layout
+        PreferenceUtils.getInstance(this); // get the preferences
         Utilities.setUpLocale(this);
 
         // Check if first instance
@@ -111,7 +123,7 @@ public class MainActivity extends AbsSearchBarActivity {
         if (isDefaultDialer) checkPermissions(null);
 
         // View Pager
-        mAdapterViewPager = new CustomPagerAdapter(getSupportFragmentManager());
+        mAdapterViewPager = new CustomPagerAdapter(this, getSupportFragmentManager());
         mViewPager.setAdapter(mAdapterViewPager);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -123,6 +135,8 @@ public class MainActivity extends AbsSearchBarActivity {
             public void onPageSelected(int position) {
                 if (isSearchBarVisible()) toggleSearchBar();
                 syncFABAndFragment();
+                if (position == 1) showView(mAddContactButton, true);
+                else showView(mAddContactButton, false);
             }
 
             @Override
@@ -130,7 +144,9 @@ public class MainActivity extends AbsSearchBarActivity {
 
             }
         });
+
         mSmartTabLayout.setViewPager(mViewPager);
+        mSharedIntentViewModel = ViewModelProviders.of(this).get(SharedIntentViewModel.class);
 
         // Search Bar View Model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
@@ -148,12 +164,8 @@ public class MainActivity extends AbsSearchBarActivity {
             }
         });
         mSharedDialViewModel.getNumber().observe(this, n -> {
-            if (n == null || n.length() == 0) {
-//                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                toggleAddContactAction(false);
-            } else {
-                toggleAddContactAction(true);
-            }
+            if (n == null || n.length() == 0) toggleAddContactAction(false);
+            else toggleAddContactAction(true);
         });
 
         // Bottom Sheet Behavior
@@ -167,7 +179,6 @@ public class MainActivity extends AbsSearchBarActivity {
 
             @Override
             public void onSlide(@NonNull View view, float v) {
-
             }
         });
 
@@ -188,14 +199,15 @@ public class MainActivity extends AbsSearchBarActivity {
         // Check for intents from others apps
         checkIncomingIntent();
 
+        mAddContactButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_black_24dp));
+
         showBiometricPrompt(this);
     }
 
     @Override
     public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof SearchBarFragment) {
+        if (fragment instanceof SearchBarFragment)
             mSearchBarFragment = (SearchBarFragment) fragment;
-        }
     }
 
     @Override
@@ -216,7 +228,7 @@ public class MainActivity extends AbsSearchBarActivity {
         switch (item.getItemId()) {
             case R.id.action_add_contact: {
                 String number = mSharedDialViewModel.getNumber().getValue();
-                Utilities.addContactIntent(this, number);
+                ContactUtils.addContactIntent(this, number);
                 return true;
             }
             case R.id.action_settings: {
@@ -259,12 +271,9 @@ public class MainActivity extends AbsSearchBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Check for first instance
-        boolean isFirstInstance = PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key);
-
-        if (isFirstInstance) {
+        // check if first instance
+        if (PreferenceUtils.getInstance().getBoolean(R.string.pref_is_first_instance_key))
             PreferenceUtils.getInstance().putBoolean(R.string.pref_is_first_instance_key, false);
-        }
     }
 
     @Override
@@ -289,7 +298,15 @@ public class MainActivity extends AbsSearchBarActivity {
     }
 
     @OnClick(R.id.left_button)
-    public void fabLeftClick() { mFABCoordinator.performLeftClick(); }
+    public void fabLeftClick() {
+        mFABCoordinator.performLeftClick();
+    }
+
+    @OnClick(R.id.add_contact_fab_button)
+    public void addContact() {
+        String number = mSharedDialViewModel.getNumber().getValue();
+        ContactUtils.addContactIntent(this, number);
+    }
 
     // -- Fragments -- //
 
@@ -320,12 +337,9 @@ public class MainActivity extends AbsSearchBarActivity {
      * @param expand
      */
     public void expandDialer(boolean expand) {
-
-        if (expand) {
+        if (expand)
             BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_EXPANDED);
-        } else {
-            BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+        else BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     /**
@@ -344,8 +358,10 @@ public class MainActivity extends AbsSearchBarActivity {
     public void updateButtons(int bottomSheetState) {
         if (bottomSheetState == BottomSheetBehavior.STATE_HIDDEN || bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED) {
             showButtons(true);
+            if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, true);
         } else {
             showButtons(false);
+            if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, false);
         }
     }
 
@@ -356,29 +372,35 @@ public class MainActivity extends AbsSearchBarActivity {
      */
     public void showButtons(boolean isShow) {
         View[] buttons = {mRightButton, mLeftButton};
-        for (View v : buttons) {
-            if (isShow && v.isEnabled()) {
-                v.animate().scaleX(1).scaleY(1).setDuration(100).start();
-                v.setClickable(true);
-                v.setFocusable(true);
-            } else {
-                v.animate().scaleX(0).scaleY(0).setDuration(100).start();
-                v.setClickable(false);
-                v.setFocusable(false);
-            }
+        for (View v : buttons) showView(v, isShow);
+    }
+
+    /**
+     * Animate view
+     *
+     * @param isShow
+     * @param v
+     */
+    public void showView(View v, boolean isShow) {
+        if (isShow && v.isEnabled()) {
+            v.animate().scaleX(1).scaleY(1).setDuration(100).start();
+            v.setClickable(true);
+            v.setFocusable(true);
+        } else {
+            v.animate().scaleX(0).scaleY(0).setDuration(100).start();
+            v.setClickable(false);
+            v.setFocusable(false);
         }
     }
 
     // -- Utilities -- //
 
     private void checkPermissions(@Nullable int[] grantResults) {
-        if (
-                (grantResults != null && Utilities.checkPermissionsGranted(grantResults)) ||
-                        Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS)) { //If granted
+        if (grantResults != null && Utilities.checkPermissionsGranted(grantResults) ||
+                Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS))
             checkVersion();
-        } else {
-//            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
-        }
+        else
+            Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
     }
 
     /**
@@ -401,10 +423,8 @@ public class MainActivity extends AbsSearchBarActivity {
         mIntent = getIntent();
         mIntentAction = mIntent.getAction();
         mIntentType = mIntent.getType();
-
-        if (Intent.ACTION_VIEW.equals(mIntentAction)) {
+        if (mIntentAction == Intent.ACTION_DIAL || mIntentAction == Intent.ACTION_VIEW)
             handleViewIntent(mIntent);
-        }
     }
 
     /**
@@ -413,18 +433,30 @@ public class MainActivity extends AbsSearchBarActivity {
      * @param intent
      */
     private void handleViewIntent(Intent intent) {
-        String sharedText = intent.getData().toString();
-        String number = "";
-        if (sharedText.contains("tel:")) {
-            number = sharedText.substring(4, sharedText.length() - 1);
+        String sharedText = "";
 
-            if (number != null) {
-                mSharedDialViewModel.setNumber(number);
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
+        // Try decoding incoming intent data
+        try {
+            sharedText = URLDecoder.decode(intent.getDataString(), "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            Toast.makeText(this, "An error occured when trying to get phone number :(", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (sharedText.contains("tel:") && sharedText != "tel:") {
+            mSharedIntentViewModel.setData(sharedText.replace("tel:", ""));
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+            Toast.makeText(this, "No phone number detected", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    /**
+     * Toggle "add contact" button at the top of the screen
+     *
+     * @param isShow show or not to show the add contact button
+     */
     private void toggleAddContactAction(boolean isShow) {
         if (mMenu != null) {
             MenuItem addContact = mMenu.findItem(R.id.action_add_contact);

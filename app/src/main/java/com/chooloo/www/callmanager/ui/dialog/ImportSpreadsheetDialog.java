@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
+import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
 import static com.chooloo.www.callmanager.util.Utilities.checkPermissionsGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
@@ -171,7 +172,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
      * Shows a file chooser for the excel file
      */
     private void showFileChooser() {
-        if (!checkPermissionsGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+        if (!checkPermissionGranted(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
             askForPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE});
             return;
         }

@@ -17,12 +17,16 @@
 package com.chooloo.www.callmanager.google;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.util.Log;
 
 import androidx.loader.content.CursorLoader;
+
+import timber.log.Timber;
 
 public final class RecentsCursorLoader extends CursorLoader {
 
@@ -87,5 +91,5 @@ public final class RecentsCursorLoader extends CursorLoader {
 
         return builder.build();
     }
-
+    
 }

@@ -32,15 +32,12 @@ public class CGroupActivity extends AbsAppBarActivity implements
         ItemTouchHelperListener {
 
     public static final String EXTRA_LIST_ID = "list_id";
-
     CGroupViewModel mViewModel;
-
     ItemTouchHelper mItemTouchHelper;
     SingleCGroupAdapter mAdapter;
-
     List<Contact> mContacts = null;
-
     ActionMode mActionMode = null;
+
     ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
         // Called when the action mode is created; startActionMode() was called
@@ -133,11 +130,9 @@ public class CGroupActivity extends AbsAppBarActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit: {
-                startActionMode();
-                return true;
-            }
+        if (item.getItemId() == R.id.action_edit) {
+            startActionMode();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -176,7 +171,6 @@ public class CGroupActivity extends AbsAppBarActivity implements
         if (mActionMode != null) return;
         // Start the CAB using the ActionMode.Callback defined above
         mActionMode = startSupportActionMode(mActionModeCallback);
-
         mAdapter.enableEditMode(true);
         getWindow().setStatusBarColor(getColor(R.color.grey_100));
     }
