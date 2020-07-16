@@ -8,22 +8,17 @@ import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
-import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
+import com.chooloo.www.callmanager.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
+import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.ListItemHolder;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {

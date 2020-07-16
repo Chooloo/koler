@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.chooloo.www.callmanager.google;
+package com.chooloo.www.callmanager.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

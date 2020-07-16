@@ -30,6 +30,7 @@ import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.ui.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.ContactUtils;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -48,6 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
+import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionsGranted;
 
 public class MainActivity extends AbsSearchBarActivity {
 
@@ -80,20 +82,28 @@ public class MainActivity extends AbsSearchBarActivity {
     // - View Binds - //
 
     // Views
-    @BindView(R.id.appbar) View mAppBar;
-    @BindView(R.id.dialer_fragment) View mDialerView;
+    @BindView(R.id.appbar)
+    View mAppBar;
+    @BindView(R.id.dialer_fragment)
+    View mDialerView;
 
     // Layouts
-    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
+    @BindView(R.id.root_view)
+    CoordinatorLayout mMainLayout;
 
     // Buttons
-    @BindView(R.id.right_button) FloatingActionButton mRightButton;
-    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
-    @BindView(R.id.add_contact_fab_button) FloatingActionButton mAddContactButton;
+    @BindView(R.id.right_button)
+    FloatingActionButton mRightButton;
+    @BindView(R.id.left_button)
+    FloatingActionButton mLeftButton;
+    @BindView(R.id.add_contact_fab_button)
+    FloatingActionButton mAddContactButton;
 
     // Other
-    @BindView(R.id.view_pager) ViewPager mViewPager;
-    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.view_pager_tab)
+    SmartTabLayout mSmartTabLayout;
 
     // -- Overrides -- //
 
@@ -106,8 +116,7 @@ public class MainActivity extends AbsSearchBarActivity {
         Utilities.setUpLocale(this);
         ButterKnife.bind(this);
 
-
-        Utilities.checkDefaultDialer(this);
+        PermissionUtils.checkDefaultDialer(this);
         showNewVersionDialog();
 
         // View Pager
@@ -253,7 +262,7 @@ public class MainActivity extends AbsSearchBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Utilities.DEFAULT_DIALER_RC) {
+        if (requestCode == PermissionUtils.DEFAULT_DIALER_RC) {
         }
     }
 
@@ -359,10 +368,11 @@ public class MainActivity extends AbsSearchBarActivity {
     // -- Utilities -- //
 
     private void checkPermissions(@Nullable int[] grantResults, boolean askForIt) {
-        if (grantResults != null && Utilities.checkPermissionsGranted(grantResults) ||
-                Utilities.checkPermissionsGranted(this, Utilities.MUST_HAVE_PERMISSIONS, false))
+        if (grantResults != null && checkPermissionsGranted(grantResults) ||
+                checkPermissionsGranted(this, PermissionUtils.MUST_HAVE_PERMISSIONS, false))
             showNewVersionDialog();
-        else if (askForIt) Utilities.askForPermissions(this, Utilities.MUST_HAVE_PERMISSIONS);
+        else if (askForIt)
+            checkPermissionsGranted(this, PermissionUtils.MUST_HAVE_PERMISSIONS, true);
     }
 
     /**

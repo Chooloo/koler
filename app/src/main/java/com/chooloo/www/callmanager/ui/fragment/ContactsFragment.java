@@ -25,10 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.ContactsAdapter;
-import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
-import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
+import com.chooloo.www.callmanager.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
+import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.ListItemHolder;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;

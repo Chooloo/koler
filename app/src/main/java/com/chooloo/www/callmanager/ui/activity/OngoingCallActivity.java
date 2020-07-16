@@ -52,6 +52,7 @@ import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
 import com.chooloo.www.callmanager.listener.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
@@ -373,7 +374,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == Utilities.PERMISSION_RC && Utilities.checkPermissionsGranted(grantResults))
+        if (requestCode == PermissionUtils.PERMISSION_RC && PermissionUtils.checkPermissionsGranted(grantResults))
             setSmsOverlay(mFloatingSendSMSButton);
     }
 
@@ -468,12 +469,10 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
-        if (Utilities.checkPermissionGranted(this, Manifest.permission.SEND_SMS, true)) {
+        if (PermissionUtils.checkPermissionGranted(this, Manifest.permission.SEND_SMS, true)) {
             setOverlay(mSendSmsOverlay);
             mSendSmsButton.setVisibility(View.VISIBLE);
             mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
-        } else {
-            Utilities.askForPermission(this, Manifest.permission.SEND_SMS);
         }
     }
 

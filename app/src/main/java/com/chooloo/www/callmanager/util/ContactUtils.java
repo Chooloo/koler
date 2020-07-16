@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.google.ContactsCursorLoader;
+import com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader;
 
 import timber.log.Timber;
 

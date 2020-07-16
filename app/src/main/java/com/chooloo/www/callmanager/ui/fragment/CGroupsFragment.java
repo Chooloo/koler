@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CGroupsAdapter;
-import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.database.entity.CGroup;
 import com.chooloo.www.callmanager.database.entity.CGroupAndItsContacts;
 import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;

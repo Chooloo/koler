@@ -47,11 +47,9 @@ public class CallManager {
         try {
             // Create call intent
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
-            // Handle sim card selection
-            int simCard = getSimSelection(context);
+            int simCard = getSimSelection(context); // handle sim card selection
             if (simCard != -1) callIntent.putExtra("com.android.phone.extra.slot", simCard);
-            // Start the call
-            context.startActivity(callIntent);
+            context.startActivity(callIntent); // start the call
         } catch (SecurityException e) {
             Toast.makeText(context, "Couldn't make a call due to security reasons", Toast.LENGTH_LONG).show();
         } catch (NullPointerException e) {
@@ -67,7 +65,6 @@ public class CallManager {
      */
     public static int getSimSelection(Context context) {
         try {
-            // try getting the sim selection preference
             return PreferenceUtils.getInstance(context).getInt(R.string.pref_sim_select_key);
         } catch (NullPointerException e) {
             Toast.makeText(context, "Couldn't get sim selection", Toast.LENGTH_LONG).show();
@@ -80,7 +77,6 @@ public class CallManager {
      */
     public static boolean callVoicemail(Context context) {
         try {
-            // try calling voicemail
             context.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1")));
             return true;
         } catch (SecurityException e) {
@@ -94,9 +90,7 @@ public class CallManager {
      * Answers incoming call
      */
     public static void answer() {
-        if (sCall != null) {
-            sCall.answer(VideoProfile.STATE_AUDIO_ONLY);
-        }
+        if (sCall != null) sCall.answer(VideoProfile.STATE_AUDIO_ONLY);
     }
 
     /**
@@ -107,11 +101,9 @@ public class CallManager {
      */
     public static void reject() {
         if (sCall != null) {
-            if (sCall.getState() == Call.STATE_RINGING) {
-                sCall.reject(false, null);
-            } else {
-                sCall.disconnect();
-            }
+            if (sCall.getState() == Call.STATE_RINGING) sCall.reject(false, null);
+            else sCall.disconnect();
+
             if (sIsAutoCalling) sAutoCallPosition++;
         }
     }
@@ -146,9 +138,7 @@ public class CallManager {
      * @param call
      */
     public static void addCall(Call call) {
-        if (sCall != null) {
-            sCall.conference(call);
-        }
+        if (sCall != null) sCall.conference(call);
     }
 
     /**

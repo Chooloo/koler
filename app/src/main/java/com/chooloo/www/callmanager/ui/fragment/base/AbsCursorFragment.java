@@ -8,13 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,16 +20,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
-import com.chooloo.www.callmanager.google.FastScroller;
-import com.chooloo.www.callmanager.google.FavoritesAndContactsLoader;
+import com.chooloo.www.callmanager.ui.FastScroller;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 /**
  * Made by Chooloo

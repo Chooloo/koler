@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
-import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
+import com.chooloo.www.callmanager.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.ListItemHolder;
 import com.chooloo.www.callmanager.util.RelativeTime;

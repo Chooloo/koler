@@ -2,8 +2,6 @@ package com.chooloo.www.callmanager.database.entity;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.CallLog;
-import android.provider.ContactsContract;
 
 import com.chooloo.www.callmanager.util.ContactUtils;
 
@@ -11,14 +9,12 @@ import java.util.Date;
 
 import timber.log.Timber;
 
-import static android.provider.CallLog.*;
 import static android.provider.CallLog.Calls.*;
-import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_CACHED_NAME;
-import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_DATE;
-import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_DURATION;
-import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_ID;
-import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_NUMBER;
-import static com.chooloo.www.callmanager.google.RecentsCursorLoader.COLUMN_TYPE;
+import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_DATE;
+import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_DURATION;
+import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_ID;
+import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_NUMBER;
+import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_TYPE;
 
 public class RecentCall {
 

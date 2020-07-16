@@ -1,8 +1,6 @@
 package com.chooloo.www.callmanager.database.entity;
 
 import android.database.Cursor;
-import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,21 +11,17 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.chooloo.www.callmanager.google.ContactsCursorLoader;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentNavigableMap;
 
-import timber.log.Timber;
-
-import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_ID;
-import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_NAME;
-import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_NUMBER;
-import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_STARRED;
-import static com.chooloo.www.callmanager.google.ContactsCursorLoader.COLUMN_THUMBNAIL;
+import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_ID;
+import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_NAME;
+import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_NUMBER;
+import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_STARRED;
+import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_THUMBNAIL;
 
 @Entity(tableName = "contact_table",
         indices = {@Index("list_id")},

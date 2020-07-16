@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Return a string of a given time according to it's difference from the current time
+ */
 public class RelativeTime {
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -11,22 +14,16 @@ public class RelativeTime {
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
 
     public static Date currentDate() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.getTime();
+        return Calendar.getInstance().getTime();
     }
 
     public static String getTimeAgo(long time) {
-        if (time < 1000000000000L) {
-            // if timestamp given in seconds, convert to millis
-            time *= 1000;
-        }
+        if (time < 1000000000000L) time *= 1000; // if timestamp given in seconds, convert to millis
+        final long now = currentDate().getTime(); // get current time
+        final long diff = now - time; // get the time difference between now and the given time
+        if (time > now || time <= 0) return "in the future"; // if time is in the future
 
-        long now = currentDate().getTime();
-        if (time > now || time <= 0) {
-            return "in the future";
-        }
-
-        final long diff = now - time;
+        // return a string according to time difference from now
         if (diff < MINUTE_MILLIS) {
             return "Moments ago";
         } else if (diff < 2 * MINUTE_MILLIS) {

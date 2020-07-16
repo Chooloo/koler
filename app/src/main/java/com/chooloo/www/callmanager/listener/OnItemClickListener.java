@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.adapter.listener;
+package com.chooloo.www.callmanager.listener;
 
 import androidx.recyclerview.widget.RecyclerView;
 

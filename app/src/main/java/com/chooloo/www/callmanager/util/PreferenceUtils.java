@@ -55,8 +55,7 @@ public class PreferenceUtils {
     }
 
     public static PreferenceUtils getInstance() {
-        if (sSharedPrefs != null)
-            return sSharedPrefs;
+        if (sSharedPrefs != null) return sSharedPrefs;
         throw new IllegalArgumentException("Should use getInstance(Context) at least once before using this method.");
     }
 
@@ -128,9 +127,7 @@ public class PreferenceUtils {
 
     @SuppressLint("CommitPrefEdits")
     private void doEdit() {
-        if (!mBulkUpdate && mEditor == null) {
-            mEditor = mPref.edit();
-        }
+        if (!mBulkUpdate && mEditor == null) mEditor = mPref.edit();
     }
 
     private void doCommit() {

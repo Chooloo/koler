@@ -24,11 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.RecentsAdapter;
-import com.chooloo.www.callmanager.adapter.listener.OnItemClickListener;
-import com.chooloo.www.callmanager.adapter.listener.OnItemLongClickListener;
+import com.chooloo.www.callmanager.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.chooloo.www.callmanager.google.RecentsCursorLoader;
+import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsCursorFragment;

@@ -143,11 +143,9 @@ public class ThemeUtils {
         int currentNightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
-                // Night mode is not active, we're using the light theme
-                return false;
+                return false; // Night mode is not active, we're using the light theme
             case Configuration.UI_MODE_NIGHT_YES:
-                // Night mode is active, we're using dark theme
-                return true;
+                return true; // Night mode is active, we're using dark theme
             default:
                 return false;
         }
