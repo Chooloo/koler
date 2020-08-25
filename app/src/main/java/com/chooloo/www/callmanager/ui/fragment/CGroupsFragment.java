@@ -24,7 +24,7 @@ import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.activity.CGroupActivity;
 import com.chooloo.www.callmanager.ui.dialog.ImportSpreadsheetDialog;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsRecyclerViewFragment;
-import com.chooloo.www.callmanager.viewmodels.CGroupsViewModel;
+import com.chooloo.www.callmanager.viewmodel.CGroupsViewModel;
 
 import java.io.File;
 import java.util.List;

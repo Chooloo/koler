@@ -2,6 +2,9 @@ package com.chooloo.www.callmanager.util;
 
 import java.util.Locale;
 
+/**
+ * Just a simple stopwatch class
+ */
 public class Stopwatch {
 
     private long startTime = 0;

@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsBaseFragment;
-import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
+import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 
 import butterknife.BindView;
 

@@ -22,8 +22,8 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
 import com.chooloo.www.callmanager.ui.FastScroller;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodels.SharedSearchViewModel;
+import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 
 import butterknife.BindView;
 import butterknife.OnClick;

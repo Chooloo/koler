@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.viewmodels;
+package com.chooloo.www.callmanager.viewmodel;
 
 import android.app.Application;
 

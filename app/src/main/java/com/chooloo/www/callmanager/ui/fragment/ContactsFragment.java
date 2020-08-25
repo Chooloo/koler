@@ -35,6 +35,7 @@ import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import timber.log.Timber;
@@ -59,7 +60,7 @@ public class ContactsFragment extends AbsCursorFragment implements
 
     @Override
     protected void onFragmentReady() {
-        if (!Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
+        if (!PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
             this.mEmptyTitle.setText(R.string.empty_contact_persmission_title);
             this.mEmptyDesc.setText(R.string.empty_contact_persmission_desc);
         }
@@ -232,7 +233,7 @@ public class ContactsFragment extends AbsCursorFragment implements
                     ContactUtils.setContactIsFavorite(getActivity(), Long.toString(contact.getContactId()), true);
                 }
             } else {
-                Utilities.askForPermission(getActivity(), WRITE_CONTACTS);
+                PermissionUtils.askForPermission(getActivity(), WRITE_CONTACTS);
                 Toast.makeText(mContext, "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
             }
         });

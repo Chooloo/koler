@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.ui.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,7 +18,6 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.telecom.Call;
 import android.view.KeyEvent;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -57,15 +55,13 @@ import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Locale;
 
 import butterknife.BindView;

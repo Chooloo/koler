@@ -119,6 +119,9 @@ public class PreferenceUtils {
         mEditor = mPref.edit();
     }
 
+    /**
+     * Commit changes without considering the states
+     */
     public void commit() {
         mBulkUpdate = false;
         mEditor.commit();
@@ -130,6 +133,9 @@ public class PreferenceUtils {
         if (!mBulkUpdate && mEditor == null) mEditor = mPref.edit();
     }
 
+    /**
+     * Commit changes made to the editor if there are any
+     */
     private void doCommit() {
         if (!mBulkUpdate && mEditor != null) {
             mEditor.commit();

@@ -32,10 +32,8 @@ import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodels.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodels.SharedIntentViewModel;
-
-import org.apache.poi.xdgf.util.Util;
+import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 
 import java.util.HashSet;
 

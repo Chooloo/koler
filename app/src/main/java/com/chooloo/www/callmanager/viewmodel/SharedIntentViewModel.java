@@ -1,12 +1,10 @@
-package com.chooloo.www.callmanager.viewmodels;
+package com.chooloo.www.callmanager.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-
-import org.apache.poi.sl.usermodel.ObjectMetaData;
 
 public class SharedIntentViewModel extends AndroidViewModel {
 

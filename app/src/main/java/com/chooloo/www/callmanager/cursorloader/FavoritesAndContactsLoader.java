@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionGranted;
 
 /**
  * Extends the basic ContactsCursorLoader but also adds the favourite contacts to it
@@ -79,7 +80,7 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
      * @return The cursor containing the favorites
      */
     private Cursor loadFavorites() {
-        Utilities.checkPermissionGranted(getContext(), READ_CONTACTS, true);
+        checkPermissionGranted(getContext(), READ_CONTACTS, true);
         String selection = ContactsCursorLoader.COLUMN_STARRED + " = 1";
         return getContext().getContentResolver().query(
                 buildFavoritesUri(),
