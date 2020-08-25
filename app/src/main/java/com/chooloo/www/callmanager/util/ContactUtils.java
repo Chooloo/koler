@@ -41,7 +41,7 @@ public class ContactUtils {
         // if phone number is empty, it's a private number
         if (phoneNumber.isEmpty() && (name == null || name.isEmpty())) return PRIVATE;
         // check for read contacts permission, ask for it if necessary
-        if (!Utilities.checkPermissionGranted(context, READ_CONTACTS, true)) return UNKNOWN;
+        if (!PermissionUtils.checkPermissionGranted(context, READ_CONTACTS, true)) return UNKNOWN;
         // initiate contact cursor
         Cursor cursor = new ContactsCursorLoader(context, phoneNumber, name).loadInBackground();
         // handle null cursor
@@ -140,7 +140,7 @@ public class ContactUtils {
     public static void setContactIsFavorite(Activity activity, String contactId, boolean isSetFavorite) {
         try {
             int num = isSetFavorite ? 1 : 0; // convert boolean to num
-            if (Utilities.checkPermissionGranted(activity, WRITE_CONTACTS, true)) {
+            if (PermissionUtils.checkPermissionGranted(activity, WRITE_CONTACTS, true)) {
                 ContentValues v = new ContentValues();
                 v.put(ContactsContract.Contacts.STARRED, num);
                 activity.getContentResolver().update(ContactsContract.Contacts.CONTENT_URI, v, ContactsContract.Contacts._ID + "=?", new String[]{contactId + ""});

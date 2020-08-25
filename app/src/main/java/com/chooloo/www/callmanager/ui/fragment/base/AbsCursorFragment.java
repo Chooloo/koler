@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
 import com.chooloo.www.callmanager.ui.FastScroller;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
@@ -195,7 +196,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
      * Run loader but first check if possible
      */
     protected void tryRunningLoader() {
-        if (!isLoaderRunning() && Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false))
+        if (!isLoaderRunning() && PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false))
             runLoader();
     }
 
@@ -239,7 +240,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
      * Checking whither to show the "enable contacts" button
      */
     public void togglePermissionButton() {
-        boolean isPermissionGranted = Utilities.checkPermissionsGranted(mContext, mRequiredPermissions, false);
+        boolean isPermissionGranted = PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false);
         mEnablePermissionButton.setVisibility(isPermissionGranted ? View.GONE : View.VISIBLE);
     }
 

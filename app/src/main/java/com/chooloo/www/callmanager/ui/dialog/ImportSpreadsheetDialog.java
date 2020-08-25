@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.CGroup;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.util.validation.Validator;
 import com.google.android.material.textfield.TextInputEditText;
@@ -33,9 +34,6 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static com.chooloo.www.callmanager.util.Utilities.askForPermissions;
-import static com.chooloo.www.callmanager.util.Utilities.checkPermissionGranted;
-import static com.chooloo.www.callmanager.util.Utilities.checkPermissionsGranted;
 
 public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadsheetDialog.Builder> implements FileChooserDialog.FileCallback {
 
@@ -106,7 +104,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
     public void onRequestPermissionsResult(
             int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == Utilities.PERMISSION_RC) {
+        if (requestCode == PermissionUtils.PERMISSION_RC) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Handler handler = new Handler();
                 handler.postDelayed(() -> mChooseFileButton.performClick(), 1000);
@@ -173,7 +171,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
      * Shows a file chooser for the excel file
      */
     private void showFileChooser() {
-        checkPermissionGranted(getActivity(), READ_EXTERNAL_STORAGE, true);
+        PermissionUtils.checkPermissionGranted(getActivity(), READ_EXTERNAL_STORAGE, true);
         new FileChooserDialog.Builder(getFragmentManager())
                 .onFileSelected(this)
                 .extensionsFilter(".xls")

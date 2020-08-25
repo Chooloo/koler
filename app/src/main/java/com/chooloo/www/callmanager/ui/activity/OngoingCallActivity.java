@@ -831,8 +831,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
         private void cancel() {
             if (mTimer != null) mTimer.cancel();
-            else
-                Toast.makeText(getApplicationContext(), "Couldn't cancel action timer (timer is null)", Toast.LENGTH_LONG).show();
             finalEndCommonMan();
         }
 

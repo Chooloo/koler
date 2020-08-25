@@ -67,7 +67,6 @@ public class CallManager {
         try {
             return PreferenceUtils.getInstance(context).getInt(R.string.pref_sim_select_key);
         } catch (NullPointerException e) {
-            Toast.makeText(context, "Couldn't get sim selection", Toast.LENGTH_LONG).show();
             return -1;
         }
     }

@@ -14,6 +14,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -126,20 +127,20 @@ public class SettingsActivity extends AbsThemeActivity {
             ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
             simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
 
-            Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE, true);
+            PermissionUtils.checkPermissionGranted(getContext(), READ_PHONE_STATE, true);
             setupSimSelection();
         }
 
         @Override
         public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            if (requestCode == Utilities.PERMISSION_RC && Utilities.checkPermissionsGranted(grantResults)) {
+            if (requestCode == PermissionUtils.PERMISSION_RC && PermissionUtils.checkPermissionsGranted(grantResults)) {
                 setupSimSelection();
             }
         }
 
         private void setupSimSelection() {
-            if (!Utilities.checkPermissionGranted(getContext(), READ_PHONE_STATE, true)) {
+            if (!PermissionUtils.checkPermissionGranted(getContext(), READ_PHONE_STATE, true)) {
                 Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
                 return;
             }
