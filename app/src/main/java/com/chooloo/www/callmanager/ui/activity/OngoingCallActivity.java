@@ -63,6 +63,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -226,6 +227,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         }
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         try {
+            assert powerManager != null;
             wakeLock = powerManager.newWakeLock(field, getLocalClassName());
         } catch (NullPointerException e) {
             Toast.makeText(this, "Can't use ear sensor for some reason :(", Toast.LENGTH_SHORT).show();
@@ -465,7 +467,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Set the sms overlay (from which you can send sms)
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
@@ -479,11 +481,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Send sms
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
-        String msg = mEditSms.getText().toString();
+        String msg = Objects.requireNonNull(mEditSms.getText()).toString();
         String phoneNum = CallManager.getDisplayContact(this).getMainPhoneNumber();
         Utilities.sendSMS(this, phoneNum, msg);
         removeOverlay();
@@ -492,7 +494,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Cancel sms overlay
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_cancel_sms)
     public void cancelSMS(View view) {
@@ -502,7 +504,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Changes the color of the icon according to button status (activated or not)
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick({R.id.button_speaker, R.id.button_hold, R.id.button_mute})
     public void changeColors(View view) {
@@ -544,10 +546,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      * Display the information about the caller
      */
     private void displayInformation() {
-        String callerName = "";
         Contact callerContact = CallManager.getDisplayContact(this);
-        if (callerContact.getName() != null) callerName = callerContact.getName();
-        else callerName = callerContact.getMainPhoneNumber();
+        String callerName = callerContact.getName();
         mCallerText.setText(callerName);
         if (callerContact.getPhotoUri() != null) {
             mPlaceholderImage.setVisibility(View.INVISIBLE);
@@ -663,7 +663,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Sets the action button (call actions) as clickable/not clickable
      *
-     * @param clickable
+     * @param clickable is clickable
      */
     private void setActionButtonsClickable(boolean clickable) {
         for (int i = 0; i < mOngoingCallLayout.getChildCount(); i++) {
@@ -683,6 +683,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mFloatingAnswerCallTimerButton.hide();
         mFloatingCancelOverlayButton.hide();
         mFloatingSendSMSButton.hide();
+        assert mFloatingCancelSMS != null;
         mFloatingCancelSMS.hide();
         mFloatingCancelTimerButton.hide();
         mSendSmsButton.setVisibility(View.GONE);
@@ -726,7 +727,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Set a given overlay as visible
      *
-     * @param overlay
+     * @param overlay the overlay to set
      */
     private void setOverlay(@NotNull ViewGroup overlay) {
         if (mCurrentOverlay != null) removeOverlay(mCurrentOverlay);
@@ -742,7 +743,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Removes a given overlay as visible
      *
-     * @param overlay
+     * @param overlay the overlay to remove
      */
     private void removeOverlay(@NotNull ViewGroup overlay) {
         if (overlay == mCurrentOverlay) {
@@ -888,7 +889,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @SuppressLint("HandlerLeak")
     class CallTimeHandler extends Handler {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NotNull Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
                 case TIME_START:
@@ -969,6 +970,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             mNotificationManager = getSystemService(NotificationManager.class);
+            assert mNotificationManager != null;
             mNotificationManager.createNotificationChannel(channel);
         }
     }
@@ -978,6 +980,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     public void cancelNotification() {
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        assert notificationManager != null;
         notificationManager.cancel(NOTIFICATION_ID);
     }
 
