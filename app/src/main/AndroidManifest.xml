@@ -25,14 +25,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Light.Pink.NoActionBar"
+        android:theme="@style/AppTheme.Light"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Light.Green">
+            android:theme="@style/AppTheme.Light">
 
             <!-- For receiving intents -->
             <intent-filter>
@@ -104,15 +104,15 @@
             android:name=".ui.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Light.Pink.TransparentStatusBar" />
+            android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.activity.SettingsActivity"
             android:label="@string/activity_settings"
-            android:theme="@style/AppTheme.Light.Pink" />
+            android:theme="@style/AppTheme.Light" />
         <activity
             android:name=".ui.activity.AboutActivity"
             android:label="@string/activity_about"
-            android:theme="@style/AppTheme.Light.Pink" />
+            android:theme="@style/AppTheme.Light" />
 
         <service
             android:name=".service.CallService"

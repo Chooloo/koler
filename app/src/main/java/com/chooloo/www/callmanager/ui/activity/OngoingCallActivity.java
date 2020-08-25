@@ -94,10 +94,10 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     private static String mStateText;
 
     // Fragments
-    private DialpadFragment mDialpadFragment;
+    DialpadFragment mDialpadFragment;
 
     // ViewModels
-    private SharedDialViewModel mSharedDialViewModel;
+    SharedDialViewModel mSharedDialViewModel;
 
     // BottomSheet
     BottomSheetBehavior mBottomSheetBehavior;
@@ -225,7 +225,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         } catch (Throwable ignored) {
         }
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
+        try {
+            wakeLock = powerManager.newWakeLock(field, getLocalClassName());
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Can't use ear sensor for some reason :(", Toast.LENGTH_SHORT).show();
+        }
 
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
@@ -392,7 +396,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Starts call timer (answer)
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_floating_answer_call_timer)
     public void startAnswerCallTimer(View view) {
@@ -404,7 +408,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Turns on mute according to current state (if already on/off)
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_mute)
     public void toggleMute(View view) {
@@ -417,7 +421,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Turns on/off the speaker according to current state (if already on/off)
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_speaker)
     public void toggleSpeaker(View view) {
@@ -428,7 +432,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Puts the call on hold
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_hold)
     public void toggleHold(View view) {
@@ -451,7 +455,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     /**
      * Cancel the call timer
      *
-     * @param view
+     * @param view the clicked view
      */
     @OnClick(R.id.button_cancel_timer)
     public void cancelTimer(View view) {

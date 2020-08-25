@@ -7,10 +7,13 @@ import android.widget.Toast;
 import androidx.annotation.CallSuper;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
+
+import org.openxmlformats.schemas.drawingml.x2006.main.impl.ThemeDocumentImpl;
 
 import timber.log.Timber;
 
@@ -46,23 +49,10 @@ public abstract class AbsThemeActivity extends AppCompatActivity {
      * i had for auto detecting system theme and i really dont have time for this
      */
     protected void updateTheme() {
-        String theme = PreferenceUtils.getInstance(this).getString(R.string.pref_app_theme_key);
-        String color = PreferenceUtils.getInstance(this).getString(R.string.pref_app_color_key);
+        setTheme(ThemeUtils.getStyleTheme(this));
+        setTheme(ThemeUtils.getTypeTheme(mThemeType));
+        setTheme(ThemeUtils.getAccentTheme(this));
 
-        // If theme supposed to match device theme
-        if (theme.equals(getString(R.string.pref_system_entry_value)))
-            theme = ThemeUtils.isNightModeOn(this) ? "dark" : "light";
-        int newThemeStyle = ThemeUtils.themeFromId(theme + ";" + color, mThemeType);
-        boolean isInOnCreate = mThemeStyle == -1;
-
-        if (mThemeStyle != newThemeStyle) {
-            mThemeStyle = newThemeStyle;
-            setTheme(mThemeStyle);
-            if (!isInOnCreate) {
-                finish();
-                startActivity(getIntent());
-            }
-        }
     }
 
     @Override
