@@ -194,7 +194,9 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
         ButterKnife.bind(this);
 
-        mCallRecorder = new CallRecorder(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mCallRecorder = new CallRecorder(this, null);
+        }
 
         // This activity needs to show even if the screen is off or locked
         Window window = getWindow();

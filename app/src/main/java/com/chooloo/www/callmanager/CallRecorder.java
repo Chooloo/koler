@@ -4,9 +4,13 @@ package com.chooloo.www.callmanager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -23,29 +27,40 @@ public class CallRecorder {
     private static final String LOG_TAG = "CallRecorder";
 
     // audio constants
-    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.VOICE_CALL;
+    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.DEFAULT;
     private static final int AUDIO_FORMAT = MediaRecorder.OutputFormat.THREE_GPP;
     private static final int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AMR_NB;
-    private static String mFileName;
+    private static final String FILE_TYPE = "3gpp";
 
+    private String mFileName;
     private boolean mIsRecording = false;
     private Context mContext;
     private MediaRecorder mRecorder;
+    private File mFile;
 
-    @SuppressLint("SimpleDateFormat")
-    public CallRecorder(Context context) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public CallRecorder(Context context, @Nullable String name) {
         mContext = context;
-        mFileName = Objects.requireNonNull(mContext.getExternalCacheDir()).getAbsolutePath();
-        mFileName += "/koler_record_" + new SimpleDateFormat("dd-MM-yyyy hh-mm-ss").format(new Date()) + ".3gpp";
+
+        if (name != null) mFileName = name + '.' + FILE_TYPE;
+        else mFileName = generateFileName();
+
+        File downloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        mFile = new File(downloadPath, mFileName);
+
+        try {
+            if (mFile.exists()) mFile.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // define recorder
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(AUDIO_SOURCE);
         mRecorder.setOutputFormat(AUDIO_FORMAT);
         mRecorder.setAudioEncoder(AUDIO_ENCODER);
-        mRecorder.setOutputFile(mFileName);
+        mRecorder.setOutputFile(mFile);
     }
-
 
     /**
      * Start recording
@@ -67,10 +82,22 @@ public class CallRecorder {
      * Stop and release recording
      */
     public void stop() {
-        mRecorder.stop();
-        mRecorder.release();
-        Timber.i("CALLRECORDPATH " + mFileName);
+        if (mRecorder != null) {
+            try {
+                mRecorder.stop();
+                mRecorder.reset();
+                mRecorder.release();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            mRecorder = null;
+        }
+
         if (mIsRecording) mIsRecording = false;
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private static String generateFileName() {
+        return "koler_record_" + new SimpleDateFormat("dd-MM-yyyy hh-mm-ss").format(new Date()) + "." + FILE_TYPE;
+    }
 }

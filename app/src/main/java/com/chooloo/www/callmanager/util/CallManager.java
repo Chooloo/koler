@@ -7,7 +7,6 @@ import android.telecom.Call;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
-import android.telephony.SubscriptionManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,39 +18,50 @@ import com.chooloo.www.callmanager.util.validation.Validator;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.security.Permission;
 import java.util.List;
 
 import timber.log.Timber;
 
-import static android.Manifest.permission.CALL_PHONE;
 
 public class CallManager {
 
     // Variables
     public static Call sCall;
-    private static boolean sIsAutoCalling = false;
     private static List<Contact> sAutoCallingContactsList = null;
+    private static boolean sIsAutoCalling = false;
     private static int sAutoCallPosition = 0;
-    private static SubscriptionManager mSubscriptionManager;
 
     // -- Call Actions -- //
 
     /**
      * Call a given number
      *
-     * @param context
-     * @param number
+     * @param context context
+     * @param number  number to call to
      */
     public static void call(@NotNull Context context, @NotNull String number) {
         try {
-            // Create call intent
+            TelecomManager telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
+            assert telecomManager != null;
+            List<PhoneAccountHandle> phoneAccountHandleList = telecomManager.getCallCapablePhoneAccounts();
+
+            int simCard = getSimSelection(context);
+
+            // create call intent
             Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
-            int simCard = getSimSelection(context); // handle sim card selection
+
+            if (phoneAccountHandleList != null && !phoneAccountHandleList.isEmpty()) {
+                callIntent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandleList.get(simCard));
+            }
+
+            // handle sim card selection
+            Timber.d("simcard %s", simCard);
             if (simCard != -1) callIntent.putExtra("com.android.phone.extra.slot", simCard);
-            context.startActivity(callIntent); // start the call
+
+            // start the call
+            context.startActivity(callIntent);
+
         } catch (SecurityException e) {
             Toast.makeText(context, "Couldn't make a call due to security reasons", Toast.LENGTH_LONG).show();
         } catch (NullPointerException e) {
@@ -62,10 +72,10 @@ public class CallManager {
     /**
      * Get sim selection from preferences
      *
-     * @param context
+     * @param context context
      * @return number of selected sim
      */
-    public static int getSimSelection(Context context) {
+    private static int getSimSelection(Context context) {
         try {
             return Integer.parseInt(String.valueOf(PreferenceUtils.getInstance(context).getString(R.string.pref_sim_select_key)));
         } catch (NullPointerException e) {
@@ -97,8 +107,6 @@ public class CallManager {
     /**
      * Ends call
      * If call ended from the other side, disconnects
-     *
-     * @return true whether there's no more calls awaiting
      */
     public static void reject() {
         if (sCall != null) {
@@ -112,11 +120,11 @@ public class CallManager {
     /**
      * Put call on hold
      *
-     * @param hold
+     * @param isHold put the call on hold or not
      */
-    public static void hold(boolean hold) {
+    public static void hold(boolean isHold) {
         if (sCall != null) {
-            if (hold) sCall.hold();
+            if (isHold) sCall.hold();
             else sCall.unhold();
         }
     }
@@ -124,7 +132,7 @@ public class CallManager {
     /**
      * Open keypad
      *
-     * @param c
+     * @param c pressed char
      */
     public static void keypad(char c) {
         if (sCall != null) {
@@ -136,7 +144,7 @@ public class CallManager {
     /**
      * Add a call to the current call
      *
-     * @param call
+     * @param call to other call to add to the current one
      */
     public static void addCall(Call call) {
         if (sCall != null) sCall.conference(call);
@@ -182,7 +190,7 @@ public class CallManager {
     /**
      * Go to the next call
      *
-     * @param context
+     * @param context context
      */
     public static void nextCall(@NotNull Context context) {
         if (sAutoCallingContactsList != null && sAutoCallPosition < sAutoCallingContactsList.size()) {
@@ -202,15 +210,13 @@ public class CallManager {
     /**
      * Finish the loop
      */
-    public static void finishAutoCall() {
+    private static void finishAutoCall() {
         sIsAutoCalling = false;
         sAutoCallPosition = 0;
     }
 
     /**
      * Check wither is currently auto calling
-     *
-     * @return
      */
     public static boolean isAutoCalling() {
         return sIsAutoCalling;
@@ -226,14 +232,17 @@ public class CallManager {
      */
     public static Contact getDisplayContact(Context context) {
         String number;
+
         // try getting the number of the other side of the call
         try {
             number = URLDecoder.decode(sCall.getDetails().getHandle().toString(), "utf-8").replace("tel:", "");
         } catch (Exception e) {
             return ContactUtils.UNKNOWN;
         }
+
         // check if number is a voice mail
         if (number.contains("voicemail")) return ContactUtils.VOICEMAIL;
+
         // get the contact
         Contact contact = ContactUtils.getContact(context, number, null); // get the contacts with the number
         if (contact == null) return new Contact(number, number, null); // return a number contact
