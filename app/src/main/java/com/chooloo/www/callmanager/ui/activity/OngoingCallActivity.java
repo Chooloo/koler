@@ -43,6 +43,7 @@ import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
+import com.chooloo.www.callmanager.CallRecorder;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
@@ -93,6 +94,9 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     // Call State
     private static int mState;
     private static String mStateText;
+
+    // Call Recorder
+    CallRecorder mCallRecorder;
 
     // Fragments
     DialpadFragment mDialpadFragment;
@@ -189,6 +193,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         Utilities.setUpLocale(this);
 
         ButterKnife.bind(this);
+
+        mCallRecorder = new CallRecorder(this);
 
         // This activity needs to show even if the screen is off or locked
         Window window = getWindow();
@@ -362,6 +368,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     protected void onStart() {
         super.onStart();
         mIsCreatingUI = false;
+        mCallRecorder.start();
     }
 
     @Override
@@ -371,6 +378,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mActionTimer.cancel();
         releaseWakeLock();
         cancelNotification();
+        mCallRecorder.stop();
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.telecom.Call;
+import android.telecom.PhoneAccountHandle;
+import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.telephony.SubscriptionManager;
 import android.widget.Toast;
@@ -65,7 +67,7 @@ public class CallManager {
      */
     public static int getSimSelection(Context context) {
         try {
-            return PreferenceUtils.getInstance(context).getInt(R.string.pref_sim_select_key);
+            return Integer.parseInt(String.valueOf(PreferenceUtils.getInstance(context).getString(R.string.pref_sim_select_key)));
         } catch (NullPointerException e) {
             return -1;
         }
