@@ -47,6 +47,7 @@ public class CallRecorder {
 
         File downloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         mFile = new File(downloadPath, mFileName);
+        Timber.d("Path of file %s", mFile.getPath());
 
         try {
             if (mFile.exists()) mFile.delete();
@@ -87,6 +88,7 @@ public class CallRecorder {
                 mRecorder.stop();
                 mRecorder.reset();
                 mRecorder.release();
+                Toast.makeText(mContext, "Call recording ended", Toast.LENGTH_SHORT).show();
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
