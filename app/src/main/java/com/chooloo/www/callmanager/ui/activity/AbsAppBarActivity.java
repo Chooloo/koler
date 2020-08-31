@@ -1,9 +1,11 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.chooloo.www.callmanager.R;
@@ -18,6 +20,11 @@ public abstract class AbsAppBarActivity extends AbsThemeActivity {
     public @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.toolbar_title) TextView mTextTitle;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     @CallSuper
