@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import com.chooloo.www.callmanager.util.validation.Validator;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URLDecoder;
+import java.security.Permission;
 import java.util.List;
 
 import timber.log.Timber;
@@ -37,35 +39,41 @@ public class CallManager {
     /**
      * Call a given number
      *
-     * @param context context
-     * @param number  number to call to
+     * @param activity activity
+     * @param number   number to call to
      */
-    public static void call(@NotNull Context context, @NotNull String number) {
-        try {
-            TelecomManager telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
-            assert telecomManager != null;
-            List<PhoneAccountHandle> phoneAccountHandleList = telecomManager.getCallCapablePhoneAccounts();
+    public static void call(@NotNull Activity activity, @NotNull String number) {
+        if (PermissionUtils.checkDefaultDialer(activity)) {
+            try {
+                // initiate variables
+                TelecomManager telecomManager = (TelecomManager) activity.getSystemService(Context.TELECOM_SERVICE);
+                assert telecomManager != null;
+                List<PhoneAccountHandle> phoneAccountHandleList = telecomManager.getCallCapablePhoneAccounts();
+                int simCard = getSimSelection(activity);
 
-            int simCard = getSimSelection(context);
+                // create call intent
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
 
-            // create call intent
-            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
+                // add sim selection to call intent
+                if (phoneAccountHandleList != null && !phoneAccountHandleList.isEmpty())
+                    callIntent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandleList.get(simCard));
 
-            if (phoneAccountHandleList != null && !phoneAccountHandleList.isEmpty()) {
-                callIntent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandleList.get(simCard));
+                // handle sim card selection
+                Timber.d("simcard %s", simCard);
+                if (simCard != -1) callIntent.putExtra("com.android.phone.extra.slot", simCard);
+
+                // start the call
+                activity.startActivity(callIntent);
+
+            } catch (SecurityException e) {
+                e.printStackTrace();
+                Toast.makeText(activity, "Couldn't make a call due to security reasons", Toast.LENGTH_LONG).show();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                Toast.makeText(activity, "Couldnt make a call, no phone number", Toast.LENGTH_LONG).show();
             }
-
-            // handle sim card selection
-            Timber.d("simcard %s", simCard);
-            if (simCard != -1) callIntent.putExtra("com.android.phone.extra.slot", simCard);
-
-            // start the call
-            context.startActivity(callIntent);
-
-        } catch (SecurityException e) {
-            Toast.makeText(context, "Couldn't make a call due to security reasons", Toast.LENGTH_LONG).show();
-        } catch (NullPointerException e) {
-            Toast.makeText(context, "Couldnt make a call, no phone number", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(activity, "Set koler as the default dialer to make calls", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -190,17 +198,17 @@ public class CallManager {
     /**
      * Go to the next call
      *
-     * @param context context
+     * @param activity activity
      */
-    public static void nextCall(@NotNull Context context) {
+    public static void nextCall(@NotNull Activity activity) {
         if (sAutoCallingContactsList != null && sAutoCallPosition < sAutoCallingContactsList.size()) {
             String phoneNumber = sAutoCallingContactsList.get(sAutoCallPosition).getMainPhoneNumber();
             if (Validator.validatePhoneNumber(phoneNumber)) {
-                call(context, phoneNumber);
+                call(activity, phoneNumber);
             } else {
-                Toast.makeText(context, "Can't call " + phoneNumber, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Can't call " + phoneNumber, Toast.LENGTH_SHORT).show();
                 sAutoCallPosition++;
-                nextCall(context);
+                nextCall(activity);
             }
         } else {
             finishAutoCall();

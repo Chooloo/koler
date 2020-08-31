@@ -30,11 +30,13 @@ import com.chooloo.www.callmanager.ui.fragment.base.AbsBaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadView;
 import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
 import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 
+import java.security.Permission;
 import java.util.HashSet;
 
 import butterknife.BindView;
@@ -276,11 +278,11 @@ public class DialpadFragment extends AbsBaseFragment {
      */
     @OnClick(R.id.button_call)
     public void call(View view) {
-        if (Utilities.getOnlyNumbers(mDigits.getText().toString()) == "" || mDigits.getText().toString().isEmpty())
+        if (Utilities.getOnlyNumbers(mDigits.getText().toString()).equals("") || mDigits.getText().toString().isEmpty()) {
             Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
-        else
-            CallManager.call(this.getContext(), mDigits.getText().toString());
-//            CallManager.call(this.getContext(), Utilities.getOnlyNumbers(mDigits.getText().toString()));
+        } else {
+            CallManager.call(getActivity(), mDigits.getText().toString());
+        }
     }
 
     @OnClick(R.id.digits_edit_text)

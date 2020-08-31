@@ -45,6 +45,7 @@ public class ThemeUtils {
     private static final String ACCENT_GREEN = "green";
     private static final String ACCENT_CREAM = "cream";
 
+    private static final int DEFAULT_ACCENT = R.style.Accent_Blue;
 
     /**
      * Return the theme that corresponds to the correct theme type
@@ -102,6 +103,7 @@ public class ThemeUtils {
     public static @StyleRes
     int getAccentTheme(Context context) {
         @AccentColor String color = PreferenceUtils.getInstance(context).getString(R.string.pref_app_color_key);
+        if (color == null) return DEFAULT_ACCENT;
         switch (color) {
             case ACCENT_BLUE:
                 return R.style.Accent_Blue;
@@ -112,7 +114,7 @@ public class ThemeUtils {
             case ACCENT_CREAM:
                 return R.style.Accent_Cream;
             default:
-                return R.style.Accent_Blue;
+                return DEFAULT_ACCENT;
         }
     }
 

@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
@@ -27,7 +28,7 @@ public class CallRecorder {
     private static final String LOG_TAG = "CallRecorder";
 
     // audio constants
-    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.DEFAULT;
+    private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.VOICE_COMMUNICATION;
     private static final int AUDIO_FORMAT = MediaRecorder.OutputFormat.THREE_GPP;
     private static final int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AMR_NB;
     private static final String FILE_TYPE = "3gpp";
@@ -55,16 +56,18 @@ public class CallRecorder {
             e.printStackTrace();
         }
 
+
         // define recorder
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(AUDIO_SOURCE);
         mRecorder.setOutputFormat(AUDIO_FORMAT);
         mRecorder.setAudioEncoder(AUDIO_ENCODER);
         mRecorder.setOutputFile(mFile);
+         mRecorder.setAudioChannels(AudioFormat.CHANNEL_IN_DEFAULT);
     }
 
     /**
-     * Start recording
+     * Start recordingT
      */
     public void start() {
         try {
@@ -76,7 +79,6 @@ public class CallRecorder {
             e.printStackTrace();
             Toast.makeText(mContext, "Couldn't start call recording :(", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     /**

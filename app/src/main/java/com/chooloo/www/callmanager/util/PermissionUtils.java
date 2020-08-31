@@ -26,10 +26,10 @@ public class PermissionUtils {
     /**
      * Check if koler is set as the default dialer app
      *
-     * @param activity
+     * @param activity activity
      * @return boolean
      */
-    public static boolean checkDefaultDialer(FragmentActivity activity) {
+    public static boolean checkDefaultDialer(Activity activity) {
         String packageName = activity.getApplication().getPackageName();
         try {
             if (!activity.getSystemService(TelecomManager.class).getDefaultDialerPackage().equals(packageName)) {

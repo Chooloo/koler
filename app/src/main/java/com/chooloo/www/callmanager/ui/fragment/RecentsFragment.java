@@ -194,7 +194,7 @@ public class RecentsFragment extends AbsCursorFragment implements
         });
 
         callButton.setOnClickListener(v -> {
-            CallManager.call(this.mContext, contact.getMainPhoneNumber());
+            CallManager.call(getActivity(), contact.getMainPhoneNumber());
         });
 
         deleteButton.setOnClickListener(v -> {

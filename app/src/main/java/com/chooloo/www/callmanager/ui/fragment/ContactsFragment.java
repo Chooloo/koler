@@ -206,7 +206,7 @@ public class ContactsFragment extends AbsCursorFragment implements
 
         callButton.setOnClickListener(v -> {
             Timber.i("MAIN PHONE NUMBER: " + contact.getMainPhoneNumber());
-            CallManager.call(this.mContext, contact.getMainPhoneNumber());
+            CallManager.call(getActivity(), contact.getMainPhoneNumber());
         });
 
         editButton.setOnClickListener(v -> {
