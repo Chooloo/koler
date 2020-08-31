@@ -41,7 +41,7 @@ public abstract class AbsAppBarActivity extends AbsThemeActivity {
     /**
      * Set the label of the appbar by a given string
      *
-     * @param label
+     * @param label label to be displayed in the appbar
      */
     protected void setLabel(String label) {
         mTextTitle.setText(label);
