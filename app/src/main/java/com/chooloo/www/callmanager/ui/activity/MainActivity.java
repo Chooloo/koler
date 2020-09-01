@@ -110,12 +110,17 @@ public class MainActivity extends AbsSearchBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // set theme and view
         setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR); // set theme
         setContentView(R.layout.activity_main); // set the layout
-        PreferenceUtils.getInstance(this); // get the preferences
+
+        // code settings
+        PreferenceUtils.getInstance(this);
         Utilities.setUpLocale(this);
         ButterKnife.bind(this);
 
+        // checks
         PermissionUtils.checkDefaultDialer(this);
         showNewVersionDialog();
 

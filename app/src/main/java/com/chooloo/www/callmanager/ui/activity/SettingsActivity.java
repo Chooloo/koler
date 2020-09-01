@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -60,8 +61,8 @@ public class SettingsActivity extends AbsThemeActivity {
                 CharSequence[] entries = listPreference.getEntries();
                 listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
 
-                getActivity().finish();
-                startActivity(getActivity().getIntent());
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
                 return true;
             };
 
@@ -70,8 +71,8 @@ public class SettingsActivity extends AbsThemeActivity {
                 CharSequence[] entries = listPreference.getEntries();
                 listPreference.setSummary(entries[listPreference.findIndexOfValue((String) newValue)]);
 
-                getActivity().finish();
-                startActivity(getActivity().getIntent());
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
                 return true;
             };
 

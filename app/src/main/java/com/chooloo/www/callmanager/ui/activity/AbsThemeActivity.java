@@ -1,13 +1,20 @@
 package com.chooloo.www.callmanager.ui.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.IntentCompat;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
@@ -52,7 +59,6 @@ public abstract class AbsThemeActivity extends AppCompatActivity {
         setTheme(ThemeUtils.getStyleTheme(this));
         setTheme(ThemeUtils.getTypeTheme(mThemeType));
         setTheme(ThemeUtils.getAccentTheme(this));
-
     }
 
     @Override

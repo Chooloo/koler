@@ -64,7 +64,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -187,19 +186,25 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // set theme and view
         setThemeType(ThemeUtils.TYPE_TRANSPARENT_STATUS_BAR); // set theme
+        setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR); // remove action bar
         setContentView(R.layout.activity_ongoing_call); // set layout
+
+        // code settings
         PreferenceUtils.getInstance(this);
         Utilities.setUpLocale(this);
-
         ButterKnife.bind(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mCallRecorder = new CallRecorder(this, null);
         }
 
-        // This activity needs to show even if the screen is off or locked
         Window window = getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        // This activity needs to show even if the screen is off or locked
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
@@ -207,15 +212,15 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
             if (km != null) km.requestDismissKeyguard(this, null);
         } else {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        //Detect a nav bar and adapt layout accordingly
+        // detect a nav bar and adapt layout accordingly
         boolean hasNavBar = Utilities.hasNavBar(this);
         int navBarHeight = Utilities.navBarHeight(this);
         if (hasNavBar) {
@@ -231,13 +236,10 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
         try {
             field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
-        } catch (Throwable ignored) {
-        }
-        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        try {
-            assert powerManager != null;
+            powerManager = (PowerManager) getSystemService(POWER_SERVICE);
             wakeLock = powerManager.newWakeLock(field, getLocalClassName());
-        } catch (NullPointerException e) {
+        } catch (NoSuchFieldException | NullPointerException | IllegalAccessException e) {
+            e.printStackTrace();
             Toast.makeText(this, "Can't use ear sensor for some reason :(", Toast.LENGTH_SHORT).show();
         }
 
@@ -349,8 +351,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        //Listen for call state changes
-        CallManager.registerCallback(mCallback);
+        CallManager.registerCallback(mCallback); // listen for call state changes
         updateUI(CallManager.getState());
     }
 
@@ -362,8 +363,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         // In case the dialpad is opened, pressing the back button will close it
         if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
-        // You cant press the back button in order to get out of the call
     }
 
     @Override
@@ -495,10 +494,14 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
-        String msg = Objects.requireNonNull(mEditSms.getText()).toString();
-        String phoneNum = CallManager.getDisplayContact(this).getMainPhoneNumber();
-        Utilities.sendSMS(this, phoneNum, msg);
-        removeOverlay();
+        if (mEditSms.getText() != null) {
+            String number = CallManager.getDisplayContact(this).getMainPhoneNumber();
+            String text = mEditSms.getText().toString();
+            Utilities.sendSMS(this, number, text);
+            removeOverlay();
+        } else {
+            Toast.makeText(this, "Enter an sms first", Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -519,9 +522,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @OnClick({R.id.button_speaker, R.id.button_hold, R.id.button_mute})
     public void changeColors(View view) {
         ImageView imageButton = (ImageView) view;
-        if (view.isActivated())
+        if (view.isActivated()) {
             imageButton.setColorFilter(ContextCompat.getColor(this, R.color.white));
-        else imageButton.setColorFilter(ContextCompat.getColor(this, R.color.soft_black));
+        } else {
+            imageButton.setColorFilter(ContextCompat.getColor(this, R.color.soft_black));
+        }
     }
 
     // -- Call Actions -- //
@@ -603,6 +608,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mState = state;
         mStateText = getResources().getString(statusTextRes);
         mBuilder.setContentText(mStateText);
+
         try {
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         } catch (NullPointerException e) {
@@ -633,7 +639,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mMuteButton.setVisibility(View.VISIBLE);
         mKeypadButton.setVisibility(View.VISIBLE);
         mSpeakerButton.setVisibility(View.VISIBLE);
-        mAddCallButton.setVisibility(View.VISIBLE);
+//        mAddCallButton.setVisibility(View.VISIBLE);
         moveRejectButtonToMiddle();
     }
 
