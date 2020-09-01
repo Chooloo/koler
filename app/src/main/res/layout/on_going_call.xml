@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ongoing_call_layout_a"
+    style="@style/ThemeType.TransparentStatusBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -93,15 +94,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44" />
+        app:layout_constraintGuide_begin="354dp" />
 
     <ImageView
         android:id="@+id/button_hold"
         android:layout_width="@dimen/flat_button_size"
-        android:layout_height="62dp"
+        android:layout_height="64dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -109,12 +109,9 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_call"
-        app:layout_constraintEnd_toStartOf="@+id/button_speaker"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_mute"
         app:layout_constraintTop_toTopOf="@+id/guide_eye_level"
-        app:layout_constraintVertical_bias="0.32999998"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/ic_pause_black_24dp"
         tools:visibility="visible" />
@@ -124,7 +121,7 @@
         android:id="@+id/button_mute"
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="@dimen/flat_button_size"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="30dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -154,11 +151,10 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button_hold"
+        app:layout_constraintBottom_toBottomOf="@id/button_keypad"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_hold"
-        app:layout_constraintTop_toTopOf="@+id/button_hold"
+        app:layout_constraintStart_toEndOf="@id/button_keypad"
+        app:layout_constraintTop_toTopOf="@id/button_keypad"
         app:srcCompat="@drawable/ic_volume_up_black_24dp"
         tools:visibility="visible" />
 
@@ -167,7 +163,8 @@
         android:id="@+id/button_keypad"
         android:layout_width="@dimen/flat_button_size"
         android:layout_height="@dimen/flat_button_size"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
         android:layout_weight="1"
         android:background="@drawable/ripple_oval"
         android:clickable="true"
@@ -175,12 +172,10 @@
         android:padding="@dimen/flat_button_padding"
         android:tint="@color/selector_button_icon"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/button_add_call"
-        app:layout_constraintEnd_toStartOf="@+id/button_add_call"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/button_speaker"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_add_call"
+        app:layout_constraintTop_toBottomOf="@+id/button_mute"
         app:srcCompat="@drawable/ic_dialpad_black_24dp"
         tools:visibility="visible" />
 
@@ -203,7 +198,7 @@
         app:layout_constraintStart_toEndOf="@+id/button_keypad"
         app:layout_constraintTop_toBottomOf="@+id/button_hold"
         app:srcCompat="@drawable/ic_add_black_24dp"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
