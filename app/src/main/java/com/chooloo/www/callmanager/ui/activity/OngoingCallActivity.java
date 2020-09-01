@@ -370,7 +370,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     protected void onStart() {
         super.onStart();
         mIsCreatingUI = false;
-        mCallRecorder.start();
+//        mCallRecorder.start();
     }
 
     @Override
@@ -380,7 +380,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mActionTimer.cancel();
         releaseWakeLock();
         cancelNotification();
-        mCallRecorder.stop();
+//        mCallRecorder.stop();
     }
 
     @Override
