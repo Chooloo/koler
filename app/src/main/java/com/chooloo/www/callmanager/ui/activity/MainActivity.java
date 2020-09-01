@@ -82,28 +82,20 @@ public class MainActivity extends AbsSearchBarActivity {
     // - View Binds - //
 
     // Views
-    @BindView(R.id.appbar)
-    View mAppBar;
-    @BindView(R.id.dialer_fragment)
-    View mDialerView;
+    @BindView(R.id.appbar) View mAppBar;
+    @BindView(R.id.dialer_fragment) View mDialerView;
 
     // Layouts
-    @BindView(R.id.root_view)
-    CoordinatorLayout mMainLayout;
+    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
 
     // Buttons
-    @BindView(R.id.right_button)
-    FloatingActionButton mRightButton;
-    @BindView(R.id.left_button)
-    FloatingActionButton mLeftButton;
-    @BindView(R.id.add_contact_fab_button)
-    FloatingActionButton mAddContactButton;
+    @BindView(R.id.right_button) FloatingActionButton mRightButton;
+    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
+    @BindView(R.id.add_contact_fab_button) FloatingActionButton mAddContactButton;
 
     // Other
-    @BindView(R.id.view_pager)
-    ViewPager mViewPager;
-    @BindView(R.id.view_pager_tab)
-    SmartTabLayout mSmartTabLayout;
+    @BindView(R.id.view_pager) ViewPager mViewPager;
+    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
     // -- Overrides -- //
 
@@ -144,8 +136,11 @@ public class MainActivity extends AbsSearchBarActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-
         mSmartTabLayout.setViewPager(mViewPager);
+
+        // View Models
+
+        // Intent View Model
         mSharedIntentViewModel = ViewModelProviders.of(this).get(SharedIntentViewModel.class);
 
         // Search Bar View Model
@@ -192,10 +187,10 @@ public class MainActivity extends AbsSearchBarActivity {
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
 
+        mAddContactButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_black_24dp));
+
         // Check for intents from others apps
         checkIncomingIntent();
-
-        mAddContactButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_black_24dp));
 
         showBiometricPrompt(this);
     }
@@ -267,8 +262,6 @@ public class MainActivity extends AbsSearchBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PermissionUtils.DEFAULT_DIALER_RC) {
-        }
     }
 
     // -- OnClicks -- //
@@ -315,21 +308,23 @@ public class MainActivity extends AbsSearchBarActivity {
     /**
      * Change the dialer status (collapse/expand)
      *
-     * @param expand
+     * @param isExpand should expend dialer or not
      */
-    public void expandDialer(boolean expand) {
-        if (expand)
+    public void expandDialer(boolean isExpand) {
+        if (isExpand) {
             BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_EXPANDED);
-        else BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     /**
      * Extend/Collapse the appbar_main according to given parameter
      *
-     * @param expand
+     * @param isExpand should expand the app bar or not
      */
-    public void expandAppBar(boolean expand) {
-        mAppBarLayout.setExpanded(expand);
+    public void expandAppBar(boolean isExpand) {
+        mAppBarLayout.setExpanded(isExpand);
     }
 
     public void updateButtons() {
@@ -355,8 +350,8 @@ public class MainActivity extends AbsSearchBarActivity {
     /**
      * Animate view
      *
-     * @param isShow
-     * @param v
+     * @param isShow show view or not
+     * @param v      view to handle
      */
     public void showView(View v, boolean isShow) {
         if (isShow && v.isEnabled()) {
@@ -371,14 +366,6 @@ public class MainActivity extends AbsSearchBarActivity {
     }
 
     // -- Utilities -- //
-
-    private void checkPermissions(@Nullable int[] grantResults, boolean askForIt) {
-        if (grantResults != null && checkPermissionsGranted(grantResults) ||
-                checkPermissionsGranted(this, PermissionUtils.MUST_HAVE_PERMISSIONS, false))
-            showNewVersionDialog();
-        else if (askForIt)
-            checkPermissionsGranted(this, PermissionUtils.MUST_HAVE_PERMISSIONS, true);
-    }
 
     /**
      * If user using a new version of the app, show the new version dialog
@@ -399,14 +386,14 @@ public class MainActivity extends AbsSearchBarActivity {
         mIntent = getIntent();
         mIntentAction = mIntent.getAction();
         mIntentType = mIntent.getType();
-        if (mIntentAction == Intent.ACTION_DIAL || mIntentAction == Intent.ACTION_VIEW)
+        if (mIntentAction.equals(Intent.ACTION_DIAL) || mIntentAction.equals(Intent.ACTION_VIEW))
             handleViewIntent(mIntent);
     }
 
     /**
      * Handle a VIEW intent (For example when you click a number in whatsapp)
      *
-     * @param intent
+     * @param intent intent to handle
      */
     private void handleViewIntent(Intent intent) {
         String sharedText = "";
@@ -419,7 +406,7 @@ public class MainActivity extends AbsSearchBarActivity {
             return;
         }
 
-        if (sharedText.contains("tel:") && sharedText != "tel:") {
+        if (sharedText.contains("tel:") && !sharedText.equals("tel:")) {
             mSharedIntentViewModel.setData(sharedText.replace("tel:", ""));
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {

@@ -197,12 +197,10 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         Utilities.setUpLocale(this);
         ButterKnife.bind(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             mCallRecorder = new CallRecorder(this, null);
-        }
 
         Window window = getWindow();
-//        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         // This activity needs to show even if the screen is off or locked
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -220,18 +218,9 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
 
-        // detect a nav bar and adapt layout accordingly
-        boolean hasNavBar = Utilities.hasNavBar(this);
-        int navBarHeight = Utilities.navBarHeight(this);
-        if (hasNavBar) {
-            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
-            mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
-            mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
-            mDialerFrame.setPadding(0, 0, 0, navBarHeight);
-        }
-
-        // Display caller information
-        displayInformation();
+        adaptToNavbar(); // adapt layout to system's navigation bar
+        displayInformation(); // display caller information
+        setDialpadFragment(); // set a new dialpad fragment
 
         // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
         try {
@@ -246,14 +235,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
 
-        // Dialpad Fragment
-        mDialpadFragment = DialpadFragment.newInstance(false);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialer_fragment, mDialpadFragment)
-                .commit();
-        mDialpadFragment.setDigitsCanBeEdited(false);
-        mDialpadFragment.setShowVoicemailButton(false);
-        mDialpadFragment.setOnKeyDownListener(this);
 
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
@@ -284,12 +265,10 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         hideButtons();
 
         // Set the correct text for the TextView
-        String rejectCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key);
-        String rejectCallText = mRejectCallTimerText.getText() + " " + rejectCallSeconds + "s";
+        String rejectCallText = mRejectCallTimerText.getText() + " " + PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key) + "s";
         mRejectCallTimerText.setText(rejectCallText);
 
-        String answerCallSeconds = PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key);
-        String answerCallText = mAnswerCallTimerText.getText() + " " + answerCallSeconds + "s";
+        String answerCallText = mAnswerCallTimerText.getText() + " " + PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key) + "s";
         mAnswerCallTimerText.setText(answerCallText);
 
         // Initiate Swipe listener
@@ -369,7 +348,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     protected void onStart() {
         super.onStart();
         mIsCreatingUI = false;
-//        mCallRecorder.start();
     }
 
     @Override
@@ -379,7 +357,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mActionTimer.cancel();
         releaseWakeLock();
         cancelNotification();
-//        mCallRecorder.stop();
     }
 
     @Override
@@ -460,7 +437,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     //TODO add functionality to the Add call button
     @OnClick(R.id.button_add_call)
     public void addCall(View view) {
-//        CallManager.addCall(// a call);
     }
 
     /**
@@ -1000,4 +976,30 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         notificationManager.cancel(NOTIFICATION_ID);
     }
 
+    /**
+     * detect a nav bar and adapt layout accordingly
+     */
+    private void adaptToNavbar() {
+        boolean hasNavBar = Utilities.hasNavBar(this);
+        int navBarHeight = Utilities.navBarHeight(this);
+        if (hasNavBar) {
+            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
+            mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
+            mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
+            mDialerFrame.setPadding(0, 0, 0, navBarHeight);
+        }
+    }
+
+    /**
+     * Set a new dialpad fragment
+     */
+    private void setDialpadFragment() {
+        mDialpadFragment = DialpadFragment.newInstance(false);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.dialer_fragment, mDialpadFragment)
+                .commit();
+        mDialpadFragment.setDigitsCanBeEdited(false);
+        mDialpadFragment.setShowVoicemailButton(false);
+        mDialpadFragment.setOnKeyDownListener(this);
+    }
 }
