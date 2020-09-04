@@ -115,6 +115,7 @@
             android:label="@string/activity_about"
             android:theme="@style/AppTheme.Light" />
 
+        <service android:name=".service.RecordService" />
         <service
             android:name=".service.CallService"
             android:permission="android.permission.BIND_INCALL_SERVICE">

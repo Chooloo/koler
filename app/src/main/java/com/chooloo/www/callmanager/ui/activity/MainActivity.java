@@ -386,7 +386,7 @@ public class MainActivity extends AbsSearchBarActivity {
         mIntent = getIntent();
         mIntentAction = mIntent.getAction();
         mIntentType = mIntent.getType();
-        if (mIntentAction.equals(Intent.ACTION_DIAL) || mIntentAction.equals(Intent.ACTION_VIEW))
+        if (mIntentAction == Intent.ACTION_DIAL || mIntentAction == Intent.ACTION_VIEW)
             handleViewIntent(mIntent);
     }
 

@@ -43,8 +43,8 @@ import androidx.transition.ChangeBounds;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
-import com.chooloo.www.callmanager.CallRecorder;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.service.RecordService;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
@@ -71,6 +71,8 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+import static com.chooloo.www.callmanager.service.RecordService.RECORD_SERVICE_START;
+import static com.chooloo.www.callmanager.service.RecordService.RECORD_SERVICE_STOP;
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 @SuppressLint("ClickableViewAccessibility")
@@ -93,9 +95,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     // Call State
     private static int mState;
     private static String mStateText;
-
-    // Call Recorder
-    CallRecorder mCallRecorder;
 
     // Fragments
     DialpadFragment mDialpadFragment;
@@ -196,9 +195,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         PreferenceUtils.getInstance(this);
         Utilities.setUpLocale(this);
         ButterKnife.bind(this);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            mCallRecorder = new CallRecorder(this, null);
 
         Window window = getWindow();
 
@@ -348,6 +344,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     protected void onStart() {
         super.onStart();
         mIsCreatingUI = false;
+//        this.startService(new Intent(this, RecordService.class)
+//                .putExtra("commandType", RECORD_SERVICE_START));
     }
 
     @Override
@@ -357,6 +355,8 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         mActionTimer.cancel();
         releaseWakeLock();
         cancelNotification();
+//        this.startService(new Intent(this, RecordService.class)
+//                .putExtra("commandType", RECORD_SERVICE_STOP));
     }
 
     @Override
