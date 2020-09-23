@@ -33,7 +33,7 @@
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Light">
+            android:theme="@style/SplashTheme">
 
             <!-- For receiving intents -->
             <intent-filter>
