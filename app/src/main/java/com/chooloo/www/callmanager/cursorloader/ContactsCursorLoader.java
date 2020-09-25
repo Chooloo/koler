@@ -29,7 +29,7 @@ import static android.provider.ContactsContract.Contacts;
 public class ContactsCursorLoader extends CursorLoader {
 
     // Columns
-    public static String COLUMN_ID = Contacts._ID;
+    public static String COLUMN_ID = Phone.CONTACT_ID;
     public static String COLUMN_NAME = Contacts.DISPLAY_NAME_PRIMARY;
     public static String COLUMN_THUMBNAIL = Contacts.PHOTO_THUMBNAIL_URI;
     public static String COLUMN_NUMBER = Phone.NUMBER;
