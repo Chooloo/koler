@@ -9,9 +9,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
@@ -76,6 +78,15 @@ public class SettingsActivity extends AbsThemeActivity {
                 return true;
             };
 
+            Preference.OnPreferenceChangeListener excelEnableChangeListener = (preference, newValue) -> {
+                CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
+                checkBoxPreference.setSummary(checkBoxPreference.getSummary());
+
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                return true;
+            };
+
             Preference.OnPreferenceChangeListener listChangeListener = (preference, newValue) -> {
                 ListPreference listPreference = (ListPreference) preference;
                 CharSequence[] entries = listPreference.getEntries();
@@ -88,6 +99,13 @@ public class SettingsActivity extends AbsThemeActivity {
                 switchPreference.setSummary(switchPreference.getSummary());
                 return true;
             };
+
+            Preference.OnPreferenceChangeListener checkChangeListener = (preference, newValue) -> {
+                CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
+                checkBoxPreference.setSummary(checkBoxPreference.getSummary());
+                return true;
+            };
+
 
             // App Color
             ListPreference appColorPreference = (ListPreference) findPreference(getString(R.string.pref_app_color_key));
@@ -113,6 +131,10 @@ public class SettingsActivity extends AbsThemeActivity {
             ListPreference defaultPagePreference = (ListPreference) findPreference(getString(R.string.pref_default_page_key));
             defaultPagePreference.setOnPreferenceChangeListener(listChangeListener);
             defaultPagePreference.setSummary(defaultPagePreference.getEntry());
+
+            // Excel enable selection
+            CheckBoxPreference excelEnablePreference = (CheckBoxPreference) findPreference(getString(R.string.pref_excel_enable_key));
+            excelEnablePreference.setOnPreferenceChangeListener(excelEnableChangeListener);
 
 //            SwitchPreference isSilentPreference = (SwitchPreference) findPreference(getString(R.string.pref_is_silent_key));
 //            isSilentPreference.setOnPreferenceChangeListener(switchChangeListener);

@@ -75,6 +75,9 @@
     <string name="pref_default_page_title">Default page</string>
     <string name="pref_default_page_default_value">1</string>
 
+    <string name="pref_excel_enable_key">excel_enable</string>
+    <string name="pref_excel_enable_title">Enable excel tab</string>
+
     <string name="pref_is_silent_title">Silent</string>
 
     <string name="pref_is_no_vibrate_title">Vibrate?</string>

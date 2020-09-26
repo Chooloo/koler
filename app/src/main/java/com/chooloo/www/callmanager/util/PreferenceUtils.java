@@ -40,7 +40,8 @@ public class PreferenceUtils {
         mPref = PreferenceManager.getDefaultSharedPreferences(context);
         mContext = context;
 
-        sDefaultValues.put(R.string.pref_sim_select_key, context.getString(R.string.pref_sim_select_default_value));
+        sDefaultValues.put(R.string.pref_excel_enable_key, context.getResources().getBoolean(R.bool.pref_excel_enable_default_value));
+        sDefaultValues.put(R.string.pref_sim_select_key, getString(R.string.pref_sim_select_default_value));
         sDefaultValues.put(R.string.pref_app_color_key, context.getString(R.string.pref_app_color_default_value));
         sDefaultValues.put(R.string.pref_app_theme_key, context.getString(R.string.pref_app_theme_default_value));
         sDefaultValues.put(R.string.pref_reject_call_timer_key, context.getString(R.string.pref_reject_call_timer_default_value));
