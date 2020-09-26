@@ -51,7 +51,7 @@
 
     <string name="pref_app_color_key">app_color</string>
     <string name="pref_app_color_title">App Color</string>
-    <string name="pref_app_color_default_value">pink</string>
+    <string name="pref_app_color_default_value">blue</string>
 
     <string name="pref_category_call">Call</string>
     <string name="pref_category_pages">Pages</string>
