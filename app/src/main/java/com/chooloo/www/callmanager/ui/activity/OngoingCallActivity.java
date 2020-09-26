@@ -138,49 +138,81 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     NotificationManager mNotificationManager;
 
     // Edit Texts
-    @BindView(R.id.edit_sms) TextInputEditText mEditSms;
+    @BindView(R.id.edit_sms)
+    TextInputEditText mEditSms;
 
     // Text views
-    @BindView(R.id.text_status) TextView mStatusText;
-    @BindView(R.id.text_caller) TextView mCallerText;
-    @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
-    @BindView(R.id.text_answer_call_timer_desc) TextView mAnswerCallTimerText;
-    @BindView(R.id.text_action_time_left) TextView mActionTimeLeftText;
-    @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
-    @BindView(R.id.text_stopwatch) TextView mTimeText;
+    @BindView(R.id.text_status)
+    TextView mStatusText;
+    @BindView(R.id.text_caller)
+    TextView mCallerText;
+    @BindView(R.id.text_reject_call_timer_desc)
+    TextView mRejectCallTimerText;
+    @BindView(R.id.text_answer_call_timer_desc)
+    TextView mAnswerCallTimerText;
+    @BindView(R.id.text_action_time_left)
+    TextView mActionTimeLeftText;
+    @BindView(R.id.text_timer_indicator)
+    TextView mTimerIndicatorText;
+    @BindView(R.id.text_stopwatch)
+    TextView mTimeText;
 
     // Action buttons
-    @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
-    @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
+    @BindView(R.id.answer_btn)
+    FloatingActionButton mAnswerButton;
+    @BindView(R.id.reject_btn)
+    FloatingActionButton mRejectButton;
 
     // Image Views
-    @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
-    @BindView(R.id.image_photo) ImageView mPhotoImage;
-    @BindView(R.id.button_hold) ImageView mHoldButton;
-    @BindView(R.id.button_mute) ImageView mMuteButton;
-    @BindView(R.id.button_keypad) ImageView mKeypadButton;
-    @BindView(R.id.button_speaker) ImageView mSpeakerButton;
-    @BindView(R.id.button_add_call) ImageView mAddCallButton;
-    @BindView(R.id.button_send_sms) Button mSendSmsButton;
+    @BindView(R.id.image_placeholder)
+    ImageView mPlaceholderImage;
+    @BindView(R.id.image_photo)
+    ImageView mPhotoImage;
+    @BindView(R.id.button_hold)
+    ImageView mHoldButton;
+    @BindView(R.id.button_mute)
+    ImageView mMuteButton;
+    @BindView(R.id.button_keypad)
+    ImageView mKeypadButton;
+    @BindView(R.id.button_speaker)
+    ImageView mSpeakerButton;
+    @BindView(R.id.button_add_call)
+    ImageView mAddCallButton;
+    @BindView(R.id.button_send_sms)
+    Button mSendSmsButton;
 
     // Floating Action Buttons
-    @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
-    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
-    @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
-    @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
+    @BindView(R.id.button_floating_reject_call_timer)
+    FloatingActionButton mFloatingRejectCallTimerButton;
+    @BindView(R.id.button_floating_answer_call_timer)
+    FloatingActionButton mFloatingAnswerCallTimerButton;
+    @BindView(R.id.button_floating_send_sms)
+    FloatingActionButton mFloatingSendSMSButton;
+    @BindView(R.id.button_floating_cancel_overlay)
+    FloatingActionButton mFloatingCancelOverlayButton;
     @Nullable
-    @BindView(R.id.button_cancel_sms) FloatingActionButton mFloatingCancelSMS;
-    @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
+    @BindView(R.id.button_cancel_sms)
+    FloatingActionButton mFloatingCancelSMS;
+    @BindView(R.id.button_cancel_timer)
+    FloatingActionButton mFloatingCancelTimerButton;
 
     // Layouts and overlays
-    @BindView(R.id.frame) ViewGroup mRootView;
-    @BindView(R.id.dialer_fragment) View mDialerFrame;
-    @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
-    @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
-    @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
-    @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
-    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
-    @Nullable ViewGroup mCurrentOverlay = null;
+    @BindView(R.id.frame)
+    ViewGroup mRootView;
+    @BindView(R.id.dialer_fragment)
+    View mDialerFrame;
+    @BindView(R.id.ongoing_call_layout)
+    ConstraintLayout mOngoingCallLayout;
+    @BindView(R.id.overlay_reject_call_options)
+    ViewGroup mRejectCallOverlay;
+    @BindView(R.id.overlay_answer_call_options)
+    ViewGroup mAnswerCallOverlay;
+    @BindView(R.id.overlay_action_timer)
+    ViewGroup mActionTimerOverlay;
+    @BindView(R.id.overlay_send_sms)
+    ViewGroup mSendSmsOverlay;
+    @Nullable
+    ViewGroup mCurrentOverlay = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,8 +262,9 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+        mAudioManager.setMode(AudioManager.MODE_IN_CALL);
 
-
+        // Click listeners
         View.OnClickListener rejectListener = v -> endCall();
         View.OnClickListener answerListener = v -> activateCall();
         LongClickOptionsListener.OverlayChangeListener overlayChangeListener = new LongClickOptionsListener.OverlayChangeListener() {
