@@ -81,4 +81,16 @@
         <item name="android:layout_width">wrap_content</item>
     </style>
 
+    <!-- Call Button -->
+    <style name="CallButton">
+        <item name="android:layout_width">@dimen/flat_button_size</item>
+        <item name="android:layout_height">@dimen/flat_button_size</item>
+        <item name="android:background">@drawable/ripple_oval</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:padding">@dimen/flat_button_padding</item>
+        <item name="android:tint">@color/selector_button_icon</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
 </resources>
