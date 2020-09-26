@@ -134,6 +134,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     AllPurposeTouchListener mIncomingCallSwipeListener;
 
     // Notification
+    private boolean mNotificationEnabled = false;
     NotificationCompat.Builder mBuilder;
     NotificationManager mNotificationManager;
 
@@ -616,12 +617,14 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         if (state == Call.STATE_DISCONNECTED) endCall();
         mState = state;
         mStateText = getResources().getString(statusTextRes);
-        mBuilder.setContentText(mStateText);
 
-        try {
-            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-        } catch (NullPointerException e) {
-            // Notifications not supported by the device's android version
+        if (mNotificationEnabled) {
+            try {
+                mBuilder.setContentText(mStateText);
+                mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+            } catch (NullPointerException e) {
+                // Notifications not supported by the device's android version
+            }
         }
     }
 
@@ -940,6 +943,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     private void createNotification() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mNotificationEnabled = true;
             Contact callerContact = CallManager.getDisplayContact(this);
             String callerName = callerContact.getName();
 
