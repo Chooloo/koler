@@ -255,6 +255,13 @@ public class MainActivity extends AbsSearchBarActivity {
 
     @Override
     public void onBackPressed() {
+        int bottomSheetState = mBottomSheetBehavior.getState();
+        boolean isBottomSheetOpen = bottomSheetState != BottomSheetBehavior.STATE_HIDDEN && bottomSheetState != BottomSheetBehavior.STATE_COLLAPSED;
+        if (isBottomSheetOpen) {
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            return;
+        }
+
         super.onBackPressed();
         syncFABAndFragment();
     }
@@ -312,9 +319,9 @@ public class MainActivity extends AbsSearchBarActivity {
      */
     public void expandDialer(boolean isExpand) {
         if (isExpand) {
-            BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_EXPANDED);
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
-            BottomSheetBehavior.from(mDialerView).setState(BottomSheetBehavior.STATE_COLLAPSED);
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 
