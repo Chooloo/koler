@@ -44,7 +44,6 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.service.RecordService;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
@@ -71,8 +70,6 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
-import static com.chooloo.www.callmanager.service.RecordService.RECORD_SERVICE_START;
-import static com.chooloo.www.callmanager.service.RecordService.RECORD_SERVICE_STOP;
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 @SuppressLint("ClickableViewAccessibility")
@@ -121,7 +118,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     // PowerManager
     PowerManager powerManager;
     PowerManager.WakeLock wakeLock;
-    private int field = 0x00000020;
 
     // Audio
     AudioManager mAudioManager;
@@ -252,14 +248,15 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         setDialpadFragment(); // set a new dialpad fragment
 
         // Initiate PowerManager and WakeLock (turn screen on/off according to distance from face)
+        int field = 0x00000020;
         try {
             field = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
-            powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-            wakeLock = powerManager.newWakeLock(field, getLocalClassName());
         } catch (NoSuchFieldException | NullPointerException | IllegalAccessException e) {
             e.printStackTrace();
             Toast.makeText(this, "Can't use ear sensor for some reason :(", Toast.LENGTH_SHORT).show();
         }
+        powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(field, getLocalClassName());
 
         // Audio Manager
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);

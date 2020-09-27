@@ -13,28 +13,24 @@ import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 
-//TODO add more settings
 //TODO add icons
 public class SettingsActivity extends AbsThemeActivity {
 
     private static final String TAG_FRAGMENT = "fragment";
-
-    private Fragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +38,12 @@ public class SettingsActivity extends AbsThemeActivity {
         setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_settings);
 
-        mFragment = new SettingsFragment();
+        Fragment fragment = new SettingsFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment, mFragment, TAG_FRAGMENT)
+                .replace(R.id.fragment, fragment, TAG_FRAGMENT)
                 .commit();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -99,13 +94,6 @@ public class SettingsActivity extends AbsThemeActivity {
                 switchPreference.setSummary(switchPreference.getSummary());
                 return true;
             };
-
-            Preference.OnPreferenceChangeListener checkChangeListener = (preference, newValue) -> {
-                CheckBoxPreference checkBoxPreference = (CheckBoxPreference) preference;
-                checkBoxPreference.setSummary(checkBoxPreference.getSummary());
-                return true;
-            };
-
 
             // App Color
             ListPreference appColorPreference = (ListPreference) findPreference(getString(R.string.pref_app_color_key));

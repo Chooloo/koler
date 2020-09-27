@@ -52,16 +52,16 @@ public class ContactsCursorLoader extends CursorLoader {
     /**
      * Constructor
      *
-     * @param context
-     * @param phoneNumber String
-     * @param contactName String
+     * @param context     Context
+     * @param phoneNumber contact's number
+     * @param contactName contect's name
      */
     public ContactsCursorLoader(Context context, String phoneNumber, String contactName) {
         super(
                 context,
                 buildUri(phoneNumber, contactName),
                 CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY,
-                getWhere(context),
+                getWhere(),
                 null,
                 CONTACTS_ORDER);
     }
@@ -70,10 +70,9 @@ public class ContactsCursorLoader extends CursorLoader {
     /**
      * Get a filter string
      *
-     * @param context
-     * @return String
+     * @return String The selection string
      */
-    private static String getWhere(Context context) {
+    private static String getWhere() {
         return "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
                 " OR " + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" + ")" +
                 " AND " + Phone.HAS_PHONE_NUMBER + "=1" +
@@ -86,8 +85,8 @@ public class ContactsCursorLoader extends CursorLoader {
     /**
      * Builds contact uri by given name and phone number
      *
-     * @param phoneNumber
-     * @param contactName
+     * @param phoneNumber contact's number
+     * @param contactName contact's name
      * @return Builder.build()
      */
     private static Uri buildUri(String phoneNumber, String contactName) {

@@ -49,7 +49,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
-import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionsGranted;
 
 public class MainActivity extends AbsSearchBarActivity {
 
@@ -82,20 +81,28 @@ public class MainActivity extends AbsSearchBarActivity {
     // - View Binds - //
 
     // Views
-    @BindView(R.id.appbar) View mAppBar;
-    @BindView(R.id.dialer_fragment) View mDialerView;
+    @BindView(R.id.appbar)
+    View mAppBar;
+    @BindView(R.id.dialer_fragment)
+    View mDialerView;
 
     // Layouts
-    @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
+    @BindView(R.id.root_view)
+    CoordinatorLayout mMainLayout;
 
     // Buttons
-    @BindView(R.id.right_button) FloatingActionButton mRightButton;
-    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
-    @BindView(R.id.add_contact_fab_button) FloatingActionButton mAddContactButton;
+    @BindView(R.id.right_button)
+    FloatingActionButton mRightButton;
+    @BindView(R.id.left_button)
+    FloatingActionButton mLeftButton;
+    @BindView(R.id.add_contact_fab_button)
+    FloatingActionButton mAddContactButton;
 
     // Other
-    @BindView(R.id.view_pager) ViewPager mViewPager;
-    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.view_pager_tab)
+    SmartTabLayout mSmartTabLayout;
 
     // -- Overrides -- //
 
