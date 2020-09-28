@@ -63,4 +63,4 @@ Great for people who call a lot of people one by one
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
  
 ## Support
-<a href="https://paypal.me/chooloome?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
+<a href="https://paypal.me/theroeiedri?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
