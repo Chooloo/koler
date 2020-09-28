@@ -14,6 +14,8 @@ import com.chooloo.www.callmanager.util.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 
+import timber.log.Timber;
+
 import static android.Manifest.permission.READ_CONTACTS;
 import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionGranted;
 
@@ -24,6 +26,8 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
 
     public static final String FAVORITES_COUNT = "favorites_count";
 
+    private boolean mWithFavs = true;
+
     /**
      * Constructor
      *
@@ -31,21 +35,29 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
      * @param phoneNumber String
      * @param contactName String
      */
-    public FavoritesAndContactsLoader(Context context, String phoneNumber, String contactName) {
+    public FavoritesAndContactsLoader(Context context, String phoneNumber, String contactName, boolean withFavs) {
         super(context, phoneNumber, contactName);
+        Timber.i("Creating contacts loader with " + phoneNumber + " : " + contactName);
+        if (phoneNumber == "") Timber.i("AHAHAHAHAH");
+        this.mWithFavs = withFavs;
     }
 
     @Override
     public Cursor loadInBackground() {
-        List<Cursor> cursors = new ArrayList<>();
-        // get cursors
-        final Cursor favoritesCursor = loadFavorites();
+        // get only contacts
         final Cursor contactsCursor = loadContacts();
-        // set favorites count
+
+        if (!mWithFavs) return contactsCursor;
+
+        // Handle favourites too
+        List<Cursor> cursors = new ArrayList<>();
+        final Cursor favoritesCursor = loadFavorites();
         final int favoritesCount = favoritesCursor == null ? 0 : favoritesCursor.getCount();
-        // add cursors to array
+
+        // add the cursors
         cursors.add(favoritesCursor);
         cursors.add(contactsCursor);
+
         // merge cursors
         return new MergeCursor(cursors.toArray(new Cursor[0])) {
             @Override

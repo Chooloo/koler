@@ -47,6 +47,7 @@ import java.net.URLDecoder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 

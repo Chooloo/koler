@@ -17,7 +17,7 @@
 package com.chooloo.www.callmanager.cursorloader;
 
 import android.content.Context;
-    import android.provider.CallLog.Calls;
+import android.provider.CallLog.Calls;
 
 import androidx.loader.content.CursorLoader;
 

@@ -9,7 +9,7 @@ import butterknife.BindView;
 
 public abstract class AbsRecyclerViewFragment extends AbsBaseFragment {
 
-    @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view) public RecyclerView mRecyclerView;
 
     @Override
     public void onResume() {

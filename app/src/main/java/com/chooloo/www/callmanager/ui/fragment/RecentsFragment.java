@@ -37,6 +37,8 @@ import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
+import timber.log.Timber;
+
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -72,6 +74,7 @@ public class RecentsFragment extends AbsCursorFragment implements
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
         String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
+
         return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
     }
 
@@ -181,7 +184,7 @@ public class RecentsFragment extends AbsCursorFragment implements
             if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CALL_LOG) == PERMISSION_GRANTED) {
                 String queryString = "_ID=" + recentCall.getCallId();
                 getActivity().getContentResolver().delete(CallLog.Calls.CONTENT_URI, queryString, null);
-                tryRunningLoader();
+                load(null, null);
                 Toast.makeText(mContext, "Call log deleted", Toast.LENGTH_SHORT).show();
                 contactDialog.dismiss();
             } else {

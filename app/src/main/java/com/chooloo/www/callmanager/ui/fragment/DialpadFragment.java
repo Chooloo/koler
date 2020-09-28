@@ -76,15 +76,20 @@ public class DialpadFragment extends AbsBaseFragment {
     private final HashSet<View> mPressedDialpadKeys = new HashSet<View>(12);
 
     // Edit Texts
-    @BindView(R.id.digits_edit_text) DigitsEditText mDigits;
+    @BindView(R.id.digits_edit_text)
+    DigitsEditText mDigits;
 
     // Buttons
-    @BindView(R.id.button_call) ImageView mCallButton;
-    @BindView(R.id.button_delete) ImageView mDelButton;
+    @BindView(R.id.button_call)
+    ImageView mCallButton;
+    @BindView(R.id.button_delete)
+    ImageView mDelButton;
 
     // Layouts
-    @BindView(R.id.dialpad) TableLayout mNumbersTable;
-    @BindView(R.id.dialpad_view) DialpadView mDialpadView;
+    @BindView(R.id.dialpad)
+    TableLayout mNumbersTable;
+    @BindView(R.id.dialpad_view)
+    DialpadView mDialpadView;
 
     public static DialpadFragment newInstance(boolean isDialer) {
         Bundle args = new Bundle();
@@ -143,9 +148,7 @@ public class DialpadFragment extends AbsBaseFragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mSharedIntentViewModel = ViewModelProviders.of(getActivity()).get(SharedIntentViewModel.class);
-        mSharedIntentViewModel.getData().observe(this, d -> {
-            setNumber(d);
-        });
+        mSharedIntentViewModel.getData().observe(this, d -> setNumber(d));
 
         // Formats the phone number text in realtime
         mPhoneNumberFormattingTextWatcher = new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry());
@@ -158,7 +161,9 @@ public class DialpadFragment extends AbsBaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mViewModel.setNumber(mDigits.getText().toString());
+//                Toast.makeText(getContext(), "Changed number to  " + mDigits.getText().toString(), Toast.LENGTH_SHORT).show();
+                if (s == "") mViewModel.setNumber(null);
+                else mViewModel.setNumber(mDigits.getText().toString());
             }
 
             @Override

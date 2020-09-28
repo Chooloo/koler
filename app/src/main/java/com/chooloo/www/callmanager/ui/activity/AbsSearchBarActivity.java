@@ -22,7 +22,8 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
     SharedSearchViewModel mSharedSearchViewModel;
     SearchBarFragment mSearchBarFragment;
 
-    @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
+    @BindView(R.id.search_bar_container)
+    FrameLayout mSearchBarContainer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,8 +36,11 @@ public abstract class AbsSearchBarActivity extends AbsAppBarActivity {
         // set search view model
         mSharedSearchViewModel = ViewModelProviders.of(this).get(SharedSearchViewModel.class);
         mSharedSearchViewModel.getIsFocused().observe(this, f -> {
-            if (!f && mSharedSearchViewModel.getText().getValue().length() == 0) {
-                toggleSearchBar(false);
+            String liveText = mSharedSearchViewModel.getText().getValue() == null ? "" : mSharedSearchViewModel.getText().getValue();
+            if (liveText != null) {
+                if (!f && liveText.length() == 0) {
+                    toggleSearchBar(false);
+                }
             }
         });
     }

@@ -109,7 +109,12 @@ public class ContactsFragment extends AbsCursorFragment implements
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
         String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
-        return new FavoritesAndContactsLoader(mContext, phoneNumber, contactName);
+
+        boolean withFavs = false;
+        if ((contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty()))
+            withFavs = true;
+
+        return new FavoritesAndContactsLoader(mContext, phoneNumber, contactName, withFavs);
     }
 
     @Override

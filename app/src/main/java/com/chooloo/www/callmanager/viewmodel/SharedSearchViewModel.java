@@ -15,7 +15,7 @@ public class SharedSearchViewModel extends AndroidViewModel {
     public SharedSearchViewModel(@NonNull Application application) {
         super(application);
         mText = new MutableLiveData<>();
-        mText.setValue("");
+        mText.setValue(null);
 
         mIsFocused = new MutableLiveData<>();
         mIsFocused.setValue(false);
@@ -25,11 +25,13 @@ public class SharedSearchViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getText() {
+        if (mText.getValue() == "") mText.setValue(null);
         return mText;
     }
 
     public void setText(String text) {
-        mText.setValue(text);
+        if (text == "") mText.setValue(null);
+        else mText.setValue(text);
     }
 
     public MutableLiveData<Boolean> getIsFocused() {

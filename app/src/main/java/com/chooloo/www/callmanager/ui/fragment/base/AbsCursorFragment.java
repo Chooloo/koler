@@ -26,8 +26,11 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 
+import java.util.Optional;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Made by Chooloo
@@ -57,21 +60,26 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     protected static final String ARG_CONTACT_NAME = "contact_name";
 
     // Bind Views
-    @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
-    @BindView(R.id.refresh_layout) SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.enable_permission_btn) Button mEnablePermissionButton;
-    @BindView(R.id.item_header) protected TextView mAnchoredHeader;
-    @BindView(R.id.empty_state) protected View mEmptyState;
-    @BindView(R.id.empty_title) protected TextView mEmptyTitle;
-    @BindView(R.id.empty_desc) protected TextView mEmptyDesc;
+    @BindView(R.id.fast_scroller)
+    protected FastScroller mFastScroller;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.enable_permission_btn)
+    Button mEnablePermissionButton;
+    @BindView(R.id.item_header)
+    protected TextView mAnchoredHeader;
+    @BindView(R.id.empty_state)
+    protected View mEmptyState;
+    @BindView(R.id.empty_title)
+    protected TextView mEmptyTitle;
+    @BindView(R.id.empty_desc)
+    protected TextView mEmptyDesc;
 
     // Variables
     protected Context mContext;
     protected AbsFastScrollerAdapter mAdapter;
     protected LinearLayoutManager mLayoutManager;
     protected String[] mRequiredPermissions;
-    private SharedDialViewModel mSharedDialViewModel;
-    private SharedSearchViewModel mSharedSearchViewModel;
 
     protected AbsCursorFragment(Context context) {
         mContext = context;
@@ -79,26 +87,6 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
 
     @Override
     protected void onFragmentReady() {
-
-        // dialer View Model
-        mSharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        mSharedDialViewModel.getNumber().observe(this, s -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_PHONE_NUMBER, s);
-                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
-            }
-        });
-
-        // search Bar View Model
-        mSharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
-        mSharedSearchViewModel.getText().observe(this, t -> {
-            if (isLoaderRunning()) {
-                Bundle args = new Bundle();
-                args.putString(ARG_CONTACT_NAME, t);
-                LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
-            }
-        });
 
         // layout manger
         mLayoutManager =
@@ -119,35 +107,15 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         // recycle view
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        mSharedDialViewModel.setIsOutOfFocus(false);
-                        break;
-                    case RecyclerView.SCROLL_STATE_DRAGGING:
-                        mSharedDialViewModel.setIsOutOfFocus(true);
-                        mSharedSearchViewModel.setIsFocused(false);
-                        break;
-                    case RecyclerView.SCROLL_STATE_SETTLING:
-                        mSharedDialViewModel.setIsOutOfFocus(true);
-                        mSharedSearchViewModel.setIsFocused(false);
-                    default:
-                        mSharedDialViewModel.setIsOutOfFocus(false);
-                }
-            }
-        });
 
         // refresh layout
         mRefreshLayout.setOnRefreshListener(() -> {
             LoaderManager.getInstance(AbsCursorFragment.this).restartLoader(LOADER_ID, null, AbsCursorFragment.this);
-            tryRunningLoader();
+            load(null, null);
         });
 
         togglePermissionButton();
-        tryRunningLoader();
+        load(null, null);
     }
 
     @Override
@@ -174,7 +142,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         togglePermissionButton();
-        tryRunningLoader();
+        load(null, null);
     }
 
     @Nullable
@@ -194,17 +162,27 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
 
     /**
      * Run loader but first check if possible
+     *
+     * @param phoneNumber number filter
+     * @param contactName name filter
      */
-    protected void tryRunningLoader() {
-        if (!isLoaderRunning() && PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false))
-            runLoader();
+    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
+        if (PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
+            runLoader(phoneNumber, contactName);
+        }
     }
 
     /**
      * Run loader without considering anything
+     *
+     * @param phoneNumber number filter
+     * @param contactName name filter
      */
-    private void runLoader() {
-        LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
+    private void runLoader(@Nullable String phoneNumber, @Nullable String contactName) {
+        Bundle args = new Bundle();
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        args.putString(ARG_CONTACT_NAME, contactName);
+        LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
     }
 
     /**
@@ -213,7 +191,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
      *
      * @return boolean is loader running or not
      */
-    private boolean isLoaderRunning() {
+    protected boolean isLoaderRunning() {
         return LoaderManager.getInstance(this).getLoader(LOADER_ID) != null;
     }
 

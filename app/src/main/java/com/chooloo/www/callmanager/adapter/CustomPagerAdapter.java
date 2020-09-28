@@ -84,11 +84,16 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         try {
             return (Fragment) mClasses.get(position).getDeclaredConstructor(new Class[]{Context.class}).newInstance(mContext);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
         } catch (InstantiationException e) {
+            e.printStackTrace();
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
         return null;
     }

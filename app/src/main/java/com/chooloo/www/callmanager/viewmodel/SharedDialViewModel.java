@@ -15,7 +15,7 @@ public class SharedDialViewModel extends AndroidViewModel {
     public SharedDialViewModel(@NonNull Application application) {
         super(application);
         mNumber = new MutableLiveData<>();
-        mNumber.setValue("");
+        mNumber.setValue(null);
 
         mIsOutOfFocus = new MutableLiveData<>();
         mIsOutOfFocus.setValue(false);
@@ -25,11 +25,13 @@ public class SharedDialViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getNumber() {
+        if (mNumber.getValue() == "") mNumber.setValue(null);
         return mNumber;
     }
 
     public void setNumber(String number) {
-        mNumber.setValue(number);
+        if (number == "") mNumber.setValue(null);
+        else mNumber.setValue(number);
     }
 
     public MutableLiveData<Boolean> getIsOutOfFocus() {
