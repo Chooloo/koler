@@ -20,6 +20,7 @@
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <item name="iconColor">@color/icon_active_light</item>
         <item name="secondaryAccentColor">?attr/colorAccent</item>
