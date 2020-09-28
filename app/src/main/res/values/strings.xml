@@ -20,7 +20,9 @@
     <string name="support_email">choolookulu@gmail.com</string>
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
-    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+    <string name="donation_link">
+        https://github.com/Chooloo/call_manage/blob/master/README.md#support
+    </string>
 
     <!-- Info -->
     <string name="hold_for_actions">Hold Buttons For More Actions</string>
@@ -110,7 +112,9 @@
     <string name="please_enter_a_number">Please enter a number first</string>
 
     <!--Dialog-->
-    <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\' fields are in:</string>
+    <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\'
+        fields are in:
+    </string>
     <string name="dialog_long_click_cgroup_title">What would you like to do?</string>
     <string name="dialog_changelog_title">Changelog</string>
 
@@ -143,12 +147,15 @@
     <string name="about_support_title">Support</string>
 
     <string name="about_bugs_title">Report Bugs</string>
-    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page.</string>
+    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page.
+    </string>
 
     <string name="about_rate_title">Rate</string>
     <string name="about_rate_desc">If you like the app, leave a positive feedback.</string>
 
-    <string name="about_donate_desc">If you think we deserve to get paid for our work, leave a few dollars here.</string>
+    <string name="about_donate_desc">If you think we deserve to get paid for our work, leave a few
+        dollars here.
+    </string>
     <string name="about_donate_title">Donate</string>
 
     <!--Other-->
@@ -170,6 +177,7 @@
     <string name="dialpad_star_number">*</string>
     <string name="dialpad_pound_number">#</string>
 
+    <!-- The small letters under the numbers -->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_1_letters">Voicmail</string>
     <string name="dialpad_2_letters">ABC</string>

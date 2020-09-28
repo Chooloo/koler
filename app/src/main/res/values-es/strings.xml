@@ -78,6 +78,9 @@
     <string name="pref_default_page_title">Página predeterminada</string>
     <string name="pref_default_page_default_value">1</string>
 
+    <string name="pref_excel_enable_key">excel_enable</string>
+    <string name="pref_excel_enable_title">Habilitar la pestaña de Excel</string>
+
     <string name="pref_is_silent_title">Silenciar</string>
 
     <string name="pref_is_no_vibrate_title">¿Vibrar?</string>
@@ -115,6 +118,8 @@
     <string name="dialog_changelog_title">Lista de cambios</string>
 
     <!--Empty-->
+    <string name="no_matches_to_search">No hay coincidencias de búsqueda</string>
+
     <string name="empty_cgroups_title">No hay nada aquí... por ahora</string>
     <string name="empty_cgroups_desc">Puedes probar algo que añadir</string>
 
@@ -197,6 +202,7 @@
     <string name="action_hangup">Hang Up</string>
 
     <!-- Buttons -->
+    <string name="enable_permission">Habilitar permiso</string>
     <string name="button_enable_contact_permission">Activar permiso de contactos</string>
     <string name="button_enable_recents_permission">Activar permiso de llamadas</string>
 </resources>
