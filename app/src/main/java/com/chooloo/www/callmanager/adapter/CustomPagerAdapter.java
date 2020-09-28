@@ -13,7 +13,9 @@ import androidx.preference.PreferenceManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.fragment.CGroupsFragment;
 import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
+import com.chooloo.www.callmanager.ui.fragment.ContactsPageFragment;
 import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
+import com.chooloo.www.callmanager.ui.fragment.RecentsPageFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,7 +30,7 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     // -- Constants -- //
     private Context mContext;
 
-    private List<Class> mClasses = new ArrayList<>(Arrays.asList(RecentsFragment.class, ContactsFragment.class, CGroupsFragment.class));
+    private List<Class> mClasses = new ArrayList<>(Arrays.asList(RecentsPageFragment.class, ContactsPageFragment.class, CGroupsFragment.class));
     private List<String> mTitles = new ArrayList<>(Arrays.asList("Recents", "Contacts", "Excel"));
 
     /**
@@ -83,21 +85,12 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
         try {
             return (Fragment) mClasses.get(position).getDeclaredConstructor(new Class[]{Context.class}).newInstance(mContext);
         } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
         } catch (InstantiationException e) {
         } catch (InvocationTargetException e) {
         }
         return null;
-//        switch (position) {
-//            case 0:
-//                return new RecentsFragment(mContext);
-//            case 1:
-//                return new ContactsFragment(mContext);
-//            case 2:
-//                return new CGroupsFragment();
-//            default:
-//                return null;
-//        }
     }
 
     /**

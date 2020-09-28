@@ -45,8 +45,6 @@ import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class ContactsFragment extends AbsCursorFragment implements
-        FABCoordinator.FABDrawableCoordination,
-        FABCoordinator.OnFABClickListener,
         OnItemClickListener,
         OnItemLongClickListener {
 
@@ -122,24 +120,6 @@ public class ContactsFragment extends AbsCursorFragment implements
 
     @Override
     public void onItemLongClick(RecyclerView.ViewHolder holder, Object data) {
-    }
-
-    @Override
-    public void onRightClick() {
-        ((MainActivity) getActivity()).expandDialer(true);
-    }
-
-    @Override
-    public void onLeftClick() {
-        ((MainActivity) getActivity()).toggleSearchBar();
-    }
-
-    @Override
-    public int[] getIconsResources() {
-        return new int[]{
-                R.drawable.ic_dialpad_black_24dp,
-                R.drawable.ic_search_black_24dp
-        };
     }
 
     private ListItemHolder getContactHolder(int position) {
