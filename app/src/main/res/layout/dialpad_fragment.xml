@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="?attr/colorPrimary"
     android:orientation="vertical"
     tools:context=".ui.fragment.DialpadFragment">
 
@@ -16,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/shadow_length"
         android:alpha="0.04"
-        android:background="@drawable/shadow_fade_up"
-        android:backgroundTint="@android:color/transparent" />
+        android:background="@drawable/shadow_fade_up" />
 
     <!-- Number Input Field -->
     <LinearLayout
@@ -25,7 +23,8 @@
         android:layout_height="@dimen/phone_number_input_height"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
-        android:paddingEnd="@dimen/top_dialpad_side_padding">
+        android:paddingEnd="@dimen/top_dialpad_side_padding"
+        android:background="?attr/colorPrimary">
 
         <!-- Call Button -->
         <ImageView
