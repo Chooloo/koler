@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="ltr"
-    android:stretchColumns="*">
+    android:stretchColumns="*"
+    android:background="?attr/colorPrimary">
 
     <TableRow
         android:layout_width="match_parent"
