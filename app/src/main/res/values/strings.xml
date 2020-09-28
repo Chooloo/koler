@@ -180,8 +180,8 @@
     <string name="dialpad_7_letters">PQRS</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters"></string>
-    <string name="dialpad_pound_letters"></string>
+    <string name="dialpad_star_letters">*</string>
+    <string name="dialpad_pound_letters">#</string>
 
     <!-- Dialogs -->
     <string name="fingerprint_title">Biometric login</string>
