@@ -54,6 +54,7 @@ dependencies {
 
     //Room
     implementation "androidx.room:room-runtime:2.1.0"
+    implementation 'androidx.wear:wear:1.0.0'
     annotationProcessor "androidx.room:room-compiler:2.1.0"
     testImplementation "androidx.room:room-testing:2.1.0"
 
@@ -106,4 +107,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'org.mockito:mockito-android:2.24.0'
     androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
+    compileOnly 'com.google.android.wearable:wearable:2.5.0'
 }
