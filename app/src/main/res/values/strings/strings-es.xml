@@ -150,6 +150,7 @@
     <string name="dialpad_star_number">*</string>
     <string name="dialpad_pound_number">#</string>
 
+    <!-- The small letters under the numbers -->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_1_letters">Voicmail</string>
     <string name="dialpad_2_letters">ABC</string>

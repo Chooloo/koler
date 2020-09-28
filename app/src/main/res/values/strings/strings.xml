@@ -1,9 +1,31 @@
 <resources>
+    <!-- Arrays -->
+    <string name="contacts">Contacts</string>
+    <string name="recents">Recents</string>
+    <string name="excel">Excel</string>
+
+    <!-- Colors -->
+    <string name="color_blue">Blue</string>
+    <string name="color_pink">Pinkish</string>
+    <string name="color_green">Greenish</string>
+    <string name="color_cream">Creamish</string>
+
+    <!-- Themes -->
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_amoled">AMOLED</string>
+    <string name="theme_auto">System Default</string>
+
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
-    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+    <string name="donation_link">
+        https://github.com/Chooloo/call_manage/blob/master/README.md#support
+    </string>
+
+    <!-- Info -->
+    <string name="hold_for_actions">Hold Buttons For More Actions</string>
 
     <!--Activities-->
     <string name="activity_ongoing_call">Ongoing Call</string>
@@ -24,9 +46,14 @@
 
     <!--Preferences-->
     <string name="pref_category_look_and_feel">Look and Feel</string>
+
     <string name="pref_app_theme_key">app_theme</string>
     <string name="pref_app_theme_title">App Theme</string>
-    <string name="pref_app_theme_default_value">light;pink</string>
+    <string name="pref_app_theme_default_value">light</string>
+
+    <string name="pref_app_color_key">app_color</string>
+    <string name="pref_app_color_title">App Color</string>
+    <string name="pref_app_color_default_value">blue</string>
 
     <string name="pref_category_call">Call</string>
     <string name="pref_category_pages">Pages</string>
@@ -50,6 +77,9 @@
     <string name="pref_default_page_title">Default page</string>
     <string name="pref_default_page_default_value">1</string>
 
+    <string name="pref_excel_enable_key">excel_enable</string>
+    <string name="pref_excel_enable_title">Enable excel tab</string>
+
     <string name="pref_is_silent_title">Silent</string>
 
     <string name="pref_is_no_vibrate_title">Vibrate?</string>
@@ -59,7 +89,8 @@
 
     <string name="pref_is_biometric_key">is_biometric</string>
     <string name="pref_is_biometric_title">Use Biometrics</string>
-    <!--Arguments-->
+
+    <string name="pref_system_entry_value">system</string>
 
     <!--Call State-->
     <string name="status_call_disconnected">Call ended</string>
@@ -81,16 +112,26 @@
     <string name="please_enter_a_number">Please enter a number first</string>
 
     <!--Dialog-->
-    <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\' fields are in:</string>
+    <string name="dialog_columns_info">Enter the columns\' indices where the following contacts\'
+        fields are in:
+    </string>
     <string name="dialog_long_click_cgroup_title">What would you like to do?</string>
     <string name="dialog_changelog_title">Changelog</string>
 
     <!--Empty-->
+    <string name="no_matches_to_search">No search matches</string>
+
     <string name="empty_cgroups_title">Nothing here… yet</string>
     <string name="empty_cgroups_desc">You can try to add something</string>
 
     <string name="empty_contact_title">No contact matching search query found</string>
     <string name="empty_contact_desc" />
+
+    <string name="empty_contact_persmission_title">No contacts permissions</string>
+    <string name="empty_contact_persmission_desc">Enable permission to access contacts</string>
+
+    <string name="empty_recents_persmission_title">No Recents permissions</string>
+    <string name="empty_recents_persmission_desc">Enable call log to access recents</string>
 
     <string name="empty_recents_title">No recent calls</string>
     <string name="empty_recents_desc" />
@@ -106,12 +147,15 @@
     <string name="about_support_title">Support</string>
 
     <string name="about_bugs_title">Report Bugs</string>
-    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page.</string>
+    <string name="about_bugs_desc">Report any issues or request new features on our GitHub page.
+    </string>
 
     <string name="about_rate_title">Rate</string>
     <string name="about_rate_desc">If you like the app, leave a positive feedback.</string>
 
-    <string name="about_donate_desc">If you think we deserve to get paid for our work, leave a few dollars here.</string>
+    <string name="about_donate_desc">If you think we deserve to get paid for our work, leave a few
+        dollars here.
+    </string>
     <string name="about_donate_title">Donate</string>
 
     <!--Other-->
@@ -133,6 +177,7 @@
     <string name="dialpad_star_number">*</string>
     <string name="dialpad_pound_number">#</string>
 
+    <!-- The small letters under the numbers -->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_1_letters">Voicmail</string>
     <string name="dialpad_2_letters">ABC</string>
@@ -161,6 +206,8 @@
     <string name="action_hangup">Hang Up</string>
 
     <!-- Buttons -->
+    <string name="enable_permission">Enable Permission</string>
     <string name="button_enable_contact_permission">Enable contacts</string>
+    <string name="button_enable_recents_permission">Enable Call Log</string>
 
 </resources>

@@ -7,12 +7,12 @@
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
 
-    
+
     <string name="activity_ongoing_call">Текущий звонок</string>
     <string name="activity_settings">настройки</string>
     <string name="activity_about">Около</string>
 
-    
+
     <string name="action_add_contact">Добавить контакт</string>
     <string name="action_settings">настройки</string>
     <string name="action_cancel">Отмена</string>
@@ -23,7 +23,7 @@
     <string name="action_edit">редактировать</string>
     <string name="action_about">Около</string>
     <string name="action_feature_request">Запрос функции</string>
-    
+
     <string name="pref_category_look_and_feel">Смотри и чувствуй</string>
     <string name="pref_app_theme_key">app_theme</string>
     <string name="pref_app_theme_title">Тема приложения</string>
@@ -60,33 +60,33 @@
 
     <string name="pref_is_biometric_key">is_biometric</string>
     <string name="pref_is_biometric_title">Используйте биометрию</string>
-    
 
-    
+
+
     <string name="status_call_disconnected">Звонок окончен</string>
     <string name="status_call_incoming">Звонит</string>
     <string name="status_call_active">Звонок в процессе</string>
     <string name="status_call_dialing">Набор номера ...</string>
     <string name="status_call_holding">Call On Hold</string>
 
-    
+
     <string name="hint_path">Путь</string>
     <string name="hint_name">имя</string>
     <string name="hint_name_column">Имя столбца</string>
     <string name="hint_number_column">Номер столбца</string>
     <string name="hint_sms_message">Сообщение</string>
 
-    
+
     <string name="error_name">Должно быть непустой строкой</string>
     <string name="error_column_index">Должно быть допустимым целым числом</string>
     <string name="please_enter_a_number">Пожалуйста, сначала введите номер</string>
 
-    
+
     <string name="dialog_columns_info">Введите индексы столбцов, в которых находятся следующие поля контактов:</string>
     <string name="dialog_long_click_cgroup_title">Чем бы Вы хотели заняться?</string>
     <string name="dialog_changelog_title">Изменения</string>
 
-    
+
     <string name="empty_cgroups_title">Здесь ничего нет ... пока</string>
     <string name="empty_cgroups_desc">Вы можете попробовать что-то добавить</string>
 
@@ -96,7 +96,7 @@
     <string name="empty_recents_title">Нет недавних звонков</string>
     <string name="empty_recents_desc" />
 
-    
+
     <string name="about_version_title">Версия</string>
     <string name="about_changelog_title">Изменения</string>
     <string name="about_source_title">Github Source</string>
@@ -115,12 +115,12 @@
     <string name="about_donate_desc">Если вы считаете, что мы заслуживаем оплаты за нашу работу, оставьте здесь несколько долларов.</string>
     <string name="about_donate_title">жертвовать</string>
 
-    
+
     <string name="reject_timer_indicator">Звонок заканчивается</string>
     <string name="answer_timer_indicator">Отвечая в</string>
     <string name="button_send">послать</string>
 
-    
+
     <string name="dialpad_0_number">0</string>
     <string name="dialpad_1_number">1</string>
     <string name="dialpad_2_number">2</string>
@@ -132,8 +132,9 @@
     <string name="dialpad_8_number">8</string>
     <string name="dialpad_9_number">9</string>
     <string name="dialpad_star_number">*</string>
-    <string name="dialpad_pound_number">d&gt;&lt;title&gt;Google Переводчик&lt;/title&gt;&lt;style&gt;body{font:normal small arial,sans-serif,helvetica;text-align:center}body,html,form,div,p,img,input{margin:0padding:0}body{padding:3px}.nb{border:0}.s1{padding:5px}.ub{border-top:1px solid #36c}.db{border-bottom:1px solid #36c}.blue{background:#ebeff9}.pt{padding-top:5px}form{padding:5px 5px 3px}.s2{padding-top:2px;padding-bottom:2px}div{border:1px solid #fff}html,body{background:#fff}body{padding-top:6px}.small{font-size:small}.title{vertical-align:middle}.center{text-align:center}#arrow{padding:5px;vertical-align:-1px;text-decoration:none}&lt;/style&gt;&lt;meta content="text/html; charset=windows-1251" http-equiv="content-type"/&gt;&lt;/head&gt;&lt;body dir="ltr"&gt;&lt;div&gt;&lt;img class="title" height="16" width="48" src="https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_48x16dp.png"alt="Google" style="margin-top: -2px"/&gt; &lt;span class="small"&gt;Переводчик&lt;/span&gt;</string>
+    <string name="dialpad_pound_number">#</string>
 
+    <!-- The small letters under the numbers -->
     <string name="dialpad_0_letters" />
     <string name="dialpad_1_letters">Voicmail</string>
     <string name="dialpad_2_letters">азбука</string>
@@ -144,26 +145,26 @@
     <string name="dialpad_7_letters">ФХЦЧ</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters" />
-    <string name="dialpad_pound_letters" />
+    <string name="dialpad_star_letters"></string>
+    <string name="dialpad_pound_letters"></string>
 
-    
+
     <string name="fingerprint_title">Биометрический логин</string>
     <string name="fingerprint_message">Войдите, используя свои биометрические данные</string>
 
     <string name="password_title">Пароль Войти</string>
     <string name="password_message">Войти с паролем</string>
 
-    
+
     <string name="active_call_notification_text">Звонит...</string>
     <string name="channel_name">уведомление</string>
     <string name="channel_description">При входящем звонке</string>
     <string name="action_answer">Ответ</string>
     <string name="action_hangup">Вешать трубку</string>
 
-    
+
     <string name="button_enable_contact_permission">Включить контакты</string>
 
 <!-- Generated by Automatic String Resource Translation
---><!--          https://asrt.gluege.boerde.de            
+--><!--          https://asrt.gluege.boerde.de
 --></resources>
