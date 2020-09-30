@@ -146,11 +146,13 @@ public class DialpadFragment extends AbsBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // view models
         mViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         mSharedIntentViewModel = ViewModelProviders.of(getActivity()).get(SharedIntentViewModel.class);
         mSharedIntentViewModel.getData().observe(this, d -> setNumber(d));
 
-        // Formats the phone number text in realtime
+        // formats the phone number text in realtime
         mPhoneNumberFormattingTextWatcher = new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry());
         mDigits.addTextChangedListener(mPhoneNumberFormattingTextWatcher);
         mDigits.addTextChangedListener(new TextWatcher() {
@@ -161,7 +163,6 @@ public class DialpadFragment extends AbsBaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                Toast.makeText(getContext(), "Changed number to  " + mDigits.getText().toString(), Toast.LENGTH_SHORT).show();
                 if (s == "") mViewModel.setNumber(null);
                 else mViewModel.setNumber(mDigits.getText().toString());
             }
