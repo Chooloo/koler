@@ -29,9 +29,11 @@ public class RecentCall {
     private int count;
 
     // Call Types
-    public static final int mOutgoingCall = OUTGOING_TYPE;
-    public static final int mIncomingCall = INCOMING_TYPE;
-    public static final int mMissedCall = MISSED_TYPE;
+    public static final int TYPE_OUTGOING = OUTGOING_TYPE;
+    public static final int TYPE_INCOMING = INCOMING_TYPE;
+    public static final int TYPE_MISSED = MISSED_TYPE;
+    public static final int TYPE_VOICEMAIL = VOICEMAIL_TYPE;
+    public static final int TYPE_REJECTED = REJECTED_TYPE;
 
     /**
      * Constructor

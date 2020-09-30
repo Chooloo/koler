@@ -16,6 +16,10 @@ import com.chooloo.www.callmanager.ui.ListItemHolder;
 import com.chooloo.www.callmanager.util.RelativeTime;
 
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
@@ -74,21 +78,19 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         holder.photo.setVisibility(View.VISIBLE);
         holder.photoPlaceholder.setVisibility(View.GONE);
 
-        // set call type icon
-        switch (recentCall.getCallType()) {
-            case RecentCall.mIncomingCall:
-                holder.photo.setImageResource(R.drawable.ic_call_received_black_24dp);
-                break;
-            case RecentCall.mOutgoingCall:
-                holder.photo.setImageResource(R.drawable.ic_call_made_black_24dp);
-                break;
-            case RecentCall.mMissedCall:
-                holder.photo.setImageResource(R.drawable.ic_call_missed_black_24dp);
-                break;
-            default:
-                holder.photo.setVisibility(View.GONE);
-                break;
+        Map<Integer, Integer> callTypeImage = new HashMap<Integer, Integer>();
+        callTypeImage.put(RecentCall.TYPE_INCOMING, R.drawable.ic_call_received_black_24dp);
+        callTypeImage.put(RecentCall.TYPE_OUTGOING, R.drawable.ic_call_made_black_24dp);
+        callTypeImage.put(RecentCall.TYPE_MISSED, R.drawable.ic_call_missed_black_24dp);
+        callTypeImage.put(RecentCall.TYPE_REJECTED, R.drawable.ic_call_missed_outgoing_black_24dp);
+        callTypeImage.put(RecentCall.TYPE_VOICEMAIL, R.drawable.ic_voicemail_black_24dp);
+
+        try {
+            holder.photo.setImageResource(callTypeImage.get(recentCall.getCallType()));
+        } catch (Exception e) {
+            holder.photo.setVisibility(View.GONE);
         }
+
 
         // set click listeners
         if (mOnItemClickListener != null)
