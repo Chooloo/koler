@@ -21,6 +21,13 @@ import android.provider.CallLog.Calls;
 
 import androidx.loader.content.CursorLoader;
 
+import org.apache.commons.codec.binary.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+
 import timber.log.Timber;
 
 public final class RecentsCursorLoader extends CursorLoader {
@@ -71,15 +78,21 @@ public final class RecentsCursorLoader extends CursorLoader {
      * According to given name and phone number
      * By default they're set to "", if they're not null, than they'le be set to their value
      *
-     * @param contactName
-     * @param phoneNumber
+     * @param contactName name of the contact duh
+     * @param phoneNumber duhh
      * @return String sql style string
      */
     private static String getSelection(String contactName, String phoneNumber) {
-        if (contactName == null) contactName = "";
-        if (phoneNumber == null) phoneNumber = "";
-        return COLUMN_CACHED_NAME + " LIKE '%" + contactName + "%' AND " +
-                COLUMN_NUMBER + " LIKE '%" + phoneNumber + "%'";
+        List<String> conditions = new ArrayList<String>();
+
+        if (contactName != null)
+            conditions.add(COLUMN_CACHED_NAME + " LIKE '%" + contactName + "%'");
+
+        if (phoneNumber != null)
+            conditions.add(COLUMN_NUMBER + " LIKE '%" + phoneNumber + "%'");
+
+        if (conditions.size() == 0) return "";
+        else return conditions.stream().collect(Collectors.joining(" AND "));
     }
 
 }
