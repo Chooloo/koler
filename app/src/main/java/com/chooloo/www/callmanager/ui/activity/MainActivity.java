@@ -135,8 +135,7 @@ public class MainActivity extends AbsSearchBarActivity {
             public void onPageSelected(int position) {
                 if (isSearchBarVisible()) toggleSearchBar();
                 syncFABAndFragment();
-                if (position == 1) showView(mAddContactButton, true);
-                else showView(mAddContactButton, false);
+                if (position == 1) showView(mAddContactButton, !isBottomSheetOpen(mBottomSheetBehavior.getState()));
             }
 
             @Override
@@ -262,9 +261,7 @@ public class MainActivity extends AbsSearchBarActivity {
 
     @Override
     public void onBackPressed() {
-        int bottomSheetState = mBottomSheetBehavior.getState();
-        boolean isBottomSheetOpen = bottomSheetState != BottomSheetBehavior.STATE_HIDDEN && bottomSheetState != BottomSheetBehavior.STATE_COLLAPSED;
-        if (isBottomSheetOpen) {
+        if (isBottomSheetOpen(mBottomSheetBehavior.getState())) {
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             return;
         }
@@ -346,7 +343,7 @@ public class MainActivity extends AbsSearchBarActivity {
     }
 
     public void updateButtons(int bottomSheetState) {
-        boolean isShow = bottomSheetState == BottomSheetBehavior.STATE_HIDDEN || bottomSheetState == BottomSheetBehavior.STATE_COLLAPSED;
+        boolean isShow = !isBottomSheetOpen(bottomSheetState);
         showButtons(isShow);
         if (mViewPager.getCurrentItem() == 1) showView(mAddContactButton, isShow);
     }
@@ -389,6 +386,10 @@ public class MainActivity extends AbsSearchBarActivity {
             PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
             new ChangelogDialog().show(getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
         }
+    }
+
+    private boolean isBottomSheetOpen(int bottomSheetState) {
+        return bottomSheetState != BottomSheetBehavior.STATE_HIDDEN && bottomSheetState != BottomSheetBehavior.STATE_COLLAPSED;
     }
 
     // -- Other -- //
