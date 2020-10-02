@@ -121,7 +121,7 @@
     <!--Empty-->
     <string name="no_matches_to_search">No search matches</string>
 
-    <string name="empty_cgroups_title">Nothing here… yet</string>
+    <string name="empty_cgroups_title">Nothing to see here</string>
     <string name="empty_cgroups_desc">You can try to add something</string>
 
     <string name="empty_contact_title">No contact matching search query found</string>
@@ -216,4 +216,5 @@
     -->
     <string name="hello_world">Hello Square World!</string>
 
+    <string name="unknown">Unknown</string>
 </resources>

@@ -80,9 +80,17 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     protected AbsFastScrollerAdapter mAdapter;
     protected LinearLayoutManager mLayoutManager;
     protected String[] mRequiredPermissions;
+    protected String mPhoneNumber = null;
+    protected String mContactName = null;
 
     protected AbsCursorFragment(Context context) {
-        mContext = context;
+        this.mContext = context;
+    }
+
+    protected AbsCursorFragment(Context context, String phoneNumber, String contactName) {
+        this.mContext = context;
+        this.mPhoneNumber = phoneNumber;
+        this.mContactName = contactName;
     }
 
     @Override
@@ -115,7 +123,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         });
 
         togglePermissionButton();
-        load(null, null);
+        load(mPhoneNumber, mContactName);
     }
 
     @Override

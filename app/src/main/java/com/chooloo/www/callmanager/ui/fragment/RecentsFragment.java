@@ -49,8 +49,17 @@ public class RecentsFragment extends AbsCursorFragment implements
 
     public static final String[] REQUIRED_PERMISSIONS = {READ_CALL_LOG, WRITE_CALL_LOG};
 
+    private String mPhoneNumber = null;
+    private String mContactName = null;
+
     public RecentsFragment(Context context) {
         super(context);
+        mAdapter = new RecentsAdapter(mContext, null, this, this);
+        mRequiredPermissions = REQUIRED_PERMISSIONS;
+    }
+
+    public RecentsFragment(Context context, String phoneNumber, String contactName) {
+        super(context, phoneNumber, contactName);
         mAdapter = new RecentsAdapter(mContext, null, this, this);
         mRequiredPermissions = REQUIRED_PERMISSIONS;
     }

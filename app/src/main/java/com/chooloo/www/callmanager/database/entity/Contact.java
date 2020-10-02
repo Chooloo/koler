@@ -13,6 +13,7 @@ import androidx.room.PrimaryKey;
 
 import com.chooloo.www.callmanager.util.Utilities;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLU
                 childColumns = "list_id",
                 onDelete = ForeignKey.CASCADE))
 
-public class Contact {
+public class Contact implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "contact_id")
@@ -46,7 +47,8 @@ public class Contact {
     @NonNull
     private List<String> phoneNumbers;
 
-    @Ignore private String photoUri; // No need to save this to the database
+    @Ignore
+    private String photoUri; // No need to save this to the database
 
     @ColumnInfo(name = "is_favorite")
     private boolean isFavorite;
@@ -126,6 +128,12 @@ public class Contact {
     }
 
 
+    /**
+     * Contact constructor
+     * Accepts a cursor from with the function loads the content by itself
+     *
+     * @param cursor
+     */
     @Ignore
     public Contact(Cursor cursor) {
         this.contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));

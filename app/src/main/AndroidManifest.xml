@@ -4,9 +4,6 @@
     package="com.chooloo.www.callmanager">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-feature android:name="android.hardware.type.watch" />
-
     <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -32,21 +29,10 @@
         android:theme="@style/AppTheme.Light"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="true" />
-
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
 
         <activity
             android:name=".ui.activity.ContactActivity"
-            android:label="@string/title_activity_contact"></activity>
+            android:label="@string/title_activity_contact" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"

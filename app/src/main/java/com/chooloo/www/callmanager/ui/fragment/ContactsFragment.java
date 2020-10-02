@@ -3,6 +3,7 @@ package com.chooloo.www.callmanager.ui.fragment;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -31,12 +32,15 @@ import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.FABCoordinator;
 import com.chooloo.www.callmanager.ui.ListItemHolder;
+import com.chooloo.www.callmanager.ui.activity.ContactActivity;
 import com.chooloo.www.callmanager.ui.activity.MainActivity;
 import com.chooloo.www.callmanager.ui.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+
+import java.io.Serializable;
 
 import timber.log.Timber;
 
@@ -56,6 +60,12 @@ public class ContactsFragment extends AbsCursorFragment implements
         mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 
+    public ContactsFragment(Context context, String phoneNumber, String contactName) {
+        super(context, phoneNumber, contactName);
+        mAdapter = new ContactsAdapter(mContext, null, this, this);
+        mRequiredPermissions = REQUIRED_PERMISSIONS;
+    }
+
     @Override
     protected void onFragmentReady() {
         if (!PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
@@ -63,6 +73,7 @@ public class ContactsFragment extends AbsCursorFragment implements
             this.mEmptyDesc.setText(R.string.empty_contact_persmission_desc);
         }
         super.onFragmentReady();
+        load(null, null);
     }
 
     /*
@@ -120,7 +131,12 @@ public class ContactsFragment extends AbsCursorFragment implements
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
         Contact contact = (Contact) data;
-        showContactPopup(contact);
+
+        Timber.i("Clicked contact with name: " + contact.getName());
+        Intent contactLayoutIntent = new Intent(mContext, ContactActivity.class);
+        contactLayoutIntent.putExtra(ContactActivity.CONTACT_INTENT_ID, contact);
+        startActivity(contactLayoutIntent);
+//        showContactPopup(contact);
     }
 
     @Override
