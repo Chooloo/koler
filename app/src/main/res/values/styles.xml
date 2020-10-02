@@ -9,13 +9,17 @@
         <item name="android:paddingBottom">@dimen/fab_and_bottom_padding</item>
     </style>
 
-    <style name="ListItemText" />
+    <style name="ListItemText">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
 
     <style name="ListItemText.Big">
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
-        <item name="android:text">Big Text</item>
-        <item name="android:maxLines">1</item>
+        <item name="android:text">Big Text lkdj alsdkj lkjasdfh lkjasdh fjksh kjfl hskjdlaf lkjhsad
+            fklj
+        </item>
     </style>
 
     <style name="ListItemText.Small">
@@ -23,8 +27,6 @@
         <item name="android:text">small text, small text, small text, small text, small text, small
             text
         </item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="ActionButton" parent="Widget.Design.FloatingActionButton">
