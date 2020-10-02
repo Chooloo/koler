@@ -27,10 +27,12 @@ public class ContactActivity extends AbsThemeActivity {
     RecentsFragment mRecentsFragment;
     Contact mContact;
 
-    @BindView(R.id.recents_section)
-    CardView mRecentsSection;
     @BindView(R.id.contact_name)
     TextView mNameView;
+    @BindView(R.id.contact_number)
+    TextView mNumberView;
+    @BindView(R.id.subtitle_recents)
+    TextView mRecentsTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,6 @@ public class ContactActivity extends AbsThemeActivity {
 
         if (mContact != null) {
             mRecentsFragment = new RecentsFragment(this, mContact.getMainPhoneNumber(), null);
-            Toast.makeText(this, "Got a contact with name: " + mContact.getName(), Toast.LENGTH_LONG).show();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.contact_recents_frame, mRecentsFragment).commit();
             toggleRecentsSection(true);
@@ -75,11 +76,11 @@ public class ContactActivity extends AbsThemeActivity {
     }
 
     private void toggleRecentsSection(boolean toggle) {
-        mRecentsSection.setVisibility(toggle ? View.VISIBLE : View.GONE);
+        mRecentsTitle.setVisibility(toggle ? View.VISIBLE : View.GONE);
     }
 
     private void showContactDetails(boolean known) {
-        String name = known ? mContact.getName() : getString(R.string.unknown);
-        mNameView.setText(name);
+        mNameView.setText(known ? mContact.getName() : getString(R.string.unknown));
+        mNumberView.setText(known ? mContact.getMainPhoneNumber() : null);
     }
 }

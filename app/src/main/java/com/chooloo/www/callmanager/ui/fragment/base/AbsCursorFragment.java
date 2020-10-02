@@ -119,11 +119,12 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         // refresh layout
         mRefreshLayout.setOnRefreshListener(() -> {
             LoaderManager.getInstance(AbsCursorFragment.this).restartLoader(LOADER_ID, null, AbsCursorFragment.this);
-            load(null, null);
+            load();
         });
 
         togglePermissionButton();
         load(mPhoneNumber, mContactName);
+        Timber.i("Loading recents fragment with phone number: " + mPhoneNumber + " | contact number: " + mContactName);
     }
 
     @Override
@@ -150,7 +151,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         togglePermissionButton();
-        load(null, null);
+        load();
     }
 
     @Nullable
@@ -178,6 +179,10 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         if (PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
             runLoader(phoneNumber, contactName);
         }
+    }
+
+    public void load() {
+        load(mPhoneNumber, mContactName);
     }
 
     /**
