@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="contact image placeholder"
-                    android:tint="@color/selector_button_icon"
+                    android:tint="?attr/colorAccent"
                     app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView

@@ -15,53 +15,41 @@
         app:layout_scrollFlags="scroll|snap"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:paddingLeft="@dimen/default_edge_padding"
-            android:paddingRight="@dimen/default_edge_padding"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            tools:text="@string/app_name" />
+        <!-- Tab layout -->
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/view_pager_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bubble_tab_height"
+            android:layout_marginEnd="40dp"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:stl_clickable="true"
+            app:stl_defaultTabBackground="@drawable/bubble_background"
+            app:stl_defaultTabTextAllCaps="true"
+            app:stl_defaultTabTextColor="@drawable/tab_color_selector"
+            app:stl_defaultTabTextHorizontalPadding="16dp"
+            app:stl_defaultTabTextMinWidth="0dp"
+            app:stl_defaultTabTextSize="12sp"
+            app:stl_distributeEvenly="true"
+            app:stl_dividerColor="#4D000000"
+            app:stl_dividerThickness="0dp"
+            app:stl_drawDecorationAfterTab="false"
+            app:stl_indicatorAlwaysInCenter="false"
+            app:stl_indicatorColor="?attr/colorAccent"
+            app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
+            app:stl_indicatorGravity="center"
+            app:stl_indicatorInFront="true"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorThickness="@dimen/bubble_tab_height"
+            app:stl_indicatorWidth="auto"
+            app:stl_indicatorWithoutPadding="false"
+            app:stl_overlineColor="#4D000000"
+            app:stl_overlineThickness="0dp"
+            app:stl_titleOffset="24dp"
+            app:stl_underlineColor="#4D000000"
+            app:stl_underlineThickness="0dp" />
+
 
     </androidx.appcompat.widget.Toolbar>
-
-    <!-- Tab layout -->
-    <com.ogaclejapan.smarttablayout.SmartTabLayout
-        android:id="@+id/view_pager_tab"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bubble_tab_height"
-        android:layout_marginStart="@dimen/bubble_horizontal_padding"
-        android:layout_marginTop="@dimen/bubble_vertical_padding"
-        android:layout_marginEnd="@dimen/bubble_horizontal_padding"
-        android:layout_marginBottom="@dimen/bubble_vertical_padding"
-        app:layout_scrollFlags="scroll|snap|enterAlways"
-        app:stl_clickable="true"
-        app:stl_defaultTabBackground="@drawable/bubble_background"
-        app:stl_defaultTabTextAllCaps="true"
-        app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-        app:stl_defaultTabTextHorizontalPadding="16dp"
-        app:stl_defaultTabTextMinWidth="0dp"
-        app:stl_defaultTabTextSize="12sp"
-        app:stl_distributeEvenly="true"
-        app:stl_dividerColor="#4D000000"
-        app:stl_dividerThickness="0dp"
-        app:stl_drawDecorationAfterTab="false"
-        app:stl_indicatorAlwaysInCenter="false"
-        app:stl_indicatorColor="?attr/colorAccent"
-        app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
-        app:stl_indicatorGravity="center"
-        app:stl_indicatorInFront="true"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="@dimen/bubble_tab_height"
-        app:stl_indicatorWidth="auto"
-        app:stl_indicatorWithoutPadding="false"
-        app:stl_overlineColor="#4D000000"
-        app:stl_overlineThickness="0dp"
-        app:stl_titleOffset="24dp"
-        app:stl_underlineColor="#4D000000"
-        app:stl_underlineThickness="0dp" />
 
     <!-- Search bar container -->
     <FrameLayout

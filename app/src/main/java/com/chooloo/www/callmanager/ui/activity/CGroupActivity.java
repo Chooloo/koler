@@ -109,7 +109,7 @@ public class CGroupActivity extends AbsAppBarActivity implements
         });
         mViewModel.getCGroup().observe(this, cGroups -> {
             if (cGroups != null && !cGroups.isEmpty()) {
-                setLabel(cGroups.get(0).getName());
+//                setLabel(cGroups.get(0).getName());
             }
         });
     }

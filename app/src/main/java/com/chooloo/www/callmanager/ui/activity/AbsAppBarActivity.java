@@ -19,7 +19,6 @@ public abstract class AbsAppBarActivity extends AbsThemeActivity {
 
     public @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.toolbar_title) TextView mTextTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,17 +32,8 @@ public abstract class AbsAppBarActivity extends AbsThemeActivity {
         ButterKnife.bind(this);
 
         // Set text
-        mTextTitle.setText(getTitle());
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
     }
 
-    /**
-     * Set the label of the appbar by a given string
-     *
-     * @param label label to be displayed in the appbar
-     */
-    protected void setLabel(String label) {
-        mTextTitle.setText(label);
-    }
 }

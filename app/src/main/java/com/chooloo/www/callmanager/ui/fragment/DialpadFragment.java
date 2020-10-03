@@ -284,8 +284,8 @@ public class DialpadFragment extends AbsBaseFragment {
     private void keyPressed(int keyCode) {
         if (getView().getTranslationY() != 0) return;
 
-        mAudioUtils.playToneByKey(keyCode, getActivity());
         Utilities.vibrate(getContext(), Utilities.SHORT_VIBRATE_LENGTH);
+        mAudioUtils.playToneByKey(keyCode, getActivity());
         toggleCursor();
 
         KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
