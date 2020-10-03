@@ -60,20 +60,13 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     protected static final String ARG_CONTACT_NAME = "contact_name";
 
     // Bind Views
-    @BindView(R.id.fast_scroller)
-    protected FastScroller mFastScroller;
-    @BindView(R.id.refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.enable_permission_btn)
-    Button mEnablePermissionButton;
-    @BindView(R.id.item_header)
-    protected TextView mAnchoredHeader;
-    @BindView(R.id.empty_state)
-    protected View mEmptyState;
-    @BindView(R.id.empty_title)
-    protected TextView mEmptyTitle;
-    @BindView(R.id.empty_desc)
-    protected TextView mEmptyDesc;
+    @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
+    @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.enable_permission_btn) protected Button mEnablePermissionButton;
+    @BindView(R.id.item_header) protected TextView mAnchoredHeader;
+    @BindView(R.id.empty_state) protected View mEmptyState;
+    @BindView(R.id.empty_title) protected TextView mEmptyTitle;
+    @BindView(R.id.empty_desc) protected TextView mEmptyDesc;
 
     // Variables
     protected Context mContext;

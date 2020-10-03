@@ -43,30 +43,22 @@ public class ContactActivity extends AbsThemeActivity {
     RecentsFragment mRecentsFragment;
     Contact mContact;
 
-    @BindView(R.id.contact_name)
-    TextView mNameView;
-    @BindView(R.id.contact_number)
-    TextView mNumberView;
-    @BindView(R.id.subtitle_recents)
-    TextView mRecentsTitle;
-    @BindView(R.id.contact_image_placeholder)
-    ImageView mImagePlaceholder;
-    @BindView(R.id.contact_image_photo)
-    CircleImageView mImage;
+    // Contact Info
+    @BindView(R.id.contact_name) TextView mNameView;
+    @BindView(R.id.contact_number) TextView mNumberView;
+    @BindView(R.id.contact_image_placeholder) ImageView mImagePlaceholder;
+    @BindView(R.id.contact_image_photo) CircleImageView mImage;
 
     // Action Buttons
-    @BindView(R.id.contact_button_call)
-    ImageButton mActionCall;
-    @BindView(R.id.contact_button_sms)
-    ImageButton mActionSms;
-    @BindView(R.id.contact_button_edit)
-    ImageButton mActionEdit;
-    @BindView(R.id.contact_button_info)
-    ImageButton mActionInfo;
-    @BindView(R.id.contact_button_delete)
-    ImageButton mActionDelete;
-    @BindView(R.id.contact_button_fav)
-    ImageButton mActionFav;
+    @BindView(R.id.contact_button_call) ImageButton mActionCall;
+    @BindView(R.id.contact_button_sms) ImageButton mActionSms;
+    @BindView(R.id.contact_button_edit) ImageButton mActionEdit;
+    @BindView(R.id.contact_button_info) ImageButton mActionInfo;
+    @BindView(R.id.contact_button_delete) ImageButton mActionDelete;
+    @BindView(R.id.contact_button_fav) ImageButton mActionFav;
+
+    // Recents Section
+    @BindView(R.id.subtitle_recents) TextView mRecentsTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +82,11 @@ public class ContactActivity extends AbsThemeActivity {
             toggleRecentsSection(false);
             showContactDetails(false);
         }
-
-
     }
 
     @OnClick(R.id.contact_button_call)
     public void actionCall(View view) {
-        Timber.i("MAIN PHONE NUMBER: " + mContact.getMainPhoneNumber());
+        Timber.i("MAIN PHONE NUMBER: %s", mContact.getMainPhoneNumber());
         CallManager.call(this, mContact.getMainPhoneNumber());
     }
 
