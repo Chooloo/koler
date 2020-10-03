@@ -38,4 +38,8 @@ public class DigitsEditText extends AppCompatEditText {
         }
         return ret;
     }
+
+    public boolean isEmpty() {
+        return this.length() == 0;
+    }
 }
