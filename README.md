@@ -65,4 +65,5 @@ Great for people who call a lot of people one by one
 ## Support
 Due to lack of support, unfortunately it's diffictult for us to keep supporting the project
 If you like the app and want us to fix and improve it, please consider giving us a boost
+
 <a href="https://paypal.me/theroeiedri?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
