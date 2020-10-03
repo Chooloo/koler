@@ -121,22 +121,13 @@ public class ContactsFragment extends AbsCursorFragment implements
         String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
         String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
 
-        boolean withFavs = false;
-        if ((contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty()))
-            withFavs = true;
-
+        boolean withFavs = (contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty());
         return new FavoritesAndContactsLoader(mContext, phoneNumber, contactName, withFavs);
     }
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, Object data) {
-        Contact contact = (Contact) data;
-
-        Timber.i("Clicked contact with name: " + contact.getName());
-        Intent contactLayoutIntent = new Intent(mContext, ContactActivity.class);
-        contactLayoutIntent.putExtra(ContactActivity.CONTACT_INTENT_ID, contact);
-        startActivity(contactLayoutIntent);
-//        showContactPopup(contact);
+        openContactActivity((Contact) data);
     }
 
     @Override
@@ -145,5 +136,16 @@ public class ContactsFragment extends AbsCursorFragment implements
 
     private ListItemHolder getContactHolder(int position) {
         return ((ListItemHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
+    }
+
+    /**
+     * Open a contact activity with a given contact
+     *
+     * @param contact contact to pass into the contact activity
+     */
+    private void openContactActivity(Contact contact) {
+        Intent contactLayoutIntent = new Intent(mContext, ContactActivity.class);
+        contactLayoutIntent.putExtra(ContactActivity.CONTACT_INTENT_ID, contact);
+        startActivity(contactLayoutIntent);
     }
 }
