@@ -47,7 +47,6 @@ import java.net.URLDecoder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import timber.log.Timber;
 
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
@@ -136,7 +135,9 @@ public class MainActivity extends AbsSearchBarActivity {
             public void onPageSelected(int position) {
                 if (isSearchBarVisible()) toggleSearchBar();
                 syncFABAndFragment();
-                if (position == 1) showView(mAddContactButton, !isBottomSheetOpen(mBottomSheetBehavior.getState()));
+
+                // if position is 1 (contacts) show add contact button
+                showView(mAddContactButton, position == 1 && !isBottomSheetOpen(mBottomSheetBehavior.getState()));
             }
 
             @Override

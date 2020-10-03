@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.chooloo.www.callmanager"
-        minSdkVersion 25
+        minSdkVersion 24
         targetSdkVersion 29
         versionCode 44
         versionName "v0.6.0"
