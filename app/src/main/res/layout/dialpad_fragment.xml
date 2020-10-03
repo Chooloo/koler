@@ -21,10 +21,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/phone_number_input_height"
+        android:background="?attr/colorPrimary"
         android:orientation="horizontal"
         android:paddingStart="@dimen/top_dialpad_side_padding"
-        android:paddingEnd="@dimen/top_dialpad_side_padding"
-        android:background="?attr/colorPrimary">
+        android:paddingEnd="@dimen/top_dialpad_side_padding">
 
         <!-- Call Button -->
         <ImageView
@@ -48,6 +48,7 @@
             android:focusableInTouchMode="true"
             android:freezesText="true"
             android:gravity="center"
+            android:inputType="phone"
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:singleLine="true"

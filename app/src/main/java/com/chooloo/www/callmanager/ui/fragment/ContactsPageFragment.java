@@ -51,6 +51,7 @@ public class ContactsPageFragment extends AbsPageFragment {
     @Override
     public void onStart() {
         super.onStart();
+
         // dialer view model
         SharedDialViewModel sharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
         sharedDialViewModel.getNumber().observe(this, s -> {
