@@ -11,6 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:id="@+id/contact_button_fav"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="favorite star button"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_star_outline_black_24dp"
+            android:tint="@color/star_yellow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contact_details_layout"
             android:layout_width="match_parent"
@@ -31,14 +43,15 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/image_placeholder"
+                    android:id="@+id/contact_image_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="contact image placeholder"
                     android:tint="@color/selector_button_icon"
                     app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/image_photo"
+                    android:id="@+id/contact_image_photo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone"
@@ -51,6 +64,7 @@
                 android:id="@+id/contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
@@ -74,14 +88,24 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <include
+            android:id="@+id/included_contact_action_buttons"
+            layout="@layout/contact_action_buttons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_details_layout" />
+
         <TextView
             android:id="@+id/subtitle_recents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:text="@string/recents"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_details_layout" />
+            app:layout_constraintTop_toBottomOf="@id/included_contact_action_buttons" />
 
         <FrameLayout
             android:id="@+id/contact_recents_frame"
