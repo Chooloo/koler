@@ -24,6 +24,7 @@ import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
+import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -134,7 +135,7 @@ public class ContactActivity extends AbsThemeActivity {
 
     private void showContactDetails(boolean known) {
         mNameView.setText(known ? mContact.getName() : getString(R.string.unknown));
-        mNumberView.setText(known ? Utilities.formatPhoneNumber(mContact.getMainPhoneNumber()) : null);
+        mNumberView.setText(known ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
         setContactImage();
     }
 

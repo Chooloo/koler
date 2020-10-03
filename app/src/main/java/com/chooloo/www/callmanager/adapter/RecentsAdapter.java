@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import timber.log.Timber;
+
 public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
     // Click listeners
@@ -61,17 +63,16 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         String phoneNumber = recentCall.getCallerNumber();
         Date date = recentCall.getCallDate();
 
+        if (callerName == null) callerName = phoneNumber;
+
         // hide header
         holder.header.setVisibility(View.GONE);
 
         // append calls in a row count
-        if (recentCall.getCount() > 1)
-            callerName += (" (" + recentCall.getCount() + ")");
-
-        // set name
-        holder.bigText.setText(callerName != null ? callerName : phoneNumber);
+        if (recentCall.getCount() > 1) callerName += (" (" + recentCall.getCount() + ")");
 
         // set date
+        holder.bigText.setText(callerName != null ? callerName : phoneNumber);
         holder.smallText.setText(RelativeTime.getTimeAgo(date.getTime()));
 
         // set image

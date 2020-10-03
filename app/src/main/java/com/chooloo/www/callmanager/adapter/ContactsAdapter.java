@@ -17,7 +17,9 @@ import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.ListItemHolder;
+import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import timber.log.Timber;
 
@@ -70,7 +72,7 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
         // set texts
         viewHolder.bigText.setText(contact.getName());
-        viewHolder.smallText.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+        viewHolder.smallText.setText(PhoneNumberUtils.formatPhoneNumber(mContext, contact.getMainPhoneNumber()));
 
         // set header
         boolean showHeader = position == 0 || !header.equals(getHeaderString(position - 1));

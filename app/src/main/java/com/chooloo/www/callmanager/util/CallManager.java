@@ -52,7 +52,7 @@ public class CallManager {
                 int simCard = getSimSelection(activity);
 
                 // create call intent
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(Utilities.getOnlyNumbers(number))));
 
                 // add sim selection to call intent
                 if (phoneAccountHandleList != null && !phoneAccountHandleList.isEmpty())
@@ -253,7 +253,7 @@ public class CallManager {
 
         // get the contact
         Contact contact = ContactUtils.getContact(context, number, null); // get the contacts with the number
-        if (contact == null) return new Contact(number, number, null); // return a number contact
+        if (contact == null) return new Contact(null, number, null); // return a number contact
         else return contact; // contact is valid, return it
     }
 

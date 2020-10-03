@@ -34,7 +34,7 @@
         android:layout_width="@dimen/caller_image_size"
         android:layout_height="@dimen/caller_image_size"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@id/guide_eye_level"
         app:layout_constraintEnd_toStartOf="@id/text_layout"
         app:layout_constraintHorizontal_chainStyle="packed"

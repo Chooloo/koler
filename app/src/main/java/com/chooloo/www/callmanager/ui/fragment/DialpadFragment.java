@@ -75,7 +75,7 @@ public class DialpadFragment extends AbsBaseFragment {
 
         // formats the phone number text in realtime
         mPhoneNumberFormattingTextWatcher = new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry());
-        mDigits.addTextChangedListener(mPhoneNumberFormattingTextWatcher);
+//        mDigits.addTextChangedListener(mPhoneNumberFormattingTextWatcher);
         mDigits.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -241,7 +241,7 @@ public class DialpadFragment extends AbsBaseFragment {
         if (number.equals("") || number.isEmpty()) {
             Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
         } else {
-            CallManager.call(getActivity(), mDigits.getText().toString());
+            CallManager.call(getActivity(), mDigits.getNumbers());
         }
     }
 

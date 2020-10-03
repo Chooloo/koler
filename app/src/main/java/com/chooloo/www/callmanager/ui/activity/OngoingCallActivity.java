@@ -16,6 +16,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.view.KeyEvent;
 import android.view.View;
@@ -51,6 +52,7 @@ import com.chooloo.www.callmanager.listener.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
+import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
@@ -59,6 +61,8 @@ import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -76,13 +80,12 @@ import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPromp
 //TODO Fix the buttons
 public class OngoingCallActivity extends AbsThemeActivity implements DialpadFragment.OnKeyDownListener {
 
+    public static final String ACTION_ANSWER = "ANSWER";
+    public static final String ACTION_HANGUP = "HANGUP";
     // Finals
     private static final long END_CALL_MILLIS = 1500;
     private static final String CHANNEL_ID = "notification";
     private static final int NOTIFICATION_ID = 42069;
-    public static final String ACTION_ANSWER = "ANSWER";
-    public static final String ACTION_HANGUP = "HANGUP";
-
     // Handler variables
     private static final int TIME_START = 1;
     private static final int TIME_STOP = 0;
@@ -128,88 +131,59 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     // Swipes Listeners
     AllPurposeTouchListener mSmsOverlaySwipeListener;
     AllPurposeTouchListener mIncomingCallSwipeListener;
-
-    // Notification
-    private boolean mNotificationEnabled = false;
     NotificationCompat.Builder mBuilder;
     NotificationManager mNotificationManager;
 
     // Edit Texts
-    @BindView(R.id.edit_sms)
-    TextInputEditText mEditSms;
+    @BindView(R.id.edit_sms) TextInputEditText mEditSms;
 
     // Text views
-    @BindView(R.id.text_status)
-    TextView mStatusText;
-    @BindView(R.id.text_caller)
-    TextView mCallerText;
-    @BindView(R.id.text_reject_call_timer_desc)
-    TextView mRejectCallTimerText;
-    @BindView(R.id.text_answer_call_timer_desc)
-    TextView mAnswerCallTimerText;
-    @BindView(R.id.text_action_time_left)
-    TextView mActionTimeLeftText;
-    @BindView(R.id.text_timer_indicator)
-    TextView mTimerIndicatorText;
-    @BindView(R.id.text_stopwatch)
-    TextView mTimeText;
+    @BindView(R.id.text_status) TextView mStatusText;
+    @BindView(R.id.text_caller) TextView mCallerText;
+    @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
+    @BindView(R.id.text_answer_call_timer_desc) TextView mAnswerCallTimerText;
+    @BindView(R.id.text_action_time_left) TextView mActionTimeLeftText;
+    @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
+    @BindView(R.id.text_stopwatch) TextView mTimeText;
 
     // Action buttons
-    @BindView(R.id.answer_btn)
-    FloatingActionButton mAnswerButton;
-    @BindView(R.id.reject_btn)
-    FloatingActionButton mRejectButton;
+    @BindView(R.id.answer_btn) FloatingActionButton mAnswerButton;
+    @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
 
     // Image Views
-    @BindView(R.id.image_placeholder)
-    ImageView mPlaceholderImage;
-    @BindView(R.id.image_photo)
-    ImageView mPhotoImage;
-    @BindView(R.id.button_hold)
-    ImageView mHoldButton;
-    @BindView(R.id.button_mute)
-    ImageView mMuteButton;
-    @BindView(R.id.button_keypad)
-    ImageView mKeypadButton;
-    @BindView(R.id.button_speaker)
-    ImageView mSpeakerButton;
-    @BindView(R.id.button_add_call)
-    ImageView mAddCallButton;
-    @BindView(R.id.button_send_sms)
-    Button mSendSmsButton;
+    @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
+    @BindView(R.id.image_photo) ImageView mPhotoImage;
+    @BindView(R.id.button_hold) ImageView mHoldButton;
+    @BindView(R.id.button_mute) ImageView mMuteButton;
+    @BindView(R.id.button_keypad) ImageView mKeypadButton;
+    @BindView(R.id.button_speaker) ImageView mSpeakerButton;
+    @BindView(R.id.button_add_call) ImageView mAddCallButton;
+    @BindView(R.id.button_send_sms) Button mSendSmsButton;
 
     // Floating Action Buttons
-    @BindView(R.id.button_floating_reject_call_timer)
-    FloatingActionButton mFloatingRejectCallTimerButton;
-    @BindView(R.id.button_floating_answer_call_timer)
-    FloatingActionButton mFloatingAnswerCallTimerButton;
-    @BindView(R.id.button_floating_send_sms)
-    FloatingActionButton mFloatingSendSMSButton;
-    @BindView(R.id.button_floating_cancel_overlay)
-    FloatingActionButton mFloatingCancelOverlayButton;
+    @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
+    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
+    @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
+    @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
+
     @Nullable
     @BindView(R.id.button_cancel_sms)
     FloatingActionButton mFloatingCancelSMS;
-    @BindView(R.id.button_cancel_timer)
-    FloatingActionButton mFloatingCancelTimerButton;
+    @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
 
     // Layouts and overlays
-    @BindView(R.id.frame)
-    ViewGroup mRootView;
-    @BindView(R.id.dialer_fragment)
-    View mDialerFrame;
-    @BindView(R.id.ongoing_call_layout)
-    ConstraintLayout mOngoingCallLayout;
-    @BindView(R.id.overlay_reject_call_options)
-    ViewGroup mRejectCallOverlay;
-    @BindView(R.id.overlay_answer_call_options)
-    ViewGroup mAnswerCallOverlay;
-    @BindView(R.id.overlay_action_timer)
-    ViewGroup mActionTimerOverlay;
-    @BindView(R.id.overlay_send_sms)
-    ViewGroup mSendSmsOverlay;
+    @BindView(R.id.frame) ViewGroup mRootView;
+    @BindView(R.id.dialer_fragment) View mDialerFrame;
+    @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
+    @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
+    @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
+    @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
+    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
+
     @Nullable
     ViewGroup mCurrentOverlay = null;
+    // Notification
+    private boolean mNotificationEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -361,24 +335,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         updateUI(CallManager.getState());
     }
 
-    /**
-     * To disable back button
-     */
-    @Override
-    public void onBackPressed() {
-        // In case the dialpad is opened, pressing the back button will close it
-        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
-            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mIsCreatingUI = false;
-//        this.startService(new Intent(this, RecordService.class)
-//                .putExtra("commandType", RECORD_SERVICE_START));
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -390,11 +346,29 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 //                .putExtra("commandType", RECORD_SERVICE_STOP));
     }
 
+    /**
+     * To disable back button
+     */
+    @Override
+    public void onBackPressed() {
+        // In case the dialpad is opened, pressing the back button will close it
+        if (mBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PermissionUtils.PERMISSION_RC && PermissionUtils.checkPermissionsGranted(grantResults))
             setSmsOverlay(mFloatingSendSMSButton);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mIsCreatingUI = false;
+//        this.startService(new Intent(this, RecordService.class)
+//                .putExtra("commandType", RECORD_SERVICE_START));
     }
 
     @Override
@@ -570,6 +544,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     private void displayInformation() {
         Contact callerContact = CallManager.getDisplayContact(this);
         String callerName = callerContact.getName();
+        if (callerName == null) {
+            Timber.i("SETTING CALLER NAME " + callerName);
+            callerName = PhoneNumberUtils.formatPhoneNumber(this, callerContact.getMainPhoneNumber());
+        }
+
         mCallerText.setText(callerName);
         if (callerContact.getPhotoUri() != null) {
             mPlaceholderImage.setVisibility(View.INVISIBLE);
@@ -808,6 +787,107 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
     // -- Classes -- //
 
+    // -- Notification -- //
+    private void createNotification() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mNotificationEnabled = true;
+            Contact callerContact = CallManager.getDisplayContact(this);
+            String callerName = callerContact.getName();
+
+            Intent touchNotification = new Intent(this, OngoingCallActivity.class);
+            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, touchNotification, 0);
+
+            // Answer Button Intent
+            Intent answerIntent = new Intent(this, NotificationActionReceiver.class);
+            answerIntent.setAction(ACTION_ANSWER);
+            answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+            PendingIntent answerPendingIntent = PendingIntent.getBroadcast(this, 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            // Hangup Button Intent
+            Intent hangupIntent = new Intent(this, NotificationActionReceiver.class);
+            hangupIntent.setAction(ACTION_HANGUP);
+            hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
+            PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.icon_full_144)
+                    .setContentTitle(callerName)
+                    .setContentText(mStateText)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setColor(ThemeUtils.getAccentColor(this))
+                    .setOngoing(true)
+                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
+                    .setAutoCancel(true);
+
+            // Adding the action buttons
+            mBuilder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
+            mBuilder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        }
+    }
+
+    /**
+     * Creates the notification channel
+     * Which allows and manages the displaying of the notification
+     */
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            mNotificationManager = getSystemService(NotificationManager.class);
+            assert mNotificationManager != null;
+            mNotificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    /**
+     * Removes the notification
+     */
+    public void cancelNotification() {
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+        assert notificationManager != null;
+        notificationManager.cancel(NOTIFICATION_ID);
+    }
+
+    /**
+     * detect a nav bar and adapt layout accordingly
+     */
+    private void adaptToNavbar() {
+        boolean hasNavBar = Utilities.hasNavBar(this);
+        int navBarHeight = Utilities.navBarHeight(this);
+        if (hasNavBar) {
+            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
+            mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
+            mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
+            mDialerFrame.setPadding(0, 0, 0, navBarHeight);
+        }
+    }
+
+    /**
+     * Set a new dialpad fragment
+     */
+    private void setDialpadFragment() {
+        mDialpadFragment = DialpadFragment.newInstance(false);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.dialer_fragment, mDialpadFragment)
+                .commit();
+        mDialpadFragment.setDigitsCanBeEdited(false);
+        mDialpadFragment.setShowVoicemailButton(false);
+        mDialpadFragment.setOnKeyDownListener(this);
+    }
+
     class ActionTimer {
 
         CountDownTimer mTimer = null;
@@ -934,106 +1014,5 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
                     break;
             }
         }
-    }
-
-    // -- Notification -- //
-    private void createNotification() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mNotificationEnabled = true;
-            Contact callerContact = CallManager.getDisplayContact(this);
-            String callerName = callerContact.getName();
-
-            Intent touchNotification = new Intent(this, OngoingCallActivity.class);
-            touchNotification.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, touchNotification, 0);
-
-            // Answer Button Intent
-            Intent answerIntent = new Intent(this, NotificationActionReceiver.class);
-            answerIntent.setAction(ACTION_ANSWER);
-            answerIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-            PendingIntent answerPendingIntent = PendingIntent.getBroadcast(this, 0, answerIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            // Hangup Button Intent
-            Intent hangupIntent = new Intent(this, NotificationActionReceiver.class);
-            hangupIntent.setAction(ACTION_HANGUP);
-            hangupIntent.putExtra(EXTRA_NOTIFICATION_ID, 0);
-            PendingIntent hangupPendingIntent = PendingIntent.getBroadcast(this, 1, hangupIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-            mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.icon_full_144)
-                    .setContentTitle(callerName)
-                    .setContentText(mStateText)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setContentIntent(pendingIntent)
-                    .setColor(ThemeUtils.getAccentColor(this))
-                    .setOngoing(true)
-                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
-                    .setAutoCancel(true);
-
-            // Adding the action buttons
-            mBuilder.addAction(R.drawable.ic_call_black_24dp, getString(R.string.action_answer), answerPendingIntent);
-            mBuilder.addAction(R.drawable.ic_call_end_black_24dp, getString(R.string.action_hangup), hangupPendingIntent);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-        }
-    }
-
-    /**
-     * Creates the notification channel
-     * Which allows and manages the displaying of the notification
-     */
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            mNotificationManager = getSystemService(NotificationManager.class);
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    /**
-     * Removes the notification
-     */
-    public void cancelNotification() {
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-        assert notificationManager != null;
-        notificationManager.cancel(NOTIFICATION_ID);
-    }
-
-    /**
-     * detect a nav bar and adapt layout accordingly
-     */
-    private void adaptToNavbar() {
-        boolean hasNavBar = Utilities.hasNavBar(this);
-        int navBarHeight = Utilities.navBarHeight(this);
-        if (hasNavBar) {
-            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
-            mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
-            mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
-            mDialerFrame.setPadding(0, 0, 0, navBarHeight);
-        }
-    }
-
-    /**
-     * Set a new dialpad fragment
-     */
-    private void setDialpadFragment() {
-        mDialpadFragment = DialpadFragment.newInstance(false);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialer_fragment, mDialpadFragment)
-                .commit();
-        mDialpadFragment.setDigitsCanBeEdited(false);
-        mDialpadFragment.setShowVoicemailButton(false);
-        mDialpadFragment.setOnKeyDownListener(this);
     }
 }

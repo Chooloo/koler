@@ -5,17 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.provider.CallLog;
-import android.provider.ContactsContract;
-import android.telecom.TelecomManager;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,28 +20,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import timber.log.Timber;
 
-import static android.Manifest.permission.CALL_PHONE;
-import static android.Manifest.permission.READ_CALL_LOG;
-import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.SEND_SMS;
 
 public class Utilities {
@@ -56,6 +44,11 @@ public class Utilities {
 
     public static void setUpLocale(@NonNull Context context) {
         Utilities.sLocale = context.getResources().getSystem().getConfiguration().getLocales().get(0);
+    }
+
+    public static String getCountry(@NonNull Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getSimCountryIso().toUpperCase();
     }
 
     /**
@@ -159,44 +152,6 @@ public class Utilities {
     }
 
     /**
-     * Format a given phone number to a readable string for the user
-     *
-     * @param phoneNumber the number to format
-     * @return the formatted number
-     */
-    public static String formatPhoneNumber(String phoneNumber) {
-        if (phoneNumber == null) return null;
-        phoneNumber = normalizePhoneNumber(phoneNumber);
-        Phonenumber.PhoneNumber formattedNumber = null;
-        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-
-        try {
-            formattedNumber = phoneUtil.parse(phoneNumber, sLocale.getCountry());
-        } catch (NumberParseException e) {
-            Timber.w(e);
-            return phoneNumber;
-        }
-
-        PhoneNumberUtil.PhoneNumberFormat format;
-        if (phoneUtil.getRegionCodeForCountryCode(formattedNumber.getCountryCode()).equals(sLocale.getCountry()))
-            format = PhoneNumberUtil.PhoneNumberFormat.NATIONAL;
-        else
-            format = PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL;
-
-        return phoneUtil.format(formattedNumber, format);
-    }
-
-    /**
-     * Return a normalized number
-     *
-     * @param phoneNumber number to normalize
-     * @return the number, normalized
-     */
-    public static String normalizePhoneNumber(String phoneNumber) {
-        return PhoneNumberUtil.normalizeDiallableCharsOnly(phoneNumber);
-    }
-
-    /**
      * Builds a string without the separators
      *
      * @param list
@@ -273,65 +228,6 @@ public class Utilities {
             imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
-    /**
-     * Returns a list of the recent calls
-     *
-     * @param context
-     * @return ArrayList<RecentCall>
-     */
-    public ArrayList<RecentCall> getRecentCalls(Context context) {
-        ArrayList<RecentCall> recentCalls = new ArrayList<RecentCall>();
-        Uri queryUri = android.provider.CallLog.Calls.CONTENT_URI;
-
-        final String[] PROJECTION = new String[]{
-                ContactsContract.Contacts._ID,
-                CallLog.Calls._ID,
-                CallLog.Calls.CACHED_NAME,
-                CallLog.Calls.NUMBER,
-                CallLog.Calls.TYPE,
-                CallLog.Calls.DATE,
-                CallLog.Calls.DURATION};
-
-        String sortOrder = String.format("%s limit 500 ", CallLog.Calls.DATE + " DESC");
-
-        Cursor cursor = context.getContentResolver().query(queryUri, PROJECTION, null, null, sortOrder);
-
-        int title = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME);
-        int number = cursor.getColumnIndex(CallLog.Calls.NUMBER);
-        int type = cursor.getColumnIndex(CallLog.Calls.TYPE);
-        int date = cursor.getColumnIndex(CallLog.Calls.DATE);
-        int duration = cursor.getColumnIndex(CallLog.Calls.DURATION);
-
-        while (cursor.moveToNext()) {
-            // get the details
-            String callerName = cursor.getString(title);
-            String phoneNumber = cursor.getString(number);
-            String callType = cursor.getString(type);
-            Date callDate = new Date(cursor.getLong(date));
-            String callDuration = cursor.getString(duration);
-            int callTypeCode = Integer.parseInt(callType);
-            // create a new RecentCall
-            RecentCall recentCall = new RecentCall(context, phoneNumber, callTypeCode, callDuration, callDate);
-            recentCalls.add(recentCall);
-        }
-        cursor.close();
-        return recentCalls;
-    }
-
-    /**
-     * Checks wither the text given is numeric or not
-     *
-     * @param text
-     * @return true/false
-     */
-    public static boolean isNumeric(String text) {
-        try {
-            Double.parseDouble(text);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 
     /**
      * Returns only the numbers from a string (removes special characters and spaces

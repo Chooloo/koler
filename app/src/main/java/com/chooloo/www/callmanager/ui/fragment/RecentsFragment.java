@@ -35,6 +35,7 @@ import com.chooloo.www.callmanager.ui.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
+import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import timber.log.Timber;
@@ -139,7 +140,7 @@ public class RecentsFragment extends AbsCursorFragment implements
 
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
-            contactNumber.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+            contactNumber.setText(PhoneNumberUtils.formatPhoneNumber(mContext, contact.getMainPhoneNumber()));
             infoButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
             if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
@@ -154,7 +155,7 @@ public class RecentsFragment extends AbsCursorFragment implements
             infoButton.setVisibility(View.GONE);
             editButton.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
-            contactName.setText(Utilities.formatPhoneNumber(contact.getMainPhoneNumber()));
+            contactName.setText(PhoneNumberUtils.formatPhoneNumber(mContext, contact.getMainPhoneNumber()));
             contactNumber.setVisibility(View.GONE);
 
             contactPhoto.setVisibility(View.GONE);

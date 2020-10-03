@@ -45,10 +45,7 @@ public class ContactUtils {
         // initiate contact cursor
         Cursor cursor = new ContactsCursorLoader(context, phoneNumber, name).loadInBackground();
         // handle null cursor
-        if (cursor == null || cursor.getCount() == 0) {
-            if (name == null) name = phoneNumber;
-            return new Contact(name, phoneNumber);
-        }
+        if (cursor == null || cursor.getCount() == 0) return new Contact(name, phoneNumber);
         // cursor isn't empty, get the first result
         cursor.moveToFirst();
         return new Contact(cursor);
