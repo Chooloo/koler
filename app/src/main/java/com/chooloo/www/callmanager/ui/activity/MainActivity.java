@@ -43,6 +43,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

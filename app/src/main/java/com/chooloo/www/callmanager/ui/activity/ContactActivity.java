@@ -128,7 +128,7 @@ public class ContactActivity extends AbsThemeActivity {
                 ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), true);
             }
         } else {
-            PermissionUtils.askForPermission(this, WRITE_CONTACTS);
+            PermissionUtils.askForPermissions(this, new String[]{WRITE_CONTACTS});
             Toast.makeText(this, "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
         }
     }

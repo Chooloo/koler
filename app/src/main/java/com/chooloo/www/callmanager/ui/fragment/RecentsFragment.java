@@ -199,7 +199,7 @@ public class RecentsFragment extends AbsCursorFragment implements
                 contactDialog.dismiss();
             } else {
                 Toast.makeText(mContext, "I dont have the permission", Toast.LENGTH_LONG).show();
-                PermissionUtils.askForPermission(getActivity(), WRITE_CALL_LOG);
+                PermissionUtils.askForPermissions(getActivity(), new String[]{WRITE_CALL_LOG});
                 contactDialog.dismiss();
             }
         });

@@ -16,7 +16,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
-import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,6 +24,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,8 +61,6 @@ import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-import com.google.i18n.phonenumbers.Phonenumber;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -73,7 +71,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
+import static android.Manifest.permission.SEND_SMS;
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 @SuppressLint("ClickableViewAccessibility")
@@ -151,6 +153,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
 
     // Image Views
+    @BindView(R.id.caller_image_layout) FrameLayout mImageLayout;
     @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
     @BindView(R.id.image_photo) ImageView mPhotoImage;
     @BindView(R.id.button_hold) ImageView mHoldButton;
@@ -461,9 +464,9 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      */
     @OnClick(R.id.button_floating_send_sms)
     public void setSmsOverlay(View view) {
-        if (PermissionUtils.checkPermissionGranted(this, Manifest.permission.SEND_SMS, true)) {
+        if (PermissionUtils.checkPermissionsGranted(this, new String[]{SEND_SMS}, true)) {
             setOverlay(mSendSmsOverlay);
-            mSendSmsButton.setVisibility(View.VISIBLE);
+            mSendSmsButton.setVisibility(VISIBLE);
             mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
         }
     }
@@ -542,18 +545,22 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
      * Display the information about the caller
      */
     private void displayInformation() {
+        // get caller contact
         Contact callerContact = CallManager.getDisplayContact(this);
-        String callerName = callerContact.getName();
-        if (callerName == null) {
-            Timber.i("SETTING CALLER NAME " + callerName);
-            callerName = PhoneNumberUtils.formatPhoneNumber(this, callerContact.getMainPhoneNumber());
-        }
 
+        // set callerName
+        String callerName = callerContact.getName();
+        if (callerName == null)
+            callerName = PhoneNumberUtils.formatPhoneNumber(this, callerContact.getMainPhoneNumber());
+
+        // apply details to layout
         mCallerText.setText(callerName);
         if (callerContact.getPhotoUri() != null) {
-            mPlaceholderImage.setVisibility(View.INVISIBLE);
-            mPhotoImage.setVisibility(View.VISIBLE);
+            mPlaceholderImage.setVisibility(INVISIBLE);
+            mPhotoImage.setVisibility(VISIBLE);
             mPhotoImage.setImageURI(Uri.parse(callerContact.getPhotoUri()));
+        } else {
+            mImageLayout.setVisibility(GONE);
         }
     }
 
@@ -623,11 +630,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
 
         // Change the buttons layout
         mAnswerButton.hide();
-        mHoldButton.setVisibility(View.VISIBLE);
-        mMuteButton.setVisibility(View.VISIBLE);
-        mKeypadButton.setVisibility(View.VISIBLE);
-        mSpeakerButton.setVisibility(View.VISIBLE);
-//        mAddCallButton.setVisibility(View.VISIBLE);
+        mHoldButton.setVisibility(VISIBLE);
+        mMuteButton.setVisibility(VISIBLE);
+        mKeypadButton.setVisibility(VISIBLE);
+        mSpeakerButton.setVisibility(VISIBLE);
+//        mAddCallButton.setVisibility(VISIBLE);
         moveRejectButtonToMiddle();
     }
 
@@ -690,7 +697,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         assert mFloatingCancelSMS != null;
         mFloatingCancelSMS.hide();
         mFloatingCancelTimerButton.hide();
-        mSendSmsButton.setVisibility(View.GONE);
+        mSendSmsButton.setVisibility(GONE);
     }
 
     /**
@@ -713,15 +720,15 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
                 if (v instanceof FloatingActionButton) {
                     ((FloatingActionButton) v).show();
                 } else {
-                    v.setVisibility(View.VISIBLE);
+                    v.setVisibility(VISIBLE);
                 }
             } else { // If we don't
                 if (v instanceof FloatingActionButton) { // Make it non-clickable
                     ((FloatingActionButton) v).hide();
                 } else if (v instanceof Button) {
-                    v.setVisibility(View.GONE);
+                    v.setVisibility(GONE);
                 } else { // Don't move any other views that are constrained to it
-                    v.setVisibility(View.INVISIBLE);
+                    v.setVisibility(INVISIBLE);
                 }
                 v.setHovered(false);
             }

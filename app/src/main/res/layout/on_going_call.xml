@@ -17,29 +17,30 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="24dp" />
 
-    <!-- Call Timer -->
+    <!-- Call Status -->
     <TextView
-        android:id="@+id/text_stopwatch"
+        android:id="@+id/text_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:textColor="?attr/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guide_status_bar"
-        tools:text="00:00" />
+        app:layout_constraintTop_toBottomOf="@id/guide_status_bar"
+        tools:text="@string/status_call_incoming" />
 
     <!-- Caller Pic -->
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/caller_image_layout"
         android:layout_width="@dimen/caller_image_size"
         android:layout_height="@dimen/caller_image_size"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@id/guide_eye_level"
-        app:layout_constraintEnd_toStartOf="@id/text_layout"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/caller_details_layout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_stopwatch">
+        app:layout_constraintTop_toBottomOf="@id/text_status"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <ImageView
             android:id="@+id/image_placeholder"
@@ -58,16 +59,17 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/text_layout"
+        android:id="@+id/caller_details_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
         android:orientation="vertical"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="@id/frameLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/frameLayout"
-        app:layout_constraintTop_toTopOf="@id/frameLayout">
+        app:layout_constraintBottom_toTopOf="@id/guide_eye_level"
+        app:layout_constraintEnd_toEndOf="@id/caller_image_layout"
+        app:layout_constraintStart_toStartOf="@id/caller_image_layout"
+        app:layout_constraintTop_toBottomOf="@id/caller_image_layout">
 
         <!-- Caller Name -->
         <TextView
@@ -76,21 +78,19 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="?attr/iconColor"
+            android:textSize="30dp"
             tools:text="Jesus" />
 
-        <!-- Call Status -->
+        <!-- Call Timer -->
         <TextView
-            android:id="@+id/text_status"
+            android:id="@+id/text_stopwatch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textColor="?attr/colorAccent"
-            tools:text="@string/status_call_incoming" />
+            tools:text="00:00" />
     </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_eye_level"
@@ -102,62 +102,54 @@
     <!-- Hold Button -->
     <ImageView
         android:id="@+id/button_hold"
-        style="@style/CallButton"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="60dp"
+        style="@style/CallButton.ActionButton"
         app:layout_constraintBottom_toTopOf="@id/button_speaker"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/button_mute"
-        app:layout_constraintTop_toBottomOf="@id/guide_eye_level"
         app:srcCompat="@drawable/ic_pause_black_24dp"
         tools:visibility="visible" />
 
     <!-- Mute Button -->
     <ImageView
         android:id="@+id/button_mute"
-        style="@style/CallButton"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="20dp"
+        style="@style/CallButton.ActionButton"
         app:layout_constraintBottom_toTopOf="@id/button_keypad"
-        app:layout_constraintEnd_toStartOf="@id/button_speaker"
+        app:layout_constraintEnd_toStartOf="@id/button_hold"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guide_eye_level"
         app:srcCompat="@drawable/ic_mic_off_black_24dp"
         tools:visibility="visible" />
 
     <!-- Speaker Button -->
     <ImageView
         android:id="@+id/button_speaker"
-        style="@style/CallButton"
-        android:layout_marginEnd="50dp"
+        style="@style/CallButton.ActionButton"
         app:layout_constraintBottom_toTopOf="@id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_keypad"
-        app:layout_constraintTop_toBottomOf="@id/button_hold"
         app:srcCompat="@drawable/ic_volume_up_black_24dp"
         tools:visibility="visible" />
 
     <!-- Keypad Button -->
     <ImageView
         android:id="@+id/button_keypad"
-        style="@style/CallButton"
-        android:layout_marginStart="60dp"
+        style="@style/CallButton.ActionButton"
         app:layout_constraintBottom_toTopOf="@id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@id/button_speaker"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_mute"
         app:srcCompat="@drawable/ic_dialpad_black_24dp"
         tools:visibility="visible" />
 
     <!-- Add Call Button -->
     <ImageView
         android:id="@+id/button_add_call"
-        style="@style/CallButton"
-        android:layout_marginEnd="60dp"
+        style="@style/CallButton.ActionButton"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_keypad"
-        app:layout_constraintTop_toBottomOf="@+id/button_hold"
         app:srcCompat="@drawable/ic_add_black_24dp" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -165,42 +157,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="512dp"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
+        style="@style/CallButton.BottomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="40dp"
-        android:scaleType="center"
         android:src="@drawable/ic_call_black_24dp"
-        android:tint="@color/white"
-        app:backgroundTint="@color/green_phone"
-        app:fabCustomSize="72dp"
-        app:fabSize="normal"
+        android:tint="@color/green_phone"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:maxImageSize="36dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Reject Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/reject_btn"
+        style="@style/CallButton.BottomButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="40dp"
-        android:scaleType="center"
         android:src="@drawable/ic_call_end_black_24dp"
-        android:tint="@color/white"
-        app:backgroundTint="@color/red_phone"
-        app:fabCustomSize="72dp"
-        app:fabSize="normal"
+        android:tint="@color/red_phone"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="36dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/ongoing_call_more_actions_text"

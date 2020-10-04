@@ -171,7 +171,7 @@ public class ImportSpreadsheetDialog extends BaseDialogFragment<ImportSpreadshee
      * Shows a file chooser for the excel file
      */
     private void showFileChooser() {
-        PermissionUtils.checkPermissionGranted(getActivity(), READ_EXTERNAL_STORAGE, true);
+        PermissionUtils.checkPermissionsGranted(getActivity(), new String[]{READ_EXTERNAL_STORAGE}, true);
         new FileChooserDialog.Builder(getFragmentManager())
                 .onFileSelected(this)
                 .extensionsFilter(".xls")

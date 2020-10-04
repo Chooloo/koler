@@ -3,12 +3,17 @@ package com.chooloo.www.callmanager.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.telecom.TelecomManager;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.Manifest.permission.CALL_PHONE;
 import static android.Manifest.permission.READ_CALL_LOG;
@@ -55,9 +60,16 @@ public class PermissionUtils {
      * @return boolean is permissions granted / not
      */
     public static boolean checkPermissionsGranted(Context context, String[] permissions, boolean askForIt) {
-        for (String permission : permissions)
-            if (!checkPermissionGranted(context, permission, askForIt)) return false;
-        return true;
+        List<String> deniedPermissions = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_DENIED) {
+                deniedPermissions.add(permission);
+            }
+        }
+        if (deniedPermissions.size() > 0 && askForIt && context instanceof Activity) {
+            askForPermissions((Activity) context, deniedPermissions.toArray(new String[deniedPermissions.size()]));
+        }
+        return deniedPermissions.size() <= 0;
     }
 
     /**
@@ -68,10 +80,10 @@ public class PermissionUtils {
      * @param askForIt   whether to ask the user for the ungranted permissions
      * @return is permission granted / not
      */
-    public static boolean checkPermissionGranted(Context context, String permission, boolean askForIt) {
+    private static boolean checkPermissionGranted(Context context, String permission, boolean askForIt) {
         boolean isGranted = (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED);
         if (askForIt && !isGranted && context instanceof Activity)
-            askForPermission((Activity) context, permission);
+            askForPermissions((Activity) context, new String[]{permission});
         return isGranted;
     }
 
@@ -89,16 +101,6 @@ public class PermissionUtils {
     }
 
     /**
-     * Ask user for a specific permission
-     *
-     * @param activity   the activity that is calling the function
-     * @param permission permission to ask the user for
-     */
-    public static void askForPermission(Activity activity, String permission) {
-        askForPermissions(activity, new String[]{permission});
-    }
-
-    /**
      * Asks user for permissions by a given list
      *
      * @param activity    the activity that is calling the function
@@ -106,6 +108,17 @@ public class PermissionUtils {
      */
     public static void askForPermissions(Activity activity, String[] permissions) {
         ActivityCompat.requestPermissions(activity, permissions, PERMISSION_RC);
+    }
+
+    /**
+     * Asks user for permissions by a given list
+     * From a fragment
+     *
+     * @param fragment    fragment from which to request the permissions
+     * @param permissions permission to ask for
+     */
+    public static void askForPermissions(Fragment fragment, String[] permissions) {
+        fragment.requestPermissions(permissions, PERMISSION_RC);
     }
 
 }

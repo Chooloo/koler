@@ -111,7 +111,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
         simSelectionPreference.setOnPreferenceChangeListener(listChangeListener);
 
-        PermissionUtils.checkPermissionGranted(getContext(), READ_PHONE_STATE, true);
+        PermissionUtils.checkPermissionsGranted(getContext(), new String[]{READ_PHONE_STATE}, true);
         setupSimSelection();
     }
 
@@ -124,7 +124,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void setupSimSelection() {
-        if (!PermissionUtils.checkPermissionGranted(getContext(), READ_PHONE_STATE, true)) {
+        if (!PermissionUtils.checkPermissionsGranted(getContext(), new String[]{READ_PHONE_STATE}, true)) {
             Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
             return;
         }

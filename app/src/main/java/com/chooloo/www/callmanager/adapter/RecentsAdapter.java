@@ -13,7 +13,9 @@ import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.ListItemHolder;
+import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.RelativeTime;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.util.Date;
 import java.util.Dictionary;
@@ -64,6 +66,7 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         Date date = recentCall.getCallDate();
 
         if (callerName == null) callerName = phoneNumber;
+//            callerName = PhoneNumberUtils.formatPhoneNumber(mContext, phoneNumber);
 
         // hide header
         holder.header.setVisibility(View.GONE);

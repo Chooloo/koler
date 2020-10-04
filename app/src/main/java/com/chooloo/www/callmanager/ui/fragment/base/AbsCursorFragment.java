@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,11 +21,6 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
 import com.chooloo.www.callmanager.ui.FastScroller;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
-
-import java.util.Optional;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -110,10 +104,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // refresh layout
-        mRefreshLayout.setOnRefreshListener(() -> {
-            LoaderManager.getInstance(AbsCursorFragment.this).restartLoader(LOADER_ID, null, AbsCursorFragment.this);
-            load();
-        });
+        mRefreshLayout.setOnRefreshListener(this::load);
 
         togglePermissionButton();
         load(mPhoneNumber, mContactName);
@@ -157,7 +148,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
 
     @OnClick(R.id.enable_permission_btn)
     public void enablePermissionClick() {
-        requestPermissions(mRequiredPermissions, 1);
+        PermissionUtils.askForPermissions(this, mRequiredPermissions);
     }
 
     // -- Loader -- //
@@ -169,9 +160,8 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
      * @param contactName name filter
      */
     public void load(@Nullable String phoneNumber, @Nullable String contactName) {
-        if (PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false)) {
+        if (PermissionUtils.checkPermissionsGranted(mContext, mRequiredPermissions, false))
             runLoader(phoneNumber, contactName);
-        }
     }
 
     public void load() {

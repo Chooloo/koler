@@ -35,7 +35,7 @@
 
             <!-- Caller Pic -->
             <FrameLayout
-                android:id="@+id/frameLayout"
+                android:id="@+id/caller_image_layout"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,9 +69,9 @@
                 android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                 android:textColor="?attr/iconColor"
-                app:layout_constraintEnd_toEndOf="@id/frameLayout"
-                app:layout_constraintStart_toStartOf="@id/frameLayout"
-                app:layout_constraintTop_toBottomOf="@id/frameLayout"
+                app:layout_constraintEnd_toEndOf="@id/caller_image_layout"
+                app:layout_constraintStart_toStartOf="@id/caller_image_layout"
+                app:layout_constraintTop_toBottomOf="@id/caller_image_layout"
                 tools:text="Jesus" />
 
             <TextView

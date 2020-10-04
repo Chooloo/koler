@@ -22,9 +22,9 @@
         android:layout_marginStart="@dimen/item_contact_padding"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/frameLayout"
+        app:layout_constraintEnd_toStartOf="@+id/caller_image_layout"
         app:layout_constraintStart_toEndOf="@+id/drag_handle"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+        app:layout_constraintTop_toTopOf="@+id/caller_image_layout" />
 
     <!-- Phone Number Text -->
     <TextView
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/item_big_text" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/caller_image_layout"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="19dp"

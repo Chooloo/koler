@@ -52,7 +52,7 @@ public class CallManager {
                 int simCard = getSimSelection(activity);
 
                 // create call intent
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(Utilities.getOnlyNumbers(number))));
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
 
                 // add sim selection to call intent
                 if (phoneAccountHandleList != null && !phoneAccountHandleList.isEmpty())
