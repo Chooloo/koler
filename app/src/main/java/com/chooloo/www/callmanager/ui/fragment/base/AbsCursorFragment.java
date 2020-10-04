@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,6 +70,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     protected String[] mRequiredPermissions;
     protected String mPhoneNumber = null;
     protected String mContactName = null;
+    protected OnLoadFinishedListener mOnLoadFinishedListener = null;
 
     protected AbsCursorFragment(Context context) {
         this.mContext = context;
@@ -124,6 +126,7 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         setData(data);
+        if (mOnLoadFinishedListener != null) mOnLoadFinishedListener.onLoadFinished();
     }
 
     @Override
@@ -218,8 +221,15 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         mEnablePermissionButton.setVisibility(isPermissionGranted ? View.GONE : View.VISIBLE);
     }
 
-    public boolean isEmpty() {
-        return mAdapter.getItemCount() == 0;
+    public int size() {
+        return mAdapter.getItemCount();
     }
 
+    public void setOnLoadFinishListener(OnLoadFinishedListener onLoadFinishListener) {
+        mOnLoadFinishedListener = onLoadFinishListener;
+    }
+
+    public interface OnLoadFinishedListener {
+        public void onLoadFinished();
+    }
 }

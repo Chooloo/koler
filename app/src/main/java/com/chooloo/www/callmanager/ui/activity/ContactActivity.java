@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
@@ -36,7 +37,7 @@ import timber.log.Timber;
 import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class ContactActivity extends AbsThemeActivity {
+public class ContactActivity extends AbsThemeActivity implements AbsCursorFragment.OnLoadFinishedListener {
 
     public static final String CONTACT_INTENT_ID = "CONTACT_INTENT";
 
@@ -76,16 +77,21 @@ public class ContactActivity extends AbsThemeActivity {
 
         if (mContact != null) {
             mRecentsFragment = new RecentsFragment(this, mContact.getMainPhoneNumber(), null);
+            mRecentsFragment.setOnLoadFinishListener(this);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
             toggleRecentsSection(true);
             showContactDetails(true);
             setActionButtons();
-            checkRecentsEmpty();
         } else {
             toggleRecentsSection(false);
             showContactDetails(false);
         }
+    }
+
+    @Override
+    public void onLoadFinished() {
+        checkRecentsEmpty();
     }
 
     @OnClick(R.id.contact_button_call)
@@ -161,7 +167,7 @@ public class ContactActivity extends AbsThemeActivity {
     }
 
     private void checkRecentsEmpty() {
-        if (mRecentsFragment.isEmpty()) {
+        if (mRecentsFragment.size() == 0) {
             mRecentsEmpty.setVisibility(View.VISIBLE);
             mRecentsTitle.setVisibility(View.GONE);
             mRecentsFrame.setVisibility(View.GONE);
@@ -169,7 +175,7 @@ public class ContactActivity extends AbsThemeActivity {
     }
 
     private void toggleRecentsSection(boolean toggle) {
-        mRecentsTitle.setVisibility(toggle ? View.VISIBLE : View.GONE);
+        mRecentsLayout.setVisibility(toggle ? View.VISIBLE : View.GONE);
     }
 
     private void getIntentContact() {

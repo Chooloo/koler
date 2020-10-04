@@ -81,10 +81,7 @@ public abstract class AbsCursorRecyclerViewAdapter<VH extends RecyclerView.ViewH
      */
     @Override
     public int getItemCount() {
-        if (mDataValid && mCursor != null) {
-            return mCursor.getCount();
-        }
-        return 0;
+        return mDataValid && mCursor != null ? mCursor.getCount() : 0;
     }
 
     /**
