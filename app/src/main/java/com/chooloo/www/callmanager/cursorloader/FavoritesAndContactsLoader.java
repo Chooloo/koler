@@ -37,7 +37,6 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
     public FavoritesAndContactsLoader(Context context, String phoneNumber, String contactName, boolean withFavs) {
         super(context, phoneNumber, contactName);
         Timber.i("Creating contacts loader with " + phoneNumber + " : " + contactName);
-        if (phoneNumber == "") Timber.i("AHAHAHAHAH");
         this.mWithFavs = withFavs;
     }
 

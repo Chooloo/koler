@@ -6,16 +6,15 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewDebug;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
@@ -59,7 +58,10 @@ public class ContactActivity extends AbsThemeActivity {
     @BindView(R.id.contact_button_fav) ImageButton mActionFav;
 
     // Recents Section
-    @BindView(R.id.subtitle_recents) TextView mRecentsTitle;
+    @BindView(R.id.recents_section_layout) ConstraintLayout mRecentsLayout;
+    @BindView(R.id.recents_section_title) TextView mRecentsTitle;
+    @BindView(R.id.recents_section_frame) FrameLayout mRecentsFrame;
+    @BindView(R.id.recents_section_empty) TextView mRecentsEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +77,11 @@ public class ContactActivity extends AbsThemeActivity {
         if (mContact != null) {
             mRecentsFragment = new RecentsFragment(this, mContact.getMainPhoneNumber(), null);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.contact_recents_frame, mRecentsFragment).commit();
+            transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
             toggleRecentsSection(true);
             showContactDetails(true);
             setActionButtons();
+            checkRecentsEmpty();
         } else {
             toggleRecentsSection(false);
             showContactDetails(false);
@@ -157,14 +160,18 @@ public class ContactActivity extends AbsThemeActivity {
             mActionFav.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_star_black_24dp));
     }
 
+    private void checkRecentsEmpty() {
+        if (mRecentsFragment.isEmpty()) {
+            mRecentsEmpty.setVisibility(View.VISIBLE);
+            mRecentsTitle.setVisibility(View.GONE);
+            mRecentsFrame.setVisibility(View.GONE);
+        }
+    }
+
     private void toggleRecentsSection(boolean toggle) {
         mRecentsTitle.setVisibility(toggle ? View.VISIBLE : View.GONE);
     }
 
-    /**
-     * Set mContact to be the contact from the incoming intent
-     * (If there is a proper intent)
-     */
     private void getIntentContact() {
         Intent intent = getIntent();
         try {

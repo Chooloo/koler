@@ -78,9 +78,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="?attr/iconColor"
-            android:textSize="30dp"
+            android:textSize="@dimen/caller_name_size"
             tools:text="Jesus" />
 
         <!-- Call Timer -->

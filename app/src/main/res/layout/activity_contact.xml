@@ -36,8 +36,8 @@
             <!-- Caller Pic -->
             <FrameLayout
                 android:id="@+id/caller_image_layout"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -46,7 +46,6 @@
                     android:id="@+id/contact_image_placeholder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="contact image placeholder"
                     android:tint="?attr/colorAccent"
                     app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
@@ -64,11 +63,12 @@
                 android:id="@+id/contact_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
                 android:textColor="?attr/iconColor"
+                android:textSize="30dp"
                 app:layout_constraintEnd_toEndOf="@id/caller_image_layout"
                 app:layout_constraintStart_toStartOf="@id/caller_image_layout"
                 app:layout_constraintTop_toBottomOf="@id/caller_image_layout"
@@ -80,7 +80,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:text="01234567"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,25 +98,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contact_details_layout" />
 
-        <TextView
-            android:id="@+id/subtitle_recents"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="50dp"
-            android:text="@string/recents"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/included_contact_action_buttons" />
-
-        <FrameLayout
-            android:id="@+id/contact_recents_frame"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recents_section_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subtitle_recents" />
+            app:layout_constraintTop_toBottomOf="@id/included_contact_action_buttons">
 
+            <TextView
+                android:id="@+id/recents_section_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="@string/recents"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/recents_section_frame"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recents_section_title" />
+
+            <TextView
+                android:id="@+id/recents_section_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/no_recent_calls"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textSize="20dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

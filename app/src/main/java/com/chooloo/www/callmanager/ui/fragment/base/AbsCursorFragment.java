@@ -218,4 +218,8 @@ public class AbsCursorFragment extends AbsRecyclerViewFragment implements
         mEnablePermissionButton.setVisibility(isPermissionGranted ? View.GONE : View.VISIBLE);
     }
 
+    public boolean isEmpty() {
+        return mAdapter.getItemCount() == 0;
+    }
+
 }
