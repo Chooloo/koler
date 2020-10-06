@@ -47,7 +47,6 @@
             app:stl_underlineColor="#4D000000"
             app:stl_underlineThickness="0dp" />
 
-
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Search bar container -->

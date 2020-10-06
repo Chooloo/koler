@@ -59,7 +59,7 @@ public class CallManager {
                     callIntent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandleList.get(simCard));
 
                 // handle sim card selection
-                Timber.d("simcard %s", simCard);
+                Timber.d("simcard index %s", simCard);
                 if (simCard != -1) callIntent.putExtra("com.android.phone.extra.slot", simCard);
 
                 // start the call
@@ -86,8 +86,8 @@ public class CallManager {
     private static int getSimSelection(Context context) {
         try {
             return Integer.parseInt(String.valueOf(PreferenceUtils.getInstance(context).getString(R.string.pref_sim_select_key)));
-        } catch (NullPointerException e) {
-            return -1;
+        } catch (NumberFormatException | NullPointerException e) {
+            return 0;
         }
     }
 
