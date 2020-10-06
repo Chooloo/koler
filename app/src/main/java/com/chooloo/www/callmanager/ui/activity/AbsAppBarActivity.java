@@ -35,5 +35,4 @@ public abstract class AbsAppBarActivity extends AbsThemeActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
     }
-
 }
