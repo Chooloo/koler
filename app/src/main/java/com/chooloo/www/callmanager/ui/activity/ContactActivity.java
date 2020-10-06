@@ -94,6 +94,11 @@ public class ContactActivity extends AbsThemeActivity implements AbsCursorFragme
         checkRecentsEmpty();
     }
 
+    @OnClick(R.id.contact_button_back)
+    public void goBack(View view) {
+        onBackPressed();
+    }
+
     @OnClick(R.id.contact_button_call)
     public void actionCall(View view) {
         Timber.i("MAIN PHONE NUMBER: %s", mContact.getMainPhoneNumber());
