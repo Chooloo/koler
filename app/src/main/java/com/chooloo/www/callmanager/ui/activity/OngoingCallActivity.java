@@ -647,7 +647,7 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         ongoingSet.clone(mOngoingCallLayout);
         ongoingSet.connect(R.id.reject_btn, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.END);
         ongoingSet.connect(R.id.reject_btn, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        ongoingSet.setHorizontalBias(R.id.reject_btn, 0.5f);
+//        ongoingSet.setHorizontalBias(R.id.reject_btn, 0.5f);
         ongoingSet.setMargin(R.id.reject_btn, ConstraintSet.END, 0);
 
         ConstraintSet overlaySet = new ConstraintSet();
