@@ -99,7 +99,7 @@
     </style>
 
     <style name="CallButton.BottomButton">
-        <item name="android:layout_margin">25dp</item>
+        <item name="android:layout_margin">30dp</item>
         <item name="android:scaleType">center</item>
         <item name="fabCustomSize">70dp</item>
         <item name="fabSize">normal</item>
