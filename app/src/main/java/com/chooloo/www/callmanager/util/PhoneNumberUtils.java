@@ -54,7 +54,7 @@ public class PhoneNumberUtils {
         } catch (NumberParseException e) {
             e.printStackTrace();
         }
-        Timber.i("3 FORMATTING " + phoneNumber + " -> " + phoneUtil.format(formattedNumber, NATIONAL));
+
         return phoneNumber;
     }
 }
