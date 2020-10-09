@@ -13,8 +13,10 @@ Believe us we want to make it good, as we use it ourselves.
 
 ## Support Availablity
 We are aware the app needs more support and updates, due to feature requests and minor bugs
-We are currently not fully availale for supporting the app though we'll do our best to slowly push updates and add requested feature
-So feel free to contact us for every little thing
+We are currently not fully availale for supporting the app due to lack of support (The app is free to use)
+We'll do our best to slowly push updates and add requested feature
+If you want to help us and support us so we can put more attention into the app, please consider supporting us (Bottom of the page)
+Feel free to contact us for every little thing
 
 ## Features
 ### Design
@@ -33,17 +35,15 @@ In an incoming call, you can do the following before answering:
 In an ongoing call you can:
 * Hang-up in a specified amount of seconds
 
+To use those features simply long click the answer or decline buttons for the appropriate action
+
 ### Swipes
-The app's main goal is to be more intuitive and comfortable. For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
-  <!-- * ### Dialer
-    * __Call__            - Swipe up  
-    * __Delete number__   - Swipe left  
-    * __Collapse dialer__ - Swipe on the contacts list  -->
-  * ### Incoming Call
-    * __Open keypad__     - Swipe up   
-    * __Reject/End__      - Swipe left  
-    * __Answer__          - Swipe right 
-    * __Send sms__        - Swipe up on the send SMS overlay
+The app's main goal is to be more intuitive and comfortable. For that reason, we tried to add more swipes into the app's functionality
+    * ### Call screen features
+       * __Open keypad__     - Swipe up   
+       * __Reject/End__      - Swipe left  
+       * __Answer__          - Swipe right 
+       * __Send sms__        - Swipe up on the send SMS overlay
 
 ### Call Actions
 In Koler you can interact with incoming calls in new ways
