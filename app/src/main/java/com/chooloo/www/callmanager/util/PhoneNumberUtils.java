@@ -49,7 +49,6 @@ public class PhoneNumberUtils {
         // Check for national number (User's country as default)
         try {
             formattedNumber = phoneUtil.parse(phoneNumber, Utilities.getCountry(context));
-            Timber.i("FORMATTING " + phoneNumber + " -> " + phoneUtil.format(formattedNumber, NATIONAL));
             return phoneUtil.format(formattedNumber, NATIONAL);
         } catch (NumberParseException e) {
             e.printStackTrace();
