@@ -16,10 +16,8 @@ import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
-import com.chooloo.www.callmanager.ui.ListItemHolder;
+import com.chooloo.www.callmanager.ui2.ListItemHolder;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
-import com.chooloo.www.callmanager.util.Utilities;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import timber.log.Timber;
 

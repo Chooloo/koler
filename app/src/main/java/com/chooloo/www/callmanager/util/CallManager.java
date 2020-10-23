@@ -14,13 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.activity.OngoingCallActivity;
+import com.chooloo.www.callmanager.ui2.activity.OngoingCallActivity;
 import com.chooloo.www.callmanager.util.validation.Validator;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URLDecoder;
-import java.security.Permission;
 import java.util.List;
 
 import timber.log.Timber;

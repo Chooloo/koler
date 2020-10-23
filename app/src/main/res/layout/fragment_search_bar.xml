@@ -10,7 +10,7 @@
     android:paddingTop="13dp"
     android:paddingEnd="30dp"
     android:paddingBottom="10dp"
-    tools:context=".ui.fragment.SearchBarFragment">
+    tools:context=".ui2.fragment.SearchBarFragment">
 
     <EditText
         android:id="@+id/search_input"

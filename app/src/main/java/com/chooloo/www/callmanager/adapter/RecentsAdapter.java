@@ -12,18 +12,12 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.chooloo.www.callmanager.ui.ListItemHolder;
-import com.chooloo.www.callmanager.util.PhoneNumberUtils;
+import com.chooloo.www.callmanager.ui2.ListItemHolder;
 import com.chooloo.www.callmanager.util.RelativeTime;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-
-import timber.log.Timber;
 
 public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 

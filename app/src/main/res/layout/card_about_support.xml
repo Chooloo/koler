@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.chooloo.www.callmanager.ui.widgets.ListItem
+        <com.chooloo.www.callmanager.ui2.widgets.ListItem
             android:id="@+id/about_bugs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             app:src="@drawable/ic_bug_report_black_24dp"
             app:title="@string/about_bugs_title" />
 
-        <com.chooloo.www.callmanager.ui.widgets.ListItem
+        <com.chooloo.www.callmanager.ui2.widgets.ListItem
             android:id="@+id/about_rate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             app:src="@drawable/ic_star_black_24dp"
             app:title="@string/about_rate_title" />
 
-        <com.chooloo.www.callmanager.ui.widgets.ListItem
+        <com.chooloo.www.callmanager.ui2.widgets.ListItem
             android:id="@+id/about_donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

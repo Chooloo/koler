@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 public class SharedDialViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> mNumber;
-    private MutableLiveData<Boolean> mIsOutOfFocus;
+    private MutableLiveData<Boolean> mIsFocused;
     private MutableLiveData<Boolean> mIsTopOpened;
 
     public SharedDialViewModel(@NonNull Application application) {
@@ -17,8 +17,8 @@ public class SharedDialViewModel extends AndroidViewModel {
         mNumber = new MutableLiveData<>();
         mNumber.setValue(null);
 
-        mIsOutOfFocus = new MutableLiveData<>();
-        mIsOutOfFocus.setValue(false);
+        mIsFocused = new MutableLiveData<>();
+        mIsFocused.setValue(false);
 
         mIsTopOpened = new MutableLiveData<>();
         mIsTopOpened.setValue(true);
@@ -34,12 +34,12 @@ public class SharedDialViewModel extends AndroidViewModel {
         else mNumber.setValue(number);
     }
 
-    public MutableLiveData<Boolean> getIsOutOfFocus() {
-        return mIsOutOfFocus;
+    public MutableLiveData<Boolean> getIsFocused() {
+        return mIsFocused;
     }
 
-    public void setIsOutOfFocus(boolean isOutOfFocus) {
-        mIsOutOfFocus.setValue(isOutOfFocus);
+    public void setIsFocused(boolean isFocused) {
+        mIsFocused.setValue(isFocused);
     }
 
     public MutableLiveData<Boolean> getIsTopOpened() {

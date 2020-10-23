@@ -20,10 +20,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.chooloo.www.callmanager.BuildConfig;
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui2.dialog.ChangelogDialog;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +41,7 @@ import static android.Manifest.permission.SEND_SMS;
 
 public class Utilities {
 
+    private static final String TAG_CHANGELOG_DIALOG = "changelog";
     public static final long LONG_VIBRATE_LENGTH = 500;
     public static final long SHORT_VIBRATE_LENGTH = 20;
     public static final long DEFAULT_VIBRATE_LENGTH = 100;
@@ -252,4 +257,13 @@ public class Utilities {
         activity.startActivity(smsIntent);
     }
 
+    /**
+     * If user using a new version of the app, show the new version dialog
+     */
+    public static void showNewVersionDialog(Activity activity) {
+        if (PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key) < BuildConfig.VERSION_CODE && activity instanceof FragmentActivity) {
+            PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
+            new ChangelogDialog().show(((FragmentActivity) activity).getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
+        }
+    }
 }

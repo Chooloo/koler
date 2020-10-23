@@ -31,10 +31,10 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.activity.ContactActivity"
+            android:name=".ui2.activity.ContactActivity"
             android:label="@string/title_activity_contact" />
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui2.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -109,19 +109,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.CGroupActivity"
-            android:parentActivityName=".ui.activity.MainActivity" />
+            android:name=".ui2.activity.CGroupActivity"
+            android:parentActivityName=".ui2.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.OngoingCallActivity"
+            android:name=".ui2.activity.OngoingCallActivity"
             android:label="@string/activity_ongoing_call"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Light" />
         <activity
-            android:name=".ui.activity.SettingsActivity"
+            android:name=".ui2.activity.SettingsActivity"
             android:label="@string/activity_settings"
             android:theme="@style/AppTheme.Light" />
         <activity
-            android:name=".ui.activity.AboutActivity"
+            android:name=".ui2.activity.AboutActivity"
             android:label="@string/activity_about"
             android:theme="@style/AppTheme.Light" />
 

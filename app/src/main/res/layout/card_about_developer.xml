@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_logo" />
 
-        <com.chooloo.www.callmanager.ui.widgets.ListItem
+        <com.chooloo.www.callmanager.ui2.widgets.ListItem
             android:id="@+id/about_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             app:description="@string/support_email"
             app:title="@string/about_email_title" />
 
-        <com.chooloo.www.callmanager.ui.widgets.ListItem
+        <com.chooloo.www.callmanager.ui2.widgets.ListItem
             android:id="@+id/about_roei"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:src="@drawable/ic_person_black_24dp"
             app:title="@string/about_roei_title" />
 
-        <com.chooloo.www.callmanager.ui.widgets.ListItem
+        <com.chooloo.www.callmanager.ui2.widgets.ListItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/about_roei"

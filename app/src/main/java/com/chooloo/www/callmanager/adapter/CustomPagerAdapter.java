@@ -1,29 +1,22 @@
 package com.chooloo.www.callmanager.adapter;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceManager;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.fragment.CGroupsFragment;
-import com.chooloo.www.callmanager.ui.fragment.ContactsFragment;
-import com.chooloo.www.callmanager.ui.fragment.ContactsPageFragment;
-import com.chooloo.www.callmanager.ui.fragment.RecentsFragment;
-import com.chooloo.www.callmanager.ui.fragment.RecentsPageFragment;
+import com.chooloo.www.callmanager.ui2.fragment.CGroupsFragment;
+import com.chooloo.www.callmanager.ui2.fragment.ContactsPageFragment;
+import com.chooloo.www.callmanager.ui2.fragment.RecentsPageFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import timber.log.Timber;
 
 public class CustomPagerAdapter extends FragmentPagerAdapter {
 
