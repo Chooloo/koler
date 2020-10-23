@@ -9,8 +9,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui2.fragment.CGroupsFragment;
-import com.chooloo.www.callmanager.ui2.fragment.ContactsPageFragment;
-import com.chooloo.www.callmanager.ui2.fragment.RecentsPageFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
 import java.lang.reflect.InvocationTargetException;

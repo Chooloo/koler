@@ -30,6 +30,8 @@ public class MainContract implements BaseContract {
         void toggleAddContactFAB(boolean isShow);
 
         void showSearchBar(boolean isShow);
+
+        void togglSearchBar();
     }
 
     interface Presenter<V extends BaseContract.View> extends BaseContract.Presenter<V> {

@@ -18,7 +18,6 @@ import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui2.ListItemHolder;
-import com.chooloo.www.callmanager.ui2.activity.ContactActivity;
 import com.chooloo.www.callmanager.ui2.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 

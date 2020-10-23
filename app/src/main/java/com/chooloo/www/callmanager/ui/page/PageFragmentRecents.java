@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2.fragment;
+package com.chooloo.www.callmanager.ui.page;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,56 +13,62 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui2.activity.MainActivity;
-import com.chooloo.www.callmanager.ui2.fragment.base.AbsPageFragment;
+import com.chooloo.www.callmanager.ui.base.BaseFragment;
+import com.chooloo.www.callmanager.ui.main.MainActivity;
+import com.chooloo.www.callmanager.ui2.fragment.RecentsFragment;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 
-/**
- * Works only in MainActivity
- */
-public class ContactsPageFragment extends AbsPageFragment {
+public class PageFragmentRecents extends BaseFragment implements PageContract.View, MainActivity.FABManager {
+
+    private PagePresenter<PageContract.View> mPresenter;
 
     private Context mContext;
 
-    private ContactsFragment mContactsFragment;
+    private RecentsFragment mRecentsFragment;
 
-    public ContactsPageFragment(Context context) {
+    public PageFragmentRecents(Context context) {
         this.mContext = context;
-        mContactsFragment = new ContactsFragment(mContext);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_page, container, false);
+
+        mPresenter = new PagePresenter();
+        mPresenter.bind(this, getLifecycle());
+        mPresenter.subscribe(mContext);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_page_layout, mContactsFragment).commit();
+        transaction.replace(R.id.fragment_page_layout, mRecentsFragment).commit();
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+        setUp();
+    }
+
+    @Override
+    public void setUp() {
+        mRecentsFragment = new RecentsFragment(mContext);
+
         // dialer view model
         SharedDialViewModel sharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        sharedDialViewModel.getNumber().observe(this, s -> {
-            if (s == "") s = null;
-            mContactsFragment.load(s, null);
-        });
+        sharedDialViewModel.getNumber().observe(this, s -> mRecentsFragment.load(s, s == "" ? null : s));
 
         // search bar view model
         SharedSearchViewModel sharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
-        sharedSearchViewModel.getText().observe(this, t -> {
-            if (t == "") t = null;
-            mContactsFragment.load(null, t);
-        });
+        sharedSearchViewModel.getText().observe(this, t -> mRecentsFragment.load(null, t == "" ? null : t));
 
-        mContactsFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecentsFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -84,14 +90,18 @@ public class ContactsPageFragment extends AbsPageFragment {
         });
     }
 
-    @Override
-    public void onRightClick() {
-        ((MainActivity) getActivity()).expandDialer(true);
+    public void loadContacts(String phoneNumber, String contactName) {
+        mRecentsFragment.load(phoneNumber, contactName);
     }
 
     @Override
     public void onLeftClick() {
-        ((MainActivity) getActivity()).toggleSearchBar();
+        mPresenter.onLeftClick();
+    }
+
+    @Override
+    public void onRightClick() {
+        mPresenter.onRightClick();
     }
 
     @Override

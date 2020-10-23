@@ -51,9 +51,14 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+
+// TODO implement FAB Coordination
+
 public class MainActivity extends BaseThemeActivity implements MainContract.View {
 
     private MainPresenter<MainContract.View> mPresenter;
+
+    FABManager mFABManager;
 
     Menu mMenu;
 
@@ -177,12 +182,12 @@ public class MainActivity extends BaseThemeActivity implements MainContract.View
 
     @OnClick(R.id.right_button)
     public void fabRightClick() {
-        mFABCoordinator.performRightClick();
+        mFABManager.onRightClick();
     }
 
     @OnClick(R.id.left_button)
     public void fabLeftClick() {
-        mFABCoordinator.performLeftClick();
+        mFABManager.onLeftClick();
     }
 
     @OnClick(R.id.add_contact_fab_button)
@@ -312,6 +317,10 @@ public class MainActivity extends BaseThemeActivity implements MainContract.View
         mAppBarLayout.setExpanded(isShow);
     }
 
+    public void toggleSearchBar() {
+        showSearchBar(mSearchBarContainer.getVisibility() == VISIBLE ? false : true);
+    }
+
     /**
      * Animate view
      *
@@ -328,5 +337,13 @@ public class MainActivity extends BaseThemeActivity implements MainContract.View
             v.setClickable(false);
             v.setFocusable(false);
         }
+    }
+
+    public interface FABManager {
+        void onRightClick();
+
+        void onLeftClick();
+
+        int[] getIconsResources();
     }
 }

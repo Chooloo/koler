@@ -9,7 +9,7 @@ public interface BaseContract {
     }
 
     interface Presenter<V extends View> {
-        void bind(BaseContract.View view, Lifecycle lifecycle);
+        void bind(V view, Lifecycle lifecycle);
 
         void unbind();
 

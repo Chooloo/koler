@@ -7,7 +7,7 @@ public interface CallContract extends BaseContract {
 
     }
 
-    interface Presenter extends BaseContract.Presenter {
+    interface Presenter<V extends View> extends BaseContract.Presenter<V> {
 
     }
 }
