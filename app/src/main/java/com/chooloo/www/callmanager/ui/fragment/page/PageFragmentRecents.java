@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.page;
+package com.chooloo.www.callmanager.ui.fragment.page;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,20 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui.main.MainActivity;
-import com.chooloo.www.callmanager.ui2.fragment.ContactsFragment;
+import com.chooloo.www.callmanager.ui.activity.main.MainActivity;
+import com.chooloo.www.callmanager.ui2.fragment.RecentsFragment;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 
-public class PageFragmentContacts extends BaseFragment implements PageContract.View, MainActivity.FABManager {
+public class PageFragmentRecents extends BaseFragment implements PageContract.View, MainActivity.FABManager {
 
     private PagePresenter<PageContract.View> mPresenter;
 
     private Context mContext;
 
-    private ContactsFragment mContactsFragment;
+    private RecentsFragment mRecentsFragment;
 
-    public PageFragmentContacts(Context context) {
+    public PageFragmentRecents(Context context) {
         this.mContext = context;
     }
 
@@ -46,7 +46,7 @@ public class PageFragmentContacts extends BaseFragment implements PageContract.V
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_page_layout, mContactsFragment).commit();
+        transaction.replace(R.id.fragment_page_layout, mRecentsFragment).commit();
     }
 
     @Override
@@ -58,17 +58,17 @@ public class PageFragmentContacts extends BaseFragment implements PageContract.V
 
     @Override
     public void setUp() {
-        mContactsFragment = new ContactsFragment(mContext);
+        mRecentsFragment = new RecentsFragment(mContext);
 
         // dialer view model
         SharedDialViewModel sharedDialViewModel = ViewModelProviders.of(getActivity()).get(SharedDialViewModel.class);
-        sharedDialViewModel.getNumber().observe(this, s -> mContactsFragment.load(s, s == "" ? null : s));
+        sharedDialViewModel.getNumber().observe(this, s -> mRecentsFragment.load(s, s == "" ? null : s));
 
         // search bar view model
         SharedSearchViewModel sharedSearchViewModel = ViewModelProviders.of(getActivity()).get(SharedSearchViewModel.class);
-        sharedSearchViewModel.getText().observe(this, t -> mContactsFragment.load(null, t == "" ? null : t));
+        sharedSearchViewModel.getText().observe(this, t -> mRecentsFragment.load(null, t == "" ? null : t));
 
-        mContactsFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecentsFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -91,9 +91,8 @@ public class PageFragmentContacts extends BaseFragment implements PageContract.V
     }
 
     public void loadContacts(String phoneNumber, String contactName) {
-        mContactsFragment.load(phoneNumber, contactName);
+        mRecentsFragment.load(phoneNumber, contactName);
     }
-
 
     @Override
     public void onLeftClick() {

@@ -1,8 +1,5 @@
-package com.chooloo.www.callmanager.ui.contact;
+package com.chooloo.www.callmanager.ui.activity.contact;
 
-import android.app.Activity;
-
-import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.BaseContract;
 
 public class ContactContract {

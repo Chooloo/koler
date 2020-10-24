@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.main;
+package com.chooloo.www.callmanager.ui.activity.main;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
-import com.chooloo.www.callmanager.ui2.activity.SettingsActivity;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 

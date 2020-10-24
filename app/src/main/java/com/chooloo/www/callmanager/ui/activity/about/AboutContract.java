@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.about;
+package com.chooloo.www.callmanager.ui.activity.about;
 
 import com.chooloo.www.callmanager.ui.base.BaseContract;
 

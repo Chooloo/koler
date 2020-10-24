@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.main;
+package com.chooloo.www.callmanager.ui.activity.main;
 
 import android.content.Intent;
 import android.view.MenuItem;

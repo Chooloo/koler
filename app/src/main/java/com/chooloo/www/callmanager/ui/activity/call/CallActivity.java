@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.call;
+package com.chooloo.www.callmanager.ui.activity.call;
 
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
 

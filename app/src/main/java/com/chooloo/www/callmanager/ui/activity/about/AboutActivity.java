@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.about;
+package com.chooloo.www.callmanager.ui.activity.about;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseContract;
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui2.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui2.widgets.ListItem;
