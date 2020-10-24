@@ -14,7 +14,6 @@ public class SharedIntentViewModel extends AndroidViewModel {
         super(application);
         mData = new MutableLiveData<>();
         mData.setValue("");
-
     }
 
     public MutableLiveData<String> getData() {

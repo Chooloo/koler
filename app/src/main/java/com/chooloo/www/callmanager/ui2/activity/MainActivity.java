@@ -1,52 +1,20 @@
 package com.chooloo.www.callmanager.ui2.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
-import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui2.FABCoordinator;
-import com.chooloo.www.callmanager.ui2.fragment.DialpadFragment;
-import com.chooloo.www.callmanager.ui2.fragment.SearchBarFragment;
-import com.chooloo.www.callmanager.util.ContactUtils;
-import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.PreferenceUtils;
-import com.chooloo.www.callmanager.util.ThemeUtils;
-import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
-import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 public class MainActivity extends AbsSearchBarActivity {
 

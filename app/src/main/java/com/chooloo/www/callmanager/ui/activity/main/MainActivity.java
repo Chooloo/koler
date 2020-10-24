@@ -25,7 +25,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
-import com.chooloo.www.callmanager.ui2.fragment.DialpadFragment;
 import com.chooloo.www.callmanager.ui2.fragment.SearchBarFragment;
 import com.chooloo.www.callmanager.util.BiometricUtils;
 import com.chooloo.www.callmanager.util.ContactUtils;
