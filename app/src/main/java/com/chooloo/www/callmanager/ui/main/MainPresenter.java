@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
-
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
-import com.chooloo.www.callmanager.ui2.activity.AboutActivity;
 import com.chooloo.www.callmanager.ui2.activity.SettingsActivity;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;

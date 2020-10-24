@@ -25,15 +25,6 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class ContactPresenter<V extends ContactContract.View> extends BasePresenter<V> implements ContactContract.Presenter<V> {
 
-    private Contact mContact;
-    private Activity mActivity;
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    @Override
-    public void setActivity() {
-        mActivity = mView.getActivity();
-    }
-
     @Override
     public void onBackButtonPressed() {
         mView.onBackPressed();
@@ -41,49 +32,31 @@ public class ContactPresenter<V extends ContactContract.View> extends BasePresen
 
     @Override
     public void onActionCall() {
-        Timber.i("MAIN PHONE NUMBER: %s", mContact.getMainPhoneNumber());
-        CallManager.call(mActivity, mContact.getMainPhoneNumber());
+        mView.actionCall();
     }
 
     @Override
     public void onActionSms() {
-        Utilities.openSmsWithNumber(mActivity, mContact.getMainPhoneNumber());
+        mView.actionSms();
     }
 
     @Override
     public void onActionEdit() {
-        ContactUtils.openContactToEdit(mActivity, mContact.getContactId());
+        mView.actionDelete();
     }
 
     @Override
     public void onActionInfo() {
-        ContactUtils.openContact(mActivity, mContact.getContactId());
+        mView.actionInfo();
     }
 
     @Override
     public void onActionDelete() {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
-            ContactUtils.deleteContact(mActivity, mContact.getContactId());
-        } else {
-            Toast.makeText(mContext, "I dont have the permission", Toast.LENGTH_LONG).show();
-        }
+        mView.actionDelete();
     }
 
     @Override
     public void onActionFav() {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            if (mContact.getIsFavorite()) {
-                mContact.setIsFavorite(false);
-                mView.toggleFavIcon(true);
-                ContactUtils.setContactIsFavorite(mActivity, Long.toString(mContact.getContactId()), false);
-            } else {
-                mContact.setIsFavorite(true);
-                mView.toggleFavIcon(false);
-                ContactUtils.setContactIsFavorite(mActivity, Long.toString(mContact.getContactId()), true);
-            }
-        } else {
-            PermissionUtils.askForPermissions(mActivity, new String[]{WRITE_CONTACTS});
-            Toast.makeText(mContext, "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
-        }
+        mView.actionFav();
     }
 }

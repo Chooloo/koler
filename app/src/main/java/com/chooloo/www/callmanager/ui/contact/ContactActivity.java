@@ -23,15 +23,12 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui2.fragment.RecentsFragment;
-import com.chooloo.www.callmanager.ui2.fragment.base.AbsCursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-
-import org.apache.xmlbeans.impl.values.XmlComplexContentImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,22 +122,12 @@ public class ContactActivity extends BaseThemeActivity implements ContactContrac
     }
 
     @Override
-    public Contact getContact() {
-        return mContact;
-    }
-
-    @Override
-    public Activity getActivity() {
-        return getActivity();
-    }
-
-    @Override
     public void setUp() {
         setContactFromIntent();
 
         if (mContact != null) {
             mRecentsFragment = new RecentsFragment(this, mContact.getMainPhoneNumber(), null);
-            mRecentsFragment.setOnLoadFinishListener(this::checkNoRecents);
+            mRecentsFragment.setOnLoadFinishListener(this::handleNoRecents);
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
@@ -172,6 +159,53 @@ public class ContactActivity extends BaseThemeActivity implements ContactContrac
     }
 
     @Override
+    public void actionCall() {
+        CallManager.call(this, mContact.getMainPhoneNumber());
+    }
+
+    @Override
+    public void actionSms() {
+        Utilities.openSmsWithNumber(this, mContact.getMainPhoneNumber());
+    }
+
+    @Override
+    public void actionEdit() {
+        ContactUtils.openContactToEdit(this, mContact.getContactId());
+    }
+
+    @Override
+    public void actionInfo() {
+        ContactUtils.openContact(this, mContact.getContactId());
+    }
+
+    @Override
+    public void actionDelete() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
+            ContactUtils.deleteContact(this, mContact.getContactId());
+        } else {
+            Toast.makeText(this, "I dont have the permission", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void actionFav() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            if (mContact.getIsFavorite()) {
+                mContact.setIsFavorite(false);
+                toggleFavIcon(true);
+                ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), false);
+            } else {
+                mContact.setIsFavorite(true);
+                toggleFavIcon(false);
+                ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), true);
+            }
+        } else {
+            PermissionUtils.askForPermissions(this, new String[]{WRITE_CONTACTS});
+            Toast.makeText(this, "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     public void toggleFavIcon(boolean toggle) {
         mActionFav.setImageDrawable(ContextCompat.getDrawable(this, toggle ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp));
     }
@@ -189,7 +223,7 @@ public class ContactActivity extends BaseThemeActivity implements ContactContrac
     }
 
     @Override
-    public void checkNoRecents() {
+    public void handleNoRecents() {
         if (mRecentsFragment.size() == 0) {
             mRecentsEmpty.setVisibility(View.VISIBLE);
             mRecentsTitle.setVisibility(View.GONE);
