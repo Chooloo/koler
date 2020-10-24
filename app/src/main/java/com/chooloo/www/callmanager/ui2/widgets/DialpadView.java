@@ -18,10 +18,12 @@ package com.chooloo.www.callmanager.ui2.widgets;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,7 +39,9 @@ public class DialpadView extends LinearLayout {
     private static final String TAG = DialpadView.class.getSimpleName();
 
     @BindView(R.id.digits_edit_text) EditText mDigits;
-    @BindView(R.id.button_delete) ImageButton mDelete;
+    @BindView(R.id.button_delete) ImageButton mDeleteButton;
+    @BindView(R.id.button_call) ImageButton mCallButton;
+    @BindView(R.id.dialpad_key_voicemail) ImageView mKeyVoicemail;
 
     public DialpadView(Context context) {
         this(context, null);
@@ -62,42 +66,65 @@ public class DialpadView extends LinearLayout {
         final int[] buttonIds = new int[]{R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4,
                 R.id.key_5, R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex};
 
-        final int[] numberIds = new int[]{R.string.dialpad_0_number, R.string.dialpad_1_number,
-                R.string.dialpad_2_number, R.string.dialpad_3_number, R.string.dialpad_4_number,
-                R.string.dialpad_5_number, R.string.dialpad_6_number, R.string.dialpad_7_number,
-                R.string.dialpad_8_number, R.string.dialpad_9_number, R.string.dialpad_star_number,
+        final int[] numberIds = new int[]{
+                R.string.dialpad_0_number,
+                R.string.dialpad_1_number,
+                R.string.dialpad_2_number,
+                R.string.dialpad_3_number,
+                R.string.dialpad_4_number,
+                R.string.dialpad_5_number,
+                R.string.dialpad_6_number,
+                R.string.dialpad_7_number,
+                R.string.dialpad_8_number,
+                R.string.dialpad_9_number,
+                R.string.dialpad_star_number,
                 R.string.dialpad_pound_number};
 
-        final int[] letterIds = new int[]{R.string.dialpad_0_letters, R.string.dialpad_1_letters,
-                R.string.dialpad_2_letters, R.string.dialpad_3_letters, R.string.dialpad_4_letters,
-                R.string.dialpad_5_letters, R.string.dialpad_6_letters, R.string.dialpad_7_letters,
-                R.string.dialpad_8_letters, R.string.dialpad_9_letters,
-                R.string.dialpad_star_letters, R.string.dialpad_pound_letters};
+        final int[] letterIds = new int[]{
+                R.string.dialpad_0_letters,
+                R.string.dialpad_1_letters,
+                R.string.dialpad_2_letters,
+                R.string.dialpad_3_letters,
+                R.string.dialpad_4_letters,
+                R.string.dialpad_5_letters,
+                R.string.dialpad_6_letters,
+                R.string.dialpad_7_letters,
+                R.string.dialpad_8_letters,
+                R.string.dialpad_9_letters,
+                R.string.dialpad_star_letters,
+                R.string.dialpad_pound_letters
+        };
+
+        final int[] keyCodes = new int[]{
+                KeyEvent.KEYCODE_0,
+                KeyEvent.KEYCODE_1,
+                KeyEvent.KEYCODE_2,
+                KeyEvent.KEYCODE_3,
+                KeyEvent.KEYCODE_4,
+                KeyEvent.KEYCODE_5,
+                KeyEvent.KEYCODE_6,
+                KeyEvent.KEYCODE_7,
+                KeyEvent.KEYCODE_8,
+                KeyEvent.KEYCODE_9,
+                KeyEvent.KEYCODE_STAR,
+                KeyEvent.KEYCODE_POUND
+        };
 
         final Resources resources = getContext().getResources();
-        DialpadKeyButton dialpadKey;
-        TextView numberView;
-        TextView lettersView;
 
         for (int i = 0; i < buttonIds.length; i++) {
-            dialpadKey = findViewById(buttonIds[i]);
-            numberView = dialpadKey.findViewById(R.id.dialpad_key_number);
-            lettersView = dialpadKey.findViewById(R.id.dialpad_key_letters);
-            final String numberString = resources.getString(numberIds[i]);
-            numberView.setText(numberString);
-            numberView.setElegantTextHeight(false);
-            if (lettersView != null) {
-                lettersView.setText(resources.getString(letterIds[i]));
-            }
+            DialpadKeyButton dialpadKey = findViewById(buttonIds[i]);
+            dialpadKey.setNumber(resources.getString(numberIds[i]));
+            dialpadKey.setLetters(resources.getString(letterIds[i]));
+            dialpadKey.setKeyCode(keyCodes[i]);
         }
 
         setDigitsCanBeEdited(true);
     }
 
     public void setShowVoicemailButton(boolean show) {
-        View view = findViewById(R.id.dialpad_key_voicemail);
-        if (view != null) {
-            view.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        if (mKeyVoicemail != null) {
+            mKeyVoicemail.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
         }
     }
 
@@ -108,15 +135,12 @@ public class DialpadView extends LinearLayout {
      *                    will be configured to allow text manipulation.
      */
     public void setDigitsCanBeEdited(boolean canBeEdited) {
-        View deleteButton = findViewById(R.id.button_delete);
-        deleteButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
-        View callButton = findViewById(R.id.button_call);
-        callButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
-        EditText digits = (DigitsEditText) findViewById(R.id.digits_edit_text);
-        digits.setClickable(canBeEdited);
-        digits.setLongClickable(canBeEdited);
-        digits.setFocusableInTouchMode(canBeEdited);
-        digits.setCursorVisible(canBeEdited);
+        mDeleteButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
+        mCallButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
+        mDigits.setClickable(canBeEdited);
+        mDigits.setLongClickable(canBeEdited);
+        mDigits.setFocusableInTouchMode(canBeEdited);
+        mDigits.setCursorVisible(canBeEdited);
     }
 
     /**

@@ -23,7 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui2.fragment.OnKeyDownListener;
+import com.chooloo.www.callmanager.ui2.widgets.DialpadKeyButton;
 import com.chooloo.www.callmanager.ui2.widgets.DialpadView;
 import com.chooloo.www.callmanager.ui2.widgets.DigitsEditText;
 import com.chooloo.www.callmanager.util.AudioUtils;
@@ -58,8 +58,6 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
     private SharedDialViewModel mSharedDialViewModel;
 
     private SharedIntentViewModel mSharedIntentViewModel;
-
-    private PhoneNumberFormattingTextWatcher mPhoneNumberFormattingTextWatcher;
 
     private AudioUtils mAudioUtils;
 
@@ -102,7 +100,7 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
             R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex, R.id.button_delete})
     public void keyClick(View view) {
-        mPresenter.onKeyClick(mKeyIdToKeyCode.get(view.getId()));
+        mPresenter.onKeyClick(((DialpadKeyButton) view).getKeyCode());
     }
 
     @OnClick(R.id.button_call)
@@ -169,21 +167,6 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
             public void afterTextChanged(Editable s) {
             }
         });
-
-        // create an id to code key map
-        mKeyIdToKeyCode.put(R.id.key_0, KeyEvent.KEYCODE_0);
-        mKeyIdToKeyCode.put(R.id.key_1, KeyEvent.KEYCODE_1);
-        mKeyIdToKeyCode.put(R.id.key_2, KeyEvent.KEYCODE_2);
-        mKeyIdToKeyCode.put(R.id.key_3, KeyEvent.KEYCODE_3);
-        mKeyIdToKeyCode.put(R.id.key_4, KeyEvent.KEYCODE_4);
-        mKeyIdToKeyCode.put(R.id.key_5, KeyEvent.KEYCODE_5);
-        mKeyIdToKeyCode.put(R.id.key_6, KeyEvent.KEYCODE_6);
-        mKeyIdToKeyCode.put(R.id.key_7, KeyEvent.KEYCODE_7);
-        mKeyIdToKeyCode.put(R.id.key_8, KeyEvent.KEYCODE_8);
-        mKeyIdToKeyCode.put(R.id.key_9, KeyEvent.KEYCODE_9);
-        mKeyIdToKeyCode.put(R.id.key_hex, KeyEvent.KEYCODE_POUND);
-        mKeyIdToKeyCode.put(R.id.key_star, KeyEvent.KEYCODE_STAR);
-        mKeyIdToKeyCode.put(R.id.button_delete, KeyEvent.KEYCODE_DEL);
     }
 
     @Override
@@ -255,15 +238,6 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
         Utilities.vibrate(mContext, Utilities.SHORT_VIBRATE_LENGTH);
     }
 
-    public Bundle tryGetArguments() {
-        Bundle args = super.getArguments();
-        if (args == null) {
-            throw new IllegalArgumentException("You must create this fragment with newInstance()");
-        } else {
-            return args;
-        }
-    }
-
     @Override
     public void setDigitsCanBeEdited(boolean isCanBeEdited) {
         Handler handler = new Handler();
@@ -274,6 +248,15 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
     public void showVoicemailButton(boolean isShow) {
         Handler handler = new Handler();
         handler.postDelayed(() -> mDialpadView.setShowVoicemailButton(isShow), 2000);
+    }
+
+    public Bundle tryGetArguments() {
+        Bundle args = super.getArguments();
+        if (args == null) {
+            throw new IllegalArgumentException("You must create this fragment with newInstance()");
+        } else {
+            return args;
+        }
     }
 
     public void setOnKeyDownListener(OnKeyDownListener onKeyDownListener) {
