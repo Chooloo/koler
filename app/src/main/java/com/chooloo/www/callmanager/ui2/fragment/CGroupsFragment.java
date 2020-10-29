@@ -23,7 +23,6 @@ import com.chooloo.www.callmanager.task.AsyncSpreadsheetImport;
 import com.chooloo.www.callmanager.ui2.FABCoordinator;
 import com.chooloo.www.callmanager.ui2.activity.CGroupActivity;
 import com.chooloo.www.callmanager.ui2.dialog.ImportSpreadsheetDialog;
-import com.chooloo.www.callmanager.ui2.fragment.base.AbsRecyclerViewFragment;
 import com.chooloo.www.callmanager.viewmodel.CGroupsViewModel;
 
 import java.io.File;

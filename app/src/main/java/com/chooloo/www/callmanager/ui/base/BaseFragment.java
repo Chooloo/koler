@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 
+import butterknife.ButterKnife;
+
 public class BaseFragment extends Fragment {
 
     @Override
@@ -33,6 +35,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ButterKnife.bind(this, getView());
     }
 
     @Override

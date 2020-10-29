@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2.widgets;
+package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -10,6 +10,8 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.appcompat.widget.AppCompatEditText;
 
 import com.chooloo.www.callmanager.util.Utilities;
+
+import java.util.Objects;
 
 public class DigitsEditText extends AppCompatEditText {
 
@@ -33,8 +35,7 @@ public class DigitsEditText extends AppCompatEditText {
     public boolean onTouchEvent(MotionEvent event) {
         final boolean ret = super.onTouchEvent(event);
         // Must be done after super.onTouchEvent()
-        final InputMethodManager imm = ((InputMethodManager) getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE));
+        final InputMethodManager imm = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
         if (imm != null && imm.isActive(this)) {
             imm.hideSoftInputFromWindow(getApplicationWindowToken(), 0);
         }
@@ -46,6 +47,6 @@ public class DigitsEditText extends AppCompatEditText {
     }
 
     public String getNumbers() {
-        return Utilities.getOnlyNumbers(this.getText().toString());
+        return Utilities.getOnlyNumbers(Objects.requireNonNull(this.getText()).toString());
     }
 }

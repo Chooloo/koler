@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2.widgets;
+package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -23,8 +23,9 @@ public class DialpadKeyButton extends FrameLayout {
 
     public DialpadKeyButton(Context context, String number, String letters, int keyCode) {
         super(context, null);
-
-        mKeyCode = keyCode;
+        this.setKeyCode(keyCode);
+        this.setLetters(letters);
+        this.setNumber(number);
     }
 
     public DialpadKeyButton(Context context, AttributeSet attrs) {

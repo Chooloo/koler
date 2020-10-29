@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2.widgets;
+package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;

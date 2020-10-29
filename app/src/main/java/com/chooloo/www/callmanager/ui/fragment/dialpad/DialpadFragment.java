@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.ui.fragment.dialpad;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,15 +16,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui2.widgets.DialpadKeyButton;
-import com.chooloo.www.callmanager.ui2.widgets.DialpadView;
-import com.chooloo.www.callmanager.ui2.widgets.DigitsEditText;
+import com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton;
+import com.chooloo.www.callmanager.ui.widgets.DialpadView;
+import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
 import com.chooloo.www.callmanager.util.AudioUtils;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
@@ -34,13 +32,11 @@ import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
-import timber.log.Timber;
 
 public class DialpadFragment extends BaseFragment implements DialpadContract.View {
 

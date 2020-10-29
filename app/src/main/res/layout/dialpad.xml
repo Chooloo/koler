@@ -2,19 +2,20 @@
 
 <!-- Dialpad keys -->
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialpad"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
     android:layoutDirection="ltr"
-    android:stretchColumns="*"
-    android:background="?attr/colorPrimary">
+    android:stretchColumns="*">
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.chooloo.www.callmanager.ui2.widgets.DialpadKeyButton
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton
             android:id="@+id/key_1"
             style="@style/DialpadKey">
 
@@ -32,12 +33,12 @@
                     android:layout_height="14dp"
                     android:baselineAlignBottom="true"
                     android:scaleType="fitStart"
-                    android:tint="?attr/iconColor"
-                    android:src="@drawable/ic_voicemail_black_24dp" />
+                    android:src="@drawable/ic_voicemail_black_24dp"
+                    app:tint="?attr/iconColor" />
 
             </LinearLayout>
 
-        </com.chooloo.www.callmanager.ui2.widgets.DialpadKeyButton>
+        </com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton>
 
         <include
             android:id="@+id/key_2"
