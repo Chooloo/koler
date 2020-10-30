@@ -20,7 +20,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
-import com.chooloo.www.callmanager.ui.base.BaseFragment;
+import com.chooloo.www.callmanager.listener.OnItemClickListener;
+import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.ui2.FastScroller;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 
@@ -33,8 +34,6 @@ import static android.view.View.VISIBLE;
 public class CursorFragment extends BaseFragment implements CursorContract.View, LoaderManager.LoaderCallbacks<Cursor> {
 
     protected static final int LOADER_ID = 1;
-    protected static final String ARG_PHONE_NUMBER = "phoneNumber";
-    protected static final String ARG_CONTACT_NAME = "contactName";
 
     protected CursorContract.Presenter<CursorContract.View> mPresenter;
     protected Context mContext;
@@ -53,11 +52,8 @@ public class CursorFragment extends BaseFragment implements CursorContract.View,
     @BindView(R.id.empty_title) protected TextView mEmptyTitle;
     @BindView(R.id.empty_desc) protected TextView mEmptyDesc;
 
-    public static CursorFragment newInstance(Context context, @Nullable String phoneNumber, @Nullable String contactName) {
+    public static CursorFragment newInstance(Bundle args) {
         CursorFragment fragment = new CursorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PHONE_NUMBER, phoneNumber);
-        args.putString(ARG_CONTACT_NAME, contactName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -171,6 +167,8 @@ public class CursorFragment extends BaseFragment implements CursorContract.View,
     public void runLoader(Bundle args) {
         LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
     }
+
+    // Listener
 
     public void setOnLoadFinishListener(OnLoadFinishedListener onLoadFinishListener) {
         mOnLoadFinishedListener = onLoadFinishListener;

@@ -48,4 +48,14 @@ public class CursorPresenter<V extends CursorContract.View> extends BasePresente
     public void onEnablePermissionClick() {
         PermissionUtils.askForPermissions((Fragment) mView, mView.getRequiredPermissions());
     }
+
+    @Override
+    public void onItemClick(View view) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(View view) {
+        return false;
+    }
 }

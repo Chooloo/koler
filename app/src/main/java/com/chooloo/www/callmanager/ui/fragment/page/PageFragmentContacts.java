@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.activity.main.MainActivity;
 import com.chooloo.www.callmanager.ui2.fragment.ContactsFragment;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;

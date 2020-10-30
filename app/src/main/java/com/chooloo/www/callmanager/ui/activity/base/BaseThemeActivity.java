@@ -1,10 +1,11 @@
-package com.chooloo.www.callmanager.ui.base;
+package com.chooloo.www.callmanager.ui.activity.base;
 
 import android.content.res.Resources;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.StyleRes;
 
+import com.chooloo.www.callmanager.ui.activity.base.BaseActivity;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 
 public class BaseThemeActivity extends BaseActivity {

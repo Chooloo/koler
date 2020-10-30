@@ -1,10 +1,12 @@
-package com.chooloo.www.callmanager.ui.base;
+package com.chooloo.www.callmanager.ui.activity.base;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
+
+import com.chooloo.www.callmanager.ui.base.BaseContract;
 
 public class BaseActivity extends AppCompatActivity implements BaseContract.View {
 

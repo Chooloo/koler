@@ -23,10 +23,12 @@ import timber.log.Timber;
 
 public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
 
-    // Click listeners
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
-    private OnContactSelectedListener mOnContactSelectedListener;
+
+    public ContactsAdapter(Context context, Cursor cursor) {
+        super(context, cursor);
+    }
 
     private final ArrayMap<ListItemHolder, Integer> holderMap = new ArrayMap<>();
 
@@ -34,21 +36,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
     private String[] mHeaders = new String[0];
     // Number of contacts that correspond to each mHeader in {@code mHeaders}.
     private int[] mCounts = new int[0];
-
-    /**
-     * Constructor
-     *
-     * @param context
-     * @param cursor
-     */
-    public ContactsAdapter(Context context,
-                           Cursor cursor,
-                           OnItemClickListener onItemClickListener,
-                           OnItemLongClickListener onItemLongClickListener) {
-        super(context, cursor);
-        mOnItemClickListener = onItemClickListener;
-        mOnItemLongClickListener = onItemLongClickListener;
-    }
 
     @NonNull
     @Override
@@ -88,9 +75,6 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         }
 
         // Set click listeners
-        if (mOnContactSelectedListener != null)
-            viewHolder.itemView.setOnClickListener(v -> mOnContactSelectedListener.onContactSelected(contact.getMainPhoneNumber()));
-
         if (mOnItemClickListener != null)
             viewHolder.itemView.setOnClickListener(v -> mOnItemClickListener.onItemClick(viewHolder, contact));
 
@@ -154,19 +138,12 @@ public class ContactsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
         }
     }
 
-    /**
-     * Sets the onContactSelectedListener by a given one
-     *
-     * @param onContactSelectedListener
-     */
-    public void setOnContactSelectedListener(OnContactSelectedListener onContactSelectedListener) {
-        mOnContactSelectedListener = onContactSelectedListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
-    /**
-     * The interface for the onContactSelectedListener
-     */
-    public interface OnContactSelectedListener {
-        void onContactSelected(String normPhoneNumber);
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        mOnItemLongClickListener = onItemLongClickListener;
     }
+
 }

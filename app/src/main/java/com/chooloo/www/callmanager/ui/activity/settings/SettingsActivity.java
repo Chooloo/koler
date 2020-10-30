@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.activity.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 
 import java.util.Objects;

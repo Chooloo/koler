@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.activity.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui2.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.widgets.ListItem;
 import com.chooloo.www.callmanager.util.ThemeUtils;

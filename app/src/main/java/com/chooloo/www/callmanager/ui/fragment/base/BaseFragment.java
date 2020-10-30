@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.base;
+package com.chooloo.www.callmanager.ui.fragment.base;
 
 import android.content.Context;
 import android.os.Bundle;

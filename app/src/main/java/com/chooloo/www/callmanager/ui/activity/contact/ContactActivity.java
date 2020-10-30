@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.activity.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui2.fragment.RecentsFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;

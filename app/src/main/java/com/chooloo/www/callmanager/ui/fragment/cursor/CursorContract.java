@@ -2,12 +2,14 @@ package com.chooloo.www.callmanager.ui.fragment.cursor;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.ui.base.BaseContract;
 
-public class CursorContract implements BaseContract {
+public interface CursorContract extends BaseContract {
     interface View extends BaseContract.View {
         void setUp();
 
@@ -38,5 +40,9 @@ public class CursorContract implements BaseContract {
         void onLoaderReset(Loader<Cursor> loader);
 
         void onEnablePermissionClick();
+
+        void onItemClick(RecyclerView.ViewHolder holder, Object data);
+
+        boolean onItemLongClick(RecyclerView.ViewHolder holder, Object data);
     }
 }

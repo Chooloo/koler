@@ -20,7 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseFragment;
+import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton;
 import com.chooloo.www.callmanager.ui.widgets.DialpadView;
 import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
