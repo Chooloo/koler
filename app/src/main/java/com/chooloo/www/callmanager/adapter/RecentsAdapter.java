@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -24,12 +25,6 @@ public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH>
 
     public RecentsAdapter(Context context) {
         super(context);
-    }
-
-    public interface OnRecentItemClickListener {
-        void onRecentItemClick(RecentCall recentCall);
-
-        void onRecentItemLongClick(RecentCall recentCall);
     }
 
     @NonNull
@@ -68,6 +63,17 @@ public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH>
 
     @Override
     public int getIdColumn() {
-        return 0;
+        return mCursor != null ? mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID) : 1;
     }
+
+    public void setOnRecentItemClickListener(OnRecentItemClickListener onRecentItemClickListener) {
+        mOnRecentItemClickListener = onRecentItemClickListener;
+    }
+
+    public interface OnRecentItemClickListener {
+        void onRecentItemClick(RecentCall recentCall);
+
+        void onRecentItemLongClick(RecentCall recentCall);
+    }
+
 }

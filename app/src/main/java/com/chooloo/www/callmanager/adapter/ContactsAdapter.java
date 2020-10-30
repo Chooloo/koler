@@ -73,10 +73,11 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         super.setCursor(newCursor);
 
         String[] header = newCursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
-        header = header == null ? new String[0] : header;
         int[] counts = newCursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
-        counts = counts == null ? new int[0] : counts;
         int favoriteCount = newCursor.getExtras().getInt(FavoritesAndContactsLoader.FAVORITES_COUNT);
+
+        header = header == null ? new String[0] : header;
+        counts = counts == null ? new int[0] : counts;
 
         updateHeaders(header, counts, favoriteCount);
     }

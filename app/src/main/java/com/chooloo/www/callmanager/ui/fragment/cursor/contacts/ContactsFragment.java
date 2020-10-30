@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.adapter.ContactsAdapter1;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.fragment.cursor.CursorFragment;
 

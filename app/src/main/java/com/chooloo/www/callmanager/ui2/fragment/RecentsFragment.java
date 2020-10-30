@@ -23,7 +23,6 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.RecentsAdapter1;
 import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
