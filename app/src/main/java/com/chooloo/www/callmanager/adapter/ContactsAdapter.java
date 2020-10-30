@@ -5,11 +5,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.base.CursorAdapter;
@@ -17,9 +15,6 @@ import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui2.ListItemHolder;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
-import com.google.i18n.phonenumbers.Phonenumber;
-
-import java.util.List;
 
 public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH> {
 
@@ -31,13 +26,13 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     private OnContactItemClickListener mOnContactItemClickListener;
 
     public ContactsAdapter(Context context) {
-        super(context)
+        super(context);
     }
 
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListItemHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);)
+        return (VH) new ListItemHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false));
     }
 
     @Override

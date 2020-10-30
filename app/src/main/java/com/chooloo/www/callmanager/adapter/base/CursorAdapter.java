@@ -16,9 +16,8 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     protected DataSetObserver mDataSetObserver;
     protected final ArrayMap<VH, Integer> mViewHoldersMap;
 
-    public CursorAdapter(Context context, Cursor cursor) {
+    public CursorAdapter(Context context) {
         mContext = context;
-        mCursor = cursor;
         mViewHoldersMap = new ArrayMap<>();
         setUp();
     }

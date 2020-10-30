@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.RemoteInput;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
@@ -69,6 +71,12 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
         mPhoto.setVisibility(isShow ? VISIBLE : GONE);
         mPhotoPlaceholder.setVisibility(isShow ? GONE : VISIBLE);
         if (isShow) mPhoto.setImageURI(image);
+    }
+
+    public void showPhoto(boolean isShow, @Nullable @DrawableRes int image) {
+        mPhoto.setVisibility(isShow ? VISIBLE : GONE);
+        mPhotoPlaceholder.setVisibility(isShow ? GONE : VISIBLE);
+        if (isShow) mPhoto.setImageResource(image);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
