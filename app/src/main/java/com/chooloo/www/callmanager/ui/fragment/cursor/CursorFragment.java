@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
-import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.ui2.FastScroller;
 import com.chooloo.www.callmanager.util.PermissionUtils;

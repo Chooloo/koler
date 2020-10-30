@@ -3,8 +3,15 @@ package com.chooloo.www.callmanager.database.entity;
 import android.content.Context;
 import android.database.Cursor;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.StringDef;
+
 import com.chooloo.www.callmanager.util.ContactUtils;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.Date;
 
 import timber.log.Timber;
@@ -15,6 +22,11 @@ import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUM
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_ID;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_NUMBER;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_TYPE;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.LOCAL_VARIABLE;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
 public class RecentCall {
 
@@ -28,12 +40,16 @@ public class RecentCall {
     private Date callDate;
     private int count;
 
-    // Call Types
     public static final int TYPE_OUTGOING = OUTGOING_TYPE;
     public static final int TYPE_INCOMING = INCOMING_TYPE;
     public static final int TYPE_MISSED = MISSED_TYPE;
     public static final int TYPE_VOICEMAIL = VOICEMAIL_TYPE;
     public static final int TYPE_REJECTED = REJECTED_TYPE;
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({TYPE_OUTGOING, TYPE_INCOMING, TYPE_MISSED, TYPE_VOICEMAIL, TYPE_REJECTED})
+    public @interface CallType {
+    }
 
     /**
      * Constructor

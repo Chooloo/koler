@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
+public class RecentsAdapter1 extends AbsFastScrollerAdapter<ListItemHolder> {
 
     // Click listeners
     private OnItemClickListener mOnItemClickListener;
@@ -33,10 +33,10 @@ public class RecentsAdapter extends AbsFastScrollerAdapter<ListItemHolder> {
      * @param onItemClickListener
      * @param onItemLongClickListener
      */
-    public RecentsAdapter(Context context,
-                          Cursor cursor,
-                          OnItemClickListener onItemClickListener,
-                          OnItemLongClickListener onItemLongClickListener) {
+    public RecentsAdapter1(Context context,
+                           Cursor cursor,
+                           OnItemClickListener onItemClickListener,
+                           OnItemLongClickListener onItemLongClickListener) {
         super(context, cursor);
         mOnItemClickListener = onItemClickListener;
         mOnItemLongClickListener = onItemLongClickListener;

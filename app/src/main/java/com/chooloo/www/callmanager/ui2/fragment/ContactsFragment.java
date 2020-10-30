@@ -12,7 +12,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.adapter.ContactsAdapter1;
 import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
@@ -30,13 +30,13 @@ public class ContactsFragment extends AbsCursorFragment implements
 
     public ContactsFragment(Context context) {
         super(context);
-        mAdapter = new ContactsAdapter(mContext, null, this, this);
+        mAdapter = new ContactsAdapter1(mContext, null, this, this);
         mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 
     public ContactsFragment(Context context, String phoneNumber, String contactName) {
         super(context, phoneNumber, contactName);
-        mAdapter = new ContactsAdapter(mContext, null, this, this);
+        mAdapter = new ContactsAdapter1(mContext, null, this, this);
         mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 

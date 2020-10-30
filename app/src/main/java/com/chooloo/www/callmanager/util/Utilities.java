@@ -20,15 +20,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.ui2.dialog.ChangelogDialog;
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +37,11 @@ import java.util.Locale;
 import timber.log.Timber;
 
 import static android.Manifest.permission.SEND_SMS;
+import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_INCOMING;
+import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_MISSED;
+import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_OUTGOING;
+import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_REJECTED;
+import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_VOICEMAIL;
 
 public class Utilities {
 
@@ -264,6 +268,23 @@ public class Utilities {
         if (PreferenceUtils.getInstance().getInt(R.string.pref_last_version_key) < BuildConfig.VERSION_CODE && activity instanceof FragmentActivity) {
             PreferenceUtils.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
             new ChangelogDialog().show(((FragmentActivity) activity).getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
+        }
+    }
+
+    public static int getCallTypeImage(@RecentCall.CallType int callType) {
+        switch (callType) {
+            case TYPE_INCOMING:
+                return R.drawable.ic_call_received_black_24dp;
+            case TYPE_OUTGOING:
+                return R.drawable.ic_call_made_black_24dp;
+            case TYPE_MISSED:
+                return R.drawable.ic_call_missed_black_24dp;
+            case TYPE_REJECTED:
+                return R.drawable.ic_call_missed_outgoing_black_24dp;
+            case TYPE_VOICEMAIL:
+                return R.drawable.ic_voicemail_black_24dp;
+            default:
+                return R.drawable.ic_call_made_black_24dp;
         }
     }
 }

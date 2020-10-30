@@ -23,7 +23,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.RecentsAdapter;
+import com.chooloo.www.callmanager.adapter.RecentsAdapter1;
 import com.chooloo.www.callmanager.listener.OnItemClickListener;
 import com.chooloo.www.callmanager.listener.OnItemLongClickListener;
 import com.chooloo.www.callmanager.database.entity.Contact;
@@ -50,13 +50,13 @@ public class RecentsFragment extends AbsCursorFragment implements
 
     public RecentsFragment(Context context) {
         super(context);
-        mAdapter = new RecentsAdapter(mContext, null, this, this);
+        mAdapter = new RecentsAdapter1(mContext, null, this, this);
         mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 
     public RecentsFragment(Context context, String phoneNumber, String contactName) {
         super(context, phoneNumber, contactName);
-        mAdapter = new RecentsAdapter(mContext, null, this, this);
+        mAdapter = new RecentsAdapter1(mContext, null, this, this);
         mRequiredPermissions = REQUIRED_PERMISSIONS;
     }
 

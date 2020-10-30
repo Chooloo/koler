@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.AbsFastScrollerAdapter;
 
 public class FastScroller extends RelativeLayout {
     private final int touchTargetWidth;

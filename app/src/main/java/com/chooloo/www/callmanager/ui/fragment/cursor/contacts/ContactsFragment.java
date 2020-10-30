@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.adapter.ContactsAdapter1;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.ui.fragment.cursor.CursorFragment;
 
@@ -33,7 +33,7 @@ public class ContactsFragment extends CursorFragment {
 
     @Override
     public void setUp() {
-        mAdapter = new ContactsAdapter(mContext, null);
+        mAdapter = new ContactsAdapter1(mContext, null);
         mRequiredPermissions = REQUIRED_PERMISSIONS;
         mRecyclerView.setOnScrollChangeListener((view, i, i1, i2, i3) -> {
             mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
