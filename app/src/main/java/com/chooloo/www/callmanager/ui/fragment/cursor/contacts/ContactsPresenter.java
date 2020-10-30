@@ -6,34 +6,35 @@ import android.view.View;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.activity.contact.ContactContract;
 import com.chooloo.www.callmanager.ui.fragment.cursor.CursorContract;
 import com.chooloo.www.callmanager.ui.fragment.cursor.CursorPresenter;
 
-public class ContactsPresenter<V extends ContactsContract.View> extends CursorPresenter<V> implements CursorContract.Presenter<V> {
+public class ContactsPresenter<V extends ContactsContract.View> extends CursorPresenter<V> implements ContactsContract.Presenter<V> {
     @Override
     public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
-        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-        int firstCompletelyVisible = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+        mView.updateFastScrollerPosition();
+        int firstVisibleItem = mView.getFirstVisibleItem();
+        int firstCompletelyVisible = mView.getFirstCompletelyVisibleItem();
         if (firstCompletelyVisible == RecyclerView.NO_POSITION)
             return; // No items are visible, so there are no headers to update.
-        String anchoredHeaderString = mAdapter.getHeaderString(firstCompletelyVisible);
+        String anchoredHeaderString = mView.getHeader(firstCompletelyVisible);
 
         // If the user swipes to the top of the list very quickly, there is some strange behavior
         // between this method updating headers and adapter#onBindViewHolder updating headers.
         // To overcome this, we refresh the headers to ensure they are correct.
         if (firstVisibleItem == firstCompletelyVisible && firstVisibleItem == 0) {
-            mAdapter.refreshHeaders();
-            mAnchoredHeader.setVisibility(View.INVISIBLE);
+            mView.refreshHeaders();
+            mView.showAnchoredHeader(false);
         } else {
-            if (mAdapter.getHeaderString(firstVisibleItem).equals(anchoredHeaderString)) {
-                mAnchoredHeader.setText(anchoredHeaderString);
-                mAnchoredHeader.setVisibility(View.VISIBLE);
+            if (mView.getHeader(firstVisibleItem).equals(anchoredHeaderString)) {
+                mView.setAnchoredHeader(anchoredHeaderString);
+                mView.showAnchoredHeader(true);
                 getContactHolder(firstVisibleItem).header.setVisibility(View.INVISIBLE);
                 getContactHolder(firstCompletelyVisible).header.setVisibility(View.INVISIBLE);
             } else {
-                mAnchoredHeader.setVisibility(View.INVISIBLE);
+                mView.showAnchoredHeader(false);
                 getContactHolder(firstVisibleItem).header.setVisibility(View.VISIBLE);
                 getContactHolder(firstCompletelyVisible).header.setVisibility(View.VISIBLE);
             }
@@ -41,13 +42,12 @@ public class ContactsPresenter<V extends ContactsContract.View> extends CursorPr
     }
 
     @Override
-    public void onItemClick(View view) {
-        super.onItemClick(view);
-        mView.openContact();
+    public void onContactItemClick(Contact contact) {
+        mView.openContact(contact);
     }
 
     @Override
-    public boolean onItemLongClick(View view) {
-        return super.onItemLongClick(view);
+    public void onContactItemLongClick(Contact contact) {
+
     }
 }

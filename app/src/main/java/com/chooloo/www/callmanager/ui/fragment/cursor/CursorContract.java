@@ -41,8 +41,8 @@ public interface CursorContract extends BaseContract {
 
         void onEnablePermissionClick();
 
-        void onItemClick(RecyclerView.ViewHolder holder, Object data);
+        void onItemClick();
 
-        boolean onItemLongClick(RecyclerView.ViewHolder holder, Object data);
+        boolean onItemLongClick();
     }
 }

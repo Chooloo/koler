@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public class CursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     protected Cursor mCursor;
     protected Context mContext;
@@ -20,6 +20,12 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
         mContext = context;
         mViewHoldersMap = new ArrayMap<>();
         setUp();
+    }
+
+    @NonNull
+    @Override
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
     }
 
     @Override
@@ -92,7 +98,10 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
         }
     }
 
-    public abstract int getIdColumn();
+    public int getIdColumn() {
+        return -1;
+    }
 
-    public abstract void onBindViewHolder(@NonNull VH viewHolder, Cursor cursor);
+    public void onBindViewHolder(@NonNull VH viewHolder, Cursor cursor) {
+    }
 }

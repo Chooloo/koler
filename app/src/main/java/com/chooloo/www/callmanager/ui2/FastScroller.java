@@ -31,11 +31,12 @@ import com.chooloo.www.callmanager.R;
 
 public class FastScroller extends RelativeLayout {
     private final int touchTargetWidth;
-    private AbsFastScrollerAdapter adapter;
+    private RecyclerView.Adapter adapter;
     private LinearLayoutManager layoutManager;
     private TextView container;
     private View scrollBar;
     private boolean dragStarted;
+    private FastScrollerHeaderManager mFastScrollerHeaderManager;
 
     public FastScroller(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -50,7 +51,7 @@ public class FastScroller extends RelativeLayout {
         scrollBar = findViewById(R.id.fast_scroller_scroll_bar);
     }
 
-    public void setup(AbsFastScrollerAdapter adapter, LinearLayoutManager layoutManager) {
+    public void setup(RecyclerView.Adapter adapter, LinearLayoutManager layoutManager) {
         this.adapter = adapter;
         this.layoutManager = layoutManager;
         setVisibility(VISIBLE);
@@ -92,8 +93,10 @@ public class FastScroller extends RelativeLayout {
         float scrolledPosition = getScrolledPercentage(y) * (float) itemCount;
         int targetPos = getValueInRange(0, itemCount - 1, (int) scrolledPosition);
         layoutManager.scrollToPositionWithOffset(targetPos, 0);
-        container.setText(adapter.getHeaderString(targetPos));
-        adapter.refreshHeaders();
+        if (mFastScrollerHeaderManager != null) {
+            container.setText(mFastScrollerHeaderManager.getHeaderString(targetPos));
+            mFastScrollerHeaderManager.refreshHeaders();
+        }
     }
 
     // Returns a float in range [0, 1] which represents the position of the scroller.
@@ -129,5 +132,15 @@ public class FastScroller extends RelativeLayout {
         container.setY(
                 getValueInRange(
                         0, getHeight() - containerHeight - scrollBarHeight / 2, (int) (y - containerHeight)));
+    }
+
+    public void setFastScrollerHeaderManager(FastScrollerHeaderManager fastScrollerHeaderManager) {
+        mFastScrollerHeaderManager = fastScrollerHeaderManager;
+    }
+
+    public interface FastScrollerHeaderManager {
+        String getHeaderString(int position);
+
+        void refreshHeaders();
     }
 }

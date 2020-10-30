@@ -50,12 +50,12 @@ public class CursorPresenter<V extends CursorContract.View> extends BasePresente
     }
 
     @Override
-    public void onItemClick(View view) {
+    public void onItemClick() {
 
     }
 
     @Override
-    public boolean onItemLongClick(View view) {
+    public boolean onItemLongClick() {
         return false;
     }
 }

@@ -102,14 +102,14 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         }
     }
 
-    private void refreshHeaders() {
+    public void refreshHeaders() {
         for (ListItemHolder holder : mViewHoldersMap.keySet()) {
             int position = mViewHoldersMap.get(holder);
             holder.showHeader(position == 0 || !getHeader(position).equals(getHeader(position - 1)));
         }
     }
 
-    private String getHeader(int position) {
+    public String getHeader(int position) {
         int index = -1;
         int sum = 0;
         while (sum <= position) {

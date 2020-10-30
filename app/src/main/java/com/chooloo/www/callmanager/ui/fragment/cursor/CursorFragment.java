@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,8 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.ContactsAdapter;
+import com.chooloo.www.callmanager.adapter.base.CursorAdapter;
 import com.chooloo.www.callmanager.ui.fragment.base.BaseFragment;
 import com.chooloo.www.callmanager.ui2.FastScroller;
+import com.chooloo.www.callmanager.ui2.ListItemHolder;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 
 import butterknife.BindView;
@@ -29,32 +33,25 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class CursorFragment extends BaseFragment implements CursorContract.View, LoaderManager.LoaderCallbacks<Cursor> {
+public abstract class CursorFragment<A extends CursorAdapter<RecyclerView.ViewHolder>, P extends CursorPresenter<CursorContract.View>> extends BaseFragment implements CursorContract.View, LoaderManager.LoaderCallbacks<Cursor> {
 
     protected static final int LOADER_ID = 1;
 
-    protected CursorContract.Presenter<CursorContract.View> mPresenter;
+    protected P mPresenter;
+    protected A mAdapter;
     protected Context mContext;
     protected Activity mActivity;
     protected LinearLayoutManager mLayoutManager;
-    protected AbsFastScrollerAdapter mAdapter;
     protected String[] mRequiredPermissions;
     protected OnLoadFinishedListener mOnLoadFinishedListener = null;
 
     @BindView(R.id.recycler_view) public RecyclerView mRecyclerView;
-    @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
     @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.enable_permission_btn) protected Button mEnablePermissionButton;
     @BindView(R.id.item_header) protected TextView mAnchoredHeader;
     @BindView(R.id.empty_state) protected View mEmptyState;
     @BindView(R.id.empty_title) protected TextView mEmptyTitle;
     @BindView(R.id.empty_desc) protected TextView mEmptyDesc;
-
-    public static CursorFragment newInstance(Bundle args) {
-        CursorFragment fragment = new CursorFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Nullable
     @Override
@@ -69,10 +66,11 @@ public class CursorFragment extends BaseFragment implements CursorContract.View,
         mContext = getContext();
         mActivity = getActivity();
 
-        mPresenter = new CursorPresenter<>();
+        mPresenter = (P) new CursorPresenter<>();
         mPresenter.bind(this, getLifecycle());
         mPresenter.subscribe(mContext);
 
+        setUp();
     }
 
     @Override
@@ -88,14 +86,7 @@ public class CursorFragment extends BaseFragment implements CursorContract.View,
 
     @Override
     public void setUp() {
-        mLayoutManager = new LinearLayoutManager(mContext) {
-            @Override
-            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                super.onLayoutChildren(recycler, state);
-                int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-                mFastScroller.setVisibility(mAdapter.getItemCount() > itemsShown ? VISIBLE : GONE);
-            }
-        };
+        mAdapter = (A) new CursorAdapter(mContext);
 
         mRecyclerView.setOnScrollChangeListener((view, i, i1, i2, i3) -> mPresenter.onScrollChange(view, i, i1, i2, i3));
         mRecyclerView.setAdapter(mAdapter);
@@ -121,8 +112,7 @@ public class CursorFragment extends BaseFragment implements CursorContract.View,
 
     @Override
     public void setData(Cursor cursor) {
-        mAdapter.changeCursor(cursor);
-        mFastScroller.setup(mAdapter, mLayoutManager);
+        mAdapter.setCursor(cursor);
         mRefreshLayout.setRefreshing(!mRefreshLayout.isRefreshing());
 
         boolean isCursorEmpty = cursor == null || cursor.getCount() == 0;
@@ -132,7 +122,7 @@ public class CursorFragment extends BaseFragment implements CursorContract.View,
 
     @Override
     public void changeCursor(Cursor cursor) {
-        mAdapter.changeCursor(cursor);
+        mAdapter.setCursor(cursor);
     }
 
     // Loader
