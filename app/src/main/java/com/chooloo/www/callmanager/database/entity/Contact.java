@@ -198,7 +198,7 @@ public class Contact implements Serializable {
      * @return String
      */
     public String getPhotoUri() {
-        return photoUri;
+        return photoUri == null || photoUri.isEmpty() ? null : photoUri;
     }
 
     /**

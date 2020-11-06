@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
+import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,11 +28,11 @@ import static android.view.View.VISIBLE;
 
 public abstract class CursorFragment extends BaseFragment implements CursorMvpView, LoaderManager.LoaderCallbacks<Cursor> {
 
-    protected static final int LOADER_ID = 1;
+    private static final int LOADER_ID = 1;
 
     protected CursorPresenter<CursorMvpView> mPresenter;
     protected LinearLayoutManager mLayoutManager;
-    protected OnLoadFinishedListener mOnLoadFinishedListener = null;
+    private OnLoadFinishedListener mOnLoadFinishedListener = null;
 
     @BindView(R.id.recycler_view) public RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
@@ -88,11 +88,6 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
 
         togglePermissionButton();
         load();
-    }
-
-    @Override
-    public String[] getRequiredPermissions() {
-        return mRequiredPermissions;
     }
 
     @Override
@@ -158,5 +153,5 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
 
     // Abstract
 
-    public abstract CursorAdapter<RecyclerView.ViewHolder> getAdapter();
+    public abstract CursorAdapter getAdapter();
 }

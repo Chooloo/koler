@@ -16,4 +16,6 @@ public interface ContactMvpPresenter<V extends ContactMvpView> extends MvpPresen
     void onActionDelete();
 
     void onActionFav();
+
+    void onRecentsLoadFinished();
 }

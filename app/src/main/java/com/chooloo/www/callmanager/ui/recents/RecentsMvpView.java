@@ -6,4 +6,6 @@ import com.chooloo.www.callmanager.ui.cursor.CursorMvpView;
 
 public interface RecentsMvpView extends CursorMvpView {
     void showRecentCallPopup(RecentCall recentCall);
+
+    int getSize();
 }

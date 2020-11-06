@@ -8,8 +8,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -26,12 +28,38 @@ import java.nio.charset.StandardCharsets;
  * Copied from <a href="https://github.com/kabouzeid/Phonograph"</a>
  */
 //TODO adapt to theme
-public class ChangelogDialog extends DialogFragment {
+public class ChangelogDialog extends DialogFragment implements ChangelogMvpView {
+
+    private ChangelogPresenter<ChangelogMvpView> mPresenter;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setUp();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
 
     @SuppressLint("InflateParams")
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return mPresenter.onCreateDialog();
+    }
+
+    @Override
+    public void setUp() {
+        mPresenter = new ChangelogPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+    }
+
+    @Override
+    public Dialog createDialog() {
         final View customView;
 
         try {

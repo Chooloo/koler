@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
@@ -128,37 +129,32 @@ public class ContactActivity extends BaseThemeActivity implements ContactMvpView
     public void setUp() {
         setContactFromIntent();
 
+        // set details
+        mNumberView.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
+        mNameView.setText(mContact != null ? mContact.getName() : getString(R.string.unknown));
+
+        // set actions
+        mActionInfo.setVisibility(mContact != null ? VISIBLE : GONE);
+        mActionEdit.setVisibility(mContact != null ? VISIBLE : GONE);
+        mActionFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(this, mContact.getIsFavorite() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
+
+        // set image
         if (mContact != null) {
-            mRecentsFragment = new RecentsFragment(this, mContact.getMainPhoneNumber(), null);
-            mRecentsFragment.setOnLoadFinishListener(this::handleNoRecents);
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
-
-            mActionInfo.setVisibility(VISIBLE);
-            mActionEdit.setVisibility(VISIBLE);
-            if (mContact.getIsFavorite())
-                mActionFav.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_star_black_24dp));
-
-            mNameView.setText(mContact.getName());
-            mNumberView.setText(PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()));
-
-            if (mContact.getPhotoUri() == null || mContact.getPhotoUri().isEmpty()) {
-                mImage.setVisibility(GONE);
-                mImagePlaceholder.setVisibility(VISIBLE);
-            } else {
-                mImage.setVisibility(VISIBLE);
-                mImagePlaceholder.setVisibility(GONE);
+            mImage.setVisibility(mContact.getPhotoUri() != null ? VISIBLE : GONE);
+            mImagePlaceholder.setVisibility(mContact.getPhotoUri() != null ? GONE : VISIBLE);
+            if (mContact.getPhotoUri() != null) {
                 mImage.setImageURI(Uri.parse(mContact.getPhotoUri()));
             }
-
-            mRecentsLayout.setVisibility(VISIBLE);
-        } else {
-            mNameView.setText(getString(R.string.unknown));
-            mNumberView.setText(null);
-
-            mRecentsLayout.setVisibility(GONE);
         }
+
+        // set recents fragment
+        if (mContact != null) {
+            mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
+            mRecentsFragment.setOnLoadFinishListener(() -> mPresenter.onRecentsLoadFinished());
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
+        }
+        mRecentsLayout.setVisibility(mContact != null ? VISIBLE : GONE);
     }
 
     @Override
@@ -227,7 +223,7 @@ public class ContactActivity extends BaseThemeActivity implements ContactMvpView
 
     @Override
     public void handleNoRecents() {
-        if (mRecentsFragment.size() == 0) {
+        if (mRecentsFragment.getSize() == 0) {
             mRecentsEmpty.setVisibility(View.VISIBLE);
             mRecentsTitle.setVisibility(View.GONE);
             mRecentsFrame.setVisibility(View.GONE);

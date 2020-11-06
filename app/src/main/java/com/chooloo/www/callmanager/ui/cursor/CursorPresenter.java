@@ -40,7 +40,7 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
 
     @Override
     public void onEnablePermissionClick() {
-        PermissionUtils.askForPermissions((Fragment) mMvpView, mMvpView.getRequiredPermissions());
+        mMvpView.askForPermissions();
     }
 
     @Override

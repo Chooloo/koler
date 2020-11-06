@@ -46,8 +46,10 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
     private RecentsAdapter<ListItemHolder> mAdapter;
     private RecentsPresenter<RecentsMvpView> mPresenter;
 
-    public static RecentsFragment newInstance() {
+    public static RecentsFragment newInstance(@Nullable String phoneNumber, @Nullable String contactName) {
         Bundle args = new Bundle();
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        args.putString(ARG_CONTACT_NAME, contactName);
         RecentsFragment fragment = new RecentsFragment();
         fragment.setArguments(args);
         fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
@@ -56,8 +58,6 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
 
     @Override
     public void setUp() {
-        super.setUp();
-
         mPresenter = new RecentsPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
@@ -78,6 +78,8 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
             this.mEmptyTitle.setText(getString(R.string.empty_recents_persmission_title));
             this.mEmptyDesc.setText(getString(R.string.empty_recents_persmission_desc));
         }
+
+        super.setUp();
     }
 
     @Override
@@ -214,4 +216,8 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
 
     }
 
+    @Override
+    public int getSize() {
+        return mAdapter.getItemCount();
+    }
 }

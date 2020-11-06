@@ -38,4 +38,9 @@ public class ContactPresenter<V extends ContactMvpView> extends BasePresenter<V>
     public void onActionFav() {
         mMvpView.actionFav();
     }
+
+    @Override
+    public void onRecentsLoadFinished() {
+        mMvpView.handleNoRecents();
+    }
 }
