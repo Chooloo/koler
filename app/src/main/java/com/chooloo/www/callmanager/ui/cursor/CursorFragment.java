@@ -19,8 +19,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui2.ListItemHolder;
-import com.chooloo.www.callmanager.util.PermissionUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -160,5 +158,5 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
 
     // Abstract
 
-    public abstract CursorAdapter<> getAdapter();
+    public abstract CursorAdapter<RecyclerView.ViewHolder> getAdapter();
 }

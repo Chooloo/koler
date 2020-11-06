@@ -13,7 +13,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui2.ListItemHolder;
+import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 
 public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH> {

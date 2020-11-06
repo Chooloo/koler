@@ -13,7 +13,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
-import com.chooloo.www.callmanager.ui2.FastScroller;
+import com.chooloo.www.callmanager.ui.widgets.FastScroller;
 
 import butterknife.BindView;
 

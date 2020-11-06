@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.chooloo.www.callmanager.ui2.ListItemHolder;
+import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.RelativeTime;
 import com.chooloo.www.callmanager.util.Utilities;
 

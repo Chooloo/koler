@@ -27,7 +27,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
-import com.chooloo.www.callmanager.ui2.dialog.ChangelogDialog;
+import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 
 import org.jetbrains.annotations.NotNull;
 

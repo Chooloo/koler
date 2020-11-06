@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2.dialog;
+package com.chooloo.www.callmanager.ui.dialog;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

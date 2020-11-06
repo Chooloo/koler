@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2;
+package com.chooloo.www.callmanager.ui.helpers;
 
 import android.net.Uri;
 import android.view.View;

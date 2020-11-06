@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.chooloo.www.callmanager.ui2;
+package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
