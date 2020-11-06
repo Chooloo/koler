@@ -2,8 +2,6 @@ package com.chooloo.www.callmanager.ui.fragment.page;
 
 import android.app.Activity;
 
-import com.chooloo.www.callmanager.ui.base.BaseContract;
-
 public class PageContract implements BaseContract {
     interface View extends BaseContract.View {
         void setUp();

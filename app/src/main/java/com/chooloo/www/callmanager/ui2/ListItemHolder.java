@@ -8,11 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.RemoteInput;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.ContactsAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

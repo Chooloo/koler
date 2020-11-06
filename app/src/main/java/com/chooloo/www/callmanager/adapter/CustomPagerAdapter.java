@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.contacts.ContactsAdapter;
+import com.chooloo.www.callmanager.ui.recents.RecentsAdapter;
 import com.chooloo.www.callmanager.ui2.fragment.CGroupsFragment;
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 
@@ -21,8 +23,8 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     // -- Constants -- //
     private Context mContext;
 
-    private List<Class> mClasses = new ArrayList<>(Arrays.asList(RecentsPageFragment.class, ContactsPageFragment.class, CGroupsFragment.class));
-    private List<String> mTitles = new ArrayList<>(Arrays.asList("Recents", "Contacts", "Excel"));
+    private List<Class> mClasses = new ArrayList<>(Arrays.asList(RecentsAdapter.class, ContactsAdapter.class));
+    private List<String> mTitles = new ArrayList<>(Arrays.asList("Recents", "Contacts"));
 
     /**
      * Constructor
