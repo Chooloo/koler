@@ -26,7 +26,7 @@ import static android.view.View.VISIBLE;
 
 public class ContactsFragment extends CursorFragment implements ContactsMvpView {
 
-    public static final String[] REQUIRED_PERMISSIONS = {READ_CONTACTS};
+    private static final String[] REQUIRED_PERMISSIONS = {READ_CONTACTS};
     private final static String ARG_PHONE_NUMBER = "phoneNumber";
     private final static String ARG_CONTACT_NAME = "contactName";
 
@@ -71,7 +71,7 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
 
             @Override
             public void refreshHeaders() {
-                this.refreshHeaders();
+                mPresenter.onRefreshHeaders();
             }
         });
 
@@ -176,6 +176,13 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
     @Override
     public CursorAdapter getAdapter() {
         return mAdapter;
+    }
+
+    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
+        Bundle args = new Bundle();
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        args.putString(ARG_CONTACT_NAME, contactName);
+        load(args);
     }
 
     private ListItemHolder getContactHolder(int position) {

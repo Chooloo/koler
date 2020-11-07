@@ -25,7 +25,7 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
 
     @Override
     public void onRefresh() {
-
+        mMvpView.load();
     }
 
     @Override

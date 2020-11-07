@@ -220,4 +220,11 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
     public int getSize() {
         return mAdapter.getItemCount();
     }
+
+    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
+        Bundle args = new Bundle();
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        args.putString(ARG_CONTACT_NAME, contactName);
+        load(args);
+    }
 }

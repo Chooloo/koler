@@ -49,16 +49,6 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mPresenter = new CursorPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
-
-        setUp();
-    }
-
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -80,6 +70,9 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
 
     @Override
     public void setUp() {
+        mPresenter = new CursorPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+
         mRecyclerView.setOnScrollChangeListener((view, i, i1, i2, i3) -> mPresenter.onScrollChange(view, i, i1, i2, i3));
         mRecyclerView.setAdapter(getAdapter());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -137,6 +130,12 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     }
 
     @Override
+    public void load(@Nullable Bundle args) {
+        setArguments(args);
+        load();
+    }
+
+    @Override
     public void runLoader(Bundle args) {
         LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
     }
@@ -154,4 +153,5 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     // Abstract
 
     public abstract CursorAdapter getAdapter();
+
 }

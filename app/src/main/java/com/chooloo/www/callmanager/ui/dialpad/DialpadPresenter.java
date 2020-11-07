@@ -4,46 +4,46 @@ import android.view.KeyEvent;
 
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
 
-public class DialpadPresenter<V extends DialpadContract.View> extends BasePresenter<V> implements DialpadContract.Presenter<V> {
+public class DialpadPresenter<V extends DialpadMvpView> extends BasePresenter<V> implements DialpadMvpPresenter<V> {
 
     @Override
     public void onResume() {
-        mView.toggleToneGenerator(true);
+        mMvpView.toggleToneGenerator(true);
     }
 
     @Override
     public void onPause() {
-        mView.stopTone();
-        mView.toggleToneGenerator(false);
+        mMvpView.stopTone();
+        mMvpView.toggleToneGenerator(false);
     }
 
     @Override
     public void onKeyClick(int keyCode) {
-        mView.vibrate();
-        mView.playTone(keyCode);
-        mView.toggleCursor(false);
-        mView.registerKeyEvent(keyCode);
+        mMvpView.vibrate();
+        mMvpView.playTone(keyCode);
+        mMvpView.toggleCursor(false);
+        mMvpView.registerKeyEvent(keyCode);
     }
 
     @Override
     public void onCallClick() {
-        mView.call();
+        mMvpView.call();
     }
 
     @Override
     public void onDigitsClick() {
-        mView.toggleCursor(true);
+        mMvpView.toggleCursor(true);
     }
 
     @Override
     public void onLongDeleteClick() {
-        mView.setNumber("");
+        mMvpView.setNumber("");
     }
 
     @Override
     public void onLongOneClick() {
-        if (mView.isDialer()) {
-            mView.callVoicemail();
+        if (mMvpView.isDialer()) {
+            mMvpView.callVoicemail();
         }
     }
 
@@ -54,17 +54,17 @@ public class DialpadPresenter<V extends DialpadContract.View> extends BasePresen
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if (!hidden) mView.requestFocus();
+        if (!hidden) mMvpView.requestFocus();
     }
 
     @Override
     public void onIntentDataChanged(String data) {
-        mView.setNumber(data);
-        mView.setViewModelNumber(data);
+        mMvpView.setNumber(data);
+        mMvpView.setViewModelNumber(data);
     }
 
     @Override
     public void onTextChanged(String text) {
-        mView.setViewModelNumber(text);
+        mMvpView.setViewModelNumber(text);
     }
 }

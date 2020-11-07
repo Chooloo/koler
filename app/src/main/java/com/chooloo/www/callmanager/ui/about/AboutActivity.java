@@ -30,14 +30,8 @@ public class AboutActivity extends BaseThemeActivity implements AboutMvpView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_about);
-
-        ButterKnife.bind(this);
-
-        mPresenter = new AboutPresenter();
-        mPresenter.onAttach(this, getLifecycle());
     }
 
     @Override
@@ -48,6 +42,9 @@ public class AboutActivity extends BaseThemeActivity implements AboutMvpView {
 
     @Override
     public void setUp() {
+        mPresenter = new AboutPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 

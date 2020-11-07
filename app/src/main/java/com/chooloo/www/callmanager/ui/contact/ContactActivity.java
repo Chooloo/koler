@@ -71,17 +71,9 @@ public class ContactActivity extends BaseThemeActivity implements ContactMvpView
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setThemeType(ThemeUtils.TYPE_TRANSPARENT_STATUS_BAR);
         setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR);
         setContentView(R.layout.activity_contact);
-
-        ButterKnife.bind(this);
-
-        mPresenter = new ContactPresenter();
-        mPresenter.onAttach(this, getLifecycle());
-
-        setUp();
     }
 
     @Override
@@ -127,6 +119,9 @@ public class ContactActivity extends BaseThemeActivity implements ContactMvpView
 
     @Override
     public void setUp() {
+        mPresenter = new ContactPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+
         setContactFromIntent();
 
         // set details

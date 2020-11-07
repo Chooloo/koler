@@ -16,5 +16,7 @@ public interface CursorMvpView extends MvpView {
 
     void load();
 
+    void load(Bundle args);
+
     void runLoader(Bundle args);
 }

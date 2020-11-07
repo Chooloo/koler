@@ -26,7 +26,6 @@ import com.chooloo.www.callmanager.ui.widgets.DialpadView;
 import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
 import com.chooloo.www.callmanager.util.AudioUtils;
 import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
@@ -34,13 +33,12 @@ import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
-public class DialpadFragment extends BaseFragment implements DialpadContract.View {
+public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
-    private DialpadContract.Presenter<DialpadContract.View> mPresenter;
+    private DialpadPresenter<DialpadMvpView> mPresenter;
     public static final String ARG_DIALER = "dialer";
 
     private boolean mIsDialer = true;
@@ -52,8 +50,6 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
     private OnKeyDownListener mOnKeyDownListener = null;
 
     private SharedDialViewModel mSharedDialViewModel;
-
-    private SharedIntentViewModel mSharedIntentViewModel;
 
     private AudioUtils mAudioUtils;
 
@@ -77,20 +73,6 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
         final View fragmentView = inflater.inflate(R.layout.dialpad_fragment, container, false);
         fragmentView.buildLayer();
         return fragmentView;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mContext = getContext();
-        mActivity = getActivity();
-
-        mPresenter = new DialpadPresenter<>();
-        mPresenter.bind(this, getLifecycle());
-        mPresenter.subscribe(mContext);
-
-        setUp();
     }
 
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
@@ -130,24 +112,19 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
 
     @Override
     public void setUp() {
-
-        PreferenceUtils.getInstance(mContext);
-        Utilities.setUpLocale(mContext);
-        ButterKnife.bind(this, requireView());
+        mPresenter = new DialpadPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
 
         mAudioUtils = new AudioUtils();
 
-        // handle is dialer
-        mIsDialer = tryGetArguments().getBoolean(ARG_DIALER);
+        mIsDialer = getArgsSafely().getBoolean(ARG_DIALER);
         mCallButton.setVisibility(mIsDialer ? View.VISIBLE : View.GONE);
         mDelButton.setVisibility(mIsDialer ? View.VISIBLE : View.GONE);
 
-        // view models
         mSharedDialViewModel = ViewModelProviders.of(mActivity).get(SharedDialViewModel.class);
-        mSharedIntentViewModel = ViewModelProviders.of(mActivity).get(SharedIntentViewModel.class);
-        mSharedIntentViewModel.getData().observe(getViewLifecycleOwner(), data -> mPresenter.onIntentDataChanged(data));
+        SharedIntentViewModel sharedIntentViewModel = ViewModelProviders.of(mActivity).get(SharedIntentViewModel.class);
+        sharedIntentViewModel.getData().observe(getViewLifecycleOwner(), data -> mPresenter.onIntentDataChanged(data));
 
-        // text changed listener
         mDigits.addTextChangedListener(new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry()));
         mDigits.addTextChangedListener(new TextWatcher() {
             @Override
@@ -244,15 +221,6 @@ public class DialpadFragment extends BaseFragment implements DialpadContract.Vie
     public void showVoicemailButton(boolean isShow) {
         Handler handler = new Handler();
         handler.postDelayed(() -> mDialpadView.setShowVoicemailButton(isShow), 2000);
-    }
-
-    public Bundle tryGetArguments() {
-        Bundle args = super.getArguments();
-        if (args == null) {
-            throw new IllegalArgumentException("You must create this fragment with newInstance()");
-        } else {
-            return args;
-        }
     }
 
     public void setOnKeyDownListener(OnKeyDownListener onKeyDownListener) {

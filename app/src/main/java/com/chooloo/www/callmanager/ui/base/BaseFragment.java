@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
+import com.chooloo.www.callmanager.util.Utilities;
+
 import org.jetbrains.annotations.NotNull;
 
 import butterknife.ButterKnife;
@@ -135,6 +137,14 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         if (mActivity != null) {
             mActivity.showError(getString(stringResId));
         }
+    }
+
+    protected Bundle getArgsSafely() {
+        Bundle args = super.getArguments();
+        if (args == null) {
+            throw new IllegalArgumentException("You must create this fragment with newInstance()");
+        }
+        return args;
     }
 
     protected abstract void setUp();

@@ -9,6 +9,11 @@ import com.chooloo.www.callmanager.ui.cursor.CursorPresenter;
 
 public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresenter<V> implements ContactsMvpPresenter<V> {
     @Override
+    public void onRefreshHeaders() {
+        mMvpView.refreshHeaders();
+    }
+
+    @Override
     public void onScrollChange(View view, int i, int i1, int i2, int i3) {
         mMvpView.updateScroll();
     }
@@ -20,6 +25,6 @@ public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresente
 
     @Override
     public void onContactItemLongClick(Contact contact) {
-
     }
+
 }
