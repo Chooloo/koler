@@ -9,7 +9,7 @@
     </style>
 
     <!-- Theme Styles -->
-    
+
     <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
@@ -46,7 +46,7 @@
 
         <item name="secondaryAccentColor">?attr/colorAccent</item>
         <item name="iconColor">@color/icon_active_dark</item>
-        <item name="overlayColor">@color/semi_grey_850</item>
+        <item name="overlayColor">@color/grey_800</item>
 
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>

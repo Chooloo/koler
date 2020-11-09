@@ -11,14 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 
-import com.chooloo.www.callmanager.util.Utilities;
-
 import org.jetbrains.annotations.NotNull;
 
 import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment implements MvpView {
 
+    private static final int PERMISSION_RC = 10;
     protected String[] mRequiredPermissions;
     protected BaseActivity mActivity;
 
@@ -43,10 +42,15 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        setUp();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ButterKnife.bind(this, getView());
-        setUp();
     }
 
     @Override
@@ -106,9 +110,7 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
     @Override
     public void askForPermissions() {
-        if (mActivity != null) {
-            mActivity.askForPermissions();
-        }
+        requestPermissions(mRequiredPermissions, PERMISSION_RC);
     }
 
     @Override

@@ -30,11 +30,11 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
 
     private static final int LOADER_ID = 1;
 
-    protected CursorPresenter<CursorMvpView> mPresenter;
-    protected LinearLayoutManager mLayoutManager;
+    private CursorPresenter<CursorMvpView> mPresenter;
     private OnLoadFinishedListener mOnLoadFinishedListener = null;
+    protected LinearLayoutManager mLayoutManager;
 
-    @BindView(R.id.recycler_view) public RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.enable_permission_btn) protected Button mEnablePermissionButton;
     @BindView(R.id.item_header) protected TextView mAnchoredHeader;
@@ -59,28 +59,29 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
         mPresenter.onDetach();
     }
 
-    // OnClicks
-
     @OnClick(R.id.enable_permission_btn)
     public void enablePermissionClick() {
         mPresenter.onEnablePermissionClick();
     }
-
-    // Mvp Overrides
 
     @Override
     public void setUp() {
         mPresenter = new CursorPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
-        mRecyclerView.setOnScrollChangeListener((view, i, i1, i2, i3) -> mPresenter.onScrollChange(view, i, i1, i2, i3));
         mRecyclerView.setAdapter(getAdapter());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                mPresenter.onScrolled();
+            }
+        });
 
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
 
         togglePermissionButton();
-        load();
     }
 
     @Override
@@ -126,6 +127,8 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     public void load() {
         if (hasPermissions()) {
             runLoader(getArguments());
+        } else {
+            askForPermissions();
         }
     }
 
@@ -140,7 +143,10 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
         LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
     }
 
-    // Listener
+    @Override
+    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+        mRecyclerView.addOnScrollListener(onScrollListener);
+    }
 
     public void setOnLoadFinishListener(OnLoadFinishedListener onLoadFinishListener) {
         mOnLoadFinishedListener = onLoadFinishListener;
@@ -149,8 +155,6 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     public interface OnLoadFinishedListener {
         void onLoadFinished();
     }
-
-    // Abstract
 
     public abstract CursorAdapter getAdapter();
 

@@ -33,6 +33,7 @@ import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 import java.util.HashMap;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
@@ -44,8 +45,6 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     private boolean mIsDialer = true;
 
     private HashMap<Integer, Integer> mKeyIdToKeyCode;
-    private Context mContext;
-    private FragmentActivity mActivity;
 
     private OnKeyDownListener mOnKeyDownListener = null;
 
@@ -75,6 +74,12 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
         return fragmentView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
+
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
             R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex, R.id.button_delete})
     public void keyClick(View view) {
@@ -92,18 +97,21 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @OnLongClick(R.id.key_1)
-    public void longOneClick(View view) {
+    public boolean longOneClick(View view) {
         mPresenter.onLongOneClick();
+        return true;
     }
 
     @OnLongClick(R.id.key_0)
-    public void longZeroClick(View view) {
+    public boolean longZeroClick(View view) {
         mPresenter.onLongZeroClick();
+        return true;
     }
 
     @OnLongClick(R.id.button_delete)
-    public void longDeleteClick(View view) {
+    public boolean longDeleteClick(View view) {
         mPresenter.onLongDeleteClick();
+        return true;
     }
 
     public boolean isDialer() {
@@ -164,7 +172,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void callVoicemail() {
-        CallManager.callVoicemail(mContext);
+        CallManager.callVoicemail(mActivity);
     }
 
     @Override
@@ -208,7 +216,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void vibrate() {
-        Utilities.vibrate(mContext, Utilities.SHORT_VIBRATE_LENGTH);
+        Utilities.vibrate(mActivity, Utilities.SHORT_VIBRATE_LENGTH);
     }
 
     @Override

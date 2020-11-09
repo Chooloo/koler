@@ -19,8 +19,7 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
     }
 
     @Override
-    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-
+    public void onScrolled() {
     }
 
     @Override

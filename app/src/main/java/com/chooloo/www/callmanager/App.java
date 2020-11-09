@@ -5,10 +5,8 @@ import android.app.Application;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import dagger.hilt.android.HiltAndroidApp;
 import timber.log.Timber;
 
-@HiltAndroidApp
 public class App extends Application {
     @Override
     public void onCreate() {

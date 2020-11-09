@@ -2,7 +2,6 @@
     <!-- Arrays -->
     <string name="contacts">Contatti</string>
     <string name="recents">Recenti</string>
-    <string name="excel">Excel</string>
 
     <!-- Colors -->
     <string name="color_blue">Blu</string>
@@ -76,9 +75,6 @@
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Pagina predefinita</string>
     <string name="pref_default_page_default_value">1</string>
-
-    <string name="pref_excel_enable_key">excel_enable</string>
-    <string name="pref_excel_enable_title">Abilita scheda Excel</string>
 
     <string name="pref_is_silent_title">Silenzioso</string>
 

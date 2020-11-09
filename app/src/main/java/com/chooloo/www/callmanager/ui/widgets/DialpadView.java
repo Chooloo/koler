@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import com.chooloo.www.callmanager.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * View that displays a twelve-key phone dialpad.
@@ -38,9 +39,9 @@ public class DialpadView extends LinearLayout {
     private static final String TAG = DialpadView.class.getSimpleName();
 
     @BindView(R.id.digits_edit_text) EditText mDigits;
-    @BindView(R.id.button_delete) ImageButton mDeleteButton;
-    @BindView(R.id.button_call) ImageButton mCallButton;
-    @BindView(R.id.dialpad_key_voicemail) ImageView mKeyVoicemail;
+    @BindView(R.id.button_delete) ImageView mDeleteButton;
+    @BindView(R.id.button_call) ImageView mCallButton;
+    @BindView(R.id.dialpad_key_icon) ImageView mKeyVoicemail;
 
     public DialpadView(Context context) {
         this(context, null);
@@ -56,12 +57,12 @@ public class DialpadView extends LinearLayout {
 
     @Override
     protected void onFinishInflate() {
+        ButterKnife.bind(this);
         setupKeypad();
         super.onFinishInflate();
     }
 
     private void setupKeypad() {
-
         final int[] buttonIds = new int[]{R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4,
                 R.id.key_5, R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex};
 

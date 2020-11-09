@@ -2,13 +2,18 @@ package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.R;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DialpadKeyButton extends FrameLayout {
 
@@ -16,8 +21,9 @@ public class DialpadKeyButton extends FrameLayout {
     private String mNumber;
     private String mLetters;
 
-    private @BindView(R.id.dialpad_key_number) TextView mNumberView;
-    private @BindView(R.id.dialpad_key_letters) TextView mLettersView;
+    @BindView(R.id.dialpad_key_number) TextView mNumberView;
+    @Nullable @BindView(R.id.dialpad_key_letters) TextView mLettersView;
+    @Nullable @BindView(R.id.dialpad_key_icon) ImageView mIconView;
 
     private OnPressedListener mOnPressedListener;
 
@@ -30,6 +36,12 @@ public class DialpadKeyButton extends FrameLayout {
 
     public DialpadKeyButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -51,7 +63,9 @@ public class DialpadKeyButton extends FrameLayout {
 
     public void setLetters(String letters) {
         mLetters = letters;
-        mLettersView.setText(letters);
+        if (mLettersView != null) {
+            mLettersView.setText(letters);
+        }
     }
 
     public String getLetters() {
@@ -64,6 +78,10 @@ public class DialpadKeyButton extends FrameLayout {
 
     public int getKeyCode() {
         return mKeyCode;
+    }
+
+    public void showLetters(boolean isShow) {
+        mLettersView.setVisibility(isShow ? VISIBLE : GONE);
     }
 
     public void setOnPressedListener(OnPressedListener onPressedListener) {

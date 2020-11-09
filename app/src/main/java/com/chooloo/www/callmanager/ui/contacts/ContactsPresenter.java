@@ -14,7 +14,7 @@ public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresente
     }
 
     @Override
-    public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+    public void onScrolled() {
         mMvpView.updateScroll();
     }
 

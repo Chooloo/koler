@@ -9,7 +9,7 @@ import com.chooloo.www.callmanager.ui.base.MvpPresenter;
 public interface CursorMvpPresenter<V extends CursorMvpView> extends MvpPresenter<V> {
     void onRequestPermissionsResult(String[] permissions);
 
-    void onScrollChange(android.view.View view, int i, int i1, int i2, int i3);
+    void onScrolled();
 
     void onRefresh();
 

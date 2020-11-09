@@ -23,8 +23,6 @@ public interface MainMvpView extends MvpView {
 
     void toggleAddContactAction(boolean isShow);
 
-    void toggleAddContactFAB(boolean isShow);
-
     void showSearchBar(boolean isShow);
 
     void toggleSearchBar();

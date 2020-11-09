@@ -16,11 +16,13 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.main.MainActivity;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
@@ -38,11 +40,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
-        mPresenter = new SettingsPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
-
         super.onCreate(savedInstanceState);
+        setUp();
     }
 
     @Override
@@ -57,11 +56,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         findPreference(getString(R.string.pref_app_theme_key)).setOnPreferenceChangeListener((preference, newValue) -> {
             mPresenter.refresh();
             return mPresenter.onListPreferenceChange(preference, newValue);
-        });
-
-        findPreference(getString(R.string.pref_excel_enable_key)).setOnPreferenceChangeListener((preference, newValue) -> {
-            mPresenter.refresh();
-            return mPresenter.onCheckBoxPreferenceChange(preference, newValue);
         });
 
         findPreference(getString(R.string.pref_reject_call_timer_key)).setOnPreferenceChangeListener((preference, newValue) -> mPresenter.onListPreferenceChange(preference, newValue));
@@ -84,6 +78,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
+    }
+
+    @Override
+    public void setUp() {
+        ButterKnife.bind(this, getView());
+        mPresenter = new SettingsPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
     }
 
     @Override
@@ -112,7 +113,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
             return;
         }
 
-        ListPreference simSelectionPreference = findPreference(getString(R.string.pref_sim_select_key));
+        ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
 
         @SuppressLint("MissingPermission")
         List<SubscriptionInfo> subscriptionInfoList = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList();

@@ -55,13 +55,6 @@
             android:key="@string/pref_default_page_key"
             android:title="@string/pref_default_page_title" />
 
-        <CheckBoxPreference
-            android:defaultValue="@bool/pref_excel_enable_default_value"
-            android:key="@string/pref_excel_enable_key"
-            android:title="@string/pref_excel_enable_title"
-            android:checked="true"
-            app:defaultValue="@bool/pref_excel_enable_default_value" />
-
     </PreferenceCategory>
 
     <!--    <PreferenceCategory-->

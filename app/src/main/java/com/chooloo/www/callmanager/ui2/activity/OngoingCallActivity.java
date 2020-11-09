@@ -48,6 +48,8 @@ import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
 import com.chooloo.www.callmanager.listener.NotificationActionReceiver;
+import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
@@ -78,7 +80,7 @@ import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPromp
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends AbsThemeActivity implements DialpadFragment.OnKeyDownListener {
+public class OngoingCallActivity extends BaseThemeActivity implements DialpadFragment.OnKeyDownListener {
 
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
@@ -345,6 +347,11 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
         cancelNotification();
 //        this.startService(new Intent(this, RecordService.class)
 //                .putExtra("commandType", RECORD_SERVICE_STOP));
+    }
+
+    @Override
+    protected void setUp() {
+
     }
 
     /**
@@ -890,7 +897,6 @@ public class OngoingCallActivity extends AbsThemeActivity implements DialpadFrag
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
         mDialpadFragment.setDigitsCanBeEdited(false);
-        mDialpadFragment.setShowVoicemailButton(false);
         mDialpadFragment.setOnKeyDownListener(this);
     }
 

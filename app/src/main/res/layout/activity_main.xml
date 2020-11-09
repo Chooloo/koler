@@ -5,7 +5,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui2.activity.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <!-- App Bar -->
     <include
@@ -15,14 +15,13 @@
         android:layout_height="wrap_content" />
 
     <!-- View Pager -->
-
-    <!-- Dialer Fragment -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <!-- Dialer Fragment -->
     <FrameLayout
         android:id="@+id/dialer_fragment"
         android:layout_width="match_parent"
@@ -32,44 +31,5 @@
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/dialpad_fragment" />
-
-    <!-- Left Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/left_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/dialer_fragment"
-        app:layout_anchorGravity="left|bottom"
-        tools:ignore="RtlHardcoded"
-        tools:src="@drawable/ic_search_black_24dp" />
-
-    <!-- Left Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_contact_fab_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="85dp"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/dialer_fragment"
-        app:layout_anchorGravity="left|bottom"
-        tools:ignore="RtlHardcoded"
-        tools:src="@drawable/ic_add_black_24dp" />
-
-    <!-- Right Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/right_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/dialer_fragment"
-        app:layout_anchorGravity="right|bottom"
-        tools:ignore="RtlHardcoded"
-        tools:src="@drawable/ic_dialpad_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

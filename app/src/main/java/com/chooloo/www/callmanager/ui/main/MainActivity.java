@@ -27,8 +27,8 @@ import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
-import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
+import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.util.BiometricUtils;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
@@ -36,10 +36,8 @@ import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
-import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.Objects;
@@ -58,60 +56,30 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
     private MainPresenter<MainMvpView> mPresenter;
 
-    FABManager mFABManager;
-
     Menu mMenu;
 
     BottomSheetBehavior<View> mBottomSheetBehavior;
 
-    // View Models
     SharedDialViewModel mSharedDialViewModel;
-    SharedIntentViewModel mSharedIntentViewModel;
 
-    // Fragments
     FragmentPagerAdapter mAdapterViewPager;
     DialpadFragment mDialpadFragment;
     SearchFragment mSearchBarFragment;
 
-    // App Bar
     @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.appbar) View mAppBar;
-
-    // Views
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
     @BindView(R.id.dialer_fragment) View mDialerView;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
-
-    // Buttons
-    @BindView(R.id.right_button) FloatingActionButton mRightButton;
-    @BindView(R.id.left_button) FloatingActionButton mLeftButton;
-    @BindView(R.id.add_contact_fab_button) FloatingActionButton mAddContactFAB;
-
-    // Other
     @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
-
-    // Built-In Overrides
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR); // set theme
         setContentView(R.layout.activity_main); // set the layout
-
-        ButterKnife.bind(this);
-
-        // set presenter
-        mPresenter = new MainPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
-
         setUp();
-
-        BiometricUtils.showBiometricPrompt(this);
-
-        checkIncomingIntent();
     }
 
 
@@ -160,34 +128,20 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
     @Override
     public void onBackPressed() {
-        if (mPresenter.onBackPressed()) return;
-        super.onBackPressed();
-    }
-
-    // OnClickes
-
-    @OnClick(R.id.right_button)
-    public void fabRightClick() {
-        mFABManager.onRightClick();
-    }
-
-    @OnClick(R.id.left_button)
-    public void fabLeftClick() {
-        mFABManager.onLeftClick();
-    }
-
-    @OnClick(R.id.add_contact_fab_button)
-    public void addContact() {
-        String number = mSharedDialViewModel.getNumber().getValue();
-        ContactUtils.openAddContact(this, number);
+        if (!mPresenter.onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 
     // Interface Overrides
 
     @Override
     public void setUp() {
-        PreferenceUtils.getInstance(this);
-        Utilities.setUpLocale(this);
+        ButterKnife.bind(this);
+
+        mPresenter = new MainPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+
         Utilities.showNewVersionDialog(this); // check new version
         PermissionUtils.checkDefaultDialer(this); // ask default dialer
 
@@ -224,14 +178,14 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         // bottom sheet
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        mBottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            public void onStateChanged(@NonNull View view, int i) {
                 // TODO add on bottom sheet state changed
             }
 
             @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            public void onSlide(@NonNull View view, float v) {
 
             }
         });
@@ -241,11 +195,12 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
-        // set add contact fab icon
-        mAddContactFAB.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add_black_24dp));
-
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
+
+        BiometricUtils.showBiometricPrompt(this);
+
+        checkIncomingIntent();
     }
 
     @Override
@@ -295,11 +250,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
     }
 
     @Override
-    public void toggleAddContactFAB(boolean isShow) {
-        showView(mAddContactFAB, isShow);
-    }
-
-    @Override
     public void showSearchBar(boolean isShow) {
         mSearchBarFragment.toggleSearchBar(isShow);
         mSearchBarContainer.setVisibility(isShow ? VISIBLE : GONE);
@@ -308,7 +258,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
     @Override
     public void toggleSearchBar() {
-        showSearchBar(mSearchBarContainer.getVisibility() == VISIBLE ? false : true);
+        showSearchBar(mSearchBarContainer.getVisibility() != VISIBLE);
     }
 
     /**
@@ -327,14 +277,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
             v.setClickable(false);
             v.setFocusable(false);
         }
-    }
-
-    public interface FABManager {
-        void onRightClick();
-
-        void onLeftClick();
-
-        int[] getIconsResources();
     }
 
     @Override

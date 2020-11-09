@@ -52,12 +52,6 @@ In Koler you can interact with incoming calls in new ways
   * ### Sms decline
   Decling the call while sending an SMS
 
-### Excel Page
-Another great feature in Koler is the ability to import and manage calls using an excel file
-Koler offers a comfortable and simple UI for managing and editing a list of contacts
-The Excel feature also offers the ability to call the list of imported contacts one by one
-Great for people who call a lot of people one by one
- 
 ## GET THE APP
  * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")

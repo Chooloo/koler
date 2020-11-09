@@ -2,7 +2,6 @@
     <!-- Arrays -->
     <string name="contacts">Contacts</string>
     <string name="recents">Recents</string>
-    <string name="excel">Excel</string>
 
     <!-- Colors -->
     <string name="color_blue">Blue</string>
@@ -76,9 +75,6 @@
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Default page</string>
     <string name="pref_default_page_default_value">1</string>
-
-    <string name="pref_excel_enable_key">excel_enable</string>
-    <string name="pref_excel_enable_title">Enable excel tab</string>
 
     <string name="pref_is_silent_title">Silent</string>
 
@@ -218,4 +214,6 @@
     <string name="hello_world">Hello Square World!</string>
 
     <string name="unknown">Unknown</string>
+
+    <string name="search_hint">Search</string>
 </resources>

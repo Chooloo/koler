@@ -24,7 +24,7 @@ public class PagePresenter<V extends PageMvpView> extends BasePresenter<V> imple
     }
 
     @Override
-    public void onScrollChanged(int newState) {
+    public void onScrollStateChanged(int newState) {
         if (newState == (RecyclerView.SCROLL_STATE_DRAGGING | RecyclerView.SCROLL_STATE_SETTLING)) {
             mMvpView.setPageState(PAGE_STATE_ACTIVE);
         } else {

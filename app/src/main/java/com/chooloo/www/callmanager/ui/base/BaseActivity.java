@@ -8,14 +8,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.chooloo.www.callmanager.util.PreferenceUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-
-import butterknife.ButterKnife;
-
-import static com.chooloo.www.callmanager.util.PermissionUtils.PERMISSION_RC;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
@@ -27,8 +22,6 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         super.onCreate(savedInstanceState);
         Utilities.setUpLocale(this);
         PreferenceUtils.getInstance(this);
-        ButterKnife.bind(this);
-        setUp();
     }
 
     @Override

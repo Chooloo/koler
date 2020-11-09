@@ -48,7 +48,6 @@
     <string-array name="pref_default_page_entries">
         <item>@string/recents</item>
         <item>@string/contacts</item>
-        <item>@string/excel</item>
     </string-array>
 
     <string-array name="pref_default_page_entry_values">

@@ -5,7 +5,6 @@
     <!-- Arrays -->
     <string name="contacts">Недавние</string>
     <string name="recents">контакты</string>
-    <string name="excel">Excel</string>
 
     <!-- Colors -->
     <string name="color_blue">синий</string>
@@ -77,9 +76,6 @@
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Страница по умолчанию</string>
     <string name="pref_default_page_default_value">1</string>
-
-    <string name="pref_excel_enable_key">excel_enable</string>
-    <string name="pref_excel_enable_title">Включить вкладку Excel</string>
 
     <string name="pref_is_silent_title">бесшумный</string>
 

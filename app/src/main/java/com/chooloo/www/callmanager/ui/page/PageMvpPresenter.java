@@ -7,5 +7,5 @@ public interface PageMvpPresenter<V extends PageMvpView> extends MvpPresenter<V>
 
     void onSearchTextChanged(String text);
 
-    void onScrollChanged(int state);
+    void onScrollStateChanged(int state);
 }

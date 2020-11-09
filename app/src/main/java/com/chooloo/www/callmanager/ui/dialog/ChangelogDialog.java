@@ -33,13 +33,6 @@ public class ChangelogDialog extends DialogFragment implements ChangelogMvpView 
     private ChangelogPresenter<ChangelogMvpView> mPresenter;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        setUp();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
@@ -49,6 +42,8 @@ public class ChangelogDialog extends DialogFragment implements ChangelogMvpView 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        setUp();
+
         return mPresenter.onCreateDialog();
     }
 

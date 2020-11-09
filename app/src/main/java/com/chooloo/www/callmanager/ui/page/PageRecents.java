@@ -13,10 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 
-public class PageRecents extends PageFragment implements PageMvpView {
-    private PagePresenter<PageMvpView> mPresenter;
+import butterknife.ButterKnife;
 
+public class PageRecents extends PageFragment implements PageMvpView {
+
+    private PagePresenter<PageMvpView> mPresenter;
     private RecentsFragment mRecentsFragment;
+
+    public static PageRecents newInstance() {
+        Bundle args = new Bundle();
+        PageRecents fragment = new PageRecents();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -26,8 +35,8 @@ public class PageRecents extends PageFragment implements PageMvpView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_page_layout, mRecentsFragment).commit();
+        mRecentsFragment = RecentsFragment.newInstance(null, null);
+        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_page_layout, mRecentsFragment).commit();
     }
 
     @Override
@@ -43,12 +52,11 @@ public class PageRecents extends PageFragment implements PageMvpView {
         mPresenter = new PagePresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
-        mRecentsFragment = new RecentsFragment();
-        mRecentsFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecentsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                mPresenter.onScrollChanged(newState);
+                mPresenter.onScrollStateChanged(newState);
             }
         });
     }
@@ -64,12 +72,12 @@ public class PageRecents extends PageFragment implements PageMvpView {
     }
 
     @Override
-    public void loadNumber(String number) {
-        mRecentsFragment.load(number, number.equals("") ? null : number);
+    public void loadNumber(@Nullable String number) {
+        mRecentsFragment.load(number, number == "" ? null : number);
     }
 
     @Override
-    public void loadSearchText(String text) {
-        mRecentsFragment.load(null, text.equals("") ? null : text);
+    public void loadSearchText(@Nullable String text) {
+        mRecentsFragment.load(null, text == "" ? null : text);
     }
 }

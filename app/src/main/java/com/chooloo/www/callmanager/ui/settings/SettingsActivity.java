@@ -12,21 +12,24 @@ import com.chooloo.www.callmanager.util.ThemeUtils;
 
 import java.util.Objects;
 
+import butterknife.ButterKnife;
+
 public class SettingsActivity extends BaseThemeActivity implements SettingsMvpView {
     private static final String TAG_FRAGMENT = "fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_settings);
-        
+
         setUp();
     }
 
     @Override
     public void setUp() {
+        ButterKnife.bind(this);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT)
                 .commit();

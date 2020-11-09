@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'dagger.hilt.android.plugin'
 
 android {
     compileSdkVersion 29
@@ -33,9 +32,6 @@ android {
 }
 
 dependencies {
-    // Hilt
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    implementation "com.google.dagger:hilt-android-compiler:2.28-alpha"
 
     //Base
     implementation fileTree(include: ['*.jar'], dir: 'libs')

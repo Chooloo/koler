@@ -79,6 +79,7 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
             this.mEmptyDesc.setText(getString(R.string.empty_recents_persmission_desc));
         }
 
+        load();
         super.setUp();
     }
 
@@ -93,8 +94,7 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
         String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
-
-        return new RecentsCursorLoader(getContext(), phoneNumber, contactName);
+        return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override
@@ -102,18 +102,14 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
         return mAdapter;
     }
 
-    /**
-     * Shows a pop up window (dialog) with the contact's information
-     *
-     * @param recentCall
-     */
     @Override
     public void showRecentCallPopup(RecentCall recentCall) {
-
         Contact contact;
-        if (recentCall.getCallerName() != null)
+        if (recentCall.getCallerName() != null) {
             contact = ContactUtils.getContact(mActivity, recentCall.getCallerNumber(), null);
-        else contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
+        } else {
+            contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
+        }
 
         // Initiate the dialog
         Dialog contactDialog = new Dialog(mActivity);
@@ -213,7 +209,6 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
 
         contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         contactDialog.show();
-
     }
 
     @Override

@@ -23,6 +23,7 @@ import butterknife.BindView;
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static android.view.View.INVISIBLE;
 
 public class ContactsFragment extends CursorFragment implements ContactsMvpView {
 
@@ -41,6 +42,7 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
         args.putString(ARG_PHONE_NUMBER, phoneNumber);
         args.putString(ARG_CONTACT_NAME, contactNumber);
         fragment.setArguments(args);
+        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
         return fragment;
     }
 
@@ -62,6 +64,15 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
             }
         });
 
+        mLayoutManager = new LinearLayoutManager(mActivity) {
+            @Override
+            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                super.onLayoutChildren(recycler, state);
+                int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
+                mFastScroller.setVisibility(mAdapter.getItemCount() > itemsShown ? VISIBLE : GONE);
+            }
+        };
+
         mFastScroller.setup(mAdapter, mLayoutManager);
         mFastScroller.setFastScrollerHeaderManager(new FastScroller.FastScrollerHeaderManager() {
             @Override
@@ -75,19 +86,15 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
             }
         });
 
-        mLayoutManager = new LinearLayoutManager(mActivity) {
+        addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                super.onLayoutChildren(recycler, state);
-                int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-                mFastScroller.setScrollBarSize(itemsShown);
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mPresenter.onScrolled();
             }
-        };
+        });
 
-        mRecyclerView.setOnScrollChangeListener((view, i, i1, i2, i3) -> mPresenter.onScrollChange(view, i, i1, i2, i3));
-
-        mRequiredPermissions = REQUIRED_PERMISSIONS;
-
+        load();
         super.setUp();
     }
 
@@ -97,8 +104,8 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
         String phoneNumber = null;
         String contactName = null;
         if (args != null) {
-            phoneNumber = args.getString(ARG_PHONE_NUMBER);
-            contactName = args.getString(ARG_CONTACT_NAME);
+            phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
+            contactName = args.getString(ARG_CONTACT_NAME, null);
         }
         boolean withFavs = (contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty());
         return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName, withFavs);
@@ -115,62 +122,38 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
     }
 
     @Override
-    public void showAnchoredHeader(boolean isShow) {
-        mAnchoredHeader.setVisibility(isShow ? VISIBLE : GONE);
-    }
-
-    @Override
-    public void setAnchoredHeader(String header) {
-        mAnchoredHeader.setText(header);
-    }
-
-    @Override
     public void refreshHeaders() {
         mAdapter.refreshHeaders();
     }
 
     @Override
-    public void updateFastScrollerPosition() {
-        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
-    }
-
-    @Override
     public void updateScroll() {
-        updateFastScrollerPosition();
-        int firstVisibleItem = getFirstVisibleItem();
-        int firstCompletelyVisible = getFirstCompletelyVisibleItem();
-        if (firstCompletelyVisible == RecyclerView.NO_POSITION)
-            return; // No items are visible, so there are no headers to update.
-        String anchoredHeaderString = getHeader(firstCompletelyVisible);
+        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+        int firstCompletelyVisible = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+
+        // No items are visible, so there are no headers to update.
+        if (firstCompletelyVisible == RecyclerView.NO_POSITION) {
+            return;
+        }
+
+        String anchoredHeaderString = mAdapter.getHeader(firstCompletelyVisible);
 
         // If the user swipes to the top of the list very quickly, there is some strange behavior
         // between this method updating headers and adapter#onBindViewHolder updating headers.
         // To overcome this, we refresh the headers to ensure they are correct.
         if (firstVisibleItem == firstCompletelyVisible && firstVisibleItem == 0) {
-            refreshHeaders();
-            showAnchoredHeader(false);
+            mAdapter.refreshHeaders();
+            mAnchoredHeader.setVisibility(INVISIBLE);
         } else {
-            if (getHeader(firstVisibleItem).equals(anchoredHeaderString)) {
-                setAnchoredHeader(anchoredHeaderString);
-                showAnchoredHeader(true);
-                getContactHolder(firstVisibleItem).showHeader(false);
-                getContactHolder(firstCompletelyVisible).showHeader(false);
-            } else {
-                showAnchoredHeader(false);
-                getContactHolder(firstVisibleItem).showHeader(true);
-                getContactHolder(firstCompletelyVisible).showHeader(true);
+            boolean headerIsAnchored = mAdapter.getHeader(firstVisibleItem).equals(anchoredHeaderString);
+            mAnchoredHeader.setVisibility(headerIsAnchored ? VISIBLE : INVISIBLE);
+            getContactHolder(firstVisibleItem).showHeader(!headerIsAnchored);
+            getContactHolder(firstCompletelyVisible).showHeader(!headerIsAnchored);
+            if (headerIsAnchored) {
+                mAnchoredHeader.setText(anchoredHeaderString);
             }
         }
-    }
-
-    @Override
-    public int getFirstVisibleItem() {
-        return mLayoutManager.findFirstVisibleItemPosition();
-    }
-
-    @Override
-    public int getFirstCompletelyVisibleItem() {
-        return mLayoutManager.findFirstCompletelyVisibleItemPosition();
     }
 
     @Override

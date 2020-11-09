@@ -27,7 +27,7 @@
                     tools:text="n" />
 
                 <ImageView
-                    android:id="@+id/dialpad_key_voicemail"
+                    android:id="@+id/dialpad_key_icon"
                     style="@style/DialpadKeyLetters"
                     android:layout_width="10dp"
                     android:layout_height="14dp"

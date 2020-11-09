@@ -32,6 +32,7 @@ public class AboutActivity extends BaseThemeActivity implements AboutMvpView {
         super.onCreate(savedInstanceState);
         setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_about);
+        setUp();
     }
 
     @Override
@@ -42,6 +43,8 @@ public class AboutActivity extends BaseThemeActivity implements AboutMvpView {
 
     @Override
     public void setUp() {
+        ButterKnife.bind(this);
+
         mPresenter = new AboutPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 

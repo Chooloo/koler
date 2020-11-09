@@ -9,18 +9,7 @@ public interface ContactsMvpView extends CursorMvpView {
 
     String getHeader(int position);
 
-    void showAnchoredHeader(boolean isShow);
-
-    void setAnchoredHeader(String header);
-
     void refreshHeaders();
 
-    void updateFastScrollerPosition();
-
     void updateScroll();
-
-    int getFirstVisibleItem();
-
-    int getFirstCompletelyVisibleItem();
-
 }

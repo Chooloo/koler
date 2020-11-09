@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
@@ -19,6 +18,13 @@ public class PageContacts extends PageFragment implements PageMvpView {
 
     private ContactsFragment mContactsFragment;
 
+    public static PageContacts newInstance() {
+        Bundle args = new Bundle();
+        PageContacts fragment = new PageContacts();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,8 +33,8 @@ public class PageContacts extends PageFragment implements PageMvpView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_page_layout, mContactsFragment).commit();
+        mContactsFragment = ContactsFragment.newInstance(null, null);
+        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_page_layout, mContactsFragment).commit();
     }
 
     @Override
@@ -44,15 +50,15 @@ public class PageContacts extends PageFragment implements PageMvpView {
         mPresenter = new PagePresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
-        mContactsFragment = new ContactsFragment();
-        mContactsFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mContactsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                mPresenter.onScrollChanged(newState);
+                mPresenter.onScrollStateChanged(newState);
             }
         });
     }
+
 
     @Override
     protected void onSearchTextChanged(String text) {
@@ -65,12 +71,12 @@ public class PageContacts extends PageFragment implements PageMvpView {
     }
 
     @Override
-    public void loadNumber(String number) {
-        mContactsFragment.load(number, number.equals("") ? null : number);
+    public void loadNumber(@Nullable String number) {
+        mContactsFragment.load(number, number == "" ? null : number);
     }
 
     @Override
-    public void loadSearchText(String text) {
-        mContactsFragment.load(null, text.equals("") ? null : text);
+    public void loadSearchText(@Nullable String text) {
+        mContactsFragment.load(null, text == "" ? null : text);
     }
 }

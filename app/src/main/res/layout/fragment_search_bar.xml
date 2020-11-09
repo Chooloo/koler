@@ -6,10 +6,7 @@
     android:layout_height="wrap_content"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:paddingStart="30dp"
-    android:paddingTop="13dp"
-    android:paddingEnd="30dp"
-    android:paddingBottom="10dp"
+    android:padding="15dp"
     tools:context=".ui.search.SearchFragment">
 
     <EditText
@@ -17,9 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/search_bar_background"
+        android:drawableStart="@drawable/ic_search_black_24dp"
+        android:drawablePadding="7dp"
+        android:drawableTint="@color/grey_400"
+        android:hint="@string/search_hint"
         android:inputType="textPersonName"
-        android:padding="7dp"
-        android:textAlignment="center"
-        android:textColor="?attr/secondaryAccentColor" />
+        android:padding="10dp"
+        android:textAlignment="textStart"
+        android:textColor="@color/grey_800"
+        android:textColorHint="@color/grey_400" />
 
 </LinearLayout>
