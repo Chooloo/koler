@@ -18,14 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/empty_image"
-            android:layout_width="260dp"
-            android:layout_height="200dp"
-            android:scaleType="fitCenter"
-            android:tint="@color/grey_400"
-            app:srcCompat="@drawable/ic_koli_sad" />
-
         <TextView
             android:id="@+id/empty_title"
             android:layout_width="wrap_content"
@@ -34,7 +26,7 @@
             android:layout_marginEnd="32dp"
             android:gravity="center"
             android:text="@string/empty_cgroups_title"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/empty_desc"

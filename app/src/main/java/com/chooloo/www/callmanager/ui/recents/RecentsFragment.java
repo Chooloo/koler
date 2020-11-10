@@ -46,6 +46,13 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
     private RecentsAdapter<ListItemHolder> mAdapter;
     private RecentsPresenter<RecentsMvpView> mPresenter;
 
+    public static RecentsFragment newInstance() {
+        RecentsFragment fragment = new RecentsFragment();
+        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
+        fragment.setArguments(new Bundle());
+        return fragment;
+    }
+
     public static RecentsFragment newInstance(@Nullable String phoneNumber, @Nullable String contactName) {
         Bundle args = new Bundle();
         args.putString(ARG_PHONE_NUMBER, phoneNumber);

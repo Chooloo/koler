@@ -36,6 +36,13 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
 
     @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
 
+    public static ContactsFragment newInstance() {
+        ContactsFragment fragment = new ContactsFragment();
+        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
+        fragment.setArguments(new Bundle());
+        return fragment;
+    }
+
     public static ContactsFragment newInstance(@Nullable String phoneNumber, @Nullable String contactNumber) {
         ContactsFragment fragment = new ContactsFragment();
         Bundle args = new Bundle();

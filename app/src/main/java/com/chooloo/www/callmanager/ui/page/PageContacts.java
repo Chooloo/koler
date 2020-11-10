@@ -33,7 +33,7 @@ public class PageContacts extends PageFragment implements PageMvpView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mContactsFragment = ContactsFragment.newInstance(null, null);
+        mContactsFragment = ContactsFragment.newInstance();
         mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_page_layout, mContactsFragment).commit();
     }
 

@@ -35,7 +35,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mRecentsFragment = RecentsFragment.newInstance(null, null);
+        mRecentsFragment = RecentsFragment.newInstance();
         mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_page_layout, mRecentsFragment).commit();
     }
 
