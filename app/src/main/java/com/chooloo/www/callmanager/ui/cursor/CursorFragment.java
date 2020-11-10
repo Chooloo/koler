@@ -40,7 +40,6 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     @BindView(R.id.item_header) protected TextView mAnchoredHeader;
     @BindView(R.id.empty_state) protected View mEmptyState;
     @BindView(R.id.empty_title) protected TextView mEmptyTitle;
-    @BindView(R.id.empty_desc) protected TextView mEmptyDesc;
 
     @Nullable
     @Override

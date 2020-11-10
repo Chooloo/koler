@@ -83,7 +83,6 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
 
         if (!hasPermissions()) {
             this.mEmptyTitle.setText(getString(R.string.empty_recents_persmission_title));
-            this.mEmptyDesc.setText(getString(R.string.empty_recents_persmission_desc));
         }
 
         load();
