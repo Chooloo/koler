@@ -56,8 +56,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
     Menu mMenu;
 
-    SharedPreferences mPreferences;
-
     BottomSheetBehavior<View> mBottomSheetBehavior;
 
     SharedDialViewModel mSharedDialViewModel;
@@ -154,7 +152,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setCurrentItem(PreferencesManager.getInstance().getInt(R.string.pref_default_page_key)); // set page the default
+        mViewPager.setCurrentItem(mPreferences.getInt(R.string.pref_default_page_key, 0));
         mSmartTabLayout.setViewPager(mViewPager);
 
         // search bar fragment

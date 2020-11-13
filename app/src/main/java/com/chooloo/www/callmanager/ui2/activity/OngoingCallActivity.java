@@ -269,10 +269,10 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
         hideButtons();
 
         // Set the correct text for the TextView
-        String rejectCallText = mRejectCallTimerText.getText() + " " + PreferencesManager.getInstance().getString(R.string.pref_reject_call_timer_key) + "s";
+        String rejectCallText = mRejectCallTimerText.getText() + " " + mPreferences.getString(R.string.pref_reject_call_timer_key, "error") + "s";
         mRejectCallTimerText.setText(rejectCallText);
 
-        String answerCallText = mAnswerCallTimerText.getText() + " " + PreferencesManager.getInstance().getString(R.string.pref_answer_call_timer_key) + "s";
+        String answerCallText = mAnswerCallTimerText.getText() + " " + mPreferences.getString(R.string.pref_answer_call_timer_key, "error") + "s";
         mAnswerCallTimerText.setText(answerCallText);
 
         // Initiate Swipe listener
@@ -388,7 +388,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
     //TODO silence the ringing
     @OnClick(R.id.button_floating_reject_call_timer)
     public void startEndCallTimer(View view) {
-        int seconds = Integer.parseInt(PreferencesManager.getInstance().getString(R.string.pref_reject_call_timer_key));
+        int seconds = mPreferences.getInt(R.string.pref_reject_call_timer_key, 0);
         mActionTimer.setData(seconds * 1000, true);
         mActionTimer.start();
         setOverlay(mActionTimerOverlay);
@@ -401,7 +401,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
      */
     @OnClick(R.id.button_floating_answer_call_timer)
     public void startAnswerCallTimer(View view) {
-        int seconds = Integer.parseInt(PreferencesManager.getInstance().getString(R.string.pref_answer_call_timer_key));
+        int seconds = mPreferences.getInt(R.string.pref_answer_call_timer_key, 0);
         mActionTimer.setData(seconds * 1000, false);
         mActionTimer.start();
     }

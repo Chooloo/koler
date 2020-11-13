@@ -265,8 +265,9 @@ public class Utilities {
      * If user using a new version of the app, show the new version dialog
      */
     public static void showNewVersionDialog(Activity activity) {
-        if (PreferencesManager.getInstance().getInt(R.string.pref_last_version_key) < BuildConfig.VERSION_CODE && activity instanceof FragmentActivity) {
-            PreferencesManager.getInstance().putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
+        PreferencesManager preferencesManager = PreferencesManager.getInstance(activity);
+        if (preferencesManager.getInt(R.string.pref_last_version_key, -1) < BuildConfig.VERSION_CODE && activity instanceof FragmentActivity) {
+            preferencesManager.putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
             new ChangelogDialog().show(((FragmentActivity) activity).getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
         }
     }

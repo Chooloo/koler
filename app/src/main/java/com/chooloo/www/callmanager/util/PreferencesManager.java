@@ -8,6 +8,8 @@ import android.util.SparseArray;
 import androidx.annotation.StringRes;
 import androidx.preference.PreferenceManager;
 
+import com.chooloo.www.callmanager.R;
+
 /*
  * A Singleton for managing your SharedPreferences.
  *_
@@ -21,6 +23,7 @@ public class PreferencesManager {
 
     @SuppressLint("StaticFieldLeak")
     private static PreferencesManager sSharedPrefs;
+    private Context mContext;
     private SharedPreferences mPref;
 
     /**
@@ -30,6 +33,8 @@ public class PreferencesManager {
      */
     private PreferencesManager(Context context) {
         mPref = PreferenceManager.getDefaultSharedPreferences(context);
+        mContext = context;
+        PreferenceManager.setDefaultValues(mContext, R.xml.preference, false);
     }
 
     public static synchronized PreferencesManager initialize(Context context) {
@@ -41,54 +46,74 @@ public class PreferencesManager {
 
     public static synchronized PreferencesManager getInstance() {
         if (sSharedPrefs == null) {
-            throw new IllegalArgumentException("Should use getInstance(Context) at least once before using this method.");
+            throw new IllegalArgumentException("Should use initialize(Context) at least once before using this method.");
         }
         return sSharedPrefs;
     }
 
-    public Object getDefaultValue(@StringRes int key) {
-        return sDefaultValues.get(key);
+    public static PreferencesManager getInstance(Context context) {
+        PreferencesManager.initialize(context);
+        return PreferencesManager.getInstance();
+    }
+
+    public void putInt(@StringRes int key, int value) {
+        mPref.edit().putInt(mContext.getString(key), value).commit();
+    }
+
+    public void putString(@StringRes int key, String value) {
+        mPref.edit().putString(mContext.getString(key), value).commit();
+    }
+
+    public void putBoolean(@StringRes int key, boolean value) {
+        mPref.edit().putBoolean(mContext.getString(key), value).commit();
+    }
+
+    public void putFloat(@StringRes int key, float value) {
+        mPref.edit().putFloat(mContext.getString(key), value).commit();
+    }
+
+    public void putLong(@StringRes int key, long value) {
+        mPref.edit().putLong(mContext.getString(key), value).commit();
     }
 
 
-    public void putInt(String key, int value) {
-        mPref.edit().putInt(key, value).commit();
+    public int getInt(@StringRes int key, int defaultValue) {
+        try {
+            return mPref.getInt(mContext.getString(key), defaultValue);
+        } catch (ClassCastException e) {
+            return defaultValue;
+        }
     }
 
-    public void putString(String key, String value) {
-        mPref.edit().putString(key, value).commit();
+    public String getString(@StringRes int key, String defaultValue) {
+        try {
+            return mPref.getString(mContext.getString(key), defaultValue);
+        } catch (ClassCastException e) {
+            return defaultValue;
+        }
     }
 
-    public void putBoolean(String key, boolean value) {
-        mPref.edit().putBoolean(String key, value).commit();
+    public boolean getBoolean(@StringRes int key, boolean defaultValue) {
+        try {
+            return mPref.getBoolean(mContext.getString(key), defaultValue);
+        } catch (ClassCastException e) {
+            return defaultValue;
+        }
     }
 
-    public void putFloat(String key, float value) {
-        mPref.edit().putFloat(key, value).commit();
+    public float getFloat(@StringRes int key, float defaultValue) {
+        try {
+            return mPref.getFloat(mContext.getString(key), defaultValue);
+        } catch (ClassCastException e) {
+            return defaultValue;
+        }
     }
 
-    public void putLong(String key, long value) {
-        mPref.edit().putLong(String key, value).commit();
-    }
-
-
-    public int getInt(String key, int defaultValue) {
-        return mPref.getInt(key, defaultValue);
-    }
-
-    public String getString(String key, String defaultValue) {
-        return mPref.getString(key, defaultValue);
-    }
-
-    public boolean getBoolean(String key, boolean defaultValue) {
-        return mPref.getBoolean(key, defaultValue);
-    }
-
-    public float getFloat(String key, float defaultValue) {
-        return mPref.getFloat(key, defaultValue);
-    }
-
-    public long getLong(String key, long defaultValue) {
-        return mPref.getLong(key, defaultValue);
+    public long getLong(@StringRes int key, long defaultValue) {
+        try {
+            return mPref.getLong(mContext.getString(key), defaultValue);
+        } catch (ClassCastException e) {
+            return defaultValue;
+        }
     }
 }
