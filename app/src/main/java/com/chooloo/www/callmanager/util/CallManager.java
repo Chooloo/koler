@@ -84,7 +84,7 @@ public class CallManager {
      */
     private static int getSimSelection(Context context) {
         try {
-            return Integer.parseInt(String.valueOf(PreferenceUtils.getInstance(context).getString(R.string.pref_sim_select_key)));
+            return Integer.parseInt(String.valueOf(PreferencesManager.getInstance(context).getString(R.string.pref_sim_select_key)));
         } catch (NumberFormatException | NullPointerException e) {
             return 0;
         }

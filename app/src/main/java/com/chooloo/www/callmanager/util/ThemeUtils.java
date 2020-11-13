@@ -76,7 +76,7 @@ public class ThemeUtils {
     public static @StyleRes
     int getStyleTheme(Context context) {
         // get the user's choice
-        @ThemeStyle String style = PreferenceUtils.getInstance(context).getString(R.string.pref_app_theme_key);
+        @ThemeStyle String style = PreferencesManager.getInstance(context).getString(R.string.pref_app_theme_key);
 
         // if the user chose "system"
         if (style.equals(STYLE_SYSTEM))
@@ -102,7 +102,7 @@ public class ThemeUtils {
      */
     public static @StyleRes
     int getAccentTheme(Context context) {
-        @AccentColor String color = PreferenceUtils.getInstance(context).getString(R.string.pref_app_color_key);
+        @AccentColor String color = PreferencesManager.getInstance(context).getString(R.string.pref_app_color_key);
         if (color == null) return DEFAULT_ACCENT;
         switch (color) {
             case ACCENT_BLUE:

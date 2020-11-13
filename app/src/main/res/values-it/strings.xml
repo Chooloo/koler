@@ -74,7 +74,7 @@
 
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Pagina predefinita</string>
-    <string name="pref_default_page_default_value">1</string>
+    <string name="pref_default_page_value">1</string>
 
     <string name="pref_is_silent_title">Silenzioso</string>
 

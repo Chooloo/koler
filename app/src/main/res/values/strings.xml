@@ -74,7 +74,7 @@
 
     <string name="pref_default_page_key">default_page</string>
     <string name="pref_default_page_title">Default page</string>
-    <string name="pref_default_page_default_value">1</string>
+    <string name="pref_default_page_value">1</string>
 
     <string name="pref_is_silent_title">Silent</string>
 
@@ -117,6 +117,8 @@
     <!--Empty-->
     <string name="no_matches_to_search">No search matches</string>
     <string name="no_recent_calls">No recent calls</string>
+
+    <string name="empty_list_no_permissions">I need permissions to show you stuff here :/</string>
 
     <string name="empty_cgroups_title">Nothing to see here :)</string>
     <string name="empty_cgroups_desc">You can try to add something</string>

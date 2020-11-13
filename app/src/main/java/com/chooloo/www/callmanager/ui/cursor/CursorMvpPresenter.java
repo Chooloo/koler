@@ -9,8 +9,6 @@ import com.chooloo.www.callmanager.ui.base.MvpPresenter;
 public interface CursorMvpPresenter<V extends CursorMvpView> extends MvpPresenter<V> {
     void onRequestPermissionsResult(String[] permissions);
 
-    void onScrolled();
-
     void onRefresh();
 
     void onLoadFinished(Loader<Cursor> loader, Cursor data);
@@ -18,8 +16,4 @@ public interface CursorMvpPresenter<V extends CursorMvpView> extends MvpPresente
     void onLoaderReset(Loader<Cursor> loader);
 
     void onEnablePermissionClick();
-
-    void onItemClick();
-
-    boolean onItemLongClick();
 }

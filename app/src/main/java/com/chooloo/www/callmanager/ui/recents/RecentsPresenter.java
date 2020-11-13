@@ -13,6 +13,6 @@ public class RecentsPresenter<V extends RecentsMvpView> extends CursorPresenter<
 
     @Override
     public void onRecentItemLongClick(RecentCall recentCall) {
-        // TODO add functionality
+        // TODO implement
     }
 }

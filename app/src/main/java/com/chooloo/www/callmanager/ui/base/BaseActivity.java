@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
@@ -21,7 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utilities.setUpLocale(this);
-        PreferenceUtils.getInstance(this);
+        PreferencesManager.getInstance(this);
     }
 
     @Override

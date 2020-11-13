@@ -14,12 +14,7 @@ import com.chooloo.www.callmanager.util.PermissionUtils;
 public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> implements CursorMvpPresenter<V> {
     @Override
     public void onRequestPermissionsResult(String[] permissions) {
-        mMvpView.togglePermissionButton();
         mMvpView.load();
-    }
-
-    @Override
-    public void onScrolled() {
     }
 
     @Override
@@ -30,25 +25,16 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mMvpView.setData(data);
+        mMvpView.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mMvpView.changeCursor(null);
+        mMvpView.setData(null);
     }
 
     @Override
     public void onEnablePermissionClick() {
         mMvpView.askForPermissions();
-    }
-
-    @Override
-    public void onItemClick() {
-
-    }
-
-    @Override
-    public boolean onItemLongClick() {
-        return false;
     }
 }

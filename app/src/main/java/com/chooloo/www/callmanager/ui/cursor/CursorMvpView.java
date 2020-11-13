@@ -15,13 +15,17 @@ public interface CursorMvpView extends MvpView {
 
     void setData(Cursor cursor);
 
-    void changeCursor(Cursor cursor);
-
     void load();
 
     void load(Bundle args);
 
-    void runLoader(Bundle args);
+    void runLoader();
+
+    int getSize();
+
+    void showEmptyPage(boolean isShow);
+
+    void setRefreshing(boolean isRefreshing);
 
     void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener);
 }

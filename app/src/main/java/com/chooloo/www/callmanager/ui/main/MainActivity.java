@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,19 +12,17 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.adapter.CustomPagerAdapter;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
@@ -32,7 +31,7 @@ import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.util.BiometricUtils;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
@@ -44,7 +43,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -58,11 +56,12 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
     Menu mMenu;
 
+    SharedPreferences mPreferences;
+
     BottomSheetBehavior<View> mBottomSheetBehavior;
 
     SharedDialViewModel mSharedDialViewModel;
 
-    FragmentPagerAdapter mAdapterViewPager;
     DialpadFragment mDialpadFragment;
     SearchFragment mSearchBarFragment;
 
@@ -87,13 +86,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
-    }
-
-    @Override
-    public void onAttachFragment(@NonNull Fragment fragment) {
-        if (fragment instanceof SearchFragment) {
-            mSearchBarFragment = (SearchFragment) fragment;
-        }
     }
 
     @Override
@@ -146,8 +138,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         PermissionUtils.checkDefaultDialer(this); // ask default dialer
 
         // view pager
-        mAdapterViewPager = new CustomPagerAdapter(this, getSupportFragmentManager());
-        mViewPager.setAdapter(mAdapterViewPager);
+        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -156,13 +147,14 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
             @Override
             public void onPageSelected(int position) {
                 // TODO add on page selected to presenter
+                Toast.makeText(getApplicationContext(), "Selected page " + position, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setCurrentItem(PreferenceUtils.getInstance().getInt(R.string.pref_default_page_key)); // set page the default
+        mViewPager.setCurrentItem(PreferencesManager.getInstance().getInt(R.string.pref_default_page_key)); // set page the default
         mSmartTabLayout.setViewPager(mViewPager);
 
         // search bar fragment

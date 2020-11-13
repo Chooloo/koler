@@ -43,20 +43,21 @@ public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH>
         holder.setSmallText(RelativeTime.getTimeAgo(date.getTime()));
         holder.showPhoto(true, Utilities.getCallTypeImage(recentCall.getCallType()));
         holder.showHeader(false);
-
-        if (mOnRecentItemClickListener != null) {
-            holder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
-                @Override
-                public void onItemClickListener() {
+        holder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
+            @Override
+            public void onItemClickListener() {
+                if (mOnRecentItemClickListener != null) {
                     mOnRecentItemClickListener.onRecentItemClick(recentCall);
                 }
+            }
 
-                @Override
-                public void onItemLongClickListener() {
+            @Override
+            public void onItemLongClickListener() {
+                if (mOnRecentItemClickListener != null) {
                     mOnRecentItemClickListener.onRecentItemLongClick(recentCall);
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override

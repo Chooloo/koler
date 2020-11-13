@@ -53,7 +53,7 @@ import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
-import com.chooloo.www.callmanager.util.PreferenceUtils;
+import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -198,7 +198,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
         setContentView(R.layout.activity_ongoing_call); // set layout
 
         // code settings
-        PreferenceUtils.getInstance(this);
+        PreferencesManager.getInstance(this);
         Utilities.setUpLocale(this);
         ButterKnife.bind(this);
 
@@ -269,10 +269,10 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
         hideButtons();
 
         // Set the correct text for the TextView
-        String rejectCallText = mRejectCallTimerText.getText() + " " + PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key) + "s";
+        String rejectCallText = mRejectCallTimerText.getText() + " " + PreferencesManager.getInstance().getString(R.string.pref_reject_call_timer_key) + "s";
         mRejectCallTimerText.setText(rejectCallText);
 
-        String answerCallText = mAnswerCallTimerText.getText() + " " + PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key) + "s";
+        String answerCallText = mAnswerCallTimerText.getText() + " " + PreferencesManager.getInstance().getString(R.string.pref_answer_call_timer_key) + "s";
         mAnswerCallTimerText.setText(answerCallText);
 
         // Initiate Swipe listener
@@ -388,7 +388,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
     //TODO silence the ringing
     @OnClick(R.id.button_floating_reject_call_timer)
     public void startEndCallTimer(View view) {
-        int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_reject_call_timer_key));
+        int seconds = Integer.parseInt(PreferencesManager.getInstance().getString(R.string.pref_reject_call_timer_key));
         mActionTimer.setData(seconds * 1000, true);
         mActionTimer.start();
         setOverlay(mActionTimerOverlay);
@@ -401,7 +401,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
      */
     @OnClick(R.id.button_floating_answer_call_timer)
     public void startAnswerCallTimer(View view) {
-        int seconds = Integer.parseInt(PreferenceUtils.getInstance().getString(R.string.pref_answer_call_timer_key));
+        int seconds = Integer.parseInt(PreferencesManager.getInstance().getString(R.string.pref_answer_call_timer_key));
         mActionTimer.setData(seconds * 1000, false);
         mActionTimer.start();
     }

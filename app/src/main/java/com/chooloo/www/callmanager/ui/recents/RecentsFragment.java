@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
@@ -37,13 +38,12 @@ import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class RecentsFragment extends CursorFragment implements RecentsMvpView {
+public class RecentsFragment extends CursorFragment<RecentsAdapter> implements RecentsMvpView {
 
     private static final String[] REQUIRED_PERMISSIONS = {READ_CALL_LOG, WRITE_CALL_LOG};
     private static final String ARG_CONTACT_NAME = "contact_name";
     private static final String ARG_PHONE_NUMBER = "phone_number";
 
-    private RecentsAdapter<ListItemHolder> mAdapter;
     private RecentsPresenter<RecentsMvpView> mPresenter;
 
     public static RecentsFragment newInstance() {
@@ -65,28 +65,12 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
 
     @Override
     public void setUp() {
+        super.setUp();
+
         mPresenter = new RecentsPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
-        mAdapter = new RecentsAdapter<>(mActivity);
-        mAdapter.setOnRecentItemClickListener(new RecentsAdapter.OnRecentItemClickListener() {
-            @Override
-            public void onRecentItemClick(RecentCall recentCall) {
-                mPresenter.onRecentItemClick(recentCall);
-            }
-
-            @Override
-            public void onRecentItemLongClick(RecentCall recentCall) {
-                mPresenter.onRecentItemLongClick(recentCall);
-            }
-        });
-
-        if (!hasPermissions()) {
-            this.mEmptyTitle.setText(getString(R.string.empty_recents_persmission_title));
-        }
-
         load();
-        super.setUp();
     }
 
     @Override
@@ -98,14 +82,27 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String contactName = args != null && args.containsKey(ARG_CONTACT_NAME) ? args.getString(ARG_CONTACT_NAME) : null;
-        String phoneNumber = args != null && args.containsKey(ARG_PHONE_NUMBER) ? args.getString(ARG_PHONE_NUMBER) : null;
+        super.onCreateLoader(id, args);
+        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
+        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
         return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override
-    public CursorAdapter<ListItemHolder> getAdapter() {
-        return mAdapter;
+    public RecentsAdapter getAdapter() {
+        RecentsAdapter recentsAdapter = new RecentsAdapter<>(mActivity);
+        recentsAdapter.setOnRecentItemClickListener(new RecentsAdapter.OnRecentItemClickListener() {
+            @Override
+            public void onRecentItemClick(RecentCall recentCall) {
+                mPresenter.onRecentItemClick(recentCall);
+            }
+
+            @Override
+            public void onRecentItemLongClick(RecentCall recentCall) {
+                mPresenter.onRecentItemLongClick(recentCall);
+            }
+        });
+        return recentsAdapter;
     }
 
     @Override
@@ -215,11 +212,6 @@ public class RecentsFragment extends CursorFragment implements RecentsMvpView {
 
         contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         contactDialog.show();
-    }
-
-    @Override
-    public int getSize() {
-        return mAdapter.getItemCount();
     }
 
     public void load(@Nullable String phoneNumber, @Nullable String contactName) {

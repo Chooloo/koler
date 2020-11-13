@@ -14,11 +14,10 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     protected Cursor mCursor;
     protected Context mContext;
     protected DataSetObserver mDataSetObserver;
-    protected final ArrayMap<VH, Integer> mViewHoldersMap;
+    protected ArrayMap<VH, Integer> mViewHoldersMap;
 
     public CursorAdapter(Context context) {
         mContext = context;
-        mViewHoldersMap = new ArrayMap<>();
         setUp();
     }
 
@@ -55,6 +54,8 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     }
 
     protected void setUp() {
+        mViewHoldersMap = new ArrayMap<>();
+
         mDataSetObserver = new DataSetObserver() {
             @Override
             public void onChanged() {

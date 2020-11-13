@@ -49,7 +49,7 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            android:defaultValue="@string/pref_default_page_default_value"
+            android:defaultValue="@string/pref_default_page_value"
             android:entries="@array/pref_default_page_entries"
             android:entryValues="@array/pref_default_page_entry_values"
             android:key="@string/pref_default_page_key"

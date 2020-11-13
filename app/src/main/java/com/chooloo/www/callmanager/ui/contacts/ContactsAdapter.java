@@ -36,7 +36,7 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH viewHolder, Cursor cursor) {
+    public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
         Contact contact = new Contact(cursor);
         int position = cursor.getPosition();
 
@@ -46,12 +46,12 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         boolean isShowHeader = position == 0 || !(header.equals(getHeader(position - 1)));
         boolean isPhotoExist = contact.getPhotoUri() != null;
 
-        viewHolder.setBigText(name);
-        viewHolder.setSmallText(number);
-        viewHolder.setHeader(header);
-        viewHolder.showHeader(isShowHeader);
-        viewHolder.showPhoto(isPhotoExist, isPhotoExist ? Uri.parse(contact.getPhotoUri()) : null);
-        viewHolder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
+        holder.setBigText(name);
+        holder.setSmallText(number);
+        holder.setHeader(header);
+        holder.showHeader(isShowHeader);
+        holder.showPhoto(isPhotoExist, isPhotoExist ? Uri.parse(contact.getPhotoUri()) : null);
+        holder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
             @Override
             public void onItemClickListener() {
                 if (mOnContactItemClickListener != null) {
@@ -84,7 +84,7 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
 
     @Override
     public int getIdColumn() {
-        return mCursor != null ? mCursor.getColumnIndex(ContactsContract.Contacts._ID) : 1;
+        return mCursor != null ? mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID) : 1;
     }
 
     private void updateHeaders(String[] headers, int[] counts, int favoriteCount) {

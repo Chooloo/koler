@@ -148,7 +148,7 @@ public class ContactActivity extends BaseThemeActivity implements ContactMvpView
         // set recents fragment
         if (mContact != null) {
             mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
-            mRecentsFragment.setOnLoadFinishListener(() -> mPresenter.onRecentsLoadFinished());
+            mRecentsFragment.setOnLoadFinishedListener(() -> mPresenter.onRecentsLoadFinished());
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
         }

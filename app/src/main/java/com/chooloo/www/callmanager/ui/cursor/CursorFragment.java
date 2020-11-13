@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -26,13 +25,13 @@ import butterknife.OnClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public abstract class CursorFragment extends BaseFragment implements CursorMvpView, LoaderManager.LoaderCallbacks<Cursor> {
+public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragment implements CursorMvpView, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = 1;
 
+    protected A mAdapter;
     private CursorPresenter<CursorMvpView> mPresenter;
-    private OnLoadFinishedListener mOnLoadFinishedListener = null;
-    protected LinearLayoutManager mLayoutManager;
+    private OnLoadFinishedListener mOnLoadFinishedListener;
 
     @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
@@ -65,22 +64,19 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
 
     @Override
     public void setUp() {
+        mAdapter = getAdapter();
+
         mPresenter = new CursorPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
-        mRecyclerView.setAdapter(getAdapter());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                mPresenter.onScrolled();
-            }
-        });
+        mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
 
-        togglePermissionButton();
+        if (!hasPermissions()) {
+            this.mEmptyTitle.setText(getString(R.string.empty_list_no_permissions));
+            showEmptyPage(true);
+        }
     }
 
     @Override
@@ -91,43 +87,36 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     @Override
     public void setData(Cursor cursor) {
         getAdapter().setCursor(cursor);
-        mRefreshLayout.setRefreshing(!mRefreshLayout.isRefreshing());
-
-        boolean isCursorEmpty = cursor == null || cursor.getCount() == 0;
-        mRecyclerView.setVisibility(isCursorEmpty ? GONE : VISIBLE);
-        mEmptyState.setVisibility(isCursorEmpty ? VISIBLE : GONE);
+        showEmptyPage(cursor == null || cursor.getCount() == 0);
     }
-
-    @Override
-    public void changeCursor(Cursor cursor) {
-        getAdapter().setCursor(cursor);
-    }
-
-    // Loader
 
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+        setRefreshing(true);
         return null;
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         mPresenter.onLoadFinished(loader, data);
+        if (mOnLoadFinishedListener != null) {
+            mOnLoadFinishedListener.onLoadFinished();
+        }
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         mPresenter.onLoaderReset(loader);
-        if (mOnLoadFinishedListener != null) mOnLoadFinishedListener.onLoadFinished();
     }
 
     @Override
     public void load() {
         if (hasPermissions()) {
-            runLoader(getArguments());
+            runLoader();
         } else {
-            askForPermissions();
+            showEmptyPage(true);
+            togglePermissionButton();
         }
     }
 
@@ -138,8 +127,28 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
     }
 
     @Override
-    public void runLoader(Bundle args) {
-        LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, this);
+    public void runLoader() {
+        LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), this);
+    }
+
+    @Override
+    public int getSize() {
+        return mAdapter.getItemCount();
+    }
+
+    @Override
+    public void showEmptyPage(boolean isShow) {
+        mEmptyState.setVisibility(isShow ? VISIBLE : GONE);
+        mRecyclerView.setVisibility(isShow ? GONE : VISIBLE);
+    }
+
+    @Override
+    public void setRefreshing(boolean isRefresh) {
+        if (!isRefresh && mRefreshLayout.isRefreshing()) {
+            mRefreshLayout.setRefreshing(false);
+        } else if (isRefresh && !mRefreshLayout.isRefreshing()) {
+            mRefreshLayout.setRefreshing(true);
+        }
     }
 
     @Override
@@ -147,14 +156,13 @@ public abstract class CursorFragment extends BaseFragment implements CursorMvpVi
         mRecyclerView.addOnScrollListener(onScrollListener);
     }
 
-    public void setOnLoadFinishListener(OnLoadFinishedListener onLoadFinishListener) {
-        mOnLoadFinishedListener = onLoadFinishListener;
-    }
-
     public interface OnLoadFinishedListener {
         void onLoadFinished();
     }
 
-    public abstract CursorAdapter getAdapter();
+    public void setOnLoadFinishedListener(OnLoadFinishedListener onLoadFinishedListener) {
+        mOnLoadFinishedListener = onLoadFinishedListener;
+    }
 
+    public abstract A getAdapter();
 }

@@ -14,6 +14,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.CursorAdapter;
+import com.chooloo.www.callmanager.ui.contact.ContactActivity;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.ui.widgets.FastScroller;
@@ -25,7 +26,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.view.View.INVISIBLE;
 
-public class ContactsFragment extends CursorFragment implements ContactsMvpView {
+public class ContactsFragment extends CursorFragment<ContactsAdapter> implements ContactsMvpView {
 
     private static final String[] REQUIRED_PERMISSIONS = {READ_CONTACTS};
     private final static String ARG_PHONE_NUMBER = "phoneNumber";
@@ -33,14 +34,12 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
 
     private ContactsAdapter<ListItemHolder> mAdapter;
     private ContactsPresenter<ContactsMvpView> mPresenter;
+    private LinearLayoutManager mLayoutManager;
 
     @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
 
     public static ContactsFragment newInstance() {
-        ContactsFragment fragment = new ContactsFragment();
-        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
-        fragment.setArguments(new Bundle());
-        return fragment;
+        return ContactsFragment.newInstance(null, null);
     }
 
     public static ContactsFragment newInstance(@Nullable String phoneNumber, @Nullable String contactNumber) {
@@ -55,30 +54,20 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
 
     @Override
     public void setUp() {
+        super.setUp();
+
         mPresenter = new ContactsPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
-
-        mAdapter = new ContactsAdapter<>(mActivity);
-        mAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
-            @Override
-            public void onContactItemClick(Contact contact) {
-                mPresenter.onContactItemClick(contact);
-            }
-
-            @Override
-            public void onContactItemLongClick(Contact contact) {
-                mPresenter.onContactItemLongClick(contact);
-            }
-        });
 
         mLayoutManager = new LinearLayoutManager(mActivity) {
             @Override
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                 super.onLayoutChildren(recycler, state);
                 int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-                mFastScroller.setVisibility(mAdapter.getItemCount() > itemsShown ? VISIBLE : GONE);
+                mFastScroller.setVisibility(getSize() > itemsShown ? VISIBLE : GONE);
             }
         };
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mFastScroller.setup(mAdapter, mLayoutManager);
         mFastScroller.setFastScrollerHeaderManager(new FastScroller.FastScrollerHeaderManager() {
@@ -102,25 +91,27 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
         });
 
         load();
-        super.setUp();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
     }
 
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        String phoneNumber = null;
-        String contactName = null;
-        if (args != null) {
-            phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
-            contactName = args.getString(ARG_CONTACT_NAME, null);
-        }
+        super.onCreateLoader(id, args);
+        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
+        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
         boolean withFavs = (contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty());
         return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName, withFavs);
     }
 
     @Override
     public void openContact(Contact contact) {
-
+        // TODO implement
     }
 
     @Override
@@ -164,8 +155,20 @@ public class ContactsFragment extends CursorFragment implements ContactsMvpView 
     }
 
     @Override
-    public CursorAdapter getAdapter() {
-        return mAdapter;
+    public ContactsAdapter getAdapter() {
+        ContactsAdapter contactsAdapter = new ContactsAdapter<>(mActivity);
+        contactsAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
+            @Override
+            public void onContactItemClick(Contact contact) {
+                mPresenter.onContactItemClick(contact);
+            }
+
+            @Override
+            public void onContactItemLongClick(Contact contact) {
+                mPresenter.onContactItemLongClick(contact);
+            }
+        });
+        return contactsAdapter;
     }
 
     public void load(@Nullable String phoneNumber, @Nullable String contactName) {
