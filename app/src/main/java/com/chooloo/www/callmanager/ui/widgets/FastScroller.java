@@ -31,7 +31,7 @@ import com.chooloo.www.callmanager.R;
 
 public class FastScroller extends RelativeLayout {
     private final int touchTargetWidth;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter mAdapter;
     private LinearLayoutManager layoutManager;
     private TextView container;
     private View scrollBar;
@@ -52,7 +52,7 @@ public class FastScroller extends RelativeLayout {
     }
 
     public void setup(RecyclerView.Adapter adapter, LinearLayoutManager layoutManager) {
-        this.adapter = adapter;
+        this.mAdapter = adapter;
         this.layoutManager = layoutManager;
         setVisibility(VISIBLE);
     }
@@ -89,7 +89,7 @@ public class FastScroller extends RelativeLayout {
     }
 
     private void setRecyclerViewPosition(float y) {
-        final int itemCount = adapter.getItemCount();
+        final int itemCount = mAdapter.getItemCount();
         float scrolledPosition = getScrolledPercentage(y) * (float) itemCount;
         int targetPos = getValueInRange(0, itemCount - 1, (int) scrolledPosition);
         layoutManager.scrollToPositionWithOffset(targetPos, 0);

@@ -35,8 +35,6 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -45,47 +43,13 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mRequiredPermissions = onGetPermissions();
         setUp();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    public String[] onGetPermissions() {
+        return new String[]{};
     }
 
     @Override
@@ -101,11 +65,6 @@ public abstract class BaseFragment extends Fragment implements MvpView {
             }
         }
         return true;
-    }
-
-    @Override
-    public void setRequiredPermissions(String[] permissions) {
-        this.mRequiredPermissions = permissions;
     }
 
     @Override
@@ -148,6 +107,4 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         }
         return args;
     }
-
-    protected abstract void setUp();
 }

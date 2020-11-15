@@ -19,15 +19,12 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.database.entity.RecentCall;
 import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
-import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
-import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
@@ -48,7 +45,6 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
 
     public static RecentsFragment newInstance() {
         RecentsFragment fragment = new RecentsFragment();
-        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
         fragment.setArguments(new Bundle());
         return fragment;
     }
@@ -59,37 +55,11 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         args.putString(ARG_CONTACT_NAME, contactName);
         RecentsFragment fragment = new RecentsFragment();
         fragment.setArguments(args);
-        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
         return fragment;
     }
 
     @Override
-    public void setUp() {
-        super.setUp();
-
-        mPresenter = new RecentsPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
-
-        load();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
-    @NonNull
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        super.onCreateLoader(id, args);
-        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
-        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
-        return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
-    }
-
-    @Override
-    public RecentsAdapter getAdapter() {
+    public RecentsAdapter onGetAdapter() {
         RecentsAdapter recentsAdapter = new RecentsAdapter<>(mActivity);
         recentsAdapter.setOnRecentItemClickListener(new RecentsAdapter.OnRecentItemClickListener() {
             @Override
@@ -103,6 +73,34 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
             }
         });
         return recentsAdapter;
+    }
+
+    @Override
+    public String[] onGetPermissions() {
+        return REQUIRED_PERMISSIONS;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
+
+    @Override
+    public void setUp() {
+        super.setUp();
+
+        mPresenter = new RecentsPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+
+        load();
+    }
+
+    @Override
+    public Loader<Cursor> getLoader(Bundle args) {
+        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
+        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
+        return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override
@@ -218,6 +216,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         Bundle args = new Bundle();
         args.putString(ARG_PHONE_NUMBER, phoneNumber);
         args.putString(ARG_CONTACT_NAME, contactName);
-        load(args);
+        setArguments(args);
+        load();
     }
 }

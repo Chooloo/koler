@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 public class PageRecents extends PageFragment implements PageMvpView {
 
     private PagePresenter<PageMvpView> mPresenter;
+
     private RecentsFragment mRecentsFragment;
 
     public static PageRecents newInstance() {
@@ -46,7 +47,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
     }
 
     @Override
-    protected void setUp() {
+    public void setUp() {
         super.setUp();
 
         mPresenter = new PagePresenter<>();

@@ -14,19 +14,12 @@ import java.util.List;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    // -- Constants -- //
-//    private Context mContext;
-
-    private List<Class> mClasses = new ArrayList<>(Arrays.asList(PageRecents.class, PageContacts.class));
-    private List<String> mTitles = new ArrayList<>(Arrays.asList("Recents", "Contacts"));
-
     public MainPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
     @Override
     public int getCount() {
-//        return mClasses.size();
         return 2;
     }
 
@@ -40,7 +33,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             default:
                 return PageContacts.newInstance();
         }
-        // return (PageFragment) mClasses.get(position).getDeclaredConstructor(new Class[]{Context.class}).newInstance();
     }
 
     @Nullable
@@ -48,16 +40,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Contacts";
-            case 1:
                 return "Recents";
+            case 1:
+                return "Contacts";
             default:
                 return "Contacts";
         }
-//        try {
-//            return mTitles.get(position);
-//        } catch (IndexOutOfBoundsException e) {
-//            return null;
-//        }
     }
 }

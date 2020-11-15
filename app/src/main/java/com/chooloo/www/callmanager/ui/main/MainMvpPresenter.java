@@ -6,7 +6,7 @@ import android.view.MenuItem;
 import com.chooloo.www.callmanager.ui.base.MvpPresenter;
 
 public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V> {
-    void onPageSelected();
+    void onPageSelected(int position);
 
     void onBottomSheetStateChanged(int state);
 

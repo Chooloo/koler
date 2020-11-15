@@ -17,10 +17,10 @@
     <dimen name="flat_button_padding">16dp</dimen>
 
     <!-- Bubble -->
-    <dimen name="bubble_tab_height">32dp</dimen>
+    <dimen name="bubble_tab_height">35dp</dimen>
     <dimen name="bubble_vertical_padding">4dp</dimen>
     <dimen name="bubble_horizontal_padding">32dp</dimen>
-    <dimen name="bubble_corner_radius">10dp</dimen>
+    <dimen name="bubble_corner_radius">7dp</dimen>
 
     <!-- Fabs -->
     <dimen name="fab_and_bottom_padding">88dp</dimen>

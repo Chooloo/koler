@@ -11,11 +11,12 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
     protected static final int PAGE_STATE_IDLE = 0;
     protected static final int PAGE_STATE_ACTIVE = 1;
 
+    protected int mPageState;
     protected SharedDialViewModel mDialViewModel;
     protected SharedSearchViewModel mSearchViewModel;
 
     @Override
-    protected void setUp() {
+    public void setUp() {
         mDialViewModel = ViewModelProviders.of(mActivity).get(SharedDialViewModel.class);
         mDialViewModel.getNumber().observe(this, this::onDialNumberChanged);
 
@@ -25,6 +26,7 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
 
     @Override
     public void setPageState(int pageState) {
+        mPageState = pageState;
         switch (pageState) {
             case PAGE_STATE_IDLE:
                 mDialViewModel.setIsFocused(false);

@@ -4,24 +4,22 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.ui.base.MvpView;
 
 public interface CursorMvpView extends MvpView {
-    void setUp();
 
-    void togglePermissionButton();
+    void setUp();
 
     void setData(Cursor cursor);
 
-    void load();
-
-    void load(Bundle args);
-
-    void runLoader();
+    Loader<Cursor> getLoader(Bundle args);
 
     int getSize();
+
+    void load();
 
     void showEmptyPage(boolean isShow);
 

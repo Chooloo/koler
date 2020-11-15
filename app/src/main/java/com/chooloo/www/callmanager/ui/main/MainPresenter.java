@@ -28,10 +28,9 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     }
 
     @Override
-    public void onPageSelected() {
-        mCurrentPosition = mMvpView.getCurrentPosition();
-        mMvpView.toggleAddContactAction(mCurrentPosition == 1 && (mBottomSheetState == STATE_HIDDEN || mBottomSheetState == STATE_COLLAPSED));
-        mMvpView.showSearchBar(false);
+    public void onPageSelected(int position) {
+        mCurrentPosition = position;
+        mMvpView.setBottomSheetState(STATE_COLLAPSED);
     }
 
     @Override
@@ -46,7 +45,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onDialNumberChanged(String number) {
-        mMvpView.toggleAddContactAction(number != null && number.length() > 0);
     }
 
     @Override
@@ -56,7 +54,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onSearchFocusChanged(boolean isFocused) {
-        mMvpView.showSearchBar(isFocused);
     }
 
     @Override

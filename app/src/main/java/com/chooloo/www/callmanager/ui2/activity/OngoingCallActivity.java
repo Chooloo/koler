@@ -350,8 +350,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
     }
 
     @Override
-    protected void setUp() {
-
+    public void setUp() {
     }
 
     /**

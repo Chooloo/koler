@@ -2,7 +2,6 @@ package com.chooloo.www.callmanager.ui.contacts;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.base.CursorAdapter;
-import com.chooloo.www.callmanager.ui.contact.ContactActivity;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.ui.widgets.FastScroller;
@@ -32,7 +29,6 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     private final static String ARG_PHONE_NUMBER = "phoneNumber";
     private final static String ARG_CONTACT_NAME = "contactName";
 
-    private ContactsAdapter<ListItemHolder> mAdapter;
     private ContactsPresenter<ContactsMvpView> mPresenter;
     private LinearLayoutManager mLayoutManager;
 
@@ -48,8 +44,35 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         args.putString(ARG_PHONE_NUMBER, phoneNumber);
         args.putString(ARG_CONTACT_NAME, contactNumber);
         fragment.setArguments(args);
-        fragment.setRequiredPermissions(REQUIRED_PERMISSIONS);
         return fragment;
+    }
+
+    @Override
+    public ContactsAdapter onGetAdapter() {
+        ContactsAdapter contactsAdapter = new ContactsAdapter<>(mActivity);
+        contactsAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
+            @Override
+            public void onContactItemClick(Contact contact) {
+                mPresenter.onContactItemClick(contact);
+            }
+
+            @Override
+            public void onContactItemLongClick(Contact contact) {
+                mPresenter.onContactItemLongClick(contact);
+            }
+        });
+        return contactsAdapter;
+    }
+
+    @Override
+    public String[] onGetPermissions() {
+        return REQUIRED_PERMISSIONS;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
     }
 
     @Override
@@ -69,7 +92,6 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         };
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mFastScroller.setup(mAdapter, mLayoutManager);
         mFastScroller.setFastScrollerHeaderManager(new FastScroller.FastScrollerHeaderManager() {
             @Override
             public String getHeaderString(int position) {
@@ -94,15 +116,16 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
+    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
+        Bundle args = new Bundle();
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        args.putString(ARG_CONTACT_NAME, contactName);
+        setArguments(args);
+        load();
     }
 
-    @NonNull
     @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        super.onCreateLoader(id, args);
+    public Loader<Cursor> getLoader(Bundle args) {
         String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
         String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
         boolean withFavs = (contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty());
@@ -110,13 +133,18 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public void openContact(Contact contact) {
-        // TODO implement
+    public String getHeader(int position) {
+        return mAdapter.getHeader(position);
     }
 
     @Override
-    public String getHeader(int position) {
-        return mAdapter.getHeader(position);
+    public ListItemHolder getContactHolder(int position) {
+        return ((ListItemHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
+    }
+
+    @Override
+    public void openContact(Contact contact) {
+        // TODO implement
     }
 
     @Override
@@ -155,30 +183,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public ContactsAdapter getAdapter() {
-        ContactsAdapter contactsAdapter = new ContactsAdapter<>(mActivity);
-        contactsAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
-            @Override
-            public void onContactItemClick(Contact contact) {
-                mPresenter.onContactItemClick(contact);
-            }
-
-            @Override
-            public void onContactItemLongClick(Contact contact) {
-                mPresenter.onContactItemLongClick(contact);
-            }
-        });
-        return contactsAdapter;
-    }
-
-    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
-        Bundle args = new Bundle();
-        args.putString(ARG_PHONE_NUMBER, phoneNumber);
-        args.putString(ARG_CONTACT_NAME, contactName);
-        load(args);
-    }
-
-    private ListItemHolder getContactHolder(int position) {
-        return ((ListItemHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
+    public void setupFastScroller() {
+        mFastScroller.setup(mAdapter, mLayoutManager);
     }
 }

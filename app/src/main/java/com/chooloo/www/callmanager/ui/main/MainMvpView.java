@@ -21,12 +21,6 @@ public interface MainMvpView extends MvpView {
 
     String getDialNumber();
 
-    void toggleAddContactAction(boolean isShow);
-
-    void showSearchBar(boolean isShow);
-
-    void toggleSearchBar();
-
     void openAddContact();
 
     void goToSettings();

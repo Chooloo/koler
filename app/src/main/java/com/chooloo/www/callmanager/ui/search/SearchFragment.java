@@ -40,14 +40,6 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
         return inflater.inflate(R.layout.fragment_search_bar, container, false);
     }
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        setUp();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -55,7 +47,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     }
 
     @Override
-    protected void setUp() {
+    public void setUp() {
         mPresenter = new SearchPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
 
@@ -82,8 +74,8 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
         });
 
         mSearchInput.setOnFocusChangeListener((v, hasFocus) -> {
-            mOnFocusChangedListener.onFocusChanged(hasFocus);
             mPresenter.onFocusChanged(hasFocus);
+            mOnFocusChangedListener.onFocusChanged(hasFocus);
         });
     }
 
@@ -97,9 +89,6 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
         mSearchInput.requestFocus();
     }
 
-    /**
-     * Toggles the search bar according to it's current state
-     */
     @Override
     public void toggleSearchBar(boolean isShow) {
         if (mActivity != null) {

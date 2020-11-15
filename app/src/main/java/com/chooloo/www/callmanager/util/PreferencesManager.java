@@ -32,9 +32,9 @@ public class PreferencesManager {
      * @param context
      */
     private PreferencesManager(Context context) {
+        PreferenceManager.setDefaultValues(context, R.xml.preference, true);
         mPref = PreferenceManager.getDefaultSharedPreferences(context);
         mContext = context;
-        PreferenceManager.setDefaultValues(mContext, R.xml.preference, false);
     }
 
     public static synchronized PreferencesManager initialize(Context context) {

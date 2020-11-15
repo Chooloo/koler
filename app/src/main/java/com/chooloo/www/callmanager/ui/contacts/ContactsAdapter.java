@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.CursorAdapter;
+import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;

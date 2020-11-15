@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,10 +16,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui.base.CursorAdapter;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -35,7 +32,6 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.enable_permission_btn) protected Button mEnablePermissionButton;
     @BindView(R.id.item_header) protected TextView mAnchoredHeader;
     @BindView(R.id.empty_state) protected View mEmptyState;
     @BindView(R.id.empty_title) protected TextView mEmptyTitle;
@@ -51,50 +47,10 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
-    @OnClick(R.id.enable_permission_btn)
-    public void enablePermissionClick() {
-        mPresenter.onEnablePermissionClick();
-    }
-
-    @Override
-    public void setUp() {
-        mAdapter = getAdapter();
-
-        mPresenter = new CursorPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
-
-        mRecyclerView.setAdapter(mAdapter);
-
-        mRefreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
-
-        if (!hasPermissions()) {
-            this.mEmptyTitle.setText(getString(R.string.empty_list_no_permissions));
-            showEmptyPage(true);
-        }
-    }
-
-    @Override
-    public void togglePermissionButton() {
-        mEnablePermissionButton.setVisibility(hasPermissions() ? GONE : VISIBLE);
-    }
-
-    @Override
-    public void setData(Cursor cursor) {
-        getAdapter().setCursor(cursor);
-        showEmptyPage(cursor == null || cursor.getCount() == 0);
-    }
-
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
-        setRefreshing(true);
-        return null;
+        return mPresenter.onCreateLoader(id, args);
     }
 
     @Override
@@ -111,29 +67,45 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     }
 
     @Override
-    public void load() {
-        if (hasPermissions()) {
-            runLoader();
-        } else {
-            showEmptyPage(true);
-            togglePermissionButton();
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
+
+    @Override
+    public void setUp() {
+        mAdapter = onGetAdapter();
+
+        mPresenter = new CursorPresenter<>();
+        mPresenter.onAttach(this, getLifecycle());
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mRefreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
+
+        if (!hasPermissions()) {
+            mPresenter.onNoPermissions();
+            mEmptyTitle.setText(getString(R.string.empty_list_no_permissions));
         }
     }
 
     @Override
-    public void load(@Nullable Bundle args) {
-        setArguments(args);
-        load();
-    }
-
-    @Override
-    public void runLoader() {
-        LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), this);
+    public void setData(Cursor cursor) {
+        mAdapter.setCursor(cursor);
     }
 
     @Override
     public int getSize() {
         return mAdapter.getItemCount();
+    }
+
+    @Override
+    public void load() {
+        if (hasPermissions()) {
+            LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), this);
+        } else {
+            mPresenter.onNoPermissions();
+        }
     }
 
     @Override
@@ -164,5 +136,5 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         mOnLoadFinishedListener = onLoadFinishedListener;
     }
 
-    public abstract A getAdapter();
+    public abstract A onGetAdapter();
 }

@@ -1,15 +1,12 @@
 package com.chooloo.www.callmanager.ui.cursor;
 
 import android.database.Cursor;
-import android.view.View;
 
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.OnLifecycleEvent;
 import androidx.loader.content.Loader;
 
+import android.os.Bundle;
+
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
-import com.chooloo.www.callmanager.util.PermissionUtils;
 
 public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> implements CursorMvpPresenter<V> {
     @Override
@@ -23,9 +20,36 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
     }
 
     @Override
+    public void onNoPermissions() {
+        onNoResults();
+        mMvpView.askForPermissions();
+    }
+
+    @Override
+    public void onResults() {
+        mMvpView.showEmptyPage(false);
+    }
+
+    @Override
+    public void onNoResults() {
+        mMvpView.showEmptyPage(true);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        mMvpView.setRefreshing(true);
+        return mMvpView.getLoader(args);
+    }
+
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mMvpView.setData(data);
         mMvpView.setRefreshing(false);
+        if (mMvpView.getSize() > 0) {
+            onResults();
+        } else {
+            onNoResults();
+        }
     }
 
     @Override

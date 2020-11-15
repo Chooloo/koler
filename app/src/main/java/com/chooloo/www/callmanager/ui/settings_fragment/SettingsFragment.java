@@ -75,6 +75,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     @Override
+    public String[] onGetPermissions() {
+        return new String[0];
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
@@ -145,7 +150,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         startActivity(intent);
     }
 
-
     @Override
     public boolean hasPermissions() {
         return true;
@@ -154,10 +158,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public boolean hasPermission(String permission) {
         return true;
-    }
-
-    @Override
-    public void setRequiredPermissions(String[] permissions) {
     }
 
     @Override

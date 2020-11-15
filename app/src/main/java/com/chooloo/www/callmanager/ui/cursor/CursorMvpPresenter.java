@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.cursor;
 
 import android.database.Cursor;
+import android.os.Bundle;
 
 import androidx.loader.content.Loader;
 
@@ -10,6 +11,14 @@ public interface CursorMvpPresenter<V extends CursorMvpView> extends MvpPresente
     void onRequestPermissionsResult(String[] permissions);
 
     void onRefresh();
+
+    void onNoPermissions();
+
+    void onResults();
+
+    void onNoResults();
+
+    Loader<Cursor> onCreateLoader(int id, Bundle args);
 
     void onLoadFinished(Loader<Cursor> loader, Cursor data);
 

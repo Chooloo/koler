@@ -44,7 +44,7 @@ public class PageContacts extends PageFragment implements PageMvpView {
     }
 
     @Override
-    protected void setUp() {
+    public void setUp() {
         super.setUp();
 
         mPresenter = new PagePresenter<>();
@@ -58,7 +58,6 @@ public class PageContacts extends PageFragment implements PageMvpView {
             }
         });
     }
-
 
     @Override
     protected void onSearchTextChanged(String text) {

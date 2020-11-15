@@ -43,6 +43,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
     DialpadFragment mDialpadFragment;
     SearchFragment mSearchBarFragment;
 
-    @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
+    @BindView(R.id.appbar_main) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
     @BindView(R.id.dialer_fragment) View mDialerView;
@@ -79,13 +80,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         setUp();
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_actions, menu);
@@ -97,6 +91,19 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
     public boolean onOptionsItemSelected(MenuItem item) {
         mPresenter.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!mPresenter.onBackPressed()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
     }
 
     @Override
@@ -117,15 +124,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
     }
 
     @Override
-    public void onBackPressed() {
-        if (!mPresenter.onBackPressed()) {
-            super.onBackPressed();
-        }
-    }
-
-    // Interface Overrides
-
-    @Override
     public void setUp() {
         ButterKnife.bind(this);
 
@@ -144,15 +142,14 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
             @Override
             public void onPageSelected(int position) {
-                // TODO add on page selected to presenter
-                Toast.makeText(getApplicationContext(), "Selected page " + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Position " + position, Toast.LENGTH_SHORT).show();
+                mPresenter.onPageSelected(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
-        mViewPager.setCurrentItem(mPreferences.getInt(R.string.pref_default_page_key, 0));
         mSmartTabLayout.setViewPager(mViewPager);
 
         // search bar fragment
@@ -232,31 +229,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         return mSharedDialViewModel.getNumber().getValue();
     }
 
-    @Override
-    public void toggleAddContactAction(boolean isShow) {
-        if (mMenu != null) {
-            mMenu.findItem(R.id.action_add_contact).setVisible(isShow);
-        }
-    }
-
-    @Override
-    public void showSearchBar(boolean isShow) {
-        mSearchBarFragment.toggleSearchBar(isShow);
-        mSearchBarContainer.setVisibility(isShow ? VISIBLE : GONE);
-        mAppBarLayout.setExpanded(isShow);
-    }
-
-    @Override
-    public void toggleSearchBar() {
-        showSearchBar(mSearchBarContainer.getVisibility() != VISIBLE);
-    }
-
-    /**
-     * Animate view
-     *
-     * @param isShow show view or not
-     * @param v      view to handle
-     */
     public void showView(View v, boolean isShow) {
         if (isShow && v.isEnabled()) {
             v.animate().scaleX(1).scaleY(1).setDuration(100).start();

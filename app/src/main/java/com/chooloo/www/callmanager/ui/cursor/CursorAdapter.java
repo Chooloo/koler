@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.base;
+package com.chooloo.www.callmanager.ui.cursor;
 
 import android.content.Context;
 import android.database.Cursor;

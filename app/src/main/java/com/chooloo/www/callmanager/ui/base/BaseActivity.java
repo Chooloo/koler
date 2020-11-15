@@ -12,6 +12,9 @@ import androidx.preference.PreferenceManager;
 
 import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.Utilities;
+import com.chooloo.www.callmanager.R;
+
+import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
@@ -24,31 +27,12 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         super.onCreate(savedInstanceState);
         Utilities.setUpLocale(this);
         mPreferences = PreferencesManager.getInstance(this);
+        mRequiredPermissions = onGetPermissions();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public String[] onGetPermissions() {
+        return new String[]{};
     }
 
     @Override
@@ -64,11 +48,6 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
             }
         }
         return true;
-    }
-
-    @Override
-    public void setRequiredPermissions(String[] permissions) {
-        this.mRequiredPermissions = permissions;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -104,6 +83,4 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
     public void showError(int stringResId) {
         showError(getString(stringResId));
     }
-
-    protected abstract void setUp();
 }

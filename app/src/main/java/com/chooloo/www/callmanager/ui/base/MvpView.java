@@ -3,11 +3,14 @@ package com.chooloo.www.callmanager.ui.base;
 import androidx.annotation.StringRes;
 
 public interface MvpView {
+
+    String[] onGetPermissions();
+
+    void setUp();
+
     boolean hasPermissions();
 
     boolean hasPermission(String permission);
-
-    void setRequiredPermissions(String[] permissions);
 
     void askForPermissions();
 
