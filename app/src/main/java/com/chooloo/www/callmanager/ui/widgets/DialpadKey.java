@@ -15,7 +15,7 @@ import com.chooloo.www.callmanager.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DialpadKeyButton extends FrameLayout {
+public class DialpadKey extends FrameLayout {
 
     private int mKeyCode;
     private String mNumber;
@@ -27,14 +27,14 @@ public class DialpadKeyButton extends FrameLayout {
 
     private OnPressedListener mOnPressedListener;
 
-    public DialpadKeyButton(Context context, String number, String letters, int keyCode) {
+    public DialpadKey(Context context, String number, String letters, int keyCode) {
         super(context, null);
         this.setKeyCode(keyCode);
         this.setLetters(letters);
         this.setNumber(number);
     }
 
-    public DialpadKeyButton(Context context, AttributeSet attrs) {
+    public DialpadKey(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

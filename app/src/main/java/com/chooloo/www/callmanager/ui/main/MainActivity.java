@@ -64,7 +64,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
     DialpadFragment mDialpadFragment;
     SearchFragment mSearchBarFragment;
 
-    @BindView(R.id.appbar_main) AppBarLayout mAppBarLayout;
+    @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
     @BindView(R.id.dialer_fragment) View mDialerView;

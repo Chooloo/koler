@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_1"
             style="@style/DialpadKey">
 
@@ -38,7 +38,7 @@
 
             </LinearLayout>
 
-        </com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton>
+        </com.chooloo.www.callmanager.ui.widgets.DialpadKey>
 
         <include
             android:id="@+id/key_2"

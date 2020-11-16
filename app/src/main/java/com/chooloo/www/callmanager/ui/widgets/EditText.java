@@ -13,13 +13,21 @@ import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
 
-public class DigitsEditText extends AppCompatEditText {
+public class EditText extends AppCompatEditText {
 
-    public DigitsEditText(Context context, AttributeSet attrs) {
+    public EditText(Context context) {
+        super(context);
+    }
+
+    public EditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         setShowSoftInputOnFocus(true);
         setTextIsSelectable(true);
+    }
+
+    public EditText(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
     @Override

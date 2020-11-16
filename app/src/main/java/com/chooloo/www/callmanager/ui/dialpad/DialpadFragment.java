@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.ui.dialpad;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -16,14 +15,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton;
-import com.chooloo.www.callmanager.ui.widgets.DialpadView;
-import com.chooloo.www.callmanager.ui.widgets.DigitsEditText;
+import com.chooloo.www.callmanager.ui.widgets.Dialpad;
+import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
+import com.chooloo.www.callmanager.ui.widgets.EditText;
 import com.chooloo.www.callmanager.util.AudioUtils;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -33,7 +31,6 @@ import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
@@ -52,11 +49,11 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     private AudioUtils mAudioUtils;
 
-    @BindView(R.id.digits_edit_text) DigitsEditText mDigits;
+    @BindView(R.id.digits_edit_text) EditText mDigits;
     @BindView(R.id.button_call) ImageView mCallButton;
     @BindView(R.id.button_delete) ImageView mDelButton;
     @BindView(R.id.dialpad) TableLayout mNumbersTable;
-    @BindView(R.id.dialpad_view) DialpadView mDialpadView;
+    @BindView(R.id.dialpad_view) Dialpad mDialpadView;
 
     public static DialpadFragment newInstance(boolean isDialer) {
         Bundle args = new Bundle();
@@ -83,7 +80,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
             R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex, R.id.button_delete})
     public void keyClick(View view) {
-        mPresenter.onKeyClick(((DialpadKeyButton) view).getKeyCode());
+        mPresenter.onKeyClick(((DialpadKey) view).getKeyCode());
     }
 
     @OnClick(R.id.button_call)

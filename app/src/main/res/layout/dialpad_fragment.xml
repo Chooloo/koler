@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- The Dialpad View (the whole view, including the edit text) -->
-<com.chooloo.www.callmanager.ui.widgets.DialpadView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chooloo.www.callmanager.ui.widgets.Dialpad xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialpad_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:orientation="vertical"
-    tools:context=".ui2.fragment.DialpadFragment">
+    tools:context=".ui.dialpad.DialpadFragment">
 
     <!--Dialpad Shadow-->
     <View
@@ -26,19 +26,8 @@
         android:paddingStart="@dimen/top_dialpad_side_padding"
         android:paddingEnd="@dimen/top_dialpad_side_padding">
 
-        <!-- Call Button -->
-        <ImageView
-            android:id="@+id/button_call"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="8dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_call_black_24dp"
-            android:tint="?attr/colorAccent" />
-
         <!-- Edit Text -->
-        <com.chooloo.www.callmanager.ui.widgets.DigitsEditText
+        <com.chooloo.www.callmanager.ui.widgets.EditText
             android:id="@+id/digits_edit_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -71,4 +60,4 @@
 
     <include layout="@layout/dialpad" />
 
-</com.chooloo.www.callmanager.ui.widgets.DialpadView>
+</com.chooloo.www.callmanager.ui.widgets.Dialpad>

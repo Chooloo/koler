@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- A layout representing a single key in the dialpad -->
-<com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chooloo.www.callmanager.ui.widgets.DialpadKey xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DialpadKey">
 
@@ -19,4 +19,4 @@
 
     </LinearLayout>
 
-</com.chooloo.www.callmanager.ui.widgets.DialpadKeyButton>
+</com.chooloo.www.callmanager.ui.widgets.DialpadKey>

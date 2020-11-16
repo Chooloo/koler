@@ -22,7 +22,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -34,24 +33,24 @@ import butterknife.ButterKnife;
 /**
  * View that displays a twelve-key phone dialpad.
  */
-public class DialpadView extends LinearLayout {
+public class Dialpad extends LinearLayout {
 
-    private static final String TAG = DialpadView.class.getSimpleName();
+    private static final String TAG = Dialpad.class.getSimpleName();
 
     @BindView(R.id.digits_edit_text) EditText mDigits;
     @BindView(R.id.button_delete) ImageView mDeleteButton;
     @BindView(R.id.button_call) ImageView mCallButton;
     @BindView(R.id.dialpad_key_icon) ImageView mKeyVoicemail;
 
-    public DialpadView(Context context) {
+    public Dialpad(Context context) {
         this(context, null);
     }
 
-    public DialpadView(Context context, AttributeSet attrs) {
+    public Dialpad(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DialpadView(Context context, AttributeSet attrs, int defStyle) {
+    public Dialpad(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -60,6 +59,11 @@ public class DialpadView extends LinearLayout {
         ButterKnife.bind(this);
         setupKeypad();
         super.onFinishInflate();
+    }
+
+    @Override
+    public boolean onHoverEvent(MotionEvent event) {
+        return true;
     }
 
     private void setupKeypad() {
@@ -113,7 +117,7 @@ public class DialpadView extends LinearLayout {
         final Resources resources = getContext().getResources();
 
         for (int i = 0; i < buttonIds.length; i++) {
-            DialpadKeyButton dialpadKey = findViewById(buttonIds[i]);
+            DialpadKey dialpadKey = findViewById(buttonIds[i]);
             dialpadKey.setNumber(resources.getString(numberIds[i]));
             dialpadKey.setLetters(resources.getString(letterIds[i]));
             dialpadKey.setKeyCode(keyCodes[i]);
@@ -128,12 +132,6 @@ public class DialpadView extends LinearLayout {
         }
     }
 
-    /**
-     * Whether or not the digits above the dialer can be edited.
-     *
-     * @param canBeEdited If true, the backspace button will be shown and the digits EditText
-     *                    will be configured to allow text manipulation.
-     */
     public void setDigitsCanBeEdited(boolean canBeEdited) {
         mDeleteButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
         mCallButton.setVisibility(canBeEdited ? View.VISIBLE : View.GONE);
@@ -143,12 +141,7 @@ public class DialpadView extends LinearLayout {
         mDigits.setCursorVisible(canBeEdited);
     }
 
-    /**
-     * Always returns true for onHoverEvent callbacks, to fix problems with accessibility due to
-     * the dialpad overlaying other fragments.
-     */
-    @Override
-    public boolean onHoverEvent(MotionEvent event) {
-        return true;
+    public void enableDeleteButton(boolean isEnable) {
+        mDeleteButton.setVisibility(isEnable ? VISIBLE : GONE);
     }
 }
