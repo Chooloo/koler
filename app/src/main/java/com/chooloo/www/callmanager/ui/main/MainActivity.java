@@ -142,7 +142,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(getApplicationContext(), "Position " + position, Toast.LENGTH_SHORT).show();
                 mPresenter.onPageSelected(position);
             }
 
@@ -164,7 +163,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
         // bottom sheet
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView);
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
@@ -176,6 +174,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
 
             }
         });
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         // dial view model
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
@@ -188,11 +187,6 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         BiometricUtils.showBiometricPrompt(this);
 
         checkIncomingIntent();
-    }
-
-    @Override
-    public Fragment getCurrentFragment() {
-        return getSupportFragmentManager().findFragmentByTag("android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem());
     }
 
     @Override

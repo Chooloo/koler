@@ -1,63 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- The Dialpad View (the whole view, including the edit text) -->
-<com.chooloo.www.callmanager.ui.widgets.Dialpad xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dialpad_view"
+    android:id="@+id/dialpad_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:orientation="vertical"
+    android:background="?attr/colorPrimary"
     tools:context=".ui.dialpad.DialpadFragment">
 
-    <!--Dialpad Shadow-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/shadow_length"
-        android:alpha="0.04"
-        android:background="@drawable/shadow_fade_up" />
+    <Button
+        android:id="@+id/dialpad_button_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="call"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/digits_edit_text"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Number Input Field -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
+        android:id="@+id/digits_edit_text"
+        android:layout_width="0dp"
         android:layout_height="@dimen/phone_number_input_height"
-        android:background="?attr/colorPrimary"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/top_dialpad_side_padding"
-        android:paddingEnd="@dimen/top_dialpad_side_padding">
+        android:layout_marginStart="50dp"
+        android:background="@android:color/transparent"
+        android:cursorVisible="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
+        android:gravity="center"
+        android:inputType="phone"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textColor="@color/color_accent_blue"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
+        app:layout_constraintEnd_toStartOf="@id/dialpad_button_delete"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="01231293" />
 
-        <!-- Edit Text -->
-        <com.chooloo.www.callmanager.ui.widgets.EditText
-            android:id="@+id/digits_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:cursorVisible="true"
-            android:focusableInTouchMode="true"
-            android:freezesText="true"
-            android:gravity="center"
-            android:inputType="phone"
-            android:maxLines="1"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="?attr/colorAccent"
-            android:textSize="20sp" />
+    <ImageView
+        android:id="@+id/dialpad_button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="50dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        android:src="@drawable/ic_backspace_black_24dp"
+        android:tint="?attr/iconColor"
+        app:layout_constraintBottom_toBottomOf="@id/digits_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/digits_edit_text" />
 
-        <!-- Delete Button -->
-        <ImageView
-            android:id="@+id/button_delete"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="center"
-            android:src="@drawable/ic_backspace_black_24dp"
-            android:tint="?attr/iconColor" />
+    <TableLayout
+        android:id="@+id/dialpad_keys_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
+        android:padding="20dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    </LinearLayout>
+        <TableRow>
 
-    <include layout="@layout/dialpad" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_1"
+                app:digit="1" />
 
-</com.chooloo.www.callmanager.ui.widgets.Dialpad>
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_2"
+                app:digit="2" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_3"
+                app:digit="3" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_4"
+                app:digit="4" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_5"
+                app:digit="5" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_6"
+                app:digit="6" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_7"
+                app:digit="7" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_8"
+                app:digit="8" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_9"
+                app:digit="9" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_star"
+                app:digit="*" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_0"
+                app:digit="0" />
+
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+                android:id="@+id/key_hex"
+                app:digit="#" />
+        </TableRow>
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

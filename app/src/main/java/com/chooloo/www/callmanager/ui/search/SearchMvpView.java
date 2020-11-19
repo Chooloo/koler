@@ -8,5 +8,5 @@ public interface SearchMvpView extends MvpView {
 
     String getText();
 
-    void toggleSearchBar(boolean isShow);
+    void showIcon(boolean isShow);
 }

@@ -895,7 +895,7 @@ public class OngoingCallActivity extends BaseThemeActivity implements DialpadFra
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialer_fragment, mDialpadFragment)
                 .commit();
-        mDialpadFragment.setDigitsCanBeEdited(false);
+        mDialpadFragment.setIsDialer(false);
         mDialpadFragment.setOnKeyDownListener(this);
     }
 

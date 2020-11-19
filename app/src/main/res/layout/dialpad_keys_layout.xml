@@ -2,26 +2,27 @@
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/dialpad_keys"
+    android:id="@+id/dialpad_keys_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:layoutDirection="ltr"
+    android:padding="10dp"
     android:stretchColumns="*">
 
     <TableRow>
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_1"
-            app:number="1" />
+            app:digit="1" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_2"
-            app:number="2" />
+            app:digit="2" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_3"
-            app:number="3" />
+            app:digit="3" />
 
     </TableRow>
 
@@ -29,15 +30,15 @@
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_4"
-            app:number="4" />
+            app:digit="4" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_5"
-            app:number="5" />
+            app:digit="5" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_6"
-            app:number="6" />
+            app:digit="6" />
 
     </TableRow>
 
@@ -45,15 +46,15 @@
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_7"
-            app:number="7" />
+            app:digit="7" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_8"
-            app:number="8" />
+            app:digit="8" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_9"
-            app:number="9" />
+            app:digit="9" />
 
     </TableRow>
 
@@ -61,15 +62,15 @@
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_star"
-            app:number="*" />
+            app:digit="*" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_0"
-            app:number="0" />
+            app:digit="0" />
 
         <com.chooloo.www.callmanager.ui.widgets.DialpadKey
             android:id="@+id/key_hex"
-            app:number="#" />
+            app:digit="#" />
 
     </TableRow>
 

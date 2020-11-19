@@ -7,8 +7,6 @@ import com.chooloo.www.callmanager.ui.base.MvpView;
 public interface MainMvpView extends MvpView {
     void setUp();
 
-    Fragment getCurrentFragment();
-
     int getCurrentPosition();
 
     void checkIncomingIntent();

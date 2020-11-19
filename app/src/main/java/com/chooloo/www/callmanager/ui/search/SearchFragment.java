@@ -10,11 +10,9 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import butterknife.BindView;
 
@@ -25,7 +23,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
 
     private SearchPresenter<SearchMvpView> mPresenter;
 
-    public @BindView(R.id.search_input) EditText mSearchInput;
+    public @BindView(R.id.search_input) EditText mEditText;
 
     public static SearchFragment newInstance() {
         Bundle args = new Bundle();
@@ -53,11 +51,10 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
 
         mOnFocusChangedListener = isFocused -> {
         };
-
         mOnTextChangedListener = text -> {
         };
 
-        mSearchInput.addTextChangedListener(new TextWatcher() {
+        mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -72,8 +69,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
             public void afterTextChanged(Editable s) {
             }
         });
-
-        mSearchInput.setOnFocusChangeListener((v, hasFocus) -> {
+        mEditText.setOnFocusChangeListener((v, hasFocus) -> {
             mPresenter.onFocusChanged(hasFocus);
             mOnFocusChangedListener.onFocusChanged(hasFocus);
         });
@@ -81,29 +77,17 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
 
     @Override
     public String getText() {
-        return String.valueOf(mSearchInput.getText());
+        return String.valueOf(mEditText.getText());
     }
 
     @Override
     public void setFocus() {
-        mSearchInput.requestFocus();
+        mEditText.requestFocus();
     }
 
     @Override
-    public void toggleSearchBar(boolean isShow) {
-        if (mActivity != null) {
-            FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.slide_up, R.anim.slide_down);
-            if (isShow) {
-                ft.show(this);
-                setFocus();
-                Utilities.toggleKeyboard(mActivity, mSearchInput, true);
-            } else {
-                ft.hide(this);
-                Utilities.toggleKeyboard(mActivity, mSearchInput, false);
-            }
-            ft.commit();
-        }
+    public void showIcon(boolean isShow) {
+        mEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black_24dp) : null, null, null, null);
     }
 
     public void setOnFocusChangedListener(OnFocusChangedListener onFocusChangedListener) {

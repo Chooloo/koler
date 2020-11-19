@@ -33,22 +33,16 @@
         <item name="android:tint">@color/white</item>
     </style>
 
-    <!-- Dialer Button -->
-
+    <!-- DialpadKey -->
     <style name="DialpadKey">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">@dimen/dialpad_key_height</item>
-        <item name="android:soundEffectsEnabled">false</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="DialpadKeyInnerLayout">
-        <item name="android:orientation">vertical</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center</item>
+        <item name="android:soundEffectsEnabled">false</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="DialpadKeyNumber">
@@ -56,7 +50,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/dialpad_key_number_text_size</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <style name="DialpadKeyLetters">
@@ -64,6 +60,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/dialpad_key_letters_text_size</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle2
+        </item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 

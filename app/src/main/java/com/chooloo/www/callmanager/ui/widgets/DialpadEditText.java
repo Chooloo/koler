@@ -14,20 +14,20 @@ import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
 
-public class DialdpadEditText extends AppCompatEditText {
+public class DialpadEditText extends AppCompatEditText {
 
-    public DialdpadEditText(Context context) {
+    public DialpadEditText(Context context) {
         super(context);
     }
 
-    public DialdpadEditText(Context context, AttributeSet attrs) {
+    public DialpadEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         setShowSoftInputOnFocus(true);
         setTextIsSelectable(true);
     }
 
-    public DialdpadEditText(Context context, AttributeSet attrs, int defStyle) {
+    public DialpadEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

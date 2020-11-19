@@ -9,7 +9,7 @@
 
     <!-- App Bar -->
     <include
-        android:id="@+id/appbar_main"
+        android:id="@+id/appbar"
         layout="@layout/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -27,7 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/dialpad_fragment" />
