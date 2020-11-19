@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialpad_keys"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:layoutDirection="ltr"
+    android:stretchColumns="*">
+
+    <TableRow>
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_1"
+            app:number="1" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_2"
+            app:number="2" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_3"
+            app:number="3" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_4"
+            app:number="4" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_5"
+            app:number="5" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_6"
+            app:number="6" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_7"
+            app:number="7" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_8"
+            app:number="8" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_9"
+            app:number="9" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_star"
+            app:number="*" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_0"
+            app:number="0" />
+
+        <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            android:id="@+id/key_hex"
+            app:number="#" />
+
+    </TableRow>
+
+</TableLayout>

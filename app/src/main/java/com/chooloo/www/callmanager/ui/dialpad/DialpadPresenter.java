@@ -53,18 +53,13 @@ public class DialpadPresenter<V extends DialpadMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) mMvpView.requestFocus();
-    }
-
-    @Override
     public void onIntentDataChanged(String data) {
         mMvpView.setNumber(data);
-        mMvpView.setViewModelNumber(data);
+        mMvpView.updateViewModel(data);
     }
 
     @Override
     public void onTextChanged(String text) {
-        mMvpView.setViewModelNumber(text);
+        mMvpView.updateViewModel(text);
     }
 }

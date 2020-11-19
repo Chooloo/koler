@@ -7,13 +7,15 @@ public interface DialpadMvpView extends MvpView {
 
     void setNumber(String number);
 
-    void setViewModelNumber(String number);
+    void setIsDialer(boolean isCanBeEdited);
+
+    void updateViewModel(String number);
+
+    void registerKeyEvent(int keyCode);
 
     void call();
 
     void callVoicemail();
-
-    void requestFocus();
 
     void toggleToneGenerator(boolean toggle);
 
@@ -23,11 +25,5 @@ public interface DialpadMvpView extends MvpView {
 
     void toggleCursor(boolean isShow);
 
-    void registerKeyEvent(int keyCode);
-
     void vibrate();
-
-    void setDigitsCanBeEdited(boolean isCanBeEdited);
-
-    void showVoicemailButton(boolean isShow);
 }

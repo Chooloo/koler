@@ -19,8 +19,6 @@ public interface DialpadMvpPresenter<V extends DialpadMvpView> extends MvpPresen
 
     void onLongZeroClick();
 
-    void onHiddenChanged(boolean hidden);
-
     void onIntentDataChanged(String data);
 
     void onTextChanged(String text);

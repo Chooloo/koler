@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.ui.dialpad;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,9 +8,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.Toast;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +23,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui.widgets.Dialpad;
+import com.chooloo.www.callmanager.ui.widgets.DialpadEditText;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
-import com.chooloo.www.callmanager.ui.widgets.EditText;
 import com.chooloo.www.callmanager.util.AudioUtils;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -49,11 +52,10 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     private AudioUtils mAudioUtils;
 
-    @BindView(R.id.digits_edit_text) EditText mDigits;
-    @BindView(R.id.button_call) ImageView mCallButton;
-    @BindView(R.id.button_delete) ImageView mDelButton;
-    @BindView(R.id.dialpad) TableLayout mNumbersTable;
-    @BindView(R.id.dialpad_view) Dialpad mDialpadView;
+    @BindView(R.id.digits_edit_text) DialpadEditText mDigits;
+    @BindView(R.id.dialpad_button_call) Button mCallButton;
+    @BindView(R.id.dialpad_button_delete) ImageView mDeleteButton;
+    @BindView(R.id.dialpad_keys_layout) TableLayout mNumbersTable;
 
     public static DialpadFragment newInstance(boolean isDialer) {
         Bundle args = new Bundle();
@@ -78,12 +80,12 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
-            R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex, R.id.button_delete})
+            R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex, R.id.dialpad_button_delete})
     public void keyClick(View view) {
         mPresenter.onKeyClick(((DialpadKey) view).getKeyCode());
     }
 
-    @OnClick(R.id.button_call)
+    @OnClick(R.id.dialpad_button_call)
     public void callClick(View view) {
         mPresenter.onCallClick();
     }
@@ -105,7 +107,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
         return true;
     }
 
-    @OnLongClick(R.id.button_delete)
+    @OnLongClick(R.id.dialpad_button_delete)
     public boolean longDeleteClick(View view) {
         mPresenter.onLongDeleteClick();
         return true;
@@ -122,9 +124,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
         mAudioUtils = new AudioUtils();
 
-        mIsDialer = getArgsSafely().getBoolean(ARG_DIALER);
-        mCallButton.setVisibility(mIsDialer ? View.VISIBLE : View.GONE);
-        mDelButton.setVisibility(mIsDialer ? View.VISIBLE : View.GONE);
+        setIsDialer(getArgsSafely().getBoolean(ARG_DIALER));
 
         mSharedDialViewModel = ViewModelProviders.of(mActivity).get(SharedDialViewModel.class);
         SharedIntentViewModel sharedIntentViewModel = ViewModelProviders.of(mActivity).get(SharedIntentViewModel.class);
@@ -153,7 +153,18 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @Override
-    public void setViewModelNumber(String number) {
+    public void setIsDialer(boolean isDialer) {
+        mDeleteButton.setVisibility(isDialer ? VISIBLE : GONE);
+        mCallButton.setVisibility(isDialer ? VISIBLE : GONE);
+        mDigits.setClickable(isDialer);
+        mDigits.setLongClickable(isDialer);
+        mDigits.setFocusableInTouchMode(isDialer);
+        mDigits.setCursorVisible(isDialer);
+        mIsDialer = isDialer;
+    }
+
+    @Override
+    public void updateViewModel(String number) {
         mSharedDialViewModel.setNumber(number.equals("") ? null : number);
     }
 
@@ -173,8 +184,28 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @Override
-    public void requestFocus() {
-        mDigits.requestFocus();
+    public void toggleCursor(boolean isShow) {
+        if (isShow && mDigits.isEmpty()) {
+            mDigits.setCursorVisible(true);
+        } else if (!isShow) {
+            final int length = mDigits.length();
+            if (length == mDigits.getSelectionStart() && length == mDigits.getSelectionEnd()) {
+                mDigits.setCursorVisible(false);
+            }
+        }
+    }
+
+    @Override
+    public void registerKeyEvent(int keyCode) {
+        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
+        mDigits.onKeyDown(keyCode, event);
+        mDigits.setText("ssdads");
+        if (mOnKeyDownListener != null) mOnKeyDownListener.onKeyPressed(keyCode, event);
+    }
+
+    @Override
+    public void vibrate() {
+        Utilities.vibrate(mActivity, Utilities.SHORT_VIBRATE_LENGTH);
     }
 
     @Override
@@ -192,41 +223,6 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
         mAudioUtils.playToneByKey(keyCode, mActivity);
     }
 
-    @Override
-    public void toggleCursor(boolean isShow) {
-        if (isShow && mDigits.isEmpty()) {
-            mDigits.setCursorVisible(true);
-        } else if (!isShow) {
-            final int length = mDigits.length();
-            if (length == mDigits.getSelectionStart() && length == mDigits.getSelectionEnd()) {
-                mDigits.setCursorVisible(false);
-            }
-        }
-    }
-
-    @Override
-    public void registerKeyEvent(int keyCode) {
-        KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
-        mDigits.onKeyDown(keyCode, event);
-        if (mOnKeyDownListener != null) mOnKeyDownListener.onKeyPressed(keyCode, event);
-    }
-
-    @Override
-    public void vibrate() {
-        Utilities.vibrate(mActivity, Utilities.SHORT_VIBRATE_LENGTH);
-    }
-
-    @Override
-    public void setDigitsCanBeEdited(boolean isCanBeEdited) {
-        Handler handler = new Handler();
-        handler.postDelayed(() -> mDialpadView.setDigitsCanBeEdited(isCanBeEdited), 2000);
-    }
-
-    @Override
-    public void showVoicemailButton(boolean isShow) {
-        Handler handler = new Handler();
-        handler.postDelayed(() -> mDialpadView.setShowVoicemailButton(isShow), 2000);
-    }
 
     public void setOnKeyDownListener(OnKeyDownListener onKeyDownListener) {
         mOnKeyDownListener = onKeyDownListener;

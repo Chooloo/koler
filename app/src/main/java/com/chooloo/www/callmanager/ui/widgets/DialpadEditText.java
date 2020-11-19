@@ -9,24 +9,25 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
 
-public class EditText extends AppCompatEditText {
+public class DialdpadEditText extends AppCompatEditText {
 
-    public EditText(Context context) {
+    public DialdpadEditText(Context context) {
         super(context);
     }
 
-    public EditText(Context context, AttributeSet attrs) {
+    public DialdpadEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         setShowSoftInputOnFocus(true);
         setTextIsSelectable(true);
     }
 
-    public EditText(Context context, AttributeSet attrs, int defStyle) {
+    public DialdpadEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
