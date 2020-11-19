@@ -74,6 +74,18 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.onPause();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
