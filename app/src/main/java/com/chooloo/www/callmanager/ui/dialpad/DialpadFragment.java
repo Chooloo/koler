@@ -8,14 +8,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.Toast;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +32,10 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import timber.log.Timber;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
@@ -92,9 +92,12 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
-            R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex, R.id.dialpad_button_delete})
+            R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex})
     public void keyClick(View view) {
-        mPresenter.onKeyClick(((DialpadKey) view).getKeyCode());
+        int keyCode = ((DialpadKey) view).getKeyCode();
+        Timber.i("CLICKED KEY CLICKED KEYYYY");
+        Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
+        mPresenter.onKeyClick(keyCode);
     }
 
     @OnClick(R.id.dialpad_button_call)

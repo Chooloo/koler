@@ -158,7 +158,7 @@ public class MainActivity extends BaseThemeActivity implements MainMvpView {
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
 
         // dialpad fragment
-        mDialpadFragment = DialpadFragment.newInstance(true);
+        mDialpadFragment = (DialpadFragment) DialpadFragment.newInstance(true);
         getSupportFragmentManager().beginTransaction().add(R.id.dialer_fragment, mDialpadFragment).commit();
 
         // bottom sheet
