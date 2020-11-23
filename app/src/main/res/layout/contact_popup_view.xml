@@ -121,7 +121,7 @@
             android:id="@+id/contact_popup_button_edit"
             style="@style/ContactPopup.Button"
             android:src="@drawable/ic_edit_black_24dp"
-            android:tint="@color/color_accent_pink" />
+            android:tint="@color/color_accent" />
 
         <!-- Add Button -->
         <ImageButton

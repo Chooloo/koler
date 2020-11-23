@@ -19,9 +19,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
-import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
@@ -40,7 +39,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class ContactActivity extends BaseThemeActivity implements ContactMvpView {
+public class ContactActivity extends BaseActivity implements ContactMvpView {
 
     public static final String CONTACT_INTENT_ID = "CONTACT_INTENT";
 

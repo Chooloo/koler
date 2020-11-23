@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -11,10 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import com.chooloo.www.callmanager.util.PreferencesManager;
+import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.R;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
@@ -82,5 +85,10 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
     @Override
     public void showError(int stringResId) {
         showError(getString(stringResId));
+    }
+
+    protected void setThemeType(@ThemeUtils.ThemeType int type) {
+        Resources.Theme theme = super.getTheme();
+        theme.applyStyle(type, true);
     }
 }

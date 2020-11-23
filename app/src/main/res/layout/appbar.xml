@@ -21,7 +21,7 @@
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/view_pager_tab"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bubble_tab_height"
+            android:layout_height="@dimen/smart_tab_height"
             app:layout_scrollFlags="scroll|snap|enterAlways"
             app:stl_clickable="true"
             app:stl_defaultTabBackground="@drawable/bubble_background"
@@ -40,7 +40,7 @@
             app:stl_indicatorGravity="center"
             app:stl_indicatorInFront="true"
             app:stl_indicatorInterpolation="smart"
-            app:stl_indicatorThickness="@dimen/bubble_tab_height"
+            app:stl_indicatorThickness="@dimen/smart_tab_height"
             app:stl_indicatorWidth="auto"
             app:stl_indicatorWithoutPadding="false"
             app:stl_overlineColor="#4D000000"

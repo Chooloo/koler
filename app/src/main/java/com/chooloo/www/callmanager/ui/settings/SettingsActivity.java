@@ -1,12 +1,9 @@
 package com.chooloo.www.callmanager.ui.settings;
 
 import android.os.Bundle;
-import android.provider.Settings;
-
-import androidx.fragment.app.Fragment;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.settings_fragment.SettingsFragment;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 
@@ -14,7 +11,7 @@ import java.util.Objects;
 
 import butterknife.ButterKnife;
 
-public class SettingsActivity extends BaseThemeActivity implements SettingsMvpView {
+public class SettingsActivity extends BaseActivity implements SettingsMvpView {
     private static final String TAG_FRAGMENT = "fragment";
 
     @Override

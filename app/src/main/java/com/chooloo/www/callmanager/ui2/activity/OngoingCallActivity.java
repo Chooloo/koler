@@ -44,11 +44,11 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
 import com.chooloo.www.callmanager.listener.NotificationActionReceiver;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
@@ -80,7 +80,7 @@ import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPromp
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends BaseThemeActivity implements DialpadFragment.OnKeyDownListener {
+public class OngoingCallActivity extends BaseActivity implements DialpadFragment.OnKeyDownListener {
 
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";

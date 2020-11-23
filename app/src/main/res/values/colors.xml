@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">@color/color_accent_pink</color>
+    <color name="ic_launcher_background">@color/color_accent</color>
 
     <!-- Themes -->
-    <color name="color_primary_light">@color/white</color>
-    <color name="color_primary_dark">@color/grey_850</color>
-    <color name="color_primary_amoled">@color/black</color>
-
-    <color name="color_accent_default">@color/color_accent_blue</color>
-    <color name="color_accent_blue">#1162bf</color>
-    <color name="color_accent_green">#47A799</color>
-    <color name="color_accent_pink">#EC134E</color>
-    <color name="color_accent_cream">#F2E2B3</color>
+    <color name="color_primary">@color/white</color>
+    <color name="color_accent">#1162bf</color>
 
     <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>

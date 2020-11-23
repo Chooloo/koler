@@ -2,6 +2,8 @@ package com.chooloo.www.callmanager.ui.base;
 
 import androidx.annotation.StringRes;
 
+import com.chooloo.www.callmanager.util.ThemeUtils;
+
 public interface MvpView {
 
     String[] onGetPermissions();

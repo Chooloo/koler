@@ -36,7 +36,7 @@
         android:singleLine="true"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textColor="@color/color_accent_blue"
+        android:textColor="@color/color_accent"
         android:textSize="27sp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toStartOf="@id/dialpad_button_delete"

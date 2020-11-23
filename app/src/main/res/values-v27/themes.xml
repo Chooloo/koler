@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="android:navigationBarColor">@color/ic_launcher_background</item>
-        <item name="android:statusBarColor">@color/ic_launcher_background</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
-
-    <!-- Theme Styles -->
-
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
@@ -29,18 +20,5 @@
 
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-    </style>
-
-    <!-- Theme Type -->
-
-    <style name="ThemeType" />
-
-    <style name="ThemeType.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="ThemeType.TransparentStatusBar">
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

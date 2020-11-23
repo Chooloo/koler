@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseThemeActivity;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.widgets.ListItem;
 import com.chooloo.www.callmanager.util.ThemeUtils;
@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AboutActivity extends BaseThemeActivity implements AboutMvpView {
+public class AboutActivity extends BaseActivity implements AboutMvpView {
 
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
 

@@ -16,36 +16,14 @@ import java.lang.annotation.RetentionPolicy;
 
 public class ThemeUtils {
 
+    public static final int TYPE_NORMAL = R.style.ThemeType;
+    public static final int TYPE_NO_ACTION_BAR = R.style.ThemeType_NoActionBar;
+    public static final int TYPE_TRANSPARENT_STATUS_BAR = R.style.ThemeType_TransparentStatusBar;
+
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TYPE_NORMAL, TYPE_NO_ACTION_BAR, TYPE_TRANSPARENT_STATUS_BAR})
     public @interface ThemeType {
     }
-
-    public static final int TYPE_NORMAL = 0;
-    public static final int TYPE_NO_ACTION_BAR = 1;
-    public static final int TYPE_TRANSPARENT_STATUS_BAR = 2;
-
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({STYLE_LIGHT, STYLE_DARK, STYLE_AMOLED, STYLE_SYSTEM})
-    private @interface ThemeStyle {
-    }
-
-    private static final String STYLE_LIGHT = "light";
-    private static final String STYLE_DARK = "dark";
-    private static final String STYLE_AMOLED = "amoled";
-    private static final String STYLE_SYSTEM = "system";
-
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({ACCENT_BLUE, ACCENT_PINK, ACCENT_GREEN, ACCENT_CREAM})
-    private @interface AccentColor {
-    }
-
-    private static final String ACCENT_BLUE = "blue";
-    private static final String ACCENT_PINK = "pink";
-    private static final String ACCENT_GREEN = "green";
-    private static final String ACCENT_CREAM = "cream";
-
-    private static final int DEFAULT_ACCENT = R.style.Accent_Blue;
 
     /**
      * Return the theme that corresponds to the correct theme type
@@ -66,58 +44,6 @@ public class ThemeUtils {
                 return R.style.ThemeType;
         }
     }
-
-    /**
-     * Return the theme that corresponds to theme style the user has chosen
-     *
-     * @param context context
-     * @return style theme resource
-     */
-    public static @StyleRes
-    int getStyleTheme(Context context) {
-        // get the user's choice
-        @ThemeStyle String style = PreferencesManager.getInstance(context).getString(R.string.pref_app_theme_key, STYLE_LIGHT);
-
-        // if the user chose "system"
-        if (style.equals(STYLE_SYSTEM))
-            style = ThemeUtils.isNightModeOn(context) ? STYLE_DARK : STYLE_LIGHT;
-
-        switch (style) {
-            case STYLE_LIGHT:
-                return R.style.AppTheme_Light;
-            case STYLE_DARK:
-                return R.style.AppTheme_Dark;
-            case STYLE_AMOLED:
-                return R.style.AppTheme_AMOLED;
-            default:
-                return R.style.AppTheme_Light;
-        }
-    }
-
-    /**
-     * Return the theme that corresponds the the user's choice for the accent color
-     *
-     * @param context Context
-     * @return accent color theme resource
-     */
-    public static @StyleRes
-    int getAccentTheme(Context context) {
-        @AccentColor String color = PreferencesManager.getInstance(context).getString(R.string.pref_app_color_key, ACCENT_BLUE);
-        if (color == null) return DEFAULT_ACCENT;
-        switch (color) {
-            case ACCENT_BLUE:
-                return R.style.Accent_Blue;
-            case ACCENT_PINK:
-                return R.style.Accent_Pink;
-            case ACCENT_GREEN:
-                return R.style.Accent_Green;
-            case ACCENT_CREAM:
-                return R.style.Accent_Cream;
-            default:
-                return DEFAULT_ACCENT;
-        }
-    }
-
 
     /**
      * Check if night mode is on by system

@@ -2,24 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/pref_category_look_and_feel">
-
-        <ListPreference
-            android:defaultValue="@string/pref_app_theme_default_value"
-            android:entries="@array/pref_app_theme_entries"
-            android:entryValues="@array/pref_app_theme_entry_values"
-            android:key="@string/pref_app_theme_key"
-            android:title="@string/pref_app_theme_title" />
-
-        <ListPreference
-            android:defaultValue="@string/pref_app_color_default_value"
-            android:entries="@array/pref_app_color_entries"
-            android:entryValues="@array/pref_app_color_entry_values"
-            android:key="@string/pref_app_color_key"
-            android:title="@string/pref_app_color_title" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/pref_category_call">
 
 
@@ -56,25 +38,7 @@
             android:title="@string/pref_default_page_title" />
 
     </PreferenceCategory>
-
-    <!--    <PreferenceCategory-->
-    <!--        android:title="@string/pref_category_noise"-->
-    <!--        app:iconSpaceReserved="false">-->
-
-    <!--        <SwitchPreference-->
-    <!--            android:enabled="false"-->
-    <!--            android:title="@string/pref_is_silent_title" />-->
-    <!--        &lt;!&ndash;android:defaultValue="false"&ndash;&gt;-->
-    <!--        &lt;!&ndash;android:key="@string/pref_is_silent_key"&ndash;&gt;-->
-
-    <!--        <SwitchPreference-->
-    <!--            android:enabled="false"-->
-    <!--            android:title="@string/pref_is_no_vibrate_title" />-->
-    <!--        &lt;!&ndash;android:defaultValue="false"&ndash;&gt;-->
-    <!--        &lt;!&ndash;android:key="@string/pref_is_no_vibrate_key"&ndash;&gt;-->
-
-    <!--    </PreferenceCategory>-->
-
+    
     <PreferenceCategory
         android:title="@string/pref_category_scurity"
         app:iconSpaceReserved="false">

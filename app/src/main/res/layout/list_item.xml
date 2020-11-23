@@ -1,12 +1,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_two_line_height"
+    android:layout_height="@dimen/list_item_height"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingTop="@dimen/item_contact_topbot_padding"
-    android:paddingBottom="@dimen/item_contact_topbot_padding">
+    android:paddingTop="@dimen/list_item_top_bottom_padding"
+    android:paddingBottom="@dimen/list_item_top_bottom_padding">
 
     <LinearLayout
         android:id="@+id/item_header_included"
@@ -34,7 +34,7 @@
         style="@style/ListItemText.Big"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/item_contact_padding"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/caller_image_layout"
