@@ -52,6 +52,19 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     private AudioUtils mAudioUtils;
 
+    @BindView(R.id.key_0) DialpadKey mKey0;
+    @BindView(R.id.key_1) DialpadKey mKey1;
+    @BindView(R.id.key_2) DialpadKey mKey2;
+    @BindView(R.id.key_3) DialpadKey mKey3;
+    @BindView(R.id.key_4) DialpadKey mKey4;
+    @BindView(R.id.key_5) DialpadKey mKey5;
+    @BindView(R.id.key_6) DialpadKey mKey6;
+    @BindView(R.id.key_7) DialpadKey mKey7;
+    @BindView(R.id.key_8) DialpadKey mKey8;
+    @BindView(R.id.key_9) DialpadKey mKey9;
+    @BindView(R.id.key_hex) DialpadKey mKeyHex;
+    @BindView(R.id.key_star) DialpadKey mKeyStar;
+
     @BindView(R.id.digits_edit_text) DialpadEditText mDigits;
     @BindView(R.id.dialpad_button_call) Button mCallButton;
     @BindView(R.id.dialpad_button_delete) ImageView mDeleteButton;
@@ -95,14 +108,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
             R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex})
     public void keyClick(View view) {
         int keyCode = ((DialpadKey) view).getKeyCode();
-        Timber.i("CLICKED KEY CLICKED KEYYYY");
-        Toast.makeText(getContext(), "Clicked", Toast.LENGTH_SHORT).show();
         mPresenter.onKeyClick(keyCode);
-    }
-
-    @OnClick(R.id.dialpad_button_call)
-    public void callClick(View view) {
-        mPresenter.onCallClick();
     }
 
     @OnClick(R.id.digits_edit_text)
@@ -214,7 +220,6 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     public void registerKeyEvent(int keyCode) {
         KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
         mDigits.onKeyDown(keyCode, event);
-        mDigits.setText("ssdads");
         if (mOnKeyDownListener != null) mOnKeyDownListener.onKeyPressed(keyCode, event);
     }
 
