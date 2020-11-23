@@ -47,6 +47,6 @@
         app:behavior_peekHeight="0dp"
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
-        tools:layout="@layout/dialpad_fragment" />
+        tools:layout="@layout/fragment_dialpad" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,35 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- App Theme Preferences -->
-    <string-array name="pref_app_color_entries">
-        <item>@string/color_blue</item>
-        <item>@string/color_pink</item>
-        <item>@string/color_green</item>
-        <item>@string/color_cream</item>
-    </string-array>
-
-    <string-array name="pref_app_theme_entries">
-        <item>@string/theme_light</item>
-        <item>@string/theme_dark</item>
-        <item>@string/theme_amoled</item>
-        <item>@string/theme_auto</item>
-    </string-array>
-
-    <string-array name="pref_app_color_entry_values">
-        <item>blue</item>
-        <item>pink</item>
-        <item>green</item>
-        <item>cream</item>
-    </string-array>
-
-    <string-array name="pref_app_theme_entry_values">
-        <item>light</item>
-        <item>dark</item>
-        <item>amoled</item>
-        <item>@string/pref_system_entry_value</item>
-    </string-array>
-
     <!-- Call Timer Preferences -->
     <string-array name="pref_call_timer_entries">
         <item>10 seconds</item>

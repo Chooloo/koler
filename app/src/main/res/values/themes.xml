@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SplashTheme" parent="AppTheme.Light">
+    <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:navigationBarColor">@color/ic_launcher_background</item>
         <item name="android:statusBarColor">@color/ic_launcher_background</item>
@@ -10,11 +10,13 @@
 
     <!-- Theme Styles -->
 
-    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/color_primary_light</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="colorAccent">?attr/colorAccent</item>
         <item name="dialogBackgroundColor">?attr/colorPrimary</item>
+
+        <item name="bottomSheetDialogTheme">@style/BottomSheet</item>
 
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
@@ -29,65 +31,12 @@
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="actionModeStyle">@style/ActionMode.Light</item>
         <item name="windowActionModeOverlay">true</item>
-    </style>
-
-    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Bridge">
-        <item name="colorPrimary">@color/color_primary_dark</item>
-        <item name="colorPrimaryDark">?attr/colorPrimary</item>
-        <item name="colorAccent">?attr/colorAccent</item>
-
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowBackground">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <item name="dialogBackgroundColor">@color/grey_800</item>
-
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-        <item name="iconColor">@color/icon_active_dark</item>
-        <item name="overlayColor">@color/grey_800</item>
-
-        <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="actionModeStyle">@style/ActionMode.Dark</item>
-        <item name="windowActionModeOverlay">true</item>
-    </style>
-
-    <style name="AppTheme.AMOLED" parent="AppTheme.Dark">
-        <item name="colorPrimary">@color/color_primary_amoled</item>
-        <item name="dialogBackgroundColor">?attr/colorPrimary</item>
-        <item name="overlayColor">@color/semi_black</item>
-    </style>
-
-    <!-- Accent Colors -->
-
-    <style name="Accent"></style>
-
-    <style name="Accent.Blue">
-        <item name="colorAccent">@color/color_accent_blue</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-    </style>
-
-    <style name="Accent.Pink">
-        <item name="colorAccent">@color/color_accent_pink</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-    </style>
-
-    <style name="Accent.Green">
-        <item name="colorAccent">@color/color_accent_green</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-    </style>
-
-    <style name="Accent.Cream">
-        <item name="colorAccent">@color/color_accent_cream</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
     </style>
 
     <!-- Theme Type -->
 
-    <style name="ThemeType"></style>
+    <style name="ThemeType" />
 
     <style name="ThemeType.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -96,17 +45,5 @@
 
     <style name="ThemeType.TransparentStatusBar">
         <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-    <!-- AppBar Overlay -->
-
-    <style name="ActionMode.Light" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/grey_100</item>
-        <item name="height">@dimen/action_bar_size</item>
-    </style>
-
-    <style name="ActionMode.Dark" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/black</item>
-        <item name="height">@dimen/action_bar_size</item>
     </style>
 </resources>

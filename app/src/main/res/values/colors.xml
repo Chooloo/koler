@@ -26,7 +26,6 @@
     <color name="semi_white">#DAFFFFFF</color>
 
     <!-- Greys -->
-    <color name="search_bar_background">#45DADADA</color>
     <color name="grey_50">#17DADADA</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_400">#BDBDBD</color>
@@ -38,4 +37,7 @@
     <color name="red_phone">#ef5350</color>
 
     <color name="star_yellow">#FFEB3B</color>
+
+    <!-- backgrounds -->
+    <color name="search_bar_background">#45DADADA</color>
 </resources>

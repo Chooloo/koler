@@ -32,7 +32,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
-import timber.log.Timber;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -81,7 +80,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View fragmentView = inflater.inflate(R.layout.dialpad_fragment, container, false);
+        final View fragmentView = inflater.inflate(R.layout.fragment_dialpad, container, false);
         fragmentView.buildLayer();
         return fragmentView;
     }

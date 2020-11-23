@@ -1,5 +1,10 @@
 <resources>
-    <!-- Text Button (A button with text in it *gets a seizure*)-->
+    <!-- Bottom Sheet -->
+    <style name="BottomSheet" parent="">
+        <item name="cornerSizeTopRight">@dimen/bubble_corner_radius</item>
+        <item name="cornerSizeTopLeft">@dimen/bubble_corner_radius</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
 
     <!-- List View -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
@@ -17,16 +22,12 @@
     <style name="ListItemText.Big">
         <item name="android:textAlignment">viewStart</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
-        <item name="android:text">Big Text lkdj alsdkj lkjasdfh lkjasdh fjksh kjfl hskjdlaf lkjhsad
-            fklj
-        </item>
+        <item name="android:text">Big Text lkdj alsdkj lkjasdfh lkjasdh fjksh kjfl hskjdla</item>
     </style>
 
     <style name="ListItemText.Small">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="android:text">small text, small text, small text, small text, small text, small
-            text
-        </item>
+        <item name="android:text">small text, small text, small text, small text, small text</item>
     </style>
 
     <style name="ActionButton" parent="Widget.Design.FloatingActionButton">

@@ -5,6 +5,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_50"
     tools:context=".ui.main.MainActivity">
 
     <!-- App Bar -->
@@ -29,6 +30,6 @@
         app:behavior_hideable="true"
         app:layout_anchorGravity="bottom"
         app:layout_behavior="@string/bottom_sheet_behavior"
-        tools:layout="@layout/dialpad_fragment" />
+        tools:layout="@layout/fragment_dialpad" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
