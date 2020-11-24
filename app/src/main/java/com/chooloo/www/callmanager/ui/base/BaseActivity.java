@@ -68,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         if (message != null) {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "And error occured", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "An error occured", Toast.LENGTH_SHORT).show();
         }
     }
 

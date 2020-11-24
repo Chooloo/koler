@@ -33,7 +33,7 @@
 
     <!-- Caller Pic -->
     <FrameLayout
-        android:id="@+id/caller_image_layout"
+        android:id="@+id/item_image_layout"
         android:layout_width="@dimen/caller_image_size"
         android:layout_height="@dimen/caller_image_size"
         app:layout_constraintBottom_toTopOf="@id/caller_details_layout"
@@ -67,9 +67,9 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/guide_eye_level"
-        app:layout_constraintEnd_toEndOf="@id/caller_image_layout"
-        app:layout_constraintStart_toStartOf="@id/caller_image_layout"
-        app:layout_constraintTop_toBottomOf="@id/caller_image_layout">
+        app:layout_constraintEnd_toEndOf="@id/item_image_layout"
+        app:layout_constraintStart_toStartOf="@id/item_image_layout"
+        app:layout_constraintTop_toBottomOf="@id/item_image_layout">
 
         <!-- Caller Name -->
         <TextView

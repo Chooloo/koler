@@ -5,7 +5,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_50"
+    android:background="@color/white"
     tools:context=".ui.main.MainActivity">
 
     <!-- App Bar -->

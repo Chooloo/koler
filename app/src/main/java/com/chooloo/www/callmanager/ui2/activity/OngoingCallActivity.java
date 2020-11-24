@@ -153,7 +153,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
     @BindView(R.id.reject_btn) FloatingActionButton mRejectButton;
 
     // Image Views
-    @BindView(R.id.caller_image_layout) FrameLayout mImageLayout;
+    @BindView(R.id.item_image_layout) FrameLayout mImageLayout;
     @BindView(R.id.image_placeholder) ImageView mPlaceholderImage;
     @BindView(R.id.image_photo) ImageView mPhotoImage;
     @BindView(R.id.button_hold) ImageView mHoldButton;

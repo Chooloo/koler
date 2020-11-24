@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
     android:background="?attr/selectableItemBackground"
@@ -12,8 +13,9 @@
         android:id="@+id/item_header_included"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item_big_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -34,12 +36,12 @@
         style="@style/ListItemText.Big"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/caller_image_layout"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/item_small_text"
+        app:layout_constraintEnd_toStartOf="@+id/item_image_layout"
         app:layout_constraintStart_toEndOf="@+id/item_header_included"
-        app:layout_constraintTop_toTopOf="@+id/caller_image_layout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <!-- Phone Number Text -->
     <TextView
@@ -47,50 +49,29 @@
         style="@style/ListItemText.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/item_big_text"
         app:layout_constraintStart_toStartOf="@+id/item_big_text"
-        app:layout_constraintTop_toBottomOf="@+id/item_big_text" />
+        app:layout_constraintTop_toBottomOf="@+id/item_big_text"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <FrameLayout
-        android:id="@+id/caller_image_layout"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="13dp"
-        android:focusableInTouchMode="false"
+        android:id="@+id/item_image_layout"
+        style="@style/ListItemImage.Layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_big_text"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/item_photo_placeholder"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:tint="?attr/secondaryAccentColor"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
-
-        <ImageView
-            android:id="@+id/item_recent_photo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+            style="@style/ListItemImage.Placeholder"
+            tools:visibility="visible" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/item_photo"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            app:civ_border_width="0dp" />
+            style="@style/ListItemImage.Image" />
 
     </FrameLayout>
-
-    <!-- Letter Text -->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

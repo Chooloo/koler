@@ -33,4 +33,6 @@
 
     <!-- backgrounds -->
     <color name="search_bar_background">#45DADADA</color>
+
+    <color name="image_placeholder_background">#F3F3F3</color>
 </resources>
