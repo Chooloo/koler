@@ -31,16 +31,12 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
     </style>
 
-    <!-- Theme Type -->
-
-    <style name="ThemeType" />
-
-    <style name="ThemeType.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ThemeType.TransparentStatusBar">
+    <style name="AppTheme.TransparentStatusBar" parent="AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

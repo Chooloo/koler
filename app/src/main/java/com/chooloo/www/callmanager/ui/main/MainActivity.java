@@ -167,7 +167,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
             }
         });
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-
+        mBottomSheetBehavior.setPeekHeight(200);
         // dial view model
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));

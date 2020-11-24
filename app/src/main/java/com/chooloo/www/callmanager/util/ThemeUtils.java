@@ -16,33 +16,13 @@ import java.lang.annotation.RetentionPolicy;
 
 public class ThemeUtils {
 
-    public static final int TYPE_NORMAL = R.style.ThemeType;
-    public static final int TYPE_NO_ACTION_BAR = R.style.ThemeType_NoActionBar;
-    public static final int TYPE_TRANSPARENT_STATUS_BAR = R.style.ThemeType_TransparentStatusBar;
+    public static final int TYPE_NORMAL = R.style.AppTheme;
+    public static final int TYPE_NO_ACTION_BAR = R.style.AppTheme_NoActionBar;
+    public static final int TYPE_TRANSPARENT_STATUS_BAR = R.style.AppTheme_TransparentStatusBar;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({TYPE_NORMAL, TYPE_NO_ACTION_BAR, TYPE_TRANSPARENT_STATUS_BAR})
     public @interface ThemeType {
-    }
-
-    /**
-     * Return the theme that corresponds to the correct theme type
-     *
-     * @param type int
-     * @return type theme resource
-     */
-    public static @StyleRes
-    int getTypeTheme(@ThemeType int type) {
-        switch (type) {
-            case TYPE_NORMAL:
-                return R.style.ThemeType;
-            case TYPE_NO_ACTION_BAR:
-                return R.style.ThemeType_NoActionBar;
-            case TYPE_TRANSPARENT_STATUS_BAR:
-                return R.style.ThemeType_TransparentStatusBar;
-            default:
-                return R.style.ThemeType;
-        }
     }
 
     /**
