@@ -4,14 +4,12 @@
 
     <!-- Themes -->
     <color name="color_primary">@color/white</color>
-    <color name="color_accent">#1162bf</color>
+    <color name="color_accent">#e57373</color>
 
     <color name="icon_active_light">#3D3D3D</color>
     <color name="icon_active_dark">#FFFFFF</color>
 
     <!-- Blacks -->
-    <color name="black">#000000</color>
-    <color name="semi_black">#DA000000</color>
     <color name="soft_black">#3D3D3D</color>
 
     <!-- Whites -->
@@ -21,7 +19,9 @@
     <!-- Greys -->
     <color name="grey_50">#17DADADA</color>
     <color name="grey_100">#F5F5F5</color>
-    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_300">#BDBDBD</color>
+    <color name="grey_400">#A6A6A6</color>
+    <color name="grey_500">#9E9E9E</color>
     <color name="grey_800">#424242</color>
     <color name="grey_850">#303030</color>
 
@@ -33,6 +33,5 @@
 
     <!-- backgrounds -->
     <color name="search_bar_background">#45DADADA</color>
-
-    <color name="image_placeholder_background">#F3F3F3</color>
+    <color name="image_placeholder_background">#FFF8F9</color>
 </resources>

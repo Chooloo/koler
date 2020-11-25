@@ -8,23 +8,26 @@
     android:focusableInTouchMode="true"
     tools:context=".ui.search.SearchFragment">
 
-    <EditText
-        android:id="@+id/search_input"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_input_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@drawable/search_bar_background"
-        android:drawableStart="@drawable/ic_search_black_24dp"
-        android:drawablePadding="8dp"
-        android:drawableTint="@color/grey_400"
-        android:hint="@string/search_hint"
-        android:inputType="textPersonName"
-        android:paddingStart="15dp"
-        android:paddingTop="7dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="7dp"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
         android:textColor="@color/grey_800"
-        android:textColorHint="@color/grey_400" />
+        app:endIconDrawable="@drawable/ic_close_black_24dp"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/grey_400"
+        app:hintEnabled="false"
+        app:startIconDrawable="@drawable/ic_search_black_24dp"
+        app:startIconTint="@color/grey_300">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_input_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="@string/search_hint"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/grey_300" />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

@@ -21,14 +21,14 @@
 
     <style name="ListItemText.Big">
         <item name="android:textAlignment">viewStart</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
-        <item name="android:text">Big Text lkdj alsdkj lkjasdfh lkjasdh fjksh kjfl hskjdla</item>
+        <item name="android:text">Simta Kumta</item>
     </style>
 
     <style name="ListItemText.Small">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="android:text">small text, small text, small text, small text, small text</item>
+        <item name="android:text">0523839832</item>
+        <item name="android:textColor">@color/grey_500</item>
     </style>
 
     <style name="ListItemImage" />
@@ -46,7 +46,7 @@
         <item name="android:tint">@color/image_placeholder_background</item>
         <item name="android:visibility">gone</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="srcCompat">@drawable/ic_account_circle_black_outlined_24dp</item>
+        <item name="srcCompat">@drawable/ic_account_circle_black_24dp</item>
     </style>
 
     <style name="ListItemImage.Image">

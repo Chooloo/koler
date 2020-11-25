@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import butterknife.BindView;
 
@@ -22,9 +24,10 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     OnFocusChangedListener mOnFocusChangedListener;
     OnTextChangedListener mOnTextChangedListener;
 
-    private SearchPresenter<SearchMvpView> mPresenter;
+    private SearchMvpPresenter<SearchMvpView> mPresenter;
 
-    public @BindView(R.id.search_input) EditText mEditText;
+    @BindView(R.id.search_input_edit_text) TextInputEditText mInputEditText;
+    @BindView(R.id.search_input_layout) TextInputLayout mInputLayout;
 
     public static SearchFragment newInstance() {
         Bundle args = new Bundle();
@@ -55,7 +58,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
         mOnTextChangedListener = text -> {
         };
 
-        mEditText.addTextChangedListener(new TextWatcher() {
+        mInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -70,7 +73,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
             public void afterTextChanged(Editable s) {
             }
         });
-        mEditText.setOnFocusChangeListener((v, hasFocus) -> {
+        mInputEditText.setOnFocusChangeListener((v, hasFocus) -> {
             mPresenter.onFocusChanged(hasFocus);
             mOnFocusChangedListener.onFocusChanged(hasFocus);
         });
@@ -78,17 +81,17 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
 
     @Override
     public String getText() {
-        return String.valueOf(mEditText.getText());
+        return mInputEditText.getText().toString();
     }
 
     @Override
     public void setFocus() {
-        mEditText.requestFocus();
+        mInputEditText.requestFocus();
     }
 
     @Override
     public void showIcon(boolean isShow) {
-        mEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black_24dp) : null, null, null, null);
+        mInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black_24dp) : null, null, null, null);
     }
 
     public void setOnFocusChangedListener(OnFocusChangedListener onFocusChangedListener) {
