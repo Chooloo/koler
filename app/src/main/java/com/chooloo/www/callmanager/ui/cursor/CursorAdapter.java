@@ -40,7 +40,8 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
 
     @Override
     public long getItemId(int position) {
-        return mCursor != null && mCursor.moveToPosition(position) ? mCursor.getLong(getIdColumn()) : 0;
+        return -1;
+//        return mCursor != null && mCursor.moveToPosition(position) ? mCursor.getLong(getIdColumn()) : 0;
     }
 
     @Override
@@ -56,7 +57,7 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     protected void setUp() {
         mViewHoldersMap = new ArrayMap<>();
 
-        mDataSetObserver = new DataSetObserver() {
+        registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -68,8 +69,7 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
                 super.onInvalidated();
                 notifyDataSetChanged();
             }
-        };
-        registerDataSetObserver();
+        });
     }
 
     public void setCursor(Cursor newCursor) {
@@ -85,11 +85,8 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
         return mCursor;
     }
 
-    public void setDataSetObserver(DataSetObserver dataSetObserver) {
+    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
         mDataSetObserver = dataSetObserver;
-    }
-
-    public void registerDataSetObserver() {
         if (mCursor != null) mCursor.registerDataSetObserver(mDataSetObserver);
     }
 

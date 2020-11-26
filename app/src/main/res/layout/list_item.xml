@@ -2,20 +2,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+    android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:paddingTop="@dimen/list_item_top_bottom_padding"
-    android:paddingBottom="@dimen/list_item_top_bottom_padding">
+    android:padding="3dp">
 
     <LinearLayout
         android:id="@+id/item_header_included"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/item_big_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -30,16 +28,47 @@
 
     </LinearLayout>
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/item_image"
+        style="@style/ListItemImage.Image"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/item_big_text"
+        app:layout_constraintStart_toEndOf="@id/item_header_included"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ListItemImage.Image" />
+
+
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/item_image_layout"-->
+    <!--        style="@style/ListItemImage.Layout"-->
+    <!--        android:layout_marginStart="10dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toStartOf="@id/item_big_text"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/item_header_included"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/item_photo_placeholder"-->
+    <!--            style="@style/ListItemImage.Placeholder"-->
+    <!--            tools:visibility="visible" />-->
+
+    <!--        <de.hdodenhof.circleimageview.CircleImageView-->
+    <!--            android:id="@+id/item_photo"-->
+    <!--            style="@style/ListItemImage.Image" />-->
+
+    <!--    </FrameLayout>-->
+
     <!-- Name Text -->
     <TextView
         android:id="@+id/item_big_text"
         style="@style/ListItemText.Big"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@id/item_small_text"
-        app:layout_constraintEnd_toStartOf="@+id/item_image_layout"
-        app:layout_constraintStart_toEndOf="@+id/item_header_included"
+        app:layout_constraintStart_toEndOf="@+id/item_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -50,29 +79,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/item_big_text"
         app:layout_constraintStart_toStartOf="@+id/item_big_text"
         app:layout_constraintTop_toBottomOf="@+id/item_big_text"
         app:layout_constraintVertical_chainStyle="packed" />
-
-    <FrameLayout
-        android:id="@+id/item_image_layout"
-        style="@style/ListItemImage.Layout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/item_big_text"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/item_photo_placeholder"
-            style="@style/ListItemImage.Placeholder"
-            tools:visibility="visible" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/item_photo"
-            style="@style/ListItemImage.Image" />
-
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

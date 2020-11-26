@@ -24,10 +24,10 @@
     <dimen name="dialpad_key_letters_text_size">10dp</dimen>
 
     <!-- list item -->
-    <dimen name="list_item_height">70dp</dimen>
+    <dimen name="list_item_height">60dp</dimen>
     <dimen name="list_item_top_bottom_padding">6dp</dimen>
-    <dimen name="list_item_image_size">45dp</dimen>
-    <dimen name="list_item_image_placeholder_size">55dp</dimen>
+    <dimen name="list_item_image_size">42dp</dimen>
+    <dimen name="list_item_image_placeholder_size">47dp</dimen>
     <dimen name="list_item_header_margin">20sp</dimen>
     <dimen name="header_width">30dp</dimen>
 

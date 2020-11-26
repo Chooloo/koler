@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.ui.helpers;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
@@ -15,16 +17,14 @@ import com.chooloo.www.callmanager.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class ListItemHolder extends RecyclerView.ViewHolder {
 
     private OnItemClickListener mOnItemClickListener;
 
-    @BindView(R.id.item_photo_placeholder) ImageView mPhotoPlaceholder;
-    @BindView(R.id.item_photo) ImageView mPhoto;
+    @BindView(R.id.item_image) ImageView mPhoto;
     @BindView(R.id.item_big_text) TextView mBigText;
     @BindView(R.id.item_small_text) TextView mSmallText;
     @BindView(R.id.item_header) TextView mHeader;
@@ -37,8 +37,6 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
     public ListItemHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-
-        mPhoto.setVisibility(VISIBLE);
 
         if (mOnItemClickListener != null) {
             itemView.setOnClickListener(view -> mOnItemClickListener.onItemClickListener());
@@ -67,15 +65,12 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
     }
 
     public void showPhoto(boolean isShow, @Nullable Uri image) {
-        mPhoto.setVisibility(isShow ? VISIBLE : GONE);
-        mPhotoPlaceholder.setVisibility(isShow ? GONE : VISIBLE);
         if (isShow) mPhoto.setImageURI(image);
+        else showPhoto(false, null);
     }
 
     public void showPhoto(boolean isShow, @Nullable @DrawableRes int image) {
-        mPhoto.setVisibility(isShow ? VISIBLE : GONE);
-        mPhotoPlaceholder.setVisibility(isShow ? GONE : VISIBLE);
-        if (isShow) mPhoto.setImageResource(image);
+        mPhoto.setImageResource(isShow ? image : R.drawable.ic_account_circle_black_24dp);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

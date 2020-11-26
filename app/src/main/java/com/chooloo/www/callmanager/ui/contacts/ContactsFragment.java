@@ -49,7 +49,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
 
     @Override
     public ContactsAdapter onGetAdapter() {
-        ContactsAdapter contactsAdapter = new ContactsAdapter<>(mActivity);
+        ContactsAdapter contactsAdapter = new ContactsAdapter<ListItemHolder>(mActivity);
         contactsAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
             @Override
             public void onContactItemClick(Contact contact) {

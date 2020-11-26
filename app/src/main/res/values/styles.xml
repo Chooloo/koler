@@ -21,7 +21,7 @@
 
     <style name="ListItemText.Big">
         <item name="android:textAlignment">viewStart</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:text">Simta Kumta</item>
     </style>
 
@@ -36,7 +36,6 @@
     <style name="ListItemImage.Layout">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:layout_margin">@dimen/list_item_header_margin</item>
     </style>
 
     <style name="ListItemImage.Placeholder">
@@ -52,9 +51,8 @@
     <style name="ListItemImage.Image">
         <item name="android:layout_width">@dimen/list_item_image_size</item>
         <item name="android:layout_height">@dimen/list_item_image_size</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:visibility">gone</item>
-        <item name="civ_border_width">0dp</item>
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
     <style name="ActionButton" parent="Widget.Design.FloatingActionButton">

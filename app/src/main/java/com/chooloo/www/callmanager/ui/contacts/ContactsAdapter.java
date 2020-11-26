@@ -36,6 +36,11 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
         Contact contact = new Contact(cursor);
         int position = cursor.getPosition();
