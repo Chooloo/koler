@@ -8,9 +8,7 @@ import com.chooloo.www.callmanager.ui.page.PageContacts;
 import com.chooloo.www.callmanager.ui.page.PageFragment;
 import com.chooloo.www.callmanager.ui.page.PageRecents;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import timber.log.Timber;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
@@ -27,8 +25,10 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public PageFragment getItem(int position) {
         switch (position) {
             case 0:
+                Timber.i("GOT RECENTS ITEM");
                 return PageRecents.newInstance();
             case 1:
+                Timber.i("GOT CONTACTS ITEM");
                 return PageContacts.newInstance();
             default:
                 return PageContacts.newInstance();

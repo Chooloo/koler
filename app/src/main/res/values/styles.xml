@@ -20,7 +20,7 @@
     </style>
 
     <style name="ListItemText.Big">
-        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:text">Simta Kumta</item>
     </style>
@@ -51,7 +51,7 @@
     <style name="ListItemImage.Image">
         <item name="android:layout_width">@dimen/list_item_image_size</item>
         <item name="android:layout_height">@dimen/list_item_image_size</item>
-        <item name="android:src">@drawable/ic_account_circle_black_outlined_24dp</item>
+        <item name="android:src">@drawable/ic_account_circle_black_24dp</item>
         <item name="civ_border_width">0dp</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>

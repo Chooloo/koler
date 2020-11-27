@@ -4,38 +4,34 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     app:elevation="0dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|snap"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <FrameLayout
-            android:id="@+id/search_bar_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_scrollFlags="scroll|snap">
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/view_pager_tab"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/smart_tab_height"
+            android:layout_gravity="start"
             app:layout_scrollFlags="scroll|snap|enterAlways"
             app:stl_clickable="true"
-            app:stl_defaultTabBackground="@drawable/bubble_background"
-            app:stl_defaultTabTextAllCaps="true"
+            app:stl_defaultTabTextAllCaps="false"
             app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-            app:stl_defaultTabTextHorizontalPadding="16dp"
+            app:stl_defaultTabTextHorizontalPadding="8dp"
             app:stl_defaultTabTextMinWidth="0dp"
-            app:stl_defaultTabTextSize="15sp"
-            app:stl_distributeEvenly="true"
-            app:stl_dividerColor="#4D000000"
+            app:stl_defaultTabTextSize="28sp"
             app:stl_dividerThickness="0dp"
-            app:stl_drawDecorationAfterTab="false"
+            app:stl_drawDecorationAfterTab="true"
             app:stl_indicatorAlwaysInCenter="false"
-            app:stl_indicatorColor="?attr/colorAccent"
+            app:stl_indicatorColor="@android:color/transparent"
             app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
             app:stl_indicatorGravity="center"
             app:stl_indicatorInFront="true"
@@ -50,5 +46,12 @@
             app:stl_underlineThickness="0dp" />
     </androidx.appcompat.widget.Toolbar>
 
+    <FrameLayout
+        android:id="@+id/search_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="5dp" />
 
 </com.google.android.material.appbar.AppBarLayout>
