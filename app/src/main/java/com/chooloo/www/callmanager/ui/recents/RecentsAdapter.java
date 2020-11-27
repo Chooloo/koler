@@ -41,7 +41,7 @@ public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH>
 
         holder.setBigText(name == null ? number : name + (recentCall.getCount() > 0 ? " (" + recentCall.getCount() + ")" : ""));
         holder.setSmallText(RelativeTime.getTimeAgo(date.getTime()));
-        holder.showPhoto(true, Utilities.getCallTypeImage(recentCall.getCallType()));
+        holder.setPhotoDrawable(Utilities.getCallTypeImage(recentCall.getCallType()));
         holder.showHeader(false);
         holder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
             @Override

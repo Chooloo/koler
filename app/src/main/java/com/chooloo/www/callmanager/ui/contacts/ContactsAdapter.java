@@ -49,13 +49,14 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         String number = PhoneNumberUtils.formatPhoneNumber(mContext, contact.getMainPhoneNumber());
         String header = String.valueOf(name.charAt(0));
         boolean isShowHeader = position == 0 || !(header.equals(getHeader(position - 1)));
-        boolean isPhotoExist = contact.getPhotoUri() != null;
 
         holder.setBigText(name);
         holder.setSmallText(number);
         holder.setHeader(header);
         holder.showHeader(isShowHeader);
-        holder.showPhoto(isPhotoExist, isPhotoExist ? Uri.parse(contact.getPhotoUri()) : null);
+        if (contact.getPhotoUri() != null) {
+            holder.setPhotoUri(Uri.parse(contact.getPhotoUri()));
+        }
         holder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
             @Override
             public void onItemClickListener() {

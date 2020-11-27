@@ -6,7 +6,7 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:padding="3dp">
+    android:padding="6dp">
 
     <LinearLayout
         android:id="@+id/item_header_included"
@@ -32,34 +32,13 @@
         android:id="@+id/item_image"
         style="@style/ListItemImage.Image"
         android:layout_marginStart="10dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/item_big_text"
         app:layout_constraintStart_toEndOf="@id/item_header_included"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ListItemImage.Image" />
 
-
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/item_image_layout"-->
-    <!--        style="@style/ListItemImage.Layout"-->
-    <!--        android:layout_marginStart="10dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toStartOf="@id/item_big_text"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/item_header_included"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <ImageView-->
-    <!--            android:id="@+id/item_photo_placeholder"-->
-    <!--            style="@style/ListItemImage.Placeholder"-->
-    <!--            tools:visibility="visible" />-->
-
-    <!--        <de.hdodenhof.circleimageview.CircleImageView-->
-    <!--            android:id="@+id/item_photo"-->
-    <!--            style="@style/ListItemImage.Image" />-->
-
-    <!--    </FrameLayout>-->
-
-    <!-- Name Text -->
     <TextView
         android:id="@+id/item_big_text"
         style="@style/ListItemText.Big"
@@ -72,7 +51,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <!-- Phone Number Text -->
     <TextView
         android:id="@+id/item_small_text"
         style="@style/ListItemText.Small"

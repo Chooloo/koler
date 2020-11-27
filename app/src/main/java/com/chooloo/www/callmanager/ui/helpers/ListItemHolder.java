@@ -37,7 +37,6 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
     public ListItemHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-
         if (mOnItemClickListener != null) {
             itemView.setOnClickListener(view -> mOnItemClickListener.onItemClickListener());
             itemView.setOnLongClickListener(view -> {
@@ -64,13 +63,12 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
         mHeader.setVisibility(isShow ? VISIBLE : INVISIBLE);
     }
 
-    public void showPhoto(boolean isShow, @Nullable Uri image) {
-        if (isShow) mPhoto.setImageURI(image);
-        else showPhoto(false, null);
+    public void setPhotoUri(Uri image) {
+        mPhoto.setImageURI(image);
     }
 
-    public void showPhoto(boolean isShow, @Nullable @DrawableRes int image) {
-        mPhoto.setImageResource(isShow ? image : R.drawable.ic_account_circle_black_24dp);
+    public void setPhotoDrawable(@DrawableRes int image) {
+        mPhoto.setImageResource(image);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
