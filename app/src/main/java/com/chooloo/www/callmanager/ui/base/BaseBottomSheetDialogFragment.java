@@ -10,20 +10,18 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
 
-import org.jetbrains.annotations.NotNull;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment implements MvpView {
-
+public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements MvpView {
     private static final int PERMISSION_RC = 10;
     protected String[] mRequiredPermissions;
     protected BaseActivity mActivity;
 
     @Override
-    public void onAttach(@NotNull Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof BaseActivity) {
             this.mActivity = (BaseActivity) context;
@@ -31,11 +29,8 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         }
     }
 
+    @Nullable
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -108,5 +103,4 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         }
         return args;
     }
-
 }

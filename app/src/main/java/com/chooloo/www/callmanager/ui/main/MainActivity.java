@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProviders;
@@ -28,17 +26,18 @@ import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.util.BiometricUtils;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 // TODO implement FAB Coordination
@@ -59,10 +58,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @BindView(R.id.appbar) AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar) Toolbar mToolbar;
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
-    @BindView(R.id.dialer_fragment) View mDialerView;
+    @BindView(R.id.dialpad_fragment) View mDialerView;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
     @BindView(R.id.view_pager) ViewPager mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
+    @BindView(R.id.dialpad_fab_button) FloatingActionButton mDialpadFab;
 
     @Override
     public int getContentView() {
@@ -112,6 +112,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         return super.dispatchTouchEvent(event);
     }
 
+    @OnClick(R.id.dialpad_fab_button)
+    public void onDialpadFabClick(View view) {
+        mPresenter.onDialpadFabClick();
+    }
+
     @Override
     public void setUp() {
         ButterKnife.bind(this);
@@ -147,24 +152,23 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
 
         // dialpad fragment
-        mDialpadFragment = (DialpadFragment) DialpadFragment.newInstance(true);
-        getSupportFragmentManager().beginTransaction().add(R.id.dialer_fragment, mDialpadFragment).commit();
+        mDialpadFragment = DialpadFragment.newInstance(true);
+        getSupportFragmentManager().beginTransaction().add(R.id.dialpad_fragment, mDialpadFragment).commit();
 
         // bottom sheet
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView);
-        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mBottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onStateChanged(@NonNull View view, int i) {
-                // TODO add on bottom sheet state changed
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                mPresenter.onBottomSheetStateChanged(newState);
             }
 
             @Override
-            public void onSlide(@NonNull View view, float v) {
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
             }
         });
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        mBottomSheetBehavior.setPeekHeight(200);
         // dial view model
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
@@ -195,11 +199,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void setBottomSheetState(@BottomSheetBehavior.State int state) {
         mBottomSheetBehavior.setState(state);
-    }
-
-    @Override
-    public int getBottomSheetState() {
-        return mBottomSheetBehavior.getState();
     }
 
     @Override
@@ -239,5 +238,10 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     public void goToAbout() {
         Intent intent = new Intent(this, AboutActivity.class);
         this.startActivity(intent);
+    }
+
+    @Override
+    public void showDialpadFab(boolean isShow) {
+        showView(mDialpadFab, isShow);
     }
 }

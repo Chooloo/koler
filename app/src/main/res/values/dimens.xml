@@ -13,13 +13,13 @@
     <dimen name="smart_tab_height">40dp</dimen>
 
     <!-- bubble -->
-    <dimen name="bubble_corner_radius">15dp</dimen>
+    <dimen name="bubble_corner_radius">13dp</dimen>
 
     <!-- fabs -->
     <dimen name="fab_and_bottom_padding">88dp</dimen>
 
     <!-- dialpad -->
-    <dimen name="phone_number_input_height">64dp</dimen>
+    <dimen name="phone_number_input_height">54dp</dimen>
     <dimen name="dialpad_key_number_text_size">30dp</dimen>
     <dimen name="dialpad_key_letters_text_size">10dp</dimen>
 

@@ -13,8 +13,6 @@ public interface MainMvpView extends MvpView {
 
     void setBottomSheetState(int state);
 
-    int getBottomSheetState();
-
     void setDialNumber(String number);
 
     String getDialNumber();
@@ -24,4 +22,6 @@ public interface MainMvpView extends MvpView {
     void goToSettings();
 
     void goToAbout();
+
+    void showDialpadFab(boolean isShow);
 }

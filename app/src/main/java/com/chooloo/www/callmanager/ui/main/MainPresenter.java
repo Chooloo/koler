@@ -28,6 +28,11 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     }
 
     @Override
+    public void onDialpadFabClick() {
+        mMvpView.setBottomSheetState(STATE_EXPANDED);
+    }
+
+    @Override
     public void onPageSelected(int position) {
         mCurrentPosition = position;
         mMvpView.setBottomSheetState(STATE_COLLAPSED);
@@ -36,11 +41,14 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void onBottomSheetStateChanged(@BottomSheetBehavior.State int state) {
         mBottomSheetState = state;
+        mMvpView.showDialpadFab(state == (STATE_COLLAPSED | STATE_HIDDEN));
     }
 
     @Override
     public void onDialFocusChanged(boolean isFocused) {
-        mMvpView.setBottomSheetState(isFocused ? STATE_EXPANDED : STATE_COLLAPSED);
+        if (!isFocused) {
+            mMvpView.setBottomSheetState(STATE_COLLAPSED);
+        }
     }
 
     @Override

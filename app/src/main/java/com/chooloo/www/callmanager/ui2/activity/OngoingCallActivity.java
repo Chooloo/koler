@@ -176,7 +176,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
-    @BindView(R.id.dialer_fragment) View mDialerFrame;
+    @BindView(R.id.dialpad_fragment) View mDialerFrame;
     @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
     @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
     @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
@@ -896,7 +896,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
     private void setDialpadFragment() {
         mDialpadFragment = DialpadFragment.newInstance(false);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialer_fragment, mDialpadFragment)
+                .add(R.id.dialpad_fragment, mDialpadFragment)
                 .commit();
         mDialpadFragment.setIsDialer(false);
         mDialpadFragment.setOnKeyDownListener(this);

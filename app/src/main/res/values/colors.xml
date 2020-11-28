@@ -33,6 +33,6 @@
     <color name="star_yellow">#FFEB3B</color>
 
     <!-- backgrounds -->
-    <color name="search_bar_background">#22DADADA</color>
+    <color name="search_bar_background">#39DADADA</color>
     <color name="image_placeholder_background">#FFF8F9</color>
 </resources>

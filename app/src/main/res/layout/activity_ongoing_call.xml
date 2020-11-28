@@ -39,7 +39,7 @@
 
     <!-- Dialer Fragment -->
     <FrameLayout
-        android:id="@+id/dialer_fragment"
+        android:id="@+id/dialpad_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"

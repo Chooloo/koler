@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadEditText;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
@@ -26,6 +27,7 @@ import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.HashMap;
 
@@ -38,8 +40,9 @@ import static android.view.View.VISIBLE;
 
 public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
-    private DialpadPresenter<DialpadMvpView> mPresenter;
     public static final String ARG_DIALER = "dialer";
+
+    private DialpadPresenter<DialpadMvpView> mPresenter;
 
     private boolean mIsDialer = true;
 
@@ -80,9 +83,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View fragmentView = inflater.inflate(R.layout.fragment_dialpad, container, false);
-        fragmentView.buildLayer();
-        return fragmentView;
+        return inflater.inflate(R.layout.fragment_dialpad, container, false);
     }
 
     @Override

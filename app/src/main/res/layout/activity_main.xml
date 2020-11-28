@@ -24,7 +24,7 @@
 
     <!-- Dialer Fragment -->
     <FrameLayout
-        android:id="@+id/dialer_fragment"
+        android:id="@+id/dialpad_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="true"
@@ -32,4 +32,14 @@
         app:layout_behavior="@string/bottom_sheet_behavior"
         tools:layout="@layout/fragment_dialpad" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/dialpad_fab_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:backgroundTint="?attr/colorAccent"
+        android:src="@drawable/ic_dialpad_black_24dp"
+        android:tint="@color/white"
+        app:fabSize="auto" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
