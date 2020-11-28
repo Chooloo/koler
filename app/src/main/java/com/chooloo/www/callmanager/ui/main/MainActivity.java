@@ -65,16 +65,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // set the layout
-        setUp();
+    public int getContentView() {
+        return R.layout.activity_main;
     }
-
-//    @Override
-//    public int getContentView() {
-//        return R.layout.activity_main;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

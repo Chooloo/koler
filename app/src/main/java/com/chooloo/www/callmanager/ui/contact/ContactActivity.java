@@ -68,10 +68,8 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
     @BindView(R.id.recents_section_empty) TextView mRecentsEmpty;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact);
-        setUp();
+    public int getContentView() {
+        return R.layout.activity_contact;
     }
 
     @Override

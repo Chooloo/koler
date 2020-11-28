@@ -15,11 +15,8 @@ public class SettingsActivity extends BaseActivity implements SettingsMvpView {
     private static final String TAG_FRAGMENT = "fragment";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-
-        setUp();
+    public int getContentView() {
+        return R.layout.activity_settings;
     }
 
     @Override

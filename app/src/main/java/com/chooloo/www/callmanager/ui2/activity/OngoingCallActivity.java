@@ -327,6 +327,11 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
         createNotification();
     }
 
+    @Override
+    public int getContentView() {
+        return R.layout.activity_ongoing_call;
+    }
+
     // -- Overrides -- //
 
     @Override

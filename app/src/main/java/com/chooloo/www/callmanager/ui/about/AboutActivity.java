@@ -28,10 +28,8 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
     @BindView(R.id.about_version) ListItem mVersionItem;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        setUp();
+    public int getContentView() {
+        return R.layout.activity_about;
     }
 
     @Override

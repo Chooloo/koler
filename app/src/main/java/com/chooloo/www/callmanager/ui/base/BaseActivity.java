@@ -32,6 +32,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         Utilities.setUpLocale(this);
         mPreferences = PreferencesManager.getInstance(this);
         mRequiredPermissions = onGetPermissions();
+        setContentView(getContentView());
+        ButterKnife.bind(this);
+        setUp();
     }
 
     @Override
@@ -93,6 +96,6 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         theme.applyStyle(type, true);
     }
 
-//    public abstract @LayoutRes
-//    int getContentView();
+    public abstract @LayoutRes
+    int getContentView();
 }
