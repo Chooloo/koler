@@ -157,7 +157,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         // bottom sheet
         mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView);
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         mBottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -169,6 +168,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
             }
         });
+        setBottomSheetState(BottomSheetBehavior.STATE_HIDDEN);
+
         // dial view model
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));

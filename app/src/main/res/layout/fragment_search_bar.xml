@@ -11,7 +11,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_input_layout"
         android:layout_width="match_parent"
-        android:layout_height="38dp"
+        android:layout_height="35dp"
         android:background="@drawable/search_bar_background"
         android:textColor="@color/grey_800"
         app:endIconDrawable="@drawable/ic_close_black_24dp"

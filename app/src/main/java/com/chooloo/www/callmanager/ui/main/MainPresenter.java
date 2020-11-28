@@ -35,7 +35,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void onPageSelected(int position) {
         mCurrentPosition = position;
-        mMvpView.setBottomSheetState(STATE_COLLAPSED);
+        mMvpView.setBottomSheetState(STATE_HIDDEN);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void onDialFocusChanged(boolean isFocused) {
         if (!isFocused) {
-            mMvpView.setBottomSheetState(STATE_COLLAPSED);
+            mMvpView.setBottomSheetState(STATE_HIDDEN);
         }
     }
 
