@@ -32,12 +32,14 @@
 
         <activity
             android:name=".ui.contact.ContactActivity"
-            android:label="@string/title_activity_contact" />
+            android:label="@string/title_activity_contact"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!-- For receiving intents -->
             <intent-filter>
@@ -109,10 +111,10 @@
             </intent-filter>
         </activity>
         <!--        <activity-->
-<!--            android:name=".ui2.activity.OngoingCallActivity"-->
-<!--            android:label="@string/activity_ongoing_call"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/AppTheme.Light" />-->
+        <!--            android:name=".ui2.activity.OngoingCallActivity"-->
+        <!--            android:label="@string/activity_ongoing_call"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            android:theme="@style/AppTheme.Light" />-->
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/activity_settings"

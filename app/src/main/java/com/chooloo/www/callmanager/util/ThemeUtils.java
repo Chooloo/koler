@@ -18,10 +18,9 @@ public class ThemeUtils {
 
     public static final int TYPE_NORMAL = R.style.AppTheme;
     public static final int TYPE_NO_ACTION_BAR = R.style.AppTheme_NoActionBar;
-    public static final int TYPE_TRANSPARENT_STATUS_BAR = R.style.AppTheme_TransparentStatusBar;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({TYPE_NORMAL, TYPE_NO_ACTION_BAR, TYPE_TRANSPARENT_STATUS_BAR})
+    @IntDef({TYPE_NORMAL, TYPE_NO_ACTION_BAR})
     public @interface ThemeType {
     }
 

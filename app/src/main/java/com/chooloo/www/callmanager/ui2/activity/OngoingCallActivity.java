@@ -193,8 +193,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
         super.onCreate(savedInstanceState);
 
         // set theme and view
-        setThemeType(ThemeUtils.TYPE_TRANSPARENT_STATUS_BAR); // set theme
-        setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR); // remove action bar
         setContentView(R.layout.activity_ongoing_call); // set layout
 
         // code settings

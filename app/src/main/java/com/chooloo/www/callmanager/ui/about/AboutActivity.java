@@ -30,7 +30,6 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_about);
         setUp();
     }

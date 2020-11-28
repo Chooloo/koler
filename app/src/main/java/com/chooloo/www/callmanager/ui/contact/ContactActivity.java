@@ -70,8 +70,6 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setThemeType(ThemeUtils.TYPE_TRANSPARENT_STATUS_BAR);
-        setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR);
         setContentView(R.layout.activity_contact);
         setUp();
     }

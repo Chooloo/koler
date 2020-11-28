@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
@@ -91,4 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         Resources.Theme theme = super.getTheme();
         theme.applyStyle(type, true);
     }
+
+//    public abstract @LayoutRes
+//    int getContentView();
 }

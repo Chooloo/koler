@@ -67,10 +67,14 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setThemeType(ThemeUtils.TYPE_NO_ACTION_BAR); // set theme
         setContentView(R.layout.activity_main); // set the layout
         setUp();
     }
+
+//    @Override
+//    public int getContentView() {
+//        return R.layout.activity_main;
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

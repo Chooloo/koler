@@ -28,6 +28,6 @@
             android:background="@null"
             android:hint="@string/search_hint"
             android:inputType="textPersonName"
-            android:textColorHint="@color/grey_300" />
+            android:textColorHint="@color/grey_200" />
     </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

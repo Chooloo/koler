@@ -19,6 +19,7 @@
     <!-- Greys -->
     <color name="grey_50">#17DADADA</color>
     <color name="grey_100">#F5F5F5</color>
+    <color name="grey_200">#CDCDCD</color>
     <color name="grey_300">#BDBDBD</color>
     <color name="grey_400">#A6A6A6</color>
     <color name="grey_500">#9E9E9E</color>

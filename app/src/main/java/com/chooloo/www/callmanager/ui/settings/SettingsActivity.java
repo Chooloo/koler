@@ -17,7 +17,6 @@ public class SettingsActivity extends BaseActivity implements SettingsMvpView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setThemeType(ThemeUtils.TYPE_NORMAL);
         setContentView(R.layout.activity_settings);
 
         setUp();
