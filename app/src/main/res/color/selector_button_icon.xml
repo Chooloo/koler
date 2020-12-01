@@ -2,5 +2,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="?attr/iconColor" />
     <item android:color="?attr/iconColor" android:state_activated="false" />
-    <item android:color="@color/icon_active_dark" android:state_activated="true" />
+    <item true android:color="@color/soft_black android:state_activated="" />
 </selector>

@@ -38,6 +38,10 @@
     <dimen name="fast_scroller_bottom_right_corner_radius">44dp</dimen>
     <dimen name="fast_scroller_bottom_left_corner_radius">44dp</dimen>
 
+    <!-- bottom sheet dialog -->
+    <dimen name="swipe_indicator_height">5dp</dimen>
+    <dimen name="swipe_indicator_width">30dp</dimen>
+    <dimen name="swipe_indicator_margin">10dp</dimen>
 
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies

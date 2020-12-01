@@ -6,9 +6,6 @@
     <color name="color_primary">@color/white</color>
     <color name="color_accent">#f85b7b</color>
 
-    <color name="icon_active_light">#3D3D3D</color>
-    <color name="icon_active_dark">#FFFFFF</color>
-
     <!-- Blacks -->
     <color name="soft_black">#3D3D3D</color>
 

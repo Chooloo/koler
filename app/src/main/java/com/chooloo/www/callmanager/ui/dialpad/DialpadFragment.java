@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadEditText;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
@@ -27,7 +26,6 @@ import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.HashMap;
 
@@ -67,7 +65,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @BindView(R.id.key_hex) DialpadKey mKeyHex;
     @BindView(R.id.key_star) DialpadKey mKeyStar;
 
-    @BindView(R.id.digits_edit_text) DialpadEditText mDigits;
+    @BindView(R.id.dialpad_edit_text) DialpadEditText mDigits;
     @BindView(R.id.dialpad_button_call) Button mCallButton;
     @BindView(R.id.dialpad_button_delete) ImageView mDeleteButton;
     @BindView(R.id.dialpad_keys_layout) TableLayout mNumbersTable;
@@ -111,7 +109,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
         mPresenter.onKeyClick(keyCode);
     }
 
-    @OnClick(R.id.digits_edit_text)
+    @OnClick(R.id.dialpad_edit_text)
     public void onDigitsClick(View view) {
         mPresenter.onDigitsClick();
     }

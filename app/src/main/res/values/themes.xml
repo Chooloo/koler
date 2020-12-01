@@ -22,7 +22,6 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <item name="iconColor">@color/icon_active_light</item>
         <item name="secondaryAccentColor">?attr/colorAccent</item>
         <item name="overlayColor">@color/semi_white</item>
 

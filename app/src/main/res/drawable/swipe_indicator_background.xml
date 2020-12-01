@@ -7,10 +7,5 @@
         android:topLeftRadius="@dimen/bubble_corner_radius"
         android:topRightRadius="@dimen/bubble_corner_radius" />
 
-    <solid android:color="?attr/colorPrimary" />
-
-    <!--<stroke-->
-    <!--android:width="@dimen/bubble_border_width"-->
-    <!--android:color="@color/soft_shadow" />-->
-
+    <solid android:color="@color/grey_100" />
 </shape>

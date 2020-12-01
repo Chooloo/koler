@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui2.activity.OngoingCallActivity;
+import com.chooloo.www.callmanager.ui.call.OngoingCallActivity;
 import com.chooloo.www.callmanager.util.validation.Validator;
 
 import org.jetbrains.annotations.NotNull;

@@ -8,23 +8,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@color/white"
+    android:background="@drawable/bottom_sheet_dialog_background"
     tools:context=".ui.dialpad.DialpadFragment">
 
-    <Button
+    <View
+        android:id="@+id/swipe_indicator"
+        android:layout_width="@dimen/swipe_indicator_width"
+        android:layout_height="@dimen/swipe_indicator_height"
+        android:layout_margin="@dimen/swipe_indicator_margin"
+        android:background="@drawable/swipe_indicator_background"
+        app:layout_constraintBottom_toTopOf="@id/dialpad_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/dialpad_button_call"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="call"
-        app:layout_constraintBottom_toBottomOf="@id/digits_edit_text"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/digits_edit_text" />
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        android:src="@drawable/ic_call_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/dialpad_edit_text"
+        app:layout_constraintEnd_toStartOf="@id/dialpad_edit_text"
+        app:layout_constraintTop_toTopOf="@id/dialpad_edit_text" />
 
     <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
-        android:id="@+id/digits_edit_text"
+        android:id="@+id/dialpad_edit_text"
         android:layout_width="0dp"
         android:layout_height="@dimen/phone_number_input_height"
         android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
         android:background="@android:color/transparent"
         android:cursorVisible="true"
         android:focusableInTouchMode="true"
@@ -39,23 +53,21 @@
         android:textColor="@color/color_accent"
         android:textSize="27sp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
-        app:layout_constraintEnd_toStartOf="@id/dialpad_button_delete"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/swipe_indicator"
         tools:text="01231293" />
 
     <ImageView
         android:id="@+id/dialpad_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="50dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="center"
         android:src="@drawable/ic_backspace_black_24dp"
-        android:tint="?attr/iconColor"
-        app:layout_constraintBottom_toBottomOf="@id/digits_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/digits_edit_text" />
+        app:layout_constraintBottom_toBottomOf="@id/dialpad_edit_text"
+        app:layout_constraintStart_toEndOf="@id/dialpad_edit_text"
+        app:layout_constraintTop_toTopOf="@id/dialpad_edit_text" />
 
     <TableLayout
         android:id="@+id/dialpad_keys_layout"

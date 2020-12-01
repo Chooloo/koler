@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui2.activity;
+package com.chooloo.www.callmanager.ui.call;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;

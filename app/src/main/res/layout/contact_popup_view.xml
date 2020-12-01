@@ -5,7 +5,7 @@
     android:id="@+id/contact_popup_layout"
     android:layout_width="280dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialer_background"
+    android:background="@drawable/bottom_sheet_dialog_background"
     android:orientation="vertical"
     android:padding="15dp">
 

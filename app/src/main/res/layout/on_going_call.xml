@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
-    tools:context=".ui2.activity.OngoingCallActivity">
+    tools:context=".ui.call.OngoingCallActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_status_bar"
