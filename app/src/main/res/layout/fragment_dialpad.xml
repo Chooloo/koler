@@ -22,17 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/dialpad_button_call"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="center"
-        android:src="@drawable/ic_call_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/dialpad_edit_text"
-        app:layout_constraintEnd_toStartOf="@id/dialpad_edit_text"
-        app:layout_constraintTop_toTopOf="@id/dialpad_edit_text" />
-
     <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         android:layout_width="0dp"
@@ -58,25 +47,16 @@
         app:layout_constraintTop_toBottomOf="@id/swipe_indicator"
         tools:text="01231293" />
 
-    <ImageView
-        android:id="@+id/dialpad_button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="center"
-        android:src="@drawable/ic_backspace_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/dialpad_edit_text"
-        app:layout_constraintStart_toEndOf="@id/dialpad_edit_text"
-        app:layout_constraintTop_toTopOf="@id/dialpad_edit_text" />
-
     <TableLayout
         android:id="@+id/dialpad_keys_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:layoutDirection="ltr"
-        android:padding="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:stretchColumns="*"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -140,4 +120,29 @@
                 app:digit="#" />
         </TableRow>
     </TableLayout>
+
+    <ImageView
+        android:id="@+id/dialpad_button_call"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_call_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/dialpad_button_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:scaleType="center"
+        android:src="@drawable/ic_arrow_back_ios_24px"
+        android:tint="@color/grey_400"
+        app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dialpad_button_call"
+        app:layout_constraintTop_toTopOf="@id/dialpad_button_call" />
 </androidx.constraintlayout.widget.ConstraintLayout>
