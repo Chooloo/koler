@@ -1,6 +1,6 @@
 # Koler
 
-## An update, im currently working on a massive code redesign from scratch, will probably take some time, but will be better :) feel free to look at the 'mvp' branch
+## An update, im currently working on a massive code refactor from scratch, will probably take some time, but will be better :) feel free to look at the 'mvp' branch
 
 
 A uniquely stylized phone app for Android, designed with the user in mind.
