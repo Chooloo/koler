@@ -13,6 +13,8 @@ public interface DialpadMvpPresenter<V extends DialpadMvpView> extends MvpPresen
 
     void onDigitsClick();
 
+    void onDeleteClick();
+
     void onLongDeleteClick();
 
     void onLongOneClick();

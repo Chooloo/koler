@@ -13,6 +13,8 @@ public interface DialpadMvpView extends MvpView {
 
     void registerKeyEvent(int keyCode);
 
+    void backspace();
+
     void call();
 
     void callVoicemail();
@@ -24,6 +26,8 @@ public interface DialpadMvpView extends MvpView {
     void playTone(int keyCode);
 
     void toggleCursor(boolean isShow);
+
+    void showDeleteButton(boolean isShow);
 
     void vibrate();
 }

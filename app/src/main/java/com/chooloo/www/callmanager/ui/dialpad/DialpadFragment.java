@@ -40,7 +40,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     public static final String ARG_DIALER = "dialer";
 
-    private DialpadPresenter<DialpadMvpView> mPresenter;
+    private DialpadMvpPresenter<DialpadMvpView> mPresenter;
 
     private boolean mIsDialer = true;
 
@@ -112,6 +112,11 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @OnClick(R.id.dialpad_edit_text)
     public void onDigitsClick(View view) {
         mPresenter.onDigitsClick();
+    }
+
+    @OnClick(R.id.dialpad_button_delete)
+    public void onDeleteClick(View view) {
+        mPresenter.onDeleteClick();
     }
 
     @OnLongClick(R.id.key_1)
@@ -222,6 +227,14 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @Override
+    public void backspace() {
+        String number = mDigits.getNumbers();
+        if (number != null && number.length() > 0) {
+            mDigits.setText(number.substring(0, number.length() - 1));
+        }
+    }
+
+    @Override
     public void vibrate() {
         Utilities.vibrate(mActivity, Utilities.SHORT_VIBRATE_LENGTH);
     }
@@ -229,6 +242,11 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @Override
     public void toggleToneGenerator(boolean toggle) {
         mAudioUtils.toggleToneGenerator(toggle);
+    }
+
+    @Override
+    public void showDeleteButton(boolean isShow) {
+        mDeleteButton.setVisibility(isShow ? VISIBLE : GONE);
     }
 
     @Override

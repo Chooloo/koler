@@ -36,6 +36,11 @@ public class DialpadPresenter<V extends DialpadMvpView> extends BasePresenter<V>
     }
 
     @Override
+    public void onDeleteClick() {
+        mMvpView.backspace();
+    }
+
+    @Override
     public void onLongDeleteClick() {
         mMvpView.setNumber("");
     }
@@ -60,6 +65,7 @@ public class DialpadPresenter<V extends DialpadMvpView> extends BasePresenter<V>
 
     @Override
     public void onTextChanged(String text) {
+        mMvpView.showDeleteButton(text != null && text.length() > 0);
         mMvpView.updateViewModel(text);
     }
 }
