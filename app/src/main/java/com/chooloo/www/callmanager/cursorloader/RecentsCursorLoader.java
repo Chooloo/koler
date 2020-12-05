@@ -17,82 +17,65 @@
 package com.chooloo.www.callmanager.cursorloader;
 
 import android.content.Context;
+import android.net.Uri;
 import android.provider.CallLog.Calls;
+import android.provider.ContactsContract;
+import android.telecom.Call;
+import android.telephony.PhoneNumberUtils;
 
+import androidx.annotation.Nullable;
 import androidx.loader.content.CursorLoader;
-
-import org.apache.commons.codec.binary.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
-
-import timber.log.Timber;
 
 public final class RecentsCursorLoader extends CursorLoader {
 
-    // Columns
     public static String COLUMN_ID = Calls._ID;
     public static String COLUMN_NUMBER = Calls.NUMBER;
+    public static String COLUMN_PRESENTATION = Calls.NUMBER_PRESENTATION;
     public static String COLUMN_DATE = Calls.DATE;
     public static String COLUMN_DURATION = Calls.DURATION;
     public static String COLUMN_TYPE = Calls.TYPE;
     public static String COLUMN_CACHED_NAME = Calls.CACHED_NAME;
 
-    private static String RECENTS_ORDER = COLUMN_DATE + " DESC";
-
-    /**
-     * Cursor selection string
-     * Column to load
-     */
-    private static String[] RECENTS_PROJECTION =
+    private static final String RECENTS_ORDER = COLUMN_DATE + " DESC";
+    private static final String RECENTS_SELECTION = null;
+    private static final String[] RECENTS_PROJECTION =
             new String[]{
                     COLUMN_ID,
                     COLUMN_NUMBER,
                     COLUMN_DATE,
                     COLUMN_DURATION,
                     COLUMN_TYPE,
-                    COLUMN_CACHED_NAME
+                    COLUMN_CACHED_NAME,
+                    COLUMN_PRESENTATION
             };
 
-    /**
-     * Constructor
-     *
-     * @param context     calling context
-     * @param phoneNumber String
-     * @param contactName String
-     */
-    public RecentsCursorLoader(Context context, String phoneNumber, String contactName) {
+    public RecentsCursorLoader(Context context, @Nullable String phoneNumber, @Nullable String contactName) {
         super(
                 context,
-                Calls.CONTENT_URI.buildUpon().build(),
+                buildUri(phoneNumber, contactName),
                 RECENTS_PROJECTION,
-                getSelection(contactName, phoneNumber),
+                RECENTS_SELECTION,
                 null,
                 RECENTS_ORDER);
     }
 
-    /**
-     * Return a selection query for the cursor
-     * According to given name and phone number
-     * By default they're set to "", if they're not null, than they'le be set to their value
-     *
-     * @param contactName name of the contact duh
-     * @param phoneNumber duhh
-     * @return String sql style string
-     */
-    private static String getSelection(String contactName, String phoneNumber) {
-        List<String> conditions = new ArrayList<String>();
+    private static Uri buildUri(@Nullable String phoneNumber, @Nullable String contactName) {
+        phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
+        Uri.Builder uriBuilder = Calls.CONTENT_URI.buildUpon();
 
-        if (contactName != null)
-            conditions.add(COLUMN_CACHED_NAME + " LIKE '%" + contactName + "%'");
+        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+            uriBuilder = Uri.withAppendedPath(Calls.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
+        }
 
-        if (phoneNumber != null)
-            conditions.add(COLUMN_NUMBER + " LIKE '%" + phoneNumber + "%'");
+        if (contactName != null && !contactName.isEmpty()) {
+            uriBuilder = Uri.withAppendedPath(Calls.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
+        }
 
-        if (conditions.size() == 0) return "";
-        else return conditions.stream().collect(Collectors.joining(" AND "));
+        return uriBuilder.build();
     }
 
 }
