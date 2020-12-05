@@ -24,6 +24,8 @@ import android.telephony.PhoneNumberUtils;
 import androidx.annotation.Nullable;
 import androidx.loader.content.CursorLoader;
 
+import com.chooloo.www.callmanager.entity.Contact;
+
 
 public class ContactsCursorLoader extends CursorLoader {
 
@@ -68,7 +70,6 @@ public class ContactsCursorLoader extends CursorLoader {
         uriBuilder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
         uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");
         uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS, "true");
-        uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES, "true");
         return uriBuilder.build();
     }
 

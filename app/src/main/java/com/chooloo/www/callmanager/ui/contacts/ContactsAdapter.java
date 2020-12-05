@@ -16,6 +16,11 @@ import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 
+import java.util.Arrays;
+import java.util.Timer;
+
+import timber.log.Timber;
+
 public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH> {
 
     private final static String FAVORITE_HEADER = "★";
@@ -44,6 +49,12 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
         Contact contact = new Contact(cursor);
         int position = cursor.getPosition();
+
+        String[] sections = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
+        Timber.i("EXTRA_TITLES %s", Arrays.toString(sections));
+
+        int[] counts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
+        Timber.i("EXTRA_COUNTS %s", Arrays.toString(counts));
 
         String name = contact.getName();
         String header = String.valueOf(name.charAt(0));
