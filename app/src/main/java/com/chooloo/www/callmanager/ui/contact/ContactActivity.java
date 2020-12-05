@@ -4,7 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -20,13 +19,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
-import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import butterknife.BindView;
@@ -123,13 +121,13 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         setContactFromIntent();
 
         // set details
-        mNumberView.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
+//        mNumberView.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
         mNameView.setText(mContact != null ? mContact.getName() : getString(R.string.unknown));
 
         // set actions
         mActionInfo.setVisibility(mContact != null ? VISIBLE : GONE);
         mActionEdit.setVisibility(mContact != null ? VISIBLE : GONE);
-        mActionFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(this, mContact.getIsFavorite() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
+        mActionFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(this, mContact.getStarred() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
 
         // set image
         if (mContact != null) {
@@ -142,7 +140,7 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
 
         // set recents fragment
         if (mContact != null) {
-            mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
+//            mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
             mRecentsFragment.setOnLoadFinishedListener(() -> mPresenter.onRecentsLoadFinished());
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
@@ -152,12 +150,12 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
 
     @Override
     public void actionCall() {
-        CallManager.call(this, mContact.getMainPhoneNumber());
+//        CallManager.call(this, mContact.getMainPhoneNumber());
     }
 
     @Override
     public void actionSms() {
-        Utilities.openSmsWithNumber(this, mContact.getMainPhoneNumber());
+//        Utilities.openSmsWithNumber(this, mContact.getMainPhoneNumber());
     }
 
     @Override
@@ -182,12 +180,12 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
     @Override
     public void actionFav() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-            if (mContact.getIsFavorite()) {
-                mContact.setIsFavorite(false);
+            if (mContact.getStarred()) {
+//                mContact.setIsFavorite(false);
                 toggleFavIcon(true);
                 ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), false);
             } else {
-                mContact.setIsFavorite(true);
+//                mContact.setIsFavorite(true);
                 toggleFavIcon(false);
                 ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), true);
             }

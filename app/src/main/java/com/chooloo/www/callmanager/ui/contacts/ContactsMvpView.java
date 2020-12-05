@@ -2,8 +2,7 @@ package com.chooloo.www.callmanager.ui.contacts;
 
 import androidx.annotation.Nullable;
 
-import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.ui.base.MvpView;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorMvpView;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 

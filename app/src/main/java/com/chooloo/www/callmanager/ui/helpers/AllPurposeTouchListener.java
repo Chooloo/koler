@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.listener;
+package com.chooloo.www.callmanager.ui.helpers;
 
 import android.content.Context;
 import android.view.GestureDetector;

@@ -1,15 +1,10 @@
 package com.chooloo.www.callmanager.ui.contacts;
 
 import android.database.Cursor;
-import android.os.Bundle;
-import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorPresenter;
 
 public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresenter<V> implements ContactsMvpPresenter<V> {

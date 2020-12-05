@@ -45,10 +45,9 @@ import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
-import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.listener.AllPurposeTouchListener;
-import com.chooloo.www.callmanager.listener.LongClickOptionsListener;
-import com.chooloo.www.callmanager.listener.NotificationActionReceiver;
+import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.ui.helpers.AllPurposeTouchListener;
+import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
@@ -486,9 +485,9 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
     @OnClick(R.id.button_send_sms)
     public void sendSMS(View view) {
         if (mEditSms.getText() != null) {
-            String number = CallManager.getDisplayContact(this).getMainPhoneNumber();
+//            String number = CallManager.getDisplayContact(this).getNumber();
             String text = mEditSms.getText().toString();
-            Utilities.sendSMS(this, number, text);
+//            Utilities.sendSMS(this, number, text);
             removeOverlay();
         } else {
             Toast.makeText(this, "Enter an sms first", Toast.LENGTH_LONG).show();
@@ -538,12 +537,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
         mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         CallManager.reject();
         releaseWakeLock();
-        if (CallManager.isAutoCalling()) {
-            finish();
-            CallManager.nextCall(this);
-        } else {
-            (new Handler()).postDelayed(this::finish, END_CALL_MILLIS); // Delay the closing of the call
-        }
     }
 
     // -- UI -- //
@@ -557,8 +550,8 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
 
         // set callerName
         String callerName = callerContact.getName();
-        if (callerName == null)
-            callerName = PhoneNumberUtils.formatPhoneNumber(this, callerContact.getMainPhoneNumber());
+//        if (callerName == null)
+//            callerName = PhoneNumberUtils.formatPhoneNumber(this, callerContact.getMainPhoneNumber());
 
         // apply details to layout
         mCallerText.setText(callerName);

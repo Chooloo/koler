@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.ui.widgets.FastScroller;
@@ -129,7 +129,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
         String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
         boolean withFavs = (contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty());
-        return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName, withFavs);
+        return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override

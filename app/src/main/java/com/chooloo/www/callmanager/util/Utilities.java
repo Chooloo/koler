@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.RecentCall;
+import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,11 +37,11 @@ import java.util.Locale;
 import timber.log.Timber;
 
 import static android.Manifest.permission.SEND_SMS;
-import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_INCOMING;
-import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_MISSED;
-import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_OUTGOING;
-import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_REJECTED;
-import static com.chooloo.www.callmanager.database.entity.RecentCall.TYPE_VOICEMAIL;
+import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_INCOMING;
+import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_MISSED;
+import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_OUTGOING;
+import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_REJECTED;
+import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_VOICEMAIL;
 
 public class Utilities {
 
@@ -188,7 +188,7 @@ public class Utilities {
     public static void sendSMS(FragmentActivity activity, String phoneNum, String msg) {
         if (ContextCompat.checkSelfPermission(activity, SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
             try {
-                SmsManager.getDefault().sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
+//                SmsManager.getDefault().sendTextMessage(CallManager.getDisplayContact(activity).getMainPhoneNumber(), null, msg, null, null);
                 Toast.makeText(activity, "Message Sent", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(activity, "Oh shit I can't send the message... Sorry", Toast.LENGTH_LONG).show();

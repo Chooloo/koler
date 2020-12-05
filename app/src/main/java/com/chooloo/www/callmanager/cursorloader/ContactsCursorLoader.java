@@ -19,93 +19,57 @@ package com.chooloo.www.callmanager.cursorloader;
 import android.content.Context;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.PhoneNumberUtils;
 
+import androidx.annotation.Nullable;
 import androidx.loader.content.CursorLoader;
 
-import static android.provider.ContactsContract.Contacts;
 
 public class ContactsCursorLoader extends CursorLoader {
 
-    // Columns
-    public static String COLUMN_ID = Phone.CONTACT_ID;
-    public static String COLUMN_NAME = Contacts.DISPLAY_NAME_PRIMARY;
-    public static String COLUMN_THUMBNAIL = Contacts.PHOTO_THUMBNAIL_URI;
-    public static String COLUMN_NUMBER = Phone.NUMBER;
-    public static String COLUMN_STARRED = Phone.STARRED;
+    public static String COLUMN_ID = ContactsContract.Contacts._ID;
+    public static String COLUMN_NAME = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY;
+    public static String COLUMN_THUMBNAIL = ContactsContract.Contacts.PHOTO_THUMBNAIL_URI;
+    public static String COLUMN_STARRED = ContactsContract.Contacts.STARRED;
 
-    private static String CONTACTS_ORDER = Contacts.SORT_KEY_PRIMARY + " ASC";
-
-    /**
-     * Cursor selection string
-     */
-    public static final String[] CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY =
+    protected static final String CONTACTS_ORDER = ContactsContract.Contacts.SORT_KEY_PRIMARY + " ASC";
+    protected static final String CONTACTS_SELECTION = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " IS NOT NULL";
+    protected static final String[] CONTACTS_PROJECTION =
             new String[]{
                     COLUMN_ID,
                     COLUMN_NAME,
                     COLUMN_THUMBNAIL,
-                    COLUMN_NUMBER,
                     COLUMN_STARRED
             };
 
-    /**
-     * Constructor
-     *
-     * @param context     Context
-     * @param phoneNumber contact's number
-     * @param contactName contect's name
-     */
-    public ContactsCursorLoader(Context context, String phoneNumber, String contactName) {
+    public ContactsCursorLoader(Context context, @Nullable String phoneNumber, @Nullable String contactName) {
         super(
                 context,
                 buildUri(phoneNumber, contactName),
-                CONTACTS_PROJECTION_DISPLAY_NAME_PRIMARY,
-                getWhere(),
+                CONTACTS_PROJECTION,
+                CONTACTS_SELECTION,
                 null,
                 CONTACTS_ORDER);
     }
 
-
-    /**
-     * Get a filter string
-     *
-     * @return String The selection string
-     */
-    private static String getWhere() {
-        return "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
-                " OR " + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" + ")" +
-                " AND " + Phone.HAS_PHONE_NUMBER + "=1" +
-                " AND (" + ContactsContract.RawContacts.ACCOUNT_NAME + " IS NULL" +
-                " OR ( " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%whatsapp%'" +
-                " AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " NOT LIKE '%tachyon%'" + "))";
-    }
-
-
-    /**
-     * Builds contact uri by given name and phone number
-     *
-     * @param phoneNumber contact's number
-     * @param contactName contact's name
-     * @return Builder.build()
-     */
-    private static Uri buildUri(String phoneNumber, String contactName) {
+    protected static Uri buildUri(@Nullable String phoneNumber, @Nullable String contactName) {
         phoneNumber = PhoneNumberUtils.normalizeNumber(phoneNumber);
-        Uri.Builder builder = Phone.CONTENT_URI.buildUpon();
+        Uri.Builder uriBuilder = ContactsContract.Contacts.CONTENT_URI.buildUpon();
 
         if (phoneNumber != null && !phoneNumber.isEmpty()) {
-            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
+            uriBuilder = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(phoneNumber)).buildUpon();
+            uriBuilder.appendQueryParameter(ContactsContract.STREQUENT_PHONE_ONLY, "true");
         }
 
         if (contactName != null && !contactName.isEmpty()) {
-            builder = Uri.withAppendedPath(Phone.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
-            builder.appendQueryParameter(ContactsContract.PRIMARY_ACCOUNT_NAME, "true");
+            uriBuilder = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_FILTER_URI, Uri.encode(contactName)).buildUpon();
         }
 
-        builder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
-        builder.appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");
-        return builder.build();
+        uriBuilder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
+        uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");
+        uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS, "true");
+        uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES, "true");
+        return uriBuilder.build();
     }
 
 }

@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.call.OngoingCallActivity;
 import com.chooloo.www.callmanager.util.validation.Validator;
 
@@ -173,58 +173,6 @@ public class CallManager {
         sCall.unregisterCallback(callback);
     }
 
-    // -- Auto-Calling -- //
-
-    /**
-     * Start the auto calling on the list of contacts
-     *
-     * @param list          a list of contacts
-     * @param context       the context
-     * @param startPosition the start position from which to start calling
-     */
-    public static void startAutoCalling(@NotNull List<Contact> list, @NotNull AppCompatActivity context, int startPosition) {
-        sIsAutoCalling = true;
-        sAutoCallPosition = startPosition;
-        sAutoCallingContactsList = list;
-        if (sAutoCallingContactsList.isEmpty()) Timber.e("No contacts in auto calling list");
-        nextCall(context);
-    }
-
-    /**
-     * Go to the next call
-     *
-     * @param activity activity
-     */
-    public static void nextCall(@NotNull Activity activity) {
-        if (sAutoCallingContactsList != null && sAutoCallPosition < sAutoCallingContactsList.size()) {
-            String phoneNumber = sAutoCallingContactsList.get(sAutoCallPosition).getMainPhoneNumber();
-            if (Validator.validatePhoneNumber(phoneNumber)) {
-                call(activity, phoneNumber);
-            } else {
-                Toast.makeText(activity, "Can't call " + phoneNumber, Toast.LENGTH_SHORT).show();
-                sAutoCallPosition++;
-                nextCall(activity);
-            }
-        } else {
-            finishAutoCall();
-        }
-    }
-
-    /**
-     * Finish the loop
-     */
-    private static void finishAutoCall() {
-        sIsAutoCalling = false;
-        sAutoCallPosition = 0;
-    }
-
-    /**
-     * Check wither is currently auto calling
-     */
-    public static boolean isAutoCalling() {
-        return sIsAutoCalling;
-    }
-
     // -- Getters -- //
 
     /**
@@ -248,7 +196,8 @@ public class CallManager {
 
         // get the contact
         Contact contact = ContactUtils.getContact(context, number, null); // get the contacts with the number
-        if (contact == null) return new Contact(null, number, null); // return a number contact
+        if (contact == null)
+            return new Contact(null, number); // return a number contact
         else return contact; // contact is valid, return it
     }
 

@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.database.entity;
+package com.chooloo.www.callmanager.entity;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -33,11 +33,11 @@ public class RecentCall {
     // Attributes
     private Context mContext;
     private long callId;
-    private String callerName;
-    private String number;
-    private int callType;
-    private String callDuration;
-    private Date callDate;
+    private final String callerName;
+    private final String number;
+    private final int callType;
+    private final String callDuration;
+    private final Date callDate;
     private int count;
 
     public static final int TYPE_OUTGOING = OUTGOING_TYPE;
@@ -72,9 +72,7 @@ public class RecentCall {
         this.mContext = context;
         this.callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         this.number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
-        Timber.i("Recent Call Number: " + this.number);
         this.callerName = ContactUtils.getContact(context, this.number, null).getName();
-        Timber.i("Recent Call Name: " + this.callerName);
         this.callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
         this.callDate = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
         this.callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));

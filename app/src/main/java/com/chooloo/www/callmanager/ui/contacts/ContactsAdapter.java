@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 
@@ -46,12 +46,10 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         int position = cursor.getPosition();
 
         String name = contact.getName();
-        String number = PhoneNumberUtils.formatPhoneNumber(mContext, contact.getMainPhoneNumber());
         String header = String.valueOf(name.charAt(0));
         boolean isShowHeader = position == 0 || !(header.equals(getHeader(position - 1)));
 
         holder.setBigText(name);
-        holder.setSmallText(number);
         holder.setHeader(header);
         holder.showHeader(isShowHeader);
         if (contact.getPhotoUri() != null) {

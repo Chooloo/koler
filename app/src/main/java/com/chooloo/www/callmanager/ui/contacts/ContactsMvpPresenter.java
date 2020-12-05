@@ -1,8 +1,6 @@
 package com.chooloo.www.callmanager.ui.contacts;
 
-import androidx.annotation.Nullable;
-
-import com.chooloo.www.callmanager.database.entity.Contact;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.MvpPresenter;
 
 public interface ContactsMvpPresenter<V extends ContactsMvpView> extends MvpPresenter<V> {

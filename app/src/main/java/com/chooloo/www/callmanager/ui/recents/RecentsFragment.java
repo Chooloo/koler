@@ -14,15 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.database.entity.Contact;
-import com.chooloo.www.callmanager.database.entity.RecentCall;
+import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.util.CallManager;
@@ -109,7 +108,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         if (recentCall.getCallerName() != null) {
             contact = ContactUtils.getContact(mActivity, recentCall.getCallerNumber(), null);
         } else {
-            contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
+            contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber());
         }
 
         // Initiate the dialog
@@ -142,7 +141,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
 
         if (contact.getName() != null) {
             contactName.setText(contact.getName());
-            contactNumber.setText(PhoneNumberUtils.formatPhoneNumber(mActivity, contact.getMainPhoneNumber()));
+//            contactNumber.setText(PhoneNumberUtils.formatPhoneNumber(mActivity, contact.getMainPhoneNumber()));
             infoButton.setVisibility(View.VISIBLE);
             editButton.setVisibility(View.VISIBLE);
             if (contact.getPhotoUri() == null || contact.getPhotoUri().isEmpty()) {
@@ -157,7 +156,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
             infoButton.setVisibility(View.GONE);
             editButton.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
-            contactName.setText(PhoneNumberUtils.formatPhoneNumber(mActivity, contact.getMainPhoneNumber()));
+//            contactName.setText(PhoneNumberUtils.formatPhoneNumber(mActivity, contact.getMainPhoneNumber()));
             contactNumber.setVisibility(View.GONE);
 
             contactPhoto.setVisibility(View.GONE);
@@ -189,7 +188,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         });
 
         callButton.setOnClickListener(v -> {
-            CallManager.call(mActivity, contact.getMainPhoneNumber());
+//            CallManager.call(mActivity, contact.getMainPhoneNumber());
         });
 
         deleteButton.setOnClickListener(v -> {

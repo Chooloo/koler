@@ -141,7 +141,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".listener.NotificationActionReceiver">
+        <receiver android:name=".notification.NotificationActionReceiver">
             <intent-filter>
                 <action android:name="ANSWER" />
                 <action android:name="HANGUP" />

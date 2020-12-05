@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 4,
-    "identityHash": "b1e7519936fe60701b1cf76fddd1e1fd",
+    "identityHash": "12df17453e50473ce8cacf6df56a4667",
     "entities": [
       {
         "tableName": "cgroup_table",
@@ -32,7 +32,7 @@
       },
       {
         "tableName": "contact_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT, `phone_numbers` TEXT NOT NULL, `is_favorite` INTEGER NOT NULL, FOREIGN KEY(`list_id`) REFERENCES `cgroup_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contact_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `list_id` INTEGER NOT NULL, `full_name` TEXT, `photo_uri` TEXT, `starred` INTEGER NOT NULL, FOREIGN KEY(`list_id`) REFERENCES `cgroup_table`(`list_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "contactId",
@@ -53,14 +53,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "phoneNumbers",
-            "columnName": "phone_numbers",
+            "fieldPath": "photoUri",
+            "columnName": "photo_uri",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
-            "fieldPath": "isFavorite",
-            "columnName": "is_favorite",
+            "fieldPath": "starred",
+            "columnName": "starred",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -78,7 +78,7 @@
             "columnNames": [
               "list_id"
             ],
-            "createSql": "CREATE  INDEX `index_contact_table_list_id` ON `${TABLE_NAME}` (`list_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_contact_table_list_id` ON `${TABLE_NAME}` (`list_id`)"
           }
         ],
         "foreignKeys": [
@@ -99,7 +99,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b1e7519936fe60701b1cf76fddd1e1fd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '12df17453e50473ce8cacf6df56a4667')"
     ]
   }
 }
