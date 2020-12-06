@@ -29,6 +29,9 @@ import com.chooloo.www.callmanager.entity.Contact;
 
 public class ContactsCursorLoader extends CursorLoader {
 
+    public static final String EXTRA_INDEX_COUNTS = ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS;
+    public static final String EXTRA_INDEX_TITLES = ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES;
+
     public static String COLUMN_ID = ContactsContract.Contacts._ID;
     public static String COLUMN_NAME = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY;
     public static String COLUMN_THUMBNAIL = ContactsContract.Contacts.PHOTO_THUMBNAIL_URI;
@@ -69,7 +72,6 @@ public class ContactsCursorLoader extends CursorLoader {
 
         uriBuilder.appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true");
         uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true");
-        uriBuilder.appendQueryParameter(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS, "true");
         return uriBuilder.build();
     }
 

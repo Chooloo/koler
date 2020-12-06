@@ -16,7 +16,7 @@ import java.util.List;
 public class FavoritesAndContactsLoader extends ContactsCursorLoader {
 
     private static final String FAVORITES_SELECTION = COLUMN_STARRED + " = 1";
-    public static final String FAVORITES_COUNT = "favorites_count";
+    public static final String EXTRA_FAVORITE_COUNT = "favorites_count";
 
     private final String phoneNumber;
     private final String contactName;
@@ -47,7 +47,7 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
             public Bundle getExtras() {
                 // Need to get the extras from the contacts cursor.
                 Bundle extras = contactsCursor == null ? new Bundle() : contactsCursor.getExtras();
-                extras.putInt(FAVORITES_COUNT, favoritesCount);
+                extras.putInt(EXTRA_FAVORITE_COUNT, favoritesCount);
                 return extras;
             }
         };

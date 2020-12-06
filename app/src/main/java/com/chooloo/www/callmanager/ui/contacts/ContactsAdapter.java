@@ -50,12 +50,6 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         Contact contact = new Contact(cursor);
         int position = cursor.getPosition();
 
-        String[] sections = cursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
-        Timber.i("EXTRA_TITLES %s", Arrays.toString(sections));
-
-        int[] counts = cursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
-        Timber.i("EXTRA_COUNTS %s", Arrays.toString(counts));
-
         String name = contact.getName();
         String header = String.valueOf(name.charAt(0));
         boolean isShowHeader = position == 0 || !(header.equals(getHeader(position - 1)));
@@ -87,14 +81,11 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     public void setCursor(Cursor newCursor) {
         super.setCursor(newCursor);
 
-        String[] header = newCursor.getExtras().getStringArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
-        int[] counts = newCursor.getExtras().getIntArray(ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
-        int favoriteCount = newCursor.getExtras().getInt(FavoritesAndContactsLoader.FAVORITES_COUNT);
+        String[] header = newCursor.getExtras().getStringArray(FavoritesAndContactsLoader.EXTRA_INDEX_TITLES);
+        int[] counts = newCursor.getExtras().getIntArray(FavoritesAndContactsLoader.EXTRA_INDEX_COUNTS);
+        int favoriteCount = newCursor.getExtras().getInt(FavoritesAndContactsLoader.EXTRA_FAVORITE_COUNT);
 
-        header = header == null ? new String[0] : header;
-        counts = counts == null ? new int[0] : counts;
-
-        updateHeaders(header, counts, favoriteCount);
+        updateHeaders(header == null ? new String[0] : header, counts == null ? new int[0] : counts, favoriteCount);
     }
 
     @Override
