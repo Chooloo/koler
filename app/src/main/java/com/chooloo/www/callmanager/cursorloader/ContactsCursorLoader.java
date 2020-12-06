@@ -32,10 +32,10 @@ public class ContactsCursorLoader extends CursorLoader {
     public static final String EXTRA_INDEX_COUNTS = ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS;
     public static final String EXTRA_INDEX_TITLES = ContactsContract.Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES;
 
-    public static String COLUMN_ID = ContactsContract.Contacts._ID;
-    public static String COLUMN_NAME = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY;
-    public static String COLUMN_THUMBNAIL = ContactsContract.Contacts.PHOTO_THUMBNAIL_URI;
-    public static String COLUMN_STARRED = ContactsContract.Contacts.STARRED;
+    public static final String COLUMN_ID = ContactsContract.Contacts._ID;
+    public static final String COLUMN_NAME = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY;
+    public static final String COLUMN_THUMBNAIL = ContactsContract.Contacts.PHOTO_THUMBNAIL_URI;
+    public static final String COLUMN_STARRED = ContactsContract.Contacts.STARRED;
 
     protected static final String CONTACTS_ORDER = ContactsContract.Contacts.SORT_KEY_PRIMARY + " ASC";
     protected static final String CONTACTS_SELECTION = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " IS NOT NULL";

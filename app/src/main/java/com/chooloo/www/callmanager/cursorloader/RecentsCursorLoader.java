@@ -32,13 +32,13 @@ import java.util.stream.Collectors;
 
 public final class RecentsCursorLoader extends CursorLoader {
 
-    public static String COLUMN_ID = Calls._ID;
-    public static String COLUMN_NUMBER = Calls.NUMBER;
-    public static String COLUMN_PRESENTATION = Calls.NUMBER_PRESENTATION;
-    public static String COLUMN_DATE = Calls.DATE;
-    public static String COLUMN_DURATION = Calls.DURATION;
-    public static String COLUMN_TYPE = Calls.TYPE;
-    public static String COLUMN_CACHED_NAME = Calls.CACHED_NAME;
+    public static final String COLUMN_ID = Calls._ID;
+    public static final String COLUMN_NUMBER = Calls.NUMBER;
+    public static final String COLUMN_PRESENTATION = Calls.NUMBER_PRESENTATION;
+    public static final String COLUMN_DATE = Calls.DATE;
+    public static final String COLUMN_DURATION = Calls.DURATION;
+    public static final String COLUMN_TYPE = Calls.TYPE;
+    public static final String COLUMN_CACHED_NAME = Calls.CACHED_NAME;
 
     private static final String RECENTS_ORDER = COLUMN_DATE + " DESC";
     private static final String RECENTS_SELECTION = null;

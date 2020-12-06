@@ -15,8 +15,9 @@ import java.util.List;
  */
 public class FavoritesAndContactsLoader extends ContactsCursorLoader {
 
-    private static final String FAVORITES_SELECTION = COLUMN_STARRED + " = 1";
     public static final String EXTRA_FAVORITE_COUNT = "favorites_count";
+
+    private static final String FAVORITES_SELECTION = COLUMN_STARRED + " = 1";
 
     private final String phoneNumber;
     private final String contactName;
@@ -29,25 +30,18 @@ public class FavoritesAndContactsLoader extends ContactsCursorLoader {
 
     @Override
     public Cursor loadInBackground() {
-        // get only contacts
-        final Cursor contactsCursor = super.loadInBackground();
-
-        // Handle favourites too
         List<Cursor> cursors = new ArrayList<>();
+        final Cursor contactsCursor = super.loadInBackground();
         final Cursor favoritesCursor = loadFavorites(this.phoneNumber, this.contactName);
-        final int favoritesCount = favoritesCursor == null ? 0 : favoritesCursor.getCount();
 
-        // add the cursors
         cursors.add(favoritesCursor);
         cursors.add(contactsCursor);
 
-        // merge cursors
         return new MergeCursor(cursors.toArray(new Cursor[0])) {
             @Override
             public Bundle getExtras() {
-                // Need to get the extras from the contacts cursor.
                 Bundle extras = contactsCursor == null ? new Bundle() : contactsCursor.getExtras();
-                extras.putInt(EXTRA_FAVORITE_COUNT, favoritesCount);
+                extras.putInt(EXTRA_FAVORITE_COUNT, favoritesCursor.getCount());
                 return extras;
             }
         };

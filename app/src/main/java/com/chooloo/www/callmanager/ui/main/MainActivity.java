@@ -10,17 +10,20 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
+import com.chooloo.www.callmanager.ui.page.PageAdapter;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.util.BiometricUtils;
@@ -44,7 +47,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
 
-    private MainPresenter<MainMvpView> mPresenter;
+    private MainMvpPresenter<MainMvpView> mPresenter;
 
     Menu mMenu;
 
@@ -60,7 +63,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
     @BindView(R.id.dialpad_fragment) View mDialerView;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
-    @BindView(R.id.view_pager) ViewPager mViewPager;
+    @BindView(R.id.view_pager) ViewPager2 mViewPager;
     @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
     @BindView(R.id.dialpad_fab_button) FloatingActionButton mDialpadFab;
 
@@ -128,22 +131,13 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         PermissionUtils.checkDefaultDialer(this); // ask default dialer
 
         // view pager
-        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
+        mViewPager.setAdapter(new PageAdapter(this));
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 mPresenter.onPageSelected(position);
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
         });
-        mSmartTabLayout.setViewPager(mViewPager);
 
         // search bar fragment
         mSearchBarFragment = new SearchFragment();

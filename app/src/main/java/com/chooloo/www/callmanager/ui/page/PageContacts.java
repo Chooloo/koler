@@ -14,7 +14,7 @@ import com.chooloo.www.callmanager.ui.contacts.ContactsFragment;
 
 public class PageContacts extends PageFragment implements PageMvpView {
 
-    private PagePresenter<PageMvpView> mPresenter;
+    private PageMvpPresenter<PageMvpView> mPresenter;
 
     private ContactsFragment mContactsFragment;
 

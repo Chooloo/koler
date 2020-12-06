@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 
 public class PageRecents extends PageFragment implements PageMvpView {
 
-    private PagePresenter<PageMvpView> mPresenter;
+    private PageMvpPresenter<PageMvpView> mPresenter;
 
     private RecentsFragment mRecentsFragment;
 
