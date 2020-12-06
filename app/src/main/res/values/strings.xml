@@ -218,4 +218,5 @@
     <string name="unknown">Unknown</string>
 
     <string name="search_hint">Search</string>
+    <string name="dialpad_button">dialpad button</string>
 </resources>

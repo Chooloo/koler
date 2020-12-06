@@ -43,6 +43,9 @@
     <dimen name="swipe_indicator_width">30dp</dimen>
     <dimen name="swipe_indicator_margin">10dp</dimen>
 
+    <!-- toolbar -->
+    <dimen name="tab_text_size">40sp</dimen>
+
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies
     to square screens.

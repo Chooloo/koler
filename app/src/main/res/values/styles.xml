@@ -65,7 +65,6 @@
     <style name="DialpadKey">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:soundEffectsEnabled">false</item>
         <item name="android:padding">8dp</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
@@ -76,8 +75,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/dialpad_key_number_text_size</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
-        </item>
+        <item name="android:textColor">?attr/colorAccent</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
@@ -86,8 +84,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/dialpad_key_letters_text_size</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle2
-        </item>
+        <item name="android:textColor">?attr/colorAccent</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
@@ -132,4 +129,21 @@
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
+
+    <style name="TabLayout" />
+
+    <style name="TabLayout.Layout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabSelectedTextColor">@color/soft_black</item>
+        <item name="android:textSize">@dimen/tab_text_size</item>
+        <item name="tabTextColor">@color/grey_300</item>
+        <item name="tabUnboundedRipple">false</item>
+    </style>
+
+    <style name="TabLayout.Text">
+        <item name="android:textSize">@dimen/tab_text_size</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline2
+        </item>
+    </style>
+
 </resources>

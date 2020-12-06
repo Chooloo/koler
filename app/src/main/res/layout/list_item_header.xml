@@ -8,6 +8,6 @@
     android:gravity="center"
     android:textAlignment="center"
     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-    android:textColor="?attr/secondaryAccentColor"
+    android:textColor="?attr/colorAccent"
     android:textStyle="bold"
     tools:text="A" />

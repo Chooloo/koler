@@ -14,16 +14,13 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="colorAccent">@color/color_accent</item>
-        <item name="dialogBackgroundColor">?attr/colorPrimary</item>
+        <item name="colorAccentLight">@color/color_accent_light</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheet</item>
 
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
-
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-        <item name="overlayColor">@color/semi_white</item>
 
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>

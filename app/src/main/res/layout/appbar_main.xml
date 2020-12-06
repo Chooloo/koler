@@ -1,0 +1,67 @@
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appbar_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    app:elevation="0dp"
+    app:layout_scrollFlags="scroll">
+
+    <!-- toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp"
+        android:contentInsetEnd="0dp"
+        android:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:layout_scrollFlags="scroll|snap">
+
+        <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
+            android:id="@+id/view_pager_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/smart_tab_height"
+            android:layout_gravity="start"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:stl_clickable="true"
+            app:stl_defaultTabTextAllCaps="false"
+            app:stl_defaultTabTextColor="@drawable/tab_color_selector"
+            app:stl_defaultTabTextHorizontalPadding="8dp"
+            app:stl_defaultTabTextMinWidth="0dp"
+            app:stl_defaultTabTextSize="26sp"
+            app:stl_dividerThickness="0dp"
+            app:stl_drawDecorationAfterTab="true"
+            app:stl_indicatorAlwaysInCenter="false"
+            app:stl_indicatorColor="@android:color/transparent"
+            app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
+            app:stl_indicatorGravity="center"
+            app:stl_indicatorInFront="true"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorThickness="@dimen/smart_tab_height"
+            app:stl_indicatorWidth="auto"
+            app:stl_indicatorWithoutPadding="false"
+            app:stl_overlineColor="#4D000000"
+            app:stl_overlineThickness="0dp"
+            app:stl_titleOffset="24dp"
+            app:stl_underlineColor="#4D000000"
+            app:stl_underlineThickness="0dp" />
+<!--                <com.google.android.material.tabs.TabLayout-->
+<!--                    android:id="@+id/tab_layout"-->
+<!--                    style="@style/TabLayout.Layout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content" />-->
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- search fragment -->
+    <FrameLayout
+        android:id="@+id/search_bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" />
+</com.google.android.material.appbar.AppBarLayout>

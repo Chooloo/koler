@@ -5,7 +5,7 @@
     android:id="@+id/overlay_send_sms"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/overlayColor">
+    android:background="?attr/colorAccentLight">
 
     <!-- Message Input -->
 

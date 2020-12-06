@@ -43,7 +43,7 @@ public class ThemeUtils {
      */
     public static int getAccentColor(Context context) {
         TypedValue typedValue = new TypedValue();
-        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{R.attr.secondaryAccentColor});
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{R.attr.colorAccent});
         int color = a.getColor(0, 0);
         a.recycle();
         return color;

@@ -10,28 +10,28 @@
 
     <!-- App Bar -->
     <include
-        android:id="@+id/appbar"
-        layout="@layout/appbar"
+        android:id="@+id/appbar_main"
+        layout="@layout/appbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- View Pager -->
+    <!-- view pager -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!-- Dialer Fragment -->
+    <!-- dialer fragment -->
     <FrameLayout
         android:id="@+id/dialpad_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:behavior_hideable="true"
         app:layout_anchorGravity="bottom"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        tools:layout="@layout/fragment_dialpad" />
+        app:layout_behavior="@string/bottom_sheet_behavior" />
 
+    <!-- dialer button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialpad_fab_button"
         android:layout_width="wrap_content"
@@ -39,6 +39,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         android:backgroundTint="?attr/colorAccent"
+        android:contentDescription="@string/dialpad_button"
         android:src="@drawable/ic_dialpad_black_24dp"
         android:tint="@color/white"
         app:fabSize="auto" />

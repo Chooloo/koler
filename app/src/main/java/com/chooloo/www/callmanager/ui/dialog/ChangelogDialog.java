@@ -86,7 +86,7 @@ public class ChangelogDialog extends DialogFragment implements ChangelogMvpView 
 
             //Get theme attributes
             TypedValue background = new TypedValue();
-            getContext().getTheme().resolveAttribute(R.attr.dialogBackgroundColor, background, true);
+            getContext().getTheme().resolveAttribute(R.attr.colorAccentLight, background, true);
 
             TypedValue textColorPrimaryAttr = new TypedValue();
             getContext().getTheme().resolveAttribute(android.R.attr.textColorPrimary, textColorPrimaryAttr, true);

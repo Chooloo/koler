@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?attr/iconColor" />
-    <item android:color="?attr/iconColor" android:state_activated="false" />
+    <item android:color="?attr/colorAccent" />
+    <item android:color="?attr/colorAccent" android:state_activated="false" />
     <item android:color="@color/soft_black" android:state_activated="true" />
 </selector>

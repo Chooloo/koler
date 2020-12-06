@@ -25,6 +25,10 @@ public class DialpadKey extends LinearLayout {
 
     public DialpadKey(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setUp(context, attrs);
+    }
+
+    private void setUp(Context context, AttributeSet attrs) {
         inflate(context, R.layout.dialpad_key_layout, this);
         ButterKnife.bind(this);
 

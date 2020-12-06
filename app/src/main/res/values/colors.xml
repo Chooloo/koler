@@ -4,7 +4,8 @@
 
     <!-- Themes -->
     <color name="color_primary">@color/white</color>
-    <color name="color_accent">#f85b7b</color>
+    <color name="color_accent">#F572BEFF</color>
+    <color name="color_accent_light">#F9FDFF</color>
 
     <!-- Blacks -->
     <color name="soft_black">#3D3D3D</color>

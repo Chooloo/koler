@@ -15,7 +15,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:scaleType="centerInside"
-        android:tint="?attr/iconColor"
+        android:tint="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

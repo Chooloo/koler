@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="?attr/iconColor"
+            android:textColor="?attr/colorAccent"
             android:textSize="@dimen/caller_name_size"
             tools:text="Jesus" />
 
