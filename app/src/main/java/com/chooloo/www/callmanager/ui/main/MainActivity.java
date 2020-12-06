@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.PagerTabStrip;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -34,6 +36,8 @@ import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.Objects;
@@ -64,7 +68,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @BindView(R.id.dialpad_fragment) View mDialerView;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
     @BindView(R.id.view_pager) ViewPager2 mViewPager;
-    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
+    @BindView(R.id.tab_layout) TabLayout mTabLayout;
+    //    @BindView(R.id.view_pager_tab) SmartTabLayout mSmartTabLayout;
     @BindView(R.id.dialpad_fab_button) FloatingActionButton mDialpadFab;
 
     @Override
@@ -138,6 +143,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
                 mPresenter.onPageSelected(position);
             }
         });
+        new TabLayoutMediator(mTabLayout, mViewPager, ((tab, position) -> tab.setText("Page " + position))).attach();
 
         // search bar fragment
         mSearchBarFragment = new SearchFragment();

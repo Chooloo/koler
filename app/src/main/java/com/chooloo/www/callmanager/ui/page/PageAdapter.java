@@ -41,4 +41,5 @@ public class PageAdapter extends FragmentStateAdapter {
                 return PageContacts.newInstance();
         }
     }
+
 }
