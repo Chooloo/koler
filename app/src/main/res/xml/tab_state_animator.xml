@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <set>
+            <objectAnimator
+                android:duration="500"
+                android:propertyName="textSize"
+                android:valueTo="10sp"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="500"
+                android:propertyName="color"
+                android:valueTo="@color/soft_black" />
+        </set>
+    </item>
+    <item android:state_selected="false">
+        <set>
+            <objectAnimator
+                android:duration="500"
+                android:propertyName="textSize"
+                android:valueTo="5sp"
+                android:valueType="floatType" />
+            <objectAnimator
+                android:duration="500"
+                android:propertyName="color"
+                android:valueTo="@color/grey_300" />
+        </set>
+    </item>
+</selector>

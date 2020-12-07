@@ -6,19 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import butterknife.ButterKnife;
 
 public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements MvpView {
+
     private static final int PERMISSION_RC = 10;
+
     protected String[] mRequiredPermissions;
+
     protected BaseActivity mActivity;
+
+    private boolean isShown = false;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -29,18 +34,24 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mRequiredPermissions = onGetPermissions();
         setUp();
+    }
+
+    @Override
+    public void show(@NonNull FragmentManager manager, @Nullable String tag) {
+        super.show(manager, tag);
+        this.isShown = true;
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        this.isShown = false;
     }
 
     @Override
@@ -102,5 +113,9 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
             throw new IllegalArgumentException("You must create this fragment with newInstance()");
         }
         return args;
+    }
+
+    public boolean isShown() {
+        return isShown;
     }
 }

@@ -46,12 +46,11 @@ import androidx.transition.TransitionManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.helpers.AllPurposeTouchListener;
 import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
-import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
@@ -79,7 +78,7 @@ import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPromp
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends BaseActivity implements DialpadFragment.OnKeyDownListener {
+public class OngoingCallActivity extends BaseActivity implements DialpadBottomDialogFragment.OnKeyDownListener {
 
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
@@ -98,7 +97,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
     private static String mStateText;
 
     // Fragments
-    DialpadFragment mDialpadFragment;
+    DialpadBottomDialogFragment mDialpadFragment;
 
     // ViewModels
     SharedDialViewModel mSharedDialViewModel;
@@ -887,7 +886,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
      * Set a new dialpad fragment
      */
     private void setDialpadFragment() {
-        mDialpadFragment = DialpadFragment.newInstance(false);
+        mDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dialpad_fragment, mDialpadFragment)
                 .commit();

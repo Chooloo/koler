@@ -22,15 +22,6 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!-- dialer fragment -->
-    <FrameLayout
-        android:id="@+id/dialpad_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:behavior_hideable="true"
-        app:layout_anchorGravity="bottom"
-        app:layout_behavior="@string/bottom_sheet_behavior" />
-
     <!-- dialer button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialpad_fab_button"

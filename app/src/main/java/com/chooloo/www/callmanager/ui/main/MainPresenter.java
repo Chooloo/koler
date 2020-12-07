@@ -29,13 +29,13 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onDialpadFabClick() {
-        mMvpView.setBottomSheetState(STATE_EXPANDED);
+        mMvpView.showDialpad(true);
     }
 
     @Override
     public void onPageSelected(int position) {
         mCurrentPosition = position;
-        mMvpView.setBottomSheetState(STATE_HIDDEN);
+        mMvpView.showDialpad(false);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void onDialFocusChanged(boolean isFocused) {
         if (!isFocused) {
-            mMvpView.setBottomSheetState(STATE_HIDDEN);
+            mMvpView.showDialpad(false);
         }
     }
 
@@ -85,7 +85,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public boolean onBackPressed() {
         if (mBottomSheetState != STATE_HIDDEN && mBottomSheetState != STATE_COLLAPSED) {
-            mMvpView.setBottomSheetState(STATE_COLLAPSED);
+            mMvpView.showDialpad(false);
             return true;
         }
         return false;
@@ -105,7 +105,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
         // check for a number
         if (intentText.contains("tel:") && !intentText.equals("tel:")) {
-            mMvpView.setBottomSheetState(STATE_EXPANDED);
+            mMvpView.showDialpad(true);
             mMvpView.setDialNumber(intentText);
         } else {
             mMvpView.showError("No phone number detected");

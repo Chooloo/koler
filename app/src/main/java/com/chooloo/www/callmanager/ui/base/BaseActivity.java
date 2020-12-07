@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import com.chooloo.www.callmanager.util.PreferencesManager;
@@ -23,8 +24,12 @@ import timber.log.Timber;
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
     private static final int PERMISSION_RC = 10;
+
     protected String[] mRequiredPermissions;
+
     protected PreferencesManager mPreferences;
+
+    protected ViewModelProvider mViewModelProvider;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         Utilities.setUpLocale(this);
         mPreferences = PreferencesManager.getInstance(this);
         mRequiredPermissions = onGetPermissions();
+        mViewModelProvider = new ViewModelProvider(this);
         setContentView(getContentView());
         ButterKnife.bind(this);
         setUp();

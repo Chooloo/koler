@@ -11,7 +11,7 @@ public interface MainMvpView extends MvpView {
 
     void checkIncomingIntent();
 
-    void setBottomSheetState(int state);
+    void showDialpad(boolean isShow);
 
     void setDialNumber(String number);
 

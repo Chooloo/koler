@@ -26,7 +26,7 @@
         <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
             android:id="@+id/view_pager_tab"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/smart_tab_height"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
             app:layout_scrollFlags="scroll|snap|enterAlways"
             app:stl_clickable="true"
@@ -51,11 +51,11 @@
             app:stl_titleOffset="24dp"
             app:stl_underlineColor="#4D000000"
             app:stl_underlineThickness="0dp" />
-<!--                <com.google.android.material.tabs.TabLayout-->
-<!--                    android:id="@+id/tab_layout"-->
-<!--                    style="@style/TabLayout.Layout"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content" />-->
+        <!--                <com.google.android.material.tabs.TabLayout-->
+        <!--                    android:id="@+id/tab_layout"-->
+        <!--                    style="@style/TabLayout.Layout"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content" />-->
     </androidx.appcompat.widget.Toolbar>
 
     <!-- search fragment -->

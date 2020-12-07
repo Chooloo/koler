@@ -1,21 +1,7 @@
 package com.chooloo.www.callmanager.ui.widgets.tablayout;
-/**
- * Copyright (C) 2015 ogaclejapan
- * Copyright (C) 2013 The Android Open Source Project
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -41,29 +27,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.chooloo.www.callmanager.R;
 import com.ogaclejapan.smarttablayout.SmartTabIndicationInterpolator;
 
-/**
- * To be used with ViewPager to provide a tab indicator component which give constant feedback as
- * to
- * the user's scroll progress.
- * <p>
- * To use the component, simply add it to your view hierarchy. Then in your
- * {@link android.app.Activity} or {@link androidx.fragment.app.Fragment} call
- * {@link #setViewPager(ViewPager2)} providing it the ViewPager this
- * layout
- * is being used for.
- * <p>
- * The colors can be customized in two ways. The first and simplest is to provide an array of
- * colors
- * via {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)}. The
- * alternative is via the {@link com.ogaclejapan.smarttablayout.SmartTabLayout.TabColorizer} interface which provides you complete control over
- * which color is used for any individual position.
- * <p>
- * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
- * providing the layout ID of your custom layout.
- * <p>
- * Forked from Google Samples &gt; SlidingTabsBasic &gt;
- * <a href="https://developer.android.com/samples/SlidingTabsBasic/src/com.example.android.common/view/SlidingTabLayout.html">SlidingTabLayout</a>
- */
 public class TabLayout extends HorizontalScrollView {
 
     private static final boolean DEFAULT_DISTRIBUTE_EVENLY = false;
@@ -356,10 +319,11 @@ public class TabLayout extends HorizontalScrollView {
         textView.setGravity(Gravity.CENTER);
         textView.setText(title);
         textView.setTextColor(tabViewTextColors);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, tabViewTextSize);
+//        textView.setTextSize(TypedValue.COMPLEX_UN, tabViewTextSize);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        textView.setStateListAnimator(AnimatorInflater.loadStateListAnimator(getContext(), R.xml.tab_state_animator));
 
         if (tabViewBackgroundResId != NO_ID) {
             textView.setBackgroundResource(tabViewBackgroundResId);

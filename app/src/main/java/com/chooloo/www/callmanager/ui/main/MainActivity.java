@@ -20,7 +20,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
-import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
+import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.page.PageAdapter;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
@@ -32,8 +32,6 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayoutMediator;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.Objects;
 
@@ -50,18 +48,15 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     Menu mMenu;
 
-    BottomSheetBehavior<View> mBottomSheetBehavior;
-
     SharedDialViewModel mSharedDialViewModel;
 
-    DialpadFragment mDialpadFragment;
+    DialpadBottomDialogFragment mDialpadFragment;
     SearchFragment mSearchBarFragment;
 
     @BindView(R.id.main_toolbar) Toolbar mToolbar;
     @BindView(R.id.view_pager_tab) TabLayout mTabLayout;
     @BindView(R.id.view_pager) ViewPager2 mViewPager;
     @BindView(R.id.search_bar_container) FrameLayout mSearchBarContainer;
-    @BindView(R.id.dialpad_fragment) View mDialerView;
     @BindView(R.id.root_view) CoordinatorLayout mMainLayout;
     @BindView(R.id.dialpad_fab_button) FloatingActionButton mDialpadFab;
 
@@ -145,26 +140,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
 
         // dialpad fragment
-        mDialpadFragment = DialpadFragment.newInstance(true);
-        getSupportFragmentManager().beginTransaction().add(R.id.dialpad_fragment, mDialpadFragment).commit();
-
-        // bottom sheet
-        mBottomSheetBehavior = BottomSheetBehavior.from(mDialerView);
-        mBottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                mPresenter.onBottomSheetStateChanged(newState);
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-        setBottomSheetState(BottomSheetBehavior.STATE_HIDDEN);
+        mDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
+        mDialpadFragment.show(getSupportFragmentManager(), DialpadBottomDialogFragment.TAG);
 
         // dial view model
-        mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
+        mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
@@ -191,8 +171,12 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
-    public void setBottomSheetState(@BottomSheetBehavior.State int state) {
-        mBottomSheetBehavior.setState(state);
+    public void showDialpad(boolean isShow) {
+        if (isShow) {
+            mDialpadFragment.show(getSupportFragmentManager(), DialpadBottomDialogFragment.TAG);
+        } else if (mDialpadFragment.isShown()) {
+            mDialpadFragment.dismiss();
+        }
     }
 
     @Override

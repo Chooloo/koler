@@ -8,16 +8,17 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadEditText;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
@@ -27,8 +28,6 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
@@ -36,17 +35,18 @@ import butterknife.OnLongClick;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class DialpadFragment extends BaseFragment implements DialpadMvpView {
+public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment implements DialpadMvpView {
 
+    public static final String TAG = "dialpad_bottom_dialog_fragment";
     public static final String ARG_DIALER = "dialer";
 
     private DialpadMvpPresenter<DialpadMvpView> mPresenter;
 
     private boolean mIsDialer = true;
 
-    private HashMap<Integer, Integer> mKeyIdToKeyCode;
-
     private OnKeyDownListener mOnKeyDownListener = null;
+
+    private ViewModelProvider mViewModelProvider;
 
     private SharedDialViewModel mSharedDialViewModel;
 
@@ -70,10 +70,10 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     @BindView(R.id.dialpad_button_delete) ImageView mDeleteButton;
     @BindView(R.id.dialpad_keys_layout) TableLayout mNumbersTable;
 
-    public static DialpadFragment newInstance(boolean isDialer) {
+    public static DialpadBottomDialogFragment newInstance(boolean isDialer) {
         Bundle args = new Bundle();
         args.putBoolean(ARG_DIALER, isDialer);
-        DialpadFragment fragment = new DialpadFragment();
+        DialpadBottomDialogFragment fragment = new DialpadBottomDialogFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -150,8 +150,11 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
         setIsDialer(getArgsSafely().getBoolean(ARG_DIALER));
 
-        mSharedDialViewModel = ViewModelProviders.of(mActivity).get(SharedDialViewModel.class);
-        SharedIntentViewModel sharedIntentViewModel = ViewModelProviders.of(mActivity).get(SharedIntentViewModel.class);
+        mViewModelProvider = new ViewModelProvider(this);
+
+        mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
+
+        SharedIntentViewModel sharedIntentViewModel = mViewModelProvider.get(SharedIntentViewModel.class);
         sharedIntentViewModel.getData().observe(getViewLifecycleOwner(), data -> mPresenter.onIntentDataChanged(data));
 
         mDigits.addTextChangedListener(new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry()));
@@ -178,13 +181,13 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void setIsDialer(boolean isDialer) {
+        mIsDialer = isDialer;
         mDeleteButton.setVisibility(isDialer ? VISIBLE : GONE);
         mCallButton.setVisibility(isDialer ? VISIBLE : GONE);
         mDigits.setClickable(isDialer);
         mDigits.setLongClickable(isDialer);
         mDigits.setFocusableInTouchMode(isDialer);
         mDigits.setCursorVisible(isDialer);
-        mIsDialer = isDialer;
     }
 
     @Override

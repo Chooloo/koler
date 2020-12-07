@@ -8,8 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@drawable/bottom_sheet_dialog_background"
-    tools:context=".ui.dialpad.DialpadFragment">
+    android:background="@drawable/bottom_sheet_dialog_background">
 
     <View
         android:id="@+id/swipe_indicator"
@@ -129,7 +128,6 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="fitXY"
         android:src="@drawable/ic_call_black_24dp"
-        android:tint="?attr/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
