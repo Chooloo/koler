@@ -5,10 +5,9 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".ui.main.MainActivity">
 
-    <!-- App Bar -->
+    <!-- app bar -->
     <include
         android:id="@+id/appbar_main"
         layout="@layout/appbar_main"
@@ -27,7 +26,7 @@
         android:id="@+id/dialpad_fab_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|center"
         android:layout_margin="10dp"
         android:backgroundTint="?attr/colorAccent"
         android:contentDescription="@string/dialpad_button"

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="10dp"
+    android:paddingTop="10dp"
     android:paddingEnd="10dp"
     app:elevation="0dp"
     app:layout_scrollFlags="scroll">
@@ -18,7 +19,7 @@
         android:contentInsetEnd="0dp"
         android:contentInsetRight="0dp"
         app:contentInsetEnd="0dp"
-            app:contentInsetLeft="0dp"
+        app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
         app:layout_scrollFlags="scroll|snap">
@@ -51,7 +52,7 @@
             app:stl_titleOffset="24dp"
             app:stl_underlineColor="#4D000000"
             app:stl_underlineThickness="0dp" />
-        <!--                <com.google.android.material.tabs.TabLayout-->
+        <!--                <com.google.android.m   aterial.tabs.TabLayout-->
         <!--                    android:id="@+id/tab_layout"-->
         <!--                    style="@style/TabLayout.Layout"-->
         <!--                    android:layout_width="wrap_content"-->
