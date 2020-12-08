@@ -18,7 +18,7 @@
         android:contentInsetEnd="0dp"
         android:contentInsetRight="0dp"
         app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
+            app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
         app:layout_scrollFlags="scroll|snap">

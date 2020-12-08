@@ -40,16 +40,11 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     public static final String TAG = "dialpad_bottom_dialog_fragment";
     public static final String ARG_DIALER = "dialer";
 
-    private DialpadMvpPresenter<DialpadMvpView> mPresenter;
-
     private boolean mIsDialer = true;
 
+    private DialpadMvpPresenter<DialpadMvpView> mPresenter;
     private OnKeyDownListener mOnKeyDownListener = null;
-
-    private ViewModelProvider mViewModelProvider;
-
     private SharedDialViewModel mSharedDialViewModel;
-
     private AudioUtils mAudioUtils;
 
     @BindView(R.id.key_0) DialpadKey mKey0;

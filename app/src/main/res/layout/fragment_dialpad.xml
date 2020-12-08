@@ -7,8 +7,8 @@
     android:id="@+id/dialpad_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom"
-    android:background="@drawable/bottom_sheet_dialog_background">
+    android:background="@drawable/bottom_sheet_dialog_background"
+    tools:layout_gravity="bottom">
 
     <View
         android:id="@+id/swipe_indicator"
@@ -24,7 +24,7 @@
     <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         android:layout_width="0dp"
-        android:layout_height="@dimen/phone_number_input_height"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:background="@android:color/transparent"
@@ -34,12 +34,13 @@
         android:gravity="center"
         android:inputType="phone"
         android:maxLines="1"
+        android:padding="15dp"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
         android:textColor="@color/color_accent"
-        android:textSize="27sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,14 +135,15 @@
 
     <ImageView
         android:id="@+id/dialpad_button_delete"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:scaleType="center"
+        android:padding="15dp"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_arrow_back_ios_24px"
-        android:tint="@color/grey_400"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dialpad_button_call"
-        app:layout_constraintTop_toTopOf="@id/dialpad_button_call" />
+        app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
+        app:tint="@color/grey_500" />
 </androidx.constraintlayout.widget.ConstraintLayout>

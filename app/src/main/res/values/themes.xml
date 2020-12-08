@@ -22,6 +22,7 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
 
+        <item name="android:textColor">@color/soft_black</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
     </style>

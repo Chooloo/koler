@@ -20,7 +20,7 @@
 
     <!-- dialpad -->
     <dimen name="phone_number_input_height">54dp</dimen>
-    <dimen name="dialpad_key_number_text_size">30dp</dimen>
+    <dimen name="dialpad_key_number_text_size">33dp</dimen>
     <dimen name="dialpad_key_letters_text_size">10dp</dimen>
 
     <!-- list item -->

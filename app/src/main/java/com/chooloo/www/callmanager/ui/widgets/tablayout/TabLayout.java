@@ -361,8 +361,10 @@ public class TabLayout extends HorizontalScrollView {
             switch (i) {
                 case 0:
                     title = "Contacts";
+                    break;
                 case 1:
                     title = "Recents";
+                    break;
                 default:
                     title = "Contacts";
             }

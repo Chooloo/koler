@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -19,11 +20,12 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     private static final int PERMISSION_RC = 10;
 
-    protected String[] mRequiredPermissions;
+    private boolean isShown = false;
 
+    protected String[] mRequiredPermissions;
+    protected ViewModelProvider mViewModelProvider;
     protected BaseActivity mActivity;
 
-    private boolean isShown = false;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -39,6 +41,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mRequiredPermissions = onGetPermissions();
+        mViewModelProvider = new ViewModelProvider(mActivity);
         setUp();
     }
 

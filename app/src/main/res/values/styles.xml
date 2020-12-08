@@ -1,6 +1,6 @@
 <resources>
     <!-- Bottom Sheet -->
-    <style name="BottomSheet" parent="">
+    <style name="BottomSheet">
         <item name="cornerSizeTopRight">@dimen/bubble_corner_radius</item>
         <item name="cornerSizeTopLeft">@dimen/bubble_corner_radius</item>
         <item name="cornerFamily">rounded</item>
@@ -62,7 +62,9 @@
     </style>
 
     <!-- DialpadKey -->
-    <style name="DialpadKey">
+    <style name="DialpadKey" />
+
+    <style name="DialpadKey.Layout">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">8dp</item>
@@ -70,18 +72,19 @@
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
-    <style name="DialpadKeyNumber">
+    <style name="DialpadKey.Text">
+        <item name="android:gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DialpadKey.Text.Number">
         <item name="android:textSize">@dimen/dialpad_key_number_text_size</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="DialpadKeyLetters">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
+    <style name="DialpadKey.Text.Letters">
         <item name="android:textSize">@dimen/dialpad_key_letters_text_size</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
