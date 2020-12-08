@@ -1,12 +1,12 @@
 <resources>
-    <!-- Bottom Sheet -->
+    <!-- bottom sheet -->
     <style name="BottomSheet">
         <item name="cornerSizeTopRight">@dimen/bubble_corner_radius</item>
         <item name="cornerSizeTopLeft">@dimen/bubble_corner_radius</item>
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <!-- List View -->
+    <!-- list view -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:clipToPadding">false</item>
@@ -14,31 +14,34 @@
         <item name="android:paddingBottom">@dimen/fab_and_bottom_padding</item>
     </style>
 
-    <style name="ListItemText">
+    <!-- list item -->
+    <style name="ListItem" />
+
+    <style name="ListItem.Text">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="ListItemText.Big">
+    <style name="ListItem.Text.Big">
         <item name="android:textAlignment">textStart</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:text">Simta Kumta</item>
     </style>
 
-    <style name="ListItemText.Small">
+    <style name="ListItem.Text.Small">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
         <item name="android:text">0523839832</item>
         <item name="android:textColor">@color/grey_500</item>
     </style>
 
-    <style name="ListItemImage" />
+    <style name="ListItem.Image" />
 
-    <style name="ListItemImage.Layout">
+    <style name="ListItem.Image.Layout">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
     </style>
 
-    <style name="ListItemImage.Placeholder">
+    <style name="ListItem.Image.Placeholder">
         <item name="android:layout_width">@dimen/list_item_image_placeholder_size</item>
         <item name="android:layout_height">@dimen/list_item_image_placeholder_size</item>
         <item name="android:layout_gravity">center</item>
@@ -48,7 +51,7 @@
         <item name="srcCompat">@drawable/ic_account_circle_black_24dp</item>
     </style>
 
-    <style name="ListItemImage.Image">
+    <style name="ListItem.Image.Image">
         <item name="android:layout_width">@dimen/list_item_image_size</item>
         <item name="android:layout_height">@dimen/list_item_image_size</item>
         <item name="android:src">@drawable/ic_account_circle_black_24dp</item>
@@ -57,14 +60,26 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="ActionButton" parent="Widget.Design.FloatingActionButton">
-        <item name="android:tint">@color/white</item>
+    <!-- dialpad -->
+    <style name="Dialpad" />
+
+    <style name="Dialpad.FabButton">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
-    <!-- DialpadKey -->
-    <style name="DialpadKey" />
+    <style name="Dialpad.Layout">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeBottomRight">10dp</item>
+    </style>
 
-    <style name="DialpadKey.Layout">
+    <style name="Dialpad.Key" />
+
+    <style name="Dialpad.Key.Layout">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">8dp</item>
@@ -72,19 +87,19 @@
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
-    <style name="DialpadKey.Text">
+    <style name="Dialpad.Key.Text">
         <item name="android:gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="DialpadKey.Text.Number">
+    <style name="Dialpad.Key.Text.Number">
         <item name="android:textSize">@dimen/dialpad_key_number_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="DialpadKey.Text.Letters">
+    <style name="Dialpad.Key.Text.Letters">
         <item name="android:textSize">@dimen/dialpad_key_letters_text_size</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
@@ -100,10 +115,12 @@
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <!-- Call Buttons -->
-    <style name="CallButton" />
+    <!-- call -->
+    <style name="Call" />
 
-    <style name="CallButton.ActionButton">
+    <style name="Call.Button" />
+
+    <style name="Call.Button.Action">
         <item name="android:layout_width">@dimen/call_action_size</item>
         <item name="android:layout_height">@dimen/call_action_size</item>
         <item name="android:background">@drawable/ripple_oval</item>
@@ -115,7 +132,7 @@
         <item name="android:visibility">invisible</item>
     </style>
 
-    <style name="CallButton.BottomButton">
+    <style name="Call.Button.Bottom">
         <item name="android:layout_margin">30dp</item>
         <item name="android:scaleType">center</item>
         <item name="fabCustomSize">70dp</item>
@@ -123,14 +140,7 @@
         <item name="maxImageSize">36dp</item>
     </style>
 
-    <style name="DialpadFabButton">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeTopRight">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-    </style>
-
+    <!-- tab layout -->
     <style name="TabLayout" />
 
     <style name="TabLayout.Layout">

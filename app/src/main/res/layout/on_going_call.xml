@@ -101,7 +101,7 @@
     <!-- Hold Button -->
     <ImageView
         android:id="@+id/button_hold"
-        style="@style/CallButton.ActionButton"
+        style="@style/Call.Button.Action"
         app:layout_constraintBottom_toTopOf="@id/button_speaker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -112,7 +112,7 @@
     <!-- Mute Button -->
     <ImageView
         android:id="@+id/button_mute"
-        style="@style/CallButton.ActionButton"
+        style="@style/Call.Button.Action"
         app:layout_constraintBottom_toTopOf="@id/button_keypad"
         app:layout_constraintEnd_toStartOf="@id/button_hold"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -123,7 +123,7 @@
     <!-- Speaker Button -->
     <ImageView
         android:id="@+id/button_speaker"
-        style="@style/CallButton.ActionButton"
+        style="@style/Call.Button.Action"
         app:layout_constraintBottom_toTopOf="@id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/button_keypad"
@@ -133,7 +133,7 @@
     <!-- Keypad Button -->
     <ImageView
         android:id="@+id/button_keypad"
-        style="@style/CallButton.ActionButton"
+        style="@style/Call.Button.Action"
         app:layout_constraintBottom_toTopOf="@id/guide_bottom"
         app:layout_constraintEnd_toStartOf="@id/button_speaker"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -144,7 +144,7 @@
     <!-- Add Call Button -->
     <ImageView
         android:id="@+id/button_add_call"
-        style="@style/CallButton.ActionButton"
+        style="@style/Call.Button.Action"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
         app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +161,7 @@
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
-        style="@style/CallButton.BottomButton"
+        style="@style/Call.Button.Bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_call_black_24dp"
@@ -173,7 +173,7 @@
     <!-- Reject Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/reject_btn"
-        style="@style/CallButton.BottomButton"
+        style="@style/Call.Button.Bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_call_end_black_24dp"

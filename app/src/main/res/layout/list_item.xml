@@ -30,18 +30,18 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/item_image"
-        style="@style/ListItemImage.Image"
+        style="@style/ListItem.Image.Image"
         android:layout_marginStart="10dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/item_big_text"
         app:layout_constraintStart_toEndOf="@id/item_header_included"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ListItemImage.Image" />
+        app:shapeAppearanceOverlay="@style/ListItem.Image.Image" />
 
     <TextView
         android:id="@+id/item_big_text"
-        style="@style/ListItemText.Big"
+        style="@style/ListItem.Text.Big"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -53,7 +53,7 @@
 
     <TextView
         android:id="@+id/item_small_text"
-        style="@style/ListItemText.Small"
+        style="@style/ListItem.Text.Small"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
