@@ -17,6 +17,8 @@ import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Date;
 
+import timber.log.Timber;
+
 public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH> {
 
     private OnRecentItemClickListener mOnRecentItemClickListener;

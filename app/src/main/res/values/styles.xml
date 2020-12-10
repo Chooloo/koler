@@ -31,8 +31,7 @@
 
     <style name="ListItem.Text.Big">
         <item name="android:textAlignment">textStart</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
-        </item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Simta Kumta</item>
@@ -49,25 +48,12 @@
         <item name="android:textColor">@color/grey_500</item>
     </style>
 
-    <style name="ListItem.Image" />
-
-    <style name="ListItem.Image.Placeholder">
-        <item name="android:layout_width">@dimen/list_item_image_placeholder_size</item>
-        <item name="android:layout_height">@dimen/list_item_image_placeholder_size</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:tint">@color/image_placeholder_background</item>
-        <item name="android:visibility">gone</item>
-        <item name="android:scaleType">fitCenter</item>
-        <item name="srcCompat">@drawable/ic_account_circle_black_24dp</item>
-    </style>
-
-    <style name="ListItem.Image.Image">
+    <style name="ListItem.Image">
         <item name="android:layout_width">@dimen/list_item_image_size</item>
         <item name="android:layout_height">@dimen/list_item_image_size</item>
         <item name="android:src">@drawable/ic_account_circle_black_24dp</item>
         <item name="civ_border_width">0dp</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="android:layout_margin">@dimen/list_item_big_text_margin</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>

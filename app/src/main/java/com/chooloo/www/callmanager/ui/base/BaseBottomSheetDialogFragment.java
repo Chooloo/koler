@@ -2,9 +2,7 @@ package com.chooloo.www.callmanager.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +38,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        mRequiredPermissions = onGetPermissions();
+        mRequiredPermissions = getPermissions();
         mViewModelProvider = new ViewModelProvider(mActivity);
         setUp();
     }
@@ -58,7 +56,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     }
 
     @Override
-    public String[] onGetPermissions() {
+    public String[] getPermissions() {
         return new String[]{};
     }
 

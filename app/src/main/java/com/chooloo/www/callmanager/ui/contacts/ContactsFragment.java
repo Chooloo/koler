@@ -48,7 +48,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public ContactsAdapter onGetAdapter() {
+    public ContactsAdapter getAdapter() {
         ContactsAdapter contactsAdapter = new ContactsAdapter<ListItemHolder>(mActivity);
         contactsAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
             @Override
@@ -65,7 +65,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public String[] onGetPermissions() {
+    public String[] getPermissions() {
         return REQUIRED_PERMISSIONS;
     }
 

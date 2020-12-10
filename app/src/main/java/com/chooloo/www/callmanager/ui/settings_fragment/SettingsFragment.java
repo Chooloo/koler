@@ -75,7 +75,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     @Override
-    public String[] onGetPermissions() {
+    public String[] getPermissions() {
         return new String[0];
     }
 

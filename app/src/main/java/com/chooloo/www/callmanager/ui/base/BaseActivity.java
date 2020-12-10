@@ -11,15 +11,12 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
 
 import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.R;
 
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
@@ -36,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         super.onCreate(savedInstanceState);
         Utilities.setUpLocale(this);
         mPreferences = PreferencesManager.getInstance(this);
-        mRequiredPermissions = onGetPermissions();
+        mRequiredPermissions = getPermissions();
         mViewModelProvider = new ViewModelProvider(this);
         setContentView(getContentView());
         ButterKnife.bind(this);
@@ -44,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
     }
 
     @Override
-    public String[] onGetPermissions() {
+    public String[] getPermissions() {
         return new String[]{};
     }
 

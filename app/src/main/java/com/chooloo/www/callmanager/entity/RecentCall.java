@@ -2,43 +2,37 @@ package com.chooloo.www.callmanager.entity;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.format.DateFormat;
 
 import androidx.annotation.IntDef;
-import androidx.annotation.StringDef;
 
 import com.chooloo.www.callmanager.util.ContactUtils;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 import java.util.Date;
 
-import timber.log.Timber;
-
-import static android.provider.CallLog.Calls.*;
+import static android.provider.CallLog.Calls.INCOMING_TYPE;
+import static android.provider.CallLog.Calls.MISSED_TYPE;
+import static android.provider.CallLog.Calls.NUMBER;
+import static android.provider.CallLog.Calls.OUTGOING_TYPE;
+import static android.provider.CallLog.Calls.REJECTED_TYPE;
+import static android.provider.CallLog.Calls.VOICEMAIL_TYPE;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_DATE;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_DURATION;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_ID;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_NUMBER;
 import static com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.COLUMN_TYPE;
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.LOCAL_VARIABLE;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.CLASS;
 
 public class RecentCall {
 
-    // Attributes
-    private Context mContext;
     private long callId;
+    private int count;
+    private final int callType;
+    private final Date callDate;
     private final String callerName;
     private final String number;
-    private final int callType;
     private final String callDuration;
-    private final Date callDate;
-    private int count;
 
     public static final int TYPE_OUTGOING = OUTGOING_TYPE;
     public static final int TYPE_INCOMING = INCOMING_TYPE;
@@ -60,7 +54,6 @@ public class RecentCall {
      * @param date     call's date
      */
     public RecentCall(Context context, String number, int type, String duration, Date date) {
-        this.mContext = context;
         this.number = number;
         this.callerName = ContactUtils.getContact(context, number, null).getName();
         this.callType = type;
@@ -69,7 +62,6 @@ public class RecentCall {
     }
 
     public RecentCall(Context context, Cursor cursor) {
-        this.mContext = context;
         this.callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         this.number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
         this.callerName = ContactUtils.getContact(context, this.number, null).getName();
@@ -114,10 +106,9 @@ public class RecentCall {
      * @return String
      */
     public String getCallDateString() {
-        android.text.format.DateFormat dateFormat = new android.text.format.DateFormat();
-        return dateFormat.format("yy ", this.callDate).toString() +
-                new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(dateFormat.format("MM", this.callDate).toString()) - 1] +
-                dateFormat.format(" dd, hh:mm", this.callDate).toString();
+        return DateFormat.format("yy ", this.callDate).toString() +
+                new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(DateFormat.format("MM", this.callDate).toString()) - 1] +
+                DateFormat.format(" dd, hh:mm", this.callDate).toString();
     }
 
     /**

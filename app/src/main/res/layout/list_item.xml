@@ -25,29 +25,29 @@
     </LinearLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/item_image"
-        style="@style/ListItem.Image.Image"
+        android:id="@+id/list_item_image"
+        style="@style/ListItem.Image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/item_header_included"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ListItem.Image.Image" />
+        app:shapeAppearanceOverlay="@style/ListItem.Image" />
 
     <TextView
-        android:id="@+id/item_big_text"
+        android:id="@+id/list_item_big_text"
         style="@style/ListItem.Text.Big"
-        app:layout_constraintBottom_toTopOf="@id/item_small_text"
-        app:layout_constraintStart_toEndOf="@+id/item_image"
+        app:layout_constraintBottom_toTopOf="@id/list_item_small_text"
+        app:layout_constraintStart_toEndOf="@+id/list_item_image"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/item_small_text"
+        android:id="@+id/list_item_small_text"
         style="@style/ListItem.Text.Small"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/item_big_text"
-        app:layout_constraintStart_toStartOf="@+id/item_big_text"
-        app:layout_constraintTop_toBottomOf="@+id/item_big_text"
+        app:layout_constraintEnd_toEndOf="@id/list_item_big_text"
+        app:layout_constraintStart_toStartOf="@+id/list_item_big_text"
+        app:layout_constraintTop_toBottomOf="@+id/list_item_big_text"
         app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

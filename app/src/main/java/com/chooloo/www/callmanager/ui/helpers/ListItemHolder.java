@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.ui.helpers;
 
-import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,8 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
@@ -24,9 +21,9 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
 
     private OnItemClickListener mOnItemClickListener;
 
-    @BindView(R.id.item_image) ImageView mPhoto;
-    @BindView(R.id.item_big_text) TextView mBigText;
-    @BindView(R.id.item_small_text) TextView mSmallText;
+    @BindView(R.id.list_item_image) ImageView mPhoto;
+    @BindView(R.id.list_item_big_text) TextView mBigText;
+    @BindView(R.id.list_item_small_text) TextView mSmallText;
     @BindView(R.id.item_header) TextView mHeader;
 
     /**

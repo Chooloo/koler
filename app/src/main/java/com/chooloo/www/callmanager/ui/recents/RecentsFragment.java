@@ -24,11 +24,14 @@ import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
+import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+
+import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
@@ -58,8 +61,14 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
-    public RecentsAdapter onGetAdapter() {
-        RecentsAdapter recentsAdapter = new RecentsAdapter<>(mActivity);
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
+
+    @Override
+    public RecentsAdapter<ListItemHolder> getAdapter() {
+        RecentsAdapter<ListItemHolder> recentsAdapter = new RecentsAdapter<>(mActivity);
         recentsAdapter.setOnRecentItemClickListener(new RecentsAdapter.OnRecentItemClickListener() {
             @Override
             public void onRecentItemClick(RecentCall recentCall) {
@@ -75,14 +84,8 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
-    public String[] onGetPermissions() {
+    public String[] getPermissions() {
         return REQUIRED_PERMISSIONS;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
     }
 
     @Override
@@ -97,6 +100,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
 
     @Override
     public Loader<Cursor> getLoader(Bundle args) {
+        Timber.d("Getting recents loader");
         String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
         String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
         return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
@@ -212,6 +216,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     public void load(@Nullable String phoneNumber, @Nullable String contactName) {
+        Timber.d("Loading recents with phoneNumber: " + phoneNumber + " contactName: " + contactName);
         Bundle args = new Bundle();
         args.putString(ARG_PHONE_NUMBER, phoneNumber);
         args.putString(ARG_CONTACT_NAME, contactName);

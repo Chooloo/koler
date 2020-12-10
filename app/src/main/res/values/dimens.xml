@@ -26,11 +26,10 @@
     <!-- list item -->
     <dimen name="list_item_height">60dp</dimen>
     <dimen name="list_item_top_bottom_padding">6dp</dimen>
-    <dimen name="list_item_image_size">45dp</dimen>
-    <dimen name="list_item_image_placeholder_size">47dp</dimen>
-    <dimen name="list_item_padding">8dp</dimen>
+    <dimen name="list_item_image_size">50dp</dimen>
+    <dimen name="list_item_padding">10dp</dimen>
     <dimen name="list_item_small_text_top_margin">4dp</dimen>
-    <dimen name="list_item_big_text_margin">10dp</dimen>
+    <dimen name="list_item_big_text_margin">15dp</dimen>
     <dimen name="header_width">30dp</dimen>
 
     <!-- fast scroller -->

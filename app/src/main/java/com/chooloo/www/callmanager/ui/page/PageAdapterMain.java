@@ -36,7 +36,7 @@ public class PageAdapterMain extends FragmentStateAdapter {
             case 0:
                 return PageRecents.newInstance();
             case 1:
-                return PageRecents.newInstance();
+                return PageContacts.newInstance();
             default:
                 return PageContacts.newInstance();
         }

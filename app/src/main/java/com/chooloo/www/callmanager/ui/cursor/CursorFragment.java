@@ -74,7 +74,7 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     @Override
     public void setUp() {
-        mAdapter = onGetAdapter();
+        mAdapter = getAdapter();
 
         mPresenter = new CursorPresenter<>();
         mPresenter.onAttach(this, getLifecycle());
@@ -136,5 +136,5 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         mOnLoadFinishedListener = onLoadFinishedListener;
     }
 
-    public abstract A onGetAdapter();
+    public abstract A getAdapter();
 }
