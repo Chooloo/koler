@@ -17,6 +17,13 @@
     <!-- list item -->
     <style name="ListItem" />
 
+    <style name="ListItem.Layout">
+        <item name="android:padding">@dimen/list_item_padding</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
     <style name="ListItem.Text">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
@@ -24,22 +31,25 @@
 
     <style name="ListItem.Text.Big">
         <item name="android:textAlignment">textStart</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Simta Kumta</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">@dimen/list_item_big_text_margin</item>
     </style>
 
     <style name="ListItem.Text.Small">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_margin">@dimen/list_item_small_text_top_margin</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
         <item name="android:text">0523839832</item>
         <item name="android:textColor">@color/grey_500</item>
     </style>
 
     <style name="ListItem.Image" />
-
-    <style name="ListItem.Image.Layout">
-        <item name="android:layout_width">50dp</item>
-        <item name="android:layout_height">50dp</item>
-    </style>
 
     <style name="ListItem.Image.Placeholder">
         <item name="android:layout_width">@dimen/list_item_image_placeholder_size</item>
@@ -56,6 +66,8 @@
         <item name="android:layout_height">@dimen/list_item_image_size</item>
         <item name="android:src">@drawable/ic_account_circle_black_24dp</item>
         <item name="civ_border_width">0dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:layout_margin">@dimen/list_item_big_text_margin</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>

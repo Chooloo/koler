@@ -17,7 +17,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
-import com.chooloo.www.callmanager.ui.page.PageAdapter;
+import com.chooloo.www.callmanager.ui.page.PageAdapterMain;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout;
@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         PermissionUtils.checkDefaultDialer(this); // ask default dialer
 
         // view pager
-        mViewPager.setAdapter(new PageAdapter(this));
+        mViewPager.setAdapter(new PageAdapterMain(this));
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {

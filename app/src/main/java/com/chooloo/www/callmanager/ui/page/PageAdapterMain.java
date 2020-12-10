@@ -18,9 +18,9 @@ import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
-public class PageAdapter extends FragmentStateAdapter {
+public class PageAdapterMain extends FragmentStateAdapter {
 
-    public PageAdapter(FragmentActivity fragmentActivity) {
+    public PageAdapterMain(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -36,7 +36,7 @@ public class PageAdapter extends FragmentStateAdapter {
             case 0:
                 return PageRecents.newInstance();
             case 1:
-                return PageContacts.newInstance();
+                return PageRecents.newInstance();
             default:
                 return PageContacts.newInstance();
         }

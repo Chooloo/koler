@@ -21,8 +21,7 @@
         app:contentInsetEnd="0dp"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_scrollFlags="scroll|snap">
+        app:contentInsetStart="0dp">
 
         <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
             android:id="@+id/view_pager_tab"
