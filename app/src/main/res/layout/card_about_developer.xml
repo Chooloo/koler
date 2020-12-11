@@ -19,24 +19,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:description="@string/support_email"
         app:layout_constraintTop_toBottomOf="@+id/header_icon"
+        app:smallText="@string/support_email"
         app:src="@drawable/ic_email_black_24dp"
-        app:title="@string/about_email_title" />
+        app:bigText="@string/about_email_title" />
 
     <com.chooloo.www.callmanager.ui.widgets.ListItem
         android:id="@+id/about_roei"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:bigText="@string/about_roei_title"
         app:layout_constraintTop_toBottomOf="@+id/about_email"
-        app:src="@drawable/ic_person_black_24dp"
-        app:title="@string/about_roei_title" />
+        app:src="@drawable/ic_person_black_24dp" />
 
     <com.chooloo.www.callmanager.ui.widgets.ListItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:bigText="@string/about_ido_title"
         app:layout_constraintTop_toBottomOf="@+id/about_roei"
-        app:src="@drawable/ic_person_black_24dp"
-        app:title="@string/about_ido_title" />
+        app:src="@drawable/ic_person_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

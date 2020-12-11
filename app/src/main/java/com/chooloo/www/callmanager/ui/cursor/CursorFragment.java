@@ -32,7 +32,7 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
     @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.item_header) protected TextView mAnchoredHeader;
+    @BindView(R.id.list_item_header) protected TextView mAnchoredHeader;
     @BindView(R.id.empty_state) protected View mEmptyState;
     @BindView(R.id.empty_title) protected TextView mEmptyTitle;
 

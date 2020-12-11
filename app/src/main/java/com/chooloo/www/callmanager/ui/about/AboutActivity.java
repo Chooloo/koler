@@ -48,7 +48,7 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mVersionItem.setDescription("" + BuildConfig.VERSION_NAME);
+        mVersionItem.setSmallText("" + BuildConfig.VERSION_NAME);
     }
 
     @OnClick(R.id.about_changelog)

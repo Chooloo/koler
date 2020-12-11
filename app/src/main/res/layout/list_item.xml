@@ -1,34 +1,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/ListItem.Layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/item_header_included"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@id/list_item_header"
+        layout="@layout/list_item_header"
+        android:layout_width="@dimen/list_item_header_width"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/list_item_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- Caller Pic -->
-        <include
-            layout="@layout/list_item_header"
-            android:layout_width="@dimen/header_width"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/list_item_image"
         style="@style/ListItem.Image"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/item_header_included"
+        app:layout_constraintStart_toEndOf="@id/list_item_header"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ListItem.Image" />
 

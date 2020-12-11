@@ -4,8 +4,9 @@
     <attr name="colorAccentLight" format="color" />
 
     <declare-styleable name="ListItem">
-        <attr name="title" format="string" localization="suggested" />
-        <attr name="description" format="string" localization="suggested" />
+        <attr name="bigText" format="string" localization="suggested" />
+        <attr name="smallText" format="string" localization="suggested" />
+        <attr name="header" format="string" />
         <attr name="src" format="reference" />
     </declare-styleable>
 

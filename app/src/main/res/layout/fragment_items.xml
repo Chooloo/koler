@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <include
+        android:id="@+id/list_item_header"
         layout="@layout/list_item_header"
-        android:layout_width="@dimen/header_width"
+        android:layout_width="@dimen/list_item_header_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:visibility="gone"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="35dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

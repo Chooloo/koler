@@ -24,6 +24,18 @@
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="ListItem.Header">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">@dimen/list_item_header_width</item>
+        <item name="android:textSize">@dimen/list_item_header_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="ListItem.Text">
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
@@ -53,6 +65,7 @@
         <item name="android:layout_height">@dimen/list_item_image_size</item>
         <item name="android:src">@drawable/ic_account_circle_black_24dp</item>
         <item name="civ_border_width">0dp</item>
+        <item name="android:layout_marginStart">@dimen/list_item_image_margin</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>

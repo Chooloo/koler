@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
+import com.chooloo.www.callmanager.ui.widgets.ListItem;
 import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 
 import java.util.Arrays;
@@ -37,7 +39,7 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return (VH) new ListItemHolder(LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false));
+        return (VH) new ListItemHolder(new ListItem(mContext));
     }
 
     @Override
@@ -47,33 +49,31 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
+        ListItem listItem = holder.mListItem;
         Contact contact = new Contact(cursor);
         int position = cursor.getPosition();
-
         String name = contact.getName();
         String header = String.valueOf(name.charAt(0));
-        boolean isShowHeader = position == 0 || !(header.equals(getHeader(position - 1)));
 
-        holder.setBigText(name);
-        holder.setHeader(header);
-        holder.showHeader(isShowHeader);
+        listItem.setBigText(name);
+        listItem.setHeaderText(header);
+        listItem.showHeader(position == 0 || !(header.equals(getHeader(position - 1))));
+
         if (contact.getPhotoUri() != null) {
-            holder.setPhotoUri(Uri.parse(contact.getPhotoUri()));
+            listItem.setImageUri(Uri.parse(contact.getPhotoUri()));
         }
-        holder.setOnItemClickListener(new ListItemHolder.OnItemClickListener() {
-            @Override
-            public void onItemClickListener() {
-                if (mOnContactItemClickListener != null) {
-                    mOnContactItemClickListener.onContactItemClick(contact);
-                }
-            }
 
-            @Override
-            public void onItemLongClickListener() {
-                if (mOnContactItemClickListener != null) {
-                    mOnContactItemClickListener.onContactItemLongClick(contact);
-                }
+        listItem.setOnClickListener(view -> {
+            if (mOnContactItemClickListener != null) {
+                mOnContactItemClickListener.onContactItemClick(contact);
             }
+        });
+
+        listItem.setOnLongClickListener(view -> {
+            if (mOnContactItemClickListener != null) {
+                mOnContactItemClickListener.onContactItemLongClick(contact);
+            }
+            return true;
         });
     }
 
@@ -111,7 +111,7 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     public void refreshHeaders() {
         for (ListItemHolder holder : mViewHoldersMap.keySet()) {
             int position = mViewHoldersMap.get(holder);
-            holder.showHeader(position == 0 || !getHeader(position).equals(getHeader(position - 1)));
+            holder.mListItem.showHeader(position == 0 || !getHeader(position).equals(getHeader(position - 1)));
         }
     }
 
