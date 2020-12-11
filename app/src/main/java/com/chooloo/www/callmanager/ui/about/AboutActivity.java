@@ -43,7 +43,7 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
         ButterKnife.bind(this);
 
         mPresenter = new AboutPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);

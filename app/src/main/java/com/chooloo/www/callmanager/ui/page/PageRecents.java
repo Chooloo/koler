@@ -14,6 +14,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class PageRecents extends PageFragment implements PageMvpView {
 
@@ -51,7 +52,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
         super.setUp();
 
         mPresenter = new PagePresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         mRecentsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

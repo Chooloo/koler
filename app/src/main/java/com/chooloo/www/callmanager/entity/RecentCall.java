@@ -30,7 +30,6 @@ public class RecentCall {
     private int count;
     private final int callType;
     private final Date callDate;
-    private final String callerName;
     private final String number;
     private final String callDuration;
 
@@ -45,26 +44,9 @@ public class RecentCall {
     public @interface CallType {
     }
 
-    /**
-     * Constructor
-     *
-     * @param number   caller's number
-     * @param type     call's type (out/in/missed)
-     * @param duration call's duration
-     * @param date     call's date
-     */
-    public RecentCall(Context context, String number, int type, String duration, Date date) {
-        this.number = number;
-        this.callerName = ContactUtils.getContact(context, number, null).getName();
-        this.callType = type;
-        this.callDuration = duration;
-        this.callDate = date;
-    }
-
     public RecentCall(Context context, Cursor cursor) {
         this.callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         this.number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
-        this.callerName = ContactUtils.getContact(context, this.number, null).getName();
         this.callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
         this.callDate = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
         this.callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
@@ -74,10 +56,6 @@ public class RecentCall {
 
     public long getCallId() {
         return this.callId;
-    }
-
-    public String getCallerName() {
-        return this.callerName;
     }
 
     public String getCallerNumber() {

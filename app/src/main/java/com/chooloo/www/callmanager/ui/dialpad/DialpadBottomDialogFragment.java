@@ -139,7 +139,7 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     @Override
     public void setUp() {
         mPresenter = new DialpadPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         mAudioUtils = new AudioUtils();
 

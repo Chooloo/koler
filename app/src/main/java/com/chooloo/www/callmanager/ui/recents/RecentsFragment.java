@@ -20,15 +20,13 @@ import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
-import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
-import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.PhoneNumberUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import timber.log.Timber;
@@ -46,9 +44,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     private RecentsPresenter<RecentsMvpView> mPresenter;
 
     public static RecentsFragment newInstance() {
-        RecentsFragment fragment = new RecentsFragment();
-        fragment.setArguments(new Bundle());
-        return fragment;
+        return RecentsFragment.newInstance(null, null);
     }
 
     public static RecentsFragment newInstance(@Nullable String phoneNumber, @Nullable String contactName) {
@@ -69,17 +65,8 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     @Override
     public RecentsAdapter<ListItemHolder> getAdapter() {
         RecentsAdapter<ListItemHolder> recentsAdapter = new RecentsAdapter<>(mActivity);
-        recentsAdapter.setOnRecentItemClickListener(new RecentsAdapter.OnRecentItemClickListener() {
-            @Override
-            public void onRecentItemClick(RecentCall recentCall) {
-                mPresenter.onRecentItemClick(recentCall);
-            }
-
-            @Override
-            public void onRecentItemLongClick(RecentCall recentCall) {
-                mPresenter.onRecentItemLongClick(recentCall);
-            }
-        });
+        recentsAdapter.setOnRecentItemClickListener(recentCall -> mPresenter.onRecentItemClick(recentCall));
+        recentsAdapter.setOnRecentItemLongClickListener(recentCall -> mPresenter.onRecentItemLongClick(recentCall));
         return recentsAdapter;
     }
 
@@ -89,31 +76,34 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
+    public Loader<Cursor> getLoader(Bundle args) {
+        String contactName = args.getString(ARG_CONTACT_NAME, null);
+        String phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
+        return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
+    }
+
+    @Override
     public void setUp() {
         super.setUp();
 
         mPresenter = new RecentsPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         load();
     }
 
     @Override
-    public Loader<Cursor> getLoader(Bundle args) {
-        Timber.d("Getting recents loader");
-        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
-        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
-        return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
+    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
+        Bundle args = new Bundle();
+        args.putString(ARG_PHONE_NUMBER, phoneNumber);
+        args.putString(ARG_CONTACT_NAME, contactName);
+        setArguments(args);
+        load();
     }
 
     @Override
-    public void showRecentCallPopup(RecentCall recentCall) {
-        Contact contact;
-        if (recentCall.getCallerName() != null) {
-            contact = ContactUtils.getContact(mActivity, recentCall.getCallerNumber(), null);
-        } else {
-            contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber());
-        }
+    public void openRecent(RecentCall recentCall) {
+        Contact contact = ContactUtils.getContact(mActivity, recentCall.getCallerNumber(), null);
 
         // Initiate the dialog
         Dialog contactDialog = new Dialog(mActivity);
@@ -213,14 +203,5 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
 
         contactDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         contactDialog.show();
-    }
-
-    public void load(@Nullable String phoneNumber, @Nullable String contactName) {
-        Timber.d("Loading recents with phoneNumber: " + phoneNumber + " contactName: " + contactName);
-        Bundle args = new Bundle();
-        args.putString(ARG_PHONE_NUMBER, phoneNumber);
-        args.putString(ARG_CONTACT_NAME, contactName);
-        setArguments(args);
-        load();
     }
 }

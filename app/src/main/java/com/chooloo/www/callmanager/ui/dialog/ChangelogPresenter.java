@@ -16,7 +16,7 @@ public class ChangelogPresenter<V extends ChangelogMvpView> implements Changelog
     }
 
     @Override
-    public void onAttach(V mvpView, Lifecycle lifecycle) {
+    public void onAttach(V mvpView) {
         mMvpView = mvpView;
     }
 

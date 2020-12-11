@@ -43,8 +43,8 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mMvpView.setData(data);
         mMvpView.setRefreshing(false);
+        mMvpView.setData(data);
         if (mMvpView.getSize() > 0) {
             onResults();
         } else {

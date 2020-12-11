@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         ButterKnife.bind(this);
 
         mPresenter = new MainPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         Utilities.showNewVersionDialog(this); // check new version
         PermissionUtils.checkDefaultDialer(this); // ask default dialer

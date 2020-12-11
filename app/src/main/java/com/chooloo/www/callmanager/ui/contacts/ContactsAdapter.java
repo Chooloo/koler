@@ -31,9 +31,14 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     private int[] mCounts = new int[0]; // Number of contacts that correspond to each mHeader in {@code mHeaders}.
 
     private OnContactItemClickListener mOnContactItemClickListener;
+    private OnContactItemLongClickListener mOnContactItemLongClickListener;
 
     public ContactsAdapter(Context context) {
         super(context);
+        mOnContactItemClickListener = contact -> {
+        };
+        mOnContactItemLongClickListener = contact -> {
+        };
     }
 
     @NonNull
@@ -63,16 +68,9 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
             listItem.setImageUri(Uri.parse(contact.getPhotoUri()));
         }
 
-        listItem.setOnClickListener(view -> {
-            if (mOnContactItemClickListener != null) {
-                mOnContactItemClickListener.onContactItemClick(contact);
-            }
-        });
-
+        listItem.setOnClickListener(view -> mOnContactItemClickListener.onContactItemClick(contact));
         listItem.setOnLongClickListener(view -> {
-            if (mOnContactItemClickListener != null) {
-                mOnContactItemClickListener.onContactItemLongClick(contact);
-            }
+            mOnContactItemLongClickListener.onContactItemLongClick(contact);
             return true;
         });
     }
@@ -86,11 +84,6 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         int favoriteCount = newCursor.getExtras().getInt(FavoritesAndContactsLoader.EXTRA_FAVORITE_COUNT);
 
         updateHeaders(header == null ? new String[0] : header, counts == null ? new int[0] : counts, favoriteCount);
-    }
-
-    @Override
-    public int getIdColumn() {
-        return mCursor != null ? mCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID) : 1;
     }
 
     private void updateHeaders(String[] headers, int[] counts, int favoriteCount) {
@@ -129,9 +122,15 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
         mOnContactItemClickListener = onContactItemClick;
     }
 
+    public void setOnContactItemLongClickListener(OnContactItemLongClickListener onContactItemLongClickListener) {
+        mOnContactItemLongClickListener = onContactItemLongClickListener;
+    }
+
     public interface OnContactItemClickListener {
         void onContactItemClick(Contact contact);
+    }
 
+    public interface OnContactItemLongClickListener {
         void onContactItemLongClick(Contact contact);
     }
 }

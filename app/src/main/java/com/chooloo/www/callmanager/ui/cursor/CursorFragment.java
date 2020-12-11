@@ -27,7 +27,7 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     private static final int LOADER_ID = 1;
 
     protected A mAdapter;
-    private CursorPresenter<CursorMvpView> mPresenter;
+    private CursorMvpPresenter<CursorMvpView> mPresenter;
     private OnLoadFinishedListener mOnLoadFinishedListener;
 
     @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
@@ -77,12 +77,13 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         mAdapter = getAdapter();
 
         mPresenter = new CursorPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         mRecyclerView.setAdapter(mAdapter);
 
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
 
+        // TODO make this no permission handling better
         if (!hasPermissions()) {
             mPresenter.onNoPermissions();
             mEmptyTitle.setText(getString(R.string.empty_list_no_permissions));
@@ -128,12 +129,12 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         mRecyclerView.addOnScrollListener(onScrollListener);
     }
 
-    public interface OnLoadFinishedListener {
-        void onLoadFinished();
-    }
-
     public void setOnLoadFinishedListener(OnLoadFinishedListener onLoadFinishedListener) {
         mOnLoadFinishedListener = onLoadFinishedListener;
+    }
+
+    public interface OnLoadFinishedListener {
+        void onLoadFinished();
     }
 
     public abstract A getAdapter();

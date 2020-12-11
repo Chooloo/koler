@@ -20,10 +20,10 @@ import butterknife.BindView;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
-public class ContactsFragment extends CursorFragment<ContactsAdapter> implements ContactsMvpView {
+public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHolder>> implements ContactsMvpView {
 
     private static final String[] REQUIRED_PERMISSIONS = {READ_CONTACTS};
     private final static String ARG_PHONE_NUMBER = "phoneNumber";
@@ -48,19 +48,16 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public ContactsAdapter getAdapter() {
-        ContactsAdapter contactsAdapter = new ContactsAdapter<ListItemHolder>(mActivity);
-        contactsAdapter.setOnContactItemClick(new ContactsAdapter.OnContactItemClickListener() {
-            @Override
-            public void onContactItemClick(Contact contact) {
-                mPresenter.onContactItemClick(contact);
-            }
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
 
-            @Override
-            public void onContactItemLongClick(Contact contact) {
-                mPresenter.onContactItemLongClick(contact);
-            }
-        });
+    @Override
+    public ContactsAdapter<ListItemHolder> getAdapter() {
+        ContactsAdapter<ListItemHolder> contactsAdapter = new ContactsAdapter<>(mActivity);
+        contactsAdapter.setOnContactItemClick(contact -> mPresenter.onContactItemClick(contact));
+        contactsAdapter.setOnContactItemLongClickListener(contact -> mPresenter.onContactItemLongClick(contact));
         return contactsAdapter;
     }
 
@@ -70,9 +67,10 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
+    public Loader<Cursor> getLoader(Bundle args) {
+        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
+        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
+        return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         super.setUp();
 
         mPresenter = new ContactsPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         mLayoutManager = new LinearLayoutManager(mActivity) {
             @Override
@@ -122,14 +120,6 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         args.putString(ARG_CONTACT_NAME, contactName);
         setArguments(args);
         load();
-    }
-
-    @Override
-    public Loader<Cursor> getLoader(Bundle args) {
-        String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
-        String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
-        boolean withFavs = (contactName == null || contactName.isEmpty()) && (phoneNumber == null || phoneNumber.isEmpty());
-        return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override

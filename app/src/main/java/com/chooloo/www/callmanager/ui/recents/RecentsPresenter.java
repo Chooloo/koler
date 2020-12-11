@@ -7,7 +7,6 @@ public class RecentsPresenter<V extends RecentsMvpView> extends CursorPresenter<
 
     @Override
     public void onRecentItemClick(RecentCall recentCall) {
-        mMvpView.showRecentCallPopup(recentCall);
     }
 
     @Override

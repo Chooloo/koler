@@ -10,7 +10,7 @@ public interface ChangelogMvpPresenter<V extends ChangelogMvpView> {
 
     Dialog onCreateDialog();
 
-    void onAttach(V mvpView, Lifecycle lifecycle);
+    void onAttach(V mvpView);
 
     void onDetach();
 }

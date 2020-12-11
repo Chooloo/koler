@@ -50,7 +50,7 @@ public class ChangelogDialog extends DialogFragment implements ChangelogMvpView 
     @Override
     public void setUp() {
         mPresenter = new ChangelogPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     @Override
     public void setUp() {
         mPresenter = new SearchPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         mOnFocusChangedListener = isFocused -> {
         };

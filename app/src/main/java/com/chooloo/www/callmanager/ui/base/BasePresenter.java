@@ -11,17 +11,14 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V>, Lifecy
     private static final String TAG = "BasePresenter";
 
     protected V mMvpView;
-    protected Lifecycle mLifecycle;
 
     @Override
-    public void onAttach(V mvpView, Lifecycle lifecycle) {
+    public void onAttach(V mvpView) {
         mMvpView = mvpView;
-        mLifecycle = lifecycle;
     }
 
     @Override
     public void onDetach() {
         mMvpView = null;
-        mLifecycle = null;
     }
 }

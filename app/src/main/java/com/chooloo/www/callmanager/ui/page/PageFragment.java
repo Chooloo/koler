@@ -8,15 +8,16 @@ import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
 
 public abstract class PageFragment extends BaseFragment implements PageMvpView {
 
-    protected static final int PAGE_STATE_IDLE = 0;
-    protected static final int PAGE_STATE_ACTIVE = 1;
+    private PageMvpPresenter<PageMvpView> mPresenter;
 
-    protected int mPageState;
     protected SharedDialViewModel mDialViewModel;
     protected SharedSearchViewModel mSearchViewModel;
 
     @Override
     public void setUp() {
+        mPresenter = new PagePresenter<>();
+        mPresenter.onAttach(this);
+
         mDialViewModel = ViewModelProviders.of(mActivity).get(SharedDialViewModel.class);
         mDialViewModel.getNumber().observe(this, this::onDialNumberChanged);
 
@@ -25,19 +26,19 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
     }
 
     @Override
-    public void setPageState(int pageState) {
-        mPageState = pageState;
-        switch (pageState) {
-            case PAGE_STATE_IDLE:
-                mDialViewModel.setIsFocused(false);
-                break;
-            case PAGE_STATE_ACTIVE:
-                mDialViewModel.setIsFocused(true);
-                mSearchViewModel.setIsFocused(false);
-                break;
-            default:
-                mDialViewModel.setIsFocused(false);
-        }
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDetach();
+    }
+
+    @Override
+    public void setDialpadFocused(boolean isFocused) {
+        mDialViewModel.setIsFocused(isFocused);
+    }
+
+    @Override
+    public void setSearchBarFocused(boolean isFocused) {
+        mSearchViewModel.setIsFocused(isFocused);
     }
 
     protected abstract void onSearchTextChanged(String text);

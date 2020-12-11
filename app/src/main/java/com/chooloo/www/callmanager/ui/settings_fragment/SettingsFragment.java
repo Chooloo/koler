@@ -89,7 +89,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     public void setUp() {
         ButterKnife.bind(this, getView());
         mPresenter = new SettingsPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
     }
 
     @Override

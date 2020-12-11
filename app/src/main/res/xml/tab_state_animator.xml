@@ -3,11 +3,11 @@
     <item android:state_selected="true">
         <set>
             <objectAnimator
-                android:duration="60"
+                android:duration="0"
                 android:propertyName="textSize"
                 android:valueTo="10sp" />
             <objectAnimator
-                android:duration="60"
+                android:duration="0"
                 android:propertyName="color"
                 android:valueTo="@color/soft_black" />
         </set>
@@ -15,11 +15,11 @@
     <item>
         <set>
             <objectAnimator
-                android:duration="60"
+                android:duration="0"
                 android:propertyName="textSize"
                 android:valueTo="5sp" />
             <objectAnimator
-                android:duration="60"
+                android:duration="0"
                 android:propertyName="color"
                 android:valueTo="@color/grey_300" />
         </set>

@@ -116,7 +116,7 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         ButterKnife.bind(this);
 
         mPresenter = new ContactPresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         setContactFromIntent();
 

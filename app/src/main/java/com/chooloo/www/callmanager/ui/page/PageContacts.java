@@ -48,7 +48,7 @@ public class PageContacts extends PageFragment implements PageMvpView {
         super.setUp();
 
         mPresenter = new PagePresenter<>();
-        mPresenter.onAttach(this, getLifecycle());
+        mPresenter.onAttach(this);
 
         mContactsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

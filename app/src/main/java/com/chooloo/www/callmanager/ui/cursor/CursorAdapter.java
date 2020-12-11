@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.ui.cursor;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import timber.log.Timber;
 
 public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
@@ -29,19 +32,9 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, int position) {
-        if (mCursor == null) {
-            throw new IllegalStateException("This should only be called after the cursor is valid");
-        } else if (!mCursor.moveToPosition(position)) {
-            throw new IllegalStateException("Couldn't move cursor to position" + position);
-        }
+        mCursor.moveToPosition(position);
         mViewHoldersMap.put(holder, position);
         onBindViewHolder(holder, mCursor);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return -1;
-//        return mCursor != null && mCursor.moveToPosition(position) ? mCursor.getLong(getIdColumn()) : 0;
     }
 
     @Override
@@ -57,7 +50,7 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     protected void setUp() {
         mViewHoldersMap = new ArrayMap<>();
 
-        registerDataSetObserver(new DataSetObserver() {
+        mDataSetObserver = new DataSetObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -69,16 +62,17 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
                 super.onInvalidated();
                 notifyDataSetChanged();
             }
-        });
+        };
+        registerDataSetObserver(mDataSetObserver);
     }
 
     public void setCursor(Cursor newCursor) {
-        if (newCursor == mCursor) return;
-        unregisterDataSetObserver();
-        if (mCursor != null) mCursor.close();
-        mCursor = newCursor;
-        setUp();
-        notifyDataSetChanged();
+        if (newCursor != mCursor) {
+            unregisterDataSetObserver();
+            if (mCursor != null) mCursor.close();
+            mCursor = newCursor;
+            setUp();
+        }
     }
 
     public Cursor getCursor() {
@@ -86,20 +80,20 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     }
 
     public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-        mDataSetObserver = dataSetObserver;
-        if (mCursor != null) mCursor.registerDataSetObserver(mDataSetObserver);
+        if (mCursor != null) {
+            mCursor.registerDataSetObserver(dataSetObserver);
+        }
     }
 
     public void unregisterDataSetObserver() {
         if (mCursor != null && mDataSetObserver != null) {
-            mCursor.unregisterDataSetObserver(mDataSetObserver);
+            try {
+                mCursor.unregisterDataSetObserver(mDataSetObserver);
+            } catch (IllegalStateException e) {
+                Timber.e("CursorAdapter was not registered when trying to unregister");
+            }
         }
     }
 
-    public int getIdColumn() {
-        return -1;
-    }
-
-    public void onBindViewHolder(@NonNull VH viewHolder, Cursor cursor) {
-    }
+    public abstract void onBindViewHolder(@NonNull VH viewHolder, Cursor cursor);
 }
