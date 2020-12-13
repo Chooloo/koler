@@ -73,6 +73,7 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
             mCursor = newCursor;
             setUp();
         }
+        notifyDataSetChanged();
     }
 
     public Cursor getCursor() {

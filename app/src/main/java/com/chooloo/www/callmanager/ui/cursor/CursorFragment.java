@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 
 import butterknife.BindView;
+import timber.log.Timber;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -45,6 +47,7 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mPresenter.onRequestPermissionsResult(permissions);
     }
 
     @NonNull

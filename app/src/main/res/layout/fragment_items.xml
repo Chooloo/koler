@@ -10,8 +10,8 @@
         layout="@layout/list_item_header"
         android:layout_width="@dimen/list_item_header_width"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="33dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +42,6 @@
         android:id="@+id/fast_scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/default_spacing_padding"
         android:layout_marginBottom="@dimen/fab_and_bottom_padding"
         android:clipChildren="false"
         android:visibility="visible"

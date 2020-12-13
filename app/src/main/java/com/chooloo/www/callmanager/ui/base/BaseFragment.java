@@ -8,16 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.jetbrains.annotations.NotNull;
 
 import butterknife.ButterKnife;
+import kotlin.TypeCastException;
 
 public abstract class BaseFragment extends Fragment implements MvpView {
 
     private static final int PERMISSION_RC = 10;
     protected String[] mRequiredPermissions;
     protected BaseActivity mActivity;
+    protected ViewModelProvider mViewModelProvider;
 
     @Override
     public void onAttach(@NotNull Context context) {
@@ -25,6 +28,9 @@ public abstract class BaseFragment extends Fragment implements MvpView {
         if (context instanceof BaseActivity) {
             this.mActivity = (BaseActivity) context;
             mActivity.onAttachFragment(this);
+            mViewModelProvider = mActivity.mViewModelProvider;
+        } else {
+            throw new TypeCastException("Fragment not a child of base activity");
         }
     }
 
