@@ -7,7 +7,7 @@
     android:id="@+id/dialpad_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bottom_sheet_dialog_background"
+    android:background="@drawable/bubble_background"
     tools:layout_gravity="bottom">
 
     <View

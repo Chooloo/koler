@@ -21,9 +21,8 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     private boolean isShown = false;
 
     protected String[] mRequiredPermissions;
-    protected ViewModelProvider mViewModelProvider;
-    protected BaseActivity mActivity;
 
+    protected BaseActivity mActivity;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -39,7 +38,6 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mRequiredPermissions = getPermissions();
-        mViewModelProvider = new ViewModelProvider(mActivity);
         setUp();
     }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.LayoutRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,6 +18,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
+import com.chooloo.www.callmanager.ui.menu.MenuFragment;
 import com.chooloo.www.callmanager.ui.page.PageAdapterMain;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
@@ -47,6 +49,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     DialpadBottomDialogFragment mDialpadFragment;
     SearchFragment mSearchBarFragment;
+    MenuFragment mMenuFragment;
 
     @BindView(R.id.main_toolbar) Toolbar mToolbar;
     @BindView(R.id.view_pager_tab) TabLayout mTabLayout;
@@ -139,6 +142,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
+
+        // bottom sheet dialog menu
+        mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

@@ -145,11 +145,9 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
 
         setIsDialer(getArgsSafely().getBoolean(ARG_DIALER));
 
-        mViewModelProvider = new ViewModelProvider(this);
+        mSharedDialViewModel = new ViewModelProvider(mActivity).get(SharedDialViewModel.class);
 
-        mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
-
-        SharedIntentViewModel sharedIntentViewModel = mViewModelProvider.get(SharedIntentViewModel.class);
+        SharedIntentViewModel sharedIntentViewModel = new ViewModelProvider(mActivity).get(SharedIntentViewModel.class);
         sharedIntentViewModel.getData().observe(getViewLifecycleOwner(), data -> mPresenter.onIntentDataChanged(data));
 
         mDigits.addTextChangedListener(new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry()));

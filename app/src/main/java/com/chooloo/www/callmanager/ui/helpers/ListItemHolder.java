@@ -7,7 +7,7 @@ import com.chooloo.www.callmanager.ui.widgets.ListItem;
 
 public class ListItemHolder extends RecyclerView.ViewHolder {
 
-    public ListItem mListItem;
+    private ListItem mListItem;
 
     /**
      * Constructor
@@ -17,5 +17,9 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
     public ListItemHolder(@NonNull ListItem listItem) {
         super(listItem);
         this.mListItem = listItem;
+    }
+
+    public ListItem getListItem() {
+        return mListItem;
     }
 }
