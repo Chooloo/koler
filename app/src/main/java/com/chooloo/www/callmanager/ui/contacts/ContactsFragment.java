@@ -164,8 +164,8 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
         } else {
             boolean headerIsAnchored = mAdapter.getHeader(firstVisibleItem).equals(anchoredHeaderString);
             mAnchoredHeader.setVisibility(headerIsAnchored ? VISIBLE : INVISIBLE);
-            getContactHolder(firstVisibleItem).mListItem.showHeader(!headerIsAnchored);
-            getContactHolder(firstCompletelyVisible).mListItem.showHeader(!headerIsAnchored);
+            getContactHolder(firstVisibleItem).getListItem().showHeader(!headerIsAnchored);
+            getContactHolder(firstCompletelyVisible).getListItem().showHeader(!headerIsAnchored);
             if (headerIsAnchored) {
                 mAnchoredHeader.setText(anchoredHeaderString);
             }

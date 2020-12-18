@@ -3,18 +3,23 @@ package com.chooloo.www.callmanager.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
-import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewbinding.ViewBinding;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
@@ -43,35 +48,17 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     private MainMvpPresenter<MainMvpView> mPresenter;
 
-    Menu mMenu;
+    private SharedDialViewModel mSharedDialViewModel;
+    private DialpadBottomDialogFragment mDialpadFragment;
+    private SearchFragment mSearchBarFragment;
+    private MenuFragment mMenuFragment;
+    private ActivityMainBinding binding;
 
-    SharedDialViewModel mSharedDialViewModel;
-
-    DialpadBottomDialogFragment mDialpadFragment;
-    SearchFragment mSearchBarFragment;
-    MenuFragment mMenuFragment;
-
-    @BindView(R.id.main_toolbar) Toolbar mToolbar;
-    @BindView(R.id.view_pager_tab) TabLayout mTabLayout;
-    @BindView(R.id.view_pager) ViewPager2 mViewPager;
-    @BindView(R.id.dialpad_fab_button) FloatingActionButton mDialpadFab;
-
+    @Nullable
     @Override
-    public int getContentView() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_actions, menu);
-        mMenu = menu;
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        mPresenter.onOptionsItemSelected(item);
-        return super.onOptionsItemSelected(item);
+    public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        return binding.getRoot();
     }
 
     @Override
@@ -109,6 +96,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mPresenter.onDialpadFabClick();
     }
 
+    @OnClick(R.id.main_menu_button)
+    public void onMenuClick(View view) {
+        mPresenter.onMenuClick();
+    }
+
     @Override
     public void setUp() {
         ButterKnife.bind(this);
@@ -120,14 +112,14 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         PermissionUtils.checkDefaultDialer(this); // ask default dialer
 
         // view pager
-        mViewPager.setAdapter(new PageAdapterMain(this));
-        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.setAdapter(new PageAdapterMain(this));
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 mPresenter.onPageSelected(position);
             }
         });
-        mTabLayout.setViewPager(mViewPager);
+        binding.appbarMain.viewPagerTab.setViewPager(binding.viewPager);
 
         // search bar fragment
         mSearchBarFragment = new SearchFragment();
@@ -145,8 +137,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         // bottom sheet dialog menu
         mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
+        mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(binding.appbarMain.mainToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         BiometricUtils.showBiometricPrompt(this);
@@ -156,7 +149,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public int getCurrentPosition() {
-        return mViewPager.getCurrentItem();
+        return binding.viewPager.getCurrentItem();
     }
 
     @Override
@@ -172,7 +165,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     public void showDialpad(boolean isShow) {
         if (isShow) {
             mDialpadFragment.show(getSupportFragmentManager(), DialpadBottomDialogFragment.TAG);
-        } else if (mDialpadFragment.isShown()) {
+        } else if (mDialpadFragment.ismIsShown()) {
             mDialpadFragment.dismiss();
         }
     }
@@ -212,7 +205,17 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
-    public void showDialpadFab(boolean isShow) {
-        showView(mDialpadFab, isShow);
+    public void showMenu(boolean isShow) {
+        if (isShow && !mMenuFragment.ismIsShown()) {
+            mMenuFragment.show(getSupportFragmentManager(), "main_menu_fragment");
+        } else if (!isShow && mMenuFragment.ismIsShown()) {
+            mMenuFragment.dismiss();
+        }
     }
+
+    @Override
+    public void showDialpadFab(boolean isShow) {
+        showView(binding.dialpadFabButton, isShow);
+    }
+
 }

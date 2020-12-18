@@ -1,20 +1,30 @@
 package com.chooloo.www.callmanager.ui.base;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewbinding.ViewBinding;
 
+import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
+
+import java.util.zip.Inflater;
 
 import butterknife.ButterKnife;
 
@@ -35,8 +45,11 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         mPreferences = PreferencesManager.getInstance(this);
         mRequiredPermissions = getPermissions();
         mViewModelProvider = new ViewModelProvider(this);
-        setContentView(getContentView());
-        ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         setUp();
     }
 
@@ -98,7 +111,4 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         Resources.Theme theme = super.getTheme();
         theme.applyStyle(type, true);
     }
-
-    public abstract @LayoutRes
-    int getContentView();
 }

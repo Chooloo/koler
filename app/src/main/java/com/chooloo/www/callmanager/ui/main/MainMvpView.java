@@ -23,5 +23,7 @@ public interface MainMvpView extends MvpView {
 
     void goToAbout();
 
+    void showMenu(boolean isShow);
+
     void showDialpadFab(boolean isShow);
 }

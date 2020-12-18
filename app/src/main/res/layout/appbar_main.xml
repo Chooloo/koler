@@ -1,5 +1,6 @@
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appbar_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,40 +24,47 @@
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp">
 
-        <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
-            android:id="@+id/view_pager_tab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="10dp"
-            app:layout_scrollFlags="scroll|snap|enterAlways"
-            app:stl_clickable="true"
-            app:stl_defaultTabTextAllCaps="false"
-            app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-            app:stl_defaultTabTextHorizontalPadding="8dp"
-            app:stl_defaultTabTextMinWidth="0dp"
-            app:stl_defaultTabTextSize="30sp"
-            app:stl_dividerThickness="0dp"
-            app:stl_drawDecorationAfterTab="true"
-            app:stl_indicatorAlwaysInCenter="false"
-            app:stl_indicatorColor="@android:color/transparent"
-            app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
-            app:stl_indicatorGravity="center"
-            app:stl_indicatorInFront="true"
-            app:stl_indicatorInterpolation="smart"
-            app:stl_indicatorThickness="@dimen/smart_tab_height"
-            app:stl_indicatorWidth="auto"
-            app:stl_indicatorWithoutPadding="false"
-            app:stl_overlineColor="#4D000000"
-            app:stl_overlineThickness="0dp"
-            app:stl_titleOffset="24dp"
-            app:stl_underlineColor="#4D000000"
-            app:stl_underlineThickness="0dp" />
-        <!--                <com.google.android.m   aterial.tabs.TabLayout-->
-        <!--                    android:id="@+id/tab_layout"-->
-        <!--                    style="@style/TabLayout.Layout"-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
+                android:id="@+id/view_pager_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                app:layout_scrollFlags="scroll|snap|enterAlways"
+                app:stl_clickable="true"
+                app:stl_defaultTabTextAllCaps="false"
+                app:stl_defaultTabTextColor="@drawable/tab_color_selector"
+                app:stl_defaultTabTextHorizontalPadding="8dp"
+                app:stl_defaultTabTextMinWidth="0dp"
+                app:stl_defaultTabTextSize="30sp"
+                app:stl_dividerThickness="0dp"
+                app:stl_drawDecorationAfterTab="true"
+                app:stl_indicatorAlwaysInCenter="false"
+                app:stl_indicatorColor="@android:color/transparent"
+                app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
+                app:stl_indicatorGravity="center"
+                app:stl_indicatorInFront="true"
+                app:stl_indicatorInterpolation="smart"
+                app:stl_indicatorThickness="@dimen/smart_tab_height"
+                app:stl_indicatorWidth="auto"
+                app:stl_indicatorWithoutPadding="false"
+                app:stl_overlineColor="#4D000000"
+                app:stl_overlineThickness="0dp"
+                app:stl_titleOffset="24dp"
+                app:stl_underlineColor="#4D000000"
+                app:stl_underlineThickness="0dp" />
+
+            <ImageView
+                android:id="@+id/main_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_more_vert_black_24dp" />
+        </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <!-- search fragment -->

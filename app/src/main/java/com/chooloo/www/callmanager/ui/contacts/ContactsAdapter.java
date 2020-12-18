@@ -54,7 +54,7 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
-        ListItem listItem = holder.mListItem;
+        ListItem listItem = holder.getListItem();
         Contact contact = new Contact(cursor);
         int position = cursor.getPosition();
         String name = contact.getName();
@@ -104,7 +104,7 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     public void refreshHeaders() {
         for (ListItemHolder holder : mViewHoldersMap.keySet()) {
             int position = mViewHoldersMap.get(holder);
-            holder.mListItem.showHeader(position == 0 || !getHeader(position).equals(getHeader(position - 1)));
+            holder.getListItem().showHeader(position == 0 || !getHeader(position).equals(getHeader(position - 1)));
         }
     }
 

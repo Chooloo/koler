@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -18,7 +17,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     private static final int PERMISSION_RC = 10;
 
-    private boolean isShown = false;
+    private boolean mIsShown = false;
 
     protected String[] mRequiredPermissions;
 
@@ -43,14 +42,18 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     @Override
     public void show(@NonNull FragmentManager manager, @Nullable String tag) {
-        super.show(manager, tag);
-        this.isShown = true;
+        if (!mIsShown) {
+            super.show(manager, tag);
+            this.mIsShown = true;
+        }
     }
 
     @Override
     public void dismiss() {
-        super.dismiss();
-        this.isShown = false;
+        if (mIsShown) {
+            dismiss();
+            this.mIsShown = false;
+        }
     }
 
     @Override
@@ -114,7 +117,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         return args;
     }
 
-    public boolean isShown() {
-        return isShown;
+    public boolean ismIsShown() {
+        return mIsShown;
     }
 }

@@ -44,7 +44,7 @@ public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH>
 
     @Override
     public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
-        ListItem listItem = holder.mListItem;
+        ListItem listItem = holder.getListItem();
         RecentCall recentCall = new RecentCall(mContext, cursor);
 
         String name = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null).getName();

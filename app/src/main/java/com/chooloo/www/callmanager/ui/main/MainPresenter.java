@@ -92,6 +92,11 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     }
 
     @Override
+    public void onMenuClick() {
+        mMvpView.showMenu(true);
+    }
+
+    @Override
     public void handleViewIntent(Intent intent) {
         String intentText = "";
 
