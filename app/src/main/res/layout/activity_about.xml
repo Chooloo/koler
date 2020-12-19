@@ -33,6 +33,7 @@
             app:layout_constraintTop_toBottomOf="@+id/card_general" />
 
         <include
+            android:id="@+id/card_support"
             layout="@layout/card_about_support"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

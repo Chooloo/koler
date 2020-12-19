@@ -24,15 +24,11 @@ public class ListItem extends ConstraintLayout {
 
     public ListItem(Context context) {
         super(context);
-        binding = ListItemBinding.inflate(LayoutInflater.from(context));
-        
-        setUp();
+        setUp(context);
     }
 
     public ListItem(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.list_item, this, true);
-
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ListItem, 0, 0);
         setBigText(a.getString(R.styleable.ListItem_bigText));
         setSmallText(a.getString(R.styleable.ListItem_smallText));
@@ -40,12 +36,11 @@ public class ListItem extends ConstraintLayout {
         setImageDrawable(a.getDrawable(R.styleable.ListItem_src));
         a.recycle();
 
-        setUp();
+        setUp(context);
     }
 
-    private void setUp() {
-        ButterKnife.bind(this);
-
+    private void setUp(Context context) {
+        binding = ListItemBinding.inflate(LayoutInflater.from(context));
         setClickable(true);
         setFocusable(true);
     }

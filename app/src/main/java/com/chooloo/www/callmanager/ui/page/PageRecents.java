@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.FragmentPageBinding;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 
 import butterknife.ButterKnife;
@@ -22,6 +23,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
     private PageMvpPresenter<PageMvpView> mPresenter;
 
     private RecentsFragment mRecentsFragment;
+    private FragmentPageBinding binding;
 
     public static PageRecents newInstance() {
         Bundle args = new Bundle();
@@ -33,7 +35,8 @@ public class PageRecents extends PageFragment implements PageMvpView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_page, container, false);
+        binding = FragmentPageBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override

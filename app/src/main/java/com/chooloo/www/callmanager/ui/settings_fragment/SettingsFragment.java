@@ -22,7 +22,6 @@ import com.chooloo.www.callmanager.util.PermissionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
@@ -87,7 +86,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public void setUp() {
-        ButterKnife.bind(this, getView());
         mPresenter = new SettingsPresenter<>();
         mPresenter.onAttach(this);
     }

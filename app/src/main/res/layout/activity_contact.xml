@@ -101,7 +101,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
-            android:id="@+id/included_contact_action_buttons"
+            android:id="@+id/contact_action_buttons"
             layout="@layout/contact_action_buttons"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/included_contact_action_buttons">
+            app:layout_constraintTop_toBottomOf="@id/contact_action_buttons">
 
             <TextView
                 android:id="@+id/recents_section_title"

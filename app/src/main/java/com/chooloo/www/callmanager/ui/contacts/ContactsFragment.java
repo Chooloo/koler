@@ -32,8 +32,6 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
     private ContactsPresenter<ContactsMvpView> mPresenter;
     private LinearLayoutManager mLayoutManager;
 
-    @BindView(R.id.fast_scroller) protected FastScroller mFastScroller;
-
     public static ContactsFragment newInstance() {
         return ContactsFragment.newInstance(null, null);
     }
@@ -45,6 +43,11 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
         args.putString(ARG_CONTACT_NAME, contactNumber);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -85,12 +88,12 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                 super.onLayoutChildren(recycler, state);
                 int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-                mFastScroller.setVisibility(getSize() > itemsShown ? VISIBLE : GONE);
+                binding.fastScroller.setVisibility(getSize() > itemsShown ? VISIBLE : GONE);
             }
         };
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        binding.recyclerView.setLayoutManager(mLayoutManager);
 
-        mFastScroller.setFastScrollerHeaderManager(new FastScroller.FastScrollerHeaderManager() {
+        binding.fastScroller.setFastScrollerHeaderManager(new FastScroller.FastScrollerHeaderManager() {
             @Override
             public String getHeaderString(int position) {
                 return mAdapter.getHeader(position);
@@ -129,7 +132,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
 
     @Override
     public ListItemHolder getContactHolder(int position) {
-        return ((ListItemHolder) mRecyclerView.findViewHolderForAdapterPosition(position));
+        return ((ListItemHolder) binding.recyclerView.findViewHolderForAdapterPosition(position));
     }
 
     @Override
@@ -144,7 +147,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
 
     @Override
     public void updateScroll() {
-        mFastScroller.updateContainerAndScrollBarPosition(mRecyclerView);
+        binding.fastScroller.updateContainerAndScrollBarPosition(binding.recyclerView);
         int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
         int firstCompletelyVisible = mLayoutManager.findFirstCompletelyVisibleItemPosition();
 
@@ -160,20 +163,20 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter<ListItemHol
         // To overcome this, we refresh the headers to ensure they are correct.
         if (firstVisibleItem == firstCompletelyVisible && firstVisibleItem == 0) {
             mAdapter.refreshHeaders();
-            mAnchoredHeader.setVisibility(INVISIBLE);
+            binding.listItemHeader.listItemHeader.setVisibility(INVISIBLE);
         } else {
             boolean headerIsAnchored = mAdapter.getHeader(firstVisibleItem).equals(anchoredHeaderString);
-            mAnchoredHeader.setVisibility(headerIsAnchored ? VISIBLE : INVISIBLE);
+            binding.listItemHeader.listItemHeader.setVisibility(headerIsAnchored ? VISIBLE : INVISIBLE);
             getContactHolder(firstVisibleItem).getListItem().showHeader(!headerIsAnchored);
             getContactHolder(firstCompletelyVisible).getListItem().showHeader(!headerIsAnchored);
             if (headerIsAnchored) {
-                mAnchoredHeader.setText(anchoredHeaderString);
+                binding.listItemHeader.listItemHeader.setText(anchoredHeaderString);
             }
         }
     }
 
     @Override
     public void setupFastScroller() {
-        mFastScroller.setup(mAdapter, mLayoutManager);
+        binding.fastScroller.setup(mAdapter, mLayoutManager);
     }
 }

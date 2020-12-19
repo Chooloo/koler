@@ -3,6 +3,8 @@ package com.chooloo.www.callmanager.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,6 +42,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 
 // TODO implement FAB Coordination
@@ -54,11 +57,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     private MenuFragment mMenuFragment;
     private ActivityMainBinding binding;
 
-    @Nullable
     @Override
-    public View onCreateView(@Nullable View parent, @NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        return binding.getRoot();
+        setContentView(binding.getRoot());
     }
 
     @Override
@@ -91,20 +94,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         return super.dispatchTouchEvent(event);
     }
 
-    @OnClick(R.id.dialpad_fab_button)
-    public void onDialpadFabClick(View view) {
-        mPresenter.onDialpadFabClick();
-    }
-
-    @OnClick(R.id.main_menu_button)
-    public void onMenuClick(View view) {
-        mPresenter.onMenuClick();
-    }
-
     @Override
     public void setUp() {
-        ButterKnife.bind(this);
-
         mPresenter = new MainPresenter<>();
         mPresenter.onAttach(this);
 
@@ -145,6 +136,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         BiometricUtils.showBiometricPrompt(this);
 
         checkIncomingIntent();
+
+        binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
+        binding.appbarMain.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
     }
 
     @Override

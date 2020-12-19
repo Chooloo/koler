@@ -37,7 +37,6 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         mRequiredPermissions = getPermissions();
         setUp();
     }

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.FragmentItemsBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 
 import butterknife.BindView;
@@ -31,17 +32,13 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     protected A mAdapter;
     private CursorMvpPresenter<CursorMvpView> mPresenter;
     private OnLoadFinishedListener mOnLoadFinishedListener;
-
-    @BindView(R.id.recycler_view) protected RecyclerView mRecyclerView;
-    @BindView(R.id.refresh_layout) protected SwipeRefreshLayout mRefreshLayout;
-    @BindView(R.id.list_item_header) protected TextView mAnchoredHeader;
-    @BindView(R.id.empty_state) protected View mEmptyState;
-    @BindView(R.id.empty_title) protected TextView mEmptyTitle;
+    protected FragmentItemsBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_items, container, false);
+        binding = FragmentItemsBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
@@ -82,14 +79,14 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         mPresenter = new CursorPresenter<>();
         mPresenter.onAttach(this);
 
-        mRecyclerView.setAdapter(mAdapter);
+        binding.recyclerView.setAdapter(mAdapter);
 
-        mRefreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
+        binding.refreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
 
         // TODO make this no permission handling better
         if (!hasPermissions()) {
             mPresenter.onNoPermissions();
-            mEmptyTitle.setText(getString(R.string.empty_list_no_permissions));
+            binding.emptyState.emptyTitle.setText(getString(R.string.empty_list_no_permissions));
         }
     }
 
@@ -114,22 +111,22 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     @Override
     public void showEmptyPage(boolean isShow) {
-        mEmptyState.setVisibility(isShow ? VISIBLE : GONE);
-        mRecyclerView.setVisibility(isShow ? GONE : VISIBLE);
+        binding.emptyState.emptyState.setVisibility(isShow ? VISIBLE : GONE);
+        binding.recyclerView.setVisibility(isShow ? GONE : VISIBLE);
     }
 
     @Override
     public void setRefreshing(boolean isRefresh) {
-        if (!isRefresh && mRefreshLayout.isRefreshing()) {
-            mRefreshLayout.setRefreshing(false);
-        } else if (isRefresh && !mRefreshLayout.isRefreshing()) {
-            mRefreshLayout.setRefreshing(true);
+        if (!isRefresh && binding.refreshLayout.isRefreshing()) {
+            binding.refreshLayout.setRefreshing(false);
+        } else if (isRefresh && !binding.refreshLayout.isRefreshing()) {
+            binding.refreshLayout.setRefreshing(true);
         }
     }
 
     @Override
     public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
-        mRecyclerView.addOnScrollListener(onScrollListener);
+        binding.recyclerView.addOnScrollListener(onScrollListener);
     }
 
     public void setOnLoadFinishedListener(OnLoadFinishedListener onLoadFinishedListener) {

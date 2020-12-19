@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.FragmentDialpadBinding;
 import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadEditText;
@@ -46,24 +47,7 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     private OnKeyDownListener mOnKeyDownListener = null;
     private SharedDialViewModel mSharedDialViewModel;
     private AudioUtils mAudioUtils;
-
-    @BindView(R.id.key_0) DialpadKey mKey0;
-    @BindView(R.id.key_1) DialpadKey mKey1;
-    @BindView(R.id.key_2) DialpadKey mKey2;
-    @BindView(R.id.key_3) DialpadKey mKey3;
-    @BindView(R.id.key_4) DialpadKey mKey4;
-    @BindView(R.id.key_5) DialpadKey mKey5;
-    @BindView(R.id.key_6) DialpadKey mKey6;
-    @BindView(R.id.key_7) DialpadKey mKey7;
-    @BindView(R.id.key_8) DialpadKey mKey8;
-    @BindView(R.id.key_9) DialpadKey mKey9;
-    @BindView(R.id.key_hex) DialpadKey mKeyHex;
-    @BindView(R.id.key_star) DialpadKey mKeyStar;
-
-    @BindView(R.id.dialpad_edit_text) DialpadEditText mDigits;
-    @BindView(R.id.dialpad_button_call) ImageView mCallButton;
-    @BindView(R.id.dialpad_button_delete) ImageView mDeleteButton;
-    @BindView(R.id.dialpad_keys_layout) TableLayout mNumbersTable;
+    private FragmentDialpadBinding binding;
 
     public static DialpadBottomDialogFragment newInstance(boolean isDialer) {
         Bundle args = new Bundle();
@@ -76,7 +60,8 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dialpad, container, false);
+        binding = FragmentDialpadBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
@@ -97,41 +82,6 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
         mPresenter.onDetach();
     }
 
-    @OnClick({R.id.key_0, R.id.key_1, R.id.key_2, R.id.key_3, R.id.key_4, R.id.key_5,
-            R.id.key_6, R.id.key_7, R.id.key_8, R.id.key_9, R.id.key_star, R.id.key_hex})
-    public void keyClick(View view) {
-        int keyCode = ((DialpadKey) view).getKeyCode();
-        mPresenter.onKeyClick(keyCode);
-    }
-
-    @OnClick(R.id.dialpad_edit_text)
-    public void onDigitsClick(View view) {
-        mPresenter.onDigitsClick();
-    }
-
-    @OnClick(R.id.dialpad_button_delete)
-    public void onDeleteClick(View view) {
-        mPresenter.onDeleteClick();
-    }
-
-    @OnLongClick(R.id.key_1)
-    public boolean longOneClick(View view) {
-        mPresenter.onLongOneClick();
-        return true;
-    }
-
-    @OnLongClick(R.id.key_0)
-    public boolean longZeroClick(View view) {
-        mPresenter.onLongZeroClick();
-        return true;
-    }
-
-    @OnLongClick(R.id.dialpad_button_delete)
-    public boolean longDeleteClick(View view) {
-        mPresenter.onLongDeleteClick();
-        return true;
-    }
-
     public boolean isDialer() {
         return mIsDialer;
     }
@@ -150,8 +100,8 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
         SharedIntentViewModel sharedIntentViewModel = new ViewModelProvider(mActivity).get(SharedIntentViewModel.class);
         sharedIntentViewModel.getData().observe(getViewLifecycleOwner(), data -> mPresenter.onIntentDataChanged(data));
 
-        mDigits.addTextChangedListener(new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry()));
-        mDigits.addTextChangedListener(new TextWatcher() {
+        binding.dialpadEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry()));
+        binding.dialpadEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -165,22 +115,42 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
             public void afterTextChanged(Editable s) {
             }
         });
+
+        View.OnClickListener keyClickListener = view -> mPresenter.onKeyClick(((DialpadKey) view).getKeyCode());
+        binding.key0.setOnClickListener(keyClickListener);
+        binding.key1.setOnClickListener(keyClickListener);
+        binding.key2.setOnClickListener(keyClickListener);
+        binding.key3.setOnClickListener(keyClickListener);
+        binding.key4.setOnClickListener(keyClickListener);
+        binding.key5.setOnClickListener(keyClickListener);
+        binding.key6.setOnClickListener(keyClickListener);
+        binding.key7.setOnClickListener(keyClickListener);
+        binding.key8.setOnClickListener(keyClickListener);
+        binding.key9.setOnClickListener(keyClickListener);
+        binding.keyHex.setOnClickListener(keyClickListener);
+        binding.keyStar.setOnClickListener(keyClickListener);
+        binding.dialpadEditText.setOnClickListener(view -> mPresenter.onDigitsClick());
+        binding.dialpadButtonDelete.setOnClickListener(view -> mPresenter.onDeleteClick());
+
+        binding.key0.setOnLongClickListener(view -> mPresenter.onLongZeroClick());
+        binding.key1.setOnLongClickListener(view -> mPresenter.onLongOneClick());
+        binding.dialpadButtonDelete.setOnLongClickListener(view -> mPresenter.onLongDeleteClick());
     }
 
     @Override
     public void setNumber(String number) {
-        mDigits.setText(number);
+        binding.dialpadEditText.setText(number);
     }
 
     @Override
     public void setIsDialer(boolean isDialer) {
         mIsDialer = isDialer;
-        mDeleteButton.setVisibility(isDialer ? VISIBLE : GONE);
-        mCallButton.setVisibility(isDialer ? VISIBLE : GONE);
-        mDigits.setClickable(isDialer);
-        mDigits.setLongClickable(isDialer);
-        mDigits.setFocusableInTouchMode(isDialer);
-        mDigits.setCursorVisible(isDialer);
+        binding.dialpadButtonDelete.setVisibility(isDialer ? VISIBLE : GONE);
+        binding.dialpadButtonCall.setVisibility(isDialer ? VISIBLE : GONE);
+        binding.dialpadEditText.setClickable(isDialer);
+        binding.dialpadEditText.setLongClickable(isDialer);
+        binding.dialpadEditText.setFocusableInTouchMode(isDialer);
+        binding.dialpadEditText.setCursorVisible(isDialer);
     }
 
     @Override
@@ -194,7 +164,7 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
         if (number.equals("") || number.isEmpty()) {
             Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
         } else {
-            CallManager.call(mActivity, mDigits.getNumbers());
+            CallManager.call(mActivity, binding.dialpadEditText.getNumbers());
         }
     }
 
@@ -205,12 +175,12 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
 
     @Override
     public void toggleCursor(boolean isShow) {
-        if (isShow && mDigits.isEmpty()) {
-            mDigits.setCursorVisible(true);
+        if (isShow && binding.dialpadEditText.isEmpty()) {
+            binding.dialpadEditText.setCursorVisible(true);
         } else if (!isShow) {
-            final int length = mDigits.length();
-            if (length == mDigits.getSelectionStart() && length == mDigits.getSelectionEnd()) {
-                mDigits.setCursorVisible(false);
+            final int length = binding.dialpadEditText.length();
+            if (length == binding.dialpadEditText.getSelectionStart() && length == binding.dialpadEditText.getSelectionEnd()) {
+                binding.dialpadEditText.setCursorVisible(false);
             }
         }
     }
@@ -218,15 +188,15 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     @Override
     public void registerKeyEvent(int keyCode) {
         KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, keyCode);
-        mDigits.onKeyDown(keyCode, event);
+        binding.dialpadEditText.onKeyDown(keyCode, event);
         if (mOnKeyDownListener != null) mOnKeyDownListener.onKeyPressed(keyCode, event);
     }
 
     @Override
     public void backspace() {
-        String number = mDigits.getNumbers();
+        String number = binding.dialpadEditText.getNumbers();
         if (number != null && number.length() > 0) {
-            mDigits.setText(number.substring(0, number.length() - 1));
+            binding.dialpadEditText.setText(number.substring(0, number.length() - 1));
         }
     }
 
@@ -242,7 +212,7 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
 
     @Override
     public void showDeleteButton(boolean isShow) {
-        mDeleteButton.setVisibility(isShow ? VISIBLE : GONE);
+        binding.dialpadButtonDelete.setVisibility(isShow ? VISIBLE : GONE);
     }
 
     @Override

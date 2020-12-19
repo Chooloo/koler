@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.FragmentSearchBarBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,9 +26,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     OnTextChangedListener mOnTextChangedListener;
 
     private SearchMvpPresenter<SearchMvpView> mPresenter;
-
-    @BindView(R.id.search_input_edit_text) TextInputEditText mInputEditText;
-    @BindView(R.id.search_input_layout) TextInputLayout mInputLayout;
+    private FragmentSearchBarBinding binding;
 
     public static SearchFragment newInstance() {
         Bundle args = new Bundle();
@@ -39,7 +38,8 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search_bar, container, false);
+        binding = FragmentSearchBarBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
         mOnTextChangedListener = text -> {
         };
 
-        mInputEditText.addTextChangedListener(new TextWatcher() {
+        binding.searchInputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -73,7 +73,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
             public void afterTextChanged(Editable s) {
             }
         });
-        mInputEditText.setOnFocusChangeListener((v, hasFocus) -> {
+        binding.searchInputEditText.setOnFocusChangeListener((v, hasFocus) -> {
             mPresenter.onFocusChanged(hasFocus);
             mOnFocusChangedListener.onFocusChanged(hasFocus);
         });
@@ -81,17 +81,17 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
 
     @Override
     public String getText() {
-        return mInputEditText.getText().toString();
+        return binding.searchInputEditText.getText().toString();
     }
 
     @Override
     public void setFocus() {
-        mInputEditText.requestFocus();
+        binding.searchInputEditText.requestFocus();
     }
 
     @Override
     public void showIcon(boolean isShow) {
-        mInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black_24dp) : null, null, null, null);
+        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black_24dp) : null, null, null, null);
     }
 
     public void setOnFocusChangedListener(OnFocusChangedListener onFocusChangedListener) {

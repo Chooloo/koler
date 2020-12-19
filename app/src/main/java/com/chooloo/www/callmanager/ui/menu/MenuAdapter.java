@@ -35,7 +35,7 @@ public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder> {
         MenuItem menuItem = mMenu.getItem(position);
         ListItem listItem = holder.getListItem();
 
-        listItem.setOnClickListener((view) -> mOnMenuItemClickListener.onMenuItemClick(menuItem));
+        listItem.setOnClickListener(view -> mOnMenuItemClickListener.onMenuItemClick(menuItem));
         listItem.setHeaderText((String) menuItem.getTitle());
         listItem.setImageDrawable(menuItem.getIcon());
     }

@@ -15,11 +15,11 @@ public interface DialpadMvpPresenter<V extends DialpadMvpView> extends MvpPresen
 
     void onDeleteClick();
 
-    void onLongDeleteClick();
+    boolean onLongDeleteClick();
 
-    void onLongOneClick();
+    boolean onLongOneClick();
 
-    void onLongZeroClick();
+    boolean onLongZeroClick();
 
     void onIntentDataChanged(String data);
 

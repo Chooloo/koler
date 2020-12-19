@@ -11,8 +11,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import butterknife.ButterKnife;
-
 public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements MvpView {
 
     private static final int PERMISSION_RC = 10;
@@ -35,7 +33,6 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         mRequiredPermissions = getPermissions();
         setUp();
     }

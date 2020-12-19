@@ -4,14 +4,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.view.View;
+import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.DialpadKeyLayoutBinding;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DialpadKey extends LinearLayout {
@@ -20,8 +18,7 @@ public class DialpadKey extends LinearLayout {
     private String mDigit;
     private String mLetters;
 
-    @BindView(R.id.digit) TextView mDigitView;
-    @BindView(R.id.letters) TextView mLettersView;
+    private DialpadKeyLayoutBinding binding;
 
     public DialpadKey(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -29,9 +26,7 @@ public class DialpadKey extends LinearLayout {
     }
 
     private void setUp(Context context, AttributeSet attrs) {
-        inflate(context, R.layout.dialpad_key_layout, this);
-        ButterKnife.bind(this);
-
+        binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context));
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.DialpadKey);
         updateDigit(attributes.getString(R.styleable.DialpadKey_digit));
     }
@@ -94,7 +89,7 @@ public class DialpadKey extends LinearLayout {
 
     public void setDigit(String digit) {
         mDigit = digit;
-        mDigitView.setText(digit);
+        binding.digit.setText(digit);
     }
 
     public String getDigit() {
@@ -103,8 +98,8 @@ public class DialpadKey extends LinearLayout {
 
     public void setLetters(String letters) {
         mLetters = letters;
-        if (mLettersView != null) {
-            mLettersView.setText(letters);
+        if (binding.letters != null) {
+            binding.letters.setText(letters);
         }
     }
 
@@ -121,6 +116,6 @@ public class DialpadKey extends LinearLayout {
     }
 
     public void showLetters(boolean isShow) {
-        mLettersView.setVisibility(isShow ? VISIBLE : GONE);
+        binding.letters.setVisibility(isShow ? VISIBLE : GONE);
     }
 }

@@ -196,7 +196,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         // code settings
         PreferencesManager.getInstance(this);
         Utilities.setUpLocale(this);
-        ButterKnife.bind(this);
 
         Window window = getWindow();
 
@@ -323,11 +322,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
 
         createNotificationChannel();
         createNotification();
-    }
-
-    @Override
-    public int getContentView() {
-        return R.layout.activity_ongoing_call;
     }
 
     // -- Overrides -- //

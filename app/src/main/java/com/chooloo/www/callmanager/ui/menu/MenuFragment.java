@@ -30,8 +30,6 @@ public class MenuFragment extends BaseBottomSheetDialogFragment implements MenuM
     private MenuAdapter mAdapter;
     private OnMenuItemClickListener mOnMenuItemClickListener;
 
-    @BindView(R.id.menu_recycler_view) RecyclerView mRecyclerView;
-
     public static MenuFragment newInstance(@MenuRes int menuLayout) {
         Bundle args = new Bundle();
         args.putInt(ARG_MENU_LAYOUT, menuLayout);
@@ -57,7 +55,7 @@ public class MenuFragment extends BaseBottomSheetDialogFragment implements MenuM
                 mOnMenuItemClickListener.onMenuItemClick(menuItem);
             }
         });
-        mRecyclerView.setAdapter(mAdapter);
+        binding.menuRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

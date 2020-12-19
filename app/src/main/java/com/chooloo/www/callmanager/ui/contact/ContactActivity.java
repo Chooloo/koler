@@ -1,36 +1,30 @@
 package com.chooloo.www.callmanager.ui.contact;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.ContactsContract;
+import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseActivity;
+import com.chooloo.www.callmanager.databinding.ActivityContactBinding;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
-import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.PhoneNumberUtils;
-import com.chooloo.www.callmanager.util.Utilities;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -44,30 +38,13 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
     private ContactPresenter<ContactMvpView> mPresenter;
     private RecentsFragment mRecentsFragment;
     private Contact mContact;
-
-    // Contact Info
-    @BindView(R.id.contact_name) TextView mNameView;
-    @BindView(R.id.contact_number) TextView mNumberView;
-    @BindView(R.id.contact_image_placeholder) ImageView mImagePlaceholder;
-    @BindView(R.id.contact_image_photo) CircleImageView mImage;
-
-    // Action Buttons
-    @BindView(R.id.contact_button_call) ImageButton mActionCall;
-    @BindView(R.id.contact_button_sms) ImageButton mActionSms;
-    @BindView(R.id.contact_button_edit) ImageButton mActionEdit;
-    @BindView(R.id.contact_button_info) ImageButton mActionInfo;
-    @BindView(R.id.contact_button_delete) ImageButton mActionDelete;
-    @BindView(R.id.contact_button_fav) ImageButton mActionFav;
-
-    // Recents Section
-    @BindView(R.id.recents_section_layout) ConstraintLayout mRecentsLayout;
-    @BindView(R.id.recents_section_title) TextView mRecentsTitle;
-    @BindView(R.id.recents_section_frame) FrameLayout mRecentsFrame;
-    @BindView(R.id.recents_section_empty) TextView mRecentsEmpty;
+    private ActivityContactBinding binding;
 
     @Override
-    public int getContentView() {
-        return R.layout.activity_contact;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityContactBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 
     @Override
@@ -76,65 +53,30 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         mPresenter.onDetach();
     }
 
-    @OnClick(R.id.contact_button_back)
-    public void goBack(View view) {
-        mPresenter.onBackButtonPressed();
-    }
-
-    @OnClick(R.id.contact_button_call)
-    public void actionCall(View view) {
-        mPresenter.onActionCall();
-    }
-
-    @OnClick(R.id.contact_button_sms)
-    public void actionSms(View view) {
-        mPresenter.onActionSms();
-    }
-
-    @OnClick(R.id.contact_button_edit)
-    public void actionEdit(View view) {
-        mPresenter.onActionEdit();
-    }
-
-    @OnClick(R.id.contact_button_info)
-    public void actionInfo(View view) {
-        mPresenter.onActionInfo();
-    }
-
-    @OnClick(R.id.contact_button_delete)
-    public void actionDelete(View view) {
-        mPresenter.onActionDelete();
-    }
-
-    @OnClick(R.id.contact_button_fav)
-    public void actionFav(ImageView view) {
-        mPresenter.onActionFav();
-    }
 
     @Override
     public void setUp() {
-        ButterKnife.bind(this);
-
         mPresenter = new ContactPresenter<>();
         mPresenter.onAttach(this);
 
         setContactFromIntent();
 
         // set details
-//        mNumberView.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
-        mNameView.setText(mContact != null ? mContact.getName() : getString(R.string.unknown));
+//        binding.contactNumber.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
+        binding.contactName.setText(mContact != null ? mContact.getName() : getString(R.string.unknown));
 
         // set actions
-        mActionInfo.setVisibility(mContact != null ? VISIBLE : GONE);
-        mActionEdit.setVisibility(mContact != null ? VISIBLE : GONE);
-        mActionFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(this, mContact.getStarred() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
+        binding.contactActionButtons.contactButtonInfo.setVisibility(mContact != null ? VISIBLE : GONE);
+        binding.contactActionButtons.contactButtonEdit.setVisibility(mContact != null ? VISIBLE : GONE);
+        binding.contactButtonFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(this, mContact.getStarred() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
 
         // set image
         if (mContact != null) {
-            mImage.setVisibility(mContact.getPhotoUri() != null ? VISIBLE : GONE);
-            mImagePlaceholder.setVisibility(mContact.getPhotoUri() != null ? GONE : VISIBLE);
+            binding.contactImagePhoto.setVisibility(mContact.getPhotoUri() != null ? VISIBLE : GONE);
+            binding.contactImagePlaceholder.setVisibility(mContact.getPhotoUri() != null ? GONE : VISIBLE);
             if (mContact.getPhotoUri() != null) {
-                mImage.setImageURI(Uri.parse(mContact.getPhotoUri()));
+                binding.contactImagePhoto.setImageURI(Uri.parse(mContact.getPhotoUri()));
+                binding.contactImagePhoto.setImageURI(Uri.parse(mContact.getPhotoUri()));
             }
         }
 
@@ -145,7 +87,15 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
         }
-        mRecentsLayout.setVisibility(mContact != null ? VISIBLE : GONE);
+        binding.recentsSectionLayout.setVisibility(mContact != null ? VISIBLE : GONE);
+
+        binding.contactButtonFav.setOnClickListener(view -> mPresenter.onActionFav());
+        binding.contactButtonBack.setOnClickListener(view -> mPresenter.onBackButtonPressed());
+        binding.contactActionButtons.contactButtonSms.setOnClickListener(view -> mPresenter.onActionSms());
+        binding.contactActionButtons.contactButtonCall.setOnClickListener(view -> mPresenter.onActionCall());
+        binding.contactActionButtons.contactButtonEdit.setOnClickListener(view -> mPresenter.onActionEdit());
+        binding.contactActionButtons.contactButtonInfo.setOnClickListener(view -> mPresenter.onActionInfo());
+        binding.contactActionButtons.contactButtonDelete.setOnClickListener(view -> mPresenter.onActionDelete());
     }
 
     @Override
@@ -197,7 +147,7 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
 
     @Override
     public void toggleFavIcon(boolean toggle) {
-        mActionFav.setImageDrawable(ContextCompat.getDrawable(this, toggle ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp));
+        binding.contactButtonFav.setImageDrawable(ContextCompat.getDrawable(this, toggle ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp));
     }
 
     @Override
@@ -215,9 +165,9 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
     @Override
     public void handleNoRecents() {
         if (mRecentsFragment.getSize() == 0) {
-            mRecentsEmpty.setVisibility(View.VISIBLE);
-            mRecentsTitle.setVisibility(View.GONE);
-            mRecentsFrame.setVisibility(View.GONE);
+            binding.recentsSectionEmpty.setVisibility(View.VISIBLE);
+            binding.recentsSectionTitle.setVisibility(View.GONE);
+            binding.recentsSectionFrame.setVisibility(View.GONE);
         }
     }
 

@@ -1,15 +1,20 @@
 package com.chooloo.www.callmanager.ui.about;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.ActivityAboutBinding;
+import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 import com.chooloo.www.callmanager.ui.widgets.ListItem;
@@ -24,12 +29,13 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
     private static final String TAG_CHANGELOG_DIALOG = "changelog";
 
     private AboutPresenter<AboutMvpView> mPresenter;
-
-    @BindView(R.id.about_version) ListItem mVersionItem;
+    private ActivityAboutBinding binding;
 
     @Override
-    public int getContentView() {
-        return R.layout.activity_about;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityAboutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
     }
 
     @Override
@@ -40,45 +46,20 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
 
     @Override
     public void setUp() {
-        ButterKnife.bind(this);
-
         mPresenter = new AboutPresenter<>();
         mPresenter.onAttach(this);
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mVersionItem.setSmallText("" + BuildConfig.VERSION_NAME);
-    }
+        binding.cardGeneral.aboutVersion.setSmallText("" + BuildConfig.VERSION_NAME);
 
-    @OnClick(R.id.about_changelog)
-    public void changelogClick(View v) {
-        mPresenter.onChangelogClick();
-    }
-
-    @OnClick(R.id.about_source)
-    public void openSourceClick(View v) {
-        mPresenter.onOpenSourceClick();
-    }
-
-    @OnClick(R.id.about_email)
-    public void sendEmailClick(View v) {
-        mPresenter.onSendEmailClick();
-    }
-
-    @OnClick(R.id.about_bugs)
-    public void reportBugClick(View v) {
-        mPresenter.onReportBugClick();
-    }
-
-    @OnClick(R.id.about_rate)
-    public void rateAppClick(View v) {
-        mPresenter.onRateAppClick();
-    }
-
-    @OnClick(R.id.about_donate)
-    public void donateClick(View v) {
-        mPresenter.onDonateClick();
+        binding.cardGeneral.aboutChangelog.setOnClickListener(view -> mPresenter.onChangelogClick());
+        binding.cardGeneral.aboutSource.setOnClickListener(view -> mPresenter.onOpenSourceClick());
+        binding.cardDeveloper.aboutEmail.setOnClickListener(view -> mPresenter.onSendEmailClick());
+        binding.cardSupport.aboutBugs.setOnClickListener(view -> mPresenter.onReportBugClick());
+        binding.cardSupport.aboutRate.setOnClickListener(view -> mPresenter.onRateAppClick());
+        binding.cardSupport.aboutDonate.setOnClickListener(view -> mPresenter.onDonateClick());
     }
 
     @Override
