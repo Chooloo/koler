@@ -41,20 +41,23 @@ public class DialpadPresenter<V extends DialpadMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public void onLongDeleteClick() {
+    public boolean onLongDeleteClick() {
         mMvpView.setNumber("");
+        return true;
     }
 
     @Override
-    public void onLongOneClick() {
+    public boolean onLongOneClick() {
         if (mMvpView.isDialer()) {
             mMvpView.callVoicemail();
         }
+        return mMvpView.isDialer();
     }
 
     @Override
-    public void onLongZeroClick() {
+    public boolean onLongZeroClick() {
         onKeyClick(KeyEvent.KEYCODE_PLUS);
+        return true;
     }
 
     @Override

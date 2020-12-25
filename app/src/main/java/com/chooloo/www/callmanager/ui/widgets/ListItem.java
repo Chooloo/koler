@@ -40,7 +40,7 @@ public class ListItem extends ConstraintLayout {
     }
 
     private void setUp(Context context) {
-        binding = ListItemBinding.inflate(LayoutInflater.from(context));
+        binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true);
         setClickable(true);
         setFocusable(true);
     }

@@ -4,24 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewbinding.ViewBinding;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
+import com.chooloo.www.callmanager.ui.BottomFragment;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
@@ -29,20 +22,13 @@ import com.chooloo.www.callmanager.ui.menu.MenuFragment;
 import com.chooloo.www.callmanager.ui.page.PageAdapterMain;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
-import com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout;
 import com.chooloo.www.callmanager.util.BiometricUtils;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import timber.log.Timber;
 
 
 // TODO implement FAB Coordination
@@ -53,7 +39,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     private SharedDialViewModel mSharedDialViewModel;
     private DialpadBottomDialogFragment mDialpadFragment;
-    private SearchFragment mSearchBarFragment;
     private MenuFragment mMenuFragment;
     private ActivityMainBinding binding;
 
@@ -113,13 +98,15 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         binding.appbarMain.viewPagerTab.setViewPager(binding.viewPager);
 
         // search bar fragment
-        mSearchBarFragment = new SearchFragment();
+        SearchFragment mSearchBarFragment = new SearchFragment();
         mSearchBarFragment.setOnFocusChangedListener(isFocused -> mPresenter.onSearchFocusChanged(isFocused));
         mSearchBarFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
         getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
 
         // dialpad fragment
         mDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
+        BottomFragment bottomFragment = new BottomFragment();
+        bottomFragment.show(getSupportFragmentManager(), "bottom_fragment");
 
         // dial view model
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
@@ -131,7 +118,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
 
         setSupportActionBar(binding.appbarMain.mainToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         BiometricUtils.showBiometricPrompt(this);
 

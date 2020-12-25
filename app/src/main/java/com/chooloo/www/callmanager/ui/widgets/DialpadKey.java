@@ -26,7 +26,7 @@ public class DialpadKey extends LinearLayout {
     }
 
     private void setUp(Context context, AttributeSet attrs) {
-        binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context));
+        binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context), this, true);
         TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.DialpadKey);
         updateDigit(attributes.getString(R.styleable.DialpadKey_digit));
     }
