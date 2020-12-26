@@ -95,13 +95,13 @@ public class MainActivity extends BaseActivity implements MainMvpView {
                 mPresenter.onPageSelected(position);
             }
         });
-        binding.appbarMain.viewPagerTab.setViewPager(binding.viewPager);
+        binding.mainTabLayout.setViewPager(binding.viewPager);
 
         // search bar fragment
         SearchFragment mSearchBarFragment = new SearchFragment();
         mSearchBarFragment.setOnFocusChangedListener(isFocused -> mPresenter.onSearchFocusChanged(isFocused));
         mSearchBarFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
-        getSupportFragmentManager().beginTransaction().replace(R.id.search_bar_container, mSearchBarFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_search_fragment, mSearchBarFragment).commit();
 
         // dialpad fragment
         mDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
@@ -117,15 +117,12 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
         mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
 
-        setSupportActionBar(binding.appbarMain.mainToolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
         BiometricUtils.showBiometricPrompt(this);
 
         checkIncomingIntent();
 
         binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
-        binding.appbarMain.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
+        binding.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
     }
 
     @Override

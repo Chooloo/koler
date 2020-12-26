@@ -10,6 +10,7 @@
         layout="@layout/list_item_header"
         android:layout_width="@dimen/list_item_header_width"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/list_item_image"
         app:layout_constraintStart_toStartOf="parent"

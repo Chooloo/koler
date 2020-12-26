@@ -5,7 +5,7 @@
             <objectAnimator
                 android:duration="0"
                 android:propertyName="textSize"
-                android:valueTo="12sp" />
+                android:valueTo="11sp" />
             <objectAnimator
                 android:duration="0"
                 android:propertyName="color"

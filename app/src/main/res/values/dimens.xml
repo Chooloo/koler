@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- generic -->
     <dimen name="default_spacing_padding">8dp</dimen>
 
     <!-- call -->
@@ -25,12 +26,12 @@
 
     <!-- list item -->
     <dimen name="list_item_height">60dp</dimen>
-    <dimen name="list_item_padding">10dp</dimen>
+    <dimen name="list_item_padding">15dp</dimen>
     <dimen name="list_item_small_text_top_margin">4dp</dimen>
-    <dimen name="list_item_big_text_margin">18dp</dimen>
+    <dimen name="list_item_big_text_margin">10dp</dimen>
     <dimen name="list_item_inner_margin">20dp</dimen>
     <dimen name="list_item_image_size">40dp</dimen>
-    <dimen name="list_item_image_margin">9dp</dimen>
+    <dimen name="list_item_image_margin">5dp</dimen>
     <dimen name="list_item_header_width">50dp</dimen>
     <dimen name="list_item_header_text_size">20sp</dimen>
 

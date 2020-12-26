@@ -29,7 +29,7 @@
             android:layout_height="wrap_content">
 
             <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
-                android:id="@+id/view_pager_tab"
+                android:id="@+id/main_tab_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
@@ -69,7 +69,7 @@
 
     <!-- search fragment -->
     <FrameLayout
-        android:id="@+id/search_bar_container"
+        android:id="@+id/main_search_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="7dp" />
