@@ -26,19 +26,19 @@ public class Contact implements Serializable {
         this.number = number;
     }
 
-    public Contact(long contactId, String name, String photoUri, boolean starred, String number) {
+    public Contact(long contactId, String name, String photoUri, boolean starred) {
         this.contactId = contactId;
         this.name = name;
         this.photoUri = photoUri;
         this.starred = starred;
-        this.number = number;
     }
 
-    public Contact(Cursor cursor) {
-        this.contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-        this.name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
-        this.photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
-        this.starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
+    public static Contact fromCursor(Cursor cursor) {
+        long contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+        String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+        String photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
+        boolean starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
+        return new Contact(contactId, name, photoUri, starred);
     }
 
     public long getContactId() {

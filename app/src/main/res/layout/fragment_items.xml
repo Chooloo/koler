@@ -5,16 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/list_item_header"
-        layout="@layout/list_item_header"
-        android:layout_width="@dimen/list_item_header_width"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="33dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
@@ -34,42 +24,6 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <!--A piece of code from google's default Dial App-->
-    <!-- Scrollbars are always on the right side of the screen. Layouts should use Rights/Left instead
-    of Start/End -->
-    <com.chooloo.www.callmanager.ui.widgets.FastScroller
-        android:id="@+id/fast_scroller"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/fab_and_bottom_padding"
-        android:clipChildren="false"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlHardcoded,RtlSymmetry">
-
-        <TextView
-            android:id="@+id/fast_scroller_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/fast_scroller_scroll_bar"
-            android:background="@drawable/fast_scroller_container_background"
-            android:gravity="center"
-            android:textColor="@android:color/primary_text_dark"
-            android:textSize="48sp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/fast_scroller_scroll_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="8dp"
-            android:paddingRight="7dp"
-            android:src="@drawable/fast_scroller_scroll_bar" />
-    </com.chooloo.www.callmanager.ui.widgets.FastScroller>
 
     <include
         android:id="@+id/empty_state"

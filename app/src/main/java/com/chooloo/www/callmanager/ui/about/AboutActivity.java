@@ -1,28 +1,17 @@
 package com.chooloo.www.callmanager.ui.about;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityAboutBinding;
-import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
-import com.chooloo.www.callmanager.ui.widgets.ListItem;
-import com.chooloo.www.callmanager.util.ThemeUtils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AboutActivity extends BaseActivity implements AboutMvpView {
 

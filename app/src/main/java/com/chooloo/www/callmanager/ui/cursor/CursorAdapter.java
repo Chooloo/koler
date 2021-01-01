@@ -1,11 +1,9 @@
 package com.chooloo.www.callmanager.ui.cursor;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.util.ArrayMap;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,19 +20,6 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     public CursorAdapter(Context context) {
         mContext = context;
         setUp();
-    }
-
-    @NonNull
-    @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull VH holder, int position) {
-        mCursor.moveToPosition(position);
-        mViewHoldersMap.put(holder, position);
-        onBindViewHolder(holder, mCursor);
     }
 
     @Override
@@ -95,6 +80,4 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
             }
         }
     }
-
-    public abstract void onBindViewHolder(@NonNull VH viewHolder, Cursor cursor);
 }

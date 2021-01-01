@@ -12,17 +12,6 @@ public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresente
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         super.onLoadFinished(loader, data);
-        mMvpView.setupFastScroller();
-    }
-
-    @Override
-    public void onRefreshHeaders() {
-        mMvpView.refreshHeaders();
-    }
-
-    @Override
-    public void onScrolled() {
-        mMvpView.updateScroll();
     }
 
     @Override

@@ -3,23 +3,24 @@ package com.chooloo.www.callmanager.ui.helpers;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.ui.widgets.ListItem;
+import com.chooloo.www.callmanager.ui.listitem.ListItem;
+import com.chooloo.www.callmanager.ui.listitem.ListItemPerson;
 
-public class ListItemHolder extends RecyclerView.ViewHolder {
+public class ListItemHolder<LI extends ListItem> extends RecyclerView.ViewHolder {
 
-    private ListItem mListItem;
+    private final LI mListItem;
 
     /**
      * Constructor
      *
      * @param listItem the layout view
      */
-    public ListItemHolder(@NonNull ListItem listItem) {
+    public ListItemHolder(@NonNull LI listItem) {
         super(listItem);
         this.mListItem = listItem;
     }
 
-    public ListItem getListItem() {
+    public LI getListItem() {
         return mListItem;
     }
 }

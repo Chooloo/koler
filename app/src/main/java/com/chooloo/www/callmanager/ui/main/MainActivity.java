@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         // dialpad fragment
         mDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
         BottomFragment bottomFragment = new BottomFragment();
-        bottomFragment.show(getSupportFragmentManager(), "bottom_fragment");
+//        bottomFragment.show(getSupportFragmentManager(), "bottom_fragment");
 
         // dial view model
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);

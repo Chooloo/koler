@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.chooloo.www.callmanager.ui.widgets.ListItem
+    <com.chooloo.www.callmanager.ui.listitem.ListItemPerson
         android:id="@+id/about_bugs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:smallText="@string/about_bugs_desc"
         app:src="@drawable/ic_bug_report_black_24dp" />
 
-    <com.chooloo.www.callmanager.ui.widgets.ListItem
+    <com.chooloo.www.callmanager.ui.listitem.ListItemPerson
         android:id="@+id/about_rate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         app:smallText="@string/about_rate_desc"
         app:src="@drawable/ic_star_black_24dp" />
 
-    <com.chooloo.www.callmanager.ui.widgets.ListItem
+    <com.chooloo.www.callmanager.ui.listitem.ListItemPerson
         android:id="@+id/about_donate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

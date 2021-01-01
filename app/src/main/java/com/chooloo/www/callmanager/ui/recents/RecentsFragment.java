@@ -63,8 +63,8 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
-    public RecentsAdapter<ListItemHolder> getAdapter() {
-        RecentsAdapter<ListItemHolder> recentsAdapter = new RecentsAdapter<>(mActivity);
+    public RecentsAdapter getAdapter() {
+        RecentsAdapter recentsAdapter = new RecentsAdapter(mActivity);
         recentsAdapter.setOnRecentItemClickListener(recentCall -> mPresenter.onRecentItemClick(recentCall));
         recentsAdapter.setOnRecentItemLongClickListener(recentCall -> mPresenter.onRecentItemLongClick(recentCall));
         return recentsAdapter;

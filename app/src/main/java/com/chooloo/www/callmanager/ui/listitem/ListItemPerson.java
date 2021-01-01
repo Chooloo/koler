@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.widgets;
+package com.chooloo.www.callmanager.ui.listitem;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,41 +6,31 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ListItemBinding;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-public class ListItem extends ConstraintLayout {
+public class ListItemPerson extends ListItem {
 
     private ListItemBinding binding;
 
-    public ListItem(Context context) {
+    public ListItemPerson(Context context) {
         super(context);
-        setUp(context);
     }
 
-    public ListItem(Context context, AttributeSet attrs) {
+    public ListItemPerson(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ListItem, 0, 0);
         setBigText(a.getString(R.styleable.ListItem_bigText));
         setSmallText(a.getString(R.styleable.ListItem_smallText));
-        setHeaderText(a.getString(R.styleable.ListItem_header));
         setImageDrawable(a.getDrawable(R.styleable.ListItem_src));
         a.recycle();
-
-        setUp(context);
     }
 
-    private void setUp(Context context) {
-        binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true);
+    public void setUp() {
+        binding = ListItemBinding.inflate(LayoutInflater.from(mContext), this, true);
         setClickable(true);
         setFocusable(true);
     }
@@ -54,11 +44,6 @@ public class ListItem extends ConstraintLayout {
         binding.listItemSmallText.setVisibility(text == null ? GONE : VISIBLE);
     }
 
-    public void setHeaderText(@Nullable String text) {
-        binding.listItemHeader.listItemHeader.setText(text == null ? "" : text);
-        showHeader(text != null);
-    }
-
     public void setImageDrawable(@Nullable Drawable image) {
         if (image != null) {
             binding.listItemImage.setImageDrawable(image);
@@ -66,10 +51,8 @@ public class ListItem extends ConstraintLayout {
     }
 
     public void setImageUri(@Nullable Uri image) {
-        binding.listItemImage.setImageURI(image);
-    }
-
-    public void showHeader(boolean isShow) {
-        binding.listItemHeader.listItemHeader.setVisibility(isShow ? VISIBLE : INVISIBLE);
+        if (image != null) {
+            binding.listItemImage.setImageURI(image);
+        }
     }
 }

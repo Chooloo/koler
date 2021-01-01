@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.text.format.DateFormat;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.util.ContactUtils;
 
@@ -44,14 +45,23 @@ public class RecentCall {
     public @interface CallType {
     }
 
-    public RecentCall(Context context, Cursor cursor) {
-        this.callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-        this.number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
-        this.callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
-        this.callDate = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
-        this.callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
-        this.count = checkNextMutliple(cursor);
-        cursor.moveToPosition(cursor.getPosition());
+    public RecentCall(long id, String number, String duration, Date date, int type, @Nullable int count) {
+        this.callId = id;
+        this.number = number;
+        this.callDuration = duration;
+        this.callDate = date;
+        this.callType = type;
+        this.count = count == 0 ? 1 : count;
+    }
+
+    public static RecentCall fromCursor(Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+        String number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
+        String duration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
+        Date date = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+        int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
+        int count = checkNextMutliple(cursor, number);
+        return new RecentCall(id, number, duration, date, type, count);
     }
 
     public long getCallId() {
@@ -95,7 +105,7 @@ public class RecentCall {
      * @param cursor
      * @return Amount of the calls from the same contact in a row
      */
-    public int checkNextMutliple(Cursor cursor) {
+    public static int checkNextMutliple(Cursor cursor, String number) {
         int count = 1;
         while (true) {
             try {

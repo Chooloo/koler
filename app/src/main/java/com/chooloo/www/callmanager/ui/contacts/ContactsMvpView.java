@@ -10,15 +10,5 @@ public interface ContactsMvpView extends CursorMvpView {
 
     void load(@Nullable String phoneNumber, @Nullable String contactName);
 
-    String getHeader(int position);
-
-    ListItemHolder getContactHolder(int position);
-
     void openContact(Contact contact);
-
-    void refreshHeaders();
-
-    void updateScroll();
-
-    void setupFastScroller();
 }

@@ -3,119 +3,96 @@ package com.chooloo.www.callmanager.ui.contacts;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
-import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
-import com.chooloo.www.callmanager.ui.widgets.ListItem;
-import com.chooloo.www.callmanager.util.PhoneNumberUtils;
+import com.chooloo.www.callmanager.ui.listitem.ListItemHeader;
+import com.chooloo.www.callmanager.ui.listitem.ListItemPerson;
 
-import java.util.Arrays;
-import java.util.Timer;
+import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_COUNTS;
 
-import timber.log.Timber;
-
-public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH> {
+public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
 
     private final static String FAVORITE_HEADER = "★";
 
-    private String[] mHeaders = new String[0]; // List of contact sublist mHeaders
-    private int[] mCounts = new int[0]; // Number of contacts that correspond to each mHeader in {@code mHeaders}.
+    private final static int VIEW_TYPE_CONTACT = 0;
+    private final static int VIEW_TYPE_HEADER = 1;
+
+    private int mHeadersCount;
 
     private OnContactItemClickListener mOnContactItemClickListener;
     private OnContactItemLongClickListener mOnContactItemLongClickListener;
 
     public ContactsAdapter(Context context) {
         super(context);
+        mHeadersCount = 0;
+        mOnContactItemLongClickListener = contact -> true;
         mOnContactItemClickListener = contact -> {
-        };
-        mOnContactItemLongClickListener = contact -> {
         };
     }
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return (VH) new ListItemHolder(new ListItem(mContext));
+    public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_CONTACT) {
+            return new ListItemHolder<>(new ListItemPerson(mContext));
+        } else {
+            return new ListItemHolder<>(new ListItemHeader(mContext));
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        if (position == 0) {
+            return VIEW_TYPE_HEADER;
+        }
+        char currentFirstLetter = Contact.fromCursor(mCursor).getName().charAt(0);
+        mCursor.moveToPrevious();
+        char previousFirstLetter = Contact.fromCursor(mCursor).getName().charAt(0);
+        mCursor.moveToNext();
+        return currentFirstLetter == previousFirstLetter ? VIEW_TYPE_CONTACT : VIEW_TYPE_HEADER;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
-        ListItem listItem = holder.getListItem();
-        Contact contact = new Contact(cursor);
-        int position = cursor.getPosition();
-        String name = contact.getName();
-        String header = String.valueOf(name.charAt(0));
+    public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_CONTACT:
+                Contact contact = Contact.fromCursor(mCursor);
 
-        listItem.setBigText(name);
-        listItem.setHeaderText(header);
-        listItem.showHeader(position == 0 || !(header.equals(getHeader(position - 1))));
+                ListItemPerson listItemContact = (ListItemPerson) holder.getListItem();
+                listItemContact.setBigText(contact.getName());
+                listItemContact.setImageUri(contact.getPhotoUri() == null ? Uri.parse(contact.getPhotoUri()) : null);
+                listItemContact.setOnClickListener(view -> mOnContactItemClickListener.onContactItemClick(contact));
+                listItemContact.setOnLongClickListener(view -> mOnContactItemLongClickListener.onContactItemLongClick(contact));
 
-        if (contact.getPhotoUri() != null) {
-            listItem.setImageUri(Uri.parse(contact.getPhotoUri()));
+                mCursor.moveToNext();
+                break;
+            case VIEW_TYPE_HEADER:
+                ListItemHeader listItemHeader = (ListItemHeader) holder.getListItem();
+                if (position == 0) {
+                    listItemHeader.setHeader(FAVORITE_HEADER);
+                } else {
+                    mCursor.moveToNext();
+                    char nextLetter = Contact.fromCursor(mCursor).getName().charAt(0);
+                    mCursor.moveToPrevious();
+                    listItemHeader.setHeader(String.valueOf(nextLetter));
+                }
         }
-
-        listItem.setOnClickListener(view -> mOnContactItemClickListener.onContactItemClick(contact));
-        listItem.setOnLongClickListener(view -> {
-            mOnContactItemLongClickListener.onContactItemLongClick(contact);
-            return true;
-        });
     }
 
     @Override
     public void setCursor(Cursor newCursor) {
         super.setCursor(newCursor);
-
-        String[] header = newCursor.getExtras().getStringArray(FavoritesAndContactsLoader.EXTRA_INDEX_TITLES);
-        int[] counts = newCursor.getExtras().getIntArray(FavoritesAndContactsLoader.EXTRA_INDEX_COUNTS);
-        int favoriteCount = newCursor.getExtras().getInt(FavoritesAndContactsLoader.EXTRA_FAVORITE_COUNT);
-
-        updateHeaders(header == null ? new String[0] : header, counts == null ? new int[0] : counts, favoriteCount);
+        mHeadersCount = newCursor.getExtras().getIntArray(EXTRA_INDEX_COUNTS).length;
     }
 
-    private void updateHeaders(String[] headers, int[] counts, int favoriteCount) {
-        if (favoriteCount == 0) {
-            mHeaders = headers;
-            mCounts = counts;
-        } else {
-            mHeaders = new String[(headers.length) + 1];
-            mHeaders[0] = FAVORITE_HEADER;
-            System.arraycopy(headers, 0, mHeaders, 1, mHeaders.length - 1);
-
-            mCounts = new int[counts.length + 1];
-            mCounts[0] = favoriteCount;
-            System.arraycopy(counts, 0, mCounts, 1, mCounts.length - 1);
-        }
-    }
-
-    public void refreshHeaders() {
-        for (ListItemHolder holder : mViewHoldersMap.keySet()) {
-            int position = mViewHoldersMap.get(holder);
-            holder.getListItem().showHeader(position == 0 || !getHeader(position).equals(getHeader(position - 1)));
-        }
-    }
-
-    public String getHeader(int position) {
-        int index = -1;
-        int sum = 0;
-        while (sum <= position) {
-            if (index + 1 >= mCounts.length) return "?"; // index is bigger than headers list size
-            sum += mCounts[++index];
-        }
-        return mHeaders[index];
+    @Override
+    public int getItemCount() {
+        return super.getItemCount() + mHeadersCount;
     }
 
     public void setOnContactItemClick(OnContactItemClickListener onContactItemClick) {
@@ -131,6 +108,6 @@ public class ContactsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH
     }
 
     public interface OnContactItemLongClickListener {
-        void onContactItemLongClick(Contact contact);
+        boolean onContactItemLongClick(Contact contact);
     }
 }

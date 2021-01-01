@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
-import com.chooloo.www.callmanager.ui.widgets.ListItem;
+import com.chooloo.www.callmanager.ui.listitem.ListItemPerson;
 
-public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder> {
+public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder<ListItemPerson>> {
 
     private final Menu mMenu;
     private final Context mContext;
@@ -26,17 +26,17 @@ public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder> {
 
     @NonNull
     @Override
-    public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListItemHolder(new ListItem(mContext));
+    public ListItemHolder<ListItemPerson> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ListItemHolder<>(new ListItemPerson(mContext));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListItemHolder<ListItemPerson> holder, int position) {
         MenuItem menuItem = mMenu.getItem(position);
-        ListItem listItem = holder.getListItem();
+        ListItemPerson listItem = holder.getListItem();
 
         listItem.setOnClickListener(view -> mOnMenuItemClickListener.onMenuItemClick(menuItem));
-        listItem.setHeaderText((String) menuItem.getTitle());
+        listItem.setBigText((String) menuItem.getTitle());
         listItem.setImageDrawable(menuItem.getIcon());
     }
 

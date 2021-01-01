@@ -2,19 +2,15 @@ package com.chooloo.www.callmanager.ui.recents;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.ContactsContract;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
-import com.chooloo.www.callmanager.ui.widgets.ListItem;
+import com.chooloo.www.callmanager.ui.listitem.ListItemPerson;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.RelativeTime;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -23,7 +19,7 @@ import java.util.Date;
 
 import timber.log.Timber;
 
-public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH> {
+public class RecentsAdapter extends CursorAdapter<ListItemHolder<ListItemPerson>> {
 
     private OnRecentItemClickListener mOnRecentItemClickListener;
     private OnRecentItemLongClickListener mOnRecentItemLongClickListener;
@@ -38,29 +34,31 @@ public class RecentsAdapter<VH extends ListItemHolder> extends CursorAdapter<VH>
 
     @NonNull
     @Override
-    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return (VH) new ListItemHolder(new ListItem(mContext));
+    public ListItemHolder<ListItemPerson> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ListItemHolder<>(new ListItemPerson(mContext));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH holder, Cursor cursor) {
-        ListItem listItem = holder.getListItem();
-        RecentCall recentCall = new RecentCall(mContext, cursor);
+    public void onBindViewHolder(@NonNull ListItemHolder<ListItemPerson> holder, int position) {
+        ListItemPerson listItem = holder.getListItem();
+        RecentCall recentCall = RecentCall.fromCursor(mCursor);
 
         String name = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null).getName();
         String number = recentCall.getCallerNumber();
-        Date date = recentCall.getCallDate();
-        Timber.d("Recent call with details: number | %s, date | %s", recentCall.getCallerNumber(), recentCall.getCallDate());
-        listItem.setBigText(name == null ? number : name + (recentCall.getCount() > 0 ? " (" + recentCall.getCount() + ")" : ""));
-        listItem.setSmallText(RelativeTime.getTimeAgo(date.getTime()));
-        listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(recentCall.getCallType())));
-        listItem.showHeader(false);
+        int count = recentCall.getCount();
+        int callType = recentCall.getCallType();
+
+        listItem.setBigText(name == null ? number : name + (count > 0 ? " (" + count + ")" : ""));
+        listItem.setSmallText(RelativeTime.getTimeAgo(recentCall.getCallDate().getTime()));
+        listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(callType)));
 
         listItem.setOnClickListener(view -> mOnRecentItemClickListener.onRecentItemClick(recentCall));
         listItem.setOnLongClickListener(view -> {
             mOnRecentItemLongClickListener.onRecentItemLongClick(recentCall);
             return true;
         });
+
+        mCursor.moveToNext();
     }
 
     public void setOnRecentItemClickListener(OnRecentItemClickListener onRecentItemClickListener) {

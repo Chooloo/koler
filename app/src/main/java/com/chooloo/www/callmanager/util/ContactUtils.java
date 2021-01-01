@@ -50,7 +50,7 @@ public class ContactUtils {
             return new Contact(name, phoneNumber);
         // cursor isn't empty, get the first result
         cursor.moveToFirst();
-        return new Contact(cursor);
+        return Contact.fromCursor(cursor);
     }
 
     /**
