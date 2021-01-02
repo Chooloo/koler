@@ -11,11 +11,13 @@ public abstract class ListItem extends ConstraintLayout {
     public ListItem(Context context) {
         super(context);
         mContext = context;
+        setUp();
     }
 
     public ListItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+        setUp();
     }
 
     abstract void setUp();

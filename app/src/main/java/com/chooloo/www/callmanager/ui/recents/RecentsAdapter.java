@@ -28,8 +28,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder<ListItemPerson>
         super(context);
         mOnRecentItemClickListener = recentCall -> {
         };
-        mOnRecentItemLongClickListener = recentCall -> {
-        };
+        mOnRecentItemLongClickListener = recentCall -> true;
     }
 
     @NonNull
@@ -53,10 +52,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder<ListItemPerson>
         listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(callType)));
 
         listItem.setOnClickListener(view -> mOnRecentItemClickListener.onRecentItemClick(recentCall));
-        listItem.setOnLongClickListener(view -> {
-            mOnRecentItemLongClickListener.onRecentItemLongClick(recentCall);
-            return true;
-        });
+        listItem.setOnLongClickListener(view -> mOnRecentItemLongClickListener.onRecentItemLongClick(recentCall));
 
         mCursor.moveToNext();
     }
@@ -75,7 +71,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder<ListItemPerson>
     }
 
     public interface OnRecentItemLongClickListener {
-        void onRecentItemLongClick(RecentCall recentCall);
+        boolean onRecentItemLongClick(RecentCall recentCall);
     }
 
 }

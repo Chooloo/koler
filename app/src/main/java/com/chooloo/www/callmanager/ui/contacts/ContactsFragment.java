@@ -3,16 +3,14 @@ package com.chooloo.www.callmanager.ui.contacts;
 import android.database.Cursor;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
-import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
+
+import timber.log.Timber;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -76,6 +74,8 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         mPresenter.onAttach(this);
 
         load();
+
+        Timber.i("www");
     }
 
     @Override

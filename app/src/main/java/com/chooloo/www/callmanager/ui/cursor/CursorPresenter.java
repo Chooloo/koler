@@ -1,10 +1,9 @@
 package com.chooloo.www.callmanager.ui.cursor;
 
 import android.database.Cursor;
+import android.os.Bundle;
 
 import androidx.loader.content.Loader;
-
-import android.os.Bundle;
 
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
 
@@ -44,8 +43,9 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mMvpView.setRefreshing(false);
-        mMvpView.setData(data);
-        if (mMvpView.getSize() > 0) {
+        mMvpView.updateData(data);
+
+        if (mMvpView.getItemCount() > 0) {
             onResults();
         } else {
             onNoResults();
@@ -54,7 +54,7 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mMvpView.setData(null);
+        mMvpView.updateData(null);
     }
 
     @Override

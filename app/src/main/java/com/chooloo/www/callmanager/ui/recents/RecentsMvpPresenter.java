@@ -6,5 +6,5 @@ import com.chooloo.www.callmanager.ui.cursor.CursorMvpPresenter;
 public interface RecentsMvpPresenter<V extends RecentsMvpView> extends CursorMvpPresenter<V> {
     void onRecentItemClick(RecentCall recentCall);
 
-    void onRecentItemLongClick(RecentCall recentCall);
+    boolean onRecentItemLongClick(RecentCall recentCall);
 }

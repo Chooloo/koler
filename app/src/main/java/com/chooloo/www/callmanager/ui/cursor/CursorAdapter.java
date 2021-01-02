@@ -3,9 +3,7 @@ package com.chooloo.www.callmanager.ui.cursor;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.util.ArrayMap;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import timber.log.Timber;
@@ -15,26 +13,9 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
     protected Cursor mCursor;
     protected Context mContext;
     protected DataSetObserver mDataSetObserver;
-    protected ArrayMap<VH, Integer> mViewHoldersMap;
 
     public CursorAdapter(Context context) {
         mContext = context;
-        setUp();
-    }
-
-    @Override
-    public int getItemCount() {
-        return mCursor != null ? mCursor.getCount() : 0;
-    }
-
-    @Override
-    public void setHasStableIds(boolean hasStableIds) {
-        super.setHasStableIds(true);
-    }
-
-    protected void setUp() {
-        mViewHoldersMap = new ArrayMap<>();
-
         mDataSetObserver = new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -48,33 +29,39 @@ public abstract class CursorAdapter<VH extends RecyclerView.ViewHolder> extends 
                 notifyDataSetChanged();
             }
         };
-        registerDataSetObserver(mDataSetObserver);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mCursor != null ? mCursor.getCount() : 0;
+    }
+
+    @Override
+    public void setHasStableIds(boolean hasStableIds) {
+        super.setHasStableIds(true);
     }
 
     public void setCursor(Cursor newCursor) {
         if (newCursor != mCursor) {
-            unregisterDataSetObserver();
-            if (mCursor != null) mCursor.close();
+            if (mCursor != null) {
+                unregisterDataSetObserver(mDataSetObserver);
+                mCursor.close();
+            }
             mCursor = newCursor;
-            setUp();
+            registerDataSetObserver(mDataSetObserver);
         }
-        notifyDataSetChanged();
     }
 
-    public Cursor getCursor() {
-        return mCursor;
-    }
-
-    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
+    private void registerDataSetObserver(DataSetObserver dataSetObserver) {
         if (mCursor != null) {
             mCursor.registerDataSetObserver(dataSetObserver);
         }
     }
 
-    public void unregisterDataSetObserver() {
-        if (mCursor != null && mDataSetObserver != null) {
+    private void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
+        if (mCursor != null) {
             try {
-                mCursor.unregisterDataSetObserver(mDataSetObserver);
+                mCursor.unregisterDataSetObserver(dataSetObserver);
             } catch (IllegalStateException e) {
                 Timber.e("CursorAdapter was not registered when trying to unregister");
             }

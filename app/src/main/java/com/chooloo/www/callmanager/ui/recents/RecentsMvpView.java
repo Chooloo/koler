@@ -8,7 +8,7 @@ import com.chooloo.www.callmanager.ui.cursor.CursorMvpView;
 public interface RecentsMvpView extends CursorMvpView {
     void openRecent(RecentCall recentCall);
 
-    int getSize();
+    int getItemCount();
 
     void load(@Nullable String phoneNumber, @Nullable String contactName);
 }

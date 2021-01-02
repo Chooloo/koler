@@ -19,11 +19,9 @@ import static com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_
 
 public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> implements MainMvpPresenter<V> {
 
-    private int mCurrentPosition;
     @BottomSheetBehavior.State private int mBottomSheetState;
 
     public MainPresenter() {
-        mCurrentPosition = 0;
         mBottomSheetState = STATE_COLLAPSED;
     }
 
@@ -34,7 +32,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onPageSelected(int position) {
-        mCurrentPosition = position;
         mMvpView.showDialpad(false);
     }
 

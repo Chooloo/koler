@@ -13,13 +13,15 @@ public interface CursorMvpView extends MvpView {
 
     void setUp();
 
-    void setData(Cursor cursor);
+    void updateData(Cursor cursor);
 
     Loader<Cursor> getLoader(Bundle args);
 
-    int getSize();
+    int getItemCount();
 
     void load();
+
+    void runLoader();
 
     void showEmptyPage(boolean isShow);
 

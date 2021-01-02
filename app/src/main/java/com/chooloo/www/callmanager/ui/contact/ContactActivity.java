@@ -1,16 +1,13 @@
 package com.chooloo.www.callmanager.ui.contact;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -23,8 +20,6 @@ import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-
-import butterknife.ButterKnife;
 
 import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -83,7 +78,6 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         // set recents fragment
         if (mContact != null) {
 //            mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
-            mRecentsFragment.setOnLoadFinishedListener(() -> mPresenter.onRecentsLoadFinished());
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
         }
@@ -164,7 +158,7 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
 
     @Override
     public void handleNoRecents() {
-        if (mRecentsFragment.getSize() == 0) {
+        if (mRecentsFragment.getItemCount() == 0) {
             binding.recentsSectionEmpty.setVisibility(View.VISIBLE);
             binding.recentsSectionTitle.setVisibility(View.GONE);
             binding.recentsSectionFrame.setVisibility(View.GONE);

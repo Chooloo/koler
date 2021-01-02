@@ -10,7 +10,8 @@ public class RecentsPresenter<V extends RecentsMvpView> extends CursorPresenter<
     }
 
     @Override
-    public void onRecentItemLongClick(RecentCall recentCall) {
+    public boolean onRecentItemLongClick(RecentCall recentCall) {
+        return true;
         // TODO implement
     }
 }

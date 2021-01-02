@@ -1,13 +1,10 @@
 package com.chooloo.www.callmanager.entity;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.text.format.DateFormat;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
-
-import com.chooloo.www.callmanager.util.ContactUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -55,13 +52,21 @@ public class RecentCall {
     }
 
     public static RecentCall fromCursor(Cursor cursor) {
-        long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-        String number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
-        String duration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
-        Date date = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
-        int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
-        int count = checkNextMutliple(cursor, number);
-        return new RecentCall(id, number, duration, date, type, count);
+        try {
+            long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+            String number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
+            String duration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
+            Date date = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+            int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
+            int count = checkNextMutliple(cursor, number);
+            return new RecentCall(id, number, duration, date, type, count);
+        } catch (IndexOutOfBoundsException e) {
+            return unknownCall();
+        }
+    }
+
+    public static RecentCall unknownCall() {
+        return new RecentCall(0, "Unknown", null, null, -1, 0);
     }
 
     public long getCallId() {

@@ -24,7 +24,6 @@ import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
-import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -89,7 +88,8 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         mPresenter = new RecentsPresenter<>();
         mPresenter.onAttach(this);
 
-        load();
+//        load();
+        Timber.i("www");
     }
 
     @Override
@@ -101,6 +101,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         load();
     }
 
+    // TODO remove all of this garbage function
     @Override
     public void openRecent(RecentCall recentCall) {
         Contact contact = ContactUtils.getContact(mActivity, recentCall.getCallerNumber(), null);

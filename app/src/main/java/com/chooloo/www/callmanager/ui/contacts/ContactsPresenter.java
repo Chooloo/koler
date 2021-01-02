@@ -20,6 +20,7 @@ public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresente
     }
 
     @Override
-    public void onContactItemLongClick(Contact contact) {
+    public boolean onContactItemLongClick(Contact contact) {
+        return true;
     }
 }

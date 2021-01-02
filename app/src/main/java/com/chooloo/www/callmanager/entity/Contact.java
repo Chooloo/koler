@@ -34,11 +34,19 @@ public class Contact implements Serializable {
     }
 
     public static Contact fromCursor(Cursor cursor) {
-        long contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-        String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
-        String photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
-        boolean starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
-        return new Contact(contactId, name, photoUri, starred);
+        try {
+            long contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+            String photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
+            boolean starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
+            return new Contact(contactId, name, photoUri, starred);
+        } catch (IndexOutOfBoundsException e) {
+            return unknownContact();
+        }
+    }
+
+    public static Contact unknownContact() {
+        return new Contact(0, "Unknown", null, false);
     }
 
     public long getContactId() {

@@ -25,7 +25,6 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     protected A mAdapter;
     private CursorMvpPresenter<CursorMvpView> mPresenter;
-    private OnLoadFinishedListener mOnLoadFinishedListener;
     protected FragmentItemsBinding binding;
 
     @Nullable
@@ -50,9 +49,6 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         mPresenter.onLoadFinished(loader, data);
-        if (mOnLoadFinishedListener != null) {
-            mOnLoadFinishedListener.onLoadFinished();
-        }
     }
 
     @Override
@@ -68,13 +64,13 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     @Override
     public void setUp() {
-        mAdapter = getAdapter();
 
         mPresenter = new CursorPresenter<>();
         mPresenter.onAttach(this);
 
+        mAdapter = getAdapter();
         binding.recyclerView.setAdapter(mAdapter);
-
+        
         binding.refreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
 
         // TODO make this no permission handling better
@@ -85,21 +81,31 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     }
 
     @Override
-    public void setData(Cursor cursor) {
+    public void updateData(Cursor cursor) {
         mAdapter.setCursor(cursor);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public int getSize() {
+    public int getItemCount() {
         return mAdapter.getItemCount();
     }
 
     @Override
     public void load() {
         if (hasPermissions()) {
-            LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArguments(), this);
+            runLoader();
         } else {
             mPresenter.onNoPermissions();
+        }
+    }
+
+    @Override
+    public void runLoader() {
+        if (LoaderManager.getInstance(this).getLoader(LOADER_ID) == null) {
+            LoaderManager.getInstance(this).initLoader(LOADER_ID, getArgsSafely(), this);
+        } else {
+            LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArgsSafely(), this);
         }
     }
 
@@ -121,14 +127,6 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     @Override
     public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
         binding.recyclerView.addOnScrollListener(onScrollListener);
-    }
-
-    public void setOnLoadFinishedListener(OnLoadFinishedListener onLoadFinishedListener) {
-        mOnLoadFinishedListener = onLoadFinishedListener;
-    }
-
-    public interface OnLoadFinishedListener {
-        void onLoadFinished();
     }
 
     public abstract A getAdapter();

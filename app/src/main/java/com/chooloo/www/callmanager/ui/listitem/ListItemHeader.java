@@ -11,12 +11,10 @@ public class ListItemHeader extends ListItem {
 
     public ListItemHeader(Context context) {
         super(context);
-        setUp();
     }
 
     public ListItemHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setUp();
     }
 
     @Override
