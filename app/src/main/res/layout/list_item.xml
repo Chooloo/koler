@@ -10,7 +10,9 @@
         style="@style/ListItem.Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:clickable="false"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/list_item_header_text"

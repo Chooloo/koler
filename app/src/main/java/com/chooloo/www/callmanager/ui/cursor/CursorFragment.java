@@ -69,8 +69,8 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
         mPresenter.onAttach(this);
 
         mAdapter = getAdapter();
-        binding.recyclerView.setAdapter(mAdapter);
-        
+        binding.itemsRecyclerView.setAdapter(mAdapter);
+
         binding.refreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
 
         // TODO make this no permission handling better
@@ -112,7 +112,7 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     @Override
     public void showEmptyPage(boolean isShow) {
         binding.emptyState.emptyState.setVisibility(isShow ? VISIBLE : GONE);
-        binding.recyclerView.setVisibility(isShow ? GONE : VISIBLE);
+        binding.itemsRecyclerView.setVisibility(isShow ? GONE : VISIBLE);
     }
 
     @Override
@@ -126,7 +126,7 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
 
     @Override
     public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
-        binding.recyclerView.addOnScrollListener(onScrollListener);
+        binding.itemsRecyclerView.addOnScrollListener(onScrollListener);
     }
 
     public abstract A getAdapter();

@@ -39,6 +39,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
 
         String name = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null).getName();
         String number = recentCall.getCallerNumber();
+        String callDate = recentCall.getCallDate() != null ? RelativeTime.getTimeAgo(recentCall.getCallDate().getTime()) : null;
         int count = recentCall.getCount();
         int callType = recentCall.getCallType();
 

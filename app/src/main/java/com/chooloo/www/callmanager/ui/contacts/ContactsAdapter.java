@@ -3,10 +3,13 @@ package com.chooloo.www.callmanager.ui.contacts;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.ui.listitem.ListItem;

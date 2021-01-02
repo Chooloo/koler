@@ -27,6 +27,7 @@
     <!-- list item -->
     <dimen name="list_item_height">60dp</dimen>
     <dimen name="list_item_padding">15dp</dimen>
+    <dimen name="list_item_padding_start">20dp</dimen>
     <dimen name="list_item_small_text_top_margin">4dp</dimen>
     <dimen name="list_item_big_text_margin">10dp</dimen>
     <dimen name="list_item_inner_margin">20dp</dimen>

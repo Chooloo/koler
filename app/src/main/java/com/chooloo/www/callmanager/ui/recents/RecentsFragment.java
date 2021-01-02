@@ -28,8 +28,6 @@ import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import timber.log.Timber;
-
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -88,8 +86,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         mPresenter = new RecentsPresenter<>();
         mPresenter.onAttach(this);
 
-//        load();
-        Timber.i("www");
+        load();
     }
 
     @Override
