@@ -1,34 +1,57 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/ListItem.Layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/list_item_image"
-        style="@style/ListItem.Image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/list_item_header"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ListItem.Image" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/list_item_header"
+        style="@style/ListItem.Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/list_item_big_text"
-        style="@style/ListItem.Text.Big"
-        app:layout_constraintBottom_toTopOf="@id/list_item_small_text"
-        app:layout_constraintStart_toEndOf="@+id/list_item_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        <TextView
+            android:id="@+id/list_item_header_text"
+            style="@style/ListItem.Header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="A" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/list_item_small_text"
-        style="@style/ListItem.Text.Small"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/list_item_big_text"
-        app:layout_constraintStart_toStartOf="@+id/list_item_big_text"
-        app:layout_constraintTop_toBottomOf="@+id/list_item_big_text"
-        app:layout_constraintVertical_chainStyle="packed" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/ListItem.Layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/list_item_image"
+            style="@style/ListItem.Image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ListItem.Image" />
+
+        <TextView
+            android:id="@+id/list_item_big_text"
+            style="@style/ListItem.Text.Big"
+            app:layout_constraintBottom_toTopOf="@id/list_item_small_text"
+            app:layout_constraintStart_toEndOf="@+id/list_item_image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/list_item_small_text"
+            style="@style/ListItem.Text.Small"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/list_item_big_text"
+            app:layout_constraintStart_toStartOf="@+id/list_item_big_text"
+            app:layout_constraintTop_toBottomOf="@+id/list_item_big_text"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

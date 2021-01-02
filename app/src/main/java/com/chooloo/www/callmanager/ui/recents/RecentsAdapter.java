@@ -1,25 +1,20 @@
 package com.chooloo.www.callmanager.ui.recents;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.entity.RecentCall;
-import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
-import com.chooloo.www.callmanager.ui.listitem.ListItemPerson;
+import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
+import com.chooloo.www.callmanager.ui.listitem.ListItem;
+import com.chooloo.www.callmanager.ui.listitem.ListItemHolder;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.RelativeTime;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import java.util.Date;
-
-import timber.log.Timber;
-
-public class RecentsAdapter extends CursorAdapter<ListItemHolder<ListItemPerson>> {
+public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
 
     private OnRecentItemClickListener mOnRecentItemClickListener;
     private OnRecentItemLongClickListener mOnRecentItemLongClickListener;
@@ -33,13 +28,13 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder<ListItemPerson>
 
     @NonNull
     @Override
-    public ListItemHolder<ListItemPerson> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListItemHolder<>(new ListItemPerson(mContext));
+    public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ListItemHolder(mContext);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListItemHolder<ListItemPerson> holder, int position) {
-        ListItemPerson listItem = holder.getListItem();
+    public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
+        ListItem listItem = holder.getListItem();
         RecentCall recentCall = RecentCall.fromCursor(mCursor);
 
         String name = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null).getName();

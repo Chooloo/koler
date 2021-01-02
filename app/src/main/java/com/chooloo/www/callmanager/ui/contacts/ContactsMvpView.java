@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorMvpView;
-import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
 
 public interface ContactsMvpView extends CursorMvpView {
 

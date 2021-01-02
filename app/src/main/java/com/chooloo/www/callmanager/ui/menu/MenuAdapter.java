@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.ui.helpers.ListItemHolder;
-import com.chooloo.www.callmanager.ui.listitem.ListItemPerson;
+import com.chooloo.www.callmanager.ui.listitem.ListItemHolder;
+import com.chooloo.www.callmanager.ui.listitem.ListItem;
 
-public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder<ListItemPerson>> {
+public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder> {
 
     private final Menu mMenu;
     private final Context mContext;
@@ -26,14 +26,14 @@ public class MenuAdapter extends RecyclerView.Adapter<ListItemHolder<ListItemPer
 
     @NonNull
     @Override
-    public ListItemHolder<ListItemPerson> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListItemHolder<>(new ListItemPerson(mContext));
+    public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ListItemHolder(mContext);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListItemHolder<ListItemPerson> holder, int position) {
+    public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
         MenuItem menuItem = mMenu.getItem(position);
-        ListItemPerson listItem = holder.getListItem();
+        ListItem listItem = holder.getListItem();
 
         listItem.setOnClickListener(view -> mOnMenuItemClickListener.onMenuItemClick(menuItem));
         listItem.setBigText((String) menuItem.getTitle());
