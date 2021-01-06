@@ -48,7 +48,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     @Override
     public void dismiss() {
         if (mIsShown) {
-            dismiss();
+            super.dismiss();
             this.mIsShown = false;
         }
     }

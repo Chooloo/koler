@@ -1,48 +1,26 @@
 package com.chooloo.www.callmanager.ui.page;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.databinding.FragmentPageBinding;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
-
-import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class PageRecents extends PageFragment implements PageMvpView {
 
     private PageMvpPresenter<PageMvpView> mPresenter;
 
     private RecentsFragment mRecentsFragment;
-    private FragmentPageBinding binding;
 
     public static PageRecents newInstance() {
         Bundle args = new Bundle();
         PageRecents fragment = new PageRecents();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentPageBinding.inflate(inflater);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        mRecentsFragment = RecentsFragment.newInstance();
-        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_page_layout, mRecentsFragment).commit();
     }
 
     @Override
@@ -58,6 +36,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
         mPresenter = new PagePresenter<>();
         mPresenter.onAttach(this);
 
+        mRecentsFragment = RecentsFragment.newInstance();
         mRecentsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -65,6 +44,8 @@ public class PageRecents extends PageFragment implements PageMvpView {
                 mPresenter.onScrollStateChanged(newState);
             }
         });
+
+        putRecentsFragment();
     }
 
     @Override
@@ -85,5 +66,11 @@ public class PageRecents extends PageFragment implements PageMvpView {
     @Override
     public void loadSearchText(@Nullable String text) {
         mRecentsFragment.load(null, text == "" ? null : text);
+    }
+
+    private void putRecentsFragment(){
+        FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
     }
 }

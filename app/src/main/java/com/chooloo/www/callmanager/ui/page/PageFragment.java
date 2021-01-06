@@ -1,7 +1,14 @@
 package com.chooloo.www.callmanager.ui.page;
 
-import androidx.lifecycle.ViewModelProviders;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.chooloo.www.callmanager.databinding.FragmentPageBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel;
@@ -10,8 +17,17 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
 
     private PageMvpPresenter<PageMvpView> mPresenter;
 
+    protected FragmentPageBinding binding;
+
     protected SharedDialViewModel mDialViewModel;
     protected SharedSearchViewModel mSearchViewModel;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentPageBinding.inflate(inflater);
+        return binding.getRoot();
+    }
 
     @Override
     public void setUp() {
