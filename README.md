@@ -3,6 +3,12 @@
 ## An update, im currently working on a massive code refactor from scratch, will probably take some time, but will be better :) feel free to look at the 'mvp' branch
 
 
+## Support
+Due to lack of support, unfortunately it's diffictult for us to keep supporting the project
+If you like the app and want us to fix and improve it, please consider giving us a boost
+
+<a href="https://paypal.me/theroeiedri?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
+
 A uniquely stylized phone app for Android, designed with the user in mind.
 Believe us we want to make it good, as we use it ourselves.
 </br>
@@ -65,9 +71,3 @@ Great for people who call a lot of people one by one
 ## GET THE APP
  * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
- 
-## Support
-Due to lack of support, unfortunately it's diffictult for us to keep supporting the project
-If you like the app and want us to fix and improve it, please consider giving us a boost
-
-<a href="https://paypal.me/theroeiedri?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
