@@ -167,6 +167,9 @@ public class MainActivity extends AbsSearchBarActivity {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
                 updateButtons(i);
+                if (!isBottomSheetOpen(i)) {
+                    mDialpadFragment.setNumber("");
+                }
             }
 
             @Override
