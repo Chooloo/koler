@@ -72,7 +72,7 @@ public class ContactsCursorLoader extends CursorLoader {
      *
      * @return String The selection string
      */
-    private static String getWhere() {
+    static String getWhere() {
         return "(" + Phone.DISPLAY_NAME_PRIMARY + " IS NOT NULL" +
                 " OR " + Phone.DISPLAY_NAME_ALTERNATIVE + " IS NOT NULL" + ")" +
                 " AND " + Phone.HAS_PHONE_NUMBER + "=1" +

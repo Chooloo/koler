@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.chooloo.www.callmanager.cursorloader.ContactLookupCursorLoader;
 import com.chooloo.www.callmanager.database.entity.Contact;
 import com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader;
 
@@ -50,6 +51,19 @@ public class ContactUtils {
         // cursor isn't empty, get the first result
         cursor.moveToFirst();
         return new Contact(cursor);
+    }
+
+    public static Contact lookupContact(@NonNull Context context, @NonNull String phoneNumber) {
+        if (!checkPermissionsGranted(context, new String[]{READ_CONTACTS}, true)) {
+            return UNKNOWN;
+        }
+
+        Contact contact = new ContactLookupCursorLoader(context, phoneNumber).loadContact();
+        if (contact == null) {
+            return new Contact(null, phoneNumber);
+        }
+
+        return contact;
     }
 
     /**

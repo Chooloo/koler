@@ -107,7 +107,7 @@ public class RecentsFragment extends AbsCursorFragment implements
 
         Contact contact;
         if (recentCall.getCallerName() != null)
-            contact = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null);
+            contact = ContactUtils.lookupContact(mContext, recentCall.getCallerNumber());
         else contact = new Contact(recentCall.getCallerName(), recentCall.getCallerNumber(), null);
 
         // Initiate the dialog
