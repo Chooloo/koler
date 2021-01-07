@@ -31,7 +31,7 @@ public class SettingsActivity extends BaseActivity implements SettingsMvpView {
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT)
                 .commit();

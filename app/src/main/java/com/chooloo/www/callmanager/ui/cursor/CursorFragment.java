@@ -21,11 +21,17 @@ import static android.view.View.VISIBLE;
 
 public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragment implements CursorMvpView, LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID = 1;
+    protected static int mLoaderId = 1;
 
     protected A mAdapter;
     private CursorMvpPresenter<CursorMvpView> mPresenter;
     protected FragmentItemsBinding binding;
+    private RecyclerView.OnScrollListener mOnScrollListener;
+
+    public CursorFragment() {
+        mOnScrollListener = new RecyclerView.OnScrollListener() {
+        };
+    }
 
     @Nullable
     @Override
@@ -57,21 +63,31 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.onDetach();
     }
 
     @Override
-    public void setUp() {
-
+    public void onSetup() {
         mPresenter = new CursorPresenter<>();
         mPresenter.onAttach(this);
 
-        mAdapter = getAdapter();
-        binding.itemsRecyclerView.setAdapter(mAdapter);
+        mAdapter = onGetAdapter();
 
         binding.refreshLayout.setOnRefreshListener(() -> mPresenter.onRefresh());
+        binding.itemsRecyclerView.setAdapter(mAdapter);
+        binding.itemsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                mOnScrollListener.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                mOnScrollListener.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
         // TODO make this no permission handling better
         if (!hasPermissions()) {
@@ -95,17 +111,17 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     public void load() {
         if (hasPermissions()) {
             runLoader();
-        } else {
+        } else if (mPresenter != null) {
             mPresenter.onNoPermissions();
         }
     }
 
     @Override
     public void runLoader() {
-        if (LoaderManager.getInstance(this).getLoader(LOADER_ID) == null) {
-            LoaderManager.getInstance(this).initLoader(LOADER_ID, getArgsSafely(), this);
+        if (LoaderManager.getInstance(this).getLoader(mLoaderId) == null) {
+            LoaderManager.getInstance(this).initLoader(mLoaderId, getArgsSafely(), this);
         } else {
-            LoaderManager.getInstance(this).restartLoader(LOADER_ID, getArgsSafely(), this);
+            LoaderManager.getInstance(this).restartLoader(mLoaderId, getArgsSafely(), this);
         }
     }
 
@@ -125,9 +141,9 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     }
 
     @Override
-    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
-        binding.itemsRecyclerView.addOnScrollListener(onScrollListener);
+    public void setOnScrollListener(RecyclerView.OnScrollListener onScrollListener) {
+        mOnScrollListener = onScrollListener;
     }
 
-    public abstract A getAdapter();
+    public abstract A onGetAdapter();
 }

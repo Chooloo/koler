@@ -46,7 +46,7 @@ public class MenuFragment extends BaseBottomSheetDialogFragment implements MenuM
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         mMenu = new PopupMenu(mActivity, null).getMenu();
         mActivity.getMenuInflater().inflate(getArgsSafely().getInt(ARG_MENU_LAYOUT), mMenu);
         mAdapter = new MenuAdapter(mActivity, mMenu);

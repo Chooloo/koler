@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
@@ -24,20 +22,14 @@ public class PageRecents extends PageFragment implements PageMvpView {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
-    @Override
-    public void setUp() {
-        super.setUp();
+    public void onSetup() {
+        super.onSetup();
 
         mPresenter = new PagePresenter<>();
         mPresenter.onAttach(this);
 
         mRecentsFragment = RecentsFragment.newInstance();
-        mRecentsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecentsFragment.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -45,7 +37,13 @@ public class PageRecents extends PageFragment implements PageMvpView {
             }
         });
 
-        putRecentsFragment();
+        mActivity.getSupportFragmentManager().beginTransaction().replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.onDetach();
     }
 
     @Override
@@ -66,11 +64,5 @@ public class PageRecents extends PageFragment implements PageMvpView {
     @Override
     public void loadSearchText(@Nullable String text) {
         mRecentsFragment.load(null, text == "" ? null : text);
-    }
-
-    private void putRecentsFragment(){
-        FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
     }
 }

@@ -33,8 +33,8 @@ public class ChangelogDialog extends DialogFragment implements ChangelogMvpView 
     private ChangelogPresenter<ChangelogMvpView> mPresenter;
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.onDetach();
     }
 

@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import org.jetbrains.annotations.NotNull;
 
-import butterknife.ButterKnife;
 import kotlin.TypeCastException;
 
 public abstract class BaseFragment extends Fragment implements MvpView {
@@ -37,12 +36,12 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRequiredPermissions = getPermissions();
-        setUp();
+        mRequiredPermissions = onGetPermissions();
+        onSetup();
     }
 
     @Override
-    public String[] getPermissions() {
+    public String[] onGetPermissions() {
         return new String[]{};
     }
 
@@ -53,6 +52,9 @@ public abstract class BaseFragment extends Fragment implements MvpView {
 
     @Override
     public boolean hasPermissions() {
+        if (mRequiredPermissions == null) {
+            return false;
+        }
         for (String permission : mRequiredPermissions) {
             if (!mActivity.hasPermission(permission)) {
                 return false;

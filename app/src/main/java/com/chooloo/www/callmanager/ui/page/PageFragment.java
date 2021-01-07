@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.chooloo.www.callmanager.databinding.FragmentPageBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
@@ -30,20 +32,24 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         mPresenter = new PagePresenter<>();
         mPresenter.onAttach(this);
 
         mDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
-        mDialViewModel.getNumber().observe(this, this::onDialNumberChanged);
-
         mSearchViewModel = mViewModelProvider.get(SharedSearchViewModel.class);
-        mSearchViewModel.getText().observe(this, this::onSearchTextChanged);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
+        mDialViewModel.getNumber().observe(getViewLifecycleOwner(), this::onDialNumberChanged);
+        mSearchViewModel.getText().observe(getViewLifecycleOwner(), this::onSearchTextChanged);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.onDetach();
     }
 

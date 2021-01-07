@@ -3,7 +3,7 @@ package com.chooloo.www.callmanager.ui.about;
 import com.chooloo.www.callmanager.ui.base.MvpView;
 
 public interface AboutMvpView extends MvpView {
-    void setUp();
+    void onSetup();
 
     void openChangelog();
 

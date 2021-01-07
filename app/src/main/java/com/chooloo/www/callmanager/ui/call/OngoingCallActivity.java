@@ -44,11 +44,11 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.helpers.AllPurposeTouchListener;
-import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PreferencesManager;
@@ -65,7 +65,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import timber.log.Timber;
 
@@ -334,6 +333,18 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     }
 
     @Override
+    public void onSetup() {
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mIsCreatingUI = false;
+//        this.startService(new Intent(this, RecordService.class)
+//                .putExtra("commandType", RECORD_SERVICE_START));
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         CallManager.unregisterCallback(mCallback); //The activity is gone, no need to listen to changes
@@ -342,10 +353,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         cancelNotification();
 //        this.startService(new Intent(this, RecordService.class)
 //                .putExtra("commandType", RECORD_SERVICE_STOP));
-    }
-
-    @Override
-    public void setUp() {
     }
 
     /**
@@ -363,14 +370,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PermissionUtils.PERMISSION_RC && PermissionUtils.checkPermissionsGranted(grantResults))
             setSmsOverlay(mFloatingSendSMSButton);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mIsCreatingUI = false;
-//        this.startService(new Intent(this, RecordService.class)
-//                .putExtra("commandType", RECORD_SERVICE_START));
     }
 
     @Override

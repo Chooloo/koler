@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setUp();
+        onSetup();
     }
 
     @Override
@@ -74,18 +75,24 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     @Override
-    public String[] getPermissions() {
+    public String[] onGetPermissions() {
         return new String[0];
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.onAttach(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.onDetach();
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         mPresenter = new SettingsPresenter<>();
         mPresenter.onAttach(this);
     }

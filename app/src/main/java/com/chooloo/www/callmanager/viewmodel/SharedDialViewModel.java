@@ -25,13 +25,15 @@ public class SharedDialViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<String> getNumber() {
-        if (mNumber.getValue() == "") mNumber.setValue(null);
         return mNumber;
     }
 
     public void setNumber(String number) {
-        if (number == "") mNumber.setValue(null);
-        else mNumber.setValue(number);
+        if (number.equals("")) {
+            mNumber.setValue(null);
+        } else {
+            mNumber.setValue(number);
+        }
     }
 
     public MutableLiveData<Boolean> getIsFocused() {

@@ -11,11 +11,11 @@ import com.chooloo.www.callmanager.ui.base.MvpView;
 
 public interface CursorMvpView extends MvpView {
 
-    void setUp();
+    void onSetup();
 
     void updateData(Cursor cursor);
 
-    Loader<Cursor> getLoader(Bundle args);
+    Loader<Cursor> onGetLoader(Bundle args);
 
     int getItemCount();
 
@@ -27,5 +27,5 @@ public interface CursorMvpView extends MvpView {
 
     void setRefreshing(boolean isRefreshing);
 
-    void addOnScrollListener(RecyclerView.OnScrollListener onScrollListener);
+    void setOnScrollListener(RecyclerView.OnScrollListener onScrollListener);
 }

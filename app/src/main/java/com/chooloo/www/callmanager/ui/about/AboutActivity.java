@@ -34,7 +34,7 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         mPresenter = new AboutPresenter<>();
         mPresenter.onAttach(this);
 

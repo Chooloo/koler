@@ -33,8 +33,8 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRequiredPermissions = getPermissions();
-        setUp();
+        mRequiredPermissions = onGetPermissions();
+        onSetup();
     }
 
     @Override
@@ -54,7 +54,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     }
 
     @Override
-    public String[] getPermissions() {
+    public String[] onGetPermissions() {
         return new String[]{};
     }
 

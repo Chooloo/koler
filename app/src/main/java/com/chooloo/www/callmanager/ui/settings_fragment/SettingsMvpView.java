@@ -7,7 +7,7 @@ import androidx.preference.Preference;
 import com.chooloo.www.callmanager.ui.base.MvpView;
 
 public interface SettingsMvpView extends MvpView {
-    void setUp();
+    void onSetup();
 
     void setListPreferenceSummary(Preference preference, Object newValue);
 

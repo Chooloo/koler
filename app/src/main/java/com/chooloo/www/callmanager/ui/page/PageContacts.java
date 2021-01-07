@@ -1,13 +1,13 @@
 package com.chooloo.www.callmanager.ui.page;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.contacts.ContactsFragment;
 
 public class PageContacts extends PageFragment implements PageMvpView {
@@ -24,20 +24,14 @@ public class PageContacts extends PageFragment implements PageMvpView {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
-    @Override
-    public void setUp() {
-        super.setUp();
+    public void onSetup() {
+        super.onSetup();
 
         mPresenter = new PagePresenter<>();
         mPresenter.onAttach(this);
 
         mContactsFragment = ContactsFragment.newInstance();
-        mContactsFragment.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mContactsFragment.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -45,7 +39,13 @@ public class PageContacts extends PageFragment implements PageMvpView {
             }
         });
 
-        putContactsFragment();
+        mActivity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_page_layout, mContactsFragment).commit();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.onDetach();
     }
 
     @Override
@@ -66,11 +66,5 @@ public class PageContacts extends PageFragment implements PageMvpView {
     @Override
     public void loadSearchText(@Nullable String text) {
         mContactsFragment.load(null, text == "" ? null : text);
-    }
-
-    private void putContactsFragment() {
-        FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(binding.fragmentPageLayout.getId(), mContactsFragment).commit();
     }
 }

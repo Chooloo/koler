@@ -65,21 +65,15 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.onAttach(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
     }
 
     public boolean isDialer() {
@@ -87,7 +81,7 @@ public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment i
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         mPresenter = new DialpadPresenter<>();
         mPresenter.onAttach(this);
 

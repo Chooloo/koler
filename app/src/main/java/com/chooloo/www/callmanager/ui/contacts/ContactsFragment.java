@@ -10,8 +10,6 @@ import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 
-import timber.log.Timber;
-
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class ContactsFragment extends CursorFragment<ContactsAdapter> implements ContactsMvpView {
@@ -36,18 +34,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
-    @Override
-    public ContactsAdapter getAdapter() {
+    public ContactsAdapter onGetAdapter() {
         ContactsAdapter contactsAdapter = new ContactsAdapter(mActivity);
         contactsAdapter.setOnContactItemClick(contact -> mPresenter.onContactItemClick(contact));
         contactsAdapter.setOnContactItemLongClickListener(contact -> mPresenter.onContactItemLongClick(contact));
@@ -55,27 +42,33 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     }
 
     @Override
-    public String[] getPermissions() {
+    public String[] onGetPermissions() {
         return REQUIRED_PERMISSIONS;
     }
 
     @Override
-    public Loader<Cursor> getLoader(Bundle args) {
+    public Loader<Cursor> onGetLoader(Bundle args) {
         String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
         String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
         return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override
-    public void setUp() {
-        super.setUp();
+    public void onSetup() {
+        super.onSetup();
+
+        mLoaderId = 0;
 
         mPresenter = new ContactsPresenter<>();
         mPresenter.onAttach(this);
 
         load();
+    }
 
-        Timber.i("www");
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.onDetach();
     }
 
     @Override

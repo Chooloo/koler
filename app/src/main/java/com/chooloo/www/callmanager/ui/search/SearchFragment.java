@@ -43,13 +43,19 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.onAttach(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
         mPresenter.onDetach();
     }
 
     @Override
-    public void setUp() {
+    public void onSetup() {
         mPresenter = new SearchPresenter<>();
         mPresenter.onAttach(this);
 

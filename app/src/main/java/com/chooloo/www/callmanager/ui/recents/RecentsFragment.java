@@ -54,13 +54,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mPresenter.onDetach();
-    }
-
-    @Override
-    public RecentsAdapter getAdapter() {
+    public RecentsAdapter onGetAdapter() {
         RecentsAdapter recentsAdapter = new RecentsAdapter(mActivity);
         recentsAdapter.setOnRecentItemClickListener(recentCall -> mPresenter.onRecentItemClick(recentCall));
         recentsAdapter.setOnRecentItemLongClickListener(recentCall -> mPresenter.onRecentItemLongClick(recentCall));
@@ -68,25 +62,33 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
-    public String[] getPermissions() {
+    public String[] onGetPermissions() {
         return REQUIRED_PERMISSIONS;
     }
 
     @Override
-    public Loader<Cursor> getLoader(Bundle args) {
+    public Loader<Cursor> onGetLoader(Bundle args) {
         String contactName = args.getString(ARG_CONTACT_NAME, null);
         String phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
         return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
     }
 
     @Override
-    public void setUp() {
-        super.setUp();
+    public void onSetup() {
+        super.onSetup();
+
+        mLoaderId = 1;
 
         mPresenter = new RecentsPresenter<>();
         mPresenter.onAttach(this);
 
         load();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.onDetach();
     }
 
     @Override

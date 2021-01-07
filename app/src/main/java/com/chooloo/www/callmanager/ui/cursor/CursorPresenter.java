@@ -37,7 +37,7 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         mMvpView.setRefreshing(true);
-        return mMvpView.getLoader(args);
+        return mMvpView.onGetLoader(args);
     }
 
     @Override

@@ -48,9 +48,8 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         mPresenter.onDetach();
     }
 
-
     @Override
-    public void setUp() {
+    public void onSetup() {
         mPresenter = new ContactPresenter<>();
         mPresenter.onAttach(this);
 

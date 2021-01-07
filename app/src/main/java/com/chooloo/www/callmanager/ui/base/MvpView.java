@@ -6,9 +6,9 @@ import com.chooloo.www.callmanager.util.ThemeUtils;
 
 public interface MvpView {
 
-    String[] getPermissions();
+    String[] onGetPermissions();
 
-    void setUp();
+    void onSetup();
 
     boolean hasPermissions();
 

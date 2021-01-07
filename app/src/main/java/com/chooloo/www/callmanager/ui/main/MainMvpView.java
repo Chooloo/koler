@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import com.chooloo.www.callmanager.ui.base.MvpView;
 
 public interface MainMvpView extends MvpView {
-    void setUp();
+    void onSetup();
 
     int getCurrentPosition();
 

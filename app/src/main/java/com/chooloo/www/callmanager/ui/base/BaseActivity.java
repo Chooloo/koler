@@ -30,18 +30,18 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         super.onCreate(savedInstanceState);
         Utilities.setUpLocale(this);
         mPreferences = PreferencesManager.getInstance(this);
-        mRequiredPermissions = getPermissions();
+        mRequiredPermissions = onGetPermissions();
         mViewModelProvider = new ViewModelProvider(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        setUp();
+        onSetup();
     }
 
     @Override
-    public String[] getPermissions() {
+    public String[] onGetPermissions() {
         return new String[]{};
     }
 
