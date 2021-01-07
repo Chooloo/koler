@@ -42,6 +42,14 @@ public class SearchBarFragment extends AbsBaseFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            mSearchInput.setText("");
+        }
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mInputParams = mSearchInput.getLayoutParams();
