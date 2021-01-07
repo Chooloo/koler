@@ -37,13 +37,9 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
         mPresenter.onAttach(this);
 
         mDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
-        mSearchViewModel = mViewModelProvider.get(SharedSearchViewModel.class);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         mDialViewModel.getNumber().observe(getViewLifecycleOwner(), this::onDialNumberChanged);
+
+        mSearchViewModel = mViewModelProvider.get(SharedSearchViewModel.class);
         mSearchViewModel.getText().observe(getViewLifecycleOwner(), this::onSearchTextChanged);
     }
 

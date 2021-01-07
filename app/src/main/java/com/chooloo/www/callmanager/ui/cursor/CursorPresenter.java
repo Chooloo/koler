@@ -54,7 +54,9 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mMvpView.updateData(null);
+        if (mMvpView != null) {
+            mMvpView.updateData(null);
+        }
     }
 
     @Override
