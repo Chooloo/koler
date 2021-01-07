@@ -29,32 +29,19 @@ public class PhoneNumberUtils {
 
     /**
      * Format a given phone number to a readable string for the user
+     * Examples:
+     *     9876543210 ->     98765 43210
+     *    09876543210 ->    098765 43210
+     *  +919876543210 -> +91 98765 43210
      *
      * @param phoneNumber the number to format
      * @return the formatted number
      */
     public static String formatPhoneNumber(Context context, String phoneNumber) {
-        if (phoneNumber == null) return null;
-        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-        Phonenumber.PhoneNumber formattedNumber = null;
-
-        // Check for international number
-        try {
-            formattedNumber = phoneUtil.parse(phoneNumber.contains("+") ? phoneNumber : "+" + phoneNumber, null);
-            return phoneUtil.format(formattedNumber, INTERNATIONAL);
-        } catch (NumberParseException e) {
-            e.printStackTrace();
+        if (phoneNumber == null) {
+            return null;
         }
 
-        // Check for national number (User's country as default)
-        try {
-            formattedNumber = phoneUtil.parse(phoneNumber, Utilities.getCountry(context));
-            Timber.i("FORMATTING " + phoneNumber + " -> " + phoneUtil.format(formattedNumber, NATIONAL));
-            return phoneUtil.format(formattedNumber, NATIONAL);
-        } catch (NumberParseException e) {
-            e.printStackTrace();
-        }
-
-        return phoneNumber;
+        return android.telephony.PhoneNumberUtils.formatNumber(phoneNumber, Utilities.getCountry(context));
     }
 }
