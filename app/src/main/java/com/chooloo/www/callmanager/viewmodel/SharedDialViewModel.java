@@ -29,7 +29,7 @@ public class SharedDialViewModel extends AndroidViewModel {
     }
 
     public void setNumber(String number) {
-        if (number.equals("")) {
+        if (number == "") {
             mNumber.setValue(null);
         } else {
             mNumber.setValue(number);
