@@ -1,13 +1,16 @@
 package com.chooloo.www.callmanager.ui.page;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.FragmentPageBinding;
 import com.chooloo.www.callmanager.ui.contacts.ContactsFragment;
 
 public class PageContacts extends PageFragment implements PageMvpView {
@@ -39,7 +42,7 @@ public class PageContacts extends PageFragment implements PageMvpView {
             }
         });
 
-        mActivity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_page_layout, mContactsFragment).commit();
+        mActivity.getSupportFragmentManager().beginTransaction().add(binding.fragmentPageLayout.getId(), mContactsFragment).commit();
     }
 
     @Override

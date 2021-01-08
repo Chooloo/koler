@@ -124,9 +124,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     // Audio
     AudioManager mAudioManager;
 
-    // Handlers
-    Handler mCallTimeHandler = new CallTimeHandler();
-
     // Swipes Listeners
     AllPurposeTouchListener mSmsOverlaySwipeListener;
     AllPurposeTouchListener mIncomingCallSwipeListener;
@@ -134,15 +131,10 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     NotificationManager mNotificationManager;
 
     // Edit Texts
-    @BindView(R.id.edit_sms) TextInputEditText mEditSms;
 
     // Text views
     @BindView(R.id.text_status) TextView mStatusText;
     @BindView(R.id.text_caller) TextView mCallerText;
-    @BindView(R.id.text_reject_call_timer_desc) TextView mRejectCallTimerText;
-    @BindView(R.id.text_answer_call_timer_desc) TextView mAnswerCallTimerText;
-    @BindView(R.id.text_action_time_left) TextView mActionTimeLeftText;
-    @BindView(R.id.text_timer_indicator) TextView mTimerIndicatorText;
     @BindView(R.id.text_stopwatch) TextView mTimeText;
 
     // Action buttons
@@ -158,27 +150,10 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     @BindView(R.id.button_keypad) ImageView mKeypadButton;
     @BindView(R.id.button_speaker) ImageView mSpeakerButton;
     @BindView(R.id.button_add_call) ImageView mAddCallButton;
-    @BindView(R.id.button_send_sms) Button mSendSmsButton;
-
-    // Floating Action Buttons
-    @BindView(R.id.button_floating_reject_call_timer) FloatingActionButton mFloatingRejectCallTimerButton;
-    @BindView(R.id.button_floating_answer_call_timer) FloatingActionButton mFloatingAnswerCallTimerButton;
-    @BindView(R.id.button_floating_send_sms) FloatingActionButton mFloatingSendSMSButton;
-    @BindView(R.id.button_floating_cancel_overlay) FloatingActionButton mFloatingCancelOverlayButton;
-
-    @Nullable
-    @BindView(R.id.button_cancel_sms)
-    FloatingActionButton mFloatingCancelSMS;
-    @BindView(R.id.button_cancel_timer) FloatingActionButton mFloatingCancelTimerButton;
 
     // Layouts and overlays
     @BindView(R.id.frame) ViewGroup mRootView;
-    @BindView(R.id.dialpad_fragment) View mDialerFrame;
     @BindView(R.id.ongoing_call_layout) ConstraintLayout mOngoingCallLayout;
-    @BindView(R.id.overlay_reject_call_options) ViewGroup mRejectCallOverlay;
-    @BindView(R.id.overlay_answer_call_options) ViewGroup mAnswerCallOverlay;
-    @BindView(R.id.overlay_action_timer) ViewGroup mActionTimerOverlay;
-    @BindView(R.id.overlay_send_sms) ViewGroup mSendSmsOverlay;
 
     @Nullable
     ViewGroup mCurrentOverlay = null;
@@ -250,24 +225,9 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
             }
         };
 
-        // Set OnLongClick listeners for answer/reject listeners
-        mRejectLongClickListener = new LongClickOptionsListener(this, mRejectCallOverlay, rejectListener, overlayChangeListener);
-        mAnswerLongClickListener = new LongClickOptionsListener(this, mAnswerCallOverlay, answerListener, overlayChangeListener);
-
         // Set OnTouch listeners for answer/reject buttons
         mRejectButton.setOnTouchListener(mRejectLongClickListener);
         mAnswerButton.setOnTouchListener(mAnswerLongClickListener);
-
-        // Hide
-        hideOverlays();
-        hideButtons();
-
-        // Set the correct text for the TextView
-        String rejectCallText = mRejectCallTimerText.getText() + " " + mPreferences.getString(R.string.pref_reject_call_timer_key, "error") + "s";
-        mRejectCallTimerText.setText(rejectCallText);
-
-        String answerCallText = mAnswerCallTimerText.getText() + " " + mPreferences.getString(R.string.pref_answer_call_timer_key, "error") + "s";
-        mAnswerCallTimerText.setText(answerCallText);
 
         // Initiate Swipe listener
         mIncomingCallSwipeListener = new AllPurposeTouchListener(this) {
@@ -290,22 +250,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         };
         mOngoingCallLayout.setOnTouchListener(mIncomingCallSwipeListener);
 
-        // Sms swipe listener
-        mSmsOverlaySwipeListener = new AllPurposeTouchListener(this) {
-            @Override
-            public void onSwipeTop() {
-                sendSMS(mFloatingSendSMSButton);
-                removeOverlay(mSendSmsOverlay);
-                mSendSmsOverlay.setOnTouchListener(null);
-            }
-
-            @Override
-            public void onSwipeBottom() {
-                removeOverlay(mSendSmsOverlay);
-                mSendSmsOverlay.setOnTouchListener(null);
-            }
-        };
-
         // Instantiate ViewModels
         mSharedDialViewModel = ViewModelProviders.of(this).get(SharedDialViewModel.class);
         mSharedDialViewModel.getNumber().observe(this, s -> {
@@ -314,10 +258,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
                 CallManager.keypad(c);
             }
         });
-
-        // Bottom Sheet Behaviour
-        mBottomSheetBehavior = BottomSheetBehavior.from(mDialerFrame); // Set the bottom sheet behaviour
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN); // Hide the bottom sheet
 
         createNotificationChannel();
         createNotification();
@@ -365,38 +305,10 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PermissionUtils.PERMISSION_RC && PermissionUtils.checkPermissionsGranted(grantResults))
-            setSmsOverlay(mFloatingSendSMSButton);
-    }
 
     @Override
     public void onKeyPressed(int keyCode, KeyEvent event) {
         CallManager.keypad((char) event.getUnicodeChar());
-    }
-    // -- On Clicks -- //
-
-    //TODO silence the ringing
-    @OnClick(R.id.button_floating_reject_call_timer)
-    public void startEndCallTimer(View view) {
-        int seconds = mPreferences.getInt(R.string.pref_reject_call_timer_key, 0);
-        mActionTimer.setData(seconds * 1000, true);
-        mActionTimer.start();
-        setOverlay(mActionTimerOverlay);
-    }
-
-    /**
-     * Starts call timer (answer)
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_floating_answer_call_timer)
-    public void startAnswerCallTimer(View view) {
-        int seconds = mPreferences.getInt(R.string.pref_answer_call_timer_key, 0);
-        mActionTimer.setData(seconds * 1000, false);
-        mActionTimer.start();
     }
 
     /**
@@ -446,57 +358,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     }
 
     /**
-     * Cancel the call timer
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_cancel_timer)
-    public void cancelTimer(View view) {
-        mActionTimer.cancel();
-    }
-
-    /**
-     * Set the sms overlay (from which you can send sms)
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_floating_send_sms)
-    public void setSmsOverlay(View view) {
-        if (PermissionUtils.checkPermissionsGranted(this, new String[]{SEND_SMS}, true)) {
-            setOverlay(mSendSmsOverlay);
-            mSendSmsButton.setVisibility(VISIBLE);
-            mSendSmsOverlay.setOnTouchListener(mSmsOverlaySwipeListener);
-        }
-    }
-
-    /**
-     * Send sms
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_send_sms)
-    public void sendSMS(View view) {
-        if (mEditSms.getText() != null) {
-//            String number = CallManager.getDisplayContact(this).getNumber();
-            String text = mEditSms.getText().toString();
-//            Utilities.sendSMS(this, number, text);
-            removeOverlay();
-        } else {
-            Toast.makeText(this, "Enter an sms first", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * Cancel sms overlay
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_cancel_sms)
-    public void cancelSMS(View view) {
-        removeOverlay();
-    }
-
-    /**
      * Changes the color of the icon according to button status (activated or not)
      *
      * @param view the clicked view
@@ -526,7 +387,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
      * End current call / Incoming call and changes the ui accordingly
      */
     private void endCall() {
-        mCallTimeHandler.sendEmptyMessage(TIME_STOP);
         CallManager.reject();
         releaseWakeLock();
     }
@@ -618,7 +478,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         else mIsCallingUI = true;
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
         acquireWakeLock();
-        mCallTimeHandler.sendEmptyMessage(TIME_START); // Starts the call timer
 
         // Change the buttons layout
         mAnswerButton.hide();
@@ -643,25 +502,15 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         ongoingSet.setMargin(R.id.reject_btn, ConstraintSet.END, 0);
         ongoingSet.setMargin(R.id.reject_btn, ConstraintSet.START, 0);
 
-        ConstraintSet overlaySet = new ConstraintSet();
-        overlaySet.clone(this, R.layout.correction_overlay_reject_call_options);
-
         if (!mIsCreatingUI) { //Don't animate if the activity is just being created
             Transition transition = new ChangeBounds();
             transition.setInterpolator(new AccelerateDecelerateInterpolator());
-            transition.addTarget(mRejectCallOverlay);
             transition.addTarget(mRejectButton);
             TransitionManager.beginDelayedTransition(mOngoingCallLayout, transition);
         }
 
         ongoingSet.applyTo(mOngoingCallLayout);
-        overlaySet.applyTo((ConstraintLayout) mRejectCallOverlay);
 
-        mFloatingRejectCallTimerButton.hide();
-        mFloatingCancelOverlayButton.hide();
-        mFloatingSendSMSButton.hide();
-
-        mRootView.removeView(mAnswerCallOverlay);
     }
 
     /**
@@ -679,30 +528,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         }
     }
 
-    /**
-     * Hide all buttons
-     */
-    private void hideButtons() {
-        mFloatingRejectCallTimerButton.hide();
-        mFloatingAnswerCallTimerButton.hide();
-        mFloatingCancelOverlayButton.hide();
-        mFloatingSendSMSButton.hide();
-        assert mFloatingCancelSMS != null;
-        mFloatingCancelSMS.hide();
-        mFloatingCancelTimerButton.hide();
-        mSendSmsButton.setVisibility(GONE);
-    }
-
-    /**
-     * Hide all overlays
-     */
-    private void hideOverlays() {
-        //Hide all overlays
-        mActionTimerOverlay.setAlpha(0.0f);
-        mAnswerCallOverlay.setAlpha(0.0f);
-        mRejectCallOverlay.setAlpha(0.0f);
-        mSendSmsOverlay.setAlpha(0.0f);
-    }
 
     // -- Overlays -- //
 
@@ -869,9 +694,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         int navBarHeight = Utilities.navBarHeight(this);
         if (hasNavBar) {
             mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
-            mAnswerCallOverlay.setPadding(0, 0, 0, navBarHeight);
-            mRejectCallOverlay.setPadding(0, 0, 0, navBarHeight);
-            mDialerFrame.setPadding(0, 0, 0, navBarHeight);
         }
     }
 
@@ -880,9 +702,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
      */
     private void setDialpadFragment() {
         mDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.dialpad_fragment, mDialpadFragment)
-                .commit();
         mDialpadFragment.setIsDialer(false);
         mDialpadFragment.setOnKeyDownListener(this);
     }
@@ -908,8 +727,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
             }
 
             @ColorInt int textColor = ContextCompat.getColor(OngoingCallActivity.this, textColorRes);
-            mActionTimeLeftText.setTextColor(textColor);
-            mTimerIndicatorText.setText(textIndicator);
 
             mTimer = new CountDownTimer(millisInFuture, REFRESH_RATE) {
                 Locale mLocale = Locale.getDefault();
@@ -918,7 +735,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
                 public void onTick(long millisUntilFinished) {
                     int secondsUntilFinished = (int) (millisUntilFinished / 1000);
                     String timer = String.format(mLocale, "00:%02d", secondsUntilFinished);
-                    mActionTimeLeftText.setText(timer);
                 }
 
                 @Override
@@ -935,7 +751,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
             if (mTimer != null) mTimer.start();
             else
                 Toast.makeText(getApplicationContext(), "Couldn't start action timer (timer is null)", Toast.LENGTH_LONG).show();
-            if (mActionTimerOverlay != null) setOverlay(mActionTimerOverlay);
         }
 
         private void cancel() {
@@ -987,31 +802,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         public void onDetailsChanged(Call call, Call.Details details) {
             super.onDetailsChanged(call, details);
             Timber.i("Details changed: %s", details.toString());
-        }
-    }
-
-    @SuppressLint("HandlerLeak")
-    class CallTimeHandler extends Handler {
-        @Override
-        public void handleMessage(@NotNull Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case TIME_START:
-                    mCallTimer.start(); // Starts the timer
-                    mCallTimeHandler.sendEmptyMessage(TIME_UPDATE); // Starts the time ui updates
-                    break;
-                case TIME_STOP:
-                    mCallTimeHandler.removeMessages(TIME_UPDATE); // No more updates
-                    mCallTimer.stop(); // Stops the timer
-                    updateTimeUI(); // Updates the time ui
-                    break;
-                case TIME_UPDATE:
-                    updateTimeUI(); // Updates the time ui
-                    mCallTimeHandler.sendEmptyMessageDelayed(TIME_UPDATE, REFRESH_RATE); // Text view updates every milisecond (REFRESH RATE)
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

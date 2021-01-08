@@ -2,17 +2,14 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dialpad_key_layout"
     style="@style/Dialpad.Key.Layout"
     android:layout_width="match_parent">
 
     <TextView
-        android:id="@+id/digit"
         style="@style/Dialpad.Key.Text.Number"
         tools:text="n" />
 
     <TextView
-        android:id="@+id/letters"
         style="@style/Dialpad.Key.Text.Letters"
         tools:text="number" />
 

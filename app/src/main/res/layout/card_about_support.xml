@@ -37,7 +37,6 @@
         app:src="@drawable/ic_star_black_24dp" />
 
     <com.chooloo.www.callmanager.ui.listitem.ListItem
-        android:id="@+id/about_donate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:bigText="@string/about_donate_title"

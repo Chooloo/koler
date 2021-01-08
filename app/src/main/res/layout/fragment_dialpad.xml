@@ -4,7 +4,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dialpad_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bubble_background">
@@ -61,62 +60,38 @@
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_1"
-                app:digit="1" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="1" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_2"
-                app:digit="2" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="2" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_3"
-                app:digit="3" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="3" />
         </TableRow>
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_4"
-                app:digit="4" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="4" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_5"
-                app:digit="5" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="5" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_6"
-                app:digit="6" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="6" />
         </TableRow>
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_7"
-                app:digit="7" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="7" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_8"
-                app:digit="8" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="8" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_9"
-                app:digit="9" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="9" />
         </TableRow>
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_star"
-                app:digit="*" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="*" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_0"
-                app:digit="0" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="0" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
-                android:id="@+id/key_hex"
-                app:digit="#" />
+            <com.chooloo.www.callmanager.ui.widgets.DialpadKey app:digit="#" />
         </TableRow>
     </TableLayout>
 
@@ -133,7 +108,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/dialpad_button_delete"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="?attr/selectableItemBackgroundBorderless"

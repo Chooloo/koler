@@ -26,13 +26,4 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="dialog_long_click_cgroup_options">
-        <item>Delete this list</item>
-    </string-array>
-
-    <array name="dots_color">
-        <item>?attr/colorAccent</item>
-        <item>?attr/colorAccent</item>
-        <item>?attr/colorAccent</item>
-    </array>
 </resources>

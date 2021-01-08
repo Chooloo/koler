@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -14,7 +13,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/items_recycler_view"
             style="@style/ListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,8 +24,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/empty_state"
-        layout="@layout/page_empty_state" />
+    <include layout="@layout/page_empty_state" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

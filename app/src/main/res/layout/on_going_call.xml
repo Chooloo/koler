@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ongoing_call_layout_a"
     style="@style/AppTheme.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -183,7 +182,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/ongoing_call_more_actions_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hold_for_actions"

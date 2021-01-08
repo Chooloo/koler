@@ -9,7 +9,6 @@
     tools:context=".ui.search.SearchFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_input_layout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/search_bar_background"
@@ -22,7 +21,6 @@
         app:startIconTint="@color/grey_200">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"

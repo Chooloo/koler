@@ -13,40 +13,5 @@
         android:id="@+id/ongoing_call_layout"
         layout="@layout/on_going_call" />
 
-    <!-- Reject Options -->
-    <include
-        android:id="@+id/overlay_reject_call_options"
-        layout="@layout/overlay_reject_call_options"
-        tools:visibility="gone" />
-
-    <!-- Answer Options -->
-    <include
-        android:id="@+id/overlay_answer_call_options"
-        layout="@layout/overlay_answer_call_options"
-        tools:visibility="gone" />
-
-    <!-- Action Timer Overlay -->
-    <include
-        android:id="@+id/overlay_action_timer"
-        layout="@layout/overlay_action_timer"
-        tools:visibility="gone" />
-
-    <!-- Send SMS Overlay -->
-    <include
-        android:id="@+id/overlay_send_sms"
-        layout="@layout/overlay_send_sms"
-        tools:visibility="gone" />
-
-    <!-- Dialer Fragment -->
-    <FrameLayout
-        android:id="@+id/dialpad_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_anchorGravity="bottom"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        tools:layout="@layout/fragment_dialpad" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

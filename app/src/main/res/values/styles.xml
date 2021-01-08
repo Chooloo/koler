@@ -74,20 +74,6 @@
     <!-- dialpad -->
     <style name="Dialpad" />
 
-    <style name="Dialpad.FabButton">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeTopRight">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-    </style>
-
-    <style name="Dialpad.Layout">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSizeTopRight">10dp</item>
-        <item name="cornerSizeBottomRight">10dp</item>
-    </style>
-
     <style name="Dialpad.Key" />
 
     <style name="Dialpad.Key.Layout">
@@ -152,20 +138,5 @@
     </style>
 
     <!-- tab layout -->
-    <style name="TabLayout" />
-
-    <style name="TabLayout.Layout">
-        <item name="tabIndicatorHeight">0dp</item>
-        <item name="tabSelectedTextColor">@color/soft_black</item>
-        <item name="android:textSize">@dimen/tab_text_size</item>
-        <item name="tabTextColor">@color/grey_300</item>
-        <item name="tabUnboundedRipple">false</item>
-    </style>
-
-    <style name="TabLayout.Text">
-        <item name="android:textSize">@dimen/tab_text_size</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline2
-        </item>
-    </style>
 
 </resources>

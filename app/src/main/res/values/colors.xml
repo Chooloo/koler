@@ -12,17 +12,14 @@
 
     <!-- Whites -->
     <color name="white">#ffffff</color>
-    <color name="semi_white">#DAFFFFFF</color>
 
     <!-- Greys -->
-    <color name="grey_50">#17DADADA</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_200">#CDCDCD</color>
     <color name="grey_300">#BDBDBD</color>
     <color name="grey_400">#A6A6A6</color>
     <color name="grey_500">#9E9E9E</color>
     <color name="grey_800">#424242</color>
-    <color name="grey_850">#303030</color>
 
     <color name="green_phone">#66bb6a</color>
 
@@ -31,6 +28,4 @@
     <color name="star_yellow">#FFEB3B</color>
 
     <!-- backgrounds -->
-    <color name="search_bar_background">#39DADADA</color>
-    <color name="image_placeholder_background">#FFF8F9</color>
 </resources>

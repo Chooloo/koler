@@ -46,7 +46,6 @@
         app:title="@string/about_changelog_title" />
 
     <com.chooloo.www.callmanager.ui.listitem.ListItem
-        android:id="@+id/about_source"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/about_changelog"
