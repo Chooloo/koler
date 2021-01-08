@@ -11,10 +11,11 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.databinding.ListItemBinding;
 
 public class ListItem extends LinearLayout {
 
-    private com.chooloo.www.callmanager.databinding.ListItemBinding binding;
+    private ListItemBinding binding;
     private Context mContext;
 
     public ListItem(Context context) {

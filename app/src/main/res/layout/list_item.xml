@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/list_item_header"
         style="@style/ListItem.Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +15,7 @@
         tools:visibility="visible">
 
         <TextView
+            android:id="@+id/list_item_header_text"
             style="@style/ListItem.Header"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
