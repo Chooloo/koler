@@ -8,18 +8,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
-import com.chooloo.www.callmanager.ui.BottomFragment;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.menu.MenuFragment;
-import com.chooloo.www.callmanager.ui.page.PageAdapterMain;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.util.BiometricUtils;
@@ -38,8 +37,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     private MainMvpPresenter<MainMvpView> mPresenter;
 
     private SharedDialViewModel mSharedDialViewModel;
+
     private DialpadBottomDialogFragment mDialpadFragment;
     private MenuFragment mMenuFragment;
+    private SearchFragment mSearchFragment;
+
     private ActivityMainBinding binding;
 
     @Override
@@ -84,45 +86,37 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mPresenter = new MainPresenter<>();
         mPresenter.onAttach(this);
 
-        Utilities.showNewVersionDialog(this); // check new version
-        PermissionUtils.checkDefaultDialer(this); // ask default dialer
+        Utilities.showNewVersionDialog(this);
+        PermissionUtils.checkDefaultDialer(this);
+        BiometricUtils.showBiometricPrompt(this);
 
-        // view pager
-        binding.viewPager.setAdapter(new PageAdapterMain(this));
+        binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
+        binding.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
+        binding.mainTabLayout.setViewPager(binding.viewPager);
+        binding.viewPager.setAdapter(new MainPagerAdapter(this));
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 mPresenter.onPageSelected(position);
+                Toast.makeText(getApplicationContext(), "Selected page " + position, Toast.LENGTH_LONG).show();
             }
         });
-        binding.mainTabLayout.setViewPager(binding.viewPager);
 
-        // search bar fragment
-        SearchFragment mSearchBarFragment = new SearchFragment();
-        mSearchBarFragment.setOnFocusChangedListener(isFocused -> mPresenter.onSearchFocusChanged(isFocused));
-        mSearchBarFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_search_fragment, mSearchBarFragment).commit();
+        mSearchFragment = new SearchFragment();
+        mSearchFragment.setOnFocusChangedListener(isFocused -> mPresenter.onSearchFocusChanged(isFocused));
+        mSearchFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_search_fragment, mSearchFragment).commit();
 
-        // dialpad fragment
+        mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
+        mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
+
         mDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
-        BottomFragment bottomFragment = new BottomFragment();
-//        bottomFragment.show(getSupportFragmentManager(), "bottom_fragment");
 
-        // dial view model
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
-        // bottom sheet dialog menu
-        mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
-        mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
-
-        BiometricUtils.showBiometricPrompt(this);
-
         checkIncomingIntent();
-
-        binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
-        binding.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
     }
 
     @Override
@@ -158,13 +152,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         return mSharedDialViewModel.getNumber().getValue();
     }
 
-    public void showView(View v, boolean isShow) {
-        isShow = isShow && v.isEnabled();
-        v.animate().scaleX(isShow ? 1 : 0).scaleY(isShow ? 1 : 0).setDuration(100).start();
-        v.setClickable(isShow);
-        v.setFocusable(isShow);
-    }
-
     @Override
     public void openAddContact() {
         ContactUtils.openAddContact(this, getDialNumber());
@@ -194,6 +181,13 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void showDialpadFab(boolean isShow) {
         showView(binding.dialpadFabButton, isShow);
+    }
+
+    private static void showView(View v, boolean isShow) {
+        isShow = isShow && v.isEnabled();
+        v.animate().scaleX(isShow ? 1 : 0).scaleY(isShow ? 1 : 0).setDuration(100).start();
+        v.setClickable(isShow);
+        v.setFocusable(isShow);
     }
 
 }
