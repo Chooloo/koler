@@ -5,83 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- tab layout -->
-    <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
-        android:id="@+id/main_tab_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="10dp"
-        android:padding="15dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_scrollFlags="scroll|snap|enterAlways"
-        app:stl_clickable="true"
-        app:stl_defaultTabTextAllCaps="false"
-        app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-        app:stl_defaultTabTextHorizontalPadding="8dp"
-        app:stl_defaultTabTextMinWidth="0dp"
-        app:stl_defaultTabTextSize="30sp"
-        app:stl_dividerThickness="0dp"
-        app:stl_drawDecorationAfterTab="true"
-        app:stl_indicatorAlwaysInCenter="false"
-        app:stl_indicatorColor="@android:color/transparent"
-        app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
-        app:stl_indicatorGravity="center"
-        app:stl_indicatorInFront="true"
-        app:stl_indicatorInterpolation="smart"
-        app:stl_indicatorThickness="@dimen/smart_tab_height"
-        app:stl_indicatorWidth="auto"
-        app:stl_indicatorWithoutPadding="false"
-        app:stl_overlineColor="#4D000000"
-        app:stl_overlineThickness="0dp"
-        app:stl_titleOffset="24dp"
-        app:stl_underlineColor="#4D000000"
-        app:stl_underlineThickness="0dp"
-        app:tabMode="scrollable" />
-
-    <!-- menu button -->
-    <ImageView
-        android:id="@+id/main_menu_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_more_vert_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/main_tab_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/main_tab_layout" />
-
-    <!-- search button -->
-    <ImageView
-        android:id="@+id/main_search_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_search_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/main_tab_layout"
-        app:layout_constraintEnd_toStartOf="@id/main_menu_button"
-        app:layout_constraintTop_toTopOf="@id/main_tab_layout" />
-
-    <!-- search fragment -->
-    <FrameLayout
-        android:id="@+id/main_search_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+    <include
+        android:id="@+id/appbar_main"
+        layout="@layout/appbar_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_tab_layout"
-        tools:layout="@layout/fragment_search_bar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- view pager -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/main_search_fragment" />
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@id/appbar_main" />
 
     <!-- dialer button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -92,8 +29,8 @@
         android:backgroundTint="@color/white"
         android:contentDescription="@string/dialpad_button"
         android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
-        app:fabSize="auto"
         app:backgroundTint="@color/white"
+        app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

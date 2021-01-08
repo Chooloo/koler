@@ -137,6 +137,12 @@
         <item name="maxImageSize">36dp</item>
     </style>
 
-    <!-- tab layout -->
+    <!-- appbar -->
+    <style name="Appbar" />
 
+    <style name="Appbar.Layout">
+        <item name="android:elevation">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
 </resources>

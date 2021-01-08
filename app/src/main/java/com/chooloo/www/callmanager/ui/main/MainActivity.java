@@ -17,6 +17,7 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
+import com.chooloo.www.callmanager.ui.dialpad.BottomDialpadFragment;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.menu.MenuFragment;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
@@ -91,16 +92,15 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         BiometricUtils.showBiometricPrompt(this);
 
         binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
-        binding.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
+        binding.appbarMain.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
         binding.viewPager.setAdapter(new MainPagerAdapter(this));
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 mPresenter.onPageSelected(position);
-                Toast.makeText(getApplicationContext(), "Selected page " + position, Toast.LENGTH_SHORT).show();
             }
         });
-        binding.mainTabLayout.setViewPager(binding.viewPager);
+        binding.appbarMain.mainTabLayout.setViewPager(binding.viewPager);
 
         mSearchFragment = new SearchFragment();
         mSearchFragment.setOnFocusChangedListener(isFocused -> mPresenter.onSearchFocusChanged(isFocused));

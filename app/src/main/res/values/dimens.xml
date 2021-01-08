@@ -14,7 +14,7 @@
     <dimen name="smart_tab_height">40dp</dimen>
 
     <!-- bubble -->
-    <dimen name="bubble_corner_radius">15dp</dimen>
+    <dimen name="bubble_corner_radius">13dp</dimen>
 
     <!-- fabs -->
     <dimen name="fab_and_bottom_padding">88dp</dimen>
@@ -31,23 +31,12 @@
     <dimen name="list_item_image_size">40dp</dimen>
     <dimen name="list_item_header_text_size">20sp</dimen>
 
-    <!-- fast scroller -->
+    <!-- appbar -->
+    <dimen name="appbar_padding">10dp</dimen>
 
     <!-- bottom sheet dialog -->
     <dimen name="swipe_indicator_height">5dp</dimen>
     <dimen name="swipe_indicator_width">30dp</dimen>
     <dimen name="swipe_indicator_margin">10dp</dimen>
 
-    <!-- toolbar -->
-
-    <!--
-    Because the window insets on round devices are larger than 15dp, this padding only applies
-    to square screens.
-    -->
-
-    <!--
-    This padding applies to both square and round screens. The total padding between the buttons
-    and the window insets is box_inset_layout_padding (above variable) on square screens and
-    inner_frame_layout_padding (below variable) on round screens.
-    -->
 </resources>
