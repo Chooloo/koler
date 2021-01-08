@@ -29,7 +29,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
     @NonNull
     @Override
     public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListItemHolder(mContext);
+        return new ListItemHolder(new ListItem(parent.getContext()));
     }
 
     @Override

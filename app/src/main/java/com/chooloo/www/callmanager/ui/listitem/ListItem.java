@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -16,7 +17,7 @@ import com.chooloo.www.callmanager.databinding.ListItemBinding;
 public class ListItem extends LinearLayout {
 
     private ListItemBinding binding;
-    private Context mContext;
+    private final Context mContext;
 
     public ListItem(Context context) {
         super(context);
@@ -39,9 +40,10 @@ public class ListItem extends LinearLayout {
     }
 
     public void setUp() {
-        binding = com.chooloo.www.callmanager.databinding.ListItemBinding.inflate(LayoutInflater.from(mContext), this, true);
+        binding = ListItemBinding.inflate(LayoutInflater.from(mContext), this, true);
         setClickable(true);
         setFocusable(true);
+        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     public void setBigText(@Nullable String text) {

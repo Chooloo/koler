@@ -4,10 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
@@ -43,7 +44,7 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
     @NonNull
     @Override
     public ListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ListItemHolder(mContext);
+        return new ListItemHolder(new ListItem(parent.getContext()));
     }
 
     @Override

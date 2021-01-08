@@ -9,7 +9,7 @@ public class ListItemHolder extends RecyclerView.ViewHolder {
 
     private final ListItem mListItem;
 
-    public ListItemHolder(Context context) {
+    public ListItemHolder(@NonNull Context context) {
         this(new ListItem(context));
     }
 
