@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -41,8 +42,18 @@ public class ListItem extends LinearLayout {
 
     public void setUp() {
         binding = ListItemBinding.inflate(LayoutInflater.from(mContext), this, true);
-        setClickable(true);
+
+        // set clickable
+        binding.listItemHeaderLayout.setClickable(false);
+        binding.listItemPersonLayout.setClickable(true);
         setFocusable(true);
+
+        // set selectable background resource
+        TypedValue outValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        setBackgroundResource(outValue.resourceId);
+
+        // set width and height
         setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
@@ -72,6 +83,6 @@ public class ListItem extends LinearLayout {
     }
 
     public void showHeader(boolean isShow) {
-        binding.listItemHeader.setVisibility(isShow ? VISIBLE : GONE);
+        binding.listItemHeaderLayout.setVisibility(isShow ? VISIBLE : GONE);
     }
 }

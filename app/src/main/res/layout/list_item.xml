@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/list_item_header"
+        android:id="@+id/list_item_header_layout"
         style="@style/ListItem.Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +27,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/ListItem.Layout"
+        android:id="@+id/list_item_person_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
