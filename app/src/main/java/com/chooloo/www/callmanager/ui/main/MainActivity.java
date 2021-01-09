@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.viewpager2.widget.ViewPager2;
@@ -17,8 +16,8 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
-import com.chooloo.www.callmanager.ui.dialpad.BottomDialpadFragment;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
+import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.ui.menu.MenuFragment;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
@@ -39,7 +38,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     private SharedDialViewModel mSharedDialViewModel;
 
-    private DialpadBottomDialogFragment mDialpadFragment;
+    private DialpadBottomDialogFragment mBottomDialpadFragment;
     private MenuFragment mMenuFragment;
     private SearchFragment mSearchFragment;
 
@@ -110,7 +109,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
         mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
 
-        mDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
+        mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
 
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
         mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
@@ -136,15 +135,15 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void showDialpad(boolean isShow) {
         if (isShow) {
-            mDialpadFragment.show(getSupportFragmentManager(), DialpadBottomDialogFragment.TAG);
-        } else if (mDialpadFragment.ismIsShown()) {
-            mDialpadFragment.dismiss();
+            mBottomDialpadFragment.show(getSupportFragmentManager(), DialpadFragment.TAG);
+        } else if (mBottomDialpadFragment.ismIsShown()) {
+            mBottomDialpadFragment.dismiss();
         }
     }
 
     @Override
     public void setDialNumber(String number) {
-        mDialpadFragment.setNumber(number);
+        mBottomDialpadFragment.mDialpadFragment.setNumber(number);
     }
 
     @Override

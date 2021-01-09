@@ -19,9 +19,5 @@ public interface ContactMvpView extends MvpView {
 
     void toggleFavIcon(boolean toggle);
 
-    void setContactFromIntent();
-
     void handleNoRecents();
-
-    void onBackPressed();
 }

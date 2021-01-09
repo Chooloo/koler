@@ -31,7 +31,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.contact.ContactActivity"
+            android:name=".ui.contact.ContactFragment"
             android:label="@string/title_activity_contact"
             android:theme="@style/AppTheme.NoActionBar" />
 

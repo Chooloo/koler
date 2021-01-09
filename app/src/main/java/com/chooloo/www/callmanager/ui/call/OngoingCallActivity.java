@@ -1,78 +1,34 @@
 package com.chooloo.www.callmanager.ui.call;
 
 import android.annotation.SuppressLint;
-import android.app.KeyguardManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.PowerManager;
-import android.telecom.Call;
+import android.os.PersistableBundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.transition.ChangeBounds;
-import androidx.transition.Transition;
-import androidx.transition.TransitionManager;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
-import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
-import com.chooloo.www.callmanager.ui.helpers.AllPurposeTouchListener;
-import com.chooloo.www.callmanager.ui.helpers.LongClickOptionsListener;
+import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.PreferencesManager;
-import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import timber.log.Timber;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
-import static android.view.View.GONE;
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends BaseActivity implements DialpadBottomDialogFragment.OnKeyDownListener {
+public class OngoingCallActivity extends BaseActivity implements DialpadFragment.OnKeyDownListener {
 
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
@@ -92,12 +48,14 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     // Notification
     private boolean mNotificationEnabled = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
         createNotificationChannel();
         createNotification();
     }
+
 
 
     @Override
@@ -112,7 +70,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
     private void updateUI(int state) {
         if (mNotificationEnabled) {
             try {
-                mBuilder.setContentText(mStateText);
+//                mBuilder.setContentText(mStateText);
                 mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
             } catch (NullPointerException e) {
                 // Notifications not supported by the device's android version
@@ -150,7 +108,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
             mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.icon_full_144)
                     .setContentTitle(callerName)
-                    .setContentText(mStateText)
+//                    .setContentText(mStateText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
                     .setColor(ThemeUtils.getAccentColor(this))
@@ -204,8 +162,17 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         boolean hasNavBar = Utilities.hasNavBar(this);
         int navBarHeight = Utilities.navBarHeight(this);
         if (hasNavBar) {
-            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
+//            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
         }
     }
 
+    @Override
+    public void onSetup() {
+
+    }
+
+    @Override
+    public void onKeyPressed(int keyCode, KeyEvent event) {
+
+    }
 }

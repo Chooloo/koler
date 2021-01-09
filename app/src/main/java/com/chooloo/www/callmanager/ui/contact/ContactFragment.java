@@ -1,22 +1,24 @@
 package com.chooloo.www.callmanager.ui.contact;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.databinding.ActivityContactBinding;
+import com.chooloo.www.callmanager.databinding.FragmentContactBinding;
 import com.chooloo.www.callmanager.entity.Contact;
-import com.chooloo.www.callmanager.ui.base.BaseActivity;
+import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
@@ -26,24 +28,33 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class ContactActivity extends BaseActivity implements ContactMvpView {
+public class ContactFragment extends BaseFragment implements ContactMvpView {
 
-    public static final String CONTACT_INTENT_ID = "CONTACT_INTENT";
+    public static final String CONTACT_ARG = "contact";
 
     private ContactPresenter<ContactMvpView> mPresenter;
     private RecentsFragment mRecentsFragment;
     private Contact mContact;
-    private ActivityContactBinding binding;
+    private FragmentContactBinding binding;
 
+
+    public static ContactFragment newInstance(Contact contact) {
+        Bundle args = new Bundle();
+        args.putSerializable(CONTACT_ARG, contact);
+        ContactFragment fragment = new ContactFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityContactBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentContactBinding.inflate(inflater);
+        return binding.getRoot();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mPresenter.onDetach();
     }
@@ -53,7 +64,7 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         mPresenter = new ContactPresenter<>();
         mPresenter.onAttach(this);
 
-        setContactFromIntent();
+        mContact = (Contact) getArgsSafely().getSerializable(CONTACT_ARG);
 
         // set details
 //        binding.contactNumber.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
@@ -62,7 +73,7 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         // set actions
         binding.contactActionButtons.contactButtonInfo.setVisibility(mContact != null ? VISIBLE : GONE);
         binding.contactActionButtons.contactButtonEdit.setVisibility(mContact != null ? VISIBLE : GONE);
-        binding.contactButtonFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(this, mContact.getStarred() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
+        binding.contactButtonFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(mActivity, mContact.getStarred() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
 
         // set image
         if (mContact != null) {
@@ -77,13 +88,12 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
         // set recents fragment
         if (mContact != null) {
 //            mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
         }
         binding.recentsSectionLayout.setVisibility(mContact != null ? VISIBLE : GONE);
 
         binding.contactButtonFav.setOnClickListener(view -> mPresenter.onActionFav());
-        binding.contactButtonBack.setOnClickListener(view -> mPresenter.onBackButtonPressed());
         binding.contactActionButtons.contactButtonSms.setOnClickListener(view -> mPresenter.onActionSms());
         binding.contactActionButtons.contactButtonCall.setOnClickListener(view -> mPresenter.onActionCall());
         binding.contactActionButtons.contactButtonEdit.setOnClickListener(view -> mPresenter.onActionEdit());
@@ -103,56 +113,44 @@ public class ContactActivity extends BaseActivity implements ContactMvpView {
 
     @Override
     public void actionEdit() {
-        ContactUtils.openContactToEdit(this, mContact.getContactId());
+        ContactUtils.openContactToEdit(mActivity, mContact.getContactId());
     }
 
     @Override
     public void actionInfo() {
-        ContactUtils.openContact(this, mContact.getContactId());
+        ContactUtils.openContact(mActivity, mContact.getContactId());
     }
 
     @Override
     public void actionDelete() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
-            ContactUtils.deleteContact(this, mContact.getContactId());
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_CONTACTS) == PERMISSION_GRANTED) {
+            ContactUtils.deleteContact(mActivity, mContact.getContactId());
         } else {
-            Toast.makeText(this, "I dont have the permission", Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "I dont have the permission", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void actionFav() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
             if (mContact.getStarred()) {
 //                mContact.setIsFavorite(false);
                 toggleFavIcon(true);
-                ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), false);
+                ContactUtils.setContactIsFavorite(mActivity, Long.toString(mContact.getContactId()), false);
             } else {
 //                mContact.setIsFavorite(true);
                 toggleFavIcon(false);
-                ContactUtils.setContactIsFavorite(this, Long.toString(mContact.getContactId()), true);
+                ContactUtils.setContactIsFavorite(mActivity, Long.toString(mContact.getContactId()), true);
             }
         } else {
             PermissionUtils.askForPermissions(this, new String[]{WRITE_CONTACTS});
-            Toast.makeText(this, "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "I dont have the permission to do that :(", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void toggleFavIcon(boolean toggle) {
-        binding.contactButtonFav.setImageDrawable(ContextCompat.getDrawable(this, toggle ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp));
-    }
-
-    @Override
-    public void setContactFromIntent() {
-        Intent intent = getIntent();
-        try {
-            mContact = (Contact) intent.getSerializableExtra(CONTACT_INTENT_ID);
-        } catch (ClassCastException e) {
-            e.printStackTrace();
-            showError("A problem occurred when trying to get contact :(");
-            mContact = null;
-        }
+        binding.contactButtonFav.setImageDrawable(ContextCompat.getDrawable(mActivity, toggle ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp));
     }
 
     @Override

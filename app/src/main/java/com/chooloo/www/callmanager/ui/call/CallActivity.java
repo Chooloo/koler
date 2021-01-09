@@ -20,6 +20,7 @@ import com.chooloo.www.callmanager.databinding.ActivityCallBinding;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
+import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.util.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -35,13 +36,13 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     private ActivityCallBinding binding;
 
-    private DialpadBottomDialogFragment mDialpadFragment;
+    private DialpadBottomDialogFragment mBottomDialpadFragment;
 
     private AudioManager mAudioManager;
 
     private PowerManager.WakeLock mWakeLock;
 
-    private Call.Callback mCallCallback
+    private Call.Callback mCallCallback;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,8 +59,8 @@ public class CallActivity extends BaseActivity implements CallMvpView {
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
 
-        mDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
-        mDialpadFragment.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
+        mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
+        mBottomDialpadFragment.mDialpadFragment.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
 
         // TODO move this to a util class
         mWakeLock = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, getLocalClassName());
@@ -158,9 +159,9 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     @Override
     public void toggleDialpad(boolean isShow) {
         if (isShow) {
-            mDialpadFragment.show(getSupportFragmentManager(), mDialpadFragment.getTag());
+            mBottomDialpadFragment.show(getSupportFragmentManager(), mBottomDialpadFragment.getTag());
         } else {
-            mDialpadFragment.dismiss();
+            mBottomDialpadFragment.dismiss();
         }
     }
 
@@ -257,6 +258,6 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     @Override
     public boolean isDialpadOpened() {
-        return mDialpadFragment.isVisible();
+        return mBottomDialpadFragment.isVisible();
     }
 }

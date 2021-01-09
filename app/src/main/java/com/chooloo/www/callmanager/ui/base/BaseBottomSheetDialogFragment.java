@@ -2,13 +2,16 @@ package com.chooloo.www.callmanager.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.FragmentManager;
 
+import com.chooloo.www.callmanager.databinding.FragmentBottomDialogBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements MvpView {
@@ -21,6 +24,8 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
 
     protected BaseActivity mActivity;
 
+    protected FragmentBottomDialogBinding binding;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -28,6 +33,13 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
             this.mActivity = (BaseActivity) context;
             mActivity.onAttachFragment(this);
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentBottomDialogBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -104,6 +116,10 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         if (mActivity != null) {
             mActivity.showError(getString(stringResId));
         }
+    }
+
+    protected void putFragment(BaseFragment fragment) {
+        mActivity.getSupportFragmentManager().beginTransaction().replace(binding.bottomDialogFragmentPlaceholder.getId(), fragment);
     }
 
     protected Bundle getArgsSafely() {

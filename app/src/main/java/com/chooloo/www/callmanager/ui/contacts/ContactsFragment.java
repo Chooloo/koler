@@ -8,6 +8,7 @@ import androidx.loader.content.Loader;
 
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.ui.contact.ContactBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -82,6 +83,6 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
 
     @Override
     public void openContact(Contact contact) {
-        // TODO implement
+        ContactBottomDialogFragment.newInstance(contact).show(mActivity.getSupportFragmentManager(), ContactBottomDialogFragment.TAG);
     }
 }

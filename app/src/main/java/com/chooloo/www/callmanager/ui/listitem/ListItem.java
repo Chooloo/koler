@@ -46,8 +46,9 @@ public class ListItem extends LinearLayout {
         // set clickable
         setClickable(false);
         binding.listItemHeaderLayout.setClickable(false);
+        binding.listItemHeaderLayout.setFocusable(false);
         binding.listItemPersonLayout.setClickable(true);
-        setFocusable(true);
+        binding.listItemPersonLayout.setFocusable(true);
 
         // set selectable background resource
         TypedValue outValue = new TypedValue();
@@ -85,5 +86,13 @@ public class ListItem extends LinearLayout {
 
     public void showHeader(boolean isShow) {
         binding.listItemHeaderLayout.setVisibility(isShow ? VISIBLE : GONE);
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        binding.listItemPersonLayout.setOnClickListener(onClickListener);
+    }
+
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        binding.listItemPersonLayout.setOnLongClickListener(onLongClickListener);
     }
 }
