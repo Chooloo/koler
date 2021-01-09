@@ -20,7 +20,7 @@
 
     <style name="ListItem.Layout">
         <item name="android:padding">@dimen/list_item_padding</item>
-        <item name="android:paddingStart">@dimen/list_item_padding_start</item>
+        <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:background">?attr/selectableItemBackground</item>
@@ -31,7 +31,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/list_item_header_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textColor">@color/grey_800</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
         </item>
     </style>
@@ -44,11 +44,12 @@
     <style name="ListItem.Text.Big">
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">textStart</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+        <item name="android:layout_marginStart">@dimen/list_item_padding</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:text">Simta Kumta</item>
-        <item name="android:layout_marginStart">@dimen/list_item_big_text_margin</item>
     </style>
 
     <style name="ListItem.Text.Small">
@@ -63,7 +64,6 @@
     <style name="ListItem.Image">
         <item name="android:layout_width">@dimen/list_item_image_size</item>
         <item name="android:layout_height">@dimen/list_item_image_size</item>
-        <item name="android:src">@drawable/ic_person_black_24dp</item>
         <item name="android:tint">@color/grey_100</item>
         <item name="civ_border_width">0dp</item>
         <item name="android:scaleType">fitCenter</item>

@@ -74,7 +74,7 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
         int favoritesCount = cursor != null ? cursor.getExtras().getInt(EXTRA_FAVORITE_COUNT) : 0;
         if (favoritesCount > 0) {
             mHeadersCounts.add(0, favoritesCount);
-            mHeaders.add(0, "☆");
+            mHeaders.add(0, "★");
         }
     }
 
