@@ -13,27 +13,25 @@ interface CallMvpView extends MvpView {
 
     void toggleSpeaker(boolean isSpeaker);
 
-    void showDialpad(boolean isShow);
+    void toggleDialpad(boolean isShow);
 
     void pressDialpadKey(char keyChar);
 
     void addCall();
 
-    void updateCallerInfo();
+    void updateCall();
 
-    void updateState(int state);
-
-    void moveHangupButtonToMiddle();
+    void updateState();
 
     void switchToActiveCallUI();
 
-    void acquireWakeLock();
-
-    void releaseWakeLock();
+    void moveHangupButtonToMiddle();
 
     void createNotification();
 
     void createNotificationChannel();
 
     void cancelNotification();
+
+    boolean isDialpadOpened();
 }

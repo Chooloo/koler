@@ -10,12 +10,8 @@ import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
-import com.chooloo.www.callmanager.ui.call.OngoingCallActivity;
-import com.chooloo.www.callmanager.util.validation.Validator;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -158,7 +154,7 @@ public class CallManager {
      *
      * @param callback the callback to register
      */
-    public static void registerCallback(OngoingCallActivity.Callback callback) {
+    public static void registerCallback(Call.Callback callback) {
         if (sCall == null) return;
         sCall.registerCallback(callback);
     }
