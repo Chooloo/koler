@@ -44,6 +44,7 @@ public class ListItem extends LinearLayout {
         binding = ListItemBinding.inflate(LayoutInflater.from(mContext), this, true);
 
         // set clickable
+        setClickable(false);
         binding.listItemHeaderLayout.setClickable(false);
         binding.listItemPersonLayout.setClickable(true);
         setFocusable(true);

@@ -12,8 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.os.PowerManager;
 import android.telecom.Call;
 import android.view.KeyEvent;
@@ -30,7 +28,6 @@ import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,8 +46,8 @@ import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.ui.helpers.AllPurposeTouchListener;
+import com.chooloo.www.callmanager.ui.helpers.LongClickOptionsListener;
 import com.chooloo.www.callmanager.util.CallManager;
-import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.PreferencesManager;
 import com.chooloo.www.callmanager.util.Stopwatch;
 import com.chooloo.www.callmanager.util.ThemeUtils;
@@ -58,7 +55,6 @@ import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -68,7 +64,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
 
-import static android.Manifest.permission.SEND_SMS;
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
@@ -165,7 +160,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         super.onCreate(savedInstanceState);
 
         // set theme and view
-        setContentView(R.layout.activity_ongoing_call); // set layout
+        setContentView(R.layout.activity_call); // set layout
 
         // code settings
         PreferencesManager.getInstance(this);
@@ -311,46 +306,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadBottomDi
         CallManager.keypad((char) event.getUnicodeChar());
     }
 
-    /**
-     * Turns on mute according to current state (if already on/off)
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_mute)
-    public void toggleMute(View view) {
-        Utilities.toggleViewActivation(view);
-        if (view.isActivated()) mMuteButton.setImageResource(R.drawable.ic_mic_off_black_24dp);
-        else mMuteButton.setImageResource(R.drawable.ic_mic_black_24dp);
-        mAudioManager.setMicrophoneMute(view.isActivated());
-    }
-
-    /**
-     * Turns on/off the speaker according to current state (if already on/off)
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_speaker)
-    public void toggleSpeaker(View view) {
-        Utilities.toggleViewActivation(view);
-        mAudioManager.setSpeakerphoneOn(view.isActivated());
-    }
-
-    /**
-     * Puts the call on hold
-     *
-     * @param view the clicked view
-     */
-    @OnClick(R.id.button_hold)
-    public void toggleHold(View view) {
-        Utilities.toggleViewActivation(view);
-        CallManager.hold(view.isActivated());
-    }
-
-    //TODO add functionality to the Keypad button
-    @OnClick(R.id.button_keypad)
-    public void toggleKeypad(View view) {
-        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-    }
 
     //TODO add functionality to the Add call button
     @OnClick(R.id.button_add_call)
