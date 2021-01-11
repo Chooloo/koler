@@ -180,16 +180,8 @@ public class Contact implements Serializable {
      */
     public String getMainPhoneNumber() {
         if (phoneNumbers.isEmpty()) return null;
-        String phoneNumber = phoneNumbers.get(0);
 
-        // Try decoding it just in case
-        try {
-            phoneNumber = java.net.URLDecoder.decode(phoneNumber, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // The number cant be decoded so its probably not needed anyway
-        }
-
-        return phoneNumber;
+        return phoneNumbers.get(0);
     }
 
     /**
