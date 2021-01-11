@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.telecom.Call;
-import android.telecom.PhoneAccountHandle;
-import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 import android.widget.Toast;
 
@@ -19,47 +17,12 @@ import com.chooloo.www.callmanager.util.PreferencesManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URLDecoder;
-import java.util.List;
 
 import timber.log.Timber;
 
 public class CallManager {
 
     public static Call sCall;
-
-    public static void call(@NotNull Activity activity, @NotNull String number) {
-        if (!PermissionUtils.checkDefaultDialer(activity)) {
-            Toast.makeText(activity, "Set koler as the default dialer to make calls", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        try {
-            TelecomManager telecomManager = (TelecomManager) activity.getSystemService(Context.TELECOM_SERVICE);
-            List<PhoneAccountHandle> phoneAccountHandleList = telecomManager.getCallCapablePhoneAccounts();
-
-            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
-
-            int simCard = getSimSelection(activity);
-            if (phoneAccountHandleList != null && !phoneAccountHandleList.isEmpty()) {
-                callIntent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandleList.get(simCard));
-            }
-
-            if (simCard != -1) {
-                callIntent.putExtra("com.android.phone.extra.slot", simCard);
-            }
-
-            activity.startActivity(callIntent);
-
-        } catch (SecurityException e) {
-            Toast.makeText(activity, "Couldn't make a call due to security reasons", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-
-        } catch (NullPointerException e) {
-            Toast.makeText(activity, "Couldnt make a call, no phone number", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-    }
-
 
     public static void answer() {
         if (sCall != null) {
@@ -143,5 +106,25 @@ public class CallManager {
             return sCall.getState();
         }
         return Call.STATE_DISCONNECTED;
+    }
+
+    public static void call(@NotNull Activity activity, @NotNull String number) {
+        if (!PermissionUtils.checkDefaultDialer(activity)) {
+            Toast.makeText(activity, "Set Koler as your default dialer to make calls", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        try {
+            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
+            activity.startActivity(callIntent);
+
+        } catch (SecurityException e) {
+            Toast.makeText(activity, "Couldn't make the call due to security reasons", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+
+        } catch (NullPointerException e) {
+            Toast.makeText(activity, "No phone number detected", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }

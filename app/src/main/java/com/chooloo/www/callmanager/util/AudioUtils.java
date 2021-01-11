@@ -4,12 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.provider.MediaStore;
 import android.view.KeyEvent;
 
 import java.util.HashMap;
-
-import timber.log.Timber;
 
 public class AudioUtils {
 
@@ -21,31 +18,23 @@ public class AudioUtils {
     private final Object mToneGeneratorLock = new Object();
     private ToneGenerator mToneGenerator;
 
-    public AudioUtils() {
-    }
-
     public static boolean isPhoneSilent(Activity activity) {
-        AudioManager audioManager = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
-        int ringerMode = audioManager.getRingerMode();
+        int ringerMode = ((AudioManager) activity.getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
         return (ringerMode == AudioManager.RINGER_MODE_SILENT) || (ringerMode == AudioManager.RINGER_MODE_VIBRATE);
     }
 
     public void toggleToneGenerator(boolean toggle) {
         synchronized (mToneGeneratorLock) {
-            if (toggle) {
-                if (mToneGenerator == null) {
-                    try {
-                        mToneGenerator = new ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME);
-                    } catch (RuntimeException e) {
-                        Timber.w(e, "Exception caught while creating local tone generator");
-                        mToneGenerator = null;
-                    }
-                }
-            } else {
-                if (mToneGenerator != null) {
-                    mToneGenerator.release();
+            if (toggle && mToneGenerator == null) {
+                try {
+                    mToneGenerator = new ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME);
+                } catch (RuntimeException e) {
                     mToneGenerator = null;
+                    e.printStackTrace();
                 }
+            } else if (mToneGenerator != null) {
+                mToneGenerator.release();
+                mToneGenerator = null;
             }
         }
     }
@@ -64,15 +53,17 @@ public class AudioUtils {
      * @param durationMs tone length.
      */
     private void playTone(int tone, int durationMs, Activity activity) {
-        if (tone == -1) return;
+        if (tone == -1 || AudioUtils.isPhoneSilent(activity)) {
+            return;
+        }
 
         // We need to re-check the ringer mode for *every* playTone() call, rather than keeping
         // a local flag that's updated in onResume(), since it's possible to toggle silent mode
         // without leaving the current activity (via the ENDCALL-longpress menu.)
-        if (AudioUtils.isPhoneSilent(activity)) return;
         synchronized (mToneGeneratorLock) {
-            if (mToneGenerator == null) return;
-            mToneGenerator.startTone(tone, durationMs); // Start the new tone (will stop any playing tone)
+            if (mToneGenerator != null) {
+                mToneGenerator.startTone(tone, durationMs); // Start the new tone (will stop any playing tone)
+            }
         }
     }
 
@@ -101,15 +92,15 @@ public class AudioUtils {
         playTone(keyToTone.getOrDefault(keyCode, -1), activity);
     }
 
-    // -- Digits -- //
-
     /**
      * Stop the tone if it is played.
      * if local tone playback is disabled, just return.
      */
     public void stopTone() {
         synchronized (mToneGeneratorLock) {
-            if (mToneGenerator != null) mToneGenerator.stopTone();
+            if (mToneGenerator != null) {
+                mToneGenerator.stopTone();
+            }
         }
     }
 }
