@@ -20,7 +20,7 @@ import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
-import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 

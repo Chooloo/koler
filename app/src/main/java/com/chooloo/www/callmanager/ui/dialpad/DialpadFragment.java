@@ -19,7 +19,7 @@ import com.chooloo.www.callmanager.databinding.FragmentDialpadBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
 import com.chooloo.www.callmanager.util.AudioUtils;
-import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;

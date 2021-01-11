@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.chooloo.www.callmanager.ui.call.OngoingCallActivity;
-import com.chooloo.www.callmanager.util.CallManager;
+import com.chooloo.www.callmanager.service.CallManager;
 
 public class NotificationActionReceiver extends BroadcastReceiver {
 
