@@ -31,7 +31,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/list_item_header_text_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/grey_800</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
         </item>
     </style>
@@ -151,5 +150,24 @@
 
     <style name="BottomDialogFragment.Layout">
         <item name="android:background">@drawable/bubble_background</item>
+    </style>
+
+    <!-- search bar -->
+    <style name="SearchBar" />
+
+    <style name="SearchBar.Layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/search_bar_background</item>
+    </style>
+
+    <style name="SearchBar.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/search_bar_height</item>
+        <item name="android:background">@null</item>
+        <item name="android:hint">@string/search_hint</item>
+        <item name="android:inputType">textPersonName</item>
+        <item name="android:textColorHint">@color/grey_200</item>
+        <item name="android:textSize">18sp</item>
     </style>
 </resources>

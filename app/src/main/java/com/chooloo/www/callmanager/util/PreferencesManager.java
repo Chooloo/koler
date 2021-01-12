@@ -3,7 +3,6 @@ package com.chooloo.www.callmanager.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.SparseArray;
 
 import androidx.annotation.StringRes;
 import androidx.preference.PreferenceManager;
@@ -23,14 +22,9 @@ public class PreferencesManager {
 
     @SuppressLint("StaticFieldLeak")
     private static PreferencesManager sSharedPrefs;
-    private Context mContext;
-    private SharedPreferences mPref;
+    private final Context mContext;
+    private final SharedPreferences mPref;
 
-    /**
-     * Constructor
-     *
-     * @param context
-     */
     private PreferencesManager(Context context) {
         PreferenceManager.setDefaultValues(context, R.xml.preference, true);
         mPref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -57,23 +51,23 @@ public class PreferencesManager {
     }
 
     public void putInt(@StringRes int key, int value) {
-        mPref.edit().putInt(mContext.getString(key), value).commit();
+        mPref.edit().putInt(mContext.getString(key), value).apply();
     }
 
     public void putString(@StringRes int key, String value) {
-        mPref.edit().putString(mContext.getString(key), value).commit();
+        mPref.edit().putString(mContext.getString(key), value).apply();
     }
 
     public void putBoolean(@StringRes int key, boolean value) {
-        mPref.edit().putBoolean(mContext.getString(key), value).commit();
+        mPref.edit().putBoolean(mContext.getString(key), value).apply();
     }
 
     public void putFloat(@StringRes int key, float value) {
-        mPref.edit().putFloat(mContext.getString(key), value).commit();
+        mPref.edit().putFloat(mContext.getString(key), value).apply();
     }
 
     public void putLong(@StringRes int key, long value) {
-        mPref.edit().putLong(mContext.getString(key), value).commit();
+        mPref.edit().putLong(mContext.getString(key), value).apply();
     }
 
 

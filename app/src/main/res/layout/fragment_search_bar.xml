@@ -1,34 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".ui.search.SearchFragment">
+    android:id="@+id/search_input_layout"
+    style="@style/SearchBar.Layout"
+    app:endIconDrawable="@drawable/ic_close_black_24dp"
+    app:endIconMode="clear_text"
+    app:endIconTint="@color/grey_400"
+    app:hintEnabled="false"
+    app:startIconDrawable="@drawable/ic_search_black_24dp"
+    app:startIconTint="@color/grey_200">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@drawable/search_bar_background"
-        android:textColor="?attr/colorAccent"
-        app:endIconDrawable="@drawable/ic_close_black_24dp"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/grey_400"
-        app:hintEnabled="false"
-        app:startIconDrawable="@drawable/ic_search_black_24dp"
-        app:startIconTint="@color/grey_200">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_input_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/search_hint"
-            android:inputType="textPersonName"
-            android:textColorHint="@color/grey_200"
-            android:textSize="18sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/search_input_edit_text"
+        style="@style/SearchBar.EditText" />
+</com.google.android.material.textfield.TextInputLayout>

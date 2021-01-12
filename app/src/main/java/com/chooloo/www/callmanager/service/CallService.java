@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.InCallService;
 
-import com.chooloo.www.callmanager.ui.call.OngoingCallActivity;
+import com.chooloo.www.callmanager.ui.call.CallActivity;
+
 
 public class CallService extends InCallService {
 
@@ -12,7 +13,8 @@ public class CallService extends InCallService {
     public void onCallAdded(Call call) {
         super.onCallAdded(call);
         CallManager.sCall = call;
-        Intent intent = new Intent(this, OngoingCallActivity.class);
+
+        Intent intent = new Intent(this, CallActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -22,5 +24,4 @@ public class CallService extends InCallService {
         super.onCallRemoved(call);
         CallManager.sCall = null;
     }
-
 }

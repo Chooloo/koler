@@ -1,6 +1,8 @@
 package com.chooloo.www.callmanager.util;
 
-import java.text.DateFormat;
+import android.text.format.DateFormat;
+
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,9 +39,8 @@ public class RelativeTime {
         } else if (diff < 48 * HOUR_MILLIS) {
             return "Yesterday";
         } else {
-            android.text.format.DateFormat dateFormat = new android.text.format.DateFormat();
-            return new java.text.DateFormatSymbols().getShortMonths()[Integer.parseInt(dateFormat.format("MM", time).toString()) - 1] +
-                    dateFormat.format(" dd, hh:mm", time).toString();
+            return new DateFormatSymbols().getShortMonths()[Integer.parseInt(DateFormat.format("MM", time).toString()) - 1] +
+                    DateFormat.format(" dd, hh:mm", time).toString();
         }
     }
 }

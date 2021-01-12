@@ -21,7 +21,6 @@ import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.ui.menu.MenuFragment;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
-import com.chooloo.www.callmanager.util.BiometricUtils;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
@@ -88,7 +87,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
         Utilities.showNewVersionDialog(this);
         PermissionUtils.checkDefaultDialer(this);
-        BiometricUtils.showBiometricPrompt(this);
 
         binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
         binding.appbarMain.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());

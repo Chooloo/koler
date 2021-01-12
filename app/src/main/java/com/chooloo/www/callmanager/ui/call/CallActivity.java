@@ -18,9 +18,9 @@ import androidx.transition.TransitionManager;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityCallBinding;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
-import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import static android.view.View.GONE;
@@ -28,7 +28,6 @@ import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
-import static com.chooloo.www.callmanager.util.BiometricUtils.showBiometricPrompt;
 
 public class CallActivity extends BaseActivity implements CallMvpView {
     private CallMvpPresenter<CallMvpView> mPresenter;
@@ -197,7 +196,6 @@ public class CallActivity extends BaseActivity implements CallMvpView {
                 break;
             case Call.STATE_RINGING: // Incoming
                 statusTextRes = R.string.status_call_incoming;
-                showBiometricPrompt(this);
                 break;
             case Call.STATE_DIALING: // Outgoing
                 statusTextRes = R.string.status_call_dialing;

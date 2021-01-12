@@ -40,4 +40,6 @@
     <dimen name="swipe_indicator_width">30dp</dimen>
     <dimen name="swipe_indicator_margin">10dp</dimen>
 
+    <!-- search bar -->
+    <dimen name="search_bar_height">40dp</dimen>
 </resources>

@@ -18,7 +18,6 @@ import androidx.preference.SwitchPreference;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.main.MainActivity;
-import com.chooloo.www.callmanager.util.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +62,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         findPreference(getString(R.string.pref_default_page_key)).setOnPreferenceChangeListener((preference, newValue) -> mPresenter.onListPreferenceChange(preference, newValue));
         findPreference(getString(R.string.pref_sim_select_key)).setOnPreferenceChangeListener((preference, newValue) -> mPresenter.onListPreferenceChange(preference, newValue));
         findPreference(getString(R.string.pref_is_biometric_key)).setOnPreferenceChangeListener((preference, newValue) -> mPresenter.onSwitchPreferenceChange(preference, newValue));
-
-        PermissionUtils.checkPermissionsGranted(getContext(), new String[]{READ_PHONE_STATE}, true);
         setupSimSelection();
     }
 
@@ -76,7 +73,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public String[] onGetPermissions() {
-        return new String[0];
+        return new String[]{READ_PHONE_STATE};
     }
 
     @Override
@@ -118,9 +115,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public void setupSimSelection() {
-        if (!PermissionUtils.checkPermissionsGranted(getContext(), new String[]{READ_PHONE_STATE}, true)) {
+        if (!hasPermissions()) {
             Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
             return;
+        } else {
+            askForPermissions();
         }
 
         ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
