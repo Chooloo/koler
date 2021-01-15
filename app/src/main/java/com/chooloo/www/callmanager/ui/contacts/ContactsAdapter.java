@@ -3,12 +3,10 @@ package com.chooloo.www.callmanager.ui.contacts;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
@@ -52,13 +50,18 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
         mCursor.moveToPosition(position);
         Contact contact = Contact.fromCursor(mCursor);
 
+
         ListItem listItemContact = holder.getListItem();
         listItemContact.setBigText(contact.getName());
-        listItemContact.setImageUri(contact.getPhotoUri() == null ? null : Uri.parse(contact.getPhotoUri()));
         listItemContact.setHeaderText(getHeader(position));
         listItemContact.showHeader(isFirstInHeader(position));
         listItemContact.setOnClickListener(view -> mOnContactItemClickListener.onContactItemClick(contact));
         listItemContact.setOnLongClickListener(view -> mOnContactItemLongClickListener.onContactItemLongClick(contact));
+        if (contact.getPhotoUri() != null) {
+            listItemContact.setImageUri(Uri.parse(contact.getPhotoUri()));
+        } else {
+            listItemContact.setImageBackgroundColor(ContextCompat.getColor(mContext, R.color.grey_100));
+        }
     }
 
     @Override

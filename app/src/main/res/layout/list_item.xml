@@ -51,6 +51,7 @@
         <TextView
             android:id="@+id/list_item_small_text"
             style="@style/ListItem.Text.Small"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/list_item_big_text"
             app:layout_constraintTop_toBottomOf="@+id/list_item_big_text"

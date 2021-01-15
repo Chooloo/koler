@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.ui.listitem.ListItem;
@@ -34,23 +36,18 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
-        ListItem listItem = holder.getListItem();
+        mCursor.moveToPosition(position);
         RecentCall recentCall = RecentCall.fromCursor(mCursor);
-
-        String name = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null).getName();
-        String number = recentCall.getCallerNumber();
+        Contact callerContact = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null);
         String callDate = recentCall.getCallDate() != null ? RelativeTime.getTimeAgo(recentCall.getCallDate().getTime()) : null;
-        int callType = recentCall.getCallType();
 
 //        listItem.setBigText(name == null ? number : name + (recentCall.getCount() > 0 ? " (" + count + ")" : ""));
-        listItem.setBigText(name == null ? number : name);
+        ListItem listItem = holder.getListItem();
+        listItem.setBigText(callerContact.getName() == null ? recentCall.getCallerNumber() : callerContact.getName());
         listItem.setSmallText(callDate);
-        listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(callType)));
-
+        listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(recentCall.getCallType())));
         listItem.setOnClickListener(view -> mOnRecentItemClickListener.onRecentItemClick(recentCall));
         listItem.setOnLongClickListener(view -> mOnRecentItemLongClickListener.onRecentItemLongClick(recentCall));
-
-        mCursor.moveToNext();
     }
 
     public void setOnRecentItemClickListener(OnRecentItemClickListener onRecentItemClickListener) {

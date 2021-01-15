@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.R;
@@ -78,6 +79,10 @@ public class ListItem extends LinearLayout {
         if (image != null) {
             binding.listItemImage.setImageURI(image);
         }
+    }
+
+    public void setImageBackgroundColor(@ColorInt int color) {
+        binding.listItemImage.setBackgroundColor(color);
     }
 
     public void setHeaderText(String headerText) {
