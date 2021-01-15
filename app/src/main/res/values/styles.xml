@@ -114,25 +114,35 @@
     <!-- call -->
     <style name="Call" />
 
+    <style name="Call.Layout">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <style name="Call.Button" />
 
     <style name="Call.Button.Action">
-        <item name="android:layout_width">@dimen/call_action_size</item>
-        <item name="android:layout_height">@dimen/call_action_size</item>
-        <item name="android:background">@drawable/ripple_oval</item>
-        <item name="android:layout_margin">15dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:clickable">true</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:drawablePadding">10dp</item>
         <item name="android:focusable">true</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:padding">@dimen/call_action_padding</item>
-        <item name="android:visibility">invisible</item>
     </style>
 
     <style name="Call.Button.Bottom">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="backgroundTint">@color/white</item>
+        <item name="android:tint">@color/white</item>
         <item name="android:scaleType">center</item>
         <item name="fabCustomSize">70dp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:elevation">0dp</item>
+        <item name="borderWidth">0dp</item>
         <item name="fabSize">normal</item>
         <item name="maxImageSize">36dp</item>
     </style>
@@ -148,26 +158,20 @@
 
     <style name="Call.Text" />
 
-    <style name="Call.Text.Status">
+    <style name="Call.Text.Status" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
-        </item>
-        <item name="android:textSize">@dimen/subtitle_1</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="Call.Text.Time">
+    <style name="Call.Text.Time" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption
-        </item>
         <item name="android:textSize">@dimen/caption_1</item>
     </style>
 
-    <style name="Call.Text.Name">
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    <style name="Call.Text.Name" parent="TextAppearance.AppCompat.Title">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/headline_2</item>
         <item name="android:layout_width">wrap_content</item>

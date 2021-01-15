@@ -58,7 +58,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
 
         mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
-        mBottomDialpadFragment.mDialpadFragment.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
+        mBottomDialpadFragment.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
 
         // TODO move this to a util class
         mWakeLock = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, getLocalClassName());
@@ -145,7 +145,8 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     @Override
     public void toggleMute(boolean isMute) {
-        binding.callActionMute.setChipIconResource(isMute ? R.drawable.ic_mic_off_black_24dp : R.drawable.ic_mic_black_24dp);
+        int muteDrawableResource = isMute ? R.drawable.ic_mic_off_black_24dp : R.drawable.ic_mic_black_24dp;
+        binding.callActionMute.setCompoundDrawablesWithIntrinsicBounds(0, muteDrawableResource, 0, 0);
         mAudioManager.setMicrophoneMute(isMute);
     }
 

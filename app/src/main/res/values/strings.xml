@@ -3,10 +3,6 @@
     <string name="contacts">Contacts</string>
     <string name="recents">Recents</string>
 
-    <!-- Colors -->
-
-    <!-- Themes -->
-
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
@@ -15,17 +11,26 @@
         https://github.com/Chooloo/call_manage/blob/master/README.md#support
     </string>
 
-    <!-- Info -->
-    <string name="hold_for_actions">Hold Buttons For More Actions</string>
-
     <!--Activities-->
+    <string name="activity_call">Call</string>
     <string name="activity_settings">Settings</string>
     <string name="activity_about">About</string>
+
+    <!-- call actions -->
+    <string name="call_action_hold">Hold</string>
+    <string name="call_action_unhold">Resume</string>
+    <string name="call_action_speaker">Speaker</string>
+    <string name="call_action_mute">Mute</string>
+    <string name="call_action_unmute">Unmute</string>
+    <string name="call_action_record">Record</string>
+    <string name="call_action_record_stop">Stop Recording</string>
+    <string name="call_action_add_call">Add Call</string>
+    <string name="call_action_keypad">Keypad</string>
+
 
     <!--Action buttons-->
     <string name="action_add_contact">Add Contact</string>
     <string name="action_settings">Settings</string>
-
     <string name="action_about">About</string>
 
     <!--Preferences-->
