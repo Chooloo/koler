@@ -40,10 +40,10 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
         String name = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null).getName();
         String number = recentCall.getCallerNumber();
         String callDate = recentCall.getCallDate() != null ? RelativeTime.getTimeAgo(recentCall.getCallDate().getTime()) : null;
-        int count = recentCall.getCount();
         int callType = recentCall.getCallType();
 
-        listItem.setBigText(name == null ? number : name + (count > 0 ? " (" + count + ")" : ""));
+//        listItem.setBigText(name == null ? number : name + (recentCall.getCount() > 0 ? " (" + count + ")" : ""));
+        listItem.setBigText(name == null ? number : name);
         listItem.setSmallText(callDate);
         listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(callType)));
 

@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.call;
 
 import android.app.KeyguardManager;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -23,7 +24,6 @@ import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.util.Utilities;
 
-import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
@@ -68,11 +68,11 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
         binding.answerBtn.setOnClickListener(view -> mPresenter.onRejectClick());
         binding.rejectBtn.setOnClickListener(view -> mPresenter.onAnswerClick());
-        binding.buttonAddCall.setOnClickListener(view -> mPresenter.onAddCallClick());
-        binding.buttonKeypad.setOnClickListener(view -> mPresenter.onKeypadClick());
-        binding.buttonMute.setOnClickListener(view -> mPresenter.onMuteClick(view.isActivated()));
-        binding.buttonSpeaker.setOnClickListener(view -> mPresenter.onSpeakerClick(view.isActivated()));
-        binding.buttonHold.setOnClickListener(view -> mPresenter.onHoldClick(view.isActivated()));
+        binding.callActionAddCall.setOnClickListener(view -> mPresenter.onAddCallClick());
+        binding.callActionKeypad.setOnClickListener(view -> mPresenter.onKeypadClick());
+        binding.callActionKeypad.setOnClickListener(view -> mPresenter.onMuteClick(view.isActivated()));
+        binding.callActionSpeaker.setOnClickListener(view -> mPresenter.onSpeakerClick(view.isActivated()));
+        binding.callActionHold.setOnClickListener(view -> mPresenter.onHoldClick(view.isActivated()));
 
         mCallCallback = new Call.Callback() {
             @Override
@@ -145,7 +145,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     @Override
     public void toggleMute(boolean isMute) {
-        binding.buttonMute.setImageResource(isMute ? R.drawable.ic_mic_off_black_24dp : R.drawable.ic_mic_black_24dp);
+        binding.callActionMute.setChipIconResource(isMute ? R.drawable.ic_mic_off_black_24dp : R.drawable.ic_mic_black_24dp);
         mAudioManager.setMicrophoneMute(isMute);
     }
 
@@ -176,12 +176,12 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     @Override
     public void updateCall() {
         Contact caller = CallManager.getDisplayContact(this);
-        boolean hasPhoto = caller.getPhotoUri() != null;
 
-        binding.textCaller.setText(caller.getName());
-        binding.imagePlaceholder.setVisibility(hasPhoto ? VISIBLE : GONE);
-        binding.imagePhoto.setVisibility(hasPhoto ? VISIBLE : GONE);
-        binding.itemImageLayout.setVisibility(hasPhoto ? VISIBLE : GONE);
+        binding.callNameText.setText(caller.getName());
+        if (caller.getPhotoUri() != null) {
+            binding.callImage.setVisibility(VISIBLE);
+            binding.callImage.setImageURI(Uri.parse(caller.getPhotoUri()));
+        }
     }
 
     @Override
@@ -210,7 +210,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
                 statusTextRes = R.string.status_call_active;
                 break;
         }
-        binding.textStatus.setText(statusTextRes);
+        binding.callStatusText.setText(statusTextRes);
     }
 
     @Override

@@ -7,88 +7,48 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:layoutDirection="ltr"
+    android:padding="24dp"
     tools:context=".ui.call.OngoingCallActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_status_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="24dp" />
-
-    <!-- Call Status -->
+    <!-- call timer -->
     <TextView
-        android:id="@+id/text_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:textColor="?attr/colorAccent"
+        android:id="@+id/call_time_text"
+        style="@style/Call.Text.Time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guide_status_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:00" />
+
+    <!-- call status -->
+    <TextView
+        android:id="@+id/call_status_text"
+        style="@style/Call.Text.Status"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/call_time_text"
         tools:text="@string/status_call_incoming" />
 
-    <!-- Caller Pic -->
-    <FrameLayout
-        android:id="@+id/item_image_layout"
-        android:layout_width="@dimen/caller_image_size"
-        android:layout_height="@dimen/caller_image_size"
-        app:layout_constraintBottom_toTopOf="@id/caller_details_layout"
+    <!-- caller image -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/call_image"
+        style="@style/Call.Image"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/call_name_text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/call_name_text"
+        tools:src="@drawable/ic_account_circle_black_24dp" />
+
+    <!-- caller name -->
+    <TextView
+        android:id="@+id/call_name_text"
+        style="@style/Call.Text.Name"
+        android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_status"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintTop_toBottomOf="@id/call_status_text"
+        tools:text="Jesus" />
 
-        <ImageView
-            android:id="@+id/image_placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:tint="@color/selector_button_icon"
-            app:srcCompat="@drawable/ic_account_circle_black_24dp" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/image_photo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:civ_border_width="0dp" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/caller_details_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/guide_eye_level"
-        app:layout_constraintEnd_toEndOf="@id/item_image_layout"
-        app:layout_constraintStart_toStartOf="@id/item_image_layout"
-        app:layout_constraintTop_toBottomOf="@id/item_image_layout">
-
-        <!-- Caller Name -->
-        <TextView
-            android:id="@+id/text_caller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textSize="@dimen/caller_name_size"
-            tools:text="Jesus" />
-
-        <!-- Call Timer -->
-        <TextView
-            android:id="@+id/text_stopwatch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="00:00" />
-    </LinearLayout>
-
-
+    <!-- eye level guideline -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_eye_level"
         android:layout_width="wrap_content"
@@ -96,75 +56,118 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
 
-    <!-- Hold Button -->
-    <ImageView
-        android:id="@+id/button_hold"
-        style="@style/Call.Button.Action"
-        app:layout_constraintBottom_toTopOf="@id/button_speaker"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/button_mute"
-        app:srcCompat="@drawable/ic_pause_black_24dp"
-        tools:visibility="visible" />
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/guide_bottom">
 
-    <!-- Mute Button -->
-    <ImageView
-        android:id="@+id/button_mute"
-        style="@style/Call.Button.Action"
-        app:layout_constraintBottom_toTopOf="@id/button_keypad"
-        app:layout_constraintEnd_toStartOf="@id/button_hold"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_mic_off_black_24dp"
-        tools:visibility="visible" />
+        <!-- Mute Button -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/call_action_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mute"
+            app:chipIcon="@drawable/ic_mic_black_24dp" />
 
-    <!-- Speaker Button -->
-    <ImageView
-        android:id="@+id/button_speaker"
-        style="@style/Call.Button.Action"
-        app:layout_constraintBottom_toTopOf="@id/guide_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_keypad"
-        app:srcCompat="@drawable/ic_volume_up_black_24dp"
-        tools:visibility="visible" />
+        <!-- Mute Button -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/call_action_keypad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keypad"
+            app:chipIcon="@drawable/ic_dialpad_black_24dp" />
 
-    <!-- Keypad Button -->
-    <ImageView
-        android:id="@+id/button_keypad"
-        style="@style/Call.Button.Action"
-        app:layout_constraintBottom_toTopOf="@id/guide_bottom"
-        app:layout_constraintEnd_toStartOf="@id/button_speaker"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_dialpad_black_24dp"
-        tools:visibility="visible" />
+        <!-- Mute Button -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/call_action_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hold"
+            app:chipIcon="@drawable/ic_pause_black_24dp" />
 
-    <!-- Add Call Button -->
-    <ImageView
-        android:id="@+id/button_add_call"
-        style="@style/Call.Button.Action"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guide_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_keypad"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        <!-- Mute Button -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/call_action_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speaker"
+            app:chipIcon="@drawable/ic_volume_up_black_24dp" />
+
+        <!-- Mute Button -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/call_action_add_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Call"
+            app:chipIcon="@drawable/ic_add_black_24dp" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <!--    &lt;!&ndash; Hold Button &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/button_hold"-->
+    <!--        style="@style/Call.Button.Action"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/button_speaker"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_chainStyle="packed"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/button_mute"-->
+    <!--        app:srcCompat="@drawable/ic_pause_black_24dp"-->
+    <!--        tools:visibility="visible" />-->
+    <!--    -->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/button_mute"-->
+    <!--        style="@style/Call.Button.Action"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/button_keypad"-->
+    <!--        app:layout_constraintEnd_toStartOf="@id/button_hold"-->
+    <!--        app:layout_constraintHorizontal_chainStyle="packed"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:srcCompat="@drawable/ic_mic_off_black_24dp"-->
+    <!--        tools:visibility="visible" />-->
+
+    <!--    &lt;!&ndash; Speaker Button &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/button_speaker"-->
+    <!--        style="@style/Call.Button.Action"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/guide_bottom"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/button_keypad"-->
+    <!--        app:srcCompat="@drawable/ic_volume_up_black_24dp"-->
+    <!--        tools:visibility="visible" />-->
+
+    <!--    &lt;!&ndash; Keypad Button &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/button_keypad"-->
+    <!--        style="@style/Call.Button.Action"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/guide_bottom"-->
+    <!--        app:layout_constraintEnd_toStartOf="@id/button_speaker"-->
+    <!--        app:layout_constraintHorizontal_chainStyle="packed"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:srcCompat="@drawable/ic_dialpad_black_24dp"-->
+    <!--        tools:visibility="visible" />-->
+
+    <!--    &lt;!&ndash; Add Call Button &ndash;&gt;-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/button_add_call"-->
+    <!--        style="@style/Call.Button.Action"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/guide_bottom"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/button_keypad"-->
+    <!--        app:srcCompat="@drawable/ic_add_black_24dp" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_begin="571dp" />
 
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
         style="@style/Call.Button.Bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:src="@drawable/ic_call_black_24dp"
         android:tint="@color/green_phone"
-        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -172,25 +175,9 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/reject_btn"
         style="@style/Call.Button.Bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:src="@drawable/ic_call_end_black_24dp"
         android:tint="@color/red_phone"
-        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hold_for_actions"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/reject_btn"
-        app:layout_constraintVertical_bias="0.7" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

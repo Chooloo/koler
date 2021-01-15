@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.ui.widgets.tablayout;
 
 import android.animation.AnimatorInflater;
-import android.animation.StateListAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -323,6 +321,7 @@ public class TabLayout extends HorizontalScrollView {
         textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setStateListAnimator(AnimatorInflater.loadStateListAnimator(getContext(), R.xml.tab_state_animator));
 
         if (tabViewBackgroundResId != NO_ID) {

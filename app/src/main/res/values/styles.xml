@@ -11,8 +11,7 @@
     <style name="ListView" parent="Widget.AppCompat.ListView">
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:clipToPadding">false</item>
-        <item name="android:paddingTop">@dimen/default_spacing_padding</item>
-        <item name="android:paddingBottom">@dimen/fab_and_bottom_padding</item>
+        <item name="android:paddingTop">@dimen/list_item_padding</item>
     </style>
 
     <!-- list item -->
@@ -41,7 +40,8 @@
     </style>
 
     <style name="ListItem.Text.Big">
-        <item name="android:textStyle">bold</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textSize">@dimen/subtitle_1</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
         </item>
@@ -54,15 +54,16 @@
     <style name="ListItem.Text.Small">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_margin">@dimen/list_item_small_text_top_margin</item>
+        <item name="android:layout_marginTop">@dimen/list_item_small_text_top_margin</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:text">0523839832</item>
         <item name="android:textColor">@color/grey_500</item>
     </style>
 
     <style name="ListItem.Image">
-        <item name="android:layout_width">@dimen/list_item_image_size</item>
-        <item name="android:layout_height">@dimen/list_item_image_size</item>
+        <item name="android:layout_width">@dimen/image_size_small</item>
+        <item name="android:layout_height">@dimen/image_size_small</item>
         <item name="android:background">@color/grey_100</item>
         <item name="civ_border_width">0dp</item>
         <item name="android:scaleType">fitCenter</item>
@@ -124,16 +125,55 @@
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:padding">@dimen/call_action_padding</item>
-        <item name="android:tint">@color/selector_button_icon</item>
         <item name="android:visibility">invisible</item>
     </style>
 
     <style name="Call.Button.Bottom">
-        <item name="android:layout_margin">30dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="backgroundTint">@color/white</item>
         <item name="android:scaleType">center</item>
         <item name="fabCustomSize">70dp</item>
         <item name="fabSize">normal</item>
         <item name="maxImageSize">36dp</item>
+    </style>
+
+    <style name="Call.Image">
+        <item name="android:layout_width">@dimen/image_size_big</item>
+        <item name="android:layout_height">@dimen/image_size_big</item>
+        <item name="civ_border_width">0dp</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="Call.Text" />
+
+    <style name="Call.Text.Status">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+        <item name="android:textSize">@dimen/subtitle_1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Call.Text.Time">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption
+        </item>
+        <item name="android:textSize">@dimen/caption_1</item>
+    </style>
+
+    <style name="Call.Text.Name">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/headline_2</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <!-- appbar -->

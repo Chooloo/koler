@@ -6,7 +6,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +14,6 @@ import androidx.core.content.ContextCompat;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.FragmentSearchBarBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
-import butterknife.BindView;
 
 public class SearchFragment extends BaseFragment implements SearchMvpView {
 
@@ -97,7 +92,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
 
     @Override
     public void showIcon(boolean isShow) {
-        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(getContext(), R.drawable.ic_search_black_24dp) : null, null, null, null);
+        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(mActivity, R.drawable.ic_search_black_24dp) : null, null, null, null);
     }
 
     public void setOnFocusChangedListener(OnFocusChangedListener onFocusChangedListener) {

@@ -28,7 +28,7 @@
                 app:stl_defaultTabTextColor="@drawable/tab_color_selector"
                 app:stl_defaultTabTextHorizontalPadding="8dp"
                 app:stl_defaultTabTextMinWidth="0dp"
-                app:stl_defaultTabTextSize="30sp"
+                app:stl_defaultTabTextSize="@dimen/headline_2"
                 app:stl_dividerThickness="0dp"
                 app:stl_drawDecorationAfterTab="true"
                 app:stl_indicatorAlwaysInCenter="false"
