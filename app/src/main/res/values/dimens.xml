@@ -10,6 +10,7 @@
     <dimen name="caption_1">12sp</dimen>
     <dimen name="image_size_small">40dp</dimen>
     <dimen name="image_size_big">55dp</dimen>
+    <dimen name="icon_size_small">30dp</dimen>
 
     <!-- call -->
     <dimen name="call_action_size">70dp</dimen>

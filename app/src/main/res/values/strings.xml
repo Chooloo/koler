@@ -27,7 +27,6 @@
     <string name="call_action_add_call">Add Call</string>
     <string name="call_action_keypad">Keypad</string>
 
-
     <!--Action buttons-->
     <string name="action_add_contact">Add Contact</string>
     <string name="action_settings">Settings</string>
@@ -113,8 +112,6 @@
     <string name="reject_timer_indicator">Call ends in</string>
     <string name="answer_timer_indicator">Answering in</string>
 
-    <!-- Dialpad View -->
-
     <!-- The small letters under the numbers -->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_2_letters">ABC</string>
@@ -152,4 +149,9 @@
 
     <string name="search_hint">Search</string>
     <string name="dialpad_button">dialpad button</string>
+
+    <!-- content descriptions -->
+    <string name="content_description_answer_button">Answer Button</string>
+    <string name="content_description_reject_button">Reject Button</string>
+
 </resources>

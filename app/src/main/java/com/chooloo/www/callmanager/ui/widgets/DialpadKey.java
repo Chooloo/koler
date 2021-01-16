@@ -10,24 +10,28 @@ import android.widget.LinearLayout;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.DialpadKeyLayoutBinding;
 
-import butterknife.ButterKnife;
-
 public class DialpadKey extends LinearLayout {
+
+    private DialpadKeyLayoutBinding binding;
+
+    private final Context mContext;
+
+    private final AttributeSet mAttrs;
 
     private int mKeyCode;
     private String mDigit;
     private String mLetters;
 
-    private DialpadKeyLayoutBinding binding;
-
     public DialpadKey(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setUp(context, attrs);
+        mContext = context;
+        mAttrs = attrs;
+        setUp();
     }
 
-    private void setUp(Context context, AttributeSet attrs) {
-        binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context), this, true);
-        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.DialpadKey);
+    private void setUp() {
+        binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(mContext), this, true);
+        TypedArray attributes = mContext.obtainStyledAttributes(mAttrs, R.styleable.DialpadKey);
         updateDigit(attributes.getString(R.styleable.DialpadKey_digit));
     }
 

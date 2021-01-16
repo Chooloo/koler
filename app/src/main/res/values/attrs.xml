@@ -14,4 +14,8 @@
         <attr name="digit" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="CallActionButton">
+        <attr name="icon" format="reference" />
+        <attr name="text" format="string" />
+    </declare-styleable>
 </resources>

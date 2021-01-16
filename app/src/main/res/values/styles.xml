@@ -122,16 +122,27 @@
 
     <style name="Call.Button" />
 
-    <style name="Call.Button.Action">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:clickable">true</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:focusable">true</item>
-        <item name="android:layout_margin">10dp</item>
+    <style name="Call.Button.Action" />
+
+    <style name="Call.Button.Action.Layout">
+        <item name="android:elevation">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/call_action_padding</item>
+    </style>
+
+    <style name="Call.Button.Action.Icon">
+        <item name="android:layout_height">@dimen/icon_size_small</item>
+        <item name="android:layout_width">@dimen/icon_size_small</item>
+    </style>
+
+    <style name="Call.Button.Action.Text">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="Call.Button.Bottom">
