@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toTopOf="@id/answer_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -71,6 +71,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_play_arrow_black_24dp"
+                app:activatedText="@string/call_action_unhold"
                 app:icon="@drawable/ic_pause_black_24dp"
                 app:text="@string/call_action_hold" />
 
@@ -80,6 +81,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_mic_off_black_24dp"
+                app:activatedText="@string/call_action_unmute"
                 app:icon="@drawable/ic_mic_black_24dp"
                 app:text="@string/call_action_mute" />
 
@@ -89,6 +91,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_volume_down_black_24dp"
+                app:activatedText="@string/call_action_speaker_off"
                 app:icon="@drawable/ic_volume_up_black_24dp"
                 app:text="@string/call_action_speaker" />
         </TableRow>
@@ -99,8 +102,9 @@
                 android:id="@+id/call_action_record"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
-                app:icon="@drawable/ic_radio_button_checked_black_24dp"
                 app:activatedIcon="@drawable/ic_stop_circle_black_24dp"
+                app:activatedText="@string/call_action_record_stop"
+                app:icon="@drawable/ic_radio_button_checked_black_24dp"
                 app:text="@string/call_action_record" />
 
             <!-- action keypad -->

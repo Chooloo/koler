@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
@@ -23,7 +24,8 @@ public class CallActionButton extends LinearLayout implements View.OnClickListen
 
     private final int mDefStyle;
 
-    private String mText;
+    private String mDefaultText;
+    private String mOnCLickText;
     @DrawableRes private int mDefaultIcon;
     @DrawableRes private int mOnClickIcon;
 
@@ -45,10 +47,8 @@ public class CallActionButton extends LinearLayout implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        setActivated(isActivated());
-        if (mOnClickIcon != NO_ID) {
-            applyIcon(isActivated() ? mOnClickIcon : mDefaultIcon);
-        }
+        Toast.makeText(mContext, "Clicked", Toast.LENGTH_SHORT).show();
+        toggleActivated();
     }
 
     private void setUp() {
@@ -56,6 +56,7 @@ public class CallActionButton extends LinearLayout implements View.OnClickListen
         TypedArray attributes = mContext.obtainStyledAttributes(mAttrs, R.styleable.CallActionButton, mDefStyle, 0);
 
         setText(attributes.getString(R.styleable.CallActionButton_text));
+        setTextOnClick(attributes.getString(R.styleable.CallActionButton_activatedText));
         setIcon(attributes.getResourceId(R.styleable.CallActionButton_icon, NO_ID));
         setIconOnClick(attributes.getResourceId(R.styleable.CallActionButton_activatedIcon, NO_ID));
 
@@ -65,8 +66,12 @@ public class CallActionButton extends LinearLayout implements View.OnClickListen
     }
 
     public void setText(String text) {
-        mText = text;
-        binding.callActionText.setText(text);
+        mDefaultText = text;
+        applyText(text);
+    }
+
+    public void setTextOnClick(String textOnClick) {
+        mOnCLickText = textOnClick;
     }
 
     public void setIcon(@DrawableRes int icon) {
@@ -81,4 +86,19 @@ public class CallActionButton extends LinearLayout implements View.OnClickListen
     private void applyIcon(@DrawableRes int icon) {
         binding.callActionIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon));
     }
+
+    private void applyText(String text) {
+        binding.callActionText.setText(text);
+    }
+
+    private void toggleActivated() {
+        setActivated(!isActivated());
+        if (mOnClickIcon != NO_ID) {
+            applyIcon(isActivated() ? mOnClickIcon : mDefaultIcon);
+        }
+        if (mOnCLickText != null) {
+            applyText(isActivated() ? mOnCLickText : mDefaultText);
+        }
+    }
+
 }

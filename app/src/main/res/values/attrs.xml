@@ -18,5 +18,6 @@
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
         <attr name="text" format="string" />
+        <attr name="activatedText" format="string" />
     </declare-styleable>
 </resources>

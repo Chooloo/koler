@@ -7,6 +7,7 @@
     <ImageView
         android:id="@+id/call_action_icon"
         style="@style/Call.Button.Action.Icon"
+        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -15,6 +16,7 @@
     <TextView
         android:id="@+id/call_action_text"
         style="@style/Call.Button.Action.Text"
+        android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_action_icon"
