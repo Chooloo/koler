@@ -16,6 +16,7 @@
 
     <declare-styleable name="CallActionButton">
         <attr name="icon" format="reference" />
+        <attr name="activatedIcon" format="reference" />
         <attr name="text" format="string" />
     </declare-styleable>
 </resources>

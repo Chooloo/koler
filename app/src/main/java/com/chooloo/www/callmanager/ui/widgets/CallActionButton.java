@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.DrawableRes;
@@ -13,7 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.CallActionButtonLayoutBinding;
 
-public class CallActionButton extends LinearLayout {
+public class CallActionButton extends LinearLayout implements View.OnClickListener {
     private CallActionButtonLayoutBinding binding;
 
     private final Context mContext;
@@ -21,6 +22,10 @@ public class CallActionButton extends LinearLayout {
     private final AttributeSet mAttrs;
 
     private final int mDefStyle;
+
+    private String mText;
+    @DrawableRes private int mDefaultIcon;
+    @DrawableRes private int mOnClickIcon;
 
     public CallActionButton(Context context) {
         this(context, null);
@@ -38,20 +43,42 @@ public class CallActionButton extends LinearLayout {
         setUp();
     }
 
+    @Override
+    public void onClick(View view) {
+        setActivated(isActivated());
+        if (mOnClickIcon != NO_ID) {
+            applyIcon(isActivated() ? mOnClickIcon : mDefaultIcon);
+        }
+    }
+
     private void setUp() {
         binding = CallActionButtonLayoutBinding.inflate(LayoutInflater.from(getContext()), this, true);
         TypedArray attributes = mContext.obtainStyledAttributes(mAttrs, R.styleable.CallActionButton, mDefStyle, 0);
+
         setText(attributes.getString(R.styleable.CallActionButton_text));
         setIcon(attributes.getResourceId(R.styleable.CallActionButton_icon, NO_ID));
+        setIconOnClick(attributes.getResourceId(R.styleable.CallActionButton_activatedIcon, NO_ID));
+
         setFocusable(true);
         setClickable(true);
+        setOnClickListener(this);
     }
 
     public void setText(String text) {
+        mText = text;
         binding.callActionText.setText(text);
     }
 
-    public void setIcon(@DrawableRes int drawableRes) {
-        binding.callActionIcon.setImageDrawable(ContextCompat.getDrawable(mContext, drawableRes));
+    public void setIcon(@DrawableRes int icon) {
+        mDefaultIcon = icon;
+        applyIcon(icon);
+    }
+
+    public void setIconOnClick(@DrawableRes int onClickIcon) {
+        mOnClickIcon = onClickIcon;
+    }
+
+    private void applyIcon(@DrawableRes int icon) {
+        binding.callActionIcon.setImageDrawable(ContextCompat.getDrawable(mContext, icon));
     }
 }
