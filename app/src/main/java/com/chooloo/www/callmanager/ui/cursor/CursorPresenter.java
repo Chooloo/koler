@@ -44,7 +44,7 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mMvpView.setRefreshing(false);
         mMvpView.updateData(data);
-
+        mMvpView.animateListView();
         if (mMvpView.getItemCount() > 0) {
             onResults();
         } else {

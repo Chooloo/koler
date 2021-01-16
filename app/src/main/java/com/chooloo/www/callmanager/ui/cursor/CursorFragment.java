@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
@@ -19,6 +18,7 @@ import com.chooloo.www.callmanager.ui.base.BaseFragment;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation;
 
 public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragment implements CursorMvpView, LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -130,6 +130,11 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     public void showEmptyPage(boolean isShow) {
         binding.emptyState.emptyState.setVisibility(isShow ? VISIBLE : GONE);
         binding.itemsRecyclerView.setVisibility(isShow ? GONE : VISIBLE);
+    }
+
+    @Override
+    public void animateListView() {
+        runLayoutAnimation(binding.itemsRecyclerView);
     }
 
     @Override

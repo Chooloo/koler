@@ -2,7 +2,6 @@ package com.chooloo.www.callmanager.ui.cursor;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +23,8 @@ public interface CursorMvpView extends MvpView {
     void runLoader();
 
     void showEmptyPage(boolean isShow);
+
+    void animateListView();
 
     void setRefreshing(boolean isRefreshing);
 

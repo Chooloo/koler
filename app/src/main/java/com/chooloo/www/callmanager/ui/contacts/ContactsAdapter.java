@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_COUNTS;
 import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_TITLES;
 import static com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader.EXTRA_FAVORITE_COUNT;
+import static com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation;
 
 public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
 
@@ -49,19 +50,18 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
     public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
         mCursor.moveToPosition(position);
         Contact contact = Contact.fromCursor(mCursor);
-
-
-        ListItem listItemContact = holder.getListItem();
-        listItemContact.setBigText(contact.getName());
-        listItemContact.setHeaderText(getHeader(position));
-        listItemContact.showHeader(isFirstInHeader(position));
-        listItemContact.setOnClickListener(view -> mOnContactItemClickListener.onContactItemClick(contact));
-        listItemContact.setOnLongClickListener(view -> mOnContactItemLongClickListener.onContactItemLongClick(contact));
+        ListItem listItem = holder.getListItem();
+        listItem.setBigText(contact.getName());
+        listItem.setHeaderText(getHeader(position));
+        listItem.showHeader(isFirstInHeader(position));
+        listItem.setOnClickListener(view -> mOnContactItemClickListener.onContactItemClick(contact));
+        listItem.setOnLongClickListener(view -> mOnContactItemLongClickListener.onContactItemLongClick(contact));
         if (contact.getPhotoUri() != null) {
-            listItemContact.setImageUri(Uri.parse(contact.getPhotoUri()));
+            listItem.setImageUri(Uri.parse(contact.getPhotoUri()));
         } else {
-            listItemContact.setImageBackgroundColor(ContextCompat.getColor(mContext, R.color.grey_100));
+            listItem.setImageBackgroundColor(ContextCompat.getColor(mContext, R.color.grey_100));
         }
+        setFadeUpAnimation(listItem, mContext);
     }
 
     @Override

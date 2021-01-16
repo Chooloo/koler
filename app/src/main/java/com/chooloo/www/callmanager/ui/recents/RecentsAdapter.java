@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
@@ -15,6 +14,8 @@ import com.chooloo.www.callmanager.ui.listitem.ListItemHolder;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.RelativeTime;
 import com.chooloo.www.callmanager.util.Utilities;
+
+import static com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation;
 
 public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
 
@@ -48,6 +49,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
         listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(recentCall.getCallType())));
         listItem.setOnClickListener(view -> mOnRecentItemClickListener.onRecentItemClick(recentCall));
         listItem.setOnLongClickListener(view -> mOnRecentItemLongClickListener.onRecentItemLongClick(recentCall));
+        setFadeUpAnimation(listItem, mContext);
     }
 
     public void setOnRecentItemClickListener(OnRecentItemClickListener onRecentItemClickListener) {
