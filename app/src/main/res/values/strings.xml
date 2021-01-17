@@ -110,8 +110,6 @@
     <string name="about_donate_title">Donate</string>
 
     <!--Other-->
-    <string name="reject_timer_indicator">Call ends in</string>
-    <string name="answer_timer_indicator">Answering in</string>
 
     <!-- The small letters under the numbers -->
     <string name="dialpad_0_letters">+</string>
@@ -127,11 +125,6 @@
     <string name="dialpad_pound_letters"></string>
 
     <!-- Dialogs -->
-    <string name="fingerprint_title">Biometric login</string>
-    <string name="fingerprint_message">Log in using your biometric credential</string>
-
-    <string name="password_title">Password Login</string>
-    <string name="password_message">Log in with your password</string>
 
     <!-- Notification -->
     <string name="channel_name">notification</string>
@@ -140,7 +133,6 @@
     <string name="action_hangup">Hang Up</string>
 
     <!-- Buttons -->
-    <string name="title_activity_contact">ContactActivity</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

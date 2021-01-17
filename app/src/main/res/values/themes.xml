@@ -8,19 +8,19 @@
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="colorAccentLight">@color/color_accent_light</item>
-        <item name="bottomSheetDialogTheme">@style/BottomSheet</item>
+
+        <item name="bottomSheetDialogTheme">@style/BottomDialog.Theme</item>
 
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
 
-<!--        <item name="android:fontFamily">@font/google_sans_regular</item>-->
+        <!--        <item name="android:fontFamily">@font/google_sans_regular</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
 </resources>

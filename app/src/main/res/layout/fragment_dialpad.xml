@@ -8,17 +8,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bubble_background">
 
-    <View
-        android:id="@+id/bottom_dialog_fragment_swipe_indicator"
-        android:layout_width="@dimen/swipe_indicator_width"
-        android:layout_height="@dimen/swipe_indicator_height"
-        android:layout_margin="@dimen/swipe_indicator_margin"
-        android:background="@drawable/swipe_indicator_background"
-        app:layout_constraintBottom_toTopOf="@id/dialpad_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         android:layout_width="0dp"

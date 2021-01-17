@@ -17,7 +17,6 @@
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
 
     <!-- Info -->
-    <string name="hold_for_actions">Hold Buttons For More Actions</string>
 
     <!--Activities-->
     <string name="activity_settings">настройки</string>
@@ -100,8 +99,6 @@
     <string name="about_donate_title">жертвовать</string>
 
     <!--Other-->
-    <string name="reject_timer_indicator">Звонок заканчивается</string>
-    <string name="answer_timer_indicator">Отвечая в</string>
 
     <!-- Dialpad View -->
 
@@ -118,11 +115,6 @@
     <string name="dialpad_pound_letters"></string>
 
     <!-- Dialogs -->
-    <string name="fingerprint_title">Биометрический логин</string>
-    <string name="fingerprint_message">Войдите, используя свои биометрические данные</string>
-
-    <string name="password_title">Пароль Войти</string>
-    <string name="password_message">Войти с паролем</string>
 
     <!-- Notification -->
     <string name="channel_name">уведомление</string>

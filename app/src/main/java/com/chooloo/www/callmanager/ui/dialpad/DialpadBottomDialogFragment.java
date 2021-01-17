@@ -2,6 +2,7 @@ package com.chooloo.www.callmanager.ui.dialpad;
 
 import android.os.Bundle;
 
+import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment;
 
 public class DialpadBottomDialogFragment extends BaseBottomSheetDialogFragment {

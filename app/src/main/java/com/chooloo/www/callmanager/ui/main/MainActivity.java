@@ -133,8 +133,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void showDialpad(boolean isShow) {
         if (isShow) {
+            mBottomDialpadFragment.dismiss();
             mBottomDialpadFragment.show(getSupportFragmentManager(), DialpadFragment.TAG);
-        } else if (mBottomDialpadFragment.ismIsShown()) {
+        } else if (mBottomDialpadFragment.isShown()) {
             mBottomDialpadFragment.dismiss();
         }
     }
@@ -168,9 +169,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void showMenu(boolean isShow) {
-        if (isShow && !mMenuFragment.ismIsShown()) {
+        if (isShow && !mMenuFragment.isShown()) {
             mMenuFragment.show(getSupportFragmentManager(), "main_menu_fragment");
-        } else if (!isShow && mMenuFragment.ismIsShown()) {
+        } else if (!isShow && mMenuFragment.isShown()) {
             mMenuFragment.dismiss();
         }
     }

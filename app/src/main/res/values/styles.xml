@@ -1,10 +1,14 @@
 <resources>
 
-    <!-- bottom sheet -->
-    <style name="BottomSheet">
-        <item name="cornerSizeTopRight">@dimen/bubble_corner_radius</item>
-        <item name="cornerSizeTopLeft">@dimen/bubble_corner_radius</item>
-        <item name="cornerFamily">rounded</item>
+    <!-- bottom dialog -->
+    <style name="BottomDialog" />
+
+    <style name="BottomDialog.Theme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomDialog.Layout</item>
+    </style>
+
+    <style name="BottomDialog.Layout" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <!-- list view -->
@@ -89,6 +93,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#000000</item>
     </style>
 
     <style name="Dialpad.Key.Text.Number">
@@ -171,8 +176,6 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
-    <style name="Call.Text" />
-
     <style name="Call.Text.Status" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -204,13 +207,6 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <!-- bottom dialog fragment-->
-    <style name="BottomDialogFragment" />
-
-    <style name="BottomDialogFragment.Layout">
-        <item name="android:background">@drawable/bubble_background</item>
-    </style>
-
     <!-- search bar -->
     <style name="SearchBar" />
 
@@ -229,4 +225,5 @@
         <item name="android:textColorHint">@color/grey_200</item>
         <item name="android:textSize">18sp</item>
     </style>
+
 </resources>

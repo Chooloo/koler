@@ -17,7 +17,6 @@
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
 
     <!-- Info -->
-    <string name="hold_for_actions">Mantener presionado para más acciones</string>
 
     <!--Activities-->
     <string name="activity_settings">Ajustes</string>
@@ -101,8 +100,6 @@
     <string name="about_donate_title">Donar</string>
 
     <!--Other-->
-    <string name="reject_timer_indicator">La llamada termina en</string>
-    <string name="answer_timer_indicator">Respuesta en</string>
 
     <!-- Dialpad View -->
 
@@ -119,11 +116,6 @@
     <string name="dialpad_pound_letters"></string>
 
     <!-- Dialogs -->
-    <string name="fingerprint_title">Acceso biométrico</string>
-    <string name="fingerprint_message">Accede con tu credencial biométrica</string>
-
-    <string name="password_title">Acceso por contraseña</string>
-    <string name="password_message">Accede con tu contraseña</string>
 
     <!-- Notification -->
     <string name="channel_name">notificación</string>

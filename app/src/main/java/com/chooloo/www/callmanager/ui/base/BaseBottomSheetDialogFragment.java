@@ -119,7 +119,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     }
 
     protected void putFragment(BaseFragment fragment) {
-        mActivity.getSupportFragmentManager().beginTransaction().replace(binding.bottomDialogFragmentPlaceholder.getId(), fragment);
+        getChildFragmentManager().beginTransaction().replace(binding.bottomDialogFragmentPlaceholder.getId(), fragment).commit();
     }
 
     protected Bundle getArgsSafely() {
@@ -130,7 +130,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
         return args;
     }
 
-    public boolean ismIsShown() {
+    public boolean isShown() {
         return mIsShown;
     }
 }
