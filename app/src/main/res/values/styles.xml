@@ -9,18 +9,23 @@
 
     <style name="Koler.Text.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
         <item name="android:textSize">@dimen/headline_1</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
         <item name="android:textSize">@dimen/headline_2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textSize">@dimen/subtitle_1</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:textSize">@dimen/subtitle_2</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Caption" parent="TextAppearance.MaterialComponents.Caption">

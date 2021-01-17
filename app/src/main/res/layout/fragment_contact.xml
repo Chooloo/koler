@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.contact.ContactFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/contact_image"
             style="@style/Koler.Image.Profile.Big"
@@ -35,13 +34,14 @@
         <!-- Contact Name -->
         <TextView
             android:id="@+id/contact_text_name"
+            style="@style/Koler.Text.Headline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/Koler.Text.Headline2"
             app:layout_constraintEnd_toEndOf="@id/contact_image"
             app:layout_constraintStart_toStartOf="@id/contact_image"
             app:layout_constraintTop_toBottomOf="@id/contact_image"
@@ -62,7 +62,7 @@
         <include
             android:id="@+id/contact_action_buttons"
             layout="@layout/contact_action_buttons"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:visibility="gone"

@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.FragmentContactBinding;
@@ -67,8 +66,8 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
         mContact = (Contact) getArgsSafely().getSerializable(CONTACT_ARG);
 
         // set details
-//        binding.contactNumber.setText(mContact != null ? PhoneNumberUtils.formatPhoneNumber(this, mContact.getMainPhoneNumber()) : null);
-        binding.contactName.setText(mContact != null ? mContact.getName() : getString(R.string.unknown));
+        binding.contactTextName.setText(mContact.getName());
+        binding.contactTextNumber.setText(mContact.getNumber());
 
         // set actions
         binding.contactActionButtons.contactButtonInfo.setVisibility(mContact != null ? VISIBLE : GONE);
@@ -76,13 +75,8 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
         binding.contactButtonFav.setImageDrawable(mContact != null ? ContextCompat.getDrawable(mActivity, mContact.getStarred() ? R.drawable.ic_star_outline_black_24dp : R.drawable.ic_star_black_24dp) : null);
 
         // set image
-        if (mContact != null) {
-            binding.contactImagePhoto.setVisibility(mContact.getPhotoUri() != null ? VISIBLE : GONE);
-            binding.contactImagePlaceholder.setVisibility(mContact.getPhotoUri() != null ? GONE : VISIBLE);
-            if (mContact.getPhotoUri() != null) {
-                binding.contactImagePhoto.setImageURI(Uri.parse(mContact.getPhotoUri()));
-                binding.contactImagePhoto.setImageURI(Uri.parse(mContact.getPhotoUri()));
-            }
+        if (mContact.getPhotoUri() != null) {
+            binding.contactImage.setImageURI(Uri.parse(mContact.getPhotoUri()));
         }
 
         // set recents fragment
