@@ -4,11 +4,17 @@
     <style name="BottomDialog" />
 
     <style name="BottomDialog.Theme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomDialog.Layout</item>
+        <item name="bottomSheetStyle">@style/BottomDialog.BottomSheetStyle</item>
     </style>
 
-    <style name="BottomDialog.Layout" parent="Widget.MaterialComponents.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
+    <style name="BottomDialog.BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/BottomDialog.ShapeAppearanceOverlay</item>
+    </style>
+
+    <style name="BottomDialog.ShapeAppearanceOverlay">
+        <item name="cornerSizeTopRight">@dimen/bubble_corner_radius</item>
+        <item name="cornerSizeTopLeft">@dimen/bubble_corner_radius</item>
+        <item name="cornerFamily">rounded</item>
     </style>
 
     <!-- list view -->

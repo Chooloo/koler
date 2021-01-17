@@ -112,7 +112,7 @@
         android:id="@+id/dialpad_button_call"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="fitXY"
         android:src="@drawable/ic_call_black_24dp"

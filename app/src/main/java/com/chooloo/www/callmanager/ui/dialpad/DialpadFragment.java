@@ -16,16 +16,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.FragmentDialpadBinding;
+import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
 import com.chooloo.www.callmanager.util.AudioUtils;
-import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.chooloo.www.callmanager.util.AnimationUtils.showView;
 
 public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
@@ -201,7 +202,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void showDeleteButton(boolean isShow) {
-        binding.dialpadButtonDelete.setVisibility(isShow ? VISIBLE : GONE);
+        showView(binding.dialpadButtonDelete, isShow);
     }
 
     @Override

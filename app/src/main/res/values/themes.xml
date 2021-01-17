@@ -15,8 +15,6 @@
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
-
-        <!--        <item name="android:fontFamily">@font/google_sans_regular</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
