@@ -12,6 +12,7 @@
 
     <!-- Whites -->
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
     <!-- Greys -->
     <color name="grey_100">#F5F5F5</color>

@@ -4,7 +4,7 @@
 
     <!-- text -->
     <style name="Koler.Text">
-        <item name="android:textColor">#00000</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
@@ -91,6 +91,24 @@
         </item>
     </style>
 
+    <style name="Koler.ListItem.Text">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+    <style name="Koler.ListItem.Text.Big" parent="Koler.Text.Subtitle1">
+        <item name="android:layout_marginStart">@dimen/list_item_padding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Koler.ListItem.Text.Small" parent="Koler.Text.Caption">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/list_item_small_text_top_margin</item>
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
 
     <!-- dialpad -->
     <style name="Koler.Dialpad" />
