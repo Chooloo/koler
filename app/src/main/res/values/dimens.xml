@@ -2,11 +2,13 @@
 <resources>
 
     <!-- generic -->
+    <dimen name="headline_1">46sp</dimen>
     <dimen name="headline_2">34sp</dimen>
     <dimen name="subtitle_1">16sp</dimen>
+    <dimen name="subtitle_2">14sp</dimen>
     <dimen name="caption_1">12sp</dimen>
     <dimen name="image_size_small">40dp</dimen>
-    <dimen name="image_size_big">55dp</dimen>
+    <dimen name="image_size_big">120dp</dimen>
     <dimen name="icon_size_small">30dp</dimen>
 
     <!-- call -->

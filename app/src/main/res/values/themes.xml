@@ -9,7 +9,7 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="colorAccentLight">@color/color_accent_light</item>
 
-        <item name="bottomSheetDialogTheme">@style/BottomDialog.Theme</item>
+        <item name="bottomSheetDialogTheme">@style/Koler.BottomDialog.Theme</item>
 
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>

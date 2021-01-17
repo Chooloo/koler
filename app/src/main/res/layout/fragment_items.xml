@@ -15,7 +15,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/items_recycler_view"
-            style="@style/ListView"
+            style="@style/Koler.ListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_item">

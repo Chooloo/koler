@@ -202,7 +202,9 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void showDeleteButton(boolean isShow) {
-        showView(binding.dialpadButtonDelete, isShow);
+        if (binding.dialpadButtonDelete.getVisibility() == (isShow ? GONE : VISIBLE)) {
+            showView(binding.dialpadButtonDelete, isShow);
+        }
     }
 
     @Override

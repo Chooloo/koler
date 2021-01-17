@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/list_item_header_layout"
-        style="@style/ListItem.Layout"
+        style="@style/Koler.ListItem.Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/list_item_header_text"
-            style="@style/ListItem.Header"
+            style="@style/Koler.ListItem.Header"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,21 +27,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/list_item_person_layout"
-        style="@style/ListItem.Layout"
+        style="@style/Koler.ListItem.Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/list_item_image"
-            style="@style/ListItem.Image"
+            style="@style/Koler.Image.Profile.Small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ListItem.Image" />
+            app:shapeAppearanceOverlay="@style/Koler.Image.Profile.Small" />
 
         <TextView
             android:id="@+id/list_item_big_text"
-            style="@style/ListItem.Text.Big"
+            style="@style/Koler.ListItem.Text.Big"
             app:layout_constraintBottom_toTopOf="@id/list_item_small_text"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/list_item_image"
@@ -50,7 +50,7 @@
 
         <TextView
             android:id="@+id/list_item_small_text"
-            style="@style/ListItem.Text.Small"
+            style="@style/Koler.ListItem.Text.Small"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/list_item_big_text"

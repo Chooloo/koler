@@ -8,40 +8,38 @@
     <!-- Call Button -->
     <ImageButton
         android:id="@+id/contact_button_call"
-        style="@style/ContactPopup.Button"
+        style="@style/Koler.Call.Button.Action.Layout"
         android:src="@drawable/ic_call_black_24dp" />
 
     <!-- Call Button -->
     <ImageButton
 
         android:id="@+id/contact_button_sms"
-        style="@style/ContactPopup.Button"
+        style="@style/Koler.Call.Button.Action.Layout"
         android:src="@drawable/ic_sms_black_24dp" />
 
     <!-- Edit Button -->
     <ImageButton
         android:id="@+id/contact_button_edit"
-        style="@style/ContactPopup.Button"
+        style="@style/Koler.Call.Button.Action.Layout"
         android:src="@drawable/ic_edit_black_24dp" />
 
     <!-- Add Button -->
     <ImageButton
         android:id="@+id/contact_button_add"
-        style="@style/ContactPopup.Button"
-        android:src="@drawable/ic_person_add_black_18dp"
-        android:visibility="gone" />
+        style="@style/Koler.Call.Button.Action.Layout"
+        android:src="@drawable/ic_person_add_black_18dp" />
 
     <!-- Info Button -->
     <ImageButton
         android:id="@+id/contact_button_info"
-        style="@style/ContactPopup.Button"
-        android:src="@drawable/ic_info_black_18dp"
-        android:visibility="gone" />
+        style="@style/Koler.Call.Button.Action.Layout"
+        android:src="@drawable/ic_info_black_18dp" />
 
     <!-- Delete Button -->
     <ImageButton
         android:id="@+id/contact_button_delete"
-        style="@style/ContactPopup.Button"
+        style="@style/Koler.Call.Button.Action.Layout"
         android:src="@drawable/ic_delete_black_18dp" />
 
 </LinearLayout>

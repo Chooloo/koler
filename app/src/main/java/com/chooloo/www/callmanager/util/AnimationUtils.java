@@ -15,7 +15,6 @@ public class AnimationUtils {
     public static final int ANIMATION_DURATION = 500;
 
     public static void showView(View view, boolean isShow) {
-        view.setAlpha(isShow ? 0 : 1);
         view.setVisibility(isShow ? VISIBLE : GONE);
         view.startAnimation(loadAnimation(view.getContext(), isShow ? R.anim.animation_fall_down_show : R.anim.animation_fall_down_hide));
     }

@@ -86,11 +86,11 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
         }
 
         // set recents fragment
-        if (mContact != null) {
+//        if (mContact != null) {
 //            mRecentsFragment = RecentsFragment.newInstance(mContact.getMainPhoneNumber(), null);
-            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
-        }
+//            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.recents_section_frame, mRecentsFragment).commit();
+//        }
         binding.recentsSectionLayout.setVisibility(mContact != null ? VISIBLE : GONE);
 
         binding.contactButtonFav.setOnClickListener(view -> mPresenter.onActionFav());

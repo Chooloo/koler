@@ -8,7 +8,7 @@
     <!-- call timer -->
     <TextView
         android:id="@+id/call_time_text"
-        style="@style/Call.Text.Time"
+        style="@style/Koler.Call.Text.Time"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +18,7 @@
     <!-- call status -->
     <TextView
         android:id="@+id/call_status_text"
-        style="@style/Call.Text.Status"
+        style="@style/Koler.Call.Text.Status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_time_text"
@@ -37,7 +37,7 @@
     <!-- caller name -->
     <TextView
         android:id="@+id/call_name_text"
-        style="@style/Call.Text.Name"
+        style="@style/Koler.Call.Text.Name"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:text="John Baba"
