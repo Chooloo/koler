@@ -2,13 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Call.Layout"
+    style="@style/Koler.Call.Layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.call.OngoingCallActivity">
 
     <!-- call timer -->
     <TextView
         android:id="@+id/call_time_text"
         style="@style/Koler.Call.Text.Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +23,8 @@
     <TextView
         android:id="@+id/call_status_text"
         style="@style/Koler.Call.Text.Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_time_text"
@@ -38,12 +44,13 @@
     <TextView
         android:id="@+id/call_name_text"
         style="@style/Koler.Call.Text.Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
-        android:text="John Baba"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_status_text"
-        tools:text="Jesus" />
+        tools:text="John Baba" />
 
     <!-- eye level guideline -->
     <androidx.constraintlayout.widget.Guideline
@@ -128,7 +135,9 @@
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/answer_btn"
-        style="@style/Call.Button.Bottom"
+        style="@style/Koler.Call.Button.Bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:backgroundTint="@color/green_phone"
         android:contentDescription="@string/content_description_answer_button"
@@ -139,7 +148,9 @@
     <!-- Reject Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/reject_btn"
-        style="@style/Call.Button.Bottom"
+        style="@style/Koler.Call.Button.Bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="24dp"
         android:backgroundTint="@color/red_phone"
         android:contentDescription="@string/content_description_reject_button"

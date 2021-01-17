@@ -85,37 +85,12 @@
     </style>
 
     <style name="Koler.ListItem.Header">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/list_item_header_text_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
         </item>
     </style>
 
-    <style name="Koler.ListItem.Text">
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Koler.ListItem.Text.Big">
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
-        <item name="android:layout_marginStart">@dimen/list_item_padding</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:text">Simta Kumta</item>
-    </style>
-
-    <style name="Koler.ListItem.Text.Small">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/list_item_small_text_top_margin</item>
-        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
-        <item name="android:textSize">@dimen/caption_1</item>
-        <item name="android:text">0523839832</item>
-        <item name="android:textColor">@color/grey_500</item>
-    </style>
 
     <!-- dialpad -->
     <style name="Koler.Dialpad" />
@@ -123,8 +98,6 @@
     <style name="Koler.Dialpad.Key" />
 
     <style name="Koler.Dialpad.Key.Layout">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">8dp</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
@@ -132,19 +105,13 @@
 
     <style name="Koler.Dialpad.Key.Text">
         <item name="android:gravity">center</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#000000</item>
     </style>
 
-    <style name="Koler.Dialpad.Key.Text.Number">
-        <item name="android:textSize">@dimen/dialpad_key_number_text_size</item>
+    <style name="Koler.Dialpad.Key.Text.Number" parent="Koler.Text.Headline2">
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="Koler.Dialpad.Key.Text.Letters">
-        <item name="android:textSize">@dimen/dialpad_key_letters_text_size</item>
+    <style name="Koler.Dialpad.Key.Text.Letters" parent="Koler.Text.Caption">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
@@ -153,8 +120,6 @@
 
     <style name="Koler.Call.Layout">
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">match_parent</item>
     </style>
 
     <style name="Koler.Call.Button" />
@@ -163,30 +128,19 @@
 
     <style name="Koler.Call.Button.Action.Layout">
         <item name="android:elevation">5dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:clickable">true</item>
         <item name="android:orientation">vertical</item>
         <item name="android:background">?selectableItemBackgroundBorderless</item>
         <item name="android:padding">@dimen/call_action_padding</item>
     </style>
 
-    <style name="Koler.Call.Button.Action.Icon">
-        <item name="android:layout_height">@dimen/icon_size_small</item>
-        <item name="android:layout_width">@dimen/icon_size_small</item>
-    </style>
-
     <style name="Koler.Call.Button.Action.Text">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
         <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:textAlignment">center</item>
     </style>
 
     <style name="Koler.Call.Button.Bottom">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:tint">@color/white</item>
         <item name="android:scaleType">center</item>
         <item name="fabCustomSize">70dp</item>
@@ -197,35 +151,16 @@
         <item name="maxImageSize">36dp</item>
     </style>
 
-    <style name="Koler.Call.Image">
-        <item name="android:layout_width">@dimen/image_size_big</item>
-        <item name="android:layout_height">@dimen/image_size_big</item>
-        <item name="civ_border_width">0dp</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="cornerSize">50%</item>
-        <item name="cornerFamily">rounded</item>
-    </style>
-
-    <style name="Koler.Call.Text.Status" parent="Koler.Text.Subtitle1">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="Koler.Call.Text">
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="Koler.Call.Text.Time" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/caption_1</item>
-    </style>
+    <style name="Koler.Call.Text.Status" parent="Koler.Text.Subtitle1" />
 
-    <style name="Koler.Call.Text.Name" parent="TextAppearance.AppCompat.Title">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/headline_2</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
+    <style name="Koler.Call.Text.Time" parent="Koler.Text.Caption" />
+
+    <style name="Koler.Call.Text.Name" parent="Koler.Text.Headline2" />
 
     <!-- appbar -->
     <style name="Koler.Appbar" />
@@ -233,22 +168,16 @@
     <style name="Koler.Appbar.Layout">
         <item name="elevation">0dp</item>
         <item name="layout_scrollFlags">scroll</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
     </style>
 
     <!-- search bar -->
     <style name="Koler.SearchBar" />
 
     <style name="Koler.SearchBar.Layout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/search_bar_background_selector</item>
     </style>
 
     <style name="Koler.SearchBar.EditText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/search_bar_height</item>
         <item name="android:background">@null</item>
         <item name="android:hint">@string/search_hint</item>
         <item name="android:inputType">textPersonName</item>

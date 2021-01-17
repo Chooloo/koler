@@ -2,9 +2,11 @@
 <com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_input_layout"
-    style="@style/SearchBar.Layout"
+    style="@style/Koler.SearchBar.Layout"
     app:endIconDrawable="@drawable/ic_close_black_24dp"
     app:endIconMode="clear_text"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     app:endIconTint="@color/grey_400"
     app:hintEnabled="false"
     app:startIconDrawable="@drawable/ic_search_black_24dp"
@@ -12,5 +14,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/search_input_edit_text"
-        style="@style/SearchBar.EditText" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_bar_height"
+        style="@style/Koler.SearchBar.EditText" />
 </com.google.android.material.textfield.TextInputLayout>

@@ -3,17 +3,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialpad_key_layout"
-    style="@style/Dialpad.Key.Layout"
-    android:layout_width="match_parent">
+    style="@style/Koler.Dialpad.Key.Layout"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
 
     <TextView
         android:id="@+id/digit"
-        style="@style/Dialpad.Key.Text.Number"
+        style="@style/Koler.Dialpad.Key.Text.Number"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         tools:text="n" />
 
     <TextView
         android:id="@+id/letters"
-        style="@style/Dialpad.Key.Text.Letters"
+        style="@style/Koler.Dialpad.Key.Text.Letters"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         tools:text="number" />
 
 </LinearLayout>

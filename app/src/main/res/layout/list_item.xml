@@ -18,6 +18,8 @@
         <TextView
             android:id="@+id/list_item_header_text"
             style="@style/Koler.ListItem.Header"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +48,8 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/list_item_image"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Simta Kumta" />
 
         <TextView
             android:id="@+id/list_item_small_text"
@@ -55,7 +58,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/list_item_big_text"
             app:layout_constraintTop_toBottomOf="@+id/list_item_big_text"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="0793827948" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
