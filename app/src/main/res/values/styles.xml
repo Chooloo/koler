@@ -9,9 +9,11 @@
 
     <!-- list view -->
     <style name="ListView" parent="Widget.AppCompat.ListView">
+        <item name="android:requiresFadingEdge">vertical</item>
+        <item name="android:scrollbars">none</item>
+        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
         <item name="android:clipToPadding">false</item>
-        <item name="android:paddingTop">@dimen/list_item_padding</item>
     </style>
 
     <!-- list item -->
@@ -196,7 +198,8 @@
     <style name="Appbar" />
 
     <style name="Appbar.Layout">
-        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
+        <item name="layout_scrollFlags">scroll</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
     </style>
@@ -214,7 +217,7 @@
     <style name="SearchBar.Layout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/search_bar_background</item>
+        <item name="android:background">@drawable/search_bar_background_selector</item>
     </style>
 
     <style name="SearchBar.EditText">

@@ -50,6 +50,7 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
     public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
         mCursor.moveToPosition(position);
         Contact contact = Contact.fromCursor(mCursor);
+
         ListItem listItem = holder.getListItem();
         listItem.setBigText(contact.getName());
         listItem.setHeaderText(getHeader(position));
@@ -61,7 +62,8 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
         } else {
             listItem.setImageBackgroundColor(ContextCompat.getColor(mContext, R.color.grey_100));
         }
-        setFadeUpAnimation(listItem, mContext);
+
+        setFadeUpAnimation(listItem);
     }
 
     @Override

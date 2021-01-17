@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appbar_main"
-    style="@style/Appbar.Layout"
-    app:elevation="0dp"
-    app:layout_scrollFlags="scroll">
+    style="@style/Appbar.Layout">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -64,7 +62,7 @@
         android:id="@+id/main_search_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         tools:layout="@layout/fragment_search_bar" />

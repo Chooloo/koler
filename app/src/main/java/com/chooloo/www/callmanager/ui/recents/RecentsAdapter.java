@@ -49,7 +49,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
         listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(recentCall.getCallType())));
         listItem.setOnClickListener(view -> mOnRecentItemClickListener.onRecentItemClick(recentCall));
         listItem.setOnLongClickListener(view -> mOnRecentItemLongClickListener.onRecentItemLongClick(recentCall));
-        setFadeUpAnimation(listItem, mContext);
+        setFadeUpAnimation(listItem);
     }
 
     public void setOnRecentItemClickListener(OnRecentItemClickListener onRecentItemClickListener) {
