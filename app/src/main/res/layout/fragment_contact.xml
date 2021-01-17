@@ -4,32 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="24dp"
     tools:context=".ui.contact.ContactFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/contact_button_fav"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="20dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_star_outline_black_24dp"
-            android:tint="@color/star_yellow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/contact_image"
-            style="@style/Koler.Image.Profile.Big"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/ic_account_circle_black_24dp"
+        <RelativeLayout
+            android:id="@+id/contact_image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/contact_image"
+                style="@style/Koler.Image.Profile.Big"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_account_circle_black_24dp" />
+
+            <ImageView
+                android:id="@+id/contact_favorite_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@id/contact_image"
+                android:layout_alignEnd="@id/contact_image"
+                android:layout_marginTop="-10dp"
+                android:layout_marginEnd="-10dp"
+                android:elevation="5dp"
+                android:src="@drawable/ic_star_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/star_yellow" />
+        </RelativeLayout>
 
         <!-- Contact Name -->
         <TextView
@@ -37,14 +47,12 @@
             style="@style/Koler.Text.Headline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
             android:ellipsize="end"
             android:maxLines="2"
-            app:layout_constraintEnd_toEndOf="@id/contact_image"
-            app:layout_constraintStart_toStartOf="@id/contact_image"
-            app:layout_constraintTop_toBottomOf="@id/contact_image"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/contact_image_layout"
+            app:layout_constraintStart_toStartOf="@id/contact_image_layout"
+            app:layout_constraintTop_toBottomOf="@id/contact_image_layout"
             tools:text="Jesus" />
 
         <TextView
@@ -53,65 +61,56 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="123-20193"
             android:textAppearance="@style/Koler.Text.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact_text_name"
             tools:text="01234567" />
 
-        <include
-            android:id="@+id/contact_action_buttons"
-            layout="@layout/contact_action_buttons"
+
+        <LinearLayout
+            android:id="@+id/contact_actions_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:visibility="gone"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/contact_text_number" />
+            app:layout_constraintTop_toBottomOf="@id/contact_text_number">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/recents_section_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_action_buttons">
-
-            <TextView
-                android:id="@+id/recents_section_title"
+            <ImageView
+                android:id="@+id/contact_button_call"
+                style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/recents"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_weight="1"
+                android:src="@drawable/ic_call_black_24dp" />
 
-            <FrameLayout
-                android:id="@+id/recents_section_frame"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/recents_section_empty"
+            <ImageView
+                android:id="@+id/contact_button_edit"
+                style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/no_recent_calls"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
-                android:textColor="@color/grey_800"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_weight="1"
+                android:src="@drawable/ic_edit_black_24dp" />
+
+            <ImageView
+                android:id="@+id/contact_button_delete"
+                style="@style/Koler.Contact.Button.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_weight="1"
+                android:src="@drawable/ic_delete_black_24dp" />
+
+            <ImageView
+                android:id="@+id/contact_button_sms"
+                style="@style/Koler.Contact.Button.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_weight="1"
+                android:src="@drawable/ic_sms_black_24dp" />
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

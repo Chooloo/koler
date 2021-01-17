@@ -102,13 +102,15 @@
         <item name="android:textAlignment">viewStart</item>
     </style>
 
-    <style name="Koler.ListItem.Text.Big" parent="Koler.Text.Subtitle1">
+    <style name="Koler.ListItem.Text.Big">
+        <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
         <item name="android:layout_marginStart">@dimen/list_item_padding</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Koler.ListItem.Text.Small" parent="Koler.Text.Caption">
+    <style name="Koler.ListItem.Text.Small">
+        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/list_item_small_text_top_margin</item>
@@ -128,14 +130,15 @@
 
     <style name="Koler.Dialpad.Key.Text">
         <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="Koler.Dialpad.Key.Text.Number" parent="Koler.Text.Headline2">
-        <item name="android:textStyle">bold</item>
+    <style name="Koler.Dialpad.Key.Text.Number">
+        <item name="android:textAppearance">@style/Koler.Text.Headline2</item>
     </style>
 
-    <style name="Koler.Dialpad.Key.Text.Letters" parent="Koler.Text.Caption">
-        <item name="android:fontFamily">sans-serif-light</item>
+    <style name="Koler.Dialpad.Key.Text.Letters">
+        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
     </style>
 
     <!-- call -->
@@ -179,11 +182,17 @@
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="Koler.Call.Text.Status" parent="Koler.Text.Subtitle1" />
+    <style name="Koler.Call.Text.Status">
+        <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
+    </style>
 
-    <style name="Koler.Call.Text.Time" parent="Koler.Text.Caption" />
+    <style name="Koler.Call.Text.Time">
+        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
+    </style>
 
-    <style name="Koler.Call.Text.Name" parent="Koler.Text.Headline2" />
+    <style name="Koler.Call.Text.Name">
+        <item name="android:textAppearance">@style/Koler.Text.Headline2</item>
+    </style>
 
     <!-- appbar -->
     <style name="Koler.Appbar" />
@@ -206,5 +215,16 @@
         <item name="android:inputType">textPersonName</item>
         <item name="android:textColorHint">@color/grey_200</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- contact fragment -->
+    <style name="Koler.Contact" />
+
+    <style name="Koler.Contact.Button" />
+
+    <style name="Koler.Contact.Button.Action">
+        <item name="android:elevation">5dp</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:padding">10dp</item>
     </style>
 </resources>

@@ -5,19 +5,15 @@ import com.chooloo.www.callmanager.ui.base.MvpView;
 public interface ContactMvpView extends MvpView {
     void onSetup();
 
-    void actionCall();
+    void callContact();
 
-    void actionSms();
+    void sendSmsToContact();
 
-    void actionEdit();
+    void editContact();
 
-    void actionInfo();
+    void openContact();
 
-    void actionDelete();
+    void deleteContact();
 
-    void actionFav();
-
-    void toggleFavIcon(boolean toggle);
-
-    void handleNoRecents();
+    void animateLayout();
 }

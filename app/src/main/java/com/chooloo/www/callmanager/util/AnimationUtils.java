@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chooloo.www.callmanager.R;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.animation.AnimationUtils.loadAnimation;
 import static android.view.animation.AnimationUtils.loadLayoutAnimation;
@@ -31,5 +32,18 @@ public class AnimationUtils {
         recyclerView.setLayoutAnimation(loadLayoutAnimation(recyclerView.getContext(), R.anim.layout_animation_fall_down));
         recyclerView.getAdapter().notifyDataSetChanged();
         recyclerView.scheduleLayoutAnimation();
+    }
+
+    public static void animateViews(View[] views, int delay, boolean isShow) {
+        for (View view : views) {
+            view.setVisibility(INVISIBLE);
+        }
+        for (int i = 0; i < views.length; i++) {
+            final View view = views[i];
+            view.postDelayed(() -> {
+                view.setVisibility(VISIBLE);
+                showView(view, isShow);
+            }, i * delay);
+        }
     }
 }

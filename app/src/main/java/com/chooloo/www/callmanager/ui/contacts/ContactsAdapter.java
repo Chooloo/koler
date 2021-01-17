@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_COUNTS;
 import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_TITLES;
 import static com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader.EXTRA_FAVORITE_COUNT;
+import static com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation;
 import static com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation;
 
 public class ContactsAdapter extends CursorAdapter<ListItemHolder> {

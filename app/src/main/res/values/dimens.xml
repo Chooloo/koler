@@ -8,7 +8,7 @@
     <dimen name="subtitle_2">14sp</dimen>
     <dimen name="caption_1">12sp</dimen>
     <dimen name="image_size_small">40dp</dimen>
-    <dimen name="image_size_big">120dp</dimen>
+    <dimen name="image_size_big">100dp</dimen>
     <dimen name="icon_size_small">30dp</dimen>
 
     <!-- call -->
@@ -20,8 +20,6 @@
     <!-- bubble -->
     <dimen name="bubble_corner_radius">13dp</dimen>
 
-    <!-- fabs -->
-
     <!-- dialpad -->
     <dimen name="dialpad_key_number_text_size">33dp</dimen>
     <dimen name="dialpad_key_letters_text_size">10dp</dimen>
@@ -32,8 +30,6 @@
     <dimen name="list_item_small_text_top_margin">4dp</dimen>
     <dimen name="list_item_header_text_size">20sp</dimen>
 
-    <!-- appbar -->
-
     <!-- bottom sheet dialog -->
     <dimen name="swipe_indicator_height">5dp</dimen>
     <dimen name="swipe_indicator_width">30dp</dimen>
@@ -41,4 +37,7 @@
 
     <!-- search bar -->
     <dimen name="search_bar_height">40dp</dimen>
+
+    <!-- contact fragment -->
+    <dimen name="contact_action_button_height">60dp</dimen>
 </resources>

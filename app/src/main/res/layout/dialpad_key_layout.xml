@@ -5,7 +5,7 @@
     android:id="@+id/dialpad_key_layout"
     style="@style/Koler.Dialpad.Key.Layout"
     android:layout_height="wrap_content"
-    android:layout_width="wrap_content">
+    android:layout_width="match_parent">
 
     <TextView
         android:id="@+id/digit"
