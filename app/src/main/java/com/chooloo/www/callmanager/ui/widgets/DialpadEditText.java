@@ -1,6 +1,7 @@
 package com.chooloo.www.callmanager.ui.widgets;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.text.InputType;
 import android.util.AttributeSet;
@@ -9,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.util.Objects;
@@ -17,18 +17,30 @@ import java.util.Objects;
 public class DialpadEditText extends AppCompatEditText {
 
     public DialpadEditText(Context context) {
-        super(context);
+        this(context, null, 0);
     }
 
     public DialpadEditText(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        setShowSoftInputOnFocus(true);
-        setTextIsSelectable(true);
+        this(context, null, 0);
     }
 
     public DialpadEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setUp();
+    }
+
+    private void setUp() {
+        setInputType(getInputType() | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        setShowSoftInputOnFocus(true);
+        setTextIsSelectable(true);
+        setFocusableInTouchMode(true);
+        setCursorVisible(true);
+        setBackgroundColor(Color.TRANSPARENT);
+        canScrollHorizontally(LAYOUT_DIRECTION_RTL | LAYOUT_DIRECTION_LTR);
+        setInputType(InputType.TYPE_CLASS_PHONE);
+        setMaxLines(1);
+        setSingleLine(true);
+        setTextAlignment(TEXT_ALIGNMENT_CENTER);
     }
 
     @Override

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import com.chooloo.www.callmanager.databinding.FragmentContactBinding;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
-import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 import com.chooloo.www.callmanager.util.ContactUtils;
 
 import static android.Manifest.permission.WRITE_CONTACTS;
@@ -26,7 +25,6 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
     public static final String CONTACT_ARG = "contact";
 
     private ContactPresenter<ContactMvpView> mPresenter;
-    private RecentsFragment mRecentsFragment;
     private Contact mContact;
     private FragmentContactBinding binding;
 
@@ -98,7 +96,7 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
     @Override
     public void deleteContact() {
         if (hasPermission(WRITE_CONTACTS)) {
-//            ContactUtils.deleteContact(mActivity, mContact.getContactId());
+            ContactUtils.deleteContact(mActivity, mContact.getContactId());
             Toast.makeText(mActivity, "Contact deleted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(mActivity, "I dont have the permission", Toast.LENGTH_LONG).show();
@@ -110,7 +108,7 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
         animateViews(new View[]{
                 binding.contactImage,
                 binding.contactTextName,
-                binding.contactActionsLayout
+//                binding.contactActionsLayout
         }, 130, true);
     }
 }

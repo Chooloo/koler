@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appbar_main"
-    android:layout_height="wrap_content"
+    style="@style/Koler.Appbar.Layout"
     android:layout_width="match_parent"
-    style="@style/Koler.Appbar.Layout">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             <!-- tab layout -->
             <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
                 android:id="@+id/main_tab_layout"
+                style="@style/Koler.Text.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"

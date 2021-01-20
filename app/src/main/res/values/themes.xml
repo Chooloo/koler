@@ -8,9 +8,10 @@
         <item name="colorPrimaryDark">?attr/colorPrimary</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="colorAccentLight">@color/color_accent_light</item>
-
+        <item name="colorSecondary">@color/color_secondary</item>
         <item name="bottomSheetDialogTheme">@style/Koler.BottomDialog.Theme</item>
 
+        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>

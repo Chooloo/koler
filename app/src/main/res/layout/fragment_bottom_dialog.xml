@@ -11,6 +11,7 @@
         android:layout_height="@dimen/swipe_indicator_height"
         android:layout_margin="@dimen/swipe_indicator_margin"
         android:background="@drawable/swipe_indicator_background"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,11 +29,13 @@
         android:id="@+id/bottom_dialog_fragment_close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="mini"
         android:layout_margin="10dp"
         android:backgroundTint="@color/grey_100"
+        android:elevation="0dp"
         android:src="@drawable/ic_close_black_24dp"
         app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

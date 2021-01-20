@@ -68,7 +68,6 @@
             app:layout_constraintTop_toBottomOf="@id/contact_text_name"
             tools:text="01234567" />
 
-
         <LinearLayout
             android:id="@+id/contact_actions_layout"
             android:layout_width="match_parent"

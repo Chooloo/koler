@@ -10,28 +10,14 @@
 
     <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
-        android:layout_width="0dp"
+        style="@style/Koler.Text.Headline2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:background="@android:color/transparent"
-        android:cursorVisible="true"
-        android:focusableInTouchMode="true"
-        android:freezesText="true"
-        android:gravity="center"
-        android:inputType="phone"
-        android:maxLines="1"
-        android:padding="15dp"
-        android:scrollHorizontally="true"
-        android:singleLine="true"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        android:textColor="@color/color_accent"
-        android:textSize="30sp"
+        android:layout_margin="30dp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_dialog_fragment_swipe_indicator"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="01231293" />
 
     <TableLayout
