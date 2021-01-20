@@ -4,8 +4,6 @@ import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -23,7 +21,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.chooloo.www.callmanager.R;
-import com.ogaclejapan.smarttablayout.SmartTabIndicationInterpolator;
 
 public class TabLayout extends HorizontalScrollView {
 
@@ -171,98 +168,6 @@ public class TabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the behavior of the Indicator scrolling feedback.
-     *
-     * @param interpolator {@link com.ogaclejapan.smarttablayout.SmartTabIndicationInterpolator}
-     */
-    public void setIndicationInterpolator(SmartTabIndicationInterpolator interpolator) {
-        tabStrip.setIndicationInterpolator(interpolator);
-    }
-
-    /**
-     * Set the custom {@link com.ogaclejapan.smarttablayout.SmartTabLayout.TabColorizer} to be used.
-     * <p>
-     * If you only require simple customisation then you can use
-     * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
-     * similar effects.
-     */
-    public void setCustomTabColorizer(TabColorizer tabColorizer) {
-        tabStrip.setCustomTabColorizer(tabColorizer);
-    }
-
-    /**
-     * Set the color used for styling the tab text. This will need to be called prior to calling
-     * {@link #setViewPager(ViewPager2)} otherwise it will not get set
-     *
-     * @param color to use for tab text
-     */
-    public void setDefaultTabTextColor(int color) {
-        tabViewTextColors = ColorStateList.valueOf(color);
-    }
-
-    /**
-     * Sets the colors used for styling the tab text. This will need to be called prior to calling
-     * {@link #setViewPager(ViewPager2)} otherwise it will not get set
-     *
-     * @param colors ColorStateList to use for tab text
-     */
-    public void setDefaultTabTextColor(ColorStateList colors) {
-        tabViewTextColors = colors;
-    }
-
-    /**
-     * Set the same weight for tab
-     */
-    public void setDistributeEvenly(boolean distributeEvenly) {
-        this.distributeEvenly = distributeEvenly;
-    }
-
-    /**
-     * Sets the colors to be used for indicating the selected tab. These colors are treated as a
-     * circular array. Providing one color will mean that all tabs are indicated with the same color.
-     */
-    public void setSelectedIndicatorColors(int... colors) {
-        tabStrip.setSelectedIndicatorColors(colors);
-    }
-
-    /**
-     * Sets the colors to be used for tab dividers. These colors are treated as a circular array.
-     * Providing one color will mean that all tabs are indicated with the same color.
-     */
-    public void setDividerColors(int... colors) {
-        tabStrip.setDividerColors(colors);
-    }
-
-    /**
-     * Set the {@link ViewPager.OnPageChangeListener}. When using {@link com.ogaclejapan.smarttablayout.SmartTabLayout} you are
-     * required to set any {@link ViewPager.OnPageChangeListener} through this method. This is so
-     * that the layout can update it's scroll position correctly.
-     *
-     * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)
-     */
-    public void setOnPageChangeListener(ViewPager2.OnPageChangeCallback listener) {
-        viewPagerPageChangeListener = listener;
-    }
-
-    /**
-     * Set {@link com.ogaclejapan.smarttablayout.SmartTabLayout.OnScrollChangeListener} for obtaining values of scrolling.
-     *
-     * @param listener the {@link com.ogaclejapan.smarttablayout.SmartTabLayout.OnScrollChangeListener} to set
-     */
-    public void setOnScrollChangeListener(OnScrollChangeListener listener) {
-        onScrollChangeListener = listener;
-    }
-
-    /**
-     * Set {@link com.ogaclejapan.smarttablayout.SmartTabLayout.OnTabClickListener} for obtaining click event.
-     *
-     * @param listener the {@link com.ogaclejapan.smarttablayout.SmartTabLayout.OnTabClickListener} to set
-     */
-    public void setOnTabClickListener(OnTabClickListener listener) {
-        onTabClickListener = listener;
-    }
-
-    /**
      * Set the custom layout to be inflated for the tab views.
      *
      * @param layoutResId Layout id to be inflated
@@ -270,15 +175,6 @@ public class TabLayout extends HorizontalScrollView {
      */
     public void setCustomTabView(int layoutResId, int textViewId) {
         tabProvider = new SimpleTabProvider(getContext(), layoutResId, textViewId);
-    }
-
-    /**
-     * Set the custom layout to be inflated for the tab views.
-     *
-     * @param provider {@link com.ogaclejapan.smarttablayout.SmartTabLayout.TabProvider}
-     */
-    public void setCustomTabView(TabProvider provider) {
-        tabProvider = provider;
     }
 
     /**
@@ -296,17 +192,6 @@ public class TabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Returns the view at the specified position in the tabs.
-     *
-     * @param position the position at which to get the view from
-     * @return the view at the specified position or null if the position does not exist within the
-     * tabs
-     */
-    public View getTabAt(int position) {
-        return tabStrip.getChildAt(position);
-    }
-
-    /**
      * Create a default view to be used for tabs. This is called if a custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
      *
@@ -316,33 +201,23 @@ public class TabLayout extends HorizontalScrollView {
         TextView textView = new TextView(getContext());
         textView.setGravity(Gravity.CENTER);
         textView.setText(title);
+        textView.setTextAppearance(R.style.Koler_Text_Headline2);
         textView.setTextColor(tabViewTextColors);
-//        textView.setTextSize(TypedValue.COMPLEX_UN, tabViewTextSize);
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
         textView.setStateListAnimator(AnimatorInflater.loadStateListAnimator(getContext(), R.xml.tab_state_animator));
+        textView.setAllCaps(tabViewTextAllCaps);
+        textView.setPadding(tabViewTextHorizontalPadding, 0, tabViewTextHorizontalPadding, 0);
 
         if (tabViewBackgroundResId != NO_ID) {
             textView.setBackgroundResource(tabViewBackgroundResId);
         } else {
-            // If we're running on Honeycomb or newer, then we can use the Theme's
-            // selectableItemBackground to ensure that the View has a pressed state
             TypedValue outValue = new TypedValue();
             getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground,
                     outValue, true);
             textView.setBackgroundResource(outValue.resourceId);
         }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            // If we're running on ICS or newer, enable all-caps to match the Action Bar tab style
-            textView.setAllCaps(tabViewTextAllCaps);
-        }
-
-        textView.setPadding(
-                tabViewTextHorizontalPadding, 0,
-                tabViewTextHorizontalPadding, 0);
 
         if (tabViewTextMinWidth > 0) {
             textView.setMinWidth(tabViewTextMinWidth);
