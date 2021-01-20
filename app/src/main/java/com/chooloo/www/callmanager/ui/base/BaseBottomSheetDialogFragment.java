@@ -46,6 +46,7 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRequiredPermissions = onGetPermissions();
+        binding.bottomDialogFragmentCloseButton.setOnClickListener(view1 -> dismiss());
         onSetup();
     }
 
