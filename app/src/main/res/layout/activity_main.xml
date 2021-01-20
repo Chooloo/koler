@@ -29,7 +29,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/white"
         android:contentDescription="@string/dialpad_button"
-        android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+        android:src="@drawable/ic_dialpad_black_24dp"
         app:backgroundTint="@color/white"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -15,6 +15,8 @@ public interface DialpadMvpView extends MvpView {
 
     void backspace();
 
+    void addContact();
+
     void call();
 
     void callVoicemail();
@@ -28,6 +30,8 @@ public interface DialpadMvpView extends MvpView {
     void toggleCursor(boolean isShow);
 
     void showDeleteButton(boolean isShow);
+
+    void showAddContactButton(boolean isShow);
 
     void vibrate();
 }

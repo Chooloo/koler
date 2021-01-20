@@ -136,6 +136,7 @@
 
     <style name="Koler.Dialpad.Key.Text.Number">
         <item name="android:textAppearance">@style/Koler.Text.Headline2</item>
+        <item name="android:fontFamily">@font/ibm_plex_sans_light</item>
     </style>
 
     <style name="Koler.Dialpad.Key.Text.Letters">

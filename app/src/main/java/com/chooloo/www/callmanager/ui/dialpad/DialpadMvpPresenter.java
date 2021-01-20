@@ -15,6 +15,8 @@ public interface DialpadMvpPresenter<V extends DialpadMvpView> extends MvpPresen
 
     void onDeleteClick();
 
+    void onAddContactClick();
+
     boolean onLongDeleteClick();
 
     boolean onLongOneClick();

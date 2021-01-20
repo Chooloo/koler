@@ -20,6 +20,7 @@ import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
 import com.chooloo.www.callmanager.util.AudioUtils;
+import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 import com.chooloo.www.callmanager.viewmodel.SharedIntentViewModel;
@@ -125,6 +126,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
         binding.key0.setOnLongClickListener(view -> mPresenter.onLongZeroClick());
         binding.key1.setOnLongClickListener(view -> mPresenter.onLongOneClick());
         binding.dialpadButtonDelete.setOnLongClickListener(view -> mPresenter.onLongDeleteClick());
+        binding.dialpadButtonAddContact.setOnClickListener(view -> mPresenter.onAddContactClick());
     }
 
     @Override
@@ -191,6 +193,11 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     }
 
     @Override
+    public void addContact() {
+        ContactUtils.openAddContactDialog(mActivity, binding.dialpadEditText.getText().toString());
+    }
+
+    @Override
     public void vibrate() {
         Utilities.vibrate(mActivity, Utilities.SHORT_VIBRATE_LENGTH);
     }
@@ -204,6 +211,13 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
     public void showDeleteButton(boolean isShow) {
         if (binding.dialpadButtonDelete.getVisibility() == (isShow ? GONE : VISIBLE)) {
             showView(binding.dialpadButtonDelete, isShow);
+        }
+    }
+
+    @Override
+    public void showAddContactButton(boolean isShow) {
+        if (binding.dialpadButtonAddContact.getVisibility() == (isShow ? GONE : VISIBLE)) {
+            showView(binding.dialpadButtonAddContact, isShow);
         }
     }
 
