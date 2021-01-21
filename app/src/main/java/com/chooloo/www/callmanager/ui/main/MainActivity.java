@@ -152,7 +152,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     public void openAddContact() {
-        ContactUtils.openAddContactDialog(this, getDialNumber());
+        ContactUtils.openContactToAdd(this, getDialNumber());
     }
 
     @Override

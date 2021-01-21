@@ -49,8 +49,9 @@ public class ContactLookupCursorLoader extends CursorLoader {
         cursor.moveToFirst();
         String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
         String number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
+        long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
         cursor.close();
-        return new Contact(name, number);
+        return new Contact(name, number, id);
     }
 
     private static Uri buildUri(String phoneNumber) {

@@ -194,7 +194,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void addContact() {
-        ContactUtils.openAddContactDialog(mActivity, binding.dialpadEditText.getText().toString());
+        ContactUtils.openContactToAdd(mActivity, binding.dialpadEditText.getText().toString());
     }
 
     @Override

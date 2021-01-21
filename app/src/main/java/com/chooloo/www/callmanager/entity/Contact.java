@@ -23,6 +23,12 @@ public class Contact implements Serializable {
         this.number = number;
     }
 
+    public Contact(@Nullable String name, @Nullable String number, @Nullable long contactId) {
+        this.name = name;
+        this.number = number;
+        this.contactId = contactId;
+    }
+
     public Contact(long contactId, String name, String photoUri, boolean starred) {
         this.contactId = contactId;
         this.name = name;
