@@ -8,17 +8,13 @@ import android.telecom.Call;
 import android.telecom.VideoProfile;
 import android.widget.Toast;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.PreferencesManager;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URLDecoder;
-
-import timber.log.Timber;
 
 public class CallManager {
 
@@ -57,26 +53,6 @@ public class CallManager {
         }
     }
 
-    private static int getSimSelection(Context context) {
-        return PreferencesManager.getInstance(context).getInt(R.string.pref_sim_select_key, 0);
-    }
-
-    public static boolean callVoicemail(Context context) {
-        try {
-            context.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1")));
-            return true;
-        } catch (SecurityException e) {
-            Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
-            Timber.e(e);
-            return false;
-        }
-    }
-
-    public static void addCall(Call call) {
-        if (sCall != null) sCall.conference(call);
-    }
-
-
     public static void registerCallback(Call.Callback callback) {
         if (sCall != null) {
             sCall.registerCallback(callback);
@@ -86,18 +62,6 @@ public class CallManager {
     public static void unregisterCallback(Call.Callback callback) {
         if (sCall != null) {
             sCall.unregisterCallback(callback);
-        }
-    }
-
-    public static Contact getDisplayContact(Context context) {
-        try {
-            String number = URLDecoder.decode(sCall.getDetails().getHandle().toString(), "utf-8").replace("tel:", "");
-            if (number.contains("voicemail")) {
-                return ContactUtils.VOICEMAIL;
-            }
-            return ContactUtils.getContact(context, number, null); // get the contacts with the number
-        } catch (Exception e) {
-            return ContactUtils.UNKNOWN;
         }
     }
 
@@ -125,6 +89,18 @@ public class CallManager {
         } catch (NullPointerException e) {
             Toast.makeText(activity, "No phone number detected", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        }
+    }
+
+    public static Contact getDisplayContact(Context context) {
+        try {
+            String number = URLDecoder.decode(sCall.getDetails().getHandle().toString(), "utf-8").replace("tel:", "");
+            if (number.contains("voicemail")) {
+                return ContactUtils.VOICEMAIL;
+            }
+            return ContactUtils.getContact(context, number, null); // get the contacts with the number
+        } catch (Exception e) {
+            return ContactUtils.UNKNOWN;
         }
     }
 }

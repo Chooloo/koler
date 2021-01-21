@@ -17,6 +17,7 @@
 package com.chooloo.www.callmanager.cursorloader;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telephony.PhoneNumberUtils;
@@ -39,13 +40,24 @@ public class ContactsCursorLoader extends CursorLoader {
 
     protected static final String CONTACTS_ORDER = ContactsContract.Contacts.SORT_KEY_PRIMARY + " ASC";
     protected static final String CONTACTS_SELECTION = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " IS NOT NULL";
-    protected static final String[] CONTACTS_PROJECTION =
-            new String[]{
-                    COLUMN_ID,
-                    COLUMN_NAME,
-                    COLUMN_THUMBNAIL,
-                    COLUMN_STARRED
-            };
+    protected static final String[] CONTACTS_PROJECTION = new String[]{
+            COLUMN_ID,
+            COLUMN_NAME,
+            COLUMN_THUMBNAIL,
+            COLUMN_STARRED
+    };
+
+    public static Contact getContactFromCursor(Cursor cursor) {
+        try {
+            long contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
+            String photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
+            boolean starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
+            return new Contact(contactId, name, photoUri, starred);
+        } catch (IndexOutOfBoundsException e) {
+            return Contact.unknownContact();
+        }
+    }
 
     public ContactsCursorLoader(Context context, @Nullable String phoneNumber, @Nullable String contactName) {
         super(
@@ -54,7 +66,8 @@ public class ContactsCursorLoader extends CursorLoader {
                 CONTACTS_PROJECTION,
                 CONTACTS_SELECTION,
                 null,
-                CONTACTS_ORDER);
+                CONTACTS_ORDER
+        );
     }
 
     protected static Uri buildUri(@Nullable String phoneNumber, @Nullable String contactName) {

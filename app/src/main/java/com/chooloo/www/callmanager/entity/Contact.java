@@ -1,17 +1,10 @@
 package com.chooloo.www.callmanager.entity;
 
-import android.database.Cursor;
-
 import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.util.Utilities;
 
 import java.io.Serializable;
-
-import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_ID;
-import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_NAME;
-import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_STARRED;
-import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.COLUMN_THUMBNAIL;
 
 public class Contact implements Serializable {
 
@@ -31,18 +24,6 @@ public class Contact implements Serializable {
         this.name = name;
         this.photoUri = photoUri;
         this.starred = starred;
-    }
-
-    public static Contact fromCursor(Cursor cursor) {
-        try {
-            long contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-            String name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME));
-            String photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL));
-            boolean starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
-            return new Contact(contactId, name, photoUri, starred);
-        } catch (IndexOutOfBoundsException e) {
-            return unknownContact();
-        }
     }
 
     public static Contact unknownContact() {
@@ -75,9 +56,6 @@ public class Contact implements Serializable {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (super.equals(obj)) return true;
-        if (!(obj instanceof Contact)) return false;
-        Contact c = (Contact) obj;
-        return (name.equals(c.name));
+        return obj instanceof Contact && (super.equals(obj) || name.equals(((Contact) obj).name));
     }
 }

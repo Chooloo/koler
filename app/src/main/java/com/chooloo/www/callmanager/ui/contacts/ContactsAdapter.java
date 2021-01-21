@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.ui.listitem.ListItem;
@@ -23,7 +24,6 @@ import java.util.stream.Stream;
 import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_COUNTS;
 import static com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader.EXTRA_INDEX_TITLES;
 import static com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader.EXTRA_FAVORITE_COUNT;
-import static com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation;
 import static com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation;
 
 public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
@@ -50,7 +50,7 @@ public class ContactsAdapter extends CursorAdapter<ListItemHolder> {
     @Override
     public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
         mCursor.moveToPosition(position);
-        Contact contact = Contact.fromCursor(mCursor);
+        Contact contact = ContactsCursorLoader.getContactFromCursor(mCursor);
 
         ListItem listItem = holder.getListItem();
         listItem.setBigText(contact.getName());

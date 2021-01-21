@@ -38,7 +38,7 @@ public class ContactUtils {
             return new Contact(name, phoneNumber);
         } else {
             cursor.moveToFirst();
-            return Contact.fromCursor(cursor);
+            return Contact.fromContactsCursor(cursor);
         }
     }
 
