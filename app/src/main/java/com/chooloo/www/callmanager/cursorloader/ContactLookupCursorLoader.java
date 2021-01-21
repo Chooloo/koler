@@ -43,7 +43,7 @@ public class ContactLookupCursorLoader extends CursorLoader {
     public Contact loadContact() {
         Cursor cursor = super.loadInBackground();
         if (cursor == null || cursor.getCount() == 0) {
-            return Contact.unknownContact();
+            return Contact.UNKNOWN;
         }
 
         cursor.moveToFirst();

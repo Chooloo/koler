@@ -5,14 +5,13 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader;
+import com.chooloo.www.callmanager.cursorloader.ContactLookupCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -22,24 +21,11 @@ import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionsG
 
 public class ContactUtils {
 
-    public static final Contact UNKNOWN = new Contact("Unknown", null);
-    public static final Contact VOICEMAIL = new Contact("Voicemail", null);
-    public static final Contact PRIVATE = new Contact("Private Number", null);
-
-    public static Contact getContact(@NonNull Context context, String phoneNumber, String name) {
-        if (phoneNumber.isEmpty() && (name == null || name.isEmpty())) {
-            return PRIVATE;
-        } else if (!checkPermissionsGranted(context, new String[]{READ_CONTACTS}, true)) {
-            return UNKNOWN;
+    public static Contact lookupContact(@NonNull Context context, @NonNull String phoneNumber) {
+        if (!checkPermissionsGranted(context, new String[]{READ_CONTACTS}, true)) {
+            return Contact.UNKNOWN;
         }
-
-        Cursor cursor = new ContactsCursorLoader(context, phoneNumber, name).loadInBackground();
-        if (cursor == null || cursor.getCount() == 0) {
-            return new Contact(name, phoneNumber);
-        } else {
-            cursor.moveToFirst();
-            return Contact.fromContactsCursor(cursor);
-        }
+        return ContactLookupCursorLoader.lookupContact(context, phoneNumber);
     }
 
     public static void openAddContactDialog(Activity activity, String number) {

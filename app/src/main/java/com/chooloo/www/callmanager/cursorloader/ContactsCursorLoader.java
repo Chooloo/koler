@@ -55,7 +55,7 @@ public class ContactsCursorLoader extends CursorLoader {
             boolean starred = "1".equals(cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)));
             return new Contact(contactId, name, photoUri, starred);
         } catch (IndexOutOfBoundsException e) {
-            return Contact.unknownContact();
+            return Contact.UNKNOWN;
         }
     }
 

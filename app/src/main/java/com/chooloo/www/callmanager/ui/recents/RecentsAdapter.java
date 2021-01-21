@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
@@ -38,11 +39,10 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
     @Override
     public void onBindViewHolder(@NonNull ListItemHolder holder, int position) {
         mCursor.moveToPosition(position);
-        RecentCall recentCall = RecentCall.fromCursor(mCursor);
-        Contact callerContact = ContactUtils.getContact(mContext, recentCall.getCallerNumber(), null);
+        RecentCall recentCall = RecentsCursorLoader.getRecentCallFromCursor(mCursor);
+        Contact callerContact = ContactUtils.lookupContact(mContext, recentCall.getCallerNumber());
         String callDate = recentCall.getCallDate() != null ? RelativeTime.getTimeAgo(recentCall.getCallDate().getTime()) : null;
 
-//        listItem.setBigText(name == null ? number : name + (recentCall.getCount() > 0 ? " (" + count + ")" : ""));
         ListItem listItem = holder.getListItem();
         listItem.setBigText(callerContact.getName() == null ? recentCall.getCallerNumber() : callerContact.getName());
         listItem.setSmallText(callDate);

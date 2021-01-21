@@ -8,6 +8,10 @@ import java.io.Serializable;
 
 public class Contact implements Serializable {
 
+    public static final Contact UNKNOWN = new Contact("Unknown", null);
+    public static final Contact VOICEMAIL = new Contact("Voicemail", null);
+    public static final Contact PRIVATE = new Contact("Private Number", null);
+
     private long contactId;
     private final String name;
     private String photoUri;
@@ -24,10 +28,6 @@ public class Contact implements Serializable {
         this.name = name;
         this.photoUri = photoUri;
         this.starred = starred;
-    }
-
-    public static Contact unknownContact() {
-        return new Contact(0, "Unknown", null, false);
     }
 
     public long getContactId() {

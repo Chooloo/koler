@@ -17,18 +17,17 @@
 package com.chooloo.www.callmanager.cursorloader;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CallLog.Calls;
-import android.provider.ContactsContract;
-import android.telecom.Call;
 import android.telephony.PhoneNumberUtils;
 
 import androidx.annotation.Nullable;
 import androidx.loader.content.CursorLoader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.chooloo.www.callmanager.entity.RecentCall;
+
+import java.util.Date;
 
 public final class RecentsCursorLoader extends CursorLoader {
 
@@ -42,16 +41,28 @@ public final class RecentsCursorLoader extends CursorLoader {
 
     private static final String RECENTS_ORDER = COLUMN_DATE + " DESC";
     private static final String RECENTS_SELECTION = null;
-    private static final String[] RECENTS_PROJECTION =
-            new String[]{
-                    COLUMN_ID,
-                    COLUMN_NUMBER,
-                    COLUMN_DATE,
-                    COLUMN_DURATION,
-                    COLUMN_TYPE,
-                    COLUMN_CACHED_NAME,
-                    COLUMN_PRESENTATION
-            };
+    private static final String[] RECENTS_PROJECTION = new String[]{
+            COLUMN_ID,
+            COLUMN_NUMBER,
+            COLUMN_DATE,
+            COLUMN_DURATION,
+            COLUMN_TYPE,
+            COLUMN_CACHED_NAME,
+            COLUMN_PRESENTATION
+    };
+
+    public static RecentCall getRecentCallFromCursor(Cursor cursor) {
+        try {
+            long id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+            String number = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER));
+            String duration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION));
+            Date date = new Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE)));
+            int type = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE));
+            return new RecentCall(id, number, duration, date, type);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
 
     public RecentsCursorLoader(Context context, @Nullable String phoneNumber, @Nullable String contactName) {
         super(
