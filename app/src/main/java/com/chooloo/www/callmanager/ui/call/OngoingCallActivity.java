@@ -86,7 +86,7 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationEnabled = true;
-            Contact callerContact = CallManager.getDisplayContact(this);
+            Contact callerContact = CallManager.getContact(this);
             String callerName = callerContact.getName();
 
             Intent touchNotification = new Intent(this, OngoingCallActivity.class);

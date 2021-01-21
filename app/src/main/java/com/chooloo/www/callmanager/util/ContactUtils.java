@@ -14,12 +14,12 @@ import com.chooloo.www.callmanager.cursorloader.ContactLookupCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionsGranted;
+import static com.chooloo.www.callmanager.util.PermissionUtils.checkPermission;
 
 public class ContactUtils {
 
     public static Contact lookupContact(@NonNull Context context, @NonNull String phoneNumber) {
-        if (!checkPermissionsGranted(context, new String[]{READ_CONTACTS}, true)) {
+        if (!checkPermission(context, READ_CONTACTS, true)) {
             return Contact.UNKNOWN;
         }
         return ContactLookupCursorLoader.lookupContact(context, phoneNumber);

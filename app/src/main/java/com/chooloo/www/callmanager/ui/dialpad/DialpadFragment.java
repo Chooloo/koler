@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.FragmentDialpadBinding;
+import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey;
@@ -194,7 +195,8 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void addContact() {
-        ContactUtils.openContactToAdd(mActivity, binding.dialpadEditText.getText().toString());
+        Contact contact = ContactUtils.lookupContact(mActivity, binding.dialpadEditText.getNumbers());
+        ContactUtils.openContactToAdd(mActivity, contact);
     }
 
     @Override

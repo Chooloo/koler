@@ -8,13 +8,16 @@ import android.telecom.Call;
 import android.telecom.VideoProfile;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 
-import org.jetbrains.annotations.NotNull;
-
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+
+import timber.log.Timber;
 
 public class CallManager {
 
@@ -72,7 +75,7 @@ public class CallManager {
         return Call.STATE_DISCONNECTED;
     }
 
-    public static void call(@NotNull Activity activity, @NotNull String number) {
+    public static void call(@NonNull Activity activity, @NonNull String number) {
         if (!PermissionUtils.checkDefaultDialer(activity)) {
             Toast.makeText(activity, "Set Koler as your default dialer to make calls", Toast.LENGTH_LONG).show();
             return;
@@ -92,15 +95,25 @@ public class CallManager {
         }
     }
 
-    public static Contact getDisplayContact(Context context) {
+    public static void callVoicemail(@NonNull Context context) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1"));
+            context.startActivity(intent);
+        } catch (SecurityException e) {
+            Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show();
+            Timber.e(e);
+        }
+    }
+
+    public static Contact getContact(Context context) {
         try {
             String number = URLDecoder.decode(sCall.getDetails().getHandle().toString(), "utf-8").replace("tel:", "");
             if (number.contains("voicemail")) {
-                return ContactUtils.VOICEMAIL;
+                return Contact.VOICEMAIL;
             }
-            return ContactUtils.getContact(context, number, null); // get the contacts with the number
-        } catch (Exception e) {
-            return ContactUtils.UNKNOWN;
+            return ContactUtils.lookupContact(context, number);
+        } catch (UnsupportedEncodingException e) {
+            return Contact.UNKNOWN;
         }
     }
 }

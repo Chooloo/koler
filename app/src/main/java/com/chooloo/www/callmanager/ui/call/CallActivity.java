@@ -23,7 +23,6 @@ import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
@@ -176,7 +175,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     @Override
     public void updateCall() {
-        Contact caller = CallManager.getDisplayContact(this);
+        Contact caller = CallManager.getContact(this);
 
         binding.callNameText.setText(caller.getName());
         if (caller.getPhotoUri() != null) {
