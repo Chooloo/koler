@@ -76,13 +76,13 @@ public class CallManager {
     }
 
     public static void call(@NonNull BaseActivity activity, @NonNull String number) {
-        if (!PermissionUtils.checkDefaultDialer(activity)) {
-            activity.showError("Set Koler as yout default dialer to make calls");
-            return;
+        if (PermissionUtils.isDefaultDialer(activity)) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(number)));
+            activity.startActivity(callIntent);
+        } else {
+            PermissionUtils.ensureDefaultDialer(activity);
+            activity.showError("Set Koler as your default dialer to make calls");
         }
-
-        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(number)));
-        activity.startActivity(callIntent);
     }
 
     public static void callVoicemail(@NonNull Context context) {

@@ -10,12 +10,12 @@ public class ContactPresenter<V extends ContactMvpView> extends BasePresenter<V>
 
     @Override
     public void onActionSms() {
-        mMvpView.sendSmsToContact();
+        mMvpView.smsContact();
     }
 
     @Override
     public void onActionEdit() {
-        mMvpView.deleteContact();
+        mMvpView.editContact();
     }
 
     @Override

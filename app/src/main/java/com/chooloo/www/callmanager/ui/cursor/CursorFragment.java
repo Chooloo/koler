@@ -22,6 +22,7 @@ import static com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation
 
 public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragment implements CursorMvpView, LoaderManager.LoaderCallbacks<Cursor> {
 
+
     protected static int mLoaderId = 1;
 
     protected A mAdapter;
@@ -39,12 +40,6 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentItemsBinding.inflate(inflater);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mPresenter.onRequestPermissionsResult(permissions);
     }
 
     @NonNull

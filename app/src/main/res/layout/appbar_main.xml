@@ -27,7 +27,7 @@
                 app:stl_clickable="true"
                 app:stl_defaultTabTextAllCaps="false"
                 app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-                app:stl_defaultTabTextHorizontalPadding="8dp"
+                app:stl_defaultTabTextHorizontalPadding="4dp"
                 app:stl_defaultTabTextMinWidth="0dp"
                 app:stl_defaultTabTextSize="@dimen/headline_2"
                 app:stl_dividerThickness="0dp"
@@ -43,7 +43,7 @@
                 app:stl_indicatorWithoutPadding="false"
                 app:stl_overlineColor="#4D000000"
                 app:stl_overlineThickness="0dp"
-                app:stl_titleOffset="24dp"
+                app:stl_titleOffset="10dp"
                 app:stl_underlineColor="#4D000000"
                 app:stl_underlineThickness="0dp"
                 app:tabMode="scrollable" />

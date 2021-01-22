@@ -14,9 +14,9 @@ import androidx.fragment.app.FragmentManager;
 import com.chooloo.www.callmanager.databinding.FragmentBottomDialogBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements MvpView {
+import static com.chooloo.www.callmanager.util.PermissionUtils.RC_DEFAULT;
 
-    private static final int PERMISSION_RC = 10;
+public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFragment implements MvpView {
 
     private boolean mIsShown = false;
 
@@ -87,8 +87,18 @@ public abstract class BaseBottomSheetDialogFragment extends BottomSheetDialogFra
     }
 
     @Override
+    public void askForPermission(String permission, int requestCode) {
+        askForPermissions(new String[]{permission}, requestCode);
+    }
+
+    @Override
+    public void askForPermissions(String[] permissions, int requestCode) {
+        requestPermissions(permissions, requestCode);
+    }
+
+    @Override
     public void askForPermissions() {
-        requestPermissions(mRequiredPermissions, PERMISSION_RC);
+        askForPermissions(mRequiredPermissions, RC_DEFAULT);
     }
 
     @Override

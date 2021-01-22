@@ -8,10 +8,6 @@ import androidx.loader.content.Loader;
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
 
 public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> implements CursorMvpPresenter<V> {
-    @Override
-    public void onRequestPermissionsResult(String[] permissions) {
-        mMvpView.load();
-    }
 
     @Override
     public void onRefresh() {
@@ -20,8 +16,8 @@ public class CursorPresenter<V extends CursorMvpView> extends BasePresenter<V> i
 
     @Override
     public void onNoPermissions() {
-        onNoResults();
         mMvpView.askForPermissions();
+        onNoResults();
     }
 
     @Override

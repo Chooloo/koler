@@ -2,7 +2,6 @@ package com.chooloo.www.callmanager.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,12 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.chooloo.www.callmanager.util.PreferencesManager;
-import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
-public abstract class BaseActivity extends AppCompatActivity implements MvpView {
+import static com.chooloo.www.callmanager.util.PermissionUtils.RC_DEFAULT;
 
-    private static final int PERMISSION_RC = 10;
+public abstract class BaseActivity extends AppCompatActivity implements MvpView {
 
     protected String[] mRequiredPermissions;
 
@@ -60,6 +58,12 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
         return true;
     }
 
+    @Override
+    public void askForPermission(String permission, int requestCode) {
+        requestPermissions(new String[]{permission}, requestCode);
+    }
+
+    @Override
     @TargetApi(Build.VERSION_CODES.M)
     public void askForPermissions(String[] permissions, int requestCode) {
         requestPermissions(permissions, requestCode);
@@ -67,16 +71,13 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
 
     @TargetApi(Build.VERSION_CODES.M)
     public void askForPermissions() {
-        requestPermissions(mRequiredPermissions, PERMISSION_RC);
+        requestPermissions(mRequiredPermissions, RC_DEFAULT);
     }
 
     @Override
     public void showMessage(String message) {
-        if (message != null) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "An error occured", Toast.LENGTH_SHORT).show();
-        }
+        // TODO implement a custom scack bar
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -86,16 +87,12 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView 
 
     @Override
     public void showError(String message) {
-        // TODO show a snack bar or something
+        // TODO implement a custom scack bar
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showError(int stringResId) {
         showError(getString(stringResId));
-    }
-
-    protected void setThemeType(@ThemeUtils.ThemeType int type) {
-        Resources.Theme theme = super.getTheme();
-        theme.applyStyle(type, true);
     }
 }

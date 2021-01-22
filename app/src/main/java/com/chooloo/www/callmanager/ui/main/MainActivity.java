@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mPresenter.onAttach(this);
 
         Utilities.showNewVersionDialog(this);
-        PermissionUtils.checkDefaultDialer(this);
+        PermissionUtils.ensureDefaultDialer(this);
 
         binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
         binding.appbarMain.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());

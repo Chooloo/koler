@@ -64,8 +64,18 @@ public abstract class BaseFragment extends Fragment implements MvpView {
     }
 
     @Override
+    public void askForPermission(String permission, int requestCode) {
+        askForPermissions(new String[]{permission}, requestCode);
+    }
+
+    @Override
+    public void askForPermissions(String[] permissions, int requestCode) {
+        requestPermissions(permissions, requestCode);
+    }
+
+    @Override
     public void askForPermissions() {
-        requestPermissions(mRequiredPermissions, PERMISSION_RC);
+        askForPermissions(mRequiredPermissions, PERMISSION_RC);
     }
 
     @Override

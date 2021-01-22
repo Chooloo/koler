@@ -154,6 +154,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
         startActivity(intent);
     }
 
+
     @Override
     public boolean hasPermissions() {
         return true;
@@ -162,6 +163,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public boolean hasPermission(String permission) {
         return true;
+    }
+
+    @Override
+    public void askForPermission(String permission, int requestCode) {
+        requestPermissions(new String[]{permission}, requestCode);
+    }
+
+    @Override
+    public void askForPermissions(String[] permissions, int requestCode) {
+        requestPermissions(permissions, requestCode);
     }
 
     @Override

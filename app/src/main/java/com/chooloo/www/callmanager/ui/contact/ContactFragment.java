@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +15,6 @@ import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.util.ContactUtils;
 
-import static android.Manifest.permission.WRITE_CONTACTS;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.chooloo.www.callmanager.util.AnimationUtils.animateViews;
@@ -66,8 +64,8 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
         }
 
         // click listeners
-        binding.contactButtonSms.setOnClickListener(view -> mPresenter.onActionSms());
         binding.contactButtonCall.setOnClickListener(view -> mPresenter.onActionCall());
+        binding.contactButtonSms.setOnClickListener(view -> mPresenter.onActionSms());
         binding.contactButtonEdit.setOnClickListener(view -> mPresenter.onActionEdit());
         binding.contactButtonDelete.setOnClickListener(view -> mPresenter.onActionDelete());
 
@@ -96,12 +94,7 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
 
     @Override
     public void deleteContact() {
-        if (hasPermission(WRITE_CONTACTS)) {
-            ContactUtils.deleteContact(mActivity, mContact);
-            Toast.makeText(mActivity, "Contact deleted", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mActivity, "I dont have the permission", Toast.LENGTH_LONG).show();
-        }
+        ContactUtils.deleteContact(mActivity, mContact);
     }
 
     @Override
