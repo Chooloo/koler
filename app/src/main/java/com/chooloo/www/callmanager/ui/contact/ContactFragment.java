@@ -85,18 +85,18 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
 
     @Override
     public void editContact() {
-        ContactUtils.openContactToEdit(mActivity, mContact.getContactId());
+        ContactUtils.openContactToEdit(mActivity, mContact);
     }
 
     @Override
     public void openContact() {
-        ContactUtils.openContact(mActivity, mContact.getContactId());
+        ContactUtils.openContact(mActivity, mContact);
     }
 
     @Override
     public void deleteContact() {
         if (hasPermission(WRITE_CONTACTS)) {
-            ContactUtils.deleteContact(mActivity, mContact.getContactId());
+            ContactUtils.deleteContact(mActivity, mContact);
             Toast.makeText(mActivity, "Contact deleted", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(mActivity, "I dont have the permission", Toast.LENGTH_LONG).show();

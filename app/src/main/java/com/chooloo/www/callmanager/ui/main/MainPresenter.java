@@ -38,7 +38,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void onBottomSheetStateChanged(@BottomSheetBehavior.State int state) {
         mBottomSheetState = state;
-        mMvpView.showDialpadFab(state == (STATE_COLLAPSED | STATE_HIDDEN));
     }
 
     @Override
@@ -64,10 +63,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public void onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add_contact: {
-                mMvpView.openAddContact();
-                break;
-            }
             case R.id.action_settings: {
                 mMvpView.goToSettings();
                 break;

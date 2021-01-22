@@ -21,7 +21,6 @@ import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
 import com.chooloo.www.callmanager.ui.menu.MenuFragment;
 import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
-import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
@@ -151,11 +150,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
-    public void openAddContact() {
-        ContactUtils.openContactToAdd(this, getDialNumber());
-    }
-
-    @Override
     public void goToSettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
         this.startActivity(intent);
@@ -177,15 +171,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
-    public void showDialpadFab(boolean isShow) {
-        showView(binding.dialpadFabButton, isShow);
-    }
+    public void handleViewIntent(Intent intent) {
 
-    private static void showView(View v, boolean isShow) {
-        isShow = isShow && v.isEnabled();
-        v.animate().scaleX(isShow ? 1 : 0).scaleY(isShow ? 1 : 0).setDuration(100).start();
-        v.setClickable(isShow);
-        v.setFocusable(isShow);
     }
-
 }
