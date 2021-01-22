@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.telephony.PhoneNumberUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ public class ContactUtils {
         return ContactLookupCursorLoader.lookupContact(context, phoneNumber);
     }
 
-    public static void openContact(Activity activity, Contact contact) {
+    public static void openContact(@NonNull Activity activity, @NonNull Contact contact) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(contact.getContactId())));
@@ -36,7 +37,7 @@ public class ContactUtils {
         }
     }
 
-    public static void openContactToAdd(Activity activity, Contact contact) {
+    public static void addContact(@NonNull Activity activity, @NonNull Contact contact) {
         try {
             Intent intent = new Intent(Intent.ACTION_INSERT);
             intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
@@ -48,7 +49,7 @@ public class ContactUtils {
         }
     }
 
-    public static void openContactToEdit(Activity activity, Contact contact) {
+    public static void editContact(@NonNull Activity activity, @NonNull Contact contact) {
         try {
             Intent intent = new Intent(Intent.ACTION_EDIT, ContactsContract.Contacts.CONTENT_URI);
             intent.setData(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contact.getContactId()));
@@ -59,7 +60,7 @@ public class ContactUtils {
         }
     }
 
-    public static void deleteContact(Activity activity, Contact contact) {
+    public static void deleteContact(@NonNull Activity activity, @NonNull Contact contact) {
         try {
             Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, Long.toString(contact.getContactId()));
             activity.getContentResolver().delete(uri, null, null);
@@ -68,5 +69,11 @@ public class ContactUtils {
             Toast.makeText(activity, "Contact couldn't be deleted", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+
+    public static void smsContact(@NonNull Activity activity, @NonNull Contact contact) {
+        Uri uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(contact.getNumber())));
+        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
+        activity.startActivity(smsIntent);
     }
 }

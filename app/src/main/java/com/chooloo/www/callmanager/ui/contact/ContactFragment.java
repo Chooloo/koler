@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.databinding.FragmentContactBinding;
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 import com.chooloo.www.callmanager.util.ContactUtils;
 
@@ -75,17 +76,17 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
 
     @Override
     public void callContact() {
-//        CallManager.call(mActivity, mContact.getNumber());
+        CallManager.call(mActivity, mContact.getNumber());
     }
 
     @Override
-    public void sendSmsToContact() {
-//        Utilities.openSmsWithNumber(mActivity, mContact.getNumber());
+    public void smsContact() {
+        ContactUtils.smsContact(mActivity, mContact);
     }
 
     @Override
     public void editContact() {
-        ContactUtils.openContactToEdit(mActivity, mContact);
+        ContactUtils.editContact(mActivity, mContact);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
         animateViews(new View[]{
                 binding.contactImage,
                 binding.contactTextName,
-//                binding.contactActionsLayout
+                binding.contactActionsLayout
         }, 130, true);
     }
 }

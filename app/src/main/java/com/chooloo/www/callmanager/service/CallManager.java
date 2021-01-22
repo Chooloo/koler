@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.service;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.chooloo.www.callmanager.entity.Contact;
+import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.util.ContactUtils;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 
@@ -75,24 +75,14 @@ public class CallManager {
         return Call.STATE_DISCONNECTED;
     }
 
-    public static void call(@NonNull Activity activity, @NonNull String number) {
+    public static void call(@NonNull BaseActivity activity, @NonNull String number) {
         if (!PermissionUtils.checkDefaultDialer(activity)) {
-            Toast.makeText(activity, "Set Koler as your default dialer to make calls", Toast.LENGTH_LONG).show();
+            activity.showError("Set Koler as yout default dialer to make calls");
             return;
         }
 
-        try {
-            Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel: " + Uri.encode(number)));
-            activity.startActivity(callIntent);
-
-        } catch (SecurityException e) {
-            Toast.makeText(activity, "Couldn't make the call due to security reasons", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-
-        } catch (NullPointerException e) {
-            Toast.makeText(activity, "No phone number detected", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
+        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(number)));
+        activity.startActivity(callIntent);
     }
 
     public static void callVoicemail(@NonNull Context context) {

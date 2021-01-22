@@ -21,5 +21,5 @@ public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V>
 
     void onMenuClick();
 
-    void handleViewIntent(Intent intent);
+    void onViewIntent(Intent intent);
 }

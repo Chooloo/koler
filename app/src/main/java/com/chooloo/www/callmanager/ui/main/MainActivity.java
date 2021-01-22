@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
@@ -25,7 +24,8 @@ import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
 
-import java.util.Objects;
+import static android.content.Intent.ACTION_DIAL;
+import static android.content.Intent.ACTION_VIEW;
 
 
 // TODO implement FAB Coordination
@@ -92,28 +92,22 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         binding.viewPager.setAdapter(new MainPagerAdapter(this));
         binding.appbarMain.mainTabLayout.setViewPager(binding.viewPager);
 
+        mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
+
+        mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
+        mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
+
         mSearchFragment = new SearchFragment();
         mSearchFragment.setOnFocusChangedListener(isFocused -> mPresenter.onSearchFocusChanged(isFocused));
         mSearchFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
         getSupportFragmentManager().beginTransaction().replace(R.id.main_search_fragment, mSearchFragment).commit();
 
-        mMenuFragment = MenuFragment.newInstance(R.menu.main_actions);
-        mMenuFragment.setOnMenuItemClickListener(menuItem -> mPresenter.onOptionsItemSelected(menuItem));
-
-        mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
-
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
-        checkIncomingIntent();
-    }
-
-    @Override
-    public void checkIncomingIntent() {
         Intent intent = getIntent();
-        String action = intent.getAction();
-        if (Objects.equals(action, Intent.ACTION_DIAL) || Objects.equals(action, Intent.ACTION_VIEW)) {
-            mPresenter.handleViewIntent(intent);
+        if (intent.getAction().equals(ACTION_DIAL) || intent.getAction().equals(ACTION_VIEW)) {
+            mPresenter.onViewIntent(intent);
         }
     }
 
@@ -151,10 +145,5 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         } else if (!isShow && mMenuFragment.isShown()) {
             mMenuFragment.dismiss();
         }
-    }
-
-    @Override
-    public void handleViewIntent(Intent intent) {
-
     }
 }

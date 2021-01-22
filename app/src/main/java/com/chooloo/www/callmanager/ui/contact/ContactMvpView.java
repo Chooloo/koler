@@ -7,7 +7,7 @@ public interface ContactMvpView extends MvpView {
 
     void callContact();
 
-    void sendSmsToContact();
+    void smsContact();
 
     void editContact();
 
