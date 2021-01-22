@@ -90,12 +90,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         binding.dialpadFabButton.setOnClickListener(view -> mPresenter.onDialpadFabClick());
         binding.appbarMain.mainMenuButton.setOnClickListener(view -> mPresenter.onMenuClick());
         binding.viewPager.setAdapter(new MainPagerAdapter(this));
-        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                mPresenter.onPageSelected(position);
-            }
-        });
         binding.appbarMain.mainTabLayout.setViewPager(binding.viewPager);
 
         mSearchFragment = new SearchFragment();
@@ -109,15 +103,9 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(true);
 
         mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
-        mSharedDialViewModel.getIsFocused().observe(this, focused -> mPresenter.onDialFocusChanged(focused));
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
         checkIncomingIntent();
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return binding.viewPager.getCurrentItem();
     }
 
     @Override
@@ -142,11 +130,6 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void setDialNumber(String number) {
         mBottomDialpadFragment.setNumber(number);
-    }
-
-    @Override
-    public String getDialNumber() {
-        return mSharedDialViewModel.getNumber().getValue();
     }
 
     @Override

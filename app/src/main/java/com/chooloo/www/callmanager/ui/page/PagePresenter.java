@@ -19,12 +19,8 @@ public class PagePresenter<V extends PageMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onScrollStateChanged(int newState) {
-        boolean isScrolling = newState == (RecyclerView.SCROLL_STATE_DRAGGING | RecyclerView.SCROLL_STATE_SETTLING);
-        if (isScrolling) {
-            mMvpView.setDialpadFocused(true);
+        if (newState == (RecyclerView.SCROLL_STATE_DRAGGING | RecyclerView.SCROLL_STATE_SETTLING)) {
             mMvpView.setSearchBarFocused(false);
-        } else {
-            mMvpView.setDialpadFocused(false);
         }
     }
 }

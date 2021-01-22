@@ -31,23 +31,6 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     }
 
     @Override
-    public void onPageSelected(int position) {
-        mMvpView.showDialpad(false);
-    }
-
-    @Override
-    public void onBottomSheetStateChanged(@BottomSheetBehavior.State int state) {
-        mBottomSheetState = state;
-    }
-
-    @Override
-    public void onDialFocusChanged(boolean isFocused) {
-        if (!isFocused) {
-            mMvpView.showDialpad(false);
-        }
-    }
-
-    @Override
     public void onDialNumberChanged(String number) {
     }
 

@@ -9,17 +9,11 @@ public interface MainMvpPresenter<V extends MainMvpView> extends MvpPresenter<V>
 
     void onDialpadFabClick();
 
-    void onPageSelected(int position);
-
-    void onBottomSheetStateChanged(int state);
-
     void onSearchTextChanged(String text);
 
     void onSearchFocusChanged(boolean isFocused);
 
     void onDialNumberChanged(String number);
-
-    void onDialFocusChanged(boolean isFocused);
 
     void onOptionsItemSelected(MenuItem item);
 

@@ -53,11 +53,6 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
     }
 
     @Override
-    public void setDialpadFocused(boolean isFocused) {
-        mDialViewModel.setIsFocused(isFocused);
-    }
-
-    @Override
     public void setSearchBarFocused(boolean isFocused) {
         mSearchViewModel.setIsFocused(isFocused);
     }
