@@ -5,11 +5,13 @@ import androidx.preference.Preference;
 import com.chooloo.www.callmanager.ui.base.BasePresenter;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 
+import static com.chooloo.www.callmanager.util.PermissionUtils.RC_DEFAULT;
+
 public class SettingsPresenter<V extends SettingsMvpView> extends BasePresenter<V> implements SettingsMvpPresenter<V> {
 
     @Override
     public void onRequestPermissionResult(int requestCode, int[] grantResults) {
-        if (requestCode == PermissionUtils.PERMISSION_RC && PermissionUtils.checkPermissionsGranted(grantResults)) {
+        if (requestCode == RC_DEFAULT && PermissionUtils.checkPermissionsGranted(grantResults)) {
             mMvpView.setupSimSelection();
         }
     }

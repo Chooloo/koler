@@ -61,13 +61,13 @@ public abstract class CursorFragment<A extends CursorAdapter> extends BaseFragme
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
     public void onSetup() {
         mPresenter = new CursorPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         mAdapter = onGetAdapter();
 

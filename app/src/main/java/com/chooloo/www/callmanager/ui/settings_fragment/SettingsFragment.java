@@ -79,19 +79,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
     public void onSetup() {
         mPresenter = new SettingsPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
     }
 
     @Override

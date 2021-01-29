@@ -26,10 +26,10 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
+        mDialViewModel = viewModelProvider.get(SharedDialViewModel.class);
         mDialViewModel.getNumber().observe(this, this::onDialNumberChanged);
 
-        mSearchViewModel = mViewModelProvider.get(SharedSearchViewModel.class);
+        mSearchViewModel = viewModelProvider.get(SharedSearchViewModel.class);
         mSearchViewModel.getText().observe(this, this::onSearchTextChanged);
     }
 
@@ -43,13 +43,13 @@ public abstract class PageFragment extends BaseFragment implements PageMvpView {
     @Override
     public void onSetup() {
         mPresenter = new PagePresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override

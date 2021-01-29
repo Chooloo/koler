@@ -36,7 +36,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
 
     @Override
     public ContactsAdapter onGetAdapter() {
-        ContactsAdapter contactsAdapter = new ContactsAdapter(mActivity);
+        ContactsAdapter contactsAdapter = new ContactsAdapter(activity);
         contactsAdapter.setOnContactItemClick(contact -> mPresenter.onContactItemClick(contact));
         contactsAdapter.setOnContactItemLongClickListener(contact -> mPresenter.onContactItemLongClick(contact));
         return contactsAdapter;
@@ -51,7 +51,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     public Loader<Cursor> onGetLoader(Bundle args) {
         String contactName = args != null ? args.getString(ARG_CONTACT_NAME, null) : null;
         String phoneNumber = args != null ? args.getString(ARG_PHONE_NUMBER, null) : null;
-        return new FavoritesAndContactsLoader(mActivity, phoneNumber, contactName);
+        return new FavoritesAndContactsLoader(activity, phoneNumber, contactName);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
         mLoaderId = 0;
 
         mPresenter = new ContactsPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         load();
     }
@@ -69,7 +69,7 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
@@ -83,6 +83,6 @@ public class ContactsFragment extends CursorFragment<ContactsAdapter> implements
 
     @Override
     public void openContact(Contact contact) {
-        ContactBottomDialogFragment.newInstance(contact).show(mActivity.getSupportFragmentManager(), ContactBottomDialogFragment.TAG);
+        ContactBottomDialogFragment.newInstance(contact).show(activity.getSupportFragmentManager(), ContactBottomDialogFragment.TAG);
     }
 }

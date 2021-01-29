@@ -18,9 +18,9 @@ import androidx.core.app.NotificationManagerCompat;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
+import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
-import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.util.ThemeUtils;
 import com.chooloo.www.callmanager.util.Utilities;
 
@@ -57,7 +57,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -77,8 +76,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
             }
         }
     }
-
-
 
 
     // -- Notification -- //

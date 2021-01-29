@@ -1,36 +1,17 @@
 package com.chooloo.www.callmanager.ui.recents;
 
-import android.Manifest;
-import android.app.Dialog;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CallLog;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.loader.content.Loader;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
-import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
-import com.chooloo.www.callmanager.util.ContactUtils;
-import com.chooloo.www.callmanager.util.PermissionUtils;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import static android.Manifest.permission.READ_CALL_LOG;
 import static android.Manifest.permission.WRITE_CALL_LOG;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class RecentsFragment extends CursorFragment<RecentsAdapter> implements RecentsMvpView {
 
@@ -55,7 +36,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
 
     @Override
     public RecentsAdapter onGetAdapter() {
-        RecentsAdapter recentsAdapter = new RecentsAdapter(mActivity);
+        RecentsAdapter recentsAdapter = new RecentsAdapter(activity);
         recentsAdapter.setOnRecentItemClickListener(recentCall -> mPresenter.onRecentItemClick(recentCall));
         recentsAdapter.setOnRecentItemLongClickListener(recentCall -> mPresenter.onRecentItemLongClick(recentCall));
         return recentsAdapter;
@@ -70,7 +51,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     public Loader<Cursor> onGetLoader(Bundle args) {
         String contactName = args.getString(ARG_CONTACT_NAME, null);
         String phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
-        return new RecentsCursorLoader(mActivity, phoneNumber, contactName);
+        return new RecentsCursorLoader(activity, phoneNumber, contactName);
     }
 
     @Override
@@ -80,7 +61,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
         mLoaderId = 1;
 
         mPresenter = new RecentsPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         load();
     }
@@ -88,7 +69,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override

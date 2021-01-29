@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     @Override
     public void onSetup() {
         mPresenter = new MainPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         Utilities.showNewVersionDialog(this);
         PermissionUtils.ensureDefaultDialer(this);
@@ -102,7 +102,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mSearchFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
         getSupportFragmentManager().beginTransaction().replace(R.id.main_search_fragment, mSearchFragment).commit();
 
-        mSharedDialViewModel = mViewModelProvider.get(SharedDialViewModel.class);
+        mSharedDialViewModel = viewModelProvider.get(SharedDialViewModel.class);
         mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
         Intent intent = getIntent();

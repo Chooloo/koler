@@ -30,13 +30,13 @@ public class AboutActivity extends BaseActivity implements AboutMvpView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
     public void onSetup() {
         mPresenter = new AboutPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);

@@ -40,19 +40,19 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
     public void onSetup() {
         mPresenter = new SearchPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         mOnFocusChangedListener = isFocused -> {
         };
@@ -94,7 +94,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     public void showIcon(boolean isShow) {
 //        binding.searchInputEditText.icon
 //        binding.searchInputLayout.setStartIconVisible(isShow);
-        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(mActivity, R.drawable.ic_search_black_24dp) : null, null, null, null);
+        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(activity, R.drawable.ic_search_black_24dp) : null, null, null, null);
     }
 
     public void setOnFocusChangedListener(OnFocusChangedListener onFocusChangedListener) {

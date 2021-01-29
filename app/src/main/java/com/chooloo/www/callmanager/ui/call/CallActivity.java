@@ -52,7 +52,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     @Override
     public void onSetup() {
         mPresenter = new CallPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
@@ -114,7 +114,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.onDetach();
+        mPresenter.detach();
         CallManager.unregisterCallback(mCallCallback);
         if (mWakeLock.isHeld()) {
             mWakeLock.release();
@@ -177,7 +177,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     public void updateCall() {
         Contact caller = CallManager.getContact(this);
 
-        binding.callNameText.setText(caller.getName());
+        binding.callNameText.setText(caller.name);
         if (caller.getPhotoUri() != null) {
             binding.callImage.setVisibility(VISIBLE);
             binding.callImage.setImageURI(Uri.parse(caller.getPhotoUri()));

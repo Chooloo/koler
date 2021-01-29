@@ -44,7 +44,7 @@ public class RecentsAdapter extends CursorAdapter<ListItemHolder> {
         String callDate = recentCall.getCallDate() != null ? RelativeTime.getTimeAgo(recentCall.getCallDate().getTime()) : null;
 
         ListItem listItem = holder.getListItem();
-        listItem.setBigText(callerContact.getName() == null ? recentCall.getCallerNumber() : callerContact.getName());
+        listItem.setBigText(callerContact.name == null ? recentCall.getCallerNumber() : callerContact.name);
         listItem.setSmallText(callDate);
         listItem.setImageDrawable(ContextCompat.getDrawable(mContext, Utilities.getCallTypeImage(recentCall.getCallType())));
         listItem.setOnClickListener(view -> mOnRecentItemClickListener.onRecentItemClick(recentCall));

@@ -46,17 +46,17 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
     public void onSetup() {
         mPresenter = new ContactPresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         // contact details
         mContact = (Contact) getArgsSafely().getSerializable(CONTACT_ARG);
-        binding.contactTextName.setText(mContact.getName());
+        binding.contactTextName.setText(mContact.name);
         binding.contactTextNumber.setText(mContact.getNumber());
         binding.contactFavoriteIcon.setVisibility(mContact.getStarred() ? VISIBLE : GONE);
         if (mContact.getPhotoUri() != null) {
@@ -74,27 +74,27 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
 
     @Override
     public void callContact() {
-        CallManager.call(mActivity, mContact.getNumber());
+        CallManager.call(activity, mContact.getNumber());
     }
 
     @Override
     public void smsContact() {
-        ContactUtils.smsContact(mActivity, mContact);
+        ContactUtils.smsContact(activity, mContact);
     }
 
     @Override
     public void editContact() {
-        ContactUtils.editContact(mActivity, mContact);
+        ContactUtils.editContact(activity, mContact);
     }
 
     @Override
     public void openContact() {
-        ContactUtils.openContact(mActivity, mContact);
+        ContactUtils.openContact(activity, mContact);
     }
 
     @Override
     public void deleteContact() {
-        ContactUtils.deleteContact(mActivity, mContact);
+        ContactUtils.deleteContact(activity, mContact);
     }
 
     @Override

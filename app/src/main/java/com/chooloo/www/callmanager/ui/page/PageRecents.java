@@ -1,15 +1,11 @@
 package com.chooloo.www.callmanager.ui.page;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.databinding.FragmentPageBinding;
 import com.chooloo.www.callmanager.ui.recents.RecentsFragment;
 
 public class PageRecents extends PageFragment implements PageMvpView {
@@ -30,7 +26,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
         super.onSetup();
 
         mPresenter = new PagePresenter<>();
-        mPresenter.onAttach(this);
+        mPresenter.attach(this);
 
         mRecentsFragment = RecentsFragment.newInstance();
         mRecentsFragment.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -41,13 +37,13 @@ public class PageRecents extends PageFragment implements PageMvpView {
             }
         });
 
-        mActivity.getSupportFragmentManager().beginTransaction().replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mPresenter.onDetach();
+        mPresenter.detach();
     }
 
     @Override
