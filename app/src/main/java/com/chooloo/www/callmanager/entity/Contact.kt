@@ -24,3 +24,4 @@ class Contact(
         return obj is Contact && (super.equals(obj) || name == obj.name)
     }
 }
+

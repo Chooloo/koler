@@ -94,7 +94,7 @@ public class SearchFragment extends BaseFragment implements SearchMvpView {
     public void showIcon(boolean isShow) {
 //        binding.searchInputEditText.icon
 //        binding.searchInputLayout.setStartIconVisible(isShow);
-        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(activity, R.drawable.ic_search_black_24dp) : null, null, null, null);
+        binding.searchInputEditText.setCompoundDrawablesWithIntrinsicBounds(isShow ? ContextCompat.getDrawable(_activity, R.drawable.ic_search_black_24dp) : null, null, null, null);
     }
 
     public void setOnFocusChangedListener(OnFocusChangedListener onFocusChangedListener) {

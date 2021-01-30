@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.contacts;
+package com.chooloo.www.callmanager.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.cursorloader.ContactsCursorLoader;
 import com.chooloo.www.callmanager.entity.Contact;
-import com.chooloo.www.callmanager.ui.cursor.CursorAdapter;
 import com.chooloo.www.callmanager.ui.listitem.ListItem;
 import com.chooloo.www.callmanager.ui.listitem.ListItemHolder;
 

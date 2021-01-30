@@ -23,7 +23,7 @@ import android.telephony.PhoneNumberUtils
 import androidx.loader.content.CursorLoader
 import com.chooloo.www.callmanager.entity.Contact
 
-open class ContactsCursorLoader(context: Context, phoneNumber: String?, contactName: String?) : CursorLoader(
+class ContactsCursorLoader(context: Context, phoneNumber: String?, contactName: String?) : CursorLoader(
         context,
         buildUri(phoneNumber, contactName),
         CONTACTS_PROJECTION,

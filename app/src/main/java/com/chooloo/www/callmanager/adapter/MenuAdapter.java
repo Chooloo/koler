@@ -1,16 +1,13 @@
-package com.chooloo.www.callmanager.ui.menu;
+package com.chooloo.www.callmanager.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.ui.listitem.ListItem;
 import com.chooloo.www.callmanager.ui.listitem.ListItemHolder;
 

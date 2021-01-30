@@ -87,9 +87,9 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
         setIsDialer(getArgsSafely().getBoolean(ARG_DIALER));
 
-        mSharedDialViewModel = new ViewModelProvider(activity).get(SharedDialViewModel.class);
+        mSharedDialViewModel = new ViewModelProvider(_activity).get(SharedDialViewModel.class);
 
-        SharedIntentViewModel sharedIntentViewModel = new ViewModelProvider(activity).get(SharedIntentViewModel.class);
+        SharedIntentViewModel sharedIntentViewModel = new ViewModelProvider(_activity).get(SharedIntentViewModel.class);
         sharedIntentViewModel.getData().observe(getViewLifecycleOwner(), data -> mPresenter.onIntentDataChanged(data));
 
         binding.dialpadEditText.addTextChangedListener(new PhoneNumberFormattingTextWatcher(Utilities.sLocale.getCountry()));
@@ -157,13 +157,13 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
         if (number.equals("") || number.isEmpty()) {
             Toast.makeText(getContext(), getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show();
         } else {
-            CallManager.call(activity, binding.dialpadEditText.getNumbers());
+            CallManager.call(_activity, binding.dialpadEditText.getNumbers());
         }
     }
 
     @Override
     public void callVoicemail() {
-        CallManager.callVoicemail(activity);
+        CallManager.callVoicemail(_activity);
     }
 
     @Override
@@ -195,13 +195,13 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void addContact() {
-        Contact contact = ContactUtils.lookupContact(activity, binding.dialpadEditText.getNumbers());
-        ContactUtils.addContact(activity, contact);
+        Contact contact = ContactUtils.lookupContact(_activity, binding.dialpadEditText.getNumbers());
+        ContactUtils.addContact(_activity, contact);
     }
 
     @Override
     public void vibrate() {
-        Utilities.vibrate(activity, Utilities.SHORT_VIBRATE_LENGTH);
+        Utilities.vibrate(_activity, Utilities.SHORT_VIBRATE_LENGTH);
     }
 
     @Override
@@ -230,7 +230,7 @@ public class DialpadFragment extends BaseFragment implements DialpadMvpView {
 
     @Override
     public void playTone(int keyCode) {
-        mAudioUtils.playToneByKey(keyCode, activity);
+        mAudioUtils.playToneByKey(keyCode, _activity);
     }
 
 

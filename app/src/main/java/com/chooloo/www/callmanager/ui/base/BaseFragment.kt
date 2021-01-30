@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment : Fragment(), MvpView {
     protected lateinit var requiredPermissions: Array<String>
-    protected lateinit var activity: BaseActivity
+    protected lateinit var _activity: BaseActivity
 
     companion object {
         private const val PERMISSION_RC = 10
@@ -19,8 +19,8 @@ abstract class BaseFragment : Fragment(), MvpView {
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        activity = context
-        activity.onAttachFragment(this)
+        _activity = context
+        _activity.onAttachFragment(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ abstract class BaseFragment : Fragment(), MvpView {
     }
 
     override fun hasPermissions(): Boolean {
-        return requiredPermissions.filter { p -> activity.hasPermission(p) }.isNotEmpty()
+        return requiredPermissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
     }
 
     override fun askForPermission(permission: String, requestCode: Int) {
@@ -54,19 +54,19 @@ abstract class BaseFragment : Fragment(), MvpView {
     }
 
     override fun showMessage(message: String) {
-        activity.showMessage(message)
+        _activity.showMessage(message)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
-        activity.showMessage(stringResId)
+        _activity.showMessage(stringResId)
     }
 
     override fun showError(message: String) {
-        activity.showError(message)
+        _activity.showError(message)
     }
 
     override fun showError(@StringRes stringResId: Int) {
-        activity.showError(getString(stringResId))
+        _activity.showError(getString(stringResId))
     }
 
     protected val argsSafely: Bundle

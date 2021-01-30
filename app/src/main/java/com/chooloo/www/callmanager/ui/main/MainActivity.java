@@ -12,6 +12,7 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.MainPagerAdapter;
 import com.chooloo.www.callmanager.databinding.ActivityMainBinding;
 import com.chooloo.www.callmanager.ui.about.AboutActivity;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;

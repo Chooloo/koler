@@ -37,7 +37,7 @@ public class PageRecents extends PageFragment implements PageMvpView {
             }
         });
 
-        activity.getSupportFragmentManager().beginTransaction().replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
+        _activity.getSupportFragmentManager().beginTransaction().replace(binding.fragmentPageLayout.getId(), mRecentsFragment).commit();
     }
 
     @Override

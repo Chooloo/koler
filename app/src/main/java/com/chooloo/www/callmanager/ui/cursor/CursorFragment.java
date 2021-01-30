@@ -13,6 +13,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chooloo.www.callmanager.R;
+import com.chooloo.www.callmanager.adapter.CursorAdapter;
 import com.chooloo.www.callmanager.databinding.FragmentItemsBinding;
 import com.chooloo.www.callmanager.ui.base.BaseFragment;
 

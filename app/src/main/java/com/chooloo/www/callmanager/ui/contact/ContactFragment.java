@@ -74,27 +74,27 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
 
     @Override
     public void callContact() {
-        CallManager.call(activity, mContact.getNumber());
+        CallManager.call(_activity, mContact.getNumber());
     }
 
     @Override
     public void smsContact() {
-        ContactUtils.smsContact(activity, mContact);
+        ContactUtils.smsContact(_activity, mContact);
     }
 
     @Override
     public void editContact() {
-        ContactUtils.editContact(activity, mContact);
+        ContactUtils.editContact(_activity, mContact);
     }
 
     @Override
     public void openContact() {
-        ContactUtils.openContact(activity, mContact);
+        ContactUtils.openContact(_activity, mContact);
     }
 
     @Override
     public void deleteContact() {
-        ContactUtils.deleteContact(activity, mContact);
+        ContactUtils.deleteContact(_activity, mContact);
     }
 
     @Override

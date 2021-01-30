@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.ui.main;
+package com.chooloo.www.callmanager.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;

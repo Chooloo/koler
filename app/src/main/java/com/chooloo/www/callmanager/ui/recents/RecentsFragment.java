@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.loader.content.Loader;
 
+import com.chooloo.www.callmanager.adapter.RecentsAdapter;
 import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader;
 import com.chooloo.www.callmanager.entity.RecentCall;
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment;
@@ -36,7 +37,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
 
     @Override
     public RecentsAdapter onGetAdapter() {
-        RecentsAdapter recentsAdapter = new RecentsAdapter(activity);
+        RecentsAdapter recentsAdapter = new RecentsAdapter(_activity);
         recentsAdapter.setOnRecentItemClickListener(recentCall -> mPresenter.onRecentItemClick(recentCall));
         recentsAdapter.setOnRecentItemLongClickListener(recentCall -> mPresenter.onRecentItemLongClick(recentCall));
         return recentsAdapter;
@@ -51,7 +52,7 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     public Loader<Cursor> onGetLoader(Bundle args) {
         String contactName = args.getString(ARG_CONTACT_NAME, null);
         String phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
-        return new RecentsCursorLoader(activity, phoneNumber, contactName);
+        return new RecentsCursorLoader(_activity, phoneNumber, contactName);
     }
 
     @Override

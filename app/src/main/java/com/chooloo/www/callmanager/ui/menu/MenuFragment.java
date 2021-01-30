@@ -11,9 +11,10 @@ import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.chooloo.www.callmanager.adapter.MenuAdapter;
 import com.chooloo.www.callmanager.databinding.FragmentMenuBinding;
 import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment;
-import com.chooloo.www.callmanager.ui.menu.MenuAdapter.OnMenuItemClickListener;
+import com.chooloo.www.callmanager.adapter.MenuAdapter.OnMenuItemClickListener;
 
 public class MenuFragment extends BaseBottomSheetDialogFragment implements MenuMvpView {
 
