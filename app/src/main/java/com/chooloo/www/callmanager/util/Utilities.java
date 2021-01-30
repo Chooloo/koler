@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Looper;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.View;

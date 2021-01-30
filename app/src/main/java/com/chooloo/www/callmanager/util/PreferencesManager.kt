@@ -25,6 +25,7 @@ class PreferencesManager(
         @SuppressLint("StaticFieldLeak")
         private var sPreferencesManager: PreferencesManager? = null
 
+        @JvmStatic
         fun getInstance(context: Context): PreferencesManager? {
             sPreferencesManager = sPreferencesManager ?: PreferencesManager(context)
             return sPreferencesManager
