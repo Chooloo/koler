@@ -4,6 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
 import android.telephony.PhoneNumberUtils
+import androidx.annotation.IntDef
+import androidx.annotation.StringDef
+import com.chooloo.www.callmanager.util.ThemeUtils
 
 class ContactsLiveData(context: Context) : CursorLiveData(context) {
 
