@@ -16,11 +16,13 @@ object AudioUtils {
     private val _toneGeneratorLock = Any()
     private var _toneGenerator: ToneGenerator? = null
 
+    @JvmStatic
     fun isPhoneSilent(activity: Activity): Boolean {
         val ringerMode = (activity.getSystemService(Context.AUDIO_SERVICE) as AudioManager).ringerMode
         return ringerMode == AudioManager.RINGER_MODE_SILENT || ringerMode == AudioManager.RINGER_MODE_VIBRATE
     }
 
+    @JvmStatic
     fun toggleToneGenerator(toggle: Boolean) {
         synchronized(_toneGeneratorLock) {
             if (toggle && _toneGenerator == null) {
@@ -52,6 +54,7 @@ object AudioUtils {
      * @param tone       a tone code from [ToneGenerator]
      * @param durationMs tone length.
      */
+    @JvmStatic
     private fun playTone(tone: Int, durationMs: Int, activity: Activity) {
         if (tone == -1 || isPhoneSilent(activity)) {
             return
@@ -68,10 +71,12 @@ object AudioUtils {
     /**
      * Plays the specified tone for TONE_LENGTH_MS milliseconds.
      */
+    @JvmStatic
     private fun playTone(tone: Int, activity: Activity) {
         playTone(tone, TONE_LENGTH_MS, activity)
     }
 
+    @JvmStatic
     fun playToneByKey(keyCode: Int, activity: Activity) {
         val keyToTone = HashMap<Int, Int>()
         keyToTone[KeyEvent.KEYCODE_0] = ToneGenerator.TONE_DTMF_0
@@ -93,6 +98,7 @@ object AudioUtils {
      * Stop the tone if it is played.
      * if local tone playback is disabled, just return.
      */
+    @JvmStatic
     fun stopTone() {
         synchronized(_toneGeneratorLock) {
             _toneGenerator?.stopTone()

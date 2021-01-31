@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.adapter.MainPagerAdapter;
@@ -23,7 +24,7 @@ import com.chooloo.www.callmanager.ui.search.SearchFragment;
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity;
 import com.chooloo.www.callmanager.util.PermissionUtils;
 import com.chooloo.www.callmanager.util.Utilities;
-import com.chooloo.www.callmanager.viewmodel.SharedDialViewModel;
+import com.chooloo.www.callmanager.viewmodel.DialViewModel;
 
 import static android.content.Intent.ACTION_DIAL;
 import static android.content.Intent.ACTION_VIEW;
@@ -35,7 +36,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     private MainMvpPresenter<MainMvpView> mPresenter;
 
-    private SharedDialViewModel mSharedDialViewModel;
+    private DialViewModel mDialViewModel;
 
     private DialpadBottomDialogFragment mBottomDialpadFragment;
     private MenuFragment mMenuFragment;
@@ -103,8 +104,8 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         mSearchFragment.setOnTextChangedListener(text -> mPresenter.onSearchTextChanged(text));
         getSupportFragmentManager().beginTransaction().replace(R.id.main_search_fragment, mSearchFragment).commit();
 
-        mSharedDialViewModel = viewModelProvider.get(SharedDialViewModel.class);
-        mSharedDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
+        mDialViewModel = new ViewModelProvider(this).get(DialViewModel.class);
+        mDialViewModel.getNumber().observe(this, number -> mPresenter.onDialNumberChanged(number));
 
         Intent intent = getIntent();
         if (intent.getAction().equals(ACTION_DIAL) || intent.getAction().equals(ACTION_VIEW)) {

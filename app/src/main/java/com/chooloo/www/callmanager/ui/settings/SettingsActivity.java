@@ -13,11 +13,8 @@ import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.databinding.ActivitySettingsBinding;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.settings_fragment.SettingsFragment;
-import com.chooloo.www.callmanager.util.ThemeUtils;
 
 import java.util.Objects;
-
-import butterknife.ButterKnife;
 
 public class SettingsActivity extends BaseActivity implements SettingsMvpView {
     private static final String TAG_FRAGMENT = "fragment";

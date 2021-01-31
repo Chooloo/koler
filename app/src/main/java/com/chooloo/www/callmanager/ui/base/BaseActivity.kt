@@ -12,16 +12,14 @@ import com.chooloo.www.callmanager.util.PreferencesManager
 import com.chooloo.www.callmanager.util.Utilities
 
 abstract class BaseActivity : AppCompatActivity(), MvpView {
+    protected var preferences: PreferencesManager? = null
     protected lateinit var requiredPermissions: Array<String>
-    protected lateinit var preferences: PreferencesManager
-    protected lateinit var viewModelProvider: ViewModelProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Utilities.setUpLocale(this)
         preferences = PreferencesManager.getInstance(this)
         requiredPermissions = onGetPermissions()
-        viewModelProvider = ViewModelProvider(this)
     }
 
     override fun onStart() {

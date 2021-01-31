@@ -37,7 +37,7 @@ public class PageContacts extends PageFragment implements PageMvpView {
             }
         });
 
-        _activity.getSupportFragmentManager().beginTransaction().add(binding.fragmentPageLayout.getId(), mContactsFragment).commit();
+        _activity.getSupportFragmentManager().beginTransaction().add(_binding.fragmentPageLayout.getId(), mContactsFragment).commit();
     }
 
     @Override

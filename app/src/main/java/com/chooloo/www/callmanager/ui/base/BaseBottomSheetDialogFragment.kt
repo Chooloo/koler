@@ -13,10 +13,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpView {
 
-    var isShown = false
-    protected lateinit var requiredPermissions: Array<String>
+    private lateinit var requiredPermissions: Array<String>
     protected lateinit var activity: BaseActivity
     protected lateinit var binding: FragmentBottomDialogBinding
+    var isShown = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -93,8 +93,8 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         activity.showError(getString(stringResId))
     }
 
-    protected fun putFragment(fragment: BaseFragment?) {
-        childFragmentManager.beginTransaction().replace(binding.bottomDialogFragmentPlaceholder.id, fragment!!).commit()
+    protected fun putFragment(fragment: BaseFragment) {
+        childFragmentManager.beginTransaction().replace(binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
 
     protected val argsSafely: Bundle

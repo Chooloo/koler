@@ -56,7 +56,7 @@ public class ContactFragment extends BaseFragment implements ContactMvpView {
 
         // contact details
         mContact = (Contact) getArgsSafely().getSerializable(CONTACT_ARG);
-        binding.contactTextName.setText(mContact.name);
+        binding.contactTextName.setText(mContact.getName());
         binding.contactTextNumber.setText(mContact.getNumber());
         binding.contactFavoriteIcon.setVisibility(mContact.getStarred() ? VISIBLE : GONE);
         if (mContact.getPhotoUri() != null) {

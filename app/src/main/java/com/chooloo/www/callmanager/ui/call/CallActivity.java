@@ -177,7 +177,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     public void updateCall() {
         Contact caller = CallManager.getContact(this);
 
-        binding.callNameText.setText(caller.name);
+        binding.callNameText.setText(caller.getName());
         if (caller.getPhotoUri() != null) {
             binding.callImage.setVisibility(VISIBLE);
             binding.callImage.setImageURI(Uri.parse(caller.getPhotoUri()));
@@ -187,7 +187,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
     @Override
     public void updateState() {
         @StringRes int statusTextRes;
-        switch (CallManager.getState()) {
+        switch (CallManager.state) {
             case Call.STATE_ACTIVE: // Ongoing
                 statusTextRes = R.string.status_call_active;
                 break;

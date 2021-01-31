@@ -4,6 +4,7 @@ import android.Manifest.permission
 import android.database.Cursor
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.Loader
 import com.chooloo.www.callmanager.adapter.ContactsAdapter
 import com.chooloo.www.callmanager.cursorloader.FavoritesAndContactsLoader
@@ -11,11 +12,10 @@ import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.livedata.ContactsLiveData
 import com.chooloo.www.callmanager.ui.contact.ContactBottomDialogFragment
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment
-import com.chooloo.www.callmanager.viewmodel.ContactsViewModel
+import com.chooloo.www.callmanager.viewmodel.CursorsViewModel
 
 class ContactsFragment : CursorFragment<ContactsAdapter?>(), ContactsMvpView {
     private lateinit var _presenter: ContactsPresenter<ContactsMvpView>
-    private lateinit var _contactsViewModel: ContactsViewModel
     private lateinit var _contactsLiveData: ContactsLiveData
 
     companion object {
@@ -23,6 +23,7 @@ class ContactsFragment : CursorFragment<ContactsAdapter?>(), ContactsMvpView {
         private const val ARG_PHONE_NUMBER = "phoneNumber"
         private const val ARG_CONTACT_NAME = "contactName"
 
+        @JvmStatic
         fun newInstance(): ContactsFragment {
             return newInstance(null, null)
         }
@@ -61,9 +62,8 @@ class ContactsFragment : CursorFragment<ContactsAdapter?>(), ContactsMvpView {
         _presenter = ContactsPresenter()
         _presenter.attach(this)
 
-        _contactsLiveData = ContactsLiveData(_activity)
+        _contactsLiveData = ViewModelProvider(this).get(CursorsViewModel::class.java).contacts
         _contactsLiveData.observe(viewLifecycleOwner, Observer { cursor -> mAdapter?.setCursor(cursor) })
-//        load()
     }
 
     override fun onDestroyView() {

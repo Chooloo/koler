@@ -2,15 +2,16 @@ package com.chooloo.www.callmanager.entity
 
 import android.provider.CallLog
 import androidx.annotation.IntDef
+import java.io.Serializable
 import java.util.*
 
-class RecentCall(
+data class RecentCall(
         val callId: Long? = null,
         val callerNumber: String? = null,
         val callDuration: String? = null,
         val callDate: Date? = null,
         val callType: Int? = null
-) {
+) : Serializable {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @IntDef(TYPE_OUTGOING, TYPE_INCOMING, TYPE_MISSED, TYPE_VOICEMAIL, TYPE_REJECTED)
@@ -25,5 +26,4 @@ class RecentCall(
 
         val UNKNOWN = RecentCall(callerNumber = "Unknown")
     }
-
 }

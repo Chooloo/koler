@@ -43,8 +43,8 @@
     <style name="Koler.Image" />
 
     <style name="Koler.Image.Profile">
-        <item name="civ_border_width">0dp</item>
         <item name="android:scaleType">fitCenter</item>
+        <item name="borderWidth">0dp</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
