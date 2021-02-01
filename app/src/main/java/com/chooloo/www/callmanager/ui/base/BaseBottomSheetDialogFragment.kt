@@ -13,9 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpView {
 
-    private lateinit var requiredPermissions: Array<String>
+    private lateinit var _binding: FragmentBottomDialogBinding
     protected lateinit var activity: BaseActivity
-    protected lateinit var binding: FragmentBottomDialogBinding
     var isShown = false
 
     override fun onAttach(context: Context) {
@@ -28,14 +27,13 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentBottomDialogBinding.inflate(inflater, container, false)
-        return binding.root
+        _binding = FragmentBottomDialogBinding.inflate(inflater, container, false)
+        return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requiredPermissions = onGetPermissions()
-        binding.bottomDialogFragmentCloseButton.setOnClickListener { view1: View? -> dismiss() }
+        _binding.bottomDialogFragmentCloseButton.setOnClickListener { view1: View? -> dismiss() }
         onSetup()
     }
 
@@ -53,16 +51,12 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         }
     }
 
-    override fun onGetPermissions(): Array<String> {
-        return arrayOf()
-    }
-
     override fun hasPermission(permission: String): Boolean {
         return false
     }
 
-    override fun hasPermissions(): Boolean {
-        return requiredPermissions.filter { p -> activity.hasPermission(p) }.isNotEmpty()
+    override fun hasPermissions(permissions: Array<String>): Boolean {
+        return permissions.filter { p -> activity.hasPermission(p) }.isNotEmpty()
     }
 
     override fun askForPermission(permission: String, requestCode: Int) {
@@ -71,10 +65,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
 
     override fun askForPermissions(permissions: Array<String>, requestCode: Int) {
         requestPermissions(permissions, requestCode)
-    }
-
-    override fun askForPermissions() {
-        askForPermissions(requiredPermissions, PermissionUtils.RC_DEFAULT)
     }
 
     override fun showMessage(message: String) {
@@ -94,7 +84,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     }
 
     protected fun putFragment(fragment: BaseFragment) {
-        childFragmentManager.beginTransaction().replace(binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
+        childFragmentManager.beginTransaction().replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
 
     protected val argsSafely: Bundle

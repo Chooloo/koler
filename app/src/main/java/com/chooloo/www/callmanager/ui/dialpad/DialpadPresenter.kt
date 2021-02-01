@@ -5,33 +5,33 @@ import com.chooloo.www.callmanager.ui.base.BasePresenter
 
 class DialpadPresenter<V : DialpadMvpView?> : BasePresenter<V>(), DialpadMvpPresenter<V> {
     override fun onKeyClick(keyCode: Int) {
-        mMvpView?.vibrate()
-        mMvpView?.playTone(keyCode)
-        mMvpView?.registerKeyEvent(keyCode)
+        mvpView?.vibrate()
+        mvpView?.playTone(keyCode)
+        mvpView?.registerKeyEvent(keyCode)
     }
 
     override fun onCallClick() {
-        mMvpView?.call()
+        mvpView?.call()
     }
 
     override fun onDeleteClick() {
-        mMvpView?.backspace()
+        mvpView?.backspace()
     }
 
     override fun onAddContactClick() {
-        mMvpView?.addContact()
+        mvpView?.addContact()
     }
 
     override fun onLongDeleteClick(): Boolean {
-        mMvpView?.number = ""
+        mvpView?.number = ""
         return true
     }
 
     override fun onLongOneClick(): Boolean {
-        if (mMvpView?.isDialer == true) {
-            mMvpView?.callVoicemail()
+        if (mvpView?.isDialer == true) {
+            mvpView?.callVoicemail()
         }
-        return mMvpView?.isDialer ?: false
+        return mvpView?.isDialer ?: false
     }
 
     override fun onLongZeroClick(): Boolean {
@@ -40,8 +40,8 @@ class DialpadPresenter<V : DialpadMvpView?> : BasePresenter<V>(), DialpadMvpPres
     }
 
     override fun onTextChanged(text: String) {
-        mMvpView?.showDeleteButton(text.isNotEmpty())
-        mMvpView?.showAddContactButton(text.isNotEmpty())
-        mMvpView?.setViewModelNumber(text)
+        mvpView?.showDeleteButton(text.isNotEmpty())
+        mvpView?.showAddContactButton(text.isNotEmpty())
+        mvpView?.setViewModelNumber(text)
     }
 }

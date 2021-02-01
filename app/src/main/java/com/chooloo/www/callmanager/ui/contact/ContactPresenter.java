@@ -5,26 +5,26 @@ import com.chooloo.www.callmanager.ui.base.BasePresenter;
 public class ContactPresenter<V extends ContactMvpView> extends BasePresenter<V> implements ContactMvpPresenter<V> {
     @Override
     public void onActionCall() {
-        mMvpView.callContact();
+        mvpView.callContact();
     }
 
     @Override
     public void onActionSms() {
-        mMvpView.smsContact();
+        mvpView.smsContact();
     }
 
     @Override
     public void onActionEdit() {
-        mMvpView.editContact();
+        mvpView.editContact();
     }
 
     @Override
     public void onActionInfo() {
-        mMvpView.openContact();
+        mvpView.openContact();
     }
 
     @Override
     public void onActionDelete() {
-        mMvpView.deleteContact();
+        mvpView.deleteContact();
     }
 }

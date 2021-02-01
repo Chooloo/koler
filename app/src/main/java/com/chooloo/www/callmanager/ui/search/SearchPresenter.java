@@ -9,6 +9,6 @@ public class SearchPresenter<V extends SearchMvpView> extends BasePresenter<V> i
 
     @Override
     public void onFocusChanged(boolean hasFocus) {
-        mMvpView.showIcon(!hasFocus);
+        mvpView.showIcon(!hasFocus);
     }
 }

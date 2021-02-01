@@ -54,15 +54,18 @@ class RecentsCursorLoader(context: Context?, phoneNumber: String?, contactName: 
         )
 
         @JvmStatic
-        fun getRecentCallFromCursor(cursor: Cursor): RecentCall? {
+        fun getRecentCallFromCursor(cursor: Cursor?): RecentCall {
             return try {
-                RecentCall(
-                        callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
-                        callerNumber = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER)),
-                        callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION)),
-                        callDate = Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE))),
-                        callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE))
-                )
+                when {
+                    cursor == null -> RecentCall.UNKNOWN
+                    else -> RecentCall(
+                            callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
+                            callerNumber = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER)),
+                            callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION)),
+                            callDate = Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE))),
+                            callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE))
+                    )
+                }
             } catch (e: IndexOutOfBoundsException) {
                 RecentCall.UNKNOWN
             }

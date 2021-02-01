@@ -10,13 +10,8 @@ import com.chooloo.www.callmanager.ui.cursor.CursorPresenter;
 public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresenter<V> implements ContactsMvpPresenter<V> {
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        super.onLoadFinished(loader, data);
-    }
-
-    @Override
     public void onContactItemClick(Contact contact) {
-        mMvpView.openContact(contact);
+        mvpView.openContact(contact);
     }
 
     @Override

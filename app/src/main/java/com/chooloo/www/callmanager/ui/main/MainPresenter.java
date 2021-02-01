@@ -23,7 +23,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onDialpadFabClick() {
-        mMvpView.showDialpad(true);
+        mvpView.showDialpad(true);
     }
 
     @Override
@@ -43,11 +43,11 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     public void onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings: {
-                mMvpView.goToSettings();
+                mvpView.goToSettings();
                 break;
             }
             case R.id.action_about: {
-                mMvpView.goToAbout();
+                mvpView.goToAbout();
                 break;
             }
         }
@@ -56,7 +56,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
     @Override
     public boolean onBackPressed() {
         if (mBottomSheetState != STATE_HIDDEN && mBottomSheetState != STATE_COLLAPSED) {
-            mMvpView.showDialpad(false);
+            mvpView.showDialpad(false);
             return true;
         }
         return false;
@@ -64,7 +64,7 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onMenuClick() {
-        mMvpView.showMenu(true);
+        mvpView.showMenu(true);
     }
 
     @Override
@@ -74,15 +74,15 @@ public class MainPresenter<V extends MainMvpView> extends BasePresenter<V> imple
         try {
             intentText = URLDecoder.decode(intent.getDataString(), "utf-8");
         } catch (UnsupportedEncodingException e) {
-            mMvpView.showError("An error occured when trying to get phone number :(");
+            mvpView.showError("An error occured when trying to get phone number :(");
             return;
         }
 
         if (intentText.contains("tel:")) {
-            mMvpView.showDialpad(true);
-            mMvpView.setDialNumber(intentText);
+            mvpView.showDialpad(true);
+            mvpView.setDialNumber(intentText);
         } else {
-            mMvpView.showError("No phone number detected");
+            mvpView.showError("No phone number detected");
         }
     }
 }

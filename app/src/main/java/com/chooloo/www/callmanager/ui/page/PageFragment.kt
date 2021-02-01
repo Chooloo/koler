@@ -17,15 +17,6 @@ abstract class PageFragment : BaseFragment(), PageMvpView {
     protected lateinit var _dialViewModel: DialViewModel
     protected lateinit var _searchViewModel: SharedSearchViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java)
-        _dialViewModel.number.observe(this, Observer { number: String? -> onDialNumberChanged(number) })
-
-        _searchViewModel = ViewModelProvider(this).get(SharedSearchViewModel::class.java)
-        _searchViewModel.text.observe(this, Observer { text: String? -> onSearchTextChanged(text) })
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPageBinding.inflate(inflater)
         return _binding.root
@@ -34,6 +25,12 @@ abstract class PageFragment : BaseFragment(), PageMvpView {
     override fun onSetup() {
         _presenter = PagePresenter()
         _presenter.attach(this)
+
+        _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java)
+        _dialViewModel.number.observe(viewLifecycleOwner, Observer { number: String? -> onDialNumberChanged(number) })
+
+        _searchViewModel = ViewModelProvider(this).get(SharedSearchViewModel::class.java)
+        _searchViewModel.text.observe(viewLifecycleOwner, Observer { text: String? -> onSearchTextChanged(text) })
     }
 
     override fun onDestroy() {

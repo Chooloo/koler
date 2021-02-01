@@ -7,8 +7,8 @@ import com.chooloo.www.callmanager.ui.base.BasePresenter;
 public class CallPresenter<V extends CallMvpView> extends BasePresenter<V> implements CallMvpPresenter<V> {
     @Override
     public boolean onBackPressed() {
-        if (mMvpView.isDialpadOpened()) {
-            mMvpView.toggleDialpad(false);
+        if (mvpView.isDialpadOpened()) {
+            mvpView.toggleDialpad(false);
             return true;
         }
         return false;
@@ -16,53 +16,53 @@ public class CallPresenter<V extends CallMvpView> extends BasePresenter<V> imple
 
     @Override
     public void onAnswerClick() {
-        mMvpView.switchToActiveCallUI();
-        mMvpView.answer();
+        mvpView.switchToActiveCallUI();
+        mvpView.answer();
     }
 
     @Override
     public void onRejectClick() {
-        mMvpView.reject();
+        mvpView.reject();
     }
 
     @Override
     public void onAddCallClick() {
         // TODO this should get a call as a parameter or something idk do it
-        mMvpView.addCall();
+        mvpView.addCall();
     }
 
     @Override
     public void onKeypadClick() {
-        mMvpView.toggleDialpad(!mMvpView.isDialpadOpened());
+        mvpView.toggleDialpad(!mvpView.isDialpadOpened());
     }
 
     @Override
     public void onMuteClick(boolean isActivated) {
-        mMvpView.toggleHold(isActivated);
+        mvpView.toggleHold(isActivated);
     }
 
     @Override
     public void onSpeakerClick(boolean isActivated) {
-        mMvpView.toggleSpeaker(isActivated);
+        mvpView.toggleSpeaker(isActivated);
     }
 
     @Override
     public void onHoldClick(boolean isActivated) {
-        mMvpView.toggleHold(isActivated);
+        mvpView.toggleHold(isActivated);
     }
 
     @Override
     public void onDialpadKeyClick(int keyCode, KeyEvent event) {
-        mMvpView.pressDialpadKey((char) event.getUnicodeChar());
+        mvpView.pressDialpadKey((char) event.getUnicodeChar());
     }
 
     @Override
     public void onDetailsChanged() {
-        mMvpView.updateCall();
+        mvpView.updateCall();
     }
 
     @Override
     public void onStateChanged() {
-        mMvpView.updateState();
+        mvpView.updateState();
     }
 }

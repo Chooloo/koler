@@ -12,30 +12,30 @@ public class SettingsPresenter<V extends SettingsMvpView> extends BasePresenter<
     @Override
     public void onRequestPermissionResult(int requestCode, int[] grantResults) {
         if (requestCode == RC_DEFAULT && PermissionUtils.checkPermissionsGranted(grantResults)) {
-            mMvpView.setupSimSelection();
+            mvpView.setupSimSelection();
         }
     }
 
     @Override
     public void refresh() {
-        mMvpView.goToMainActivity();
+        mvpView.goToMainActivity();
     }
 
     @Override
     public boolean onListPreferenceChange(Preference preference, Object newValue) {
-        mMvpView.setListPreferenceSummary(preference, newValue);
+        mvpView.setListPreferenceSummary(preference, newValue);
         return true;
     }
 
     @Override
     public boolean onSwitchPreferenceChange(Preference preference, Object newValue) {
-        mMvpView.setSwitchPreferenceSummary(preference, newValue);
+        mvpView.setSwitchPreferenceSummary(preference, newValue);
         return true;
     }
 
     @Override
     public boolean onCheckBoxPreferenceChange(Preference preference, Object newValue) {
-        mMvpView.setCheckBoxPreferenceSummary(preference, newValue);
+        mvpView.setCheckBoxPreferenceSummary(preference, newValue);
         return true;
     }
 }

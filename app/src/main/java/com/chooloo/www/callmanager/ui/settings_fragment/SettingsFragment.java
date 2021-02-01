@@ -72,11 +72,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     }
 
     @Override
-    public String[] onGetPermissions() {
-        return new String[]{READ_PHONE_STATE};
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attach(this);
@@ -115,14 +110,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
     @Override
     public void setupSimSelection() {
-        if (!hasPermissions()) {
-            Toast.makeText(getContext(), "No permission, please give permission to read phone state", Toast.LENGTH_LONG).show();
-            return;
-        } else {
-            askForPermissions();
-        }
-
-        ListPreference simSelectionPreference = (ListPreference) findPreference(getString(R.string.pref_sim_select_key));
+        ListPreference simSelectionPreference = findPreference(getString(R.string.pref_sim_select_key));
 
         @SuppressLint("MissingPermission")
         List<SubscriptionInfo> subscriptionInfoList = SubscriptionManager.from(getContext()).getActiveSubscriptionInfoList();
@@ -156,12 +144,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
 
 
     @Override
-    public boolean hasPermissions() {
+    public boolean hasPermission(String permission) {
         return true;
     }
 
     @Override
-    public boolean hasPermission(String permission) {
+    public boolean hasPermissions(String[] permissions) {
         return true;
     }
 
@@ -173,10 +161,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Settin
     @Override
     public void askForPermissions(String[] permissions, int requestCode) {
         requestPermissions(permissions, requestCode);
-    }
-
-    @Override
-    public void askForPermissions() {
     }
 
     @Override

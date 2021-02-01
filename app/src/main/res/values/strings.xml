@@ -82,7 +82,7 @@
 
     <!--Empty-->
     <string name="no_recent_calls">No recent calls</string>
-
+    <string name="empty_list_no_results">No results :/</string>
     <string name="empty_list_no_permissions">I need permissions to show you stuff here :/</string>
 
     <string name="empty_cgroups_title">Nothing to see here :)</string>

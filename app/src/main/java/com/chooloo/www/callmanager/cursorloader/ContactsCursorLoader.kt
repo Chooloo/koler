@@ -50,12 +50,15 @@ open class ContactsCursorLoader(context: Context, phoneNumber: String?, contactN
         )
 
         @JvmStatic
-        fun getContactFromCursor(cursor: Cursor): Contact {
+        fun getContactFromCursor(cursor: Cursor?): Contact {
             return try {
-                Contact(contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
-                        name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-                        photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL)),
-                        starred = "1" == cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)))
+                when {
+                    cursor == null -> Contact.UNKNOWN
+                    else -> Contact(contactId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
+                            name = cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+                            photoUri = cursor.getString(cursor.getColumnIndex(COLUMN_THUMBNAIL)),
+                            starred = "1" == cursor.getString(cursor.getColumnIndex(COLUMN_STARRED)))
+                }
             } catch (e: IndexOutOfBoundsException) {
                 Contact.UNKNOWN
             }

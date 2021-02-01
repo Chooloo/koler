@@ -7,7 +7,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
 abstract class BaseFragment : Fragment(), MvpView {
-    protected lateinit var requiredPermissions: Array<String>
     protected lateinit var _activity: BaseActivity
 
     companion object {
@@ -25,20 +24,15 @@ abstract class BaseFragment : Fragment(), MvpView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requiredPermissions = onGetPermissions()
         onSetup()
-    }
-
-    override fun onGetPermissions(): Array<String> {
-        return arrayOf()
     }
 
     override fun hasPermission(permission: String): Boolean {
         return false
     }
 
-    override fun hasPermissions(): Boolean {
-        return requiredPermissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
+    override fun hasPermissions(permissions: Array<String>): Boolean {
+        return permissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
     }
 
     override fun askForPermission(permission: String, requestCode: Int) {
@@ -47,10 +41,6 @@ abstract class BaseFragment : Fragment(), MvpView {
 
     override fun askForPermissions(permissions: Array<String>, requestCode: Int) {
         requestPermissions(permissions, requestCode)
-    }
-
-    override fun askForPermissions() {
-        askForPermissions(requiredPermissions, PERMISSION_RC)
     }
 
     override fun showMessage(message: String) {

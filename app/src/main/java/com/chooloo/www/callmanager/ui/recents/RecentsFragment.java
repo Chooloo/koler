@@ -44,11 +44,6 @@ public class RecentsFragment extends CursorFragment<RecentsAdapter> implements R
     }
 
     @Override
-    public String[] onGetPermissions() {
-        return REQUIRED_PERMISSIONS;
-    }
-
-    @Override
     public Loader<Cursor> onGetLoader(Bundle args) {
         String contactName = args.getString(ARG_CONTACT_NAME, null);
         String phoneNumber = args.getString(ARG_PHONE_NUMBER, null);
