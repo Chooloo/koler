@@ -1,29 +1,22 @@
 package com.chooloo.www.callmanager.ui.recents
 
-import android.Manifest.permission
-import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.adapter.RecentsAdapter
 import com.chooloo.www.callmanager.entity.RecentCall
+import com.chooloo.www.callmanager.livedata.RecentsLiveData
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment
+import com.chooloo.www.callmanager.viewmodel.CursorsViewModel
+import com.chooloo.www.callmanager.viewmodelfactory.CursorsViewModelFactory
 
 class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
     private lateinit var _presenter: RecentsPresenter<RecentsMvpView>
+    private lateinit var _recentsLiveData: RecentsLiveData
 
     companion object {
-        private val REQUIRED_PERMISSIONS = arrayOf(permission.READ_CALL_LOG, permission.WRITE_CALL_LOG)
-        private const val ARG_CONTACT_NAME = "contact_name"
-        private const val ARG_PHONE_NUMBER = "phone_number"
+        @JvmStatic
         fun newInstance(): RecentsFragment {
-            return newInstance(null, null)
-        }
-
-        fun newInstance(phoneNumber: String?, contactName: String?): RecentsFragment {
-            return RecentsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PHONE_NUMBER, phoneNumber)
-                    putString(ARG_CONTACT_NAME, contactName)
-                }
-            }
+            return RecentsFragment()
         }
     }
 
@@ -39,6 +32,9 @@ class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
 
         _presenter = RecentsPresenter()
         _presenter.attach(this)
+
+        _recentsLiveData = ViewModelProvider(this, CursorsViewModelFactory(_activity)).get(CursorsViewModel::class.java).recents
+        _recentsLiveData.observe(viewLifecycleOwner, Observer { cursor -> updateData(cursor) })
     }
 
     override fun onDestroyView() {

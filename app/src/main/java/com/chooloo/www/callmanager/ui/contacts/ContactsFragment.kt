@@ -1,6 +1,5 @@
 package com.chooloo.www.callmanager.ui.contacts
 
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.adapter.ContactsAdapter
@@ -16,21 +15,9 @@ class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
     private lateinit var _contactsLiveData: ContactsLiveData
 
     companion object {
-        private const val ARG_PHONE_NUMBER = "phoneNumber"
-        private const val ARG_CONTACT_NAME = "contactName"
-
         @JvmStatic
         fun newInstance(): ContactsFragment {
-            return newInstance(null, null)
-        }
-
-        fun newInstance(phoneNumber: String?, contactNumber: String?): ContactsFragment {
-            return ContactsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PHONE_NUMBER, phoneNumber)
-                    putString(ARG_CONTACT_NAME, contactNumber)
-                }
-            }
+            return ContactsFragment()
         }
     }
 
@@ -43,6 +30,7 @@ class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
 
     override fun onSetup() {
         super.onSetup()
+
         _presenter = ContactsPresenter()
         _presenter.attach(this)
 
