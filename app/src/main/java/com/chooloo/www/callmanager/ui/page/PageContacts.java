@@ -58,11 +58,11 @@ public class PageContacts extends PageFragment implements PageMvpView {
 
     @Override
     public void loadNumber(@Nullable String number) {
-        mContactsFragment.load(number, number == "" ? null : number);
+//        mContactsFragment.load(number, number == "" ? null : number);
     }
 
     @Override
     public void loadSearchText(@Nullable String text) {
-        mContactsFragment.load(null, text == "" ? null : text);
+//        mContactsFragment.load(null, text == "" ? null : text);
     }
 }

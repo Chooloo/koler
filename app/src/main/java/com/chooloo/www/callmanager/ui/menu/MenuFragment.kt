@@ -11,7 +11,7 @@ import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment
 class MenuFragment : BaseBottomSheetDialogFragment(), MenuMvpView {
 
     private lateinit var _binding: FragmentMenuBinding
-    private var _onMenuItemClickListener: MenuAdapter.OnMenuItemClickListener? = null
+    private var _onMenuItemClickListener: ((MenuItem) -> Unit?)? = null
     protected lateinit var adapter: MenuAdapter
     protected lateinit var menu: Menu
 
@@ -39,16 +39,12 @@ class MenuFragment : BaseBottomSheetDialogFragment(), MenuMvpView {
         arguments?.getInt(ARG_MENU_LAYOUT)?.let { activity.menuInflater.inflate(it, menu) }
 
         adapter = MenuAdapter(activity, menu)
-        adapter.setOnMenuItemClickListener(object : MenuAdapter.OnMenuItemClickListener {
-            override fun onMenuItemClick(menuItem: MenuItem) {
-                _onMenuItemClickListener?.onMenuItemClick(menuItem)
-            }
-        })
+        adapter.setOnMenuItemClickListener(_onMenuItemClickListener)
 
         _binding.menuRecyclerView.adapter = adapter
     }
 
-    fun setOnMenuItemClickListener(onMenuItemClickListener: MenuAdapter.OnMenuItemClickListener?) {
+    fun setOnMenuItemClickListener(onMenuItemClickListener: ((MenuItem) -> Unit?)?) {
         _onMenuItemClickListener = onMenuItemClickListener
     }
 }

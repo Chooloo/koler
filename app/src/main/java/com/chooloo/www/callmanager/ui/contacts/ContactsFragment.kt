@@ -23,17 +23,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
 
     override fun onGetAdapter(): ContactsAdapter {
         return ContactsAdapter(_activity).apply {
-            setOnContactItemClick(object : ContactsAdapter.OnContactItemClickListener {
-                override fun onContactItemClick(contact: Contact) {
-                    _presenter.onContactItemClick(contact)
-                }
-            })
-            setOnContactItemLongClickListener(object : ContactsAdapter.OnContactItemLongClickListener {
-                override fun onContactItemLongClick(contact: Contact): Boolean {
-                    _presenter.onContactItemLongClick(contact)
-                    return true
-                }
-            })
+            setOnContactItemClick { contact -> _presenter.onContactItemClick(contact) }
+            setOnContactItemLongClickListener { contact -> _presenter.onContactItemLongClick(contact) }
         }
     }
 
@@ -44,7 +35,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.attach(this)
 
         _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
-        _contactsLiveData.observe(viewLifecycleOwner, Observer { cursor -> adapter.updateContacts(cursor) })
+        _contactsLiveData.observe(viewLifecycleOwner, Observer { contacts -> adapter.updateContacts(contacts) })
     }
 
     override fun onDestroyView() {

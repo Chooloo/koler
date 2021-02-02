@@ -29,7 +29,7 @@ abstract class BaseContentResolver<T>(
         unregisterContentObserver(_observer)
     }
 
-    fun setOnContentChangedListener(onContentChangedListener: (T) -> Unit) {
+    fun setOnContentChangedListener(onContentChangedListener: ((T) -> Unit?)?) {
         _onContentChangedListener = onContentChangedListener
     }
 

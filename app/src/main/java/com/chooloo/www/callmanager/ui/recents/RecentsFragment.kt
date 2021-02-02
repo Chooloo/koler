@@ -22,17 +22,8 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
     override fun onGetAdapter(): RecentsAdapter {
         return RecentsAdapter(_activity).apply {
-            setOnRecentItemClickListener(object : RecentsAdapter.OnRecentItemClickListener {
-                override fun onRecentItemClick(recent: Recent) {
-                    _presenter.onRecentItemClick(recent)
-                }
-            })
-            setOnRecentItemLongClickListener(object : RecentsAdapter.OnRecentItemLongClickListener {
-                override fun onRecentItemLongClick(recent: Recent): Boolean {
-                    _presenter.onRecentItemLongClick(recent)
-                    return true
-                }
-            })
+            setOnRecentItemClickListener { recent -> _presenter.onRecentItemClick(recent) }
+            setOnRecentItemLongClickListener { recent -> _presenter.onRecentItemLongClick(recent) }
         }
     }
 
