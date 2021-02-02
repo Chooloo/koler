@@ -22,7 +22,7 @@ import com.chooloo.www.callmanager.util.AudioUtils.playToneByKey
 import com.chooloo.www.callmanager.util.ContactUtils.addContact
 import com.chooloo.www.callmanager.util.ContactUtils.lookupContact
 import com.chooloo.www.callmanager.util.Utilities
-import com.chooloo.www.callmanager.viewmodel.DialViewModel
+import com.chooloo.www.callmanager.viewmodel.dial.DialViewModel
 
 class DialpadFragment : BaseFragment(), DialpadMvpView {
 

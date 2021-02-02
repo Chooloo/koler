@@ -1,17 +1,16 @@
-package com.chooloo.www.callmanager.viewmodelfactory
+package com.chooloo.www.callmanager.viewmodel.data
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.chooloo.www.callmanager.viewmodel.CursorsViewModel
 
-class CursorsViewModelFactory(
+class DataViewModelFactory(
         private val context: Context
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(CursorsViewModel::class.java)) {
-            return CursorsViewModel(context) as T
+        if (modelClass.isAssignableFrom(DataViewModel::class.java)) {
+            return DataViewModel(context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

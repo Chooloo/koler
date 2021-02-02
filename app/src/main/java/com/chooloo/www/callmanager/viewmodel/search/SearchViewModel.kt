@@ -1,10 +1,10 @@
-package com.chooloo.www.callmanager.viewmodel
+package com.chooloo.www.callmanager.viewmodel.search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 
-class SharedSearchViewModel(application: Application) : AndroidViewModel(application) {
+class SearchViewModel(application: Application) : AndroidViewModel(application) {
     private var _text: MutableLiveData<String?>
     private var _isFocused: MutableLiveData<Boolean>
 

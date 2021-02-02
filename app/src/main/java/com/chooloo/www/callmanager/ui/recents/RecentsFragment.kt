@@ -3,11 +3,11 @@ package com.chooloo.www.callmanager.ui.recents
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.adapter.RecentsAdapter
-import com.chooloo.www.callmanager.entity.RecentCall
+import com.chooloo.www.callmanager.entity.Recent
 import com.chooloo.www.callmanager.livedata.RecentsLiveData
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment
-import com.chooloo.www.callmanager.viewmodel.CursorsViewModel
-import com.chooloo.www.callmanager.viewmodelfactory.CursorsViewModelFactory
+import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
+import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
 class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
     private lateinit var _presenter: RecentsPresenter<RecentsMvpView>
@@ -22,8 +22,8 @@ class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
 
     override fun onGetAdapter(): RecentsAdapter {
         return RecentsAdapter(_activity).apply {
-            setOnRecentItemClickListener { recentCall: RecentCall? -> _presenter.onRecentItemClick(recentCall) }
-            setOnRecentItemLongClickListener { recentCall: RecentCall? -> _presenter.onRecentItemLongClick(recentCall) }
+//            setOnRecentItemClickListener { recentCall: RecentCall? -> _presenter.onRecentItemClick(recentCall) }
+//            setOnRecentItemLongClickListener { recentCall: RecentCall? -> _presenter.onRecentItemLongClick(recentCall) }
         }
     }
 
@@ -33,7 +33,7 @@ class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter = RecentsPresenter()
         _presenter.attach(this)
 
-        _recentsLiveData = ViewModelProvider(this, CursorsViewModelFactory(_activity)).get(CursorsViewModel::class.java).recents
+        _recentsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).recents
         _recentsLiveData.observe(viewLifecycleOwner, Observer { cursor -> updateData(cursor) })
     }
 
@@ -42,7 +42,7 @@ class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.detach()
     }
 
-    override fun openRecent(recentCall: RecentCall) {
+    override fun openRecent(recent: Recent) {
         // TODO implement
     }
 }

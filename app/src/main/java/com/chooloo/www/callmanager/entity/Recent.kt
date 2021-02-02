@@ -5,7 +5,7 @@ import androidx.annotation.IntDef
 import java.io.Serializable
 import java.util.*
 
-data class RecentCall(
+data class Recent(
         val callerNumber: String,
         @CallType val callType: Int,
         val callId: Long? = null,
@@ -25,6 +25,6 @@ data class RecentCall(
         const val TYPE_REJECTED = CallLog.Calls.REJECTED_TYPE
         const val TYPE_UNKNOWN = 6
 
-        val UNKNOWN = RecentCall(callerNumber = "Unknown", callType = TYPE_UNKNOWN)
+        val UNKNOWN = Recent(callerNumber = "Unknown", callType = TYPE_UNKNOWN)
     }
 }

@@ -7,8 +7,8 @@ import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.livedata.ContactsLiveData
 import com.chooloo.www.callmanager.ui.contact.ContactBottomDialogFragment
 import com.chooloo.www.callmanager.ui.cursor.CursorFragment
-import com.chooloo.www.callmanager.viewmodel.CursorsViewModel
-import com.chooloo.www.callmanager.viewmodelfactory.CursorsViewModelFactory
+import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
+import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
 class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
     private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
@@ -34,7 +34,7 @@ class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter = ContactsPresenter()
         _presenter.attach(this)
 
-        _contactsLiveData = ViewModelProvider(this, CursorsViewModelFactory(_activity)).get(CursorsViewModel::class.java).contacts
+        _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
         _contactsLiveData.observe(viewLifecycleOwner, Observer { cursor -> updateData(cursor) })
     }
 

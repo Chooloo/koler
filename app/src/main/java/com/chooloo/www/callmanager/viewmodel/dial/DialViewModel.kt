@@ -1,4 +1,4 @@
-package com.chooloo.www.callmanager.viewmodel
+package com.chooloo.www.callmanager.viewmodel.dial
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

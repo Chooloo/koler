@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.Companion.getRecentCallFromCursor
-import com.chooloo.www.callmanager.entity.RecentCall
+import com.chooloo.www.callmanager.entity.Recent
 import com.chooloo.www.callmanager.ui.listitem.ListItem
 import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
 import com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation
@@ -48,10 +48,10 @@ class RecentsAdapter(
     }
 
     interface OnRecentItemClickListener {
-        fun onRecentItemClick(recentCall: RecentCall?)
+        fun onRecentItemClick(recent: Recent?)
     }
 
     interface OnRecentItemLongClickListener {
-        fun onRecentItemLongClick(recentCall: RecentCall?): Boolean
+        fun onRecentItemLongClick(recent: Recent?): Boolean
     }
 }

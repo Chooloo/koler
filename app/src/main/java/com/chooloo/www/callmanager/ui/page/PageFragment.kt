@@ -8,14 +8,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.databinding.FragmentPageBinding
 import com.chooloo.www.callmanager.ui.base.BaseFragment
-import com.chooloo.www.callmanager.viewmodel.DialViewModel
-import com.chooloo.www.callmanager.viewmodel.SharedSearchViewModel
+import com.chooloo.www.callmanager.viewmodel.dial.DialViewModel
+import com.chooloo.www.callmanager.viewmodel.search.SearchViewModel
 
 abstract class PageFragment : BaseFragment(), PageMvpView {
     private lateinit var _presenter: PageMvpPresenter<PageMvpView>
     protected lateinit var _binding: FragmentPageBinding
     protected lateinit var _dialViewModel: DialViewModel
-    protected lateinit var _searchViewModel: SharedSearchViewModel
+    protected lateinit var _searchViewModel: SearchViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPageBinding.inflate(inflater)
@@ -29,7 +29,7 @@ abstract class PageFragment : BaseFragment(), PageMvpView {
         _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java)
         _dialViewModel.number.observe(viewLifecycleOwner, Observer { number: String? -> onDialNumberChanged(number) })
 
-        _searchViewModel = ViewModelProvider(this).get(SharedSearchViewModel::class.java)
+        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         _searchViewModel.text.observe(viewLifecycleOwner, Observer { text: String? -> onSearchTextChanged(text) })
     }
 

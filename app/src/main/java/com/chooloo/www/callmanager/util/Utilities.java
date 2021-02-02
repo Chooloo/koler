@@ -25,7 +25,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
-import com.chooloo.www.callmanager.entity.RecentCall;
+import com.chooloo.www.callmanager.entity.Recent;
 import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,11 +36,11 @@ import java.util.Locale;
 import timber.log.Timber;
 
 import static android.Manifest.permission.SEND_SMS;
-import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_INCOMING;
-import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_MISSED;
-import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_OUTGOING;
-import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_REJECTED;
-import static com.chooloo.www.callmanager.entity.RecentCall.TYPE_VOICEMAIL;
+import static com.chooloo.www.callmanager.entity.Recent.TYPE_INCOMING;
+import static com.chooloo.www.callmanager.entity.Recent.TYPE_MISSED;
+import static com.chooloo.www.callmanager.entity.Recent.TYPE_OUTGOING;
+import static com.chooloo.www.callmanager.entity.Recent.TYPE_REJECTED;
+import static com.chooloo.www.callmanager.entity.Recent.TYPE_VOICEMAIL;
 
 public class Utilities {
 
@@ -271,7 +271,7 @@ public class Utilities {
         }
     }
 
-    public static int getCallTypeImage(@RecentCall.CallType int callType) {
+    public static int getCallTypeImage(@Recent.CallType int callType) {
         switch (callType) {
             case TYPE_INCOMING:
                 return R.drawable.ic_call_received_black_24dp;

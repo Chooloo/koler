@@ -21,7 +21,7 @@ import android.net.Uri
 import android.provider.CallLog
 import android.telephony.PhoneNumberUtils
 import androidx.loader.content.CursorLoader
-import com.chooloo.www.callmanager.entity.RecentCall
+import com.chooloo.www.callmanager.entity.Recent
 import java.util.*
 
 class RecentsCursorLoader(context: Context?, phoneNumber: String?, contactName: String?) : CursorLoader(
@@ -54,11 +54,11 @@ class RecentsCursorLoader(context: Context?, phoneNumber: String?, contactName: 
         )
 
         @JvmStatic
-        fun getRecentCallFromCursor(cursor: Cursor?): RecentCall {
+        fun getRecentCallFromCursor(cursor: Cursor?): Recent {
             return try {
                 when {
-                    cursor == null -> RecentCall.UNKNOWN
-                    else -> RecentCall(
+                    cursor == null -> Recent.UNKNOWN
+                    else -> Recent(
                             callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
                             callerNumber = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER)),
                             callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION)),
@@ -67,7 +67,7 @@ class RecentsCursorLoader(context: Context?, phoneNumber: String?, contactName: 
                     )
                 }
             } catch (e: IndexOutOfBoundsException) {
-                RecentCall.UNKNOWN
+                Recent.UNKNOWN
             }
         }
 

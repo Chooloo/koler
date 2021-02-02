@@ -1,7 +1,6 @@
 package com.chooloo.www.callmanager.adapter
 
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -13,12 +12,19 @@ import com.chooloo.www.callmanager.ui.listitem.ListItem
 import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
 import com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation
 
-class ContactsAdapter(context: Context) : CursorAdapter<ListItemHolder?>(context) {
+open class ContactsAdapter(context: Context) : CursorAdapter<ListItemHolder?>(context) {
     private var _headersCounts: Array<Int> = arrayOf()
     private var _headers: Array<String> = arrayOf()
 
     private var _onContactItemClickListener: OnContactItemClickListener? = null
     private var _onContactItemLongClickListener: OnContactItemLongClickListener? = null
+
+    private val headersCounts: Array<Int>
+        get() = cursor?.extras?.getIntArray(ContactsCursorLoader.EXTRA_INDEX_COUNTS)?.toTypedArray()
+                ?: arrayOf()
+
+    private val headers: Array<String>
+        get() = cursor?.extras?.getStringArray(ContactsCursorLoader.EXTRA_INDEX_TITLES) ?: arrayOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
         return ListItemHolder(ListItem(parent.context))
@@ -43,17 +49,9 @@ class ContactsAdapter(context: Context) : CursorAdapter<ListItemHolder?>(context
         }
     }
 
-    override fun setCursor(newCursor: Cursor) {
-        super.setCursor(newCursor)
-        _headersCounts = newCursor.extras.getIntArray(ContactsCursorLoader.EXTRA_INDEX_COUNTS)?.toTypedArray()
-                ?: arrayOf()
-        _headers = newCursor.extras.getStringArray(ContactsCursorLoader.EXTRA_INDEX_TITLES)
-                ?: arrayOf()
-    }
-
     private fun isFirstInHeader(position: Int): Boolean {
         var total = 0
-        _headersCounts.forEach { count ->
+        headersCounts.forEach { count ->
             when {
                 position == total -> return true
                 else -> total += count
@@ -64,10 +62,10 @@ class ContactsAdapter(context: Context) : CursorAdapter<ListItemHolder?>(context
 
     private fun getHeader(position: Int): String {
         var total = 0
-        _headersCounts.indices.forEach { i ->
+        headersCounts.withIndex().forEach { (index, headerCount) ->
             when {
-                position <= total -> return _headers[i]
-                else -> total += _headersCounts[i]
+                position <= total -> return headers.get(index)
+                else -> total += headerCount
             }
         }
         return ""
