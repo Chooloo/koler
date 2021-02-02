@@ -11,7 +11,7 @@ class MenuAdapter(
         private val _context: Context,
         private val _menu: Menu
 ) : RecyclerView.Adapter<ListItemHolder>() {
-    private var _onMenuItemClickListener: OnMenuItemClickListener? = null
+    private var _onMenuItemClickListener: ((MenuItem) -> Unit?)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
         return ListItemHolder(_context)
@@ -20,7 +20,7 @@ class MenuAdapter(
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val menuItem = _menu.getItem(position)
         holder.listItem.apply {
-            setOnClickListener { _onMenuItemClickListener?.onMenuItemClick(menuItem) }
+            setOnClickListener { _onMenuItemClickListener?.invoke(menuItem) }
             setBigText(menuItem.title as String)
             setImageDrawable(menuItem.icon)
         }
@@ -30,11 +30,7 @@ class MenuAdapter(
         return _menu.size()
     }
 
-    fun setOnMenuItemClickListener(onMenuItemClickListener: OnMenuItemClickListener) {
+    fun setOnMenuItemClickListener(onMenuItemClickListener: ((MenuItem) -> Unit?)?) {
         _onMenuItemClickListener = onMenuItemClickListener
-    }
-
-    interface OnMenuItemClickListener {
-        fun onMenuItemClick(menuItem: MenuItem)
     }
 }

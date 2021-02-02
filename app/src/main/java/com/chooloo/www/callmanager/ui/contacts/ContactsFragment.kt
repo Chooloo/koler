@@ -6,11 +6,11 @@ import com.chooloo.www.callmanager.adapter.ContactsAdapter
 import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.livedata.ContactsLiveData
 import com.chooloo.www.callmanager.ui.contact.ContactBottomDialogFragment
-import com.chooloo.www.callmanager.ui.cursor.CursorFragment
+import com.chooloo.www.callmanager.ui.list.ListFragment
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
-class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
+class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
     private lateinit var _contactsLiveData: ContactsLiveData
 
@@ -23,8 +23,17 @@ class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
 
     override fun onGetAdapter(): ContactsAdapter {
         return ContactsAdapter(_activity).apply {
-            setOnContactItemClick { contact: Contact -> _presenter.onContactItemClick(contact) }
-            setOnContactItemLongClickListener { contact: Contact -> _presenter.onContactItemLongClick(contact) }
+            setOnContactItemClick(object : ContactsAdapter.OnContactItemClickListener {
+                override fun onContactItemClick(contact: Contact) {
+                    _presenter.onContactItemClick(contact)
+                }
+            })
+            setOnContactItemLongClickListener(object : ContactsAdapter.OnContactItemLongClickListener {
+                override fun onContactItemLongClick(contact: Contact): Boolean {
+                    _presenter.onContactItemLongClick(contact)
+                    return true
+                }
+            })
         }
     }
 
@@ -35,7 +44,7 @@ class ContactsFragment : CursorFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.attach(this)
 
         _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
-        _contactsLiveData.observe(viewLifecycleOwner, Observer { cursor -> updateData(cursor) })
+        _contactsLiveData.observe(viewLifecycleOwner, Observer { cursor -> adapter.updateContacts(cursor) })
     }
 
     override fun onDestroyView() {

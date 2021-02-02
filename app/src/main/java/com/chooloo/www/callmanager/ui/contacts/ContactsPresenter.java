@@ -1,13 +1,9 @@
 package com.chooloo.www.callmanager.ui.contacts;
 
-import android.database.Cursor;
-
-import androidx.loader.content.Loader;
-
 import com.chooloo.www.callmanager.entity.Contact;
-import com.chooloo.www.callmanager.ui.cursor.CursorPresenter;
+import com.chooloo.www.callmanager.ui.list.ListPresenter;
 
-public class ContactsPresenter<V extends ContactsMvpView> extends CursorPresenter<V> implements ContactsMvpPresenter<V> {
+public class ContactsPresenter<V extends ContactsMvpView> extends ListPresenter<V> implements ContactsMvpPresenter<V> {
 
     @Override
     public void onContactItemClick(Contact contact) {

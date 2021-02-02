@@ -1,13 +1,11 @@
-package com.chooloo.www.callmanager.ui.cursor
+package com.chooloo.www.callmanager.ui.list
 
-import android.database.Cursor
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.callmanager.ui.base.MvpView
 
-interface CursorMvpView : MvpView {
+interface ListMvpView : MvpView {
     val itemCount: Int
 
-    fun updateData(cursor: Cursor)
     fun showEmptyPage(isShow: Boolean)
     fun showNoPermissions(isShow: Boolean)
     fun animateListView()

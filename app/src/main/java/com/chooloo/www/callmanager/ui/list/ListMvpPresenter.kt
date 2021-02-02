@@ -1,8 +1,8 @@
-package com.chooloo.www.callmanager.ui.cursor
+package com.chooloo.www.callmanager.ui.list
 
 import com.chooloo.www.callmanager.ui.base.MvpPresenter
 
-interface CursorMvpPresenter<V : CursorMvpView?> : MvpPresenter<V> {
+interface ListMvpPresenter<V : ListMvpView?> : MvpPresenter<V> {
     fun onNoPermissions()
     fun onResults()
     fun onNoResults()

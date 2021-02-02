@@ -1,10 +1,7 @@
 package com.chooloo.www.callmanager.ui.menu
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import com.chooloo.www.callmanager.adapter.MenuAdapter
@@ -30,7 +27,7 @@ class MenuFragment : BaseBottomSheetDialogFragment(), MenuMvpView {
             }
         }
     }
-    
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMenuBinding.inflate(layoutInflater)
         return _binding.root
@@ -42,7 +39,11 @@ class MenuFragment : BaseBottomSheetDialogFragment(), MenuMvpView {
         arguments?.getInt(ARG_MENU_LAYOUT)?.let { activity.menuInflater.inflate(it, menu) }
 
         adapter = MenuAdapter(activity, menu)
-        adapter.setOnMenuItemClickListener { _onMenuItemClickListener?.onMenuItemClick(it) }
+        adapter.setOnMenuItemClickListener(object : MenuAdapter.OnMenuItemClickListener {
+            override fun onMenuItemClick(menuItem: MenuItem) {
+                _onMenuItemClickListener?.onMenuItemClick(menuItem)
+            }
+        })
 
         _binding.menuRecyclerView.adapter = adapter
     }

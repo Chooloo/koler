@@ -1,22 +1,21 @@
-package com.chooloo.www.callmanager.ui.cursor
+package com.chooloo.www.callmanager.ui.list
 
 import android.Manifest.permission
-import android.database.Cursor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.callmanager.R
-import com.chooloo.www.callmanager.adapter.CursorAdapter
 import com.chooloo.www.callmanager.databinding.FragmentItemsBinding
 import com.chooloo.www.callmanager.ui.base.BaseFragment
+import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
 import com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation
 
-abstract class CursorFragment<A : CursorAdapter<*>> : BaseFragment(), CursorMvpView {
+abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(), ListMvpView {
 
     private var _onScrollListener: RecyclerView.OnScrollListener? = null
-    private lateinit var _presenter: CursorMvpPresenter<CursorMvpView>
+    private lateinit var _presenter: ListMvpPresenter<ListMvpView>
     protected lateinit var adapter: A
     protected lateinit var binding: FragmentItemsBinding
 
@@ -34,7 +33,7 @@ abstract class CursorFragment<A : CursorAdapter<*>> : BaseFragment(), CursorMvpV
     }
 
     override fun onSetup() {
-        _presenter = CursorPresenter()
+        _presenter = ListPresenter()
         _presenter.attach(this)
 
         adapter = onGetAdapter()
@@ -56,11 +55,6 @@ abstract class CursorFragment<A : CursorAdapter<*>> : BaseFragment(), CursorMvpV
         if (!hasPermission(permission.READ_CONTACTS)) {
             _presenter.onNoPermissions()
         }
-    }
-
-    override fun updateData(cursor: Cursor) {
-        adapter.setCursor(cursor)
-        adapter.notifyDataSetChanged()
     }
 
     override fun showEmptyPage(isShow: Boolean) {

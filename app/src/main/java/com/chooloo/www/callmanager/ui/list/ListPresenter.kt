@@ -1,10 +1,10 @@
-package com.chooloo.www.callmanager.ui.cursor
+package com.chooloo.www.callmanager.ui.list
 
 import android.Manifest.permission
 import com.chooloo.www.callmanager.ui.base.BasePresenter
 import com.chooloo.www.callmanager.util.PermissionUtils.RC_READ_CONTACTS
 
-open class CursorPresenter<V : CursorMvpView?> : BasePresenter<V>(), CursorMvpPresenter<V> {
+open class ListPresenter<V : ListMvpView?> : BasePresenter<V>(), ListMvpPresenter<V> {
     override fun onNoPermissions() {
         onNoResults()
     }

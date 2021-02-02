@@ -3,7 +3,7 @@ package com.chooloo.www.callmanager.adapter
 import android.content.Context
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import com.chooloo.www.callmanager.cursorloader.RecentsCursorLoader.Companion.getRecentCallFromCursor
+import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.callmanager.entity.Recent
 import com.chooloo.www.callmanager.ui.listitem.ListItem
 import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
@@ -13,20 +13,24 @@ import com.chooloo.www.callmanager.util.RelativeTime.getTimeAgo
 import com.chooloo.www.callmanager.util.Utilities
 
 class RecentsAdapter(
-        context: Context
-) : CursorAdapter<ListItemHolder?>(context) {
+        private val context: Context
+) : RecyclerView.Adapter<ListItemHolder>() {
+
+    private var _recents: Array<Recent> = arrayOf()
 
     private var _onRecentItemClickListener: OnRecentItemClickListener? = null
     private var _onRecentItemLongClickListener: OnRecentItemLongClickListener? = null
+
+    override fun getItemCount(): Int {
+        return _recents.size
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
         return ListItemHolder(ListItem(parent.context))
     }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
-        cursor?.moveToPosition(position)
-
-        val recentCall = getRecentCallFromCursor(cursor)
+        val recentCall = _recents.get(position)
         val contact = lookupContact(context, recentCall.callerNumber)
 
         holder.listItem.run {
@@ -39,6 +43,11 @@ class RecentsAdapter(
         }
     }
 
+    fun updateRecents(newRecents: Array<Recent>) {
+        _recents = newRecents
+        notifyDataSetChanged()
+    }
+
     fun setOnRecentItemClickListener(onRecentItemClickListener: OnRecentItemClickListener) {
         _onRecentItemClickListener = onRecentItemClickListener
     }
@@ -48,10 +57,10 @@ class RecentsAdapter(
     }
 
     interface OnRecentItemClickListener {
-        fun onRecentItemClick(recent: Recent?)
+        fun onRecentItemClick(recent: Recent)
     }
 
     interface OnRecentItemLongClickListener {
-        fun onRecentItemLongClick(recent: Recent?): Boolean
+        fun onRecentItemLongClick(recent: Recent): Boolean
     }
 }

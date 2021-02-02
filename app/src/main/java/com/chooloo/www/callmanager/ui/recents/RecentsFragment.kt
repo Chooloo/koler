@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.adapter.RecentsAdapter
 import com.chooloo.www.callmanager.entity.Recent
 import com.chooloo.www.callmanager.livedata.RecentsLiveData
-import com.chooloo.www.callmanager.ui.cursor.CursorFragment
+import com.chooloo.www.callmanager.ui.list.ListFragment
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
-class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
+class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     private lateinit var _presenter: RecentsPresenter<RecentsMvpView>
     private lateinit var _recentsLiveData: RecentsLiveData
 
@@ -22,8 +22,17 @@ class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
 
     override fun onGetAdapter(): RecentsAdapter {
         return RecentsAdapter(_activity).apply {
-//            setOnRecentItemClickListener { recentCall: RecentCall? -> _presenter.onRecentItemClick(recentCall) }
-//            setOnRecentItemLongClickListener { recentCall: RecentCall? -> _presenter.onRecentItemLongClick(recentCall) }
+            setOnRecentItemClickListener(object : RecentsAdapter.OnRecentItemClickListener {
+                override fun onRecentItemClick(recent: Recent) {
+                    _presenter.onRecentItemClick(recent)
+                }
+            })
+            setOnRecentItemLongClickListener(object : RecentsAdapter.OnRecentItemLongClickListener {
+                override fun onRecentItemLongClick(recent: Recent): Boolean {
+                    _presenter.onRecentItemLongClick(recent)
+                    return true
+                }
+            })
         }
     }
 
@@ -34,7 +43,7 @@ class RecentsFragment : CursorFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.attach(this)
 
         _recentsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).recents
-        _recentsLiveData.observe(viewLifecycleOwner, Observer { cursor -> updateData(cursor) })
+        _recentsLiveData.observe(viewLifecycleOwner, Observer { recents -> adapter.updateRecents(recents) })
     }
 
     override fun onDestroyView() {
