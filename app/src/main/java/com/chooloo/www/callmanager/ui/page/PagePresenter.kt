@@ -5,11 +5,11 @@ import com.chooloo.www.callmanager.ui.base.BasePresenter
 
 class PagePresenter<V : PageMvpView> : BasePresenter<V>(), PageMvpPresenter<V> {
     override fun onDialNumberChanged(number: String) {
-        TODO("implement")
+        // TODO "implement"
     }
 
     override fun onSearchTextChanged(text: String) {
-        TODO("implement")
+        // TODO implement
     }
 
     override fun onScrollStateChanged(state: Int) {

@@ -33,7 +33,12 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.attach(this)
 
         _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
-        _contactsLiveData.observe(viewLifecycleOwner, Observer { contacts -> adapter.updateContacts(contacts) })
+
+        try {
+            _contactsLiveData.observe(viewLifecycleOwner, Observer { contacts -> adapter.updateContacts(contacts) })
+        } catch (e: SecurityException) {
+            showNoPermissions(true)
+        }
     }
 
     override fun onDestroyView() {

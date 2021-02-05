@@ -34,7 +34,12 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.attach(this)
 
         _recentsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).recents
-        _recentsLiveData.observe(viewLifecycleOwner, Observer { recents -> adapter.updateRecents(recents) })
+
+        try {
+            _recentsLiveData.observe(viewLifecycleOwner, Observer { recents -> adapter.updateRecents(recents) })
+        } catch (e: SecurityException) {
+            showNoPermissions(true)
+        }
     }
 
     override fun onDestroyView() {

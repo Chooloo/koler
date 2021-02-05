@@ -9,15 +9,11 @@ class ContactsLiveData(
         private val context: Context
 ) : LiveData<Array<Contact>>() {
 
-    private var contactsContentResolver: ContactsContentResolver
-
-    init {
-        contactsContentResolver = ContactsContentResolver(context)
-        contactsContentResolver.setOnContentChangedListener { postValue(ContactsContentResolver.getContacts(context)) }
-    }
+    private val contactsContentResolver = ContactsContentResolver(context)
 
     override fun onActive() {
         contactsContentResolver.observe()
+        contactsContentResolver.setOnContentChangedListener { postValue(ContactsContentResolver.getContacts(context)) }
     }
 
     override fun onInactive() {
