@@ -37,7 +37,7 @@ class SearchFragment : BaseFragment(), SearchMvpView {
         _binding.apply {
             searchInputEditText.addTextChangedListener(
                     afterTextChanged = {},
-                    onTextChanged = { _, _, _, _ -> run {} },
+                    onTextChanged = { _, _, _, _ -> },
                     beforeTextChanged = { s, _, _, _ ->
                         _presenter.onTextChanged(s.toString())
                         _onTextChangedListener?.invoke(s.toString())

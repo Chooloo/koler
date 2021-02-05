@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.callmanager.entity.Recent
-import com.chooloo.www.callmanager.ui.listitem.ListItem
-import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
+import com.chooloo.www.callmanager.ui.widgets.ListItem
+import com.chooloo.www.callmanager.ui.widgets.ListItemHolder
 import com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation
 import com.chooloo.www.callmanager.util.ContactUtils.lookupContact
 import com.chooloo.www.callmanager.util.RelativeTime.getTimeAgo

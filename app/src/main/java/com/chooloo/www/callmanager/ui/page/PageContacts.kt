@@ -21,7 +21,7 @@ class PageContacts : PageFragment(), PageMvpView {
             setOnScrollStateChangedListener { newState -> _presenter.onScrollStateChanged(newState) }
         }
 
-        _activity.supportFragmentManager.beginTransaction().add(_binding.fragmentPageLayout.id, _contactsFragment).commit()
+        _activity.supportFragmentManager.beginTransaction().add(binding.fragmentPageLayout.id, _contactsFragment).commit()
     }
 
     override fun onDestroyView() {

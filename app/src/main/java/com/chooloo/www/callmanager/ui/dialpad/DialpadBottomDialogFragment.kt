@@ -2,7 +2,6 @@ package com.chooloo.www.callmanager.ui.dialpad
 
 import android.os.Bundle
 import com.chooloo.www.callmanager.ui.base.BaseBottomSheetDialogFragment
-import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment.OnKeyDownListener
 
 class DialpadBottomDialogFragment : BaseBottomSheetDialogFragment() {
     private lateinit var _dialpadFragment: DialpadFragment
@@ -29,9 +28,5 @@ class DialpadBottomDialogFragment : BaseBottomSheetDialogFragment() {
     override fun onSetup() {
         _dialpadFragment = DialpadFragment.newInstance(argsSafely.getBoolean(ARG_DIALER))
         putFragment(_dialpadFragment)
-    }
-
-    fun setOnKeyDownListener(onKeyDownListener: OnKeyDownListener) {
-        _dialpadFragment.setOnKeyDownListener(onKeyDownListener)
     }
 }

@@ -28,7 +28,7 @@ import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
-public class OngoingCallActivity extends BaseActivity implements DialpadFragment.OnKeyDownListener {
+public class OngoingCallActivity extends BaseActivity {
 
     public static final String ACTION_ANSWER = "ANSWER";
     public static final String ACTION_HANGUP = "HANGUP";
@@ -165,11 +165,6 @@ public class OngoingCallActivity extends BaseActivity implements DialpadFragment
 
     @Override
     public void onSetup() {
-
-    }
-
-    @Override
-    public void onKeyPressed(int keyCode, KeyEvent event) {
 
     }
 }

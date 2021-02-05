@@ -58,7 +58,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
 
         mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
-        mBottomDialpadFragment.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
+//        mBottomDialpadFragmentgit.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
 
         // TODO move this to a util class
         mWakeLock = ((PowerManager) getSystemService(POWER_SERVICE)).newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, getLocalClassName());

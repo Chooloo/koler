@@ -26,7 +26,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.chooloo.www.callmanager.BuildConfig;
 import com.chooloo.www.callmanager.R;
 import com.chooloo.www.callmanager.entity.Recent;
-import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -267,7 +266,6 @@ public class Utilities {
         PreferencesManager preferencesManager = PreferencesManager.getInstance(activity);
         if (preferencesManager.getInt(R.string.pref_last_version_key, -1) < BuildConfig.VERSION_CODE && activity instanceof FragmentActivity) {
             preferencesManager.putInt(R.string.pref_last_version_key, BuildConfig.VERSION_CODE);
-            new ChangelogDialog().show(((FragmentActivity) activity).getSupportFragmentManager(), TAG_CHANGELOG_DIALOG);
         }
     }
 

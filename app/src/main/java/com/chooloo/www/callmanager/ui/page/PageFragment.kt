@@ -13,13 +13,13 @@ import com.chooloo.www.callmanager.viewmodel.search.SearchViewModel
 abstract class PageFragment : BaseFragment(), PageMvpView {
 
     private lateinit var _presenter: PageMvpPresenter<PageMvpView>
-    private lateinit var _binding: FragmentPageBinding
     private lateinit var _dialViewModel: DialViewModel
     private lateinit var _searchViewModel: SearchViewModel
+    protected lateinit var binding: FragmentPageBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentPageBinding.inflate(inflater)
-        return _binding.root
+        binding = FragmentPageBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onSetup() {

@@ -61,7 +61,6 @@ object ContactUtils {
     @JvmStatic
     fun smsContact(activity: Activity, contact: Contact) {
         val uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(contact.number)))
-        val smsIntent = Intent(Intent.ACTION_SENDTO, uri)
-        activity.startActivity(smsIntent)
+        activity.startActivity(Intent(Intent.ACTION_SENDTO, uri))
     }
 }

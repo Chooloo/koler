@@ -2,13 +2,12 @@ package com.chooloo.www.callmanager.ui.dialpad
 
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.R
 import com.chooloo.www.callmanager.databinding.FragmentDialpadBinding
@@ -27,7 +26,7 @@ import com.chooloo.www.callmanager.viewmodel.dial.DialViewModel
 class DialpadFragment : BaseFragment(), DialpadMvpView {
 
     override val isDialer: Boolean
-    private var _onKeyDownListener: OnKeyDownListener? = null
+    private var _onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)? = null
     private lateinit var _presenter: DialpadMvpPresenter<DialpadMvpView>
     private lateinit var _dialViewModel: DialViewModel
     private lateinit var _binding: FragmentDialpadBinding
@@ -36,7 +35,6 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         const val TAG = "dialpad_bottom_dialog_fragment"
         const val ARG_DIALER = "dialer"
 
-        @JvmStatic
         fun newInstance(isDialer: Boolean): DialpadFragment {
             return DialpadFragment().apply {
                 arguments = Bundle().apply {
@@ -78,16 +76,14 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
 
         _dialViewModel = ViewModelProvider(_activity).get(DialViewModel::class.java)
 
-        _binding.dialpadEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(Utilities.sLocale.country))
-        _binding.dialpadEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                _presenter.onTextChanged(s.toString())
-            }
-        })
+        _binding.apply {
+            dialpadEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(Utilities.sLocale.country))
+            dialpadEditText.addTextChangedListener(
+                    beforeTextChanged = { _, _, _, _ -> },
+                    afterTextChanged = { },
+                    onTextChanged = { s, _, _, _ -> _presenter.onTextChanged(s.toString()) }
+            )
 
-        _binding.run {
             View.OnClickListener { view: View -> _presenter.onKeyClick((view as DialpadKey).keyCode) }.also {
                 key0.setOnClickListener(it)
                 key1.setOnClickListener(it)
@@ -136,7 +132,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
     override fun registerKeyEvent(keyCode: Int) {
         KeyEvent(KeyEvent.ACTION_DOWN, keyCode).also {
             _binding.dialpadEditText.onKeyDown(keyCode, it)
-            _onKeyDownListener?.onKeyPressed(keyCode, it)
+            _onKeyDownListener?.invoke(keyCode, it)
         }
     }
 
@@ -153,7 +149,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
 
     override fun call() {
         val number = _dialViewModel.number.value
-        if (number?.isEmpty() ?: false) {
+        if (number?.isEmpty() == true) {
             Toast.makeText(context, getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show()
         } else {
             call(_activity, _binding.dialpadEditText.numbers)
@@ -176,11 +172,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         playToneByKey(keyCode, _activity)
     }
 
-    fun setOnKeyDownListener(onKeyDownListener: OnKeyDownListener?) {
+    fun setOnKeyDownListener(onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)?) {
         _onKeyDownListener = onKeyDownListener
-    }
-
-    interface OnKeyDownListener {
-        fun onKeyPressed(keyCode: Int, event: KeyEvent?)
     }
 }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.callmanager.R
 import com.chooloo.www.callmanager.databinding.FragmentItemsBinding
 import com.chooloo.www.callmanager.ui.base.BaseFragment
-import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
+import com.chooloo.www.callmanager.ui.widgets.ListItemHolder
 import com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(), ListMvpView {

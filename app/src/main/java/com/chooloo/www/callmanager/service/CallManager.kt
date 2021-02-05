@@ -53,7 +53,7 @@ object CallManager {
     }
 
     @JvmStatic
-    fun call(activity: BaseActivity, number: String) {
+    fun call(activity: BaseActivity, number: String?) {
         if (PermissionUtils.isDefaultDialer(activity)) {
             val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(number)))
             activity.startActivity(callIntent)

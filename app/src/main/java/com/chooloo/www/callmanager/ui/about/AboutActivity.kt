@@ -8,15 +8,10 @@ import com.chooloo.www.callmanager.BuildConfig
 import com.chooloo.www.callmanager.R
 import com.chooloo.www.callmanager.databinding.ActivityAboutBinding
 import com.chooloo.www.callmanager.ui.base.BaseActivity
-import com.chooloo.www.callmanager.ui.dialog.ChangelogDialog
 
 class AboutActivity : BaseActivity(), AboutMvpView {
     private lateinit var _presenter: AboutPresenter<AboutMvpView>
     private lateinit var _binding: ActivityAboutBinding
-
-    companion object {
-        private const val TAG_CHANGELOG_DIALOG = "changelog"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,18 +41,14 @@ class AboutActivity : BaseActivity(), AboutMvpView {
         }
     }
 
-    override fun openChangelog() {
-        ChangelogDialog().show(supportFragmentManager, TAG_CHANGELOG_DIALOG)
-    }
-
     override fun openSource() {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_source_url))))
     }
 
     override fun sendEmail() {
         startActivity(Intent(Intent.ACTION_SEND).apply {
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
             type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
         })
     }
 

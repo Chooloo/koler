@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chooloo.www.callmanager.ui.listitem.ListItemHolder
+import com.chooloo.www.callmanager.ui.widgets.ListItemHolder
 
 class MenuAdapter(
         private val _context: Context,
