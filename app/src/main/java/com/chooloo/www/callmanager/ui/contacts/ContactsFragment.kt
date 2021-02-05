@@ -11,14 +11,12 @@ import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
 class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
+
     private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
     private lateinit var _contactsLiveData: ContactsLiveData
 
     companion object {
-        @JvmStatic
-        fun newInstance(): ContactsFragment {
-            return ContactsFragment()
-        }
+        fun newInstance(): ContactsFragment = ContactsFragment()
     }
 
     override fun onGetAdapter(): ContactsAdapter {

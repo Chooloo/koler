@@ -14,17 +14,17 @@ import com.chooloo.www.callmanager.util.AnimationUtils.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(), ListMvpView {
 
-    private var _onScrollListener: RecyclerView.OnScrollListener? = null
+    private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
     private lateinit var _presenter: ListMvpPresenter<ListMvpView>
+    private lateinit var _binding: FragmentItemsBinding
     protected lateinit var adapter: A
-    protected lateinit var binding: FragmentItemsBinding
 
     override val itemCount: Int
         get() = adapter.itemCount
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentItemsBinding.inflate(inflater)
-        return binding.root
+        _binding = FragmentItemsBinding.inflate(inflater)
+        return _binding.root
     }
 
     override fun onDestroyView() {
@@ -38,15 +38,11 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
 
         adapter = onGetAdapter()
 
-        binding.run {
+        _binding.run {
             itemsRecyclerView.adapter = adapter
             itemsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    _onScrollListener?.onScrollStateChanged(recyclerView, newState)
-                }
-
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    _onScrollListener?.onScrolled(recyclerView, dx, dy)
+                    _onScrollStateChangedListener?.invoke(newState)
                 }
             })
         }
@@ -58,23 +54,23 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     }
 
     override fun showEmptyPage(isShow: Boolean) {
-        binding.emptyState.emptyTitle.text = getString(R.string.empty_list_no_results)
-        binding.emptyState.emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
-        binding.itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+        _binding.emptyState.emptyTitle.text = getString(R.string.empty_list_no_results)
+        _binding.emptyState.emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
+        _binding.itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     override fun showNoPermissions(isShow: Boolean) {
-        binding.emptyState.emptyTitle.text = getString(R.string.empty_list_no_permissions)
-        binding.emptyState.emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
-        binding.itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+        _binding.emptyState.emptyTitle.text = getString(R.string.empty_list_no_permissions)
+        _binding.emptyState.emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
+        _binding.itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
     }
 
     override fun animateListView() {
-        runLayoutAnimation(binding.itemsRecyclerView)
+        runLayoutAnimation(_binding.itemsRecyclerView)
     }
 
-    override fun setOnScrollListener(onScrollListener: RecyclerView.OnScrollListener) {
-        _onScrollListener = onScrollListener
+    fun setOnScrollStateChangedListener(onScrollStateChangedListener: ((newState: Int) -> Unit?)?) {
+        _onScrollStateChangedListener = onScrollStateChangedListener
     }
 
     abstract fun onGetAdapter(): A

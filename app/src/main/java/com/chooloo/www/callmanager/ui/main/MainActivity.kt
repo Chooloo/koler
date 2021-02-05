@@ -6,7 +6,6 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.lifecycle.Observer
@@ -32,7 +31,6 @@ class MainActivity : BaseActivity(), MainMvpView {
     private lateinit var _presenter: MainMvpPresenter<MainMvpView>
     private lateinit var _dialViewModel: DialViewModel
     private lateinit var _binding: ActivityMainBinding
-
     private lateinit var _bottomDialpadFragment: DialpadBottomDialogFragment
     private lateinit var _menuFragment: MenuFragment
     private lateinit var _searchFragment: SearchFragment
@@ -86,26 +84,21 @@ class MainActivity : BaseActivity(), MainMvpView {
         Utilities.showNewVersionDialog(this)
         ensureDefaultDialer(this)
 
-        _binding.apply {
-            dialpadFabButton.setOnClickListener { view: View? -> _presenter.onDialpadFabClick() }
-            appbarMain.mainMenuButton.setOnClickListener { view: View? -> _presenter.onMenuClick() }
-            viewPager.adapter = MainPagerAdapter(this@MainActivity)
-            appbarMain.mainTabLayout.setViewPager(_binding.viewPager)
-        }
-
         _bottomDialpadFragment = newInstance(true)
 
-        _menuFragment = newInstance(R.menu.main_actions).also {
-            it.setOnMenuItemClickListener { menuItem: MenuItem? -> _presenter.onOptionsItemSelected(menuItem) }
+        _menuFragment = newInstance(R.menu.main_actions).apply {
+            setOnMenuItemClickListener { menuItem: MenuItem -> _presenter.onOptionsItemSelected(menuItem) }
         }
 
-        _searchFragment = SearchFragment().also {
-            it.setOnFocusChangedListener { isFocused: Boolean -> _presenter.onSearchFocusChanged(isFocused) }
-            it.setOnTextChangedListener { text: String? -> _presenter.onSearchTextChanged(text) }
+        _searchFragment = SearchFragment().apply {
+            setOnFocusChangedListener { isFocused: Boolean -> _presenter.onSearchFocusChanged(isFocused) }
+            setOnTextChangedListener { text: String -> _presenter.onSearchTextChanged(text) }
         }
 
-        _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java).also {
-            it.number.observe(this, Observer { number: String? -> _presenter.onDialNumberChanged(number) })
+        _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java).apply {
+            number.observe(this@MainActivity, Observer { number: String? ->
+                _presenter.onDialNumberChanged(number ?: "")
+            })
         }
 
         if (intent.action == Intent.ACTION_DIAL || intent.action == Intent.ACTION_VIEW) {
@@ -113,6 +106,13 @@ class MainActivity : BaseActivity(), MainMvpView {
         }
 
         supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, _searchFragment).commit()
+
+        _binding.apply {
+            dialpadFabButton.setOnClickListener { _presenter.onDialpadFabClick() }
+            appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
+            appbarMain.mainTabLayout.setViewPager(_binding.viewPager)
+            viewPager.adapter = MainPagerAdapter(this@MainActivity)
+        }
     }
 
     override fun showDialpad(isShow: Boolean) {
