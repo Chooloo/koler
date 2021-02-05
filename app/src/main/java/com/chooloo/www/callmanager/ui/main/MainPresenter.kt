@@ -7,7 +7,7 @@ import com.chooloo.www.callmanager.ui.base.BasePresenter
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
-class MainPresenter<V : MainMvpView?> : BasePresenter<V>(), MainMvpPresenter<V> {
+class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
     override fun onDialpadFabClick() {
         mvpView?.showDialpad(true)
     }

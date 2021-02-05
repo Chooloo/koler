@@ -3,7 +3,7 @@ package com.chooloo.www.callmanager.ui.page
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.callmanager.ui.base.BasePresenter
 
-class PagePresenter<V : PageMvpView?> : BasePresenter<V>(), PageMvpPresenter<V> {
+class PagePresenter<V : PageMvpView> : BasePresenter<V>(), PageMvpPresenter<V> {
     override fun onDialNumberChanged(number: String) {
         TODO("implement")
     }

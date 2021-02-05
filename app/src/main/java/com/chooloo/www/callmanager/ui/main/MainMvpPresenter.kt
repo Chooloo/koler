@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.MenuItem
 import com.chooloo.www.callmanager.ui.base.MvpPresenter
 
-interface MainMvpPresenter<V : MainMvpView?> : MvpPresenter<V> {
+interface MainMvpPresenter<V : MainMvpView> : MvpPresenter<V> {
     fun onDialpadFabClick()
     fun onSearchTextChanged(text: String)
     fun onSearchFocusChanged(isFocused: Boolean)

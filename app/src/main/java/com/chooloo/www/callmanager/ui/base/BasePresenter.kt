@@ -2,7 +2,7 @@ package com.chooloo.www.callmanager.ui.base
 
 import androidx.lifecycle.LifecycleObserver
 
-open class BasePresenter<V : MvpView?> : MvpPresenter<V>, LifecycleObserver {
+open class BasePresenter<V : MvpView> : MvpPresenter<V>, LifecycleObserver {
     @JvmField
     protected var mvpView: V? = null
 
