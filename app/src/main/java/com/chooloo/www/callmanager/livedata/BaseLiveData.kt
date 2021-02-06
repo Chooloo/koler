@@ -6,5 +6,5 @@ import androidx.lifecycle.LiveData
 abstract class BaseLiveData<T:Any>(
         protected val context: Context
 ) : LiveData<T>() {
-    abstract fun updateObservers()
+    abstract fun updateData()
 }

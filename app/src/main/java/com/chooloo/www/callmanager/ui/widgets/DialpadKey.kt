@@ -13,10 +13,11 @@ class DialpadKey constructor(
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
 ) : LinearLayout(context, attrs, defStyleRes) {
-    var keyCode = 0
-
     private var _binding: DialpadKeyLayoutBinding
     private var _letters: String? = null
+    var keyCode = 0
+
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     init {
         _binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context), this, true)

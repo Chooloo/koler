@@ -3,7 +3,7 @@ package com.chooloo.www.callmanager.ui.page
 import com.chooloo.www.callmanager.ui.contacts.ContactsFragment
 
 class PageContacts : PageFragment(), PageMvpView {
-    
+
     private lateinit var _presenter: PageMvpPresenter<PageMvpView>
     private lateinit var _contactsFragment: ContactsFragment
 

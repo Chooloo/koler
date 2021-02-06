@@ -13,8 +13,4 @@ class ContactsLiveData(context: Context) : BaseContentLiveData<ContactsContentRe
     override fun onGetContentResolver(): ContactsContentResolver {
         return ContactsContentResolver(context)
     }
-
-    override fun updateObservers() {
-        postValue(ContactsContentResolver.getContacts(context))
-    }
 }

@@ -13,8 +13,4 @@ class RecentsLiveData(context: Context) : BaseContentLiveData<RecentsContentReso
     override fun onGetContentResolver(): RecentsContentResolver {
         return RecentsContentResolver(context)
     }
-
-    override fun updateObservers() {
-        postValue(RecentsContentResolver.getRecents(context))
-    }
 }

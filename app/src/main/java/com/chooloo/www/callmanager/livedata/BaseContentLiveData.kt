@@ -11,14 +11,25 @@ abstract class BaseContentLiveData<C : BaseContentResolver<T>, T : Any>(context:
     }
 
     override fun onActive() {
-        super.onActive()
         contentResolver.observe()
-        contentResolver.setOnContentChangedListener { updateObservers() }
+        contentResolver.setOnContentChangedListener { updateData() }
+        updateData()
     }
 
     override fun onInactive() {
-        super.onInactive()
         contentResolver.detach()
+    }
+
+    override fun updateData() {
+        value = contentResolver.getContent()
+    }
+
+    fun filter(filterString: String) {
+        contentResolver.filter(filterString)
+    }
+
+    fun resetFilter() {
+        contentResolver.reset()
     }
 
     abstract fun onGetContentResolver(): C

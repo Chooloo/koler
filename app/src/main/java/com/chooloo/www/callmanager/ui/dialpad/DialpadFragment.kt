@@ -52,8 +52,9 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         return _binding.root
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _presenter.detach()
     }
 
     override fun onSetup() {

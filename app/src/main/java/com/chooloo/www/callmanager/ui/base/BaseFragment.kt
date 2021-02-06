@@ -66,8 +66,7 @@ abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
     }
 
     protected val argsSafely: Bundle
-        get() = super.getArguments()
-                ?: throw IllegalArgumentException("You must create this fragment with newInstance()")
+        get() = arguments ?: Bundle()
 
     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
     }

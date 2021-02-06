@@ -16,6 +16,8 @@ class DialpadEditText constructor(
         defStyleRes: Int = 0
 ) : AppCompatEditText(context, attrs, defStyleRes) {
 
+    constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
+
     init {
         showSoftInputOnFocus = true
         isFocusableInTouchMode = true

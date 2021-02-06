@@ -40,9 +40,9 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(RecentsLiveData.REQUIRED_PERMISSION) {
+    override fun observe() = runWithPermissions(RecentsLiveData.REQUIRED_PERMISSION, callback = {
         _recentsLiveData.observe(viewLifecycleOwner, { recents -> adapter.updateRecents(recents) })
-    }
+    })
 
     override fun openRecent(recent: Recent) {
         // TODO implement

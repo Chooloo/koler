@@ -6,7 +6,8 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import com.chooloo.www.callmanager.R
@@ -31,7 +32,12 @@ class ListItem(
             it.recycle()
         }
 
-        // set clickable
+        TypedValue().also {
+            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
+            setBackgroundResource(it.resourceId)
+        }
+
+        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         isClickable = false
         _binding.apply {
             listItemHeaderLayout.isClickable = false
@@ -40,14 +46,6 @@ class ListItem(
             listItemPersonLayout.isFocusable = true
         }
 
-        // set selectable background resource
-        TypedValue().also {
-            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
-            setBackgroundResource(it.resourceId)
-        }
-
-        // set width and height
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     fun setBigText(text: String?) {

@@ -4,11 +4,11 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.telecom.TelecomManager
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.chooloo.www.callmanager.ui.base.BaseActivity
 import com.karumi.dexter.Dexter
@@ -36,12 +36,12 @@ fun BaseActivity.requestDefaultDialer() {
 
 // general permissions
 
-fun Activity.requestPermissionsWithManager(permissions: Array<String>) {
-    Dexter.withActivity(this).withPermissions(permissions.toList()).withListener(PermissionsManagerListener(this))
+fun Activity.requestPermissionsWithManager(permissions: Array<String>, callback: (() -> Unit?)?) {
+    Dexter.withActivity(this).withPermissions(permissions.toList()).withListener(PermissionsManagerListener(this, callback))
 }
 
 fun Context.hasSelfPermission(permissions: Array<String>): Boolean {
-    return permissions.all { PermissionChecker.checkSelfPermission(this, it) != PERMISSION_GRANTED }
+    return permissions.all { ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED }
 }
 
 fun Context.runWithPermissions(vararg permissions: String, callback: () -> Unit): Any? {
@@ -62,7 +62,7 @@ private fun runWithPermissionsHandler(target: Any, permissions: Array<String>, c
     if (activity.hasSelfPermission(permissions)) {
         return callback()
     }
-    activity.requestPermissionsWithManager(permissions)
+    activity.requestPermissionsWithManager(permissions, callback)
     return null
 }
 
@@ -74,11 +74,11 @@ fun Activity.alertPermanentlyDeniedPermissions(permissions: Array<String>?, mess
             .show()
 }
 
-fun Activity.alertRationaleDeniedPermissions(permissions: Array<String>?, message: String?) = permissions.let {
+fun Activity.alertRationaleDeniedPermissions(permissions: Array<String>?, message: String?, callback: (() -> Unit?)?) = permissions.let {
     AlertDialog.Builder(this)
             .setMessage(message)
             .setPositiveButton("Try Again") { _, _ ->
-                requestPermissionsWithManager(permissions ?: arrayOf())
+                requestPermissionsWithManager(permissions ?: arrayOf(), callback)
             }
             .setNegativeButton("Cancel") { _, _ -> }
             .show()
@@ -90,14 +90,19 @@ fun Activity.openAppSettings() {
 }
 
 private class PermissionsManagerListener(
-        val activity: Activity
+        val activity: Activity,
+        val callback: (() -> Unit?)?
 ) : MultiplePermissionsListener {
     override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-        val permanentlyDeniedPermissions = report?.deniedPermissionResponses?.filter { it.isPermanentlyDenied }?.map { it.permissionName }
-        permanentlyDeniedPermissions.let { activity.alertPermanentlyDeniedPermissions(it?.toTypedArray(), "bla") }
+        if (report?.isAnyPermissionPermanentlyDenied == false) {
+            callback?.invoke()
+        } else {
+            val permanentlyDeniedPermissions = report?.deniedPermissionResponses?.filter { it.isPermanentlyDenied }?.map { it.permissionName }
+            permanentlyDeniedPermissions.let { activity.alertPermanentlyDeniedPermissions(it?.toTypedArray(), "bla") }
+        }
     }
 
     override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>?, token: PermissionToken?) {
-        activity.alertRationaleDeniedPermissions(permissions?.map { it.name }?.toTypedArray(), "blabla")
+        activity.alertRationaleDeniedPermissions(permissions?.map { it.name }?.toTypedArray(), "blabla", callback)
     }
 }

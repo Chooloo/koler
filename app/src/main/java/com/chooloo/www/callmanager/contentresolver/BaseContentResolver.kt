@@ -3,15 +3,22 @@ package com.chooloo.www.callmanager.contentresolver
 import android.content.ContentResolver
 import android.content.Context
 import android.database.ContentObserver
+import android.database.Cursor
 import android.net.Uri
 
-abstract class BaseContentResolver<T>(
-        val context: Context,
-        val uri: Uri
+open class BaseContentResolver<T>(
+        private val context: Context,
+        var defaultUri: Uri,
+        var filterUri: Uri? = null,
+        var projection: Array<String>? = null,
+        var selection: String? = null,
+        var selectionArgs: Array<String>? = null,
+        var sortOrder: String? = null
 ) : ContentResolver(context) {
 
     private var _observer: ContentObserver
-    private var _onContentChangedListener: ((T) -> Unit?)? = null
+    private var _onContentChangedListener: ((T?) -> Unit?)? = null
+    private var _uri: Uri
 
     init {
         _observer = object : ContentObserver(null) {
@@ -19,19 +26,38 @@ abstract class BaseContentResolver<T>(
                 _onContentChangedListener?.invoke(getContent())
             }
         }
+        _uri = defaultUri
+    }
+
+    fun queryContent(): Cursor? {
+        return context.contentResolver.query(
+                defaultUri,
+                projection,
+                selection,
+                selectionArgs,
+                sortOrder
+        )
+    }
+
+    fun reset() {
+        _uri = defaultUri
+    }
+
+    fun filter(filterString: String) {
+        filterUri.let { _uri = Uri.withAppendedPath(filterUri, filterString).buildUpon().build() }
     }
 
     fun observe() {
-        registerContentObserver(uri, true, _observer)
+        registerContentObserver(defaultUri, true, _observer)
     }
 
     fun detach() {
         unregisterContentObserver(_observer)
     }
 
-    fun setOnContentChangedListener(onContentChangedListener: ((T) -> Unit?)?) {
+    fun setOnContentChangedListener(onContentChangedListener: ((T?) -> Unit?)?) {
         _onContentChangedListener = onContentChangedListener
     }
 
-    abstract fun getContent(): T
+    open fun getContent(): T? = null
 }

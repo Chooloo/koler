@@ -33,7 +33,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.attach(this)
 
         _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
-
+        showEmptyPage(false)
+        showNoPermissions(false)
         observe()
     }
 
@@ -42,9 +43,9 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(ContactsLiveData.REQUIRED_PERMISSION) {
+    override fun observe() = runWithPermissions(ContactsLiveData.REQUIRED_PERMISSION, callback = {
         _contactsLiveData.observe(viewLifecycleOwner, { contacts -> adapter.updateContacts(contacts) })
-    }
+    })
 
     override fun openContact(contact: Contact) {
         ContactBottomDialogFragment.newInstance(contact).show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
