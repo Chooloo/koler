@@ -13,7 +13,7 @@ object RelativeTime {
     private const val HOUR_MILLIS = 60 * MINUTE_MILLIS
     private const val DAY_MILLIS = 24 * HOUR_MILLIS
 
-    val currentDate: Date
+    private val currentDate: Date
         get() = Calendar.getInstance().time
 
     @JvmStatic

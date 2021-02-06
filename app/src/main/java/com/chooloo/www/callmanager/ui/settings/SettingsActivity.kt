@@ -16,9 +16,7 @@ class SettingsActivity : BaseActivity(), SettingsMvpView {
     }
 
     override fun onSetup() {
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT)
-                .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT).commitNow()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -1,11 +1,11 @@
 package com.chooloo.www.callmanager.ui.recents
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.adapter.RecentsAdapter
 import com.chooloo.www.callmanager.entity.Recent
 import com.chooloo.www.callmanager.livedata.RecentsLiveData
 import com.chooloo.www.callmanager.ui.list.ListFragment
+import com.chooloo.www.callmanager.util.runWithPermissions
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
@@ -14,10 +14,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     private lateinit var _recentsLiveData: RecentsLiveData
 
     companion object {
-        @JvmStatic
-        fun newInstance(): RecentsFragment {
-            return RecentsFragment()
-        }
+        fun newInstance(): RecentsFragment = RecentsFragment()
     }
 
     override fun onGetAdapter(): RecentsAdapter {
@@ -35,16 +32,16 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
         _recentsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).recents
 
-        try {
-            _recentsLiveData.observe(viewLifecycleOwner, Observer { recents -> adapter.updateRecents(recents) })
-        } catch (e: SecurityException) {
-            showNoPermissions(true)
-        }
+        observe()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _presenter.detach()
+    }
+
+    override fun observe() = runWithPermissions(RecentsLiveData.REQUIRED_PERMISSION) {
+        _recentsLiveData.observe(viewLifecycleOwner, { recents -> adapter.updateRecents(recents) })
     }
 
     override fun openRecent(recent: Recent) {

@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.contentresolver
 
+import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -8,12 +9,11 @@ import androidx.core.content.ContentResolverCompat
 import androidx.core.os.CancellationSignal
 import com.chooloo.www.callmanager.entity.Contact
 
-class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Contact>>(
-        context = context,
-        uri = URI
-) {
+class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Contact>>(context, URI) {
 
     companion object {
+        val REQUIRED_PERMISSION = READ_CONTACTS
+
         private const val COLUMN_ID = ContactsContract.Contacts._ID
         private const val COLUMN_NAME = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
         private const val COLUMN_THUMBNAIL = ContactsContract.Contacts.PHOTO_THUMBNAIL_URI

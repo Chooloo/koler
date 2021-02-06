@@ -8,8 +8,9 @@ import android.telecom.VideoProfile
 import android.widget.Toast
 import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.ui.base.BaseActivity
-import com.chooloo.www.callmanager.util.ContactUtils
-import com.chooloo.www.callmanager.util.PermissionUtils
+import com.chooloo.www.callmanager.util.isDefaultDialer
+import com.chooloo.www.callmanager.util.lookupContact
+import com.chooloo.www.callmanager.util.requestDefaultDialer
 import timber.log.Timber
 import java.net.URLDecoder
 
@@ -54,11 +55,11 @@ object CallManager {
 
     @JvmStatic
     fun call(activity: BaseActivity, number: String?) {
-        if (PermissionUtils.isDefaultDialer(activity)) {
+        if (activity.isDefaultDialer()) {
             val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(number)))
             activity.startActivity(callIntent)
         } else {
-            PermissionUtils.ensureDefaultDialer(activity)
+            activity.requestDefaultDialer()
             activity.showError("Set Koler as your default dialer to make calls")
         }
     }
@@ -81,7 +82,7 @@ object CallManager {
             if (number.contains("voicemail")) {
                 Contact.VOICEMAIL
             } else {
-                ContactUtils.lookupContact(context, number)
+                lookupContact(context, number)
             }
         } catch (e: Exception) {
             Contact.UNKNOWN

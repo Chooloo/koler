@@ -1,21 +1,18 @@
 package com.chooloo.www.callmanager.ui.base
 
-import android.annotation.TargetApi
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.callmanager.util.PermissionUtils
+import androidx.core.content.PermissionChecker
+import androidx.core.content.PermissionChecker.checkSelfPermission
 import com.chooloo.www.callmanager.util.PreferencesManager
-import com.chooloo.www.callmanager.util.Utilities
+import com.karumi.dexter.Dexter
 
 abstract class BaseActivity : AppCompatActivity(), MvpView {
     protected var preferences: PreferencesManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utilities.setUpLocale(this)
         preferences = PreferencesManager.getInstance(this)
     }
 
@@ -25,20 +22,19 @@ abstract class BaseActivity : AppCompatActivity(), MvpView {
     }
 
     override fun hasPermission(permission: String): Boolean {
-        return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+        return checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
     }
 
     override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.filter { p -> hasPermission(p) }.isNotEmpty()
+        return permissions.any { p -> hasPermission(p) }
     }
 
-    override fun askForPermission(permission: String, requestCode: Int) {
-        requestPermissions(arrayOf(permission), requestCode)
+    override fun askForPermission(permission: String, requestCode: Int?) {
+        Dexter.withActivity(this).withPermission(permission)
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int) {
-        requestPermissions(permissions, requestCode)
+    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
+        permissions.forEach { permission -> askForPermission(permission, requestCode) }
     }
 
     override fun showMessage(message: String) {

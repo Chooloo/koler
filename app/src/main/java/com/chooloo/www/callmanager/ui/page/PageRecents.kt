@@ -21,7 +21,7 @@ class PageRecents : PageFragment(), PageMvpView {
             setOnScrollStateChangedListener { newState -> _presenter.onScrollStateChanged(newState) }
         }
 
-        _activity.supportFragmentManager.beginTransaction().replace(binding.fragmentPageLayout.id, _recentsFragment).commit()
+        childFragmentManager.beginTransaction().replace(binding.fragmentPageLayout.id, _recentsFragment).commitNow()
     }
 
     override fun onDestroyView() {

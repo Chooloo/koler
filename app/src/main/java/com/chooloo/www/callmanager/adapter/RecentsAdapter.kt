@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.chooloo.www.callmanager.R
 import com.chooloo.www.callmanager.entity.Recent
+import com.chooloo.www.callmanager.entity.Recent.CallType
 import com.chooloo.www.callmanager.ui.widgets.ListItem
 import com.chooloo.www.callmanager.ui.widgets.ListItemHolder
-import com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation
-import com.chooloo.www.callmanager.util.ContactUtils.lookupContact
 import com.chooloo.www.callmanager.util.RelativeTime.getTimeAgo
-import com.chooloo.www.callmanager.util.Utilities
+import com.chooloo.www.callmanager.util.lookupContact
+import com.chooloo.www.callmanager.util.setFadeUpAnimation
 
 class RecentsAdapter(
         private val context: Context
@@ -36,7 +37,7 @@ class RecentsAdapter(
         holder.listItem.run {
             setBigText(contact.name ?: recentCall.callerNumber)
             setSmallText(if (recentCall.callDate != null) getTimeAgo(recentCall.callDate.getTime()) else null)
-            setImageDrawable(ContextCompat.getDrawable(context, Utilities.getCallTypeImage(recentCall.callType)))
+            setImageDrawable(ContextCompat.getDrawable(context, getCallTypeImage(recentCall.callType)))
             setOnClickListener { _onRecentItemClickListener?.invoke(recentCall) }
             setOnLongClickListener {
                 _onRecentItemLongClickListener?.invoke(recentCall)
@@ -57,5 +58,16 @@ class RecentsAdapter(
 
     fun setOnRecentItemLongClickListener(onRecentItemLongClickListener: ((Recent) -> Unit?)?) {
         _onRecentItemLongClickListener = onRecentItemLongClickListener
+    }
+
+    fun getCallTypeImage(@CallType callType: Int): Int {
+        return when (callType) {
+            Recent.TYPE_INCOMING -> R.drawable.ic_call_received_black_24dp
+            Recent.TYPE_OUTGOING -> R.drawable.ic_call_made_black_24dp
+            Recent.TYPE_MISSED -> R.drawable.ic_call_missed_black_24dp
+            Recent.TYPE_REJECTED -> R.drawable.ic_call_missed_outgoing_black_24dp
+            Recent.TYPE_VOICEMAIL -> R.drawable.ic_voicemail_black_24dp
+            else -> R.drawable.ic_call_made_black_24dp
+        }
     }
 }

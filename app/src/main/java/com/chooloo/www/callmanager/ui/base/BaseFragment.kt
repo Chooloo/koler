@@ -5,8 +5,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 
-abstract class BaseFragment : Fragment(), MvpView {
+abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
     protected lateinit var _activity: BaseActivity
 
     companion object {
@@ -35,12 +41,12 @@ abstract class BaseFragment : Fragment(), MvpView {
         return permissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
     }
 
-    override fun askForPermission(permission: String, requestCode: Int) {
-        askForPermissions(arrayOf(permission), requestCode)
+    override fun askForPermission(permission: String, requestCode: Int?) {
+        Dexter.withActivity(activity).withPermission(permission).withListener(this)
     }
 
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int) {
-        requestPermissions(permissions, requestCode)
+    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
+        permissions.forEach { permission -> askForPermission(permission, requestCode) }
     }
 
     override fun showMessage(message: String) {
@@ -62,4 +68,13 @@ abstract class BaseFragment : Fragment(), MvpView {
     protected val argsSafely: Bundle
         get() = super.getArguments()
                 ?: throw IllegalArgumentException("You must create this fragment with newInstance()")
+
+    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+    }
+
+    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+    }
+
+    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+    }
 }

@@ -1,22 +1,20 @@
 package com.chooloo.www.callmanager.livedata
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.chooloo.www.callmanager.contentresolver.RecentsContentResolver
 import com.chooloo.www.callmanager.entity.Recent
 
-class RecentsLiveData(
-        private val context: Context
-) : LiveData<Array<Recent>>() {
+class RecentsLiveData(context: Context) : BaseContentLiveData<RecentsContentResolver, Array<Recent>>(context) {
 
-    private val recentsContentResolver = RecentsContentResolver(context)
-
-    override fun onActive() {
-        recentsContentResolver.observe()
-        recentsContentResolver.setOnContentChangedListener { postValue(RecentsContentResolver.getRecents(context)) }
+    companion object {
+        val REQUIRED_PERMISSION = RecentsContentResolver.REQUIRED_PERMISSION
     }
 
-    override fun onInactive() {
-        recentsContentResolver.detach()
+    override fun onGetContentResolver(): RecentsContentResolver {
+        return RecentsContentResolver(context)
+    }
+
+    override fun updateObservers() {
+        postValue(RecentsContentResolver.getRecents(context))
     }
 }

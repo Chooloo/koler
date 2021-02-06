@@ -112,12 +112,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
         return true
     }
 
-    override fun askForPermission(permission: String, requestCode: Int) {
-        requestPermissions(arrayOf(permission), requestCode)
+    override fun askForPermission(permission: String, requestCode: Int?) {
+        requestPermissions(arrayOf(permission), requestCode ?: 1)
     }
 
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int) {
-        requestPermissions(permissions, requestCode)
+    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
+        requestPermissions(permissions, requestCode ?: 1)
     }
 
     override fun showMessage(message: String) {

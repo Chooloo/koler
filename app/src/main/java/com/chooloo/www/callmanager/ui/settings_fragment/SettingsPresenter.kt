@@ -2,15 +2,11 @@ package com.chooloo.www.callmanager.ui.settings_fragment
 
 import androidx.preference.Preference
 import com.chooloo.www.callmanager.ui.base.BasePresenter
-import com.chooloo.www.callmanager.util.PermissionUtils.RC_DEFAULT
-import com.chooloo.www.callmanager.util.PermissionUtils.checkPermissionsGranted
 
 class SettingsPresenter<V : SettingsMvpView> : BasePresenter<V>(), SettingsMvpPresenter<V> {
 
     override fun onRequestPermissionResult(requestCode: Int, grantResults: IntArray) {
-        if (requestCode == RC_DEFAULT && checkPermissionsGranted(grantResults)) {
-            mvpView?.setupSimSelection()
-        }
+        mvpView?.setupSimSelection()
     }
 
     override fun onListPreferenceChange(preference: Preference, newValue: Any): Boolean {

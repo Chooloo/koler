@@ -22,12 +22,13 @@ import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
 import com.chooloo.www.callmanager.ui.dialpad.DialpadBottomDialogFragment;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 import static android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
+import static com.chooloo.www.callmanager.util.ViewUtilsKt.hasNavBar;
+import static com.chooloo.www.callmanager.util.ViewUtilsKt.navBarHeight;
 
 public class CallActivity extends BaseActivity implements CallMvpView {
     private CallMvpPresenter<CallMvpView> mPresenter;
@@ -92,8 +93,8 @@ public class CallActivity extends BaseActivity implements CallMvpView {
         updateCall();
         updateState();
 
-        if (Utilities.hasNavBar(this)) {
-            binding.getRoot().setPadding(0, 0, 0, Utilities.navBarHeight(this));
+        if (hasNavBar(this)) {
+            binding.getRoot().setPadding(0, 0, 0, navBarHeight(this));
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {

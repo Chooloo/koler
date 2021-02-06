@@ -15,12 +15,7 @@ import com.chooloo.www.callmanager.service.CallManager.call
 import com.chooloo.www.callmanager.service.CallManager.callVoicemail
 import com.chooloo.www.callmanager.ui.base.BaseFragment
 import com.chooloo.www.callmanager.ui.widgets.DialpadKey
-import com.chooloo.www.callmanager.util.AnimationUtils.showView
-import com.chooloo.www.callmanager.util.AudioUtils
-import com.chooloo.www.callmanager.util.AudioUtils.playToneByKey
-import com.chooloo.www.callmanager.util.ContactUtils.addContact
-import com.chooloo.www.callmanager.util.ContactUtils.lookupContact
-import com.chooloo.www.callmanager.util.Utilities
+import com.chooloo.www.callmanager.util.*
 import com.chooloo.www.callmanager.viewmodel.dial.DialViewModel
 
 class DialpadFragment : BaseFragment(), DialpadMvpView {
@@ -57,17 +52,8 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         return _binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        AudioUtils.toggleToneGenerator(true)
-    }
-
     override fun onPause() {
         super.onPause()
-        AudioUtils.apply {
-            stopTone()
-            toggleToneGenerator(false)
-        }
     }
 
     override fun onSetup() {
@@ -77,7 +63,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         _dialViewModel = ViewModelProvider(_activity).get(DialViewModel::class.java)
 
         _binding.apply {
-            dialpadEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(Utilities.sLocale.country))
+            dialpadEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(resources.configuration.locales.get(0).toString()))
             dialpadEditText.addTextChangedListener(
                     beforeTextChanged = { _, _, _, _ -> },
                     afterTextChanged = { },
@@ -165,11 +151,11 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
     }
 
     override fun vibrate() {
-        Utilities.vibrate(_activity, Utilities.SHORT_VIBRATE_LENGTH)
+        _activity.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun playTone(keyCode: Int) {
-        playToneByKey(keyCode, _activity)
+        context?.playToneByKey(keyCode)
     }
 
     fun setOnKeyDownListener(onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)?) {

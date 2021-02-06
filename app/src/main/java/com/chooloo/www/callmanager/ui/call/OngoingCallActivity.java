@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.view.KeyEvent;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
@@ -20,11 +19,10 @@ import com.chooloo.www.callmanager.entity.Contact;
 import com.chooloo.www.callmanager.notification.NotificationActionReceiver;
 import com.chooloo.www.callmanager.service.CallManager;
 import com.chooloo.www.callmanager.ui.base.BaseActivity;
-import com.chooloo.www.callmanager.ui.dialpad.DialpadFragment;
-import com.chooloo.www.callmanager.util.ThemeUtils;
-import com.chooloo.www.callmanager.util.Utilities;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+import static com.chooloo.www.callmanager.util.ViewUtilsKt.hasNavBar;
+import static com.chooloo.www.callmanager.util.ViewUtilsKt.navBarHeight;
 
 @SuppressLint("ClickableViewAccessibility")
 //TODO Fix the buttons
@@ -108,7 +106,6 @@ public class OngoingCallActivity extends BaseActivity {
 //                    .setContentText(mStateText)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
-                    .setColor(ThemeUtils.getAccentColor(this))
                     .setOngoing(true)
                     .setStyle(new androidx.media.app.NotificationCompat.MediaStyle().setShowActionsInCompactView(0, 1))
                     .setAutoCancel(true);
@@ -156,8 +153,8 @@ public class OngoingCallActivity extends BaseActivity {
      * detect a nav bar and adapt layout accordingly
      */
     private void adaptToNavbar() {
-        boolean hasNavBar = Utilities.hasNavBar(this);
-        int navBarHeight = Utilities.navBarHeight(this);
+        boolean hasNavBar = hasNavBar(this);
+        int navBarHeight = navBarHeight(this);
         if (hasNavBar) {
 //            mOngoingCallLayout.setPadding(0, 0, 0, navBarHeight);
         }

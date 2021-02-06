@@ -5,5 +5,7 @@ import com.chooloo.www.callmanager.ui.list.ListMvpView
 
 interface RecentsMvpView : ListMvpView {
     override val itemCount: Int
+
+    fun observe(): Any?
     fun openRecent(recent: Recent)
 }

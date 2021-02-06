@@ -1,12 +1,12 @@
 package com.chooloo.www.callmanager.ui.contacts
 
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.callmanager.adapter.ContactsAdapter
 import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.livedata.ContactsLiveData
 import com.chooloo.www.callmanager.ui.contact.ContactBottomDialogFragment
 import com.chooloo.www.callmanager.ui.list.ListFragment
+import com.chooloo.www.callmanager.util.runWithPermissions
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModel
 import com.chooloo.www.callmanager.viewmodel.data.DataViewModelFactory
 
@@ -34,16 +34,16 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
 
         _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
 
-        try {
-            _contactsLiveData.observe(viewLifecycleOwner, Observer { contacts -> adapter.updateContacts(contacts) })
-        } catch (e: SecurityException) {
-            showNoPermissions(true)
-        }
+        observe()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _presenter.detach()
+    }
+
+    override fun observe() = runWithPermissions(ContactsLiveData.REQUIRED_PERMISSION) {
+        _contactsLiveData.observe(viewLifecycleOwner, { contacts -> adapter.updateContacts(contacts) })
     }
 
     override fun openContact(contact: Contact) {

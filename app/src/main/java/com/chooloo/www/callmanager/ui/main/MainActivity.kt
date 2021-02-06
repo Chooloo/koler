@@ -22,8 +22,7 @@ import com.chooloo.www.callmanager.ui.menu.MenuFragment
 import com.chooloo.www.callmanager.ui.menu.MenuFragment.Companion.newInstance
 import com.chooloo.www.callmanager.ui.search.SearchFragment
 import com.chooloo.www.callmanager.ui.settings.SettingsActivity
-import com.chooloo.www.callmanager.util.PermissionUtils.ensureDefaultDialer
-import com.chooloo.www.callmanager.util.Utilities
+import com.chooloo.www.callmanager.util.requestDefaultDialer
 import com.chooloo.www.callmanager.viewmodel.dial.DialViewModel
 
 // TODO implement FAB Coordination
@@ -81,8 +80,7 @@ class MainActivity : BaseActivity(), MainMvpView {
         _presenter = MainPresenter()
         _presenter.attach(this)
 
-        Utilities.showNewVersionDialog(this)
-        ensureDefaultDialer(this)
+        requestDefaultDialer()
 
         _bottomDialpadFragment = newInstance(true)
 
@@ -105,7 +103,7 @@ class MainActivity : BaseActivity(), MainMvpView {
             _presenter.onViewIntent(intent)
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, _searchFragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, _searchFragment).commitNow()
 
         _binding.apply {
             dialpadFabButton.setOnClickListener { _presenter.onDialpadFabClick() }

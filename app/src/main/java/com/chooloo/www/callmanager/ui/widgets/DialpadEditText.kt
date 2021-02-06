@@ -9,8 +9,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
-import com.chooloo.www.callmanager.util.Utilities
-import java.util.*
 
 class DialpadEditText constructor(
         context: Context,
@@ -33,7 +31,7 @@ class DialpadEditText constructor(
     }
 
     val numbers: String
-        get() = Utilities.getOnlyNumbers(Objects.requireNonNull(this.text).toString())
+        get() = text?.filter { it.isDigit() }.toString()
 
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect)

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.FragmentManager
 import com.chooloo.www.callmanager.databinding.FragmentBottomDialogBinding
-import com.chooloo.www.callmanager.util.PermissionUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpView {
@@ -59,12 +58,12 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         return permissions.filter { p -> activity.hasPermission(p) }.isNotEmpty()
     }
 
-    override fun askForPermission(permission: String, requestCode: Int) {
+    override fun askForPermission(permission: String, requestCode: Int?) {
         askForPermissions(arrayOf(permission), requestCode)
     }
 
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int) {
-        requestPermissions(permissions, requestCode)
+    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
+        requestPermissions(permissions, requestCode ?: 1)
     }
 
     override fun showMessage(message: String) {
@@ -88,7 +87,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     }
 
     protected val argsSafely: Bundle
-        get() = super.getArguments()
-                ?: throw IllegalArgumentException("You must create this fragment with newInstance()")
+        get() = arguments
+                ?: throw IllegalArgumentException("Always create fragment with newInstance()")
 
 }

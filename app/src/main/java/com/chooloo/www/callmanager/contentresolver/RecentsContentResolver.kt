@@ -1,5 +1,6 @@
 package com.chooloo.www.callmanager.contentresolver
 
+import android.Manifest.permission.READ_CALL_LOG
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -16,6 +17,8 @@ class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recen
 ) {
 
     companion object {
+        val REQUIRED_PERMISSION = READ_CALL_LOG
+
         private const val COLUMN_ID = CallLog.Calls._ID
         private const val COLUMN_NUMBER = CallLog.Calls.NUMBER
         private const val COLUMN_PRESENTATION = CallLog.Calls.NUMBER_PRESENTATION

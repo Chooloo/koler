@@ -9,7 +9,7 @@ import com.chooloo.www.callmanager.R
 import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.ui.widgets.ListItem
 import com.chooloo.www.callmanager.ui.widgets.ListItemHolder
-import com.chooloo.www.callmanager.util.AnimationUtils.setFadeUpAnimation
+import com.chooloo.www.callmanager.util.setFadeUpAnimation
 
 open class ContactsAdapter(
         private val context: Context

@@ -9,11 +9,7 @@ import com.chooloo.www.callmanager.databinding.FragmentContactBinding
 import com.chooloo.www.callmanager.entity.Contact
 import com.chooloo.www.callmanager.service.CallManager.call
 import com.chooloo.www.callmanager.ui.base.BaseFragment
-import com.chooloo.www.callmanager.util.AnimationUtils.animateViews
-import com.chooloo.www.callmanager.util.ContactUtils.deleteContact
-import com.chooloo.www.callmanager.util.ContactUtils.editContact
-import com.chooloo.www.callmanager.util.ContactUtils.openContact
-import com.chooloo.www.callmanager.util.ContactUtils.smsContact
+import com.chooloo.www.callmanager.util.*
 
 class ContactFragment : BaseFragment(), ContactMvpView {
 
