@@ -4,8 +4,8 @@
 
 A uniquely stylized phone app for Android, designed with the user in mind.
 Believe us we want to make it good, as we use it ourselves.
-
 </br>
+
 ## Support
 Due to lack of support, unfortunately it's diffictult for us to keep supporting the project
 If you like the app and want us to fix and improve it, please consider giving us a boost
