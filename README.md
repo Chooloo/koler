@@ -4,7 +4,14 @@
 
 A uniquely stylized phone app for Android, designed with the user in mind.
 Believe us we want to make it good, as we use it ourselves.
+
 </br>
+## Support
+Due to lack of support, unfortunately it's diffictult for us to keep supporting the project
+If you like the app and want us to fix and improve it, please consider giving us a boost
+</br>
+
+<a href="https://paypal.me/theroeiedri?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
 
 <img src="https://github.com/Chooloo/call_manage/blob/master/art/screenshots.png" height="250">
 
@@ -58,9 +65,4 @@ In Koler you can interact with incoming calls in new ways
 ## GET THE APP
  * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
- 
-## Support
-Due to lack of support, unfortunately it's diffictult for us to keep supporting the project
-If you like the app and want us to fix and improve it, please consider giving us a boost
 
-<a href="https://paypal.me/theroeiedri?locale.x=en_US"><img src="https://www.paypalobjects.com/webstatic/paypalme/images/social/pplogo384.png" alt="Paypal.me" width="190px"></a>
