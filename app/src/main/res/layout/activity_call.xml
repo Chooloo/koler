@@ -74,7 +74,7 @@
 
         <TableRow>
             <!-- action hold -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.CallActionButton
                 android:id="@+id/call_action_hold"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -84,7 +84,7 @@
                 app:text="@string/call_action_hold" />
 
             <!-- action mute -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.CallActionButton
                 android:id="@+id/call_action_mute"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -94,7 +94,7 @@
                 app:text="@string/call_action_mute" />
 
             <!-- action speaker -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.CallActionButton
                 android:id="@+id/call_action_speaker"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -106,7 +106,7 @@
 
         <TableRow>
             <!-- action record -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.CallActionButton
                 android:id="@+id/call_action_record"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -116,7 +116,7 @@
                 app:text="@string/call_action_record" />
 
             <!-- action keypad -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.CallActionButton
                 android:id="@+id/call_action_keypad"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -124,7 +124,7 @@
                 app:text="@string/call_action_keypad" />
 
             <!-- action add call -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.CallActionButton
                 android:id="@+id/call_action_add_call"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"

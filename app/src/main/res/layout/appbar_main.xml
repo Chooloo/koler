@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <!-- tab layout -->
-            <com.chooloo.www.callmanager.ui.widgets.tablayout.TabLayout
+            <com.chooloo.www.koler.ui.widgets.tablayout.TabLayout
                 android:id="@+id/main_tab_layout"
                 style="@style/Koler.Text.Headline2"
                 android:layout_width="wrap_content"

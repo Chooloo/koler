@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.chooloo.www.callmanager">
+    package="com.chooloo.www.koler">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <application
-        android:name=".App"
+        android:name="com.chooloo.www.koler.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -31,7 +31,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.chooloo.www.koler.ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -102,7 +102,7 @@
         </activity>
 
         <activity
-            android:name=".ui.call.CallActivity"
+            android:name="com.chooloo.www.koler.ui.call.CallActivity"
             android:label="@string/activity_call"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -115,17 +115,17 @@
         </activity>
 
         <activity
-            android:name=".ui.settings.SettingsActivity"
+            android:name="com.chooloo.www.koler.ui.settings.SettingsActivity"
             android:label="@string/activity_settings"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.about.AboutActivity"
+            android:name="com.chooloo.www.koler.ui.about.AboutActivity"
             android:label="@string/activity_about"
             android:theme="@style/AppTheme" />
 
-        <service android:name=".service.RecordService" />
+        <service android:name="com.chooloo.www.koler.service.RecordService" />
         <service
-            android:name=".service.CallService"
+            android:name="com.chooloo.www.koler.service.CallService"
             android:permission="android.permission.BIND_INCALL_SERVICE">
             <meta-data
                 android:name="android.telecom.IN_CALL_SERVICE_UI"
@@ -140,7 +140,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".notification.NotificationActionReceiver">
+        <receiver android:name="com.chooloo.www.koler.notification.NotificationActionReceiver">
             <intent-filter>
                 <action android:name="ANSWER" />
                 <action android:name="HANGUP" />

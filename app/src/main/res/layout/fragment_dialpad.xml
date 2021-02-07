@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bubble_background">
 
-    <com.chooloo.www.callmanager.ui.widgets.DialpadEditText
+    <com.chooloo.www.koler.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         style="@style/Koler.Text.Headline2"
         android:layout_width="wrap_content"
@@ -32,60 +32,60 @@
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_1"
                 app:digit="1" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_2"
                 app:digit="2" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_3"
                 app:digit="3" />
         </TableRow>
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_4"
                 app:digit="4" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_5"
                 app:digit="5" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_6"
                 app:digit="6" />
         </TableRow>
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_7"
                 app:digit="7" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_8"
                 app:digit="8" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_9"
                 app:digit="9" />
         </TableRow>
 
         <TableRow>
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_star"
                 app:digit="*" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_0"
                 app:digit="0" />
 
-            <com.chooloo.www.callmanager.ui.widgets.DialpadKey
+            <com.chooloo.www.koler.ui.widgets.DialpadKey
                 android:id="@+id/key_hex"
                 app:digit="#" />
         </TableRow>
