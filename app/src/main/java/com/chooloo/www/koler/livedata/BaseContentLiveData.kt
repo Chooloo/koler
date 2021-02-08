@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.livedata
 
 import android.content.Context
+import android.os.Handler
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
 
 abstract class BaseContentLiveData<C : BaseContentResolver<T>, T : Any>(context: Context) : BaseLiveData<T>(context) {
@@ -21,7 +22,9 @@ abstract class BaseContentLiveData<C : BaseContentResolver<T>, T : Any>(context:
     }
 
     override fun updateData() {
-        value = contentResolver.getContent()
+        Handler(context.mainLooper).post {
+            value = contentResolver.getContent()
+        }
     }
 
     fun filter(filterString: String) {
