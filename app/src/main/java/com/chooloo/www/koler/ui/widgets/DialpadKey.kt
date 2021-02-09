@@ -10,18 +10,15 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.DialpadKeyLayoutBinding
 
 @SuppressLint("Recycle", "CustomViewStyleable")
-class DialpadKey constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleRes) {
+class DialpadKey : LinearLayout {
+    
     private var _binding: DialpadKeyLayoutBinding
     private var _letters: String? = null
     var keyCode = 0
 
+    constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    init {
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
         _binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context), this, true)
         updateDigit(context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey).getString(R.styleable.Koler_DialpadKey_digit))
     }

@@ -40,6 +40,15 @@
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
+    <!-- button -->
+    <style name="Koler.Button" parent="Widget.MaterialComponents.Button" />
+
+    <style name="Koler.Button.Icon" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:inset">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/Koler.ShapeAppearance.Circle</item>
+    </style>
+
     <!-- image view -->
     <style name="Koler.Image" />
 
@@ -222,14 +231,11 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <!-- contact fragment -->
-    <style name="Koler.Contact" />
 
-    <style name="Koler.Contact.Button" />
+    <style name="Koler.ShapeAppearance" />
 
-    <style name="Koler.Contact.Button.Action">
-        <item name="android:elevation">5dp</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:padding">10dp</item>
+    <style name="Koler.ShapeAppearance.Circle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

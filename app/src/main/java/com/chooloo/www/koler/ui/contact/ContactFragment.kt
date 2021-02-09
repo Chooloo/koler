@@ -30,7 +30,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentContactBinding.inflate(inflater)
         return _binding.root
     }

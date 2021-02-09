@@ -73,36 +73,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact_text_number">
 
-            <com.chooloo.www.koler.ui.widgets.IconChip
+            <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/contact_button_call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/grey_100"
-                android:src="@drawable/ic_call_black_24dp"
                 app:icon="@drawable/ic_call_black_24dp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/contact_button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_edit_black_24dp" />
+                app:icon="@drawable/ic_edit_black_24dp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/contact_button_delete"
-                style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_delete_black_24dp" />
+                app:icon="@drawable/ic_delete_black_24dp" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/contact_button_sms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_sms_black_24dp" />
+                app:icon="@drawable/ic_sms_black_24dp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

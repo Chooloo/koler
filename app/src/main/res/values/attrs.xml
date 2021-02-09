@@ -16,12 +16,10 @@
         <attr name="digit" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="Koler.IconChip">
+    <declare-styleable name="Koler.IconButton">
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
         <attr name="text" format="string" />
         <attr name="activatedText" format="string" />
-        <attr name="backgroundColor" format="color" />
-        <attr name="backgroundColorActivated" format="color" />
     </declare-styleable>
 </resources>
