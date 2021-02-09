@@ -47,9 +47,6 @@
             style="@style/Koler.Text.Headline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="@id/contact_image_layout"
             app:layout_constraintStart_toStartOf="@id/contact_image_layout"
             app:layout_constraintTop_toBottomOf="@id/contact_image_layout"
@@ -57,12 +54,10 @@
 
         <TextView
             android:id="@+id/contact_text_number"
+            style="@style/Koler.Text.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:text="123-20193"
-            android:textAppearance="@style/Koler.Text.Subtitle1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact_text_name"
@@ -78,35 +73,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contact_text_number">
 
-            <ImageView
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/contact_button_call"
-                style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/ic_call_black_24dp" />
+                android:backgroundTint="@color/grey_100"
+                android:src="@drawable/ic_call_black_24dp"
+                app:icon="@drawable/ic_call_black_24dp" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/contact_button_edit"
-                style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ic_edit_black_24dp" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/contact_button_delete"
                 style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ic_delete_black_24dp" />
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/contact_button_sms"
-                style="@style/Koler.Contact.Button.Action"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/contact_action_button_height"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/ic_sms_black_24dp" />
         </LinearLayout>

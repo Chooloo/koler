@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivitySettingsBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.settings_fragment.SettingsFragment
+import com.chooloo.www.koler.ui.settingsfragment.SettingsFragment
 
 class SettingsActivity : BaseActivity(), SettingsMvpView {
     private lateinit var _binding: ActivitySettingsBinding

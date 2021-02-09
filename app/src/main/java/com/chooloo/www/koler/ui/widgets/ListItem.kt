@@ -21,13 +21,20 @@ class ListItem(
     private var _binding: ListItemBinding
 
     init {
-        _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true)
+        _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true).apply {
+            root.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            root.isClickable = false
+            listItemHeaderLayout.isClickable = false
+            listItemHeaderLayout.isFocusable = false
+            listItemPersonLayout.isClickable = true
+            listItemPersonLayout.isFocusable = true
+        }
 
-        context.obtainStyledAttributes(attrs, R.styleable.ListItem, 0, 0).also {
-            setBigText(it.getString(R.styleable.ListItem_bigText))
-            setSmallText(it.getString(R.styleable.ListItem_smallText))
-            setImageDrawable(it.getDrawable(R.styleable.ListItem_src))
-            setHeaderText(it.getString(R.styleable.ListItem_header))
+        context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
+            setBigText(it.getString(R.styleable.Koler_ListItem_bigText))
+            setSmallText(it.getString(R.styleable.Koler_ListItem_smallText))
+            setImageDrawable(it.getDrawable(R.styleable.Koler_ListItem_src))
+            setHeaderText(it.getString(R.styleable.Koler_ListItem_header))
             showHeader(_binding.listItemHeaderText.text != null)
             it.recycle()
         }
@@ -36,16 +43,6 @@ class ListItem(
             context.theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
             setBackgroundResource(it.resourceId)
         }
-
-        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        isClickable = false
-        _binding.apply {
-            listItemHeaderLayout.isClickable = false
-            listItemHeaderLayout.isFocusable = false
-            listItemPersonLayout.isClickable = true
-            listItemPersonLayout.isFocusable = true
-        }
-
     }
 
     fun setBigText(text: String?) {

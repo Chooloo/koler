@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.settings_fragment
+package com.chooloo.www.koler.ui.settingsfragment
 
 import androidx.preference.Preference
 import com.chooloo.www.koler.ui.base.MvpView

@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.settings_fragment
+package com.chooloo.www.koler.ui.settingsfragment
 
 import android.annotation.SuppressLint
 import android.content.Intent

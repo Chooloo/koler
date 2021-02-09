@@ -13,7 +13,7 @@
     <dimen name="icon_size_small">30dp</dimen>
 
     <!-- call -->
-    <dimen name="call_action_padding">10dp</dimen>
+    <dimen name="icon_chip_padding">10dp</dimen>
 
     <!-- smart tab layout -->
     <dimen name="smart_tab_height">40dp</dimen>

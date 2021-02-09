@@ -4,6 +4,7 @@
 
     <!-- text -->
     <style name="Koler.Text">
+        <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -158,14 +159,6 @@
     <style name="Koler.Call.Button" />
 
     <style name="Koler.Call.Button.Action" />
-
-    <style name="Koler.Call.Button.Action.Layout">
-        <item name="android:elevation">5dp</item>
-        <item name="android:clickable">true</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:padding">@dimen/call_action_padding</item>
-    </style>
 
     <style name="Koler.Call.Button.Action.Text">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>

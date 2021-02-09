@@ -74,8 +74,10 @@
 
         <TableRow>
             <!-- action hold -->
-            <com.chooloo.www.koler.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/call_action_hold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_play_arrow_black_24dp"
@@ -84,8 +86,10 @@
                 app:text="@string/call_action_hold" />
 
             <!-- action mute -->
-            <com.chooloo.www.koler.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/call_action_mute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_mic_off_black_24dp"
@@ -94,8 +98,10 @@
                 app:text="@string/call_action_mute" />
 
             <!-- action speaker -->
-            <com.chooloo.www.koler.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/call_action_speaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_volume_down_black_24dp"
@@ -106,8 +112,10 @@
 
         <TableRow>
             <!-- action record -->
-            <com.chooloo.www.koler.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/call_action_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:activatedIcon="@drawable/ic_stop_circle_black_24dp"
@@ -116,16 +124,20 @@
                 app:text="@string/call_action_record" />
 
             <!-- action keypad -->
-            <com.chooloo.www.koler.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/call_action_keypad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:icon="@drawable/ic_dialpad_black_24dp"
                 app:text="@string/call_action_keypad" />
 
             <!-- action add call -->
-            <com.chooloo.www.koler.ui.widgets.CallActionButton
+            <com.chooloo.www.koler.ui.widgets.IconChip
                 android:id="@+id/call_action_add_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 app:icon="@drawable/ic_add_black_24dp"

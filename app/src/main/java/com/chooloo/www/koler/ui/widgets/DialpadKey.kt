@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.widgets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.KeyEvent
@@ -8,6 +9,7 @@ import android.widget.LinearLayout
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.DialpadKeyLayoutBinding
 
+@SuppressLint("Recycle", "CustomViewStyleable")
 class DialpadKey constructor(
         context: Context,
         attrs: AttributeSet? = null,
@@ -21,8 +23,7 @@ class DialpadKey constructor(
 
     init {
         _binding = DialpadKeyLayoutBinding.inflate(LayoutInflater.from(context), this, true)
-        val digit = context.obtainStyledAttributes(attrs, R.styleable.DialpadKey).getString(R.styleable.DialpadKey_digit)
-        updateDigit(digit)
+        updateDigit(context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey).getString(R.styleable.Koler_DialpadKey_digit))
     }
 
     private var letters: String?
