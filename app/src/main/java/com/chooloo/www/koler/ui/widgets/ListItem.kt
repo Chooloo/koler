@@ -21,27 +21,15 @@ class ListItem : LinearLayout {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
-        _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true).apply {
-            root.apply {
-                isClickable = false
-                layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-            }
-            listItemHeaderLayout.apply {
-                isClickable = false
-                isFocusable = false
-            }
-            listItemPersonLayout.apply {
-                isClickable = true
-                isFocusable = true
-            }
-        }
+        _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true)
+        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
         context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
             setBigText(it.getString(R.styleable.Koler_ListItem_bigText))
             setSmallText(it.getString(R.styleable.Koler_ListItem_smallText))
             setImageDrawable(it.getDrawable(R.styleable.Koler_ListItem_src))
             setHeaderText(it.getString(R.styleable.Koler_ListItem_header))
-            showHeader(_binding.listItemHeaderText.text != null)
+//            showHeader(_binding.listItemHeaderText.text != null)
         }
     }
 

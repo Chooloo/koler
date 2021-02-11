@@ -92,7 +92,6 @@
         <item name="android:scrollbars">none</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
-        <item name="android:clipToPadding">false</item>
     </style>
 
     <!-- list item -->
@@ -102,7 +101,6 @@
         <item name="android:padding">@dimen/list_item_padding</item>
         <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
         <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 

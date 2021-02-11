@@ -36,7 +36,7 @@ class RecentsAdapter(
 
         holder.listItem.run {
             setBigText(contact.name ?: recentCall.callerNumber)
-            setSmallText(if (recentCall.callDate != null) getTimeAgo(recentCall.callDate.getTime()) else null)
+            setSmallText(if (recentCall.callDate != null) getTimeAgo(recentCall.callDate.time) else null)
             setImageDrawable(ContextCompat.getDrawable(context, getCallTypeImage(recentCall.callType)))
             setOnClickListener { _onRecentItemClickListener?.invoke(recentCall) }
             setOnLongClickListener {
