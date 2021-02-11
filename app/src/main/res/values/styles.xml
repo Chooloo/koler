@@ -3,9 +3,8 @@
     <style name="Koler" />
 
     <!-- text -->
-    <style name="Koler.Text">
+    <style name="Koler.Text" parent="android:TextAppearance">
         <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Headline1">
@@ -16,28 +15,23 @@
     <style name="Koler.Text.Headline2">
         <item name="android:textSize">@dimen/headline_2</item>
         <!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Headline3">
         <item name="android:textSize">@dimen/headline_3</item>
-        <item name="android:textColor">@color/soft_black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Koler.Text.Subtitle1">
         <item name="android:textSize">@dimen/subtitle_1</item>
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Subtitle2">
         <item name="android:textSize">@dimen/subtitle_2</item>
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Caption">
         <item name="android:textSize">@dimen/caption_1</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <!-- button -->

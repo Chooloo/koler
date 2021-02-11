@@ -14,41 +14,33 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <!-- tab layout -->
-            <com.chooloo.www.koler.ui.widgets.tablayout.TabLayout
-                android:id="@+id/main_tab_layout"
-                style="@style/Koler.Text.Headline2"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tab_text_contacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                app:layout_scrollFlags="scroll|snap|enterAlways"
-                app:stl_clickable="true"
-                app:stl_defaultTabTextAllCaps="false"
-                app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-                app:stl_defaultTabTextHorizontalPadding="4dp"
-                app:stl_defaultTabTextMinWidth="0dp"
-                app:stl_defaultTabTextSize="@dimen/headline_2"
-                app:stl_dividerThickness="0dp"
-                app:stl_drawDecorationAfterTab="true"
-                app:stl_indicatorAlwaysInCenter="false"
-                app:stl_indicatorColor="@android:color/transparent"
-                app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
-                app:stl_indicatorGravity="center"
-                app:stl_indicatorInFront="true"
-                app:stl_indicatorInterpolation="smart"
-                app:stl_indicatorThickness="@dimen/smart_tab_height"
-                app:stl_indicatorWidth="auto"
-                app:stl_indicatorWithoutPadding="false"
-                app:stl_overlineColor="#4D000000"
-                app:stl_overlineThickness="0dp"
-                app:stl_titleOffset="10dp"
-                app:stl_underlineColor="#4D000000"
-                app:stl_underlineThickness="0dp"
-                app:tabMode="scrollable" />
+                android:layout_marginEnd="10dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/contacts"
+                android:textAppearance="@style/Koler.Text.Headline3" />
 
-            <!-- menu button -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tab_text_recents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/tab_text_contacts"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/recents"
+                android:textAppearance="@style/Koler.Text.Headline3"
+                tools:enabled="false"
+                tools:ignore="RelativeOverlap" />
+
             <ImageView
                 android:id="@+id/main_menu_button"
                 android:layout_width="wrap_content"
@@ -66,8 +58,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+
         tools:layout="@layout/fragment_search_bar" />
 
 </com.google.android.material.appbar.AppBarLayout>

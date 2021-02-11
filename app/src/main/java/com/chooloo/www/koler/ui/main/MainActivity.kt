@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.ActivityMainBinding
@@ -108,7 +109,13 @@ class MainActivity : BaseActivity(), MainMvpView {
         _binding.apply {
             dialpadFabButton.setOnClickListener { _presenter.onDialpadFabClick() }
             appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-            appbarMain.mainTabLayout.setViewPager(_binding.viewPager)
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    appbarMain.tabTextContacts.isEnabled = position == 0
+                    appbarMain.tabTextRecents.isEnabled = position == 1
+                }
+            })
             viewPager.adapter = MainPagerAdapter(this@MainActivity)
         }
     }
