@@ -1,10 +1,10 @@
 package com.chooloo.www.koler.ui.widgets
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -13,21 +13,27 @@ import androidx.annotation.ColorInt
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ListItemBinding
 
-class ListItem(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleRes: Int = 0
-) : LinearLayout(context, attrs, defStyleRes) {
+@SuppressLint("CustomViewStyleable", "Recycle")
+class ListItem : LinearLayout {
+
     private var _binding: ListItemBinding
 
-    init {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
         _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true).apply {
-            root.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-            root.isClickable = false
-            listItemHeaderLayout.isClickable = false
-            listItemHeaderLayout.isFocusable = false
-            listItemPersonLayout.isClickable = true
-            listItemPersonLayout.isFocusable = true
+            root.apply {
+                isClickable = false
+                layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            }
+            listItemHeaderLayout.apply {
+                isClickable = false
+                isFocusable = false
+            }
+            listItemPersonLayout.apply {
+                isClickable = true
+                isFocusable = true
+            }
         }
 
         context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
@@ -36,12 +42,6 @@ class ListItem(
             setImageDrawable(it.getDrawable(R.styleable.Koler_ListItem_src))
             setHeaderText(it.getString(R.styleable.Koler_ListItem_header))
             showHeader(_binding.listItemHeaderText.text != null)
-            it.recycle()
-        }
-
-        TypedValue().also {
-            context.theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
-            setBackgroundResource(it.resourceId)
         }
     }
 

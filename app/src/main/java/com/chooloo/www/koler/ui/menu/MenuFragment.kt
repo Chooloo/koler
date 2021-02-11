@@ -28,17 +28,17 @@ class MenuFragment : BaseBottomSheetDialogFragment(), MenuMvpView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMenuBinding.inflate(layoutInflater)
         return _binding.root
     }
 
     override fun onSetup() {
-        menu = PopupMenu(activity, null).menu
+        menu = PopupMenu(_activity, null).menu
 
-        arguments?.getInt(ARG_MENU_LAYOUT)?.let { activity.menuInflater.inflate(it, menu) }
+        arguments?.getInt(ARG_MENU_LAYOUT)?.let { _activity.menuInflater.inflate(it, menu) }
 
-        adapter = MenuAdapter(activity, menu)
+        adapter = MenuAdapter(_activity, menu)
         adapter.setOnMenuItemClickListener(_onMenuItemClickListener)
 
         _binding.menuRecyclerView.adapter = adapter

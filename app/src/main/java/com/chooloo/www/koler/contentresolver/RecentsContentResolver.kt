@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.contentresolver
 
 import android.Manifest.permission.READ_CALL_LOG
+import android.Manifest.permission.READ_VOICEMAIL
 import android.content.Context
 import android.provider.CallLog
 import com.chooloo.www.koler.entity.Recent
@@ -15,7 +16,7 @@ class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recen
 ) {
 
     companion object {
-        const val REQUIRED_PERMISSION = READ_CALL_LOG
+        val REQUIRED_PERMISSIONS = arrayOf(READ_CALL_LOG, READ_VOICEMAIL)
 
         private const val COLUMN_ID = CallLog.Calls._ID
         private const val COLUMN_NUMBER = CallLog.Calls.NUMBER

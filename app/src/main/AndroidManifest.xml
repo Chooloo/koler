@@ -30,25 +30,27 @@
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
+        <!-- activities -->
+
         <activity
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!-- For receiving intents -->
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="image/*" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
+                <data android:mimeType="image/*" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
             <intent-filter>
@@ -58,8 +60,6 @@
 
                 <data android:mimeType="image/*" />
             </intent-filter>
-
-            <!-- From Google's Dialer App -->
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
 
@@ -69,20 +69,6 @@
                 <data android:mimeType="vnd.android.cursor.item/phone" />
                 <data android:mimeType="vnd.android.cursor.item/person" />
                 <data android:scheme="voicemail" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.DIAL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -118,10 +104,18 @@
             android:name="com.chooloo.www.koler.ui.settings.SettingsActivity"
             android:label="@string/activity_settings"
             android:theme="@style/AppTheme" />
+
         <activity
             android:name="com.chooloo.www.koler.ui.about.AboutActivity"
             android:label="@string/activity_about"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".util.permissions.PermissionsActivity"
+            android:label="@string/activity_permissions"
+            android:theme="@style/AppTheme" />
+
+        <!-- services -->
 
         <service android:name="com.chooloo.www.koler.service.RecordService" />
         <service
@@ -136,9 +130,13 @@
             </intent-filter>
         </service>
 
+        <!-- metadata -->
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <!-- receivers -->
 
         <receiver android:name="com.chooloo.www.koler.notification.NotificationActionReceiver">
             <intent-filter>

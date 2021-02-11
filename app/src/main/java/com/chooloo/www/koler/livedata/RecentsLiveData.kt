@@ -7,7 +7,7 @@ import com.chooloo.www.koler.entity.Recent
 class RecentsLiveData(context: Context) : BaseContentLiveData<RecentsContentResolver, Array<Recent>>(context) {
 
     companion object {
-        val REQUIRED_PERMISSION = RecentsContentResolver.REQUIRED_PERMISSION
+        val REQUIRED_PERMISSIONS = RecentsContentResolver.REQUIRED_PERMISSIONS
     }
 
     override fun onGetContentResolver(): RecentsContentResolver {

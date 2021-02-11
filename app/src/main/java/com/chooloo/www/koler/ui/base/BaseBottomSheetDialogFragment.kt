@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpView {
 
     private lateinit var _binding: FragmentBottomDialogBinding
-    protected lateinit var activity: BaseActivity
+    protected lateinit var _activity: BaseActivity
     var isShown = false
 
     override fun onAttach(context: Context) {
@@ -21,18 +21,18 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        activity = context
-        activity.onAttachFragment(this)
+        _activity = context
+        _activity.onAttachFragment(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBottomDialogBinding.inflate(inflater, container, false)
+        _binding.bottomDialogFragmentCloseButton.setOnClickListener { dismiss() }
         return _binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding.bottomDialogFragmentCloseButton.setOnClickListener { view1: View? -> dismiss() }
         onSetup()
     }
 
@@ -55,7 +55,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     }
 
     override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.filter { p -> activity.hasPermission(p) }.isNotEmpty()
+        return permissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
     }
 
     override fun askForPermission(permission: String, requestCode: Int?) {
@@ -67,19 +67,19 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     }
 
     override fun showMessage(message: String) {
-        activity.showMessage(message)
+        _activity.showMessage(message)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
-        activity.showMessage(stringResId)
+        _activity.showMessage(stringResId)
     }
 
     override fun showError(message: String) {
-        activity.showError(message)
+        _activity.showError(message)
     }
 
     override fun showError(@StringRes stringResId: Int) {
-        activity.showError(getString(stringResId))
+        _activity.showError(getString(stringResId))
     }
 
     protected fun putFragment(fragment: BaseFragment) {

@@ -7,7 +7,7 @@ import com.chooloo.www.koler.entity.Contact
 class ContactsLiveData(context: Context) : BaseContentLiveData<ContactsContentResolver, Array<Contact>>(context) {
 
     companion object {
-        val REQUIRED_PERMISSION = ContactsContentResolver.REQUIRED_PERMISSION
+        val REQUIRED_PERMISSIONS = ContactsContentResolver.REQUIRED_PERMISSIONS
     }
 
     override fun onGetContentResolver(): ContactsContentResolver {

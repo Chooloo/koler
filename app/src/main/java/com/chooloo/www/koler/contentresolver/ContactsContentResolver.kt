@@ -15,7 +15,7 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
 ) {
 
     companion object {
-        val REQUIRED_PERMISSION = READ_CONTACTS
+        val REQUIRED_PERMISSIONS = arrayOf(READ_CONTACTS)
 
         private const val COLUMN_ID = ContactsContract.Contacts._ID
         private const val COLUMN_NAME = ContactsContract.Contacts.DISPLAY_NAME_PRIMARY

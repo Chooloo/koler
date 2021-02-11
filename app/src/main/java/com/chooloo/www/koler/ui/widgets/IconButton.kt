@@ -6,9 +6,11 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.WidgetIconChipBinding
+import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
 
 
 @SuppressLint("Recycle", "CustomViewStyleable")
@@ -35,6 +37,9 @@ class IconButton : ConstraintLayout {
             setIcon(it.getResourceId(R.styleable.Koler_IconButton_icon, NO_ID))
             setIconOnClick(it.getResourceId(R.styleable.Koler_IconButton_activatedIcon, NO_ID))
         }
+
+        background = ContextCompat.getDrawable(context, R.drawable.icon_button_background)
+        foreground = ContextCompat.getDrawable(context, context.getSelectableItemBackgroundDrawable())
 
         setOnClickListener { isActivated = !isActivated }
 

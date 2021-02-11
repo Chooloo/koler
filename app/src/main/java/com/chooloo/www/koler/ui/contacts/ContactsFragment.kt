@@ -43,9 +43,9 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(ContactsLiveData.REQUIRED_PERMISSION, callback = {
+    override fun observe() = runWithPermissions(ContactsLiveData.REQUIRED_PERMISSIONS) {
         _contactsLiveData.observe(viewLifecycleOwner, { contacts -> adapter.updateContacts(contacts) })
-    })
+    }
 
     override fun openContact(contact: Contact) {
         ContactBottomDialogFragment.newInstance(contact).show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
