@@ -9,7 +9,7 @@ import java.util.*
 
 class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recent>>(
         context = context,
-        defaultUri = CallLog.Calls.CONTENT_URI_WITH_VOICEMAIL,
+        defaultUri = CallLog.Calls.CONTENT_URI,
         filterUri = CallLog.Calls.CONTENT_FILTER_URI,
         sortOrder = "$COLUMN_DATE DESC",
         projection = arrayOf(COLUMN_ID, COLUMN_NUMBER, COLUMN_DATE, COLUMN_DURATION, COLUMN_TYPE, COLUMN_CACHED_NAME, COLUMN_PRESENTATION)

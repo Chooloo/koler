@@ -12,8 +12,9 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.setFadeUpAnimation
 
 open class ContactsAdapter(
-        private val context: Context
+        private val context: Context,
 ) : RecyclerView.Adapter<ListItemHolder>() {
+
     private var _contacts: Array<Contact> = arrayOf()
 
     private var _onContactItemClickListener: ((Contact) -> Unit?)? = null
@@ -21,12 +22,9 @@ open class ContactsAdapter(
 
     private val headersCounts: Array<Int>
         get() = arrayOf()
-//        get() = cursor?.extras?.getIntArray(ContactsCursorLoader.EXTRA_INDEX_COUNTS)?.toTypedArray()
-//                ?: arrayOf()
 
     private val headers: Array<String>
         get() = arrayOf()
-//        get() = cursor?.extras?.getStringArray(ContactsCursorLoader.EXTRA_INDEX_TITLES) ?: arrayOf()
 
     override fun getItemCount(): Int {
         return _contacts.size

@@ -14,7 +14,7 @@ import com.chooloo.www.koler.util.lookupContact
 import com.chooloo.www.koler.util.setFadeUpAnimation
 
 class RecentsAdapter(
-        private val context: Context
+        private val context: Context,
 ) : RecyclerView.Adapter<ListItemHolder>() {
 
     private var _recents: Array<Recent> = arrayOf()
@@ -31,7 +31,7 @@ class RecentsAdapter(
     }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
-        val recentCall = _recents.get(position)
+        val recentCall = _recents[position]
         val contact = lookupContact(context, recentCall.callerNumber)
 
         holder.listItem.run {
@@ -60,7 +60,7 @@ class RecentsAdapter(
         _onRecentItemLongClickListener = onRecentItemLongClickListener
     }
 
-    fun getCallTypeImage(@CallType callType: Int): Int {
+    private fun getCallTypeImage(@CallType callType: Int): Int {
         return when (callType) {
             Recent.TYPE_INCOMING -> R.drawable.ic_call_received_black_24dp
             Recent.TYPE_OUTGOING -> R.drawable.ic_call_made_black_24dp

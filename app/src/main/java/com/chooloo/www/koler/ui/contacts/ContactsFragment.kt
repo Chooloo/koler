@@ -33,6 +33,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.attach(this)
 
         _contactsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).contacts
+
         showEmptyPage(false)
         showNoPermissions(false)
         observe()

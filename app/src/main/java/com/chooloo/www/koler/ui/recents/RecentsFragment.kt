@@ -32,6 +32,8 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
         _recentsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).recents
 
+        showEmptyPage(false)
+        showNoPermissions(false)
         observe()
     }
 
