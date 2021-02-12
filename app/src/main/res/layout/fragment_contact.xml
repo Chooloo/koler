@@ -1,106 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="24dp"
-    tools:context=".ui.contact.ContactFragment">
+    android:padding="20dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/contact_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_person_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contact_text_name"
+        app:shapeAppearanceOverlay="@style/Koler.Image.Profile" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contact_text_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:textAppearance="@style/Koler.Text.Headline3"
+        app:layout_constraintBottom_toTopOf="@id/contact_text_number"
+        app:layout_constraintEnd_toStartOf="@id/contact_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Jesus" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contact_text_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Koler.Text.Caption"
+        app:layout_constraintBottom_toTopOf="@id/contact_actions_layout"
+        app:layout_constraintEnd_toEndOf="@id/contact_text_name"
+        app:layout_constraintStart_toStartOf="@id/contact_text_name"
+        app:layout_constraintTop_toBottomOf="@id/contact_text_name"
+        tools:text="01234567" />
+
+    <LinearLayout
+        android:id="@+id/contact_actions_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_text_number">
 
-        <RelativeLayout
-            android:id="@+id/contact_image_layout"
+        <com.chooloo.www.koler.ui.widgets.IconButton
+            android:id="@+id/contact_button_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:gravity="center_horizontal"
+            app:icon="@drawable/ic_call_black_24dp" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/contact_image"
-                style="@style/Koler.Image.Profile.Big"
-                android:layout_margin="10dp"
-                android:src="@drawable/ic_account_circle_black_24dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <ImageView
-                android:id="@+id/contact_favorite_icon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@id/contact_image"
-                android:layout_alignEnd="@id/contact_image"
-                android:layout_marginTop="-10dp"
-                android:layout_marginEnd="-10dp"
-                android:elevation="5dp"
-                android:src="@drawable/ic_star_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/star_yellow" />
-        </RelativeLayout>
-
-        <!-- Contact Name -->
-        <TextView
-            android:id="@+id/contact_text_name"
-            style="@style/Koler.Text.Headline2"
+        <com.chooloo.www.koler.ui.widgets.IconButton
+            android:id="@+id/contact_button_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/contact_image_layout"
-            app:layout_constraintStart_toStartOf="@id/contact_image_layout"
-            app:layout_constraintTop_toBottomOf="@id/contact_image_layout"
-            tools:text="Jesus" />
+            android:gravity="center_horizontal"
+            app:icon="@drawable/ic_edit_black_24dp" />
 
-        <TextView
-            android:id="@+id/contact_text_number"
-            style="@style/Koler.Text.Subtitle1"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.chooloo.www.koler.ui.widgets.IconButton
+            android:id="@+id/contact_button_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="123-20193"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_text_name"
-            tools:text="01234567" />
+            android:gravity="center_horizontal"
+            app:icon="@drawable/ic_delete_black_24dp" />
 
-        <LinearLayout
-            android:id="@+id/contact_actions_layout"
-            android:layout_width="match_parent"
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.chooloo.www.koler.ui.widgets.IconButton
+            android:id="@+id/contact_button_sms"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contact_text_number">
-
-            <com.chooloo.www.koler.ui.widgets.IconButton
-                android:id="@+id/contact_button_call"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:icon="@drawable/ic_call_black_24dp" />
-
-            <com.chooloo.www.koler.ui.widgets.IconButton
-                android:id="@+id/contact_button_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:icon="@drawable/ic_edit_black_24dp" />
-
-            <com.chooloo.www.koler.ui.widgets.IconButton
-                android:id="@+id/contact_button_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:icon="@drawable/ic_delete_black_24dp" />
-
-            <com.chooloo.www.koler.ui.widgets.IconButton
-                android:id="@+id/contact_button_sms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:icon="@drawable/ic_sms_black_24dp" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            android:gravity="center_horizontal"
+            app:icon="@drawable/ic_sms_black_24dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

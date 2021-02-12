@@ -7,7 +7,8 @@ data class Contact(
         var name: String? = null,
         var number: String? = null,
         var photoUri: String? = null,
-        var starred: Boolean = false
+        var starred: Boolean = false,
+        var lookupKey: String? = null,
 ) : Serializable {
 
     companion object {

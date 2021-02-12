@@ -146,7 +146,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     @Override
     public void toggleMute(boolean isMute) {
-        binding.callActionMute.setIcon(isMute ? R.drawable.ic_mic_off_black_24dp : R.drawable.ic_mic_black_24dp);
+//        binding.callActionMutez.setIcon(isMute ? R.drawable.ic_mic_off_black_24dp : R.drawable.ic_mic_black_24dp);
         mAudioManager.setMicrophoneMute(isMute);
     }
 

@@ -13,8 +13,11 @@
     <dimen name="icon_size_small">50dp</dimen>
     <dimen name="icon_size_big">70dp</dimen>
 
-    <!-- call -->
-    <dimen name="icon_chip_padding">10dp</dimen>
+    <!-- icon button -->
+    <dimen name="icon_button_size_small">30dp</dimen>
+    <dimen name="icon_button_size_normal">50dp</dimen>
+    <dimen name="icon_button_size_big">70dp</dimen>
+    <dimen name="icon_button_padding">10dp</dimen>
 
     <!-- smart tab layout -->
     <dimen name="smart_tab_height">40dp</dimen>

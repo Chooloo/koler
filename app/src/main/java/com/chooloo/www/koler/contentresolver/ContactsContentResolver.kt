@@ -4,6 +4,7 @@ import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.Contacts
 import com.chooloo.www.koler.entity.Contact
 
@@ -21,16 +22,18 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
             Contacts._ID,
             Contacts.DISPLAY_NAME_PRIMARY,
             Contacts.PHOTO_THUMBNAIL_URI,
-            Contacts.STARRED
+            Contacts.STARRED,
+            Contacts.LOOKUP_KEY
     )
 
     override fun convertCursorToContent(cursor: Cursor?) = ArrayList<Contact>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {
             add(Contact(
                     contactId = getLong(getColumnIndex(Contacts._ID)),
-                    name = getString(getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
+                    number = getString(getColumnIndex(Phone.NUMBER)),
                     photoUri = getString(getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI)),
-                    starred = "1" == getString(getColumnIndex(Contacts.STARRED))
+                    starred = "1" == getString(getColumnIndex(Contacts.STARRED)),
+                    lookupKey = getString(getColumnIndex(Contacts.LOOKUP_KEY))
             ))
         }
         cursor?.close()

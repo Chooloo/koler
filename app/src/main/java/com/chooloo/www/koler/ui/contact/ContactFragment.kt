@@ -4,7 +4,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.Toast
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.service.CallManager.call
@@ -50,12 +52,12 @@ class ContactFragment : BaseFragment(), ContactMvpView {
         _binding.apply {
             contactTextName.text = _contact.name
             contactTextNumber.text = _contact.number
-            contactFavoriteIcon.visibility = if (_contact.starred) View.VISIBLE else View.GONE
             if (_contact.photoUri != null) {
                 contactImage.setImageURI(Uri.parse(_contact.photoUri))
+            } else {
+                contactImage.visibility = GONE
             }
 
-            // click listeners
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
@@ -90,6 +92,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
             animateViews(arrayOf(
                     contactImage,
                     contactTextName,
+                    contactTextNumber,
                     contactActionsLayout
             ), 130, true)
         }
