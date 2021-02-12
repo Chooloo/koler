@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.Toast
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.service.CallManager.call
@@ -51,7 +50,13 @@ class ContactFragment : BaseFragment(), ContactMvpView {
 
         _binding.apply {
             contactTextName.text = _contact.name
-            contactTextNumber.text = _contact.number
+            
+            if (_contact.number != null) {
+                contactTextNumber.text = _contact.number
+            } else {
+                contactTextNumber.visibility = GONE
+            }
+
             if (_contact.photoUri != null) {
                 contactImage.setImageURI(Uri.parse(_contact.photoUri))
             } else {
@@ -90,7 +95,6 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     override fun animateLayout() {
         _binding.apply {
             animateViews(arrayOf(
-                    contactImage,
                     contactTextName,
                     contactTextNumber,
                     contactActionsLayout

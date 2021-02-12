@@ -4,7 +4,6 @@ import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
-import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.Contacts
 import com.chooloo.www.koler.entity.Contact
 
@@ -30,7 +29,7 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
         while (cursor != null && cursor.moveToNext()) cursor.apply {
             add(Contact(
                     contactId = getLong(getColumnIndex(Contacts._ID)),
-                    number = getString(getColumnIndex(Phone.NUMBER)),
+                    name = getString(getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
                     photoUri = getString(getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI)),
                     starred = "1" == getString(getColumnIndex(Contacts.STARRED)),
                     lookupKey = getString(getColumnIndex(Contacts.LOOKUP_KEY))
