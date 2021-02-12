@@ -11,6 +11,7 @@ data class Recent(
         val callId: Long? = null,
         val callDuration: String? = null,
         val callDate: Date? = null,
+        val cachedName: String? = null,
 ) : Serializable {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)

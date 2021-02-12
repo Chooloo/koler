@@ -5,54 +5,58 @@ import android.content.Context
 import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
+import android.widget.Toast
 
-open class BaseContentResolver<T>(
+abstract class BaseContentResolver<T>(
         private val context: Context,
-        var defaultUri: Uri,
-        var filterUri: Uri? = null,
-        var projection: Array<String>? = null,
-        var selection: String? = null,
-        var selectionArgs: Array<String>? = null,
-        var sortOrder: String? = null
 ) : ContentResolver(context) {
-
-    private var _uri: Uri
+    private var _currentUri: Uri
     private var _observer: ContentObserver
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
 
+    val content: T
+        get() = convertCursorToContent(queryContent())
+
+    open val requiredPermissions: Array<String>
+        get() = arrayOf()
+
     init {
-        _uri = defaultUri
+        _currentUri = onGetDefaultUri()
         _observer = object : ContentObserver(null) {
             override fun onChange(selfChange: Boolean) {
-                _onContentChangedListener?.invoke(getContent())
+                _onContentChangedListener?.invoke(content)
             }
         }
     }
 
     fun queryContent(): Cursor? {
         return context.contentResolver.query(
-                defaultUri,
-                projection,
-                selection,
-                selectionArgs,
-                sortOrder
+                _currentUri,
+                onGetProjection(),
+                onGetSelection(),
+                onGetSelectionArgs(),
+                onGetSortOrder()
         )
     }
 
     fun reset() {
-        _uri = defaultUri
+        _currentUri = onGetDefaultUri()
     }
 
     fun filter(filterString: String) {
-        if (filterUri != null) {
-            _uri = Uri.withAppendedPath(filterUri, filterString).buildUpon().build()
-        } else {
-            TODO("filter uri not given")
+        onGetFilterUri().also {
+            if (it != null) {
+                _currentUri = Uri.withAppendedPath(it, filterString).buildUpon().build()
+                detach()
+                observe()
+            } else {
+                Toast.makeText(context, "Cannot filter this type of content", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     fun observe() {
-        registerContentObserver(defaultUri, true, _observer)
+        registerContentObserver(_currentUri, true, _observer)
     }
 
     fun detach() {
@@ -63,5 +67,11 @@ open class BaseContentResolver<T>(
         _onContentChangedListener = onContentChangedListener
     }
 
-    open fun getContent(): T? = null
+    abstract fun onGetDefaultUri(): Uri
+    abstract fun onGetFilterUri(): Uri?
+    abstract fun onGetSelection(): String?
+    abstract fun onGetSortOrder(): String?
+    abstract fun onGetSelectionArgs(): Array<String>?
+    abstract fun onGetProjection(): Array<String>?
+    abstract fun convertCursorToContent(cursor: Cursor?): T
 }

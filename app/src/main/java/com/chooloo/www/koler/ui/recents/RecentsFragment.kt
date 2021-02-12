@@ -1,17 +1,14 @@
 package com.chooloo.www.koler.ui.recents
 
-import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.entity.Recent
-import com.chooloo.www.koler.livedata.RecentsLiveData
+import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.runWithPermissions
-import com.chooloo.www.koler.viewmodel.data.DataViewModel
-import com.chooloo.www.koler.viewmodel.data.DataViewModelFactory
 
 class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     private lateinit var _presenter: RecentsPresenter<RecentsMvpView>
-    private lateinit var _recentsLiveData: RecentsLiveData
+    private lateinit var _recentsLiveData: RecentsProviderLiveData
 
     companion object {
         fun newInstance(): RecentsFragment = RecentsFragment()
@@ -30,7 +27,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter = RecentsPresenter()
         _presenter.attach(this)
 
-        _recentsLiveData = ViewModelProvider(this, DataViewModelFactory(_activity)).get(DataViewModel::class.java).recents
+        _recentsLiveData = RecentsProviderLiveData(_activity)
 
         showEmptyPage(false)
         showNoPermissions(false)
@@ -42,7 +39,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(RecentsLiveData.REQUIRED_PERMISSIONS) {
+    override fun observe() = runWithPermissions(RecentsProviderLiveData.REQUIRED_PERMISSIONS) {
         _recentsLiveData.observe(viewLifecycleOwner, { recents -> adapter.updateRecents(recents) })
     }
 

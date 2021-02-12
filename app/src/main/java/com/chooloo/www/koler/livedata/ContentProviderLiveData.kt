@@ -2,9 +2,12 @@ package com.chooloo.www.koler.livedata
 
 import android.content.Context
 import android.os.Handler
+import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
 
-abstract class BaseContentLiveData<C : BaseContentResolver<T>, T : Any>(context: Context) : BaseLiveData<T>(context) {
+abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
+        protected val context: Context,
+) : LiveData<T>() {
     private var contentResolver: C
 
     init {
@@ -21,7 +24,7 @@ abstract class BaseContentLiveData<C : BaseContentResolver<T>, T : Any>(context:
         contentResolver.detach()
     }
 
-    override fun updateData() {
+    fun updateData() {
         Handler(context.mainLooper).post {
             value = contentResolver.getContent()
         }
@@ -34,6 +37,8 @@ abstract class BaseContentLiveData<C : BaseContentResolver<T>, T : Any>(context:
     fun resetFilter() {
         contentResolver.reset()
     }
+
+    fun getRequiredPermissions(): Array<String> = contentResolver.getRequiredPermissions()
 
     abstract fun onGetContentResolver(): C
 }

@@ -3,43 +3,42 @@ package com.chooloo.www.koler.contentresolver
 import android.Manifest.permission.READ_CALL_LOG
 import android.Manifest.permission.READ_VOICEMAIL
 import android.content.Context
+import android.database.Cursor
 import android.provider.CallLog
 import com.chooloo.www.koler.entity.Recent
 import java.util.*
 
-class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recent>>(
-        context = context,
-        defaultUri = CallLog.Calls.CONTENT_URI,
-        filterUri = CallLog.Calls.CONTENT_FILTER_URI,
-        sortOrder = "$COLUMN_DATE DESC",
-        projection = arrayOf(COLUMN_ID, COLUMN_NUMBER, COLUMN_DATE, COLUMN_DURATION, COLUMN_TYPE, COLUMN_CACHED_NAME, COLUMN_PRESENTATION)
-) {
+class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recent>>(context) {
 
-    companion object {
-        val REQUIRED_PERMISSIONS = arrayOf(READ_CALL_LOG, READ_VOICEMAIL)
+    override val requiredPermissions: Array<String>
+        get() = arrayOf(READ_CALL_LOG, READ_VOICEMAIL)
 
-        private const val COLUMN_ID = CallLog.Calls._ID
-        private const val COLUMN_NUMBER = CallLog.Calls.NUMBER
-        private const val COLUMN_PRESENTATION = CallLog.Calls.NUMBER_PRESENTATION
-        private const val COLUMN_DATE = CallLog.Calls.DATE
-        private const val COLUMN_DURATION = CallLog.Calls.DURATION
-        private const val COLUMN_TYPE = CallLog.Calls.TYPE
-        private const val COLUMN_CACHED_NAME = CallLog.Calls.CACHED_NAME
-    }
+    override fun onGetDefaultUri() = CallLog.Calls.CONTENT_URI
+    override fun onGetFilterUri() = CallLog.Calls.CONTENT_FILTER_URI
+    override fun onGetSelection() = "${CallLog.Calls.DATE} DESC"
+    override fun onGetSortOrder() = null
+    override fun onGetSelectionArgs() = null
+    override fun onGetProjection() = arrayOf(
+            CallLog.Calls._ID,
+            CallLog.Calls.NUMBER,
+            CallLog.Calls.NUMBER_PRESENTATION,
+            CallLog.Calls.DATE,
+            CallLog.Calls.DURATION,
+            CallLog.Calls.CACHED_NAME,
+            CallLog.Calls.TYPE
+    )
 
-    override fun getContent(): Array<Recent> {
-        return ArrayList<Recent>().apply {
-            val cursor = queryContent()
-            while (cursor != null && cursor.moveToNext()) {
-                add(Recent(
-                        callId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID)),
-                        callerNumber = cursor.getString(cursor.getColumnIndex(COLUMN_NUMBER)),
-                        callDuration = cursor.getString(cursor.getColumnIndex(COLUMN_DURATION)),
-                        callDate = Date(cursor.getLong(cursor.getColumnIndex(COLUMN_DATE))),
-                        callType = cursor.getInt(cursor.getColumnIndex(COLUMN_TYPE))
-                ))
-            }
-            cursor?.close()
-        }.toTypedArray()
-    }
+    override fun convertCursorToContent(cursor: Cursor?) = ArrayList<Recent>().apply {
+        while (cursor != null && cursor.moveToNext()) cursor.apply {
+            add(Recent(
+                    callId = getLong(getColumnIndex(CallLog.Calls._ID)),
+                    callerNumber = getString(getColumnIndex(CallLog.Calls.NUMBER)),
+                    callDuration = getString(getColumnIndex(CallLog.Calls.DURATION)),
+                    callDate = Date(getLong(getColumnIndex(CallLog.Calls.DATE))),
+                    callType = getInt(getColumnIndex(CallLog.Calls.TYPE)),
+                    cachedName = getString(getColumnIndex(CallLog.Calls.CACHED_NAME))
+            ))
+        }
+        cursor?.close()
+    }.toTypedArray()
 }
