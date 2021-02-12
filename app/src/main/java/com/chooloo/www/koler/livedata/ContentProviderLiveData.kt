@@ -8,37 +8,38 @@ import com.chooloo.www.koler.contentresolver.BaseContentResolver
 abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
         protected val context: Context,
 ) : LiveData<T>() {
-    private var contentResolver: C
+    private var _contentResolver: C
+
+    val requiredPermissions: Array<String>
+        get() = _contentResolver.requiredPermissions
 
     init {
-        contentResolver = onGetContentResolver()
+        _contentResolver = onGetContentResolver()
     }
 
     override fun onActive() {
-        contentResolver.observe()
-        contentResolver.setOnContentChangedListener { updateData() }
+        _contentResolver.observe()
+        _contentResolver.setOnContentChangedListener { updateData() }
         updateData()
     }
 
     override fun onInactive() {
-        contentResolver.detach()
+        _contentResolver.detach()
     }
 
     fun updateData() {
         Handler(context.mainLooper).post {
-            value = contentResolver.getContent()
+            value = _contentResolver.content
         }
     }
 
     fun filter(filterString: String) {
-        contentResolver.filter(filterString)
+        _contentResolver.filter(filterString)
     }
 
     fun resetFilter() {
-        contentResolver.reset()
+        _contentResolver.reset()
     }
-
-    fun getRequiredPermissions(): Array<String> = contentResolver.getRequiredPermissions()
 
     abstract fun onGetContentResolver(): C
 }

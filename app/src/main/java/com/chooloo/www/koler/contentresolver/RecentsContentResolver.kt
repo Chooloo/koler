@@ -15,8 +15,8 @@ class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recen
 
     override fun onGetDefaultUri() = CallLog.Calls.CONTENT_URI
     override fun onGetFilterUri() = CallLog.Calls.CONTENT_FILTER_URI
-    override fun onGetSelection() = "${CallLog.Calls.DATE} DESC"
-    override fun onGetSortOrder() = null
+    override fun onGetSelection() = null
+    override fun onGetSortOrder() = "${CallLog.Calls.DATE} DESC"
     override fun onGetSelectionArgs() = null
     override fun onGetProjection() = arrayOf(
             CallLog.Calls._ID,

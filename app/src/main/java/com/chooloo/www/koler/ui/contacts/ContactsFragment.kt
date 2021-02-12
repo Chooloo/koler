@@ -41,7 +41,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(ContactsProviderLiveData.REQUIRED_PERMISSIONS) {
+    override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions) {
         _contactsLiveData.observe(viewLifecycleOwner, { contacts -> adapter.updateContacts(contacts) })
     }
 
