@@ -3,6 +3,7 @@ package com.chooloo.www.koler.contentresolver
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import com.chooloo.www.koler.entity.Contact
@@ -12,11 +13,18 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
     override val requiredPermissions: Array<String>
         get() = arrayOf(READ_CONTACTS)
 
-    override fun onGetDefaultUri() = Contacts.CONTENT_URI.buildUpon().appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true").build()
-    override fun onGetFilterUri() = Contacts.CONTENT_FILTER_URI
-    override fun onGetSelection() = "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL"
-    override fun onGetSortOrder() = "${Contacts.SORT_KEY_PRIMARY} ASC"
-    override fun onGetSelectionArgs() = null
+    override fun onGetUri(): Uri {
+        return Contacts.CONTENT_URI.buildUpon().appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true").build()
+    }
+
+    override fun onGetSelection(): String {
+        return "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL"
+    }
+
+    override fun onGetSortOrder(): String {
+        return "${Contacts.SORT_KEY_PRIMARY} ASC"
+    }
+
     override fun onGetProjection() = arrayOf(
             Contacts._ID,
             Contacts.DISPLAY_NAME_PRIMARY,

@@ -4,6 +4,7 @@ import android.Manifest.permission.READ_CALL_LOG
 import android.Manifest.permission.READ_VOICEMAIL
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.provider.CallLog
 import com.chooloo.www.koler.entity.Recent
 import java.util.*
@@ -13,11 +14,14 @@ class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recen
     override val requiredPermissions: Array<String>
         get() = arrayOf(READ_CALL_LOG, READ_VOICEMAIL)
 
-    override fun onGetDefaultUri() = CallLog.Calls.CONTENT_URI
-    override fun onGetFilterUri() = CallLog.Calls.CONTENT_FILTER_URI
-    override fun onGetSelection() = null
-    override fun onGetSortOrder() = "${CallLog.Calls.DATE} DESC"
-    override fun onGetSelectionArgs() = null
+    override fun onGetUri(): Uri {
+        return CallLog.Calls.CONTENT_URI
+    }
+
+    override fun onGetSortOrder(): String {
+        return "${CallLog.Calls.DATE} DESC"
+    }
+
     override fun onGetProjection() = arrayOf(
             CallLog.Calls._ID,
             CallLog.Calls.NUMBER,

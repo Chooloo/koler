@@ -5,12 +5,10 @@ import android.content.Context
 import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
-import android.widget.Toast
 
 abstract class BaseContentResolver<T>(
         private val context: Context,
 ) : ContentResolver(context) {
-    private var _currentUri: Uri
     private var _observer: ContentObserver
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
 
@@ -21,7 +19,6 @@ abstract class BaseContentResolver<T>(
         get() = arrayOf()
 
     init {
-        _currentUri = onGetDefaultUri()
         _observer = object : ContentObserver(null) {
             override fun onChange(selfChange: Boolean) {
                 _onContentChangedListener?.invoke(content)
@@ -29,34 +26,16 @@ abstract class BaseContentResolver<T>(
         }
     }
 
-    fun queryContent(): Cursor? {
-        return context.contentResolver.query(
-                _currentUri,
-                onGetProjection(),
-                onGetSelection(),
-                onGetSelectionArgs(),
-                onGetSortOrder()
-        )
-    }
-
-    fun reset() {
-        _currentUri = onGetDefaultUri()
-    }
-
-    fun filter(filterString: String) {
-        onGetFilterUri().also {
-            if (it != null) {
-                _currentUri = Uri.withAppendedPath(it, filterString).buildUpon().build()
-                detach()
-                observe()
-            } else {
-                Toast.makeText(context, "Cannot filter this type of content", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+    private fun queryContent() = context.contentResolver.query(
+            onGetUri(),
+            onGetProjection(),
+            onGetSelection(),
+            onGetSelectionArgs(),
+            onGetSortOrder()
+    )
 
     fun observe() {
-        registerContentObserver(_currentUri, true, _observer)
+        registerContentObserver(onGetUri(), true, _observer)
     }
 
     fun detach() {
@@ -67,11 +46,11 @@ abstract class BaseContentResolver<T>(
         _onContentChangedListener = onContentChangedListener
     }
 
-    abstract fun onGetDefaultUri(): Uri
-    abstract fun onGetFilterUri(): Uri?
-    abstract fun onGetSelection(): String?
-    abstract fun onGetSortOrder(): String?
-    abstract fun onGetSelectionArgs(): Array<String>?
+    open fun onGetSelection(): String? = null
+    open fun onGetSortOrder(): String? = null
+    open fun onGetSelectionArgs(): Array<String>? = null
+
+    abstract fun onGetUri(): Uri
     abstract fun onGetProjection(): Array<String>?
     abstract fun convertCursorToContent(cursor: Cursor?): T
 }

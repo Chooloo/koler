@@ -10,6 +10,8 @@
         android:id="@+id/contact_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+        android:visibility="gone"
         android:src="@drawable/ic_person_black_24dp"
         app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
         app:layout_constraintDimensionRatio="1:1"
@@ -37,9 +39,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Koler.Text.Caption"
         app:layout_constraintBottom_toTopOf="@id/contact_actions_layout"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/contact_text_name"
         app:layout_constraintStart_toStartOf="@id/contact_text_name"
         app:layout_constraintTop_toBottomOf="@id/contact_text_name"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="01234567" />
 
     <LinearLayout

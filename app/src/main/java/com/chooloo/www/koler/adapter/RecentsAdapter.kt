@@ -32,7 +32,7 @@ class RecentsAdapter(
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val recentCall = _recents[position]
-        val contact = lookupContact(context, recentCall.callerNumber)
+        val contact = context.lookupContact(recentCall.callerNumber)
 
         holder.listItem.run {
             setBigText(contact.name ?: recentCall.callerNumber)

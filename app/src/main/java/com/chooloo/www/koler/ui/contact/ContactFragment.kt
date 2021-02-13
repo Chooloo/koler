@@ -4,13 +4,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.entity.Contact
-import com.chooloo.www.koler.service.CallManager.call
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.animateViews
+import com.chooloo.www.koler.util.getContactbyId
 
 class ContactFragment : BaseFragment(), ContactMvpView {
 
@@ -19,13 +19,12 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     private lateinit var _binding: FragmentContactBinding
 
     companion object {
-        const val CONTACT_ARG = "contact"
+        const val ARG_CONTACT_ID = "contact_id"
 
-        @JvmStatic
-        fun newInstance(contact: Contact): ContactFragment {
+        fun newInstance(contactId: Long): ContactFragment {
             return ContactFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(CONTACT_ARG, contact)
+                    putLong(ARG_CONTACT_ID, contactId)
                 }
             }
         }
@@ -45,22 +44,19 @@ class ContactFragment : BaseFragment(), ContactMvpView {
         _presenter = ContactPresenter()
         _presenter.attach(this)
 
-        // contact details
-        _contact = argsSafely.getSerializable(CONTACT_ARG) as Contact
+        _contact = _activity.getContactbyId(argsSafely.getLong(ARG_CONTACT_ID))
 
         _binding.apply {
             contactTextName.text = _contact.name
-            
-            if (_contact.number != null) {
-                contactTextNumber.text = _contact.number
-            } else {
-                contactTextNumber.visibility = GONE
+
+            _contact.number?.let {
+                contactTextNumber.text = it
+                contactTextNumber.visibility = VISIBLE
             }
 
-            if (_contact.photoUri != null) {
-                contactImage.setImageURI(Uri.parse(_contact.photoUri))
-            } else {
-                contactImage.visibility = GONE
+            _contact.photoUri?.let {
+                contactImage.setImageURI(Uri.parse(it))
+                contactImage.visibility = VISIBLE
             }
 
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
@@ -73,23 +69,23 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     }
 
     override fun call() {
-        call(_activity, _contact.number)
+//        call(_activity, _contact.number)
     }
 
     override fun sms() {
-        smsContact(_activity, _contact)
+//        smsContact(_activity, _contact)
     }
 
     override fun edit() {
-        editContact(_activity, _contact)
+//        editContact(_activity, _contact)
     }
 
     override fun open() {
-        openContact(_activity, _contact)
+//        openContact(_activity, _contact)
     }
 
     override fun delete() {
-        deleteContact(_activity, _contact)
+//        deleteContact(_activity, _contact)
     }
 
     override fun animateLayout() {
@@ -98,7 +94,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
                     contactTextName,
                     contactTextNumber,
                     contactActionsLayout
-            ), 130, true)
+            ), 100, true)
         }
     }
 }

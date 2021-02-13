@@ -33,13 +33,5 @@ abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
         }
     }
 
-    fun filter(filterString: String) {
-        _contentResolver.filter(filterString)
-    }
-
-    fun resetFilter() {
-        _contentResolver.reset()
-    }
-
     abstract fun onGetContentResolver(): C
 }

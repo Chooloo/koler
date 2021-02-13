@@ -82,7 +82,7 @@ object CallManager {
             if (number.contains("voicemail")) {
                 Contact.VOICEMAIL
             } else {
-                lookupContact(context, number)
+                context.lookupContact(number)
             }
         } catch (e: Exception) {
             Contact.UNKNOWN

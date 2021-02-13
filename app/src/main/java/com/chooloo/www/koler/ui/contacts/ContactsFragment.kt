@@ -46,6 +46,6 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }
 
     override fun openContact(contact: Contact) {
-        ContactBottomDialogFragment.newInstance(contact).show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
+        ContactBottomDialogFragment.newInstance(contact.contactId).show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
     }
 }

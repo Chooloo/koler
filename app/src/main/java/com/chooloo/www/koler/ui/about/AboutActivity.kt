@@ -32,12 +32,12 @@ class AboutActivity : BaseActivity(), AboutMvpView {
 
         _binding.apply {
             cardGeneral.aboutVersion.setSmallText("" + BuildConfig.VERSION_NAME)
-            cardGeneral.aboutChangelog.setOnClickListener { view: View? -> _presenter.onChangelogClick() }
-            cardGeneral.aboutSource.setOnClickListener { view: View? -> _presenter.onOpenSourceClick() }
-            cardDeveloper.aboutEmail.setOnClickListener { view: View? -> _presenter.onSendEmailClick() }
-            cardSupport.aboutBugs.setOnClickListener { view: View? -> _presenter.onReportBugClick() }
-            cardSupport.aboutRate.setOnClickListener { view: View? -> _presenter.onRateAppClick() }
-            cardSupport.aboutDonate.setOnClickListener { view: View? -> _presenter.onDonateClick() }
+            cardGeneral.aboutChangelog.setOnClickListener { _presenter.onChangelogClick() }
+            cardGeneral.aboutSource.setOnClickListener { _presenter.onOpenSourceClick() }
+            cardDeveloper.aboutEmail.setOnClickListener { _presenter.onSendEmailClick() }
+            cardSupport.aboutBugs.setOnClickListener { _presenter.onReportBugClick() }
+            cardSupport.aboutRate.setOnClickListener { _presenter.onRateAppClick() }
+            cardSupport.aboutDonate.setOnClickListener { _presenter.onDonateClick() }
         }
     }
 

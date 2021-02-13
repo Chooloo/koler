@@ -8,14 +8,23 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
 import android.telephony.PhoneNumberUtils
-import com.chooloo.www.koler.cursorloader.ContactLookupCursorLoader
+import com.chooloo.www.koler.contentresolver.PhoneContentResolver
+import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.ui.base.BaseActivity
 
 const val PERMISSION_RC_WRITE_CONTACTS = 1
 
-fun lookupContact(context: Context, phoneNumber: String): Contact {
-    return ContactLookupCursorLoader.lookupContact(context, phoneNumber)
+fun Context.getContactbyId(contactId: Long): Contact {
+    PhoneContentResolver(this, contactId).content.also {
+        return if (it.isNotEmpty()) it[0] else Contact.UNKNOWN
+    }
+}
+
+fun Context.lookupContact(number: String): Contact {
+    PhoneLookupContentResolver(this, number).content.also {
+        return if (it.isNotEmpty()) it[0] else Contact.UNKNOWN
+    }
 }
 
 fun openContact(activity: BaseActivity, contact: Contact) {

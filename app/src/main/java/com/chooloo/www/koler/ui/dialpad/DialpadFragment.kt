@@ -148,7 +148,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
     }
 
     override fun addContact() {
-        addContact(_activity, lookupContact(_activity, _binding.dialpadEditText.numbers))
+        addContact(_activity, _activity.lookupContact(_binding.dialpadEditText.numbers))
     }
 
     override fun vibrate() {
