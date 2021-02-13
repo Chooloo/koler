@@ -92,8 +92,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
         _binding.apply {
             animateViews(arrayOf(
                     contactTextName,
-                    contactTextNumber,
-                    contactActionsLayout
+                    contactTextNumber
             ), 100, true)
         }
     }

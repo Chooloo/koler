@@ -28,7 +28,6 @@
         android:layout_marginStart="3dp"
         android:textAppearance="@style/Koler.Text.Caption"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/contact_actions_layout"
         app:layout_constraintEnd_toEndOf="@id/contact_text_name"
         app:layout_constraintStart_toStartOf="@id/contact_text_name"
         app:layout_constraintTop_toBottomOf="@id/contact_text_name"
@@ -50,57 +49,46 @@
         app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
         tools:visibility="visible" />
 
-    <LinearLayout
-        android:id="@+id/contact_actions_layout"
-        android:layout_width="match_parent"
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_call"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
+        app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_number">
+        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
-        <com.chooloo.www.koler.ui.widgets.IconButton
-            android:id="@+id/contact_button_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            app:icon="@drawable/ic_call_black_24dp" />
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        app:icon="@drawable/ic_edit_black_24dp"
+        app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
+        app:layout_constraintStart_toEndOf="@id/contact_button_call"
+        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        app:icon="@drawable/ic_delete_black_24dp"
+        app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
+        app:layout_constraintStart_toEndOf="@id/contact_button_edit"
+        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
-        <com.chooloo.www.koler.ui.widgets.IconButton
-            android:id="@+id/contact_button_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            app:icon="@drawable/ic_edit_black_24dp" />
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        app:icon="@drawable/ic_sms_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.chooloo.www.koler.ui.widgets.IconButton
-            android:id="@+id/contact_button_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            app:icon="@drawable/ic_delete_black_24dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.chooloo.www.koler.ui.widgets.IconButton
-            android:id="@+id/contact_button_sms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            app:icon="@drawable/ic_sms_black_24dp" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
