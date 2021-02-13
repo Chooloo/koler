@@ -11,8 +11,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentDialpadBinding
-import com.chooloo.www.koler.service.CallManager.call
-import com.chooloo.www.koler.service.CallManager.callVoicemail
+import com.chooloo.www.koler.util.call.CallManager.call
+import com.chooloo.www.koler.util.call.CallManager.callVoicemail
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
 import com.chooloo.www.koler.util.*

@@ -19,7 +19,7 @@ import androidx.transition.TransitionManager;
 import com.chooloo.www.koler.R;
 import com.chooloo.www.koler.databinding.ActivityCallBinding;
 import com.chooloo.www.koler.entity.Contact;
-import com.chooloo.www.koler.service.CallManager;
+import com.chooloo.www.koler.util.call.CallManager;
 import com.chooloo.www.koler.ui.base.BaseActivity;
 import com.chooloo.www.koler.ui.dialpad.DialpadBottomDialogFragment;
 

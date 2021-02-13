@@ -25,7 +25,7 @@ fun Activity.requestDefaultDialer() {
     val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).apply {
         putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, this@requestDefaultDialer.packageName)
     }
-    this.startActivityForResult(intent, RC_DEFAULT_DIALER)
+    startActivityForResult(intent, RC_DEFAULT_DIALER)
 }
 
 // general permissions

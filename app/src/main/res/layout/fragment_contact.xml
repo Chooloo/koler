@@ -6,25 +6,13 @@
     android:layout_height="wrap_content"
     android:padding="20dp">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/contact_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="5dp"
-        android:visibility="gone"
-        android:src="@drawable/ic_person_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/contact_text_name"
-        app:shapeAppearanceOverlay="@style/Koler.Image.Profile" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="15dp"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/Koler.Text.Headline3"
         app:layout_constraintBottom_toTopOf="@id/contact_text_number"
         app:layout_constraintEnd_toStartOf="@id/contact_image"
@@ -37,20 +25,36 @@
         android:id="@+id/contact_text_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:textAppearance="@style/Koler.Text.Caption"
-        app:layout_constraintBottom_toTopOf="@id/contact_actions_layout"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/contact_actions_layout"
         app:layout_constraintEnd_toEndOf="@id/contact_text_name"
         app:layout_constraintStart_toStartOf="@id/contact_text_name"
         app:layout_constraintTop_toBottomOf="@id/contact_text_name"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="01234567" />
+        tools:text="01234567"
+        tools:visibility="visible" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/contact_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_person_black_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contact_text_name"
+        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/contact_actions_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

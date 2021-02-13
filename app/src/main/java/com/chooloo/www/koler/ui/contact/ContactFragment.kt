@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.util.animateViews
-import com.chooloo.www.koler.util.getContactbyId
+import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.call.call
 
 class ContactFragment : BaseFragment(), ContactMvpView {
 
@@ -69,23 +69,23 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     }
 
     override fun call() {
-//        call(_activity, _contact.number)
+        _contact.number?.let { _activity.call(it) }
     }
 
     override fun sms() {
-//        smsContact(_activity, _contact)
+        _activity.smsContact(_contact)
     }
 
     override fun edit() {
-//        editContact(_activity, _contact)
+        _activity.editContact(_contact)
     }
 
     override fun open() {
-//        openContact(_activity, _contact)
+        _activity.openContact(_contact)
     }
 
     override fun delete() {
-//        deleteContact(_activity, _contact)
+        _activity.deleteContact(_contact)
     }
 
     override fun animateLayout() {

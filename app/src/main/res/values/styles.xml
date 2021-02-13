@@ -32,6 +32,7 @@
 
     <style name="Koler.Text.Caption">
         <item name="android:textSize">@dimen/caption_1</item>
+        <item name="android:textColor">?android:textColorHint</item>
     </style>
 
     <!-- button -->

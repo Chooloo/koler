@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.service
+package com.chooloo.www.koler.util.call
 
 import android.content.Context
 import android.content.Intent
@@ -51,28 +51,6 @@ object CallManager {
     @JvmStatic
     fun unregisterCallback(callback: Call.Callback?) {
         sCall?.unregisterCallback(callback)
-    }
-
-    @JvmStatic
-    fun call(activity: BaseActivity, number: String?) {
-        if (activity.isDefaultDialer()) {
-            val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Uri.encode(number)))
-            activity.startActivity(callIntent)
-        } else {
-            activity.requestDefaultDialer()
-            activity.showError("Set Koler as your default dialer to make calls")
-        }
-    }
-
-    @JvmStatic
-    fun callVoicemail(context: Context) {
-        try {
-            val intent = Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1"))
-            context.startActivity(intent)
-        } catch (e: SecurityException) {
-            Toast.makeText(context, "Couldn't start Voicemail", Toast.LENGTH_LONG).show()
-            Timber.e(e)
-        }
     }
 
     @JvmStatic

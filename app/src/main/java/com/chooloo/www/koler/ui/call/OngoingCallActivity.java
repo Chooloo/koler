@@ -17,7 +17,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.chooloo.www.koler.R;
 import com.chooloo.www.koler.entity.Contact;
 import com.chooloo.www.koler.notification.NotificationActionReceiver;
-import com.chooloo.www.koler.service.CallManager;
+import com.chooloo.www.koler.util.call.CallManager;
 import com.chooloo.www.koler.ui.base.BaseActivity;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
