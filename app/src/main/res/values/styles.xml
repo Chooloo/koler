@@ -208,19 +208,20 @@
     <style name="Koler.SearchBar" />
 
     <style name="Koler.SearchBar.Layout">
-        <item name="android:background">@drawable/search_bar_background_selector</item>
+<!--        <item name="android:background">@drawable/search_bar_background_selector</item>-->
+        <item name="android:background">@drawable/bubble_background</item>
     </style>
 
     <style name="Koler.SearchBar.EditText">
         <item name="android:drawablePadding">10dp</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:drawableStart">@drawable/ic_search_black_24dp</item>
-        <item name="drawableTint">@color/grey_200</item>
+        <item name="drawableTint">?colorAccent</item>
         <item name="android:paddingEnd">15dp</item>
         <item name="android:background">@null</item>
         <item name="android:hint">@string/search_hint</item>
-        <item name="android:inputType">textPersonName</item>
-        <item name="android:textColorHint">@color/grey_200</item>
+        <item name="android:inputType">text</item>
+        <item name="android:textColorHint">?colorAccent</item>
         <item name="android:textSize">18sp</item>
     </style>
 

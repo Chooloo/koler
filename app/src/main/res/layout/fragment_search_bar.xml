@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:endIconDrawable="@drawable/ic_close_black_24dp"
     app:endIconMode="clear_text"
-    app:endIconTint="@color/grey_400"
+    app:endIconTint="?colorAccent"
     app:hintEnabled="false">
 
     <com.google.android.material.textfield.TextInputEditText

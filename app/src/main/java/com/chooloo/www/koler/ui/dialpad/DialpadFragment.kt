@@ -11,16 +11,16 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentDialpadBinding
-import com.chooloo.www.koler.util.call.CallManager.call
-import com.chooloo.www.koler.util.call.CallManager.callVoicemail
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
 import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.call.call
+import com.chooloo.www.koler.util.call.callVoicemail
 import com.chooloo.www.koler.viewmodel.dial.DialViewModel
 
 class DialpadFragment : BaseFragment(), DialpadMvpView {
 
-    override val isDialer: Boolean
+    override val isDialer = argsSafely.getBoolean(ARG_DIALER)
     private var _onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)? = null
     private lateinit var _presenter: DialpadMvpPresenter<DialpadMvpView>
     private lateinit var _dialViewModel: DialViewModel
@@ -37,10 +37,6 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
                 }
             }
         }
-    }
-
-    init {
-        isDialer = argsSafely.getBoolean(ARG_DIALER)
     }
 
     override var number: String
@@ -139,16 +135,16 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         if (number?.isEmpty() == true) {
             Toast.makeText(context, getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show()
         } else {
-            call(_activity, _binding.dialpadEditText.numbers)
+            _activity.call(_binding.dialpadEditText.numbers)
         }
     }
 
     override fun callVoicemail() {
-        callVoicemail(_activity)
+        _activity.callVoicemail()
     }
 
     override fun addContact() {
-        addContact(_activity, _activity.lookupContact(_binding.dialpadEditText.numbers))
+        _activity.addContact(_activity.lookupContact(_binding.dialpadEditText.numbers))
     }
 
     override fun vibrate() {
