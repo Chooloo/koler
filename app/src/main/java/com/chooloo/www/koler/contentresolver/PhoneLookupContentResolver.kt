@@ -3,7 +3,6 @@ package com.chooloo.www.koler.contentresolver
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.provider.ContactsContract
 import android.provider.ContactsContract.PhoneLookup
 import com.chooloo.www.koler.entity.Contact
 
@@ -27,11 +26,11 @@ class PhoneLookupContentResolver(
     override fun convertCursorToContent(cursor: Cursor?): Array<Contact> = ArrayList<Contact>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {
             add(Contact(
-                    contactId = getLong(getColumnIndex(ContactsContract.Contacts._ID)),
-                    name = getString(getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)),
-                    photoUri = getString(getColumnIndex(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI)),
-                    starred = "1" == getString(getColumnIndex(ContactsContract.Contacts.STARRED)),
-                    lookupKey = getString(getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY))
+                    contactId = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
+                    name = getString(getColumnIndex(PhoneLookup.DISPLAY_NAME_PRIMARY)),
+                    number = getString(getColumnIndex(PhoneLookup.NUMBER)),
+                    photoUri = getString(getColumnIndex(PhoneLookup.PHOTO_URI)),
+                    starred = "1" == getString(getColumnIndex(PhoneLookup.STARRED))
             ))
         }
     }.toTypedArray()

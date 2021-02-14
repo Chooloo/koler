@@ -54,6 +54,7 @@
         <TextView
             android:id="@+id/list_item_small_text"
             style="@style/Koler.ListItem.Text.Small"
+            android:layout_marginTop="5dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/list_item_big_text"

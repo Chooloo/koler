@@ -1,13 +1,13 @@
 package com.chooloo.www.koler.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.entity.Recent
 import com.chooloo.www.koler.entity.Recent.CallType
-import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.RelativeTime.getTimeAgo
 import com.chooloo.www.koler.util.lookupContact
@@ -38,6 +38,7 @@ class RecentsAdapter(
             setBigText(contact.name ?: recentCall.callerNumber)
             setSmallText(if (recentCall.callDate != null) getTimeAgo(recentCall.callDate.time) else null)
             setImageDrawable(ContextCompat.getDrawable(context, getCallTypeImage(recentCall.callType)))
+            setImageBackgroundColor(Color.TRANSPARENT)
             setOnClickListener { _onRecentItemClickListener?.invoke(recentCall) }
             setOnLongClickListener {
                 _onRecentItemLongClickListener?.invoke(recentCall)
