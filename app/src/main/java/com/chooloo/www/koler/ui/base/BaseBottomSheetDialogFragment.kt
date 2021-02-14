@@ -27,7 +27,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBottomDialogBinding.inflate(inflater, container, false)
-        _binding.bottomDialogFragmentCloseButton.setOnClickListener { dismiss() }
         return _binding.root
     }
 

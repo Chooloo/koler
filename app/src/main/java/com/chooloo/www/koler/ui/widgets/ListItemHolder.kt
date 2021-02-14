@@ -7,5 +7,5 @@ class ListItemHolder(
         val listItem: ListItem
 ) : RecyclerView.ViewHolder(listItem) {
 
-    constructor(context: Context) : this(ListItem(context))
+        constructor(context: Context) : this(ListItem(context))
 }

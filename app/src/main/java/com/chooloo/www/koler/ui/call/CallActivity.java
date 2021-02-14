@@ -21,7 +21,7 @@ import com.chooloo.www.koler.databinding.ActivityCallBinding;
 import com.chooloo.www.koler.entity.Contact;
 import com.chooloo.www.koler.util.call.CallManager;
 import com.chooloo.www.koler.ui.base.BaseActivity;
-import com.chooloo.www.koler.ui.dialpad.DialpadBottomDialogFragment;
+import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment;
 
 import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD;
@@ -35,7 +35,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
 
     private ActivityCallBinding binding;
 
-    private DialpadBottomDialogFragment mBottomDialpadFragment;
+    private DialpadBottomFragment mBottomDialpadFragment;
 
     private AudioManager mAudioManager;
 
@@ -58,7 +58,7 @@ public class CallActivity extends BaseActivity implements CallMvpView {
         mAudioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
         mAudioManager.setMode(AudioManager.MODE_IN_CALL);
 
-        mBottomDialpadFragment = DialpadBottomDialogFragment.newInstance(false);
+        mBottomDialpadFragment = DialpadBottomFragment.newInstance(false);
 //        mBottomDialpadFragmentgit.setOnKeyDownListener((keyCode, event) -> mPresenter.onDialpadKeyClick(keyCode, event));
 
         // TODO move this to a util class

@@ -4,11 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
@@ -16,11 +14,10 @@ import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.ActivityMainBinding
 import com.chooloo.www.koler.ui.about.AboutActivity
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.dialpad.DialpadBottomDialogFragment
-import com.chooloo.www.koler.ui.dialpad.DialpadBottomDialogFragment.Companion.newInstance
+import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment
+import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment.Companion.newInstance
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.ui.menu.MenuFragment
-import com.chooloo.www.koler.ui.menu.MenuFragment.Companion.newInstance
+import com.chooloo.www.koler.ui.menu.MenuBottomFragment
 import com.chooloo.www.koler.ui.search.SearchFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.requestDefaultDialer
@@ -31,18 +28,18 @@ class MainActivity : BaseActivity(), MainMvpView {
     private lateinit var _presenter: MainMvpPresenter<MainMvpView>
     private lateinit var _dialViewModel: DialViewModel
     private lateinit var _binding: ActivityMainBinding
-    private lateinit var _bottomDialpadFragment: DialpadBottomDialogFragment
-    private lateinit var _menuFragment: MenuFragment
+    private lateinit var _dialpadBottomFragment: DialpadBottomFragment
+    private lateinit var _menuBottomFragment: MenuBottomFragment
     private lateinit var _searchFragment: SearchFragment
 
     override var dialpadNumber: String
-        get() = _bottomDialpadFragment.number
+        get() = _dialpadBottomFragment.number
         set(value) {
-            _bottomDialpadFragment.number = value
+            _dialpadBottomFragment.number = value
         }
 
     override val isDialpadShown: Boolean
-        get() = _bottomDialpadFragment.isShown
+        get() = _dialpadBottomFragment.isShown
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,21 +80,19 @@ class MainActivity : BaseActivity(), MainMvpView {
 
         requestDefaultDialer()
 
-        _bottomDialpadFragment = newInstance(true)
+        _dialpadBottomFragment = newInstance(true)
 
-        _menuFragment = newInstance(R.menu.main_actions).apply {
-            setOnMenuItemClickListener { menuItem: MenuItem -> _presenter.onOptionsItemSelected(menuItem) }
+        _menuBottomFragment = MenuBottomFragment.newInstance(R.menu.main_actions).apply {
+            setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
         }
 
         _searchFragment = SearchFragment().apply {
-            setOnFocusChangedListener { isFocused: Boolean -> _presenter.onSearchFocusChanged(isFocused) }
-            setOnTextChangedListener { text: String -> _presenter.onSearchTextChanged(text) }
+            setOnFocusChangedListener(_presenter::onSearchFocusChanged)
+            setOnTextChangedListener(_presenter::onSearchTextChanged)
         }
 
         _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java).apply {
-            number.observe(this@MainActivity, Observer { number: String? ->
-                _presenter.onDialNumberChanged(number ?: "")
-            })
+            number.observe(this@MainActivity) { _presenter.onDialNumberChanged(it ?: "") }
         }
 
         if (intent.action == Intent.ACTION_DIAL || intent.action == Intent.ACTION_VIEW) {
@@ -121,27 +116,29 @@ class MainActivity : BaseActivity(), MainMvpView {
     }
 
     override fun showDialpad(isShow: Boolean) {
-        if (isShow) {
-            _bottomDialpadFragment.dismiss()
-            _bottomDialpadFragment.show(supportFragmentManager, DialpadFragment.TAG)
-        } else if (_bottomDialpadFragment.isShown) {
-            _bottomDialpadFragment.dismiss()
+        _dialpadBottomFragment.apply {
+            if (isShown) {
+                dismiss()
+            }
+            if (isShow) {
+                show(supportFragmentManager, DialpadFragment.TAG)
+            }
         }
     }
 
     override fun showMenu(isShow: Boolean) {
-        if (isShow && !_menuFragment.isShown) {
-            _menuFragment.show(supportFragmentManager, "main_menu_fragment")
-        } else if (!isShow && _menuFragment.isShown) {
-            _menuFragment.dismiss()
+        if (isShow && !_menuBottomFragment.isShown) {
+            _menuBottomFragment.show(supportFragmentManager, "main_menu_fragment")
+        } else if (!isShow && _menuBottomFragment.isShown) {
+            _menuBottomFragment.dismiss()
         }
     }
 
     override fun goToSettings() {
-        this.startActivity(Intent(this, SettingsActivity::class.java))
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 
     override fun goToAbout() {
-        this.startActivity(Intent(this, AboutActivity::class.java))
+        startActivity(Intent(this, AboutActivity::class.java))
     }
 }

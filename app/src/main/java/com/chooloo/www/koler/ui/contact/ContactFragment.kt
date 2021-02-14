@@ -48,17 +48,14 @@ class ContactFragment : BaseFragment(), ContactMvpView {
 
         _binding.apply {
             contactTextName.text = _contact.name
-
             _contact.number?.let {
                 contactTextNumber.text = it
                 contactTextNumber.visibility = VISIBLE
             }
-
             _contact.photoUri?.let {
                 contactImage.setImageURI(Uri.parse(it))
                 contactImage.visibility = VISIBLE
             }
-
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }

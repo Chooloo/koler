@@ -27,7 +27,7 @@ class RecentsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
-        return ListItemHolder(ListItem(parent.context))
+        return ListItemHolder(parent.context)
     }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {

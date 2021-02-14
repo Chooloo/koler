@@ -3,13 +3,10 @@ package com.chooloo.www.koler.adapter
 import android.content.Context
 import android.net.Uri
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.entity.Contact
-import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.setFadeUpAnimation
 
@@ -33,7 +30,7 @@ open class ContactsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
-        return ListItemHolder(ListItem(parent.context))
+        return ListItemHolder(parent.context)
     }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {

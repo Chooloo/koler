@@ -9,7 +9,7 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 
 class MenuAdapter(
         private val _context: Context,
-        private val _menu: Menu
+        private val _menu: Menu,
 ) : RecyclerView.Adapter<ListItemHolder>() {
     private var _onMenuItemClickListener: ((MenuItem) -> Unit?)? = null
 
@@ -21,13 +21,17 @@ class MenuAdapter(
         val menuItem = _menu.getItem(position)
         holder.listItem.apply {
             setOnClickListener { _onMenuItemClickListener?.invoke(menuItem) }
-            setBigText(menuItem.title as String)
+            setBigText(menuItem.title.toString())
             setImageDrawable(menuItem.icon)
         }
     }
 
     override fun getItemCount(): Int {
         return _menu.size()
+    }
+
+    fun setMenu(menu: Menu) {
+
     }
 
     fun setOnMenuItemClickListener(onMenuItemClickListener: ((MenuItem) -> Unit?)?) {

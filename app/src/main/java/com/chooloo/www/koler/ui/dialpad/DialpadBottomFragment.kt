@@ -3,15 +3,15 @@ package com.chooloo.www.koler.ui.dialpad
 import android.os.Bundle
 import com.chooloo.www.koler.ui.base.BaseBottomSheetDialogFragment
 
-class DialpadBottomDialogFragment : BaseBottomSheetDialogFragment() {
+class DialpadBottomFragment : BaseBottomSheetDialogFragment() {
     private lateinit var _dialpadFragment: DialpadFragment
 
     companion object {
         const val ARG_DIALER = "is_dialer"
 
         @JvmStatic
-        fun newInstance(isDialer: Boolean): DialpadBottomDialogFragment {
-            return DialpadBottomDialogFragment().apply {
+        fun newInstance(isDialer: Boolean): DialpadBottomFragment {
+            return DialpadBottomFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean(ARG_DIALER, isDialer)
                 }
