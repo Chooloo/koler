@@ -3,9 +3,7 @@ package com.chooloo.www.koler.adapter
 import android.content.Context
 import android.net.Uri
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.setFadeUpAnimation
@@ -39,15 +37,11 @@ open class ContactsAdapter(
             setBigText(contact.name)
             setHeaderText(getHeader(position))
             showHeader(isFirstInHeader(position))
+            contact.photoUri?.let { setImageUri(Uri.parse(it)) }
             setOnClickListener { _onContactItemClickListener?.invoke(contact) }
             setOnLongClickListener {
                 _onContactItemLongClickListener?.invoke(contact)
                 true
-            }
-            if (contact.photoUri != null) {
-                setImageUri(Uri.parse(contact.photoUri))
-            } else {
-                setImageBackgroundColor(ContextCompat.getColor(context, R.color.grey_100))
             }
             setFadeUpAnimation(this)
         }

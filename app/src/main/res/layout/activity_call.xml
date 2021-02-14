@@ -80,9 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_play_arrow_black_24dp"
-                app:activatedText="@string/call_action_unhold"
-                app:icon="@drawable/ic_pause_black_24dp"
-                app:text="@string/call_action_hold" />
+                app:icon="@drawable/ic_pause_black_24dp" />
 
             <!-- action mute -->
             <com.chooloo.www.koler.ui.widgets.IconButton
@@ -91,9 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_mic_off_black_24dp"
-                app:activatedText="@string/call_action_unmute"
-                app:icon="@drawable/ic_mic_black_24dp"
-                app:text="@string/call_action_mute" />
+                app:icon="@drawable/ic_mic_black_24dp" />
 
             <!-- action speaker -->
             <com.chooloo.www.koler.ui.widgets.IconButton
@@ -102,9 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_volume_down_black_24dp"
-                app:activatedText="@string/call_action_speaker_off"
-                app:icon="@drawable/ic_volume_up_black_24dp"
-                app:text="@string/call_action_speaker" />
+                app:icon="@drawable/ic_volume_up_black_24dp" />
         </TableRow>
 
         <TableRow>
@@ -115,9 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_stop_circle_black_24dp"
-                app:activatedText="@string/call_action_record_stop"
-                app:icon="@drawable/ic_radio_button_checked_black_24dp"
-                app:text="@string/call_action_record" />
+                app:icon="@drawable/ic_radio_button_checked_black_24dp" />
 
             <!-- action keypad -->
             <com.chooloo.www.koler.ui.widgets.IconButton
@@ -125,8 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:icon="@drawable/ic_dialpad_black_24dp"
-                app:text="@string/call_action_keypad" />
+                app:icon="@drawable/ic_dialpad_black_24dp" />
 
             <!-- action add call -->
             <com.chooloo.www.koler.ui.widgets.IconButton
@@ -134,8 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:icon="@drawable/ic_add_black_24dp"
-                app:text="@string/call_action_add_call" />
+                app:icon="@drawable/ic_add_black_24dp" />
         </TableRow>
     </TableLayout>
 

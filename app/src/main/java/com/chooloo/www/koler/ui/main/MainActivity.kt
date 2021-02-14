@@ -102,27 +102,23 @@ class MainActivity : BaseActivity(), MainMvpView {
         supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, _searchFragment).commitNow()
 
         _binding.apply {
-            dialpadFabButton.setOnClickListener { _presenter.onDialpadFabClick() }
+            mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     appbarMain.tabTextContacts.isEnabled = position == 0
                     appbarMain.tabTextRecents.isEnabled = position == 1
                 }
             })
-            viewPager.adapter = MainPagerAdapter(this@MainActivity)
+            mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
         }
     }
 
     override fun showDialpad(isShow: Boolean) {
         _dialpadBottomFragment.apply {
-            if (isShown) {
-                dismiss()
-            }
-            if (isShow) {
-                show(supportFragmentManager, DialpadFragment.TAG)
-            }
+            if (isShown) dismiss()
+            if (isShow) show(supportFragmentManager, DialpadFragment.TAG)
         }
     }
 

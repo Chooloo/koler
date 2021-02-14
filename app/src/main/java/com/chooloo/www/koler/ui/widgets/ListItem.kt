@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ListItemBinding
+import com.chooloo.www.koler.util.getAttrColor
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
@@ -23,6 +24,7 @@ class ListItem : LinearLayout {
     constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
         _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true)
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        setImageBackgroundColor(context.getAttrColor(R.attr.colorAccentLight))
 
         context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
             setBigText(it.getString(R.styleable.Koler_ListItem_bigText))

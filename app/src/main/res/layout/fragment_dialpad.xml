@@ -97,15 +97,14 @@
         app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:size="normal" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/dialpad_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:fabSize="mini"
         app:icon="@drawable/ic_arrow_back_ios_24px"
-        app:size="small"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dialpad_button_call"
@@ -114,8 +113,8 @@
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/dialpad_button_add_contact"
         android:layout_width="wrap_content"
-        app:size="small"
         android:layout_height="wrap_content"
+        app:fabSize="mini"
         app:icon="@drawable/ic_person_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toStartOf="@id/dialpad_button_call"

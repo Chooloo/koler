@@ -19,12 +19,5 @@
     <declare-styleable name="Koler.IconButton">
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
-        <attr name="text" format="string" />
-        <attr name="activatedText" format="string" />
-        <attr name="size" format="enum">
-            <enum name="small" value="1" />
-            <enum name="normal" value="0" />
-            <enum name="auto" value="-1" />
-        </attr>
     </declare-styleable>
 </resources>
