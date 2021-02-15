@@ -26,7 +26,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/KolerTheme"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
@@ -36,7 +36,7 @@
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/KolerTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -90,7 +90,7 @@
         <activity
             android:name="com.chooloo.www.koler.ui.call.CallActivity"
             android:label="@string/activity_call"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/KolerTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -103,17 +103,17 @@
         <activity
             android:name="com.chooloo.www.koler.ui.settings.SettingsActivity"
             android:label="@string/activity_settings"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/KolerTheme" />
 
         <activity
             android:name="com.chooloo.www.koler.ui.about.AboutActivity"
             android:label="@string/activity_about"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/KolerTheme" />
 
         <activity
             android:name=".util.permissions.PermissionsActivity"
             android:label="@string/activity_permissions"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/KolerTheme" />
 
         <!-- services -->
 

@@ -3,22 +3,27 @@
 
     <!-- Theme Styles -->
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.Bridge">
+    <style name="KolerTheme" parent="Theme.MaterialComponents.Light.Bridge">
+        <!-- attribute colors -->
         <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">?attr/colorPrimary</item>
-        <item name="colorAccent">@color/color_accent</item>
-        <item name="colorAccentLight">@color/color_accent_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_secondary</item>
-        <item name="bottomSheetDialogTheme">@style/Koler.BottomDialog.Theme</item>
+        <item name="colorSecondaryVariant">@color/color_secondary_dark</item>
+        <item name="colorAccent">?colorSecondaryVariant</item>
+        <item name="colorError">@color/color_error</item>
 
-        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
+        <!-- views colors -->
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+
+        <!-- other -->
+        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="bottomSheetDialogTheme">@style/Koler.BottomDialog.Theme</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
+    <style name="KolerTheme.NoActionBar" parent="KolerTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

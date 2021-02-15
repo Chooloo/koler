@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-
     <corners
         android:bottomLeftRadius="@dimen/bubble_corner_radius"
         android:bottomRightRadius="@dimen/bubble_corner_radius"
         android:topLeftRadius="@dimen/bubble_corner_radius"
         android:topRightRadius="@dimen/bubble_corner_radius" />
-
-    <solid android:color="@color/grey_100" />
+    <solid android:color="?colorPrimaryDark" />
 </shape>

@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.util.getAttrColor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -27,8 +27,8 @@ class IconButton : FloatingActionButton {
 
         compatElevation = 0f
         elevation = 0f
-        imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.color_accent))
-        backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.color_accent_light))
+        imageTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
+        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
 
         setImageDrawable(_iconDefault?.let { getDrawable(context, it) })
         setOnClickListener {

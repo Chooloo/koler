@@ -3,7 +3,7 @@
     <item android:state_activated="true">
         <shape android:shape="oval">
             <corners android:radius="100dp" />
-            <solid android:color="@color/grey_100" />
+            <solid android:color="?colorPrimaryDark" />
         </shape>
     </item>
     <item android:state_activated="false">
