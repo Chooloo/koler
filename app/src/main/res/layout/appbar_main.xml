@@ -59,9 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         tools:layout="@layout/fragment_search_bar" />
 
 </com.google.android.material.appbar.AppBarLayout>

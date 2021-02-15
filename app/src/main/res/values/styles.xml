@@ -208,7 +208,6 @@
     <style name="Koler.SearchBar" />
 
     <style name="Koler.SearchBar.Layout">
-<!--        <item name="android:background">@drawable/search_bar_background_selector</item>-->
         <item name="android:background">@drawable/bubble_background</item>
     </style>
 

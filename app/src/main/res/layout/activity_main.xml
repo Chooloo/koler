@@ -27,6 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="20dp"
+        android:elevation="10dp"
+        app:elevation="10dp"
         app:icon="@drawable/ic_dialpad_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
