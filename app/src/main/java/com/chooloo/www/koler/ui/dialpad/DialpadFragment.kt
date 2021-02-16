@@ -16,14 +16,14 @@ import com.chooloo.www.koler.ui.widgets.DialpadKey
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.call.callVoicemail
-import com.chooloo.www.koler.viewmodel.dial.DialViewModel
+import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class DialpadFragment : BaseFragment(), DialpadMvpView {
 
     override val isDialer = argsSafely.getBoolean(ARG_DIALER)
     private var _onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)? = null
     private lateinit var _presenter: DialpadMvpPresenter<DialpadMvpView>
-    private lateinit var _dialViewModel: DialViewModel
+    private lateinit var _searchViewModel: SearchViewModel
     private lateinit var _binding: FragmentDialpadBinding
 
     companion object {
@@ -57,7 +57,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         _presenter = DialpadPresenter()
         _presenter.attach(this)
 
-        _dialViewModel = ViewModelProvider(_activity).get(DialViewModel::class.java)
+        _searchViewModel = ViewModelProvider(_activity).get(SearchViewModel::class.java)
 
         _binding.apply {
             dialpadEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(resources.configuration.locales.get(0).toString()))
@@ -120,7 +120,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
     }
 
     override fun setViewModelNumber(number: String?) {
-        _dialViewModel.number.value = if (number == "") null else number
+        _searchViewModel.number.value = if (number == "") null else number
     }
 
     override fun backspace() {
@@ -131,8 +131,7 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
     }
 
     override fun call() {
-        val number = _dialViewModel.number.value
-        if (number?.isEmpty() == true) {
+        if (number.isEmpty()) {
             Toast.makeText(context, getString(R.string.please_enter_a_number), Toast.LENGTH_SHORT).show()
         } else {
             _activity.call(_binding.dialpadEditText.numbers)

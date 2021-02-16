@@ -18,7 +18,7 @@ class PageRecents : PageFragment(), PageMvpView {
         _presenter.attach(this)
 
         _recentsFragment = RecentsFragment.newInstance().apply {
-            setOnScrollStateChangedListener { newState -> _presenter.onScrollStateChanged(newState) }
+            setOnScrollStateChangedListener(_presenter::onScrollStateChanged)
         }
 
         childFragmentManager.beginTransaction().replace(binding.fragmentPageLayout.id, _recentsFragment).commitNow()
@@ -27,13 +27,5 @@ class PageRecents : PageFragment(), PageMvpView {
     override fun onDestroyView() {
         super.onDestroyView()
         _presenter.detach()
-    }
-
-    override fun onSearchTextChanged(text: String) {
-        _presenter.onSearchTextChanged(text)
-    }
-
-    override fun onDialNumberChanged(number: String) {
-        _presenter.onDialNumberChanged(number)
     }
 }

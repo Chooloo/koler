@@ -18,7 +18,7 @@ class PageContacts : PageFragment(), PageMvpView {
         _presenter.attach(this)
 
         _contactsFragment = ContactsFragment.newInstance().apply {
-            setOnScrollStateChangedListener { newState -> _presenter.onScrollStateChanged(newState) }
+            setOnScrollStateChangedListener(_presenter::onScrollStateChanged)
         }
 
         childFragmentManager.beginTransaction().add(binding.fragmentPageLayout.id, _contactsFragment).commitNow()
@@ -27,13 +27,5 @@ class PageContacts : PageFragment(), PageMvpView {
     override fun onDestroyView() {
         super.onDestroyView()
         _presenter.detach()
-    }
-
-    override fun onSearchTextChanged(text: String) {
-        _presenter.onSearchTextChanged(text)
-    }
-
-    override fun onDialNumberChanged(number: String) {
-        _presenter.onDialNumberChanged(number)
     }
 }

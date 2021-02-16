@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
@@ -21,12 +20,10 @@ import com.chooloo.www.koler.ui.menu.MenuBottomFragment
 import com.chooloo.www.koler.ui.search.SearchFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.requestDefaultDialer
-import com.chooloo.www.koler.viewmodel.dial.DialViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainMvpView {
     private lateinit var _presenter: MainMvpPresenter<MainMvpView>
-    private lateinit var _dialViewModel: DialViewModel
     private lateinit var _binding: ActivityMainBinding
     private lateinit var _dialpadBottomFragment: DialpadBottomFragment
     private lateinit var _menuBottomFragment: MenuBottomFragment
@@ -91,10 +88,6 @@ class MainActivity : BaseActivity(), MainMvpView {
             setOnTextChangedListener(_presenter::onSearchTextChanged)
         }
 
-        _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java).apply {
-            number.observe(this@MainActivity) { _presenter.onDialNumberChanged(it ?: "") }
-        }
-
         if (intent.action == Intent.ACTION_DIAL || intent.action == Intent.ACTION_VIEW) {
             _presenter.onViewIntent(intent)
         }
@@ -104,14 +97,16 @@ class MainActivity : BaseActivity(), MainMvpView {
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    appbarMain.tabTextContacts.isEnabled = position == 0
-                    appbarMain.tabTextRecents.isEnabled = position == 1
-                }
-            })
-            mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
+            mainViewPager.apply {
+                adapter = MainPagerAdapter(this@MainActivity)
+                registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        appbarMain.tabTextContacts.isEnabled = position == 0
+                        appbarMain.tabTextRecents.isEnabled = position == 1
+                    }
+                })
+            }
         }
     }
 

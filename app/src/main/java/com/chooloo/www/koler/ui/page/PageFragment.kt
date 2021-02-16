@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.databinding.FragmentPageBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.viewmodel.dial.DialViewModel
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 abstract class PageFragment : BaseFragment(), PageMvpView {
 
     private lateinit var _presenter: PageMvpPresenter<PageMvpView>
-    private lateinit var _dialViewModel: DialViewModel
     private lateinit var _searchViewModel: SearchViewModel
     protected lateinit var binding: FragmentPageBinding
 
@@ -25,18 +22,6 @@ abstract class PageFragment : BaseFragment(), PageMvpView {
     override fun onSetup() {
         _presenter = PagePresenter()
         _presenter.attach(this)
-
-        _dialViewModel = ViewModelProvider(this).get(DialViewModel::class.java).apply {
-            number.observe(viewLifecycleOwner, { number: String? ->
-                onDialNumberChanged(number ?: "")
-            })
-        }
-
-        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java).apply {
-            text.observe(viewLifecycleOwner, { text: String? ->
-                onSearchTextChanged(text ?: "")
-            })
-        }
     }
 
     override fun onDestroy() {
@@ -47,7 +32,4 @@ abstract class PageFragment : BaseFragment(), PageMvpView {
     override fun setSearchBarFocused(isFocused: Boolean) {
         _searchViewModel.isFocused.value = isFocused
     }
-
-    protected abstract fun onSearchTextChanged(text: String)
-    protected abstract fun onDialNumberChanged(number: String)
 }
