@@ -17,10 +17,10 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
     private lateinit var _presenter: ListMvpPresenter<ListMvpView>
     private lateinit var _binding: FragmentItemsBinding
-    protected lateinit var adapter: A
+    protected lateinit var listAdapter: A
 
     override val itemCount: Int
-        get() = adapter.itemCount
+        get() = listAdapter.itemCount
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentItemsBinding.inflate(inflater)
@@ -36,11 +36,11 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
         _presenter = ListPresenter()
         _presenter.attach(this)
 
-        adapter = onGetAdapter()
+        listAdapter = onGetAdapter()
 
         _binding.run {
             itemsRecyclerView.apply {
-                adapter = adapter
+                adapter = listAdapter
                 addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                         _onScrollStateChangedListener?.invoke(newState)

@@ -41,7 +41,7 @@
     <dimen name="swipe_indicator_margin">10dp</dimen>
 
     <!-- search bar -->
-    <dimen name="search_bar_height">37dp</dimen>
+    <dimen name="search_bar_height">36dp</dimen>
 
     <!-- contact fragment -->
     <dimen name="contact_action_button_height">60dp</dimen>

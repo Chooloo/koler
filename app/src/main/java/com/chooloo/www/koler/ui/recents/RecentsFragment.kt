@@ -33,7 +33,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
         _recentsLiveData = RecentsProviderLiveData(_activity)
 
-        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java).apply {
+        _searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java).apply {
             number.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
             text.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
         }
@@ -49,7 +49,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }
 
     override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions) {
-        _recentsLiveData.observe(viewLifecycleOwner, { recents -> adapter.updateRecents(recents) })
+        _recentsLiveData.observe(viewLifecycleOwner, { recents -> listAdapter.updateRecents(recents) })
     }
 
     override fun openRecent(recent: Recent) {

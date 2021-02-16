@@ -25,12 +25,13 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainMvpView {
-    private lateinit var _presenter: MainMvpPresenter<MainMvpView>
+
     private lateinit var _binding: ActivityMainBinding
-    private lateinit var _dialpadBottomFragment: DialpadBottomFragment
-    private lateinit var _menuBottomFragment: MenuBottomFragment
     private lateinit var _searchFragment: SearchFragment
     private lateinit var _searchViewModel: SearchViewModel
+    private lateinit var _menuBottomFragment: MenuBottomFragment
+    private lateinit var _presenter: MainMvpPresenter<MainMvpView>
+    private lateinit var _dialpadBottomFragment: DialpadBottomFragment
 
     override var dialpadNumber: String
         get() = _dialpadBottomFragment.number
@@ -80,6 +81,12 @@ class MainActivity : BaseActivity(), MainMvpView {
 
         requestDefaultDialer()
 
+        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+
+        if (intent.action == Intent.ACTION_DIAL || intent.action == Intent.ACTION_VIEW) {
+            _presenter.onViewIntent(intent)
+        }
+
         _dialpadBottomFragment = newInstance(true)
 
         _menuBottomFragment = MenuBottomFragment.newInstance(R.menu.main_actions).apply {
@@ -88,19 +95,13 @@ class MainActivity : BaseActivity(), MainMvpView {
 
         _searchFragment = SearchFragment().apply {
             setOnTextChangedListener(_presenter::onSearchTextChanged)
+            supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, this).commitNow()
         }
-
-        if (intent.action == Intent.ACTION_DIAL || intent.action == Intent.ACTION_VIEW) {
-            _presenter.onViewIntent(intent)
-        }
-
-        supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, _searchFragment).commitNow()
 
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
             mainViewPager.apply {
-                adapter = MainPagerAdapter(this@MainActivity)
                 registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
@@ -108,10 +109,9 @@ class MainActivity : BaseActivity(), MainMvpView {
                         appbarMain.tabTextRecents.isEnabled = position == 1
                     }
                 })
+                adapter = MainPagerAdapter(this@MainActivity)
             }
         }
-
-        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
     }
 
     override fun showDialpad(isShow: Boolean) {

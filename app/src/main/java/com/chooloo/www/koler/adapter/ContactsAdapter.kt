@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.adapter
 
-import android.content.Context
 import android.net.Uri
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,12 +7,9 @@ import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.setFadeUpAnimation
 
-open class ContactsAdapter(
-        private val context: Context,
-) : RecyclerView.Adapter<ListItemHolder>() {
+open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
 
     private var _contacts: Array<Contact> = arrayOf()
-
     private var _onContactItemClickListener: ((Contact) -> Unit?)? = null
     private var _onContactItemLongClickListener: ((Contact) -> Unit)? = null
 

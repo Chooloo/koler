@@ -16,14 +16,12 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
 
     companion object {
-        fun newInstance(): ContactsFragment = ContactsFragment()
+        fun newInstance() = ContactsFragment()
     }
 
-    override fun onGetAdapter(): ContactsAdapter {
-        return ContactsAdapter(_activity).apply {
-            setOnContactItemClick { contact -> _presenter.onContactItemClick(contact) }
-            setOnContactItemLongClickListener { contact -> _presenter.onContactItemLongClick(contact) }
-        }
+    override fun onGetAdapter() = ContactsAdapter().apply {
+        setOnContactItemClick { contact -> _presenter.onContactItemClick(contact) }
+        setOnContactItemLongClickListener { contact -> _presenter.onContactItemLongClick(contact) }
     }
 
     override fun onSetup() {
@@ -34,7 +32,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
 
         _contactsLiveData = ContactsProviderLiveData(_activity)
 
-        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java).apply {
+        _searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java).apply {
             number.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
             text.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
         }
@@ -50,7 +48,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }
 
     override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions) {
-        _contactsLiveData.observe(viewLifecycleOwner, { contacts -> adapter.updateContacts(contacts) })
+        _contactsLiveData.observe(viewLifecycleOwner, listAdapter::updateContacts)
     }
 
     override fun openContact(contact: Contact) {

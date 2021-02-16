@@ -26,7 +26,7 @@ abstract class BaseActivity : AppCompatActivity(), MvpView {
     }
 
     override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.any { p -> hasPermission(p) }
+        return permissions.any(this::hasPermission)
     }
 
     override fun askForPermission(permission: String, requestCode: Int?) {
