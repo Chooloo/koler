@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
@@ -20,6 +21,7 @@ import com.chooloo.www.koler.ui.menu.MenuBottomFragment
 import com.chooloo.www.koler.ui.search.SearchFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.requestDefaultDialer
+import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainMvpView {
@@ -28,6 +30,7 @@ class MainActivity : BaseActivity(), MainMvpView {
     private lateinit var _dialpadBottomFragment: DialpadBottomFragment
     private lateinit var _menuBottomFragment: MenuBottomFragment
     private lateinit var _searchFragment: SearchFragment
+    private lateinit var _searchViewModel: SearchViewModel
 
     override var dialpadNumber: String
         get() = _dialpadBottomFragment.number
@@ -84,7 +87,6 @@ class MainActivity : BaseActivity(), MainMvpView {
         }
 
         _searchFragment = SearchFragment().apply {
-            setOnFocusChangedListener(_presenter::onSearchFocusChanged)
             setOnTextChangedListener(_presenter::onSearchTextChanged)
         }
 
@@ -108,6 +110,8 @@ class MainActivity : BaseActivity(), MainMvpView {
                 })
             }
         }
+
+        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
     }
 
     override fun showDialpad(isShow: Boolean) {
@@ -131,5 +135,9 @@ class MainActivity : BaseActivity(), MainMvpView {
 
     override fun goToAbout() {
         startActivity(Intent(this, AboutActivity::class.java))
+    }
+
+    override fun updateSearchViewModelText(text: String?) {
+        _searchViewModel.text.value = text
     }
 }

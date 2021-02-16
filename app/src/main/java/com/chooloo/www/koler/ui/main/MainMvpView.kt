@@ -10,4 +10,5 @@ interface MainMvpView : MvpView {
     fun showMenu(isShow: Boolean)
     fun goToSettings()
     fun goToAbout()
+    fun updateSearchViewModelText(text: String?)
 }

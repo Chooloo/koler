@@ -46,4 +46,8 @@ class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
             mvpView?.showError("No phone number detected")
         }
     }
+
+    override fun onSearchTextChanged(text: String) {
+        mvpView?.updateSearchViewModelText(text)
+    }
 }
