@@ -12,8 +12,6 @@ class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
         mvpView?.showDialpad(true)
     }
 
-    override fun onSearchFocusChanged(isFocused: Boolean) {}
-
     override fun onOptionsItemSelected(item: MenuItem) {
         when (item.itemId) {
             R.id.action_settings -> mvpView?.goToSettings()
