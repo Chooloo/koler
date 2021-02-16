@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.databinding.FragmentPageBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.viewmodel.dial.DialViewModel
-import com.chooloo.www.koler.viewmodel.search.SearchViewModel
+import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 abstract class PageFragment : BaseFragment(), PageMvpView {
 

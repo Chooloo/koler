@@ -9,6 +9,8 @@ import android.net.Uri
 abstract class BaseContentResolver<T>(
         private val context: Context,
 ) : ContentResolver(context) {
+
+    private var _filter: String? = null
     private var _observer: ContentObserver
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
 
@@ -26,13 +28,25 @@ abstract class BaseContentResolver<T>(
         }
     }
 
+    private fun getUri(): Uri {
+        return if (_filter != null) {
+            Uri.withAppendedPath(onGetFilterUri(), _filter)
+        } else {
+            onGetUri()
+        }
+    }
+
     private fun queryContent() = context.contentResolver.query(
-            onGetUri(),
+            getUri(),
             onGetProjection(),
             onGetSelection(),
             onGetSelectionArgs(),
             onGetSortOrder()
     )
+
+    fun setFilter(filter: String?) {
+        _filter = filter
+    }
 
     fun observe() {
         registerContentObserver(onGetUri(), true, _observer)
@@ -51,6 +65,7 @@ abstract class BaseContentResolver<T>(
     open fun onGetSelectionArgs(): Array<String>? = null
 
     abstract fun onGetUri(): Uri
+    abstract fun onGetFilterUri(): Uri
     abstract fun onGetProjection(): Array<String>?
     abstract fun convertCursorToContent(cursor: Cursor?): T
 }

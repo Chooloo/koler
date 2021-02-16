@@ -4,8 +4,8 @@ import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
+import android.provider.ContactsContract.REMOVE_DUPLICATE_ENTRIES
 import com.chooloo.www.koler.entity.Contact
 
 class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Contact>>(context) {
@@ -14,7 +14,11 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
         get() = arrayOf(READ_CONTACTS)
 
     override fun onGetUri(): Uri {
-        return Contacts.CONTENT_URI.buildUpon().appendQueryParameter(ContactsContract.REMOVE_DUPLICATE_ENTRIES, "true").build()
+        return Contacts.CONTENT_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
+    }
+
+    override fun onGetFilterUri(): Uri {
+        return Contacts.CONTENT_FILTER_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
     }
 
     override fun onGetSelection(): String {

@@ -15,6 +15,10 @@ class PhoneContentResolver(
         return Phone.CONTENT_URI
     }
 
+    override fun onGetFilterUri(): Uri {
+        return Phone.CONTENT_FILTER_URI
+    }
+
     override fun onGetProjection() = arrayOf(
             Phone.CONTACT_ID,
             Phone.DISPLAY_NAME_PRIMARY,

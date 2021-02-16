@@ -8,7 +8,7 @@ import com.chooloo.www.koler.contentresolver.BaseContentResolver
 abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
         protected val context: Context,
 ) : LiveData<T>() {
-    private var _contentResolver: C
+    protected var _contentResolver: C
 
     val requiredPermissions: Array<String>
         get() = _contentResolver.requiredPermissions
@@ -31,6 +31,11 @@ abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
         Handler(context.mainLooper).post {
             value = _contentResolver.content
         }
+    }
+
+    fun setFilter(filter: String?) {
+        _contentResolver.setFilter(filter)
+        updateData()
     }
 
     abstract fun onGetContentResolver(): C

@@ -18,6 +18,10 @@ class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recen
         return CallLog.Calls.CONTENT_URI
     }
 
+    override fun onGetFilterUri(): Uri {
+        return CallLog.Calls.CONTENT_FILTER_URI
+    }
+
     override fun onGetSortOrder(): String {
         return "${CallLog.Calls.DATE} DESC"
     }

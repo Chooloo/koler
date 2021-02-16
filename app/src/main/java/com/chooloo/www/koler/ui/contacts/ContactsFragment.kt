@@ -1,16 +1,19 @@
 package com.chooloo.www.koler.ui.contacts
 
+import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.livedata.ContactsProviderLiveData
 import com.chooloo.www.koler.ui.contact.ContactBottomDialogFragment
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.runWithPermissions
+import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
 
-    private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
+    private lateinit var _searchViewModel: SearchViewModel
     private lateinit var _contactsLiveData: ContactsProviderLiveData
+    private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
 
     companion object {
         fun newInstance(): ContactsFragment = ContactsFragment()
@@ -31,6 +34,11 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
 
         _contactsLiveData = ContactsProviderLiveData(_activity)
 
+        _searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java).apply {
+            number.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
+            text.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
+        }
+
         showEmptyPage(false)
         showNoPermissions(false)
         observe()
@@ -42,7 +50,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }
 
     override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions) {
-        _contactsLiveData.observe(viewLifecycleOwner, { contacts -> _adapter.updateContacts(contacts) })
+        _contactsLiveData.observe(viewLifecycleOwner, { contacts -> adapter.updateContacts(contacts) })
     }
 
     override fun openContact(contact: Contact) {
