@@ -45,7 +45,7 @@ abstract class BaseContentResolver<T>(
     )
 
     fun setFilter(filter: String?) {
-        _filter = filter
+        _filter = if (filter == "") null else filter
     }
 
     fun observe() {
