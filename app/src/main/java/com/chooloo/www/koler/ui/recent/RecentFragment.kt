@@ -53,7 +53,7 @@ class RecentFragment : BaseFragment(), RecentMvpView {
             recentTextDate.text = _recent.duration
             recentTypeImage.apply {
                 visibility = VISIBLE
-                background = ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type))
+                setImageDrawable(ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type)))
             }
 
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
