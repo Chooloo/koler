@@ -16,7 +16,6 @@ object RelativeTime {
     private val currentDate: Date
         get() = Calendar.getInstance().time
 
-    @JvmStatic
     fun getTimeAgo(time: Long): String {
         val timeMillis = if (time < 1000000000000L) time * 1000 else time
         val now = currentDate.time // get current time

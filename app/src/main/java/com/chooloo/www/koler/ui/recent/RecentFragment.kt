@@ -50,7 +50,7 @@ class RecentFragment : BaseFragment(), RecentMvpView {
 
         _binding.apply {
             recentTextName.text = _recent.cachedName
-            recentTextDate.text = _recent.duration
+            recentTextDate.text = _recent.relativeTime
             recentTypeImage.apply {
                 visibility = VISIBLE
                 setImageDrawable(ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type)))

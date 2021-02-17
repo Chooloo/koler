@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.entity.Recent
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
-import com.chooloo.www.koler.util.RelativeTime.getTimeAgo
 import com.chooloo.www.koler.util.lookupContact
 import com.chooloo.www.koler.util.setFadeUpAnimation
 
@@ -30,17 +29,17 @@ class RecentsAdapter(
     }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
-        val recentCall = _recents[position]
-        val contact = context.lookupContact(recentCall.number)
+        val recent = _recents[position]
+        val contact = context.lookupContact(recent.number)
 
         holder.listItem.run {
-            setBigText(contact.name ?: recentCall.number)
-            setSmallText(if (recentCall.date != null) getTimeAgo(recentCall.date.time) else null)
-            setImageDrawable(ContextCompat.getDrawable(context, getCallTypeImage(recentCall.type)))
+            setBigText(contact.name ?: recent.number)
+            setSmallText(if (recent.date != null) recent.relativeTime else null)
+            setImageDrawable(ContextCompat.getDrawable(context, getCallTypeImage(recent.type)))
             setImageBackgroundColor(Color.TRANSPARENT)
-            setOnClickListener { _onRecentItemClickListener?.invoke(recentCall) }
+            setOnClickListener { _onRecentItemClickListener?.invoke(recent) }
             setOnLongClickListener {
-                _onRecentItemLongClickListener?.invoke(recentCall)
+                _onRecentItemLongClickListener?.invoke(recent)
                 true
             }
             setFadeUpAnimation(this)

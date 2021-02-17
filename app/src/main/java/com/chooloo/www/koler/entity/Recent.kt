@@ -2,6 +2,7 @@ package com.chooloo.www.koler.entity
 
 import android.provider.CallLog
 import androidx.annotation.IntDef
+import com.chooloo.www.koler.util.RelativeTime.getTimeAgo
 import java.io.Serializable
 import java.util.*
 
@@ -28,4 +29,7 @@ data class Recent(
 
         val UNKNOWN = Recent(number = "Unknown", type = TYPE_UNKNOWN)
     }
+
+    val relativeTime: String?
+        get() = date?.time?.let { getTimeAgo(it) }
 }
