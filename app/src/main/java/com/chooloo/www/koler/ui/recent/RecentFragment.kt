@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.recent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
@@ -50,7 +51,10 @@ class RecentFragment : BaseFragment(), RecentMvpView {
         _binding.apply {
             recentTextName.text = _recent.cachedName
             recentTextDate.text = _recent.duration
-            recentTypeImage.background = ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type))
+            recentTypeImage.apply {
+                visibility = VISIBLE
+                background = ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type))
+            }
 
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
