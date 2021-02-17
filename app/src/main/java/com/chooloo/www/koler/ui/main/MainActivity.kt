@@ -18,7 +18,6 @@ import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment.Companion.newInstance
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.menu.MenuBottomFragment
-import com.chooloo.www.koler.ui.search.SearchFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.requestDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
@@ -27,7 +26,6 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 class MainActivity : BaseActivity(), MainMvpView {
 
     private lateinit var _binding: ActivityMainBinding
-    private lateinit var _searchFragment: SearchFragment
     private lateinit var _searchViewModel: SearchViewModel
     private lateinit var _menuBottomFragment: MenuBottomFragment
     private lateinit var _presenter: MainMvpPresenter<MainMvpView>
@@ -93,14 +91,12 @@ class MainActivity : BaseActivity(), MainMvpView {
             setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
         }
 
-        _searchFragment = SearchFragment().apply {
-            setOnTextChangedListener(_presenter::onSearchTextChanged)
-            supportFragmentManager.beginTransaction().replace(R.id.main_search_fragment, this).commitNow()
-        }
-
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
-            appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
+            appbarMain.apply {
+                mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
+                mainSearchBar.setOnTextChangedListener(_presenter::onSearchTextChanged)
+            }
             mainViewPager.apply {
                 registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {

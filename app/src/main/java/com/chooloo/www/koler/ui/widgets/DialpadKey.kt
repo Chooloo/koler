@@ -27,26 +27,30 @@ class DialpadKey : LinearLayout {
     constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
 
         _digitTextView = TextView(context, attrs, defStyleRes).apply {
-            setTextAppearance(R.style.Koler_Text_Headline2)
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             gravity = Gravity.CENTER_HORIZONTAL
             textAlignment = TEXT_ALIGNMENT_CENTER
+            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+
+            setTextAppearance(R.style.Koler_Text_Headline2)
+        }.also {
+            addView(it)
         }
-        addView(_digitTextView)
 
         _lettersTextView = TextView(context, attrs, defStyleRes).apply {
-            setTextAppearance(R.style.Koler_Text_Caption)
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             gravity = Gravity.CENTER_HORIZONTAL
             textAlignment = TEXT_ALIGNMENT_CENTER
+            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+
+            setTextAppearance(R.style.Koler_Text_Caption)
+        }.also {
+            addView(it)
         }
-        addView(_lettersTextView)
 
-        layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         orientation = VERTICAL
+        layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         background = context.getSelectableItemBackgroundBorderlessDrawable()
-        setPadding(context.sizeInDp(8))
 
+        setPadding(context.sizeInDp(8))
         setDigit(context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey).getString(R.styleable.Koler_DialpadKey_digit))
     }
 

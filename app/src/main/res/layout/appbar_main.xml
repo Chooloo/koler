@@ -53,14 +53,13 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!-- search fragment -->
-    <FrameLayout
-        android:id="@+id/main_search_fragment"
+    <com.chooloo.www.koler.ui.widgets.SearchBar
+        android:id="@+id/main_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        tools:layout="@layout/fragment_search_bar" />
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="8dp" />
 
 </com.google.android.material.appbar.AppBarLayout>

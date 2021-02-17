@@ -24,6 +24,7 @@ class ListItem : LinearLayout {
     constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
         _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true)
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+
         setImageBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
 
         context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {

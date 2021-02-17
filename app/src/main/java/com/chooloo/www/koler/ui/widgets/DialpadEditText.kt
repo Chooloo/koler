@@ -10,26 +10,22 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 
-class DialpadEditText constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleRes: Int = 0
-) : AppCompatEditText(context, attrs, defStyleRes) {
+class DialpadEditText : AppCompatEditText {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
-
-    init {
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int) : super(context, attrs, defStyleRes) {
+        maxLines = 1
+        isSingleLine = true
+        isCursorVisible = true
         showSoftInputOnFocus = true
         isFocusableInTouchMode = true
-        isCursorVisible = true
-        isSingleLine = true
-        maxLines = 1
         textAlignment = TEXT_ALIGNMENT_CENTER
         inputType = InputType.TYPE_CLASS_PHONE
         inputType = inputType or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        setBackgroundColor(Color.TRANSPARENT)
+
         setTextIsSelectable(true)
+        setBackgroundColor(Color.TRANSPARENT)
         canScrollHorizontally(LAYOUT_DIRECTION_RTL or LAYOUT_DIRECTION_LTR)
     }
 

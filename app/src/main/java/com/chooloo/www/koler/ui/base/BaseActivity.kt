@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import com.chooloo.www.koler.util.PreferencesManager
+import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
 
 abstract class BaseActivity : AppCompatActivity(), MvpView {

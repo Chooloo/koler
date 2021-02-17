@@ -42,6 +42,7 @@
 
     <!-- search bar -->
     <dimen name="search_bar_height">36dp</dimen>
+    <dimen name="search_bar_drawable_padding">10dp</dimen>
 
     <!-- contact fragment -->
     <dimen name="contact_action_button_height">60dp</dimen>
