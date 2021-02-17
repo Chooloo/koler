@@ -50,7 +50,7 @@
         tools:visibility="visible" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/recent_button_call"
+        android:id="@+id/contact_button_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -60,29 +60,29 @@
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/recent_button_edit"
+        android:id="@+id/contact_button_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center_horizontal"
         app:icon="@drawable/ic_edit_black_24dp"
-        app:layout_constraintEnd_toStartOf="@id/recent_button_delete"
-        app:layout_constraintStart_toEndOf="@id/recent_button_call"
+        app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
+        app:layout_constraintStart_toEndOf="@id/contact_button_call"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/recent_button_delete"
+        android:id="@+id/contact_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center_horizontal"
         app:icon="@drawable/ic_delete_black_24dp"
-        app:layout_constraintEnd_toStartOf="@id/recent_button_sms"
-        app:layout_constraintStart_toEndOf="@id/recent_button_edit"
+        app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
+        app:layout_constraintStart_toEndOf="@id/contact_button_edit"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/recent_button_sms"
+        android:id="@+id/contact_button_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"

@@ -28,7 +28,7 @@ class PhoneContentResolver(
     override fun convertCursorToContent(cursor: Cursor?): Array<Contact> = ArrayList<Contact>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {
             add(Contact(
-                    contactId = getLong(getColumnIndex(Phone.CONTACT_ID)),
+                    id = getLong(getColumnIndex(Phone.CONTACT_ID)),
                     name = getString(getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
                     number = getString(getColumnIndex(Phone.NUMBER)),
                     photoUri = getString(getColumnIndex(Phone.PHOTO_URI)),

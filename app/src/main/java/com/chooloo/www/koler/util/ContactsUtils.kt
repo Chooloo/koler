@@ -51,7 +51,7 @@ fun Context.deleteContact(contactId: Long) = runWithPermissions(WRITE_CONTACTS) 
     contentResolver.delete(uri, null, null)
 }
 
-fun Context.smsNumber(number: String) {
+fun Context.smsNumber(number: String?) {
     val uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
     startActivity(Intent(Intent.ACTION_SENDTO, uri))
 }

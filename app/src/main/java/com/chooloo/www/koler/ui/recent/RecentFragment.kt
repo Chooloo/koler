@@ -22,13 +22,11 @@ class RecentFragment : BaseFragment(), RecentMvpView {
     private lateinit var _binding: FragmentRecentBinding
 
     companion object {
-        const val ARG_RECENT_ID = "contact_id"
+        const val ARG_RECENT_ID = "recent_id"
 
-        fun newInstance(recentId: Long): RecentFragment {
-            return RecentFragment().apply {
-                arguments = Bundle().apply {
-                    putLong(ARG_RECENT_ID, recentId)
-                }
+        fun newInstance(recentId: Long) = RecentFragment().apply {
+            arguments = Bundle().apply {
+                putLong(ARG_RECENT_ID, recentId)
             }
         }
     }

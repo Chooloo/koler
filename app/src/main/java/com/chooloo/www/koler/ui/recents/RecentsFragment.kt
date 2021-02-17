@@ -5,6 +5,7 @@ import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.entity.Recent
 import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.list.ListFragment
+import com.chooloo.www.koler.ui.recent.RecentBottomDialogFragment
 import com.chooloo.www.koler.util.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
@@ -53,6 +54,6 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }
 
     override fun openRecent(recent: Recent) {
-        // TODO implement
+        RecentBottomDialogFragment.newInstance(recent.id).show(_activity.supportFragmentManager, RecentBottomDialogFragment.TAG)
     }
 }

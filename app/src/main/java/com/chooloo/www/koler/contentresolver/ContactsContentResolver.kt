@@ -28,7 +28,7 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
     override fun convertCursorToContent(cursor: Cursor?) = ArrayList<Contact>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {
             add(Contact(
-                    contactId = getLong(getColumnIndex(Contacts._ID)),
+                    id = getLong(getColumnIndex(Contacts._ID)),
                     name = getString(getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
                     photoUri = getString(getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI)),
                     starred = "1" == getString(getColumnIndex(Contacts.STARRED)),

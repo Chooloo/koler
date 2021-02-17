@@ -46,8 +46,8 @@ open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
     private fun isFirstInHeader(position: Int): Boolean {
         var total = 0
         headersCounts.forEach { count ->
-            when {
-                position == total -> return true
+            when (position) {
+                total -> return true
                 else -> total += count
             }
         }

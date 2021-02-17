@@ -24,7 +24,7 @@ class PhoneLookupContentResolver(
     override fun convertCursorToContent(cursor: Cursor?): Array<Contact> = ArrayList<Contact>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {
             add(Contact(
-                    contactId = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
+                    id = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
                     name = getString(getColumnIndex(PhoneLookup.DISPLAY_NAME_PRIMARY)),
                     number = getString(getColumnIndex(PhoneLookup.NUMBER)),
                     photoUri = getString(getColumnIndex(PhoneLookup.PHOTO_URI)),

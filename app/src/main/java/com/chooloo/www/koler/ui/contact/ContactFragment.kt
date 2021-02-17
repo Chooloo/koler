@@ -21,11 +21,9 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     companion object {
         const val ARG_CONTACT_ID = "contact_id"
 
-        fun newInstance(contactId: Long): ContactFragment {
-            return ContactFragment().apply {
-                arguments = Bundle().apply {
-                    putLong(ARG_CONTACT_ID, contactId)
-                }
+        fun newInstance(contactId: Long) = ContactFragment().apply {
+            arguments = Bundle().apply {
+                putLong(ARG_CONTACT_ID, contactId)
             }
         }
     }
@@ -56,6 +54,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
                 contactImage.setImageURI(Uri.parse(it))
                 contactImage.visibility = VISIBLE
             }
+
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
@@ -70,19 +69,19 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     }
 
     override fun sms() {
-        _activity.smsNumber(_contact)
+        _activity.smsNumber(_contact.number)
     }
 
     override fun edit() {
-        _activity.editContact(_contact)
+        _activity.editContact(_contact.id)
     }
 
     override fun open() {
-        _activity.openContact(_contact)
+        _activity.openContact(_contact.id)
     }
 
     override fun delete() {
-        _activity.deleteContact(_contact)
+        _activity.deleteContact(_contact.id)
     }
 
     override fun animateLayout() {

@@ -10,11 +10,9 @@ class ContactBottomDialogFragment : BaseBottomSheetDialogFragment() {
     companion object {
         const val TAG = "contact_bottom_dialog_fragment"
 
-        fun newInstance(contactId: Long): ContactBottomDialogFragment {
-            return ContactBottomDialogFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(ARG_CONTACT_ID, contactId)
-                }
+        fun newInstance(contactId: Long) = ContactBottomDialogFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(ARG_CONTACT_ID, contactId)
             }
         }
     }
