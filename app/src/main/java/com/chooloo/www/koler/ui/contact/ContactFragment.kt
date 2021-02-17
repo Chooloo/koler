@@ -87,10 +87,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
 
     override fun animateLayout() {
         _binding.apply {
-            animateViews(arrayOf(
-                    contactTextName,
-                    contactTextNumber
-            ), 100, true)
+            animateViews(views = arrayOf(contactTextName, contactTextNumber), isShow = true)
         }
     }
 }

@@ -26,7 +26,7 @@ fun runLayoutAnimation(recyclerView: RecyclerView) {
     recyclerView.scheduleLayoutAnimation()
 }
 
-fun animateViews(views: Array<View>, delay: Int, isShow: Boolean) {
+fun animateViews(views: Array<View>, delay: Int=70, isShow: Boolean) {
     for (view in views) {
         view.visibility = View.INVISIBLE
     }
