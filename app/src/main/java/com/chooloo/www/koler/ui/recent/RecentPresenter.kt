@@ -12,14 +12,6 @@ class RecentPresenter<V : RecentMvpView> : BasePresenter<V>(), RecentMvpPresente
         mvpView?.sms()
     }
 
-    override fun onActionEdit() {
-        mvpView?.edit()
-    }
-
-    override fun onActionInfo() {
-        mvpView?.open()
-    }
-
     override fun onActionDelete() {
         mvpView?.delete()
     }

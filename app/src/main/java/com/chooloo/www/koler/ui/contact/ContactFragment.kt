@@ -70,7 +70,7 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     }
 
     override fun sms() {
-        _activity.smsContact(_contact)
+        _activity.smsNumber(_contact)
     }
 
     override fun edit() {

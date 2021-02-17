@@ -6,11 +6,11 @@ import java.io.Serializable
 import java.util.*
 
 data class Recent(
-        val callerNumber: String,
-        @CallType val callType: Int,
-        val callId: Long? = null,
-        val callDuration: String? = null,
-        val callDate: Date? = null,
+        val number: String,
+        @CallType val type: Int,
+        val id: Long = 0,
+        val duration: String? = null,
+        val date: Date? = null,
         val cachedName: String? = null,
 ) : Serializable {
 
@@ -26,6 +26,6 @@ data class Recent(
         const val TYPE_REJECTED = CallLog.Calls.REJECTED_TYPE
         const val TYPE_UNKNOWN = 6
 
-        val UNKNOWN = Recent(callerNumber = "Unknown", callType = TYPE_UNKNOWN)
+        val UNKNOWN = Recent(number = "Unknown", type = TYPE_UNKNOWN)
     }
 }

@@ -10,18 +10,10 @@ import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
-import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.entity.Contact
-import com.chooloo.www.koler.entity.Recent
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 
 const val PERMISSION_RC_WRITE_CONTACTS = 1
-
-fun Context.getRecentById(recentId: Long): Recent {
-    RecentsContentResolver(this, recentId).content.also {
-        return if (it.isNotEmpty()) it[0] else Recent.UNKNOWN
-    }
-}
 
 fun Context.getContactbyId(contactId: Long): Contact {
     PhoneContentResolver(this, contactId).content.also {
@@ -35,31 +27,31 @@ fun Context.lookupContact(number: String): Contact {
     }
 }
 
-fun Context.openContact(contact: Contact) {
+fun Context.openContact(contactId: Long) {
     startActivity(Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.withAppendedPath(Contacts.CONTENT_URI, contact.contactId.toString())
+        data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
     })
 }
 
-fun Context.addContact(contact: Contact) {
+fun Context.addContact(number: String) {
     startActivity(Intent(Intent.ACTION_INSERT).apply {
         type = Contacts.CONTENT_TYPE
-        putExtra(ContactsContract.Intents.Insert.PHONE, contact.number)
+        putExtra(ContactsContract.Intents.Insert.PHONE, number)
     })
 }
 
-fun Context.editContact(contact: Contact) {
+fun Context.editContact(contactId: Long) {
     startActivity(Intent(Intent.ACTION_EDIT, Contacts.CONTENT_URI).apply {
-        data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contact.contactId)
+        data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
     })
 }
 
-fun Context.deleteContact(contact: Contact) = runWithPermissions(WRITE_CONTACTS) {
-    val uri = Uri.withAppendedPath(Contacts.CONTENT_URI, contact.contactId.toString())
+fun Context.deleteContact(contactId: Long) = runWithPermissions(WRITE_CONTACTS) {
+    val uri = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
     contentResolver.delete(uri, null, null)
 }
 
-fun Context.smsContact(contact: Contact) {
-    val uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(contact.number)))
+fun Context.smsNumber(number: String) {
+    val uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
     startActivity(Intent(Intent.ACTION_SENDTO, uri))
 }
