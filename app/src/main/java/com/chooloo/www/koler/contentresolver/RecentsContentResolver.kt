@@ -9,23 +9,18 @@ import android.provider.CallLog
 import com.chooloo.www.koler.entity.Recent
 import java.util.*
 
-class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recent>>(context) {
+class RecentsContentResolver(
+        context: Context,
+        private val recentId: Long? = null,
+        private val number: String? = null,
+) : BaseContentResolver<Array<Recent>>(context) {
 
     override val requiredPermissions: Array<String>
         get() = arrayOf(READ_CALL_LOG, READ_VOICEMAIL)
 
-    override fun onGetUri(): Uri {
-        return CallLog.Calls.CONTENT_URI
-    }
-
-    override fun onGetFilterUri(): Uri {
-        return CallLog.Calls.CONTENT_FILTER_URI
-    }
-
-    override fun onGetSortOrder(): String {
-        return "${CallLog.Calls.DATE} DESC"
-    }
-
+    override fun onGetUri(): Uri = CallLog.Calls.CONTENT_URI
+    override fun onGetFilterUri(): Uri = CallLog.Calls.CONTENT_FILTER_URI
+    override fun onGetSortOrder() = "${CallLog.Calls.DATE} DESC"
     override fun onGetProjection() = arrayOf(
             CallLog.Calls._ID,
             CallLog.Calls.NUMBER,
@@ -35,6 +30,11 @@ class RecentsContentResolver(context: Context) : BaseContentResolver<Array<Recen
             CallLog.Calls.CACHED_NAME,
             CallLog.Calls.TYPE
     )
+
+    override fun onGetSelection() = SelectionBuilder()
+            .addSelection(CallLog.Calls._ID, recentId)
+            .addSelection(CallLog.Calls.NUMBER, number)
+            .build()
 
     override fun convertCursorToContent(cursor: Cursor?) = ArrayList<Recent>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {

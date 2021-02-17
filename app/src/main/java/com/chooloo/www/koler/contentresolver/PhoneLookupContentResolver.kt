@@ -11,14 +11,8 @@ class PhoneLookupContentResolver(
         private val number: String,
 ) : BaseContentResolver<Array<Contact>>(context) {
 
-    override fun onGetUri(): Uri {
-        return PhoneLookup.CONTENT_FILTER_URI.buildUpon().appendPath(number).build()
-    }
-
-    override fun onGetFilterUri(): Uri {
-        return PhoneLookup.CONTENT_FILTER_URI
-    }
-
+    override fun onGetUri(): Uri = PhoneLookup.CONTENT_FILTER_URI.buildUpon().appendPath(number).build()
+    override fun onGetFilterUri(): Uri = PhoneLookup.CONTENT_FILTER_URI
     override fun onGetProjection() = arrayOf(
             PhoneLookup.CONTACT_ID,
             PhoneLookup.DISPLAY_NAME_PRIMARY,

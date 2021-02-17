@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!-- header layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/list_item_header_layout"
         style="@style/Koler.ListItem.Layout"
@@ -26,13 +27,14 @@
             tools:text="A" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+    <!-- list item layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/list_item_person_layout"
         style="@style/Koler.ListItem.Layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- list item image -->
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/list_item_image"
             style="@style/Koler.Image.Profile.Small"
@@ -41,6 +43,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/Koler.Image.Profile.Small" />
 
+        <!-- list item big text -->
         <TextView
             android:id="@+id/list_item_big_text"
             style="@style/Koler.ListItem.Text.Big"
@@ -53,6 +56,7 @@
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Simta Kumta" />
 
+        <!-- list item small text -->
         <TextView
             android:id="@+id/list_item_small_text"
             style="@style/Koler.ListItem.Text.Small"

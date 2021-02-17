@@ -10,10 +10,18 @@ import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
+import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.entity.Recent
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 
 const val PERMISSION_RC_WRITE_CONTACTS = 1
+
+fun Context.getRecentById(recentId: Long): Recent {
+    RecentsContentResolver(this, recentId).content.also {
+        return if (it.isNotEmpty()) it[0] else Recent.UNKNOWN
+    }
+}
 
 fun Context.getContactbyId(contactId: Long): Contact {
     PhoneContentResolver(this, contactId).content.also {

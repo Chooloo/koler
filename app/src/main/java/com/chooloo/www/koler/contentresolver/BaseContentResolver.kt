@@ -68,4 +68,17 @@ abstract class BaseContentResolver<T>(
     abstract fun onGetFilterUri(): Uri
     abstract fun onGetProjection(): Array<String>?
     abstract fun convertCursorToContent(cursor: Cursor?): T
+
+    open inner class SelectionBuilder {
+        private val selections = arrayListOf<String>()
+
+        fun addSelection(key: String, value: Any?): SelectionBuilder {
+            value?.let { selections.add("$key = $value") }
+            return this
+        }
+
+        fun build(): String {
+            return selections.joinToString(separator = " AND ")
+        }
+    }
 }

@@ -13,22 +13,10 @@ class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Cont
     override val requiredPermissions: Array<String>
         get() = arrayOf(READ_CONTACTS)
 
-    override fun onGetUri(): Uri {
-        return Contacts.CONTENT_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
-    }
-
-    override fun onGetFilterUri(): Uri {
-        return Contacts.CONTENT_FILTER_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
-    }
-
-    override fun onGetSelection(): String {
-        return "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL"
-    }
-
-    override fun onGetSortOrder(): String {
-        return "${Contacts.SORT_KEY_PRIMARY} ASC"
-    }
-
+    override fun onGetUri(): Uri = Contacts.CONTENT_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
+    override fun onGetFilterUri(): Uri = Contacts.CONTENT_FILTER_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
+    override fun onGetSelection() = "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL"
+    override fun onGetSortOrder() = "${Contacts.SORT_KEY_PRIMARY} ASC"
     override fun onGetProjection() = arrayOf(
             Contacts._ID,
             Contacts.DISPLAY_NAME_PRIMARY,
