@@ -9,12 +9,9 @@ class DialpadBottomFragment : BaseBottomSheetDialogFragment() {
     companion object {
         const val ARG_DIALER = "is_dialer"
 
-        @JvmStatic
-        fun newInstance(isDialer: Boolean): DialpadBottomFragment {
-            return DialpadBottomFragment().apply {
-                arguments = Bundle().apply {
-                    putBoolean(ARG_DIALER, isDialer)
-                }
+        fun newInstance(isDialer: Boolean) = DialpadBottomFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_DIALER, isDialer)
             }
         }
     }
