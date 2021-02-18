@@ -19,7 +19,7 @@ import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment.Companion.newInsta
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.menu.MenuBottomFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
-import com.chooloo.www.koler.util.requestDefaultDialer
+import com.chooloo.www.koler.util.permissions.requestDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination

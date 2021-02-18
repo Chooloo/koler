@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.util
+package com.chooloo.www.koler.util.permissions
 
 import android.app.Activity
 import android.content.Context
@@ -8,7 +8,6 @@ import android.telecom.TelecomManager
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.util.permissions.PermissionsActivity
-import com.chooloo.www.koler.util.permissions.PermissionsListener
 import java.util.*
 
 const val RC_DEFAULT_DIALER = 0
@@ -17,26 +16,19 @@ const val RC_DEFAULT = 2
 
 // default dialer
 
-fun Context.isDefaultDialer(): Boolean {
-    return this.getSystemService(TelecomManager::class.java)?.defaultDialerPackage == this.applicationContext?.packageName
-}
+fun Context.isDefaultDialer() = this.getSystemService(TelecomManager::class.java)?.defaultDialerPackage == this.applicationContext?.packageName
 
 fun Activity.requestDefaultDialer() {
-    val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).apply {
+    startActivityForResult(Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).apply {
         putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, this@requestDefaultDialer.packageName)
-    }
-    startActivityForResult(intent, RC_DEFAULT_DIALER)
+    }, RC_DEFAULT_DIALER)
 }
 
 // general permissions
 
-fun Activity.hasSelfPermission(permission: String): Boolean {
-    return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-}
+fun Activity.hasSelfPermission(permission: String) = checkSelfPermisonsion(permission) == PackageManager.PERMISSION_GRANTED
 
-fun Activity.hasSelfPermissions(permissions: Array<String>): Boolean {
-    return permissions.all { hasSelfPermission(it) }
-}
+fun Activity.hasSelfPermissions(permissions: Array<String>) = permissions.all { hasSelfPermission(it) }
 
 fun Activity.requestPermissions(permissions: Array<String>) {
     ActivityCompat.requestPermissions(this, permissions, 0)

@@ -6,7 +6,7 @@ import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.livedata.ContactsProviderLiveData
 import com.chooloo.www.koler.ui.contact.ContactBottomDialogFragment
 import com.chooloo.www.koler.ui.list.ListFragment
-import com.chooloo.www.koler.util.runWithPermissions
+import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {

@@ -17,23 +17,25 @@ object RelativeTime {
         get() = Calendar.getInstance().time
 
     fun getTimeAgo(time: Long): String {
-        val timeMillis = if (time < 1000000000000L) time * 1000 else time
         val now = currentDate.time // get current time
+        val diff = now - time; // get the time difference between now and the given time
 
-        if (timeMillis > now || timeMillis <= 0) {
-            return "in the future"
+        if (diff < 0) {
+            return "In the future"; // if time is in the future
         }
 
-        val diff = now - timeMillis // get the time difference between now and the given time
+        // return a string according to time difference from now
         return when {
             diff < MINUTE_MILLIS -> "Moments ago"
             diff < 2 * MINUTE_MILLIS -> "A minute ago"
-            diff < 50 * MINUTE_MILLIS -> "${diff.div(MINUTE_MILLIS)} minutes ago"
-            diff < 90 * MINUTE_MILLIS -> "An hour ago"
-            diff < 24 * HOUR_MILLIS -> "${diff.div(HOUR_MILLIS)} hours ago"
-            diff < 48 * HOUR_MILLIS -> "Yesterday"
-            else -> DateFormatSymbols().shortMonths[DateFormat.format("MM", timeMillis).toString().toInt() - 1].toString() +
-                    DateFormat.format(" dd, hh:mm", timeMillis).toString()
+            diff < HOUR_MILLIS -> "${diff / MINUTE_MILLIS} minutes ago"
+            diff < 2 * HOUR_MILLIS -> "An hour ago"
+            diff < DAY_MILLIS -> "${diff / HOUR_MILLIS} hours ago"
+            diff < 2 * DAY_MILLIS -> "Yesterday"
+            else -> {
+                DateFormatSymbols().shortMonths[DateFormat.format("MM", time).toString().toInt() - 1].toString() +
+                        DateFormat.format(" dd, hh:mm", time).toString()
+            }
         }
     }
 }

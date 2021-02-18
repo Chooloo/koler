@@ -6,7 +6,7 @@ import com.chooloo.www.koler.entity.Recent
 import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentBottomDialogFragment
-import com.chooloo.www.koler.util.runWithPermissions
+import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {

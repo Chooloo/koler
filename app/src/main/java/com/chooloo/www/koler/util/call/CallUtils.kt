@@ -3,8 +3,8 @@ package com.chooloo.www.koler.util.call
 import android.content.Intent
 import android.net.Uri
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.isDefaultDialer
-import com.chooloo.www.koler.util.requestDefaultDialer
+import com.chooloo.www.koler.util.permissions.isDefaultDialer
+import com.chooloo.www.koler.util.permissions.requestDefaultDialer
 
 fun BaseActivity.call(number: String) {
     if (isDefaultDialer()) {

@@ -8,8 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import com.chooloo.www.koler.util.checkPermissions
-import com.chooloo.www.koler.util.hasSelfPermission
 
 class PermissionsActivity : Activity() {
     private lateinit var _allPermissions: Array<String>
