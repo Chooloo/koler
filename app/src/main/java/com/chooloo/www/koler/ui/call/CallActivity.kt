@@ -23,19 +23,7 @@ class CallActivity : BaseActivity(), CallMvpView {
     private val _audioManager by lazy { applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager }
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _bottomDialpadFragment by lazy { newInstance(false) }
-    private val _callCallback by lazy {
-        object : Call.Callback() {
-            override fun onStateChanged(call: Call, state: Int) {
-                super.onStateChanged(call, state)
-                _presenter.onStateChanged()
-            }
-
-            override fun onDetailsChanged(call: Call, details: Details) {
-                super.onDetailsChanged(call, details)
-                _presenter.onDetailsChanged()
-            }
-        }
-    }
+    private val _callCallback by lazy { CallCallback() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,5 +114,17 @@ class CallActivity : BaseActivity(), CallMvpView {
 
     override fun setAudioInCall() {
         _audioManager.mode = AudioManager.MODE_IN_CALL
+    }
+
+    inner class CallCallback : Call.Callback() {
+        override fun onStateChanged(call: Call, state: Int) {
+            super.onStateChanged(call, state)
+            _presenter.onStateChanged(state)
+        }
+
+        override fun onDetailsChanged(call: Call, details: Details) {
+            super.onDetailsChanged(call, details)
+            _presenter.onDetailsChanged(details)
+        }
     }
 }

@@ -76,7 +76,7 @@
             <!-- action hold -->
             <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/call_action_hold"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_play_arrow_black_24dp"
@@ -85,7 +85,7 @@
             <!-- action mute -->
             <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/call_action_mute"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_mic_off_black_24dp"
@@ -94,7 +94,7 @@
             <!-- action speaker -->
             <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/call_action_speaker"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:activatedIcon="@drawable/ic_volume_down_black_24dp"

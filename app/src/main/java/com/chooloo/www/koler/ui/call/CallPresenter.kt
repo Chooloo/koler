@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.call
 
+import android.telecom.Call
 import android.view.KeyEvent
 import com.chooloo.www.koler.ui.base.BasePresenter
 
@@ -37,11 +38,11 @@ class CallPresenter<V : CallMvpView> : BasePresenter<V>(), CallMvpPresenter<V> {
         mvpView?.pressDialpadKey(event.unicodeChar.toChar())
     }
 
-    override fun onDetailsChanged() {
-        mvpView?.updateDetails()
+    override fun onDetailsChanged(details: Call.Details) {
+        mvpView?.updateDetails(details)
     }
 
-    override fun onStateChanged() {
-        mvpView?.updateState()
+    override fun onStateChanged(state: Int) {
+        mvpView?.updateState(state)
     }
 }

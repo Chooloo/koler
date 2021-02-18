@@ -17,7 +17,6 @@ import androidx.core.app.NotificationManagerCompat;
 import com.chooloo.www.koler.R;
 import com.chooloo.www.koler.entity.Contact;
 import com.chooloo.www.koler.notification.NotificationActionReceiver;
-import com.chooloo.www.koler.util.call.CallManager;
 import com.chooloo.www.koler.ui.base.BaseActivity;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
@@ -81,7 +80,8 @@ public class OngoingCallActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             mNotificationEnabled = true;
-            Contact callerContact = CallManager.getContact(this);
+//            Contact callerContact = CallManager.getContact(this);
+            Contact callerContact = Contact.UNKNOWN;
             String callerName = callerContact.getName();
 
             Intent touchNotification = new Intent(this, OngoingCallActivity.class);

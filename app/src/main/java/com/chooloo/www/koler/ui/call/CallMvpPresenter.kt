@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.call
 
+import android.telecom.Call
 import android.view.KeyEvent
 import com.chooloo.www.koler.ui.base.MvpPresenter
 
@@ -16,7 +17,7 @@ interface CallMvpPresenter<V : CallMvpView> : MvpPresenter<V> {
     fun onSpeakerClick(isActivated: Boolean)
     fun onHoldClick(isActivated: Boolean)
     fun onDialpadKeyClick(keyCode: Int, event: KeyEvent)
-    
-    fun onDetailsChanged()
-    fun onStateChanged()
+
+    fun onDetailsChanged(details: Call.Details)
+    fun onStateChanged(state: Int)
 }
