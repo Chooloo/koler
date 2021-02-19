@@ -63,6 +63,5 @@ In Koler you can interact with incoming calls in new ways
   Decling the call while sending an SMS
 
 ## GET THE APP
- * Download it from the [Google Play Store](https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
 
