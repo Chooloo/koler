@@ -147,5 +147,6 @@
     <!-- content descriptions -->
     <string name="content_description_answer_button">Answer Button</string>
     <string name="content_description_reject_button">Reject Button</string>
+    <string name="content_description_call_actions_button">Call Actions</string>
 
 </resources>

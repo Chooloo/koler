@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.FragmentRecentBinding
-import com.chooloo.www.koler.entity.Recent
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.animateViews
 import com.chooloo.www.koler.util.call.call
@@ -18,9 +17,9 @@ import com.chooloo.www.koler.util.smsNumber
 
 class RecentFragment : BaseFragment(), RecentMvpView {
 
-    private lateinit var _presenter: RecentPresenter<RecentMvpView>
-    private lateinit var _recent: Recent
-    private lateinit var _binding: FragmentRecentBinding
+    private val _presenter: RecentMvpPresenter<RecentMvpView> by lazy { RecentPresenter() }
+    private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
+    private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
 
     companion object {
         const val ARG_RECENT_ID = "recent_id"
@@ -33,7 +32,6 @@ class RecentFragment : BaseFragment(), RecentMvpView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentRecentBinding.inflate(inflater)
         return _binding.root
     }
 
@@ -43,10 +41,7 @@ class RecentFragment : BaseFragment(), RecentMvpView {
     }
 
     override fun onSetup() {
-        _presenter = RecentPresenter()
         _presenter.attach(this)
-
-        _recent = _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID))
 
         _binding.apply {
             recentTextName.text = _recent.cachedName

@@ -23,7 +23,8 @@ class DialpadBottomFragment : BaseBottomSheetDialogFragment() {
         }
 
     override fun onSetup() {
-        _dialpadFragment = DialpadFragment.newInstance(argsSafely.getBoolean(ARG_DIALER))
-        putFragment(_dialpadFragment)
+        _dialpadFragment = DialpadFragment.newInstance(argsSafely.getBoolean(ARG_DIALER)).also {
+            putFragment(it)
+        }
     }
 }

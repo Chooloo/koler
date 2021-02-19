@@ -26,7 +26,7 @@ fun Activity.requestDefaultDialer() {
 
 // general permissions
 
-fun Activity.hasSelfPermission(permission: String) = checkSelfPermisonsion(permission) == PackageManager.PERMISSION_GRANTED
+fun Activity.hasSelfPermission(permission: String) = checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
 
 fun Activity.hasSelfPermissions(permissions: Array<String>) = permissions.all { hasSelfPermission(it) }
 

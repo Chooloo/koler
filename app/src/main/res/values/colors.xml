@@ -9,7 +9,7 @@
     <color name="color_secondary_dark">#72BEFF</color>
     <color name="color_error">#B00020</color>
 
-    <color name="green_phone">#66BB6A</color>
-    <color name="red_phone">#EF5350</color>
+    <color name="green_phone">#9966BB6A</color>
+    <color name="red_phone">#99EF5350</color>
     <color name="star_yellow">#FFEE00</color>
 </resources>

@@ -16,14 +16,13 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
 
     private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
     private lateinit var _presenter: ListMvpPresenter<ListMvpView>
-    private lateinit var _binding: FragmentItemsBinding
+    private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
     protected lateinit var listAdapter: A
 
     override val itemCount: Int
         get() = listAdapter.itemCount
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentItemsBinding.inflate(inflater)
         return _binding.root
     }
 

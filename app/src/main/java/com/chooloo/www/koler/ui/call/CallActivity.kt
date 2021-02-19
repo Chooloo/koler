@@ -9,7 +9,7 @@ import android.view.View
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment.Companion.newInstance
+import com.chooloo.www.koler.ui.callactions.CallActionsBottomFragment
 import com.chooloo.www.koler.util.ProximitySensor
 import com.chooloo.www.koler.util.call.CallManager
 import com.chooloo.www.koler.util.disableKeyboard
@@ -22,8 +22,8 @@ class CallActivity : BaseActivity(), CallMvpView {
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
     private val _audioManager by lazy { applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager }
     private val _proximitySensor by lazy { ProximitySensor(this) }
-    private val _bottomDialpadFragment by lazy { newInstance(false) }
     private val _callCallback by lazy { CallCallback() }
+    private val _bottomCallActionsFragment by lazy { CallActionsBottomFragment.newInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +38,9 @@ class CallActivity : BaseActivity(), CallMvpView {
         disableKeyboard()
 
         _binding.apply {
-            answerBtn.setOnClickListener { _presenter.onRejectClick() }
-            rejectBtn.setOnClickListener { _presenter.onAnswerClick() }
-            callActionAddCall.setOnClickListener { _presenter.onAddCallClick() }
-            callActionKeypad.setOnClickListener { _presenter.onKeypadClick() }
-            callActionKeypad.setOnClickListener { view -> _presenter.onMuteClick(view.isActivated) }
-            callActionSpeaker.setOnClickListener { view -> _presenter.onSpeakerClick(view.isActivated) }
-            callActionHold.setOnClickListener { view -> _presenter.onHoldClick(view.isActivated) }
+            callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
+            callRejectButton.setOnClickListener { _presenter.onRejectClick() }
+            callActionsButton.setOnClickListener { _presenter.onCallActionsClick() }
         }
     }
 
@@ -61,30 +57,6 @@ class CallActivity : BaseActivity(), CallMvpView {
 
     override fun reject() {
         CallManager.reject()
-    }
-
-    override fun addCall() {
-        // TODO implement
-    }
-
-    override fun toggleHold(isHold: Boolean) {
-        CallManager.hold(isHold)
-    }
-
-    override fun pressDialpadKey(keyChar: Char) {
-        CallManager.keypad(keyChar)
-    }
-
-    override fun toggleMute(isMute: Boolean) {
-        _audioManager.isMicrophoneMute = isMute
-    }
-
-    override fun toggleSpeaker(isSpeaker: Boolean) {
-        _audioManager.isSpeakerphoneOn = isSpeaker
-    }
-
-    override fun showDialpad() {
-        _bottomDialpadFragment.show(supportFragmentManager, _bottomDialpadFragment.tag)
     }
 
     override fun updateDetails(details: Details) {
@@ -114,6 +86,10 @@ class CallActivity : BaseActivity(), CallMvpView {
 
     override fun setAudioInCall() {
         _audioManager.mode = AudioManager.MODE_IN_CALL
+    }
+
+    override fun openCallActions() {
+        _bottomCallActionsFragment.show(supportFragmentManager, CallActionsBottomFragment.TAG)
     }
 
     inner class CallCallback : Call.Callback() {
