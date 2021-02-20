@@ -28,10 +28,6 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         super.onSetup()
 
         _presenter.attach(this)
-        _searchViewModel.apply {
-            number.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
-            text.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
-        }
 
         showEmptyPage(false)
         showNoPermissions(false)
@@ -43,11 +39,16 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions) {
+    override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions, {
         _contactsLiveData.observe(viewLifecycleOwner, listAdapter::updateContacts)
-    }
+        _searchViewModel.apply {
+            number.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
+            text.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
+        }
+    }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openContact(contact: Contact) {
-        ContactBottomDialogFragment.newInstance(contact.id).show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
+        ContactBottomDialogFragment.newInstance(contact.id)
+            .show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
     }
 }

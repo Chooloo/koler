@@ -10,8 +10,6 @@ import android.os.Bundle
 import android.provider.Settings
 
 class PermissionsActivity : Activity() {
-    private lateinit var _deniedPermissions: Array<String>
-    private lateinit var _deniedNonRationalPermissions: Array<String>
     private val _rationaleMessage by lazy { intent.getStringExtra(EXTRA_RATIONAL_MESSAGE) }
     private val _allPermissions by lazy { intent.getStringArrayExtra(EXTRA_PERMISSIONS) }
 
@@ -22,7 +20,9 @@ class PermissionsActivity : Activity() {
         const val EXTRA_RATIONAL_MESSAGE = "extra_rationale"
         const val EXTRA_PERMISSIONS = "extra_permissions"
 
-        var listener: PermissionsListener? = null
+        var sGrantedCallback: (() -> Unit)? = null
+        var sBlockedCallback: ((permissions: Array<String>) -> Unit)? = null
+        var sDeniedCallback: (() -> Unit)? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,16 +30,11 @@ class PermissionsActivity : Activity() {
         setFinishOnTouchOutside(true)
         window.statusBarColor = 0
 
-        _allPermissions.filter { !hasSelfPermission(it) }.also { denied ->
-            _deniedPermissions = denied.toTypedArray()
-            _deniedNonRationalPermissions =
-                denied.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
-        }
-
-        if (_deniedPermissions.isEmpty()) {
+        val deniedPermissions = _allPermissions.filter { !hasSelfPermission(it) }.toTypedArray()
+        if (deniedPermissions.isEmpty()) {
             onGranted()
         } else {
-            requestPermissions(_deniedPermissions, RC_PERMISSION)
+            requestPermissions(deniedPermissions, RC_PERMISSION)
         }
     }
 
@@ -48,65 +43,65 @@ class PermissionsActivity : Activity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (grantResults.isEmpty()) {
-            onDenied()
-            return
+        if (hasSelfPermissions(permissions as Array<String>)) {
+            onGranted()
         }
 
-        _deniedPermissions =
-            permissions.filterIndexed { index, _ -> checkGrantResult(grantResults[index]) }
-                .toTypedArray()
-        if (_deniedPermissions.isEmpty()) {
-            onGranted()
-            return
-        }
+        val deniedPermissions = permissions.filterIndexed { index, _ ->
+            grantResults[index] == PackageManager.PERMISSION_DENIED
+        }.toTypedArray()
 
         val blockedPermissions =
-            _deniedPermissions.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
-        val justBlockedPermissions =
-            blockedPermissions.filter { !_deniedNonRationalPermissions.contains(it) }.toTypedArray()
+            deniedPermissions.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
+
         when {
-            justBlockedPermissions.isNotEmpty() -> onJustBlocked(justBlockedPermissions)
-            _deniedPermissions.any { shouldShowRequestPermissionRationale(it) } -> onDenied() // just denied
-            listener?.onBlocked(blockedPermissions) == true -> sendToSettings() // blocked
-            else -> finish()
+            deniedPermissions.any { !blockedPermissions.contains(it) } -> onDenied() // just denied
+            else -> onBlocked(blockedPermissions) // blocked
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_SETTINGS && listener != null) {
-            checkPermissions(_allPermissions, null, listener)
+        if (requestCode == RC_SETTINGS) {
+            checkPermissions(
+                _allPermissions,
+                sGrantedCallback,
+                sDeniedCallback,
+                sBlockedCallback,
+                _rationaleMessage
+            )
         }
         super.finish()
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun finish() {
-        listener = null
+        sBlockedCallback = null
+        sGrantedCallback = null
+        sDeniedCallback = null
         super.finish()
     }
 
     private fun onGranted() {
-        val listener = listener
+        val callback = sGrantedCallback
         finish()
-        listener?.onGranted()
+        callback?.invoke()
     }
 
     private fun onDenied() {
-        val listener = listener
+        val callback = sDeniedCallback
         finish()
-        listener?.onDenied(_deniedPermissions)
+        callback?.invoke()
     }
 
-    private fun onJustBlocked(justBlockedPermissions: Array<String>) {
-        val listener = listener
+    private fun onBlocked(blockedPermissions: Array<String>) {
+        val callback = sBlockedCallback
         finish()
-        listener?.onJustBlocked(justBlockedPermissions)
+        callback?.invoke(blockedPermissions)
     }
 
-    private fun sendToSettings() {
+    private fun sendToSettings(message: String) {
         AlertDialog.Builder(this).setTitle("Required Permissions")
-            .setMessage(_rationaleMessage)
+            .setMessage(message)
             .setPositiveButton("Enable") { _, _ ->
                 Intent(
                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,

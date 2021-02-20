@@ -9,4 +9,8 @@ class RecentsPresenter<V : RecentsMvpView> : ListPresenter<V>(), RecentsMvpPrese
     }
 
     override fun onRecentItemLongClick(recent: Recent) {}
+    
+    override fun onPermissionsBlocked() {
+        mvpView?.showNoPermissions(true)
+    }
 }

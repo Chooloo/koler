@@ -29,11 +29,6 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
         _presenter.attach(this)
 
-        _searchViewModel.apply {
-            number.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
-            text.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
-        }
-
         showEmptyPage(false)
         showNoPermissions(false)
         observe()
@@ -44,9 +39,13 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions) {
+    override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions, {
         _recentsLiveData.observe(viewLifecycleOwner) { listAdapter.updateRecents(it) }
-    }
+        _searchViewModel.apply {
+            number.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
+            text.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
+        }
+    }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openRecent(recent: Recent) {
         RecentBottomDialogFragment.newInstance(recent.id)

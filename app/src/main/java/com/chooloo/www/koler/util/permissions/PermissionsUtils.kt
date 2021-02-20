@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.telecom.TelecomManager
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.chooloo.www.koler.util.permissions.PermissionsActivity
 
 const val RC_DEFAULT_DIALER = 0
 const val RC_READ_CONTACTS = 1
@@ -15,9 +14,8 @@ const val RC_DEFAULT = 2
 
 // default dialer
 
-fun Context.isDefaultDialer(): Boolean {
-    return this.getSystemService(TelecomManager::class.java)?.defaultDialerPackage == this.applicationContext?.packageName
-}
+fun Context.isDefaultDialer() =
+    this.getSystemService(TelecomManager::class.java)?.defaultDialerPackage == this.applicationContext?.packageName
 
 fun Activity.requestDefaultDialer() {
     startActivityForResult(Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).also {
@@ -27,49 +25,61 @@ fun Activity.requestDefaultDialer() {
 
 // general permissions
 
-fun Activity.hasSelfPermission(permission: String): Boolean {
-    return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-}
+fun Activity.hasSelfPermission(permission: String) =
+    checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
 
-fun Activity.hasSelfPermissions(permissions: Array<String>): Boolean {
-    return permissions.all { hasSelfPermission(it) }
-}
+fun Activity.hasSelfPermissions(permissions: Array<String>) =
+    permissions.all { hasSelfPermission(it) }
 
 fun Activity.requestPermissions(permissions: Array<String>) {
     ActivityCompat.requestPermissions(this, permissions, 0)
 }
 
+fun Fragment.runWithPermissions(
+    permissions: Array<String>,
+    grantedCallback: () -> Unit,
+    deniedCallback: (() -> Unit)? = null,
+    blockedCallback: ((permissions: Array<String>) -> Unit)? = null,
+    rationaleMessage: String? = null
+) = activity?.runWithPermissions(
+    permissions,
+    grantedCallback,
+    deniedCallback,
+    blockedCallback,
+    rationaleMessage
+)
+
 fun Activity.runWithPermissions(
     permissions: Array<String>,
-    callback: () -> Unit,
-    rationaleMessage: String? = null
-) {
-    checkPermissions(permissions, rationaleMessage, object : PermissionsListener() {
-        override fun onGranted() {
-            callback()
-        }
-    })
-}
-
-fun Fragment.runWithPermissions(permissions: Array<String>, callback: () -> Unit): Any? {
-    return activity?.runWithPermissions(permissions, callback)
-}
+    grantedCallback: () -> Unit,
+    deniedCallback: (() -> Unit)? = null,
+    blockedCallback: ((permissions: Array<String>) -> Unit)? = null,
+    rationaleMessage: String? = null,
+) = checkPermissions(
+    permissions,
+    grantedCallback,
+    deniedCallback,
+    blockedCallback,
+    rationaleMessage
+)
 
 fun Activity.checkPermissions(
     permissions: Array<String>,
-    rationaleMessage: String? = null,
-    permissionsListener: PermissionsListener? = null,
-) {
-//    if (permissions.all { checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED }) {
-//        permissionsListener?.onGrantedCallback?.invoke()
-//    } else {
-    PermissionsActivity.listener = permissionsListener
-    Intent(this, PermissionsActivity::class.java).also {
+    grantedCallback: (() -> Unit)? = null,
+    deniedCallback: (() -> Unit)? = null,
+    blockedCallback: ((permissions: Array<String>) -> Unit)? = null,
+    rationaleMessage: String? = null
+) = if (permissions.all { checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED }) {
+    grantedCallback?.invoke()
+} else {
+    PermissionsActivity.apply {
+        sGrantedCallback = grantedCallback
+        sBlockedCallback = blockedCallback
+        sDeniedCallback = deniedCallback
+    }
+    startActivity(Intent(this, PermissionsActivity::class.java).also {
         it.putExtra(PermissionsActivity.EXTRA_PERMISSIONS, permissions)
         it.putExtra(PermissionsActivity.EXTRA_RATIONAL_MESSAGE, rationaleMessage)
-        startActivity(it)
-    }
-//    }
-
+        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    })
 }
-
