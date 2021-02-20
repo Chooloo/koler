@@ -15,4 +15,6 @@ interface MvpView {
     fun showMessage(@StringRes stringResId: Int)
     fun showError(message: String)
     fun showError(@StringRes stringResId: Int)
+
+    fun getString(@StringRes resId: Int): String
 }

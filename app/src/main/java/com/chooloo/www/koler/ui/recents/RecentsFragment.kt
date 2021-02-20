@@ -11,30 +11,25 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
-    private lateinit var _searchViewModel: SearchViewModel
-    private lateinit var _recentsLiveData: RecentsProviderLiveData
-    private lateinit var _presenter: RecentsPresenter<RecentsMvpView>
+    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
+    private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
+    private val _presenter by lazy { RecentsPresenter<RecentsMvpView>() }
 
     companion object {
         fun newInstance(): RecentsFragment = RecentsFragment()
     }
 
-    override fun onGetAdapter(): RecentsAdapter {
-        return RecentsAdapter(_activity).apply {
-            setOnRecentItemClickListener { recent -> _presenter.onRecentItemClick(recent) }
-            setOnRecentItemLongClickListener { recent -> _presenter.onRecentItemLongClick(recent) }
-        }
+    override fun onGetAdapter() = RecentsAdapter(_activity).apply {
+        setOnRecentItemClickListener { recent -> _presenter.onRecentItemClick(recent) }
+        setOnRecentItemLongClickListener { recent -> _presenter.onRecentItemLongClick(recent) }
     }
 
     override fun onSetup() {
         super.onSetup()
 
-        _presenter = RecentsPresenter()
         _presenter.attach(this)
 
-        _recentsLiveData = RecentsProviderLiveData(_activity)
-
-        _searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java).apply {
+        _searchViewModel.apply {
             number.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
             text.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
         }
@@ -50,10 +45,11 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }
 
     override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions) {
-        _recentsLiveData.observe(viewLifecycleOwner, { recents -> listAdapter.updateRecents(recents) })
+        _recentsLiveData.observe(viewLifecycleOwner) { listAdapter.updateRecents(it) }
     }
 
     override fun openRecent(recent: Recent) {
-        RecentBottomDialogFragment.newInstance(recent.id).show(_activity.supportFragmentManager, RecentBottomDialogFragment.TAG)
+        RecentBottomDialogFragment.newInstance(recent.id)
+            .show(_activity.supportFragmentManager, RecentBottomDialogFragment.TAG)
     }
 }

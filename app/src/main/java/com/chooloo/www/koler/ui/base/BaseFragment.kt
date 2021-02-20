@@ -13,18 +13,13 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 
 abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
-    protected lateinit var _activity: BaseActivity
-
-    companion object {
-        private const val PERMISSION_RC = 10
-    }
+    protected val _activity by lazy { context as BaseActivity }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        _activity = context
         _activity.onAttachFragment(this)
     }
 
@@ -65,9 +60,6 @@ abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
         _activity.showError(getString(stringResId))
     }
 
-    protected val argsSafely: Bundle
-        get() = arguments ?: Bundle()
-
     override fun onPermissionGranted(response: PermissionGrantedResponse?) {
     }
 
@@ -76,4 +68,7 @@ abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
 
     override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
     }
+
+    protected val argsSafely: Bundle
+        get() = arguments ?: Bundle()
 }

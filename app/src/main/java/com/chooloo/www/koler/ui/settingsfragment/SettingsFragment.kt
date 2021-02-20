@@ -13,7 +13,7 @@ import timber.log.Timber
 import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
-    private lateinit var _presenter: SettingsPresenter<SettingsMvpView>
+    private val _presenter by lazy { SettingsPresenter<SettingsMvpView>() }
 
     companion object {
         fun newInstance(): SettingsFragment = SettingsFragment()
@@ -21,24 +21,55 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
 
     override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
         setPreferencesFromResource(R.xml.preference, rootKey)
-        findPreference<Preference>(getString(R.string.pref_app_color_key))?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-            _presenter.refresh()
-            _presenter.onListPreferenceChange(preference, newValue)
+        findPreference<Preference>(getString(R.string.pref_app_color_key))?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { preference, newValue ->
+                _presenter.refresh()
+                _presenter.onListPreferenceChange(preference, newValue)
+            }
+        findPreference<Preference>(getString(R.string.pref_app_theme_key))?.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { preference, newValue ->
+                _presenter.refresh()
+                _presenter.onListPreferenceChange(preference, newValue)
+            }
+        findPreference<Preference>(getString(R.string.pref_reject_call_timer_key))?.setOnPreferenceChangeListener { preference, newValue ->
+            _presenter.onListPreferenceChange(
+                preference,
+                newValue
+            )
         }
-        findPreference<Preference>(getString(R.string.pref_app_theme_key))?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-            _presenter.refresh()
-            _presenter.onListPreferenceChange(preference, newValue)
+        findPreference<Preference>(getString(R.string.pref_answer_call_timer_key))?.setOnPreferenceChangeListener { preference, newValue ->
+            _presenter.onListPreferenceChange(
+                preference,
+                newValue
+            )
         }
-        findPreference<Preference>(getString(R.string.pref_reject_call_timer_key))?.setOnPreferenceChangeListener { preference, newValue -> _presenter.onListPreferenceChange(preference, newValue) }
-        findPreference<Preference>(getString(R.string.pref_answer_call_timer_key))?.setOnPreferenceChangeListener { preference, newValue -> _presenter.onListPreferenceChange(preference, newValue) }
-        findPreference<Preference>(getString(R.string.pref_default_page_key))?.setOnPreferenceChangeListener { preference, newValue -> _presenter.onListPreferenceChange(preference, newValue) }
-        findPreference<Preference>(getString(R.string.pref_sim_select_key))?.setOnPreferenceChangeListener { preference, newValue -> _presenter.onListPreferenceChange(preference, newValue) }
-        findPreference<Preference>(getString(R.string.pref_is_biometric_key))?.setOnPreferenceChangeListener { preference, newValue -> _presenter.onSwitchPreferenceChange(preference, newValue) }
+        findPreference<Preference>(getString(R.string.pref_default_page_key))?.setOnPreferenceChangeListener { preference, newValue ->
+            _presenter.onListPreferenceChange(
+                preference,
+                newValue
+            )
+        }
+        findPreference<Preference>(getString(R.string.pref_sim_select_key))?.setOnPreferenceChangeListener { preference, newValue ->
+            _presenter.onListPreferenceChange(
+                preference,
+                newValue
+            )
+        }
+        findPreference<Preference>(getString(R.string.pref_is_biometric_key))?.setOnPreferenceChangeListener { preference, newValue ->
+            _presenter.onSwitchPreferenceChange(
+                preference,
+                newValue
+            )
+        }
 
         setupSimSelection()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         _presenter.onRequestPermissionResult(requestCode, grantResults)
     }
@@ -48,14 +79,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
         onSetup()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _presenter.detach()
+    override fun onSetup() {
+        _presenter.attach(this)
     }
 
-    override fun onSetup() {
-        _presenter = SettingsPresenter()
-        _presenter.attach(this)
+    override fun onDestroy() {
+        super.onDestroy()
+        _presenter.detach()
     }
 
     override fun setListPreferenceSummary(preference: Preference, newValue: Any) {
@@ -76,10 +106,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
 
     override fun setupSimSelection() {
         TODO("implement normally")
-        val simSelectionPreference = findPreference<ListPreference>(getString(R.string.pref_sim_select_key))
+        val simSelectionPreference =
+            findPreference<ListPreference>(getString(R.string.pref_sim_select_key))
 
         @SuppressLint("MissingPermission")
-        val subscriptionInfoList = activity?.getSystemService(SubscriptionManager::class.java)?.activeSubscriptionInfoList
+        val subscriptionInfoList =
+            activity?.getSystemService(SubscriptionManager::class.java)?.activeSubscriptionInfoList
         val simCount = subscriptionInfoList?.size
 
         if (simCount == 1) {

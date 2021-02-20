@@ -20,12 +20,6 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class DialpadFragment : BaseFragment(), DialpadMvpView {
 
-    override val isDialer = argsSafely.getBoolean(ARG_DIALER)
-    private var _onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)? = null
-    private lateinit var _presenter: DialpadMvpPresenter<DialpadMvpView>
-    private lateinit var _searchViewModel: SearchViewModel
-    private lateinit var _binding: FragmentDialpadBinding
-
     companion object {
         const val TAG = "dialpad_bottom_dialog_fragment"
         const val ARG_DIALER = "dialer"
@@ -39,35 +33,38 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
         }
     }
 
+    override val isDialer by lazy { argsSafely.getBoolean(ARG_DIALER) }
+    private val _presenter by lazy { DialpadPresenter<DialpadMvpView>() }
+    private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
+    private val _searchViewModel by lazy { ViewModelProvider(_activity).get(SearchViewModel::class.java) }
+    private var _onKeyDownListener: ((keyCode: Int, event: KeyEvent) -> Unit?)? = null
+
     override var number: String
         get() = _binding.dialpadEditText.text.toString()
-        set(value) = _binding.dialpadEditText.setText(value)
+        set(value) {
+            _binding.dialpadEditText.setText(value)
+        }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentDialpadBinding.inflate(inflater)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return _binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _presenter.detach()
-    }
-
     override fun onSetup() {
-        _presenter = DialpadPresenter()
         _presenter.attach(this)
 
-        _searchViewModel = ViewModelProvider(_activity).get(SearchViewModel::class.java)
-
         _binding.apply {
-            dialpadEditText.addTextChangedListener(PhoneNumberFormattingTextWatcher(resources.configuration.locales.get(0).toString()))
-            dialpadEditText.addTextChangedListener(
-                    beforeTextChanged = { _, _, _, _ -> },
-                    afterTextChanged = { },
-                    onTextChanged = { s, _, _, _ -> _presenter.onTextChanged(s.toString()) }
-            )
+            dialpadEditText.apply {
+                addTextChangedListener(PhoneNumberFormattingTextWatcher(resources.configuration.locales.get(0).toString()))
+                addTextChangedListener({ _, _, _, _ -> }, { s, _, _, _ -> _presenter.onTextChanged(s.toString()) }, {})
+            }
 
-            View.OnClickListener { view: View -> _presenter.onKeyClick((view as DialpadKey).keyCode) }.also {
+            key0.setOnLongClickListener { _presenter.onLongZeroClick() }
+            key1.setOnLongClickListener { _presenter.onLongOneClick() }
+            dialpadButtonDelete.setOnClickListener { _presenter.onDeleteClick() }
+            dialpadButtonDelete.setOnLongClickListener { _presenter.onLongDeleteClick() }
+            dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
+
+            View.OnClickListener { _presenter.onKeyClick((it as DialpadKey).keyCode) }.also {
                 key0.setOnClickListener(it)
                 key1.setOnClickListener(it)
                 key2.setOnClickListener(it)
@@ -81,12 +78,12 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
                 keyHex.setOnClickListener(it)
                 keyStar.setOnClickListener(it)
             }
-            key0.setOnLongClickListener { _presenter.onLongZeroClick() }
-            key1.setOnLongClickListener { _presenter.onLongOneClick() }
-            dialpadButtonDelete.setOnClickListener { _presenter.onDeleteClick() }
-            dialpadButtonDelete.setOnLongClickListener { _presenter.onLongDeleteClick() }
-            dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _presenter.detach()
     }
 
     override fun showDeleteButton(isShow: Boolean) {

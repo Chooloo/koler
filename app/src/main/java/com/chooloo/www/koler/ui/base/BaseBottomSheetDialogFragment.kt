@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpView {
 
     private lateinit var _binding: FragmentBottomDialogBinding
-    protected lateinit var _activity: BaseActivity
+    protected val _activity by lazy { context as BaseActivity }
     var isShown = false
 
     override fun onAttach(context: Context) {
@@ -21,7 +21,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        _activity = context
         _activity.onAttachFragment(this)
     }
 
@@ -88,5 +87,4 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     protected val argsSafely: Bundle
         get() = arguments
                 ?: throw IllegalArgumentException("Always create fragment with newInstance()")
-
 }

@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.util.permissions
 
 abstract class PermissionsListener {
-
     fun onDenied(deniedPermissions: Array<String>) {
     }
 

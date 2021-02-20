@@ -14,7 +14,11 @@ class DialpadEditText : AppCompatEditText {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int) : super(context, attrs, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    ) {
         maxLines = 1
         isSingleLine = true
         isCursorVisible = true

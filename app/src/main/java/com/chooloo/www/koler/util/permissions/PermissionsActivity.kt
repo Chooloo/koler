@@ -10,10 +10,10 @@ import android.os.Bundle
 import android.provider.Settings
 
 class PermissionsActivity : Activity() {
-    private lateinit var _allPermissions: Array<String>
     private lateinit var _deniedPermissions: Array<String>
     private lateinit var _deniedNonRationalPermissions: Array<String>
-    private var _rationaleMessage: String? = null
+    private val _rationaleMessage by lazy { intent.getStringExtra(EXTRA_RATIONAL_MESSAGE) }
+    private val _allPermissions by lazy { intent.getStringArrayExtra(EXTRA_PERMISSIONS) }
 
     companion object {
         private const val RC_PERMISSION = 6937
@@ -30,14 +30,10 @@ class PermissionsActivity : Activity() {
         setFinishOnTouchOutside(true)
         window.statusBarColor = 0
 
-        intent.also {
-            _rationaleMessage = it.getStringExtra(EXTRA_RATIONAL_MESSAGE)
-            _allPermissions = it.getStringArrayExtra(EXTRA_PERMISSIONS) ?: arrayOf()
-        }
-
         _allPermissions.filter { !hasSelfPermission(it) }.also { denied ->
             _deniedPermissions = denied.toTypedArray()
-            _deniedNonRationalPermissions = denied.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
+            _deniedNonRationalPermissions =
+                denied.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
         }
 
         if (_deniedPermissions.isEmpty()) {
@@ -47,20 +43,28 @@ class PermissionsActivity : Activity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         if (grantResults.isEmpty()) {
             onDenied()
             return
         }
 
-        _deniedPermissions = permissions.filterIndexed { index, _ -> checkGrantResult(grantResults[index]) }.toTypedArray()
+        _deniedPermissions =
+            permissions.filterIndexed { index, _ -> checkGrantResult(grantResults[index]) }
+                .toTypedArray()
         if (_deniedPermissions.isEmpty()) {
             onGranted()
             return
         }
 
-        val blockedPermissions = _deniedPermissions.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
-        val justBlockedPermissions = blockedPermissions.filter { !_deniedNonRationalPermissions.contains(it) }.toTypedArray()
+        val blockedPermissions =
+            _deniedPermissions.filter { !shouldShowRequestPermissionRationale(it) }.toTypedArray()
+        val justBlockedPermissions =
+            blockedPermissions.filter { !_deniedNonRationalPermissions.contains(it) }.toTypedArray()
         when {
             justBlockedPermissions.isNotEmpty() -> onJustBlocked(justBlockedPermissions)
             _deniedPermissions.any { shouldShowRequestPermissionRationale(it) } -> onDenied() // just denied
@@ -102,15 +106,18 @@ class PermissionsActivity : Activity() {
 
     private fun sendToSettings() {
         AlertDialog.Builder(this).setTitle("Required Permissions")
-                .setMessage(_rationaleMessage)
-                .setPositiveButton("Enable") { _, _ ->
-                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)).also {
-                        startActivityForResult(it, RC_SETTINGS)
-                    }
+            .setMessage(_rationaleMessage)
+            .setPositiveButton("Enable") { _, _ ->
+                Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", packageName, null)
+                ).also {
+                    startActivityForResult(it, RC_SETTINGS)
                 }
-                .setNegativeButton(R.string.cancel) { _, _ -> onDenied() }
-                .setOnCancelListener { onDenied() }
-                .create().show()
+            }
+            .setNegativeButton(R.string.cancel) { _, _ -> onDenied() }
+            .setOnCancelListener { onDenied() }
+            .create().show()
     }
 
     private fun checkGrantResult(grantResult: Int): Boolean {

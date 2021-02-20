@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.util
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -23,15 +22,18 @@ fun Context.getAttrColor(@AttrRes attrRes: Int): Int {
     return TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data
 }
 
-fun Context.getSelectableItemBackgroundDrawable(): Drawable? {
-    return ContextCompat.getDrawable(this, TypedValue().also { theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true) }.resourceId)
-}
+fun Context.getSelectableItemBackgroundDrawable() = ContextCompat.getDrawable(
+    this,
+    TypedValue().also {
+        theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
+    }.resourceId
+)
 
-fun Context.getSelectableItemBackgroundBorderlessDrawable(): Drawable? {
-    return ContextCompat.getDrawable(this, TypedValue().also { theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, it, true) }.resourceId)
-}
+fun Context.getSelectableItemBackgroundBorderlessDrawable() = ContextCompat.getDrawable(
+    this,
+    TypedValue().also {
+        theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, it, true)
+    }.resourceId
+)
 
-fun Context.sizeInDp(sizeInDp: Int): Int {
-    val scale: Float = resources.displayMetrics.density
-    return (sizeInDp * scale + 0.5f).toInt()
-}
+fun Context.sizeInDp(sizeInDp: Int) = (sizeInDp * resources.displayMetrics.density + 0.5f).toInt()

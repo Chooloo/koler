@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
 
 abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
-        protected val context: Context,
+    protected val context: Context,
 ) : LiveData<T>() {
     private val _contentResolver: C by lazy { onGetContentResolver() }
 

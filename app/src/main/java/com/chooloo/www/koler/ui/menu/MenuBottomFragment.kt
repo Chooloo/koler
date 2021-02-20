@@ -7,7 +7,9 @@ import com.chooloo.www.koler.ui.base.BaseBottomSheetDialogFragment
 import com.chooloo.www.koler.ui.menu.MenuFragment.Companion.ARG_MENU_LAYOUT
 
 class MenuBottomFragment : BaseBottomSheetDialogFragment() {
-    private lateinit var _menuFragment: MenuFragment
+    
+    private val _menuLayout by lazy { argsSafely.getInt(ARG_MENU_LAYOUT) }
+    private val _menuFragment by lazy { MenuFragment.newInstance(_menuLayout) }
     private var _onMenuItemClickListener: ((MenuItem) -> Unit?)? = null
 
     companion object {
@@ -19,10 +21,8 @@ class MenuBottomFragment : BaseBottomSheetDialogFragment() {
     }
 
     override fun onSetup() {
-        _menuFragment = MenuFragment.newInstance(argsSafely.getInt(ARG_MENU_LAYOUT)).apply {
-            setOnMenuItemClickListener(_onMenuItemClickListener)
-            putFragment(this)
-        }
+        _menuFragment.setOnMenuItemClickListener(_onMenuItemClickListener)
+        putFragment(_menuFragment)
     }
 
     fun setOnMenuItemClickListener(onMenuItemClickListener: ((MenuItem) -> Unit?)?) {

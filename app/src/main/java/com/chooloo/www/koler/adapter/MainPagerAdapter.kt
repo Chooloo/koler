@@ -5,7 +5,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 
-class MainPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+class MainPagerAdapter(
+    fragmentActivity: FragmentActivity
+) : FragmentStateAdapter(fragmentActivity) {
 
     override fun getItemCount() = 2
     override fun createFragment(position: Int) = when (position) {

@@ -3,19 +3,17 @@ package com.chooloo.www.koler.ui.about
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import com.chooloo.www.koler.BuildConfig
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivityAboutBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 
 class AboutActivity : BaseActivity(), AboutMvpView {
-    private lateinit var _presenter: AboutPresenter<AboutMvpView>
-    private lateinit var _binding: ActivityAboutBinding
+    private val _presenter: AboutMvpPresenter<AboutMvpView> by lazy { AboutPresenter() }
+    private val _binding by lazy { ActivityAboutBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(_binding.root)
     }
 
@@ -25,14 +23,12 @@ class AboutActivity : BaseActivity(), AboutMvpView {
     }
 
     override fun onSetup() {
-        _presenter = AboutPresenter()
         _presenter.attach(this)
 
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         _binding.apply {
-            cardGeneral.aboutVersion.setSmallText("" + BuildConfig.VERSION_NAME)
-            cardGeneral.aboutChangelog.setOnClickListener { _presenter.onChangelogClick() }
+            cardGeneral.aboutVersion.smallText = "" + BuildConfig.VERSION_NAME
             cardGeneral.aboutSource.setOnClickListener { _presenter.onOpenSourceClick() }
             cardDeveloper.aboutEmail.setOnClickListener { _presenter.onSendEmailClick() }
             cardSupport.aboutBugs.setOnClickListener { _presenter.onReportBugClick() }
@@ -53,7 +49,12 @@ class AboutActivity : BaseActivity(), AboutMvpView {
     }
 
     override fun reportBug() {
-        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_bug_reporting_url))))
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(getString(R.string.app_bug_reporting_url))
+            )
+        )
     }
 
     override fun rateApp() {

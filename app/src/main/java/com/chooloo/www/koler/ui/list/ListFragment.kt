@@ -14,10 +14,10 @@ import com.chooloo.www.koler.util.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(), ListMvpView {
 
-    private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
-    private lateinit var _presenter: ListMvpPresenter<ListMvpView>
+    protected val listAdapter by lazy { onGetAdapter() }
+    private val _presenter by lazy { ListPresenter<ListMvpView>() }
     private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
-    protected lateinit var listAdapter: A
+    private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
 
     override val itemCount: Int
         get() = listAdapter.itemCount
@@ -32,20 +32,15 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     }
 
     override fun onSetup() {
-        _presenter = ListPresenter()
         _presenter.attach(this)
 
-        listAdapter = onGetAdapter()
-
-        _binding.run {
-            itemsRecyclerView.apply {
-                adapter = listAdapter
-                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        _onScrollStateChangedListener?.invoke(newState)
-                    }
-                })
-            }
+        _binding.itemsRecyclerView.apply {
+            adapter = listAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    _onScrollStateChangedListener?.invoke(newState)
+                }
+            })
         }
 
         // TODO make this no permission handling better
@@ -55,15 +50,23 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     }
 
     override fun showEmptyPage(isShow: Boolean) {
-        _binding.emptyState.emptyTitle.text = getString(R.string.empty_list_no_results)
-        _binding.emptyState.emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
-        _binding.itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+        _binding.apply {
+            emptyState.apply {
+                emptyTitle.text = getString(R.string.empty_list_no_results)
+                emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
+            }
+            itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+        }
     }
 
     override fun showNoPermissions(isShow: Boolean) {
-        _binding.emptyState.emptyTitle.text = getString(R.string.empty_list_no_permissions)
-        _binding.emptyState.emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
-        _binding.itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+        _binding.apply {
+            emptyState.apply {
+                emptyTitle.text = getString(R.string.empty_list_no_permissions)
+                emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
+            }
+            itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+        }
     }
 
     override fun animateListView() {

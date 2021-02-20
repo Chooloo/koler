@@ -7,7 +7,7 @@ import android.database.Cursor
 import android.net.Uri
 
 abstract class BaseContentResolver<T>(
-        private val context: Context,
+    private val context: Context,
 ) : ContentResolver(context) {
 
     private var _filter: String? = null
@@ -37,11 +37,11 @@ abstract class BaseContentResolver<T>(
     }
 
     private fun queryContent() = context.contentResolver.query(
-            getUri(),
-            onGetProjection(),
-            onGetSelection(),
-            onGetSelectionArgs(),
-            onGetSortOrder()
+        getUri(),
+        onGetProjection(),
+        onGetSelection(),
+        onGetSelectionArgs(),
+        onGetSortOrder()
     )
 
     fun setFilter(filter: String?) {
@@ -77,8 +77,6 @@ abstract class BaseContentResolver<T>(
             return this
         }
 
-        fun build(): String {
-            return selections.joinToString(separator = " AND ")
-        }
+        fun build() = selections.joinToString(separator = " AND ")
     }
 }

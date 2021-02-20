@@ -9,7 +9,7 @@ import java.net.URLDecoder
 
 class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
     override fun onDialpadFabClick() {
-        mvpView?.showDialpad(true)
+        mvpView?.isDialpadVisible = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem) {
@@ -19,29 +19,23 @@ class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
         }
     }
 
-    override fun onBackPressed(): Boolean {
-        if (mvpView?.isDialpadShown == true) {
-            mvpView?.showDialpad(false)
-            return true
-        }
-        return false
-    }
-
     override fun onMenuClick() {
-        mvpView?.showMenu(true)
+        mvpView?.isMenuVisible = true
     }
 
     override fun onViewIntent(intent: Intent) {
         val intentText = try {
             URLDecoder.decode(intent.dataString, "utf-8")
         } catch (e: UnsupportedEncodingException) {
-            mvpView?.showError("An error occured when trying to get phone number :(")
+            mvpView?.showError("An error occurred when trying to get phone number :(")
             return
         }
 
         if (intentText.contains("tel:")) {
-            mvpView?.showDialpad(true)
-            mvpView?.dialpadNumber = intentText
+            mvpView?.apply {
+                isDialpadVisible = true
+                dialpadNumber = intentText
+            }
         } else {
             mvpView?.showError("No phone number detected")
         }

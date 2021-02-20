@@ -4,8 +4,6 @@ import android.os.Bundle
 import com.chooloo.www.koler.ui.base.BaseBottomSheetDialogFragment
 
 class DialpadBottomFragment : BaseBottomSheetDialogFragment() {
-    private lateinit var _dialpadFragment: DialpadFragment
-
     companion object {
         const val ARG_DIALER = "is_dialer"
 
@@ -16,6 +14,9 @@ class DialpadBottomFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
+    private val _isDialer by lazy { argsSafely.getBoolean(ARG_DIALER) }
+    private val _dialpadFragment by lazy { DialpadFragment.newInstance(_isDialer) }
+
     var number: String
         get() = _dialpadFragment.number
         set(value) {
@@ -23,8 +24,6 @@ class DialpadBottomFragment : BaseBottomSheetDialogFragment() {
         }
 
     override fun onSetup() {
-        _dialpadFragment = DialpadFragment.newInstance(argsSafely.getBoolean(ARG_DIALER)).also {
-            putFragment(it)
-        }
+        putFragment(_dialpadFragment)
     }
 }

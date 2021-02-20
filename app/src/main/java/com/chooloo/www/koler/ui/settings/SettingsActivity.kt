@@ -7,16 +7,16 @@ import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.settingsfragment.SettingsFragment
 
 class SettingsActivity : BaseActivity(), SettingsMvpView {
-    private lateinit var _binding: ActivitySettingsBinding
+    private val _binding by lazy { ActivitySettingsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(_binding.root)
     }
 
     override fun onSetup() {
-        supportFragmentManager.beginTransaction().replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT).commitNow()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT).commitNow()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

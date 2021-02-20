@@ -10,30 +10,39 @@ import com.chooloo.www.koler.entity.Contact
 
 class ContactsContentResolver(context: Context) : BaseContentResolver<Array<Contact>>(context) {
 
-    override val requiredPermissions: Array<String>
-        get() = arrayOf(READ_CONTACTS)
+    override val requiredPermissions = arrayOf(READ_CONTACTS)
 
-    override fun onGetUri(): Uri = Contacts.CONTENT_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
-    override fun onGetFilterUri(): Uri = Contacts.CONTENT_FILTER_URI.buildUpon().appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true").build()
+    override fun onGetUri(): Uri = Contacts.CONTENT_URI
+        .buildUpon()
+        .appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true")
+        .build()
+
+    override fun onGetFilterUri(): Uri = Contacts.CONTENT_FILTER_URI
+        .buildUpon()
+        .appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true")
+        .build()
+
     override fun onGetSelection() = "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL"
     override fun onGetSortOrder() = "${Contacts.SORT_KEY_PRIMARY} ASC"
     override fun onGetProjection() = arrayOf(
-            Contacts._ID,
-            Contacts.DISPLAY_NAME_PRIMARY,
-            Contacts.PHOTO_THUMBNAIL_URI,
-            Contacts.STARRED,
-            Contacts.LOOKUP_KEY
+        Contacts._ID,
+        Contacts.DISPLAY_NAME_PRIMARY,
+        Contacts.PHOTO_THUMBNAIL_URI,
+        Contacts.STARRED,
+        Contacts.LOOKUP_KEY
     )
 
     override fun convertCursorToContent(cursor: Cursor?) = ArrayList<Contact>().apply {
         while (cursor != null && cursor.moveToNext()) cursor.apply {
-            add(Contact(
+            add(
+                Contact(
                     id = getLong(getColumnIndex(Contacts._ID)),
                     name = getString(getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
                     photoUri = getString(getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI)),
                     starred = "1" == getString(getColumnIndex(Contacts.STARRED)),
                     lookupKey = getString(getColumnIndex(Contacts.LOOKUP_KEY))
-            ))
+                )
+            )
         }
         cursor?.close()
     }.toTypedArray()

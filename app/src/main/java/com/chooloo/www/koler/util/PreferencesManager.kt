@@ -17,7 +17,7 @@ import com.chooloo.www.koler.R
  * preferences at the same time.
  */
 class PreferencesManager(
-        private var _context: Context
+    private var _context: Context
 ) {
     private val _pref: SharedPreferences
 

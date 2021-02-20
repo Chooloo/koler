@@ -19,8 +19,8 @@ class CallService : InCallService() {
     }
 
     private fun goToCallActivity() {
-        val intent = Intent(this, CallActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+        startActivity(Intent(this, CallActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
     }
 }

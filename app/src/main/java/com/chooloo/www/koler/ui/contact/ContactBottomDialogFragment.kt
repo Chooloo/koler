@@ -5,7 +5,8 @@ import com.chooloo.www.koler.ui.base.BaseBottomSheetDialogFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
 
 class ContactBottomDialogFragment : BaseBottomSheetDialogFragment() {
-    private lateinit var _contactFragment: ContactFragment
+    private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
+    private val _contactFragment by lazy { ContactFragment.newInstance(_contactId) }
 
     companion object {
         const val TAG = "contact_bottom_dialog_fragment"
@@ -18,8 +19,6 @@ class ContactBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     override fun onSetup() {
-        _contactFragment = ContactFragment.newInstance(argsSafely.getLong(ARG_CONTACT_ID)).also {
-            putFragment(it)
-        }
+        putFragment(_contactFragment)
     }
 }

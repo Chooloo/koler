@@ -4,20 +4,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.FragmentContactBinding
-import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 
 class ContactFragment : BaseFragment(), ContactMvpView {
-
-    private lateinit var _presenter: ContactPresenter<ContactMvpView>
-    private lateinit var _contact: Contact
-    private lateinit var _binding: FragmentContactBinding
-
     companion object {
         const val ARG_CONTACT_ID = "contact_id"
 
@@ -28,8 +23,35 @@ class ContactFragment : BaseFragment(), ContactMvpView {
         }
     }
 
+    private val _presenter by lazy { ContactPresenter<ContactMvpView>() }
+    private val _contact by lazy { _activity.lookupContact(argsSafely.getLong(ARG_CONTACT_ID)) }
+    private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
+
+    override var contactName: String?
+        get() = _binding.contactTextName.text.toString()
+        set(value) {
+            _binding.contactTextName.text = value
+        }
+
+    override var contactNumber: String?
+        get() = _binding.contactTextNumber.text.toString()
+        set(value) {
+            _binding.contactTextNumber.apply {
+                text = value
+                visibility = if (value != null) VISIBLE else GONE
+            }
+        }
+
+    override var contactImage: Uri?
+        get() = null
+        set(value) {
+            _binding.contactImage.apply {
+                setImageURI(value)
+                visibility = if (value != null) VISIBLE else GONE
+            }
+        }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentContactBinding.inflate(inflater)
         return _binding.root
     }
 
@@ -39,22 +61,12 @@ class ContactFragment : BaseFragment(), ContactMvpView {
     }
 
     override fun onSetup() {
-        _presenter = ContactPresenter()
-        _presenter.attach(this)
-
-        _contact = _activity.getContactbyId(argsSafely.getLong(ARG_CONTACT_ID))
+        _presenter.apply {
+            attach(this@ContactFragment)
+            onLoadContact(_contact)
+        }
 
         _binding.apply {
-            contactTextName.text = _contact.name
-            _contact.number?.let {
-                contactTextNumber.text = it
-                contactTextNumber.visibility = VISIBLE
-            }
-            _contact.photoUri?.let {
-                contactImage.setImageURI(Uri.parse(it))
-                contactImage.visibility = VISIBLE
-            }
-
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
@@ -64,23 +76,23 @@ class ContactFragment : BaseFragment(), ContactMvpView {
         animateLayout()
     }
 
-    override fun call() {
+    override fun callContact() {
         _contact.number?.let { _activity.call(it) }
     }
 
-    override fun sms() {
+    override fun smsContact() {
         _activity.smsNumber(_contact.number)
     }
 
-    override fun edit() {
+    override fun editContact() {
         _activity.editContact(_contact.id)
     }
 
-    override fun open() {
+    override fun openContact() {
         _activity.openContact(_contact.id)
     }
 
-    override fun delete() {
+    override fun deleteContact() {
         _activity.deleteContact(_contact.id)
     }
 

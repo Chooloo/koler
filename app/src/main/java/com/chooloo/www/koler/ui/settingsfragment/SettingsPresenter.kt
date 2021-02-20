@@ -4,7 +4,6 @@ import androidx.preference.Preference
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class SettingsPresenter<V : SettingsMvpView> : BasePresenter<V>(), SettingsMvpPresenter<V> {
-
     override fun onRequestPermissionResult(requestCode: Int, grantResults: IntArray) {
         mvpView?.setupSimSelection()
     }

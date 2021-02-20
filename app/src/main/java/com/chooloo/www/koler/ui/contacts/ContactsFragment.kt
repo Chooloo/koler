@@ -11,13 +11,13 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
 
-    private lateinit var _searchViewModel: SearchViewModel
-    private lateinit var _contactsLiveData: ContactsProviderLiveData
-    private lateinit var _presenter: ContactsMvpPresenter<ContactsMvpView>
-
     companion object {
         fun newInstance() = ContactsFragment()
     }
+
+    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
+    private val _contactsLiveData by lazy { ContactsProviderLiveData(_activity) }
+    private val _presenter: ContactsMvpPresenter<ContactsMvpView> by lazy { ContactsPresenter() }
 
     override fun onGetAdapter() = ContactsAdapter().apply {
         setOnContactItemClick { contact -> _presenter.onContactItemClick(contact) }
@@ -27,12 +27,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     override fun onSetup() {
         super.onSetup()
 
-        _presenter = ContactsPresenter()
         _presenter.attach(this)
-
-        _contactsLiveData = ContactsProviderLiveData(_activity)
-
-        _searchViewModel = ViewModelProvider(requireActivity()).get(SearchViewModel::class.java).apply {
+        _searchViewModel.apply {
             number.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
             text.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
         }
@@ -42,8 +38,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         observe()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _presenter.detach()
     }
 

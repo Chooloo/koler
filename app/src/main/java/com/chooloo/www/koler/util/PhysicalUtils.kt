@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
 import android.os.Build
-import android.os.PowerManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.WindowManager
@@ -33,7 +32,10 @@ fun Activity.setShowWhenLocked() {
 
 fun Activity.disableKeyboard() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        (getSystemService(AppCompatActivity.KEYGUARD_SERVICE) as KeyguardManager).requestDismissKeyguard(this, null)
+        (getSystemService(AppCompatActivity.KEYGUARD_SERVICE) as KeyguardManager).requestDismissKeyguard(
+            this,
+            null
+        )
     } else {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
     }

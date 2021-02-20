@@ -55,7 +55,7 @@ class CallActionsFragment : BaseFragment(), CallActionsMvpView {
         _audioManager.isMicrophoneMute = isMute
     }
 
-    override fun pressKeypadKey(keyChar: Char) {
+    override fun applyCallKeypad(keyChar: Char) {
         CallManager.keypad(keyChar)
     }
 }

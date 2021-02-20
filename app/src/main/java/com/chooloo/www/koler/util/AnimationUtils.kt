@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.util
 
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
@@ -9,7 +10,16 @@ const val ANIMATION_DURATION = 500
 
 fun showView(view: View, isShow: Boolean) {
     view.visibility = if (isShow) View.VISIBLE else View.GONE
-    view.startAnimation(AnimationUtils.loadAnimation(view.context, if (isShow) R.anim.animation_fall_down_show else R.anim.animation_fall_down_hide))
+    view.startAnimation(
+        AnimationUtils.loadAnimation(
+            view.context,
+            if (isShow) {
+                R.anim.animation_fall_down_show
+            } else {
+                R.anim.animation_fall_down_hide
+            }
+        )
+    )
 }
 
 fun setFadeAnimation(view: View) {
@@ -21,20 +31,19 @@ fun setFadeUpAnimation(view: View) {
 }
 
 fun runLayoutAnimation(recyclerView: RecyclerView) {
-    recyclerView.layoutAnimation = AnimationUtils.loadLayoutAnimation(recyclerView.context, R.anim.layout_animation_fall_down)
+    recyclerView.layoutAnimation =
+        AnimationUtils.loadLayoutAnimation(recyclerView.context, R.anim.layout_animation_fall_down)
     recyclerView.adapter!!.notifyDataSetChanged()
     recyclerView.scheduleLayoutAnimation()
 }
 
-fun animateViews(views: Array<View>, delay: Int=70, isShow: Boolean) {
-    for (view in views) {
-        view.visibility = View.INVISIBLE
-    }
-    views.indices.forEach { i ->
-        val view = views[i]
+fun animateViews(views: Array<View>, delay: Int = 70, isShow: Boolean) {
+    views.forEach { it.visibility = INVISIBLE }
+    views.indices.forEach {
+        val view = views[it]
         view.postDelayed({
             view.visibility = View.VISIBLE
             showView(view, isShow)
-        }, i * delay.toLong())
+        }, it * delay.toLong())
     }
 }

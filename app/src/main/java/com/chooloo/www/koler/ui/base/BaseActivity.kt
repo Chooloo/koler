@@ -1,21 +1,19 @@
 package com.chooloo.www.koler.ui.base
 
-import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import com.chooloo.www.koler.util.PreferencesManager
-import com.google.android.material.snackbar.Snackbar
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 
-abstract class BaseActivity : AppCompatActivity(), MvpView {
-    protected var preferences: PreferencesManager? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        preferences = PreferencesManager.getInstance(this)
-    }
+abstract class BaseActivity : AppCompatActivity(), MvpView, PermissionListener {
+    protected val preferences by lazy { PreferencesManager.getInstance(this) }
 
     override fun onStart() {
         super.onStart()
@@ -31,7 +29,7 @@ abstract class BaseActivity : AppCompatActivity(), MvpView {
     }
 
     override fun askForPermission(permission: String, requestCode: Int?) {
-        Dexter.withActivity(this).withPermission(permission)
+        Dexter.withActivity(this).withPermission(permission).withListener(this)
     }
 
     override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
@@ -54,5 +52,14 @@ abstract class BaseActivity : AppCompatActivity(), MvpView {
 
     override fun showError(stringResId: Int) {
         showError(getString(stringResId))
+    }
+
+    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
+    }
+
+    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
+    }
+
+    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
     }
 }

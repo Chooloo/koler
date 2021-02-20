@@ -19,7 +19,11 @@ class IconButton : FloatingActionButton {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleRes: Int = 0
+    ) : super(context, attrs, defStyleRes) {
         context.obtainStyledAttributes(attrs, R.styleable.Koler_IconButton, defStyleRes, 0).also {
             _iconDefault = it.getResourceId(R.styleable.Koler_IconButton_icon, NO_ID)
             _iconOnClick = it.getResourceId(R.styleable.Koler_IconButton_activatedIcon, NO_ID)
@@ -34,8 +38,7 @@ class IconButton : FloatingActionButton {
         setOnClickListener {
             isActivated = !isActivated
             if (_iconOnClick != NO_ID) {
-                val iconRes = if (isActivated) _iconOnClick else _iconDefault
-                iconRes?.let { setImageResource(it) }
+                (if (isActivated) _iconOnClick else _iconDefault)?.let { setImageResource(it) }
             }
         }
     }

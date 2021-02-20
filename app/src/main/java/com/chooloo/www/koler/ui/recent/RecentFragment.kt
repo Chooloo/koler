@@ -31,7 +31,11 @@ class RecentFragment : BaseFragment(), RecentMvpView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return _binding.root
     }
 
@@ -48,7 +52,8 @@ class RecentFragment : BaseFragment(), RecentMvpView {
             recentTextDate.text = _recent.relativeTime
             recentTypeImage.apply {
                 visibility = VISIBLE
-                setImageDrawable(ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type)))
+                val drawable = ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type))
+                setImageDrawable(drawable)
             }
 
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
@@ -59,15 +64,15 @@ class RecentFragment : BaseFragment(), RecentMvpView {
         animateLayout()
     }
 
-    override fun call() {
+    override fun callRecent() {
         _recent.number.let { _activity.call(it) }
     }
 
-    override fun sms() {
+    override fun smsRecent() {
         _activity.smsNumber(_recent.number)
     }
 
-    override fun delete() {
+    override fun deleteRecent() {
         _activity.deleteRecent(_recent.id)
     }
 

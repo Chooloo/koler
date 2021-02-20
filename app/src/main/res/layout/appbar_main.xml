@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appbar_main"
     style="@style/Koler.Appbar.Layout"
     android:layout_width="match_parent"
@@ -17,29 +16,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tab_text_contacts"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/main_tab_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/contacts"
-                android:textAppearance="@style/Koler.Text.Headline3" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tab_text_recents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/tab_text_contacts"
-                android:background="?selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/recents"
-                android:textAppearance="@style/Koler.Text.Headline3"
-                tools:enabled="false"
-                tools:ignore="RelativeOverlap" />
+                app:tabIndicator="@null"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/Koler.Text.TabLayout" />
 
             <ImageView
                 android:id="@+id/main_menu_button"

@@ -20,7 +20,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Koler.Text.Subtitle1">
+    <style name="Koler.Text.Subtitle1" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">@dimen/subtitle_1</item>
     </style>
 
@@ -31,6 +31,11 @@
     <style name="Koler.Text.Caption">
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?android:textColorHint</item>
+    </style>
+
+    <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/headline_4</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- button -->
@@ -111,7 +116,6 @@
     </style>
 
     <style name="Koler.ListItem.Text.Big">
-        <item name="android:textStyle">bold</item>
         <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
         <item name="android:layout_marginStart">@dimen/list_item_padding</item>
     </style>

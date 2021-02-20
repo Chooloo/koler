@@ -15,7 +15,7 @@ import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 
 const val PERMISSION_RC_WRITE_CONTACTS = 1
 
-fun Context.getContactbyId(contactId: Long): Contact {
+fun Context.lookupContact(contactId: Long): Contact {
     PhoneContentResolver(this, contactId).content.also {
         return if (it.isNotEmpty()) it[0] else Contact.UNKNOWN
     }

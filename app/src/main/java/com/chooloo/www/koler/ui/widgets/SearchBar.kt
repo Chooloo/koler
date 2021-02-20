@@ -23,15 +23,24 @@ class SearchBar : TextInputLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleRes: Int = 0
+    ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
             hint = resources.getString(R.string.search_hint)
-            compoundDrawablePadding = resources.getDimension(R.dimen.search_bar_drawable_padding).toInt()
-            compoundDrawableTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
-            layoutParams = LayoutParams(MATCH_PARENT, resources.getDimension(R.dimen.search_bar_height).toInt())
+            compoundDrawablePadding =
+                resources.getDimension(R.dimen.search_bar_drawable_padding).toInt()
+            compoundDrawableTintList =
+                ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
+            layoutParams = LayoutParams(
+                MATCH_PARENT,
+                resources.getDimension(R.dimen.search_bar_height).toInt()
+            )
 
             setTextAppearance(R.style.Koler_Text_Subtitle1)
             setTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
@@ -40,9 +49,9 @@ class SearchBar : TextInputLayout {
             setPadding(context.sizeInDp(15), 0, context.sizeInDp(15), 0)
 
             addTextChangedListener(
-                    afterTextChanged = {},
-                    beforeTextChanged = { _, _, _, _ -> },
-                    onTextChanged = { text, _, _, _ -> _onTextChangedListener?.invoke(text.toString()) }
+                afterTextChanged = {},
+                beforeTextChanged = { _, _, _, _ -> },
+                onTextChanged = { text, _, _, _ -> _onTextChangedListener?.invoke(text.toString()) }
             )
         }.also {
             addView(it)
@@ -58,7 +67,12 @@ class SearchBar : TextInputLayout {
     }
 
     private fun showIcon(isShow: Boolean) {
-        _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(if (isShow) ContextCompat.getDrawable(context, R.drawable.ic_search_black_24dp) else null, null, null, null)
+        _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(
+            if (isShow) ContextCompat.getDrawable(
+                context,
+                R.drawable.ic_search_black_24dp
+            ) else null, null, null, null
+        )
     }
 
     fun setOnTextChangedListener(onTextChangedListener: ((text: String) -> Unit?)?) {

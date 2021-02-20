@@ -7,12 +7,12 @@ import java.io.Serializable
 import java.util.*
 
 data class Recent(
-        val number: String,
-        @CallType val type: Int,
-        val id: Long = 0,
-        val duration: String? = null,
-        val date: Date? = null,
-        val cachedName: String? = null,
+    val number: String,
+    @CallType val type: Int,
+    val id: Long = 0,
+    val duration: String? = null,
+    val date: Date? = null,
+    val cachedName: String? = null,
 ) : Serializable {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
@@ -32,4 +32,5 @@ data class Recent(
 
     val relativeTime: String?
         get() = date?.time?.let { getTimeAgo(it) }
+
 }

@@ -9,7 +9,6 @@ import java.net.URLDecoder
 
 object CallManager {
     var sCall: Call? = null
-    val state = sCall?.state ?: Call.STATE_CONNECTING
 
     fun answer() {
         sCall?.answer(VideoProfile.STATE_AUDIO_ONLY)
@@ -46,7 +45,8 @@ object CallManager {
 
     fun getContact(context: Context): Contact {
         return try {
-            val number = URLDecoder.decode(sCall?.details?.handle.toString(), "utf-8").replace("tel:", "")
+            val number =
+                URLDecoder.decode(sCall?.details?.handle.toString(), "utf-8").replace("tel:", "")
             if (number.contains("voicemail")) {
                 Contact.VOICEMAIL
             } else {

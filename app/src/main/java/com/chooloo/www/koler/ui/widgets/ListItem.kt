@@ -17,39 +17,62 @@ import com.chooloo.www.koler.util.getAttrColor
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
 
-    private var _binding: ListItemBinding
+    private val _binding by lazy {
+        ListItemBinding.inflate(LayoutInflater.from(context), this, true)
+    }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet? = null, defStyleRes: Int = 0) : super(context, attrs, defStyleRes) {
-        _binding = ListItemBinding.inflate(LayoutInflater.from(context), this, true)
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleRes: Int = 0
+    ) : super(context, attrs, defStyleRes) {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
         setImageBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
 
         context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
-            setBigText(it.getString(R.styleable.Koler_ListItem_bigText))
-            setSmallText(it.getString(R.styleable.Koler_ListItem_smallText))
-            setImageDrawable(it.getDrawable(R.styleable.Koler_ListItem_src))
-            setHeaderText(it.getString(R.styleable.Koler_ListItem_header))
+            bigText = it.getString(R.styleable.Koler_ListItem_bigText)
+            smallText = it.getString(R.styleable.Koler_ListItem_smallText)
+            imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
+            headerText = it.getString(R.styleable.Koler_ListItem_header)
 //            showHeader(_binding.listItemHeaderText.text != null)
         }
     }
 
-    fun setBigText(text: String?) {
-        _binding.listItemBigText.text = text ?: ""
-    }
-
-    fun setSmallText(text: String?) {
-        _binding.apply {
-            listItemSmallText.text = text ?: ""
-            listItemSmallText.visibility = if (text == null) GONE else VISIBLE
+    var bigText: String?
+        get() = _binding.listItemBigText.text.toString()
+        set(value) {
+            _binding.listItemBigText.text = value ?: ""
         }
-    }
 
-    fun setImageDrawable(image: Drawable?) {
-        _binding.listItemImage.setImageDrawable(image)
-    }
+    var smallText: String?
+        get() = _binding.listItemSmallText.text.toString()
+        set(value) {
+            _binding.listItemSmallText.apply {
+                text = value ?: ""
+                visibility = if (value == null) GONE else VISIBLE
+            }
+        }
+
+    var headerText: String?
+        get() = _binding.listItemHeaderText.text.toString()
+        set(value) {
+            _binding.listItemHeaderText.text = value
+        }
+
+    var isHeaderVisible: Boolean
+        get() = _binding.listItemHeaderLayout.visibility == VISIBLE
+        set(value) {
+            _binding.listItemHeaderLayout.visibility = if (value) VISIBLE else GONE
+        }
+
+    var imageDrawable: Drawable?
+        get() = _binding.listItemImage.drawable
+        set(value) {
+            _binding.listItemImage.setImageDrawable(value)
+        }
 
     fun setImageUri(image: Uri?) {
         _binding.listItemImage.setImageURI(image)
@@ -57,14 +80,6 @@ class ListItem : LinearLayout {
 
     fun setImageBackgroundColor(@ColorInt color: Int) {
         _binding.listItemImage.setBackgroundColor(color)
-    }
-
-    fun setHeaderText(headerText: String?) {
-        _binding.listItemHeaderText.text = headerText
-    }
-
-    fun showHeader(isShow: Boolean) {
-        _binding.listItemHeaderLayout.visibility = if (isShow) VISIBLE else GONE
     }
 
     override fun setOnClickListener(onClickListener: OnClickListener?) {

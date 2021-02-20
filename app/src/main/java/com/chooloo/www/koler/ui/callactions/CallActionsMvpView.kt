@@ -10,5 +10,5 @@ interface CallActionsMvpView : MvpView {
     fun toggleHold(isHold: Boolean)
     fun toggleSpeaker(isSpeaker: Boolean)
     fun toggleMute(isMute: Boolean)
-    fun pressKeypadKey(keyChar: Char)
+    fun applyCallKeypad(keyChar: Char)
 }

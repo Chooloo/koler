@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import timber.log.Timber
 
 abstract class CursorAdapter<VH : RecyclerView.ViewHolder?>(
-        protected var context: Context
+    protected var context: Context
 ) : RecyclerView.Adapter<VH>() {
 
-    @JvmField
-    protected var cursor: Cursor? = null
+    protected var _cursor: Cursor? = null
     protected var _dataSetObserver: DataSetObserver = object : DataSetObserver() {
         override fun onChanged() {
             super.onChanged()
@@ -24,32 +23,32 @@ abstract class CursorAdapter<VH : RecyclerView.ViewHolder?>(
         }
     }
 
-    override fun getItemCount(): Int {
-        return cursor?.count ?: 0
-    }
+    var cursor: Cursor?
+        get() = _cursor
+        set(value) {
+            if (value !== _cursor) {
+                if (_cursor != null) {
+                    unregisterDataSetObserver(_dataSetObserver)
+                    _cursor!!.close()
+                }
+                _cursor = value
+                registerDataSetObserver(_dataSetObserver)
+            }
+        }
+
+    override fun getItemCount() = _cursor?.count ?: 0
 
     override fun setHasStableIds(hasStableIds: Boolean) {
         super.setHasStableIds(true)
     }
 
-    fun setCursor(newCursor: Cursor) {
-        if (newCursor !== cursor) {
-            if (cursor != null) {
-                unregisterDataSetObserver(_dataSetObserver)
-                cursor!!.close()
-            }
-            cursor = newCursor
-            registerDataSetObserver(_dataSetObserver)
-        }
-    }
-
     private fun registerDataSetObserver(dataSetObserver: DataSetObserver) {
-        cursor?.registerDataSetObserver(dataSetObserver)
+        _cursor?.registerDataSetObserver(dataSetObserver)
     }
 
     private fun unregisterDataSetObserver(dataSetObserver: DataSetObserver) {
         try {
-            cursor?.unregisterDataSetObserver(dataSetObserver)
+            _cursor?.unregisterDataSetObserver(dataSetObserver)
         } catch (e: IllegalStateException) {
             Timber.e("CursorAdapter was not registered when trying to unregister")
         }

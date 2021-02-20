@@ -4,11 +4,11 @@ import com.chooloo.www.koler.ui.base.MvpView
 
 interface MainMvpView : MvpView {
     var dialpadNumber: String
-    val isDialpadShown: Boolean
+    var isDialpadVisible: Boolean
+    var isMenuVisible: Boolean
 
-    fun showDialpad(isShow: Boolean)
-    fun showMenu(isShow: Boolean)
     fun goToSettings()
     fun goToAbout()
     fun updateSearchViewModelText(text: String?)
+    fun checkIntent()
 }

@@ -12,16 +12,10 @@ open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
     private var _contacts: Array<Contact> = arrayOf()
     private var _onContactItemClickListener: ((Contact) -> Unit?)? = null
     private var _onContactItemLongClickListener: ((Contact) -> Unit)? = null
+    private var headersCounts: Array<Int> = arrayOf()
+    private var headers: Array<String> = arrayOf()
 
-    private val headersCounts: Array<Int>
-        get() = arrayOf()
-
-    private val headers: Array<String>
-        get() = arrayOf()
-
-    override fun getItemCount(): Int {
-        return _contacts.size
-    }
+    override fun getItemCount() = _contacts.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
         return ListItemHolder(parent.context)
@@ -30,9 +24,9 @@ open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val contact = _contacts.get(position)
         holder.listItem.apply {
-            setBigText(contact.name)
-            setHeaderText(getHeader(position))
-            showHeader(isFirstInHeader(position))
+            bigText = contact.name
+            headerText = getHeader(position)
+            isHeaderVisible = isFirstInHeader(position)
             contact.photoUri?.let { setImageUri(Uri.parse(it)) }
             setOnClickListener { _onContactItemClickListener?.invoke(contact) }
             setOnLongClickListener {

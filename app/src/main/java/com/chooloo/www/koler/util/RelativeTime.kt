@@ -33,7 +33,8 @@ object RelativeTime {
             diff < DAY_MILLIS -> "${diff / HOUR_MILLIS} hours ago"
             diff < 2 * DAY_MILLIS -> "Yesterday"
             else -> {
-                DateFormatSymbols().shortMonths[DateFormat.format("MM", time).toString().toInt() - 1].toString() +
+                DateFormatSymbols().shortMonths[DateFormat.format("MM", time).toString()
+                    .toInt() - 1].toString() +
                         DateFormat.format(" dd, hh:mm", time).toString()
             }
         }

@@ -6,11 +6,16 @@ import android.media.ToneGenerator
 import android.view.KeyEvent
 import java.util.*
 
+// Stream type used to play the DTMF tones off call, and mapped to the volume control keys
+private const val DIAL_TONE_STREAM_TYPE = AudioManager.STREAM_DTMF
 
-private const val DIAL_TONE_STREAM_TYPE = AudioManager.STREAM_DTMF // Stream type used to play the DTMF tones off call, and mapped to the volume control keys
-private const val TONE_RELATIVE_VOLUME = 80 // The DTMF tone volume relative to other sounds in the stream
-private const val TONE_LENGTH_MS = 150 // The length of DTMF tones in milliseconds
-val _toneGeneratorLock = Any()
+// The DTMF tone volume relative to other sounds in the stream
+private const val TONE_RELATIVE_VOLUME = 80
+
+// The length of DTMF tones in milliseconds
+private const val TONE_LENGTH_MS = 150
+
+val toneGeneratorLock = Any()
 
 fun Context.isPhoneSilent(): Boolean {
     val ringerMode = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).ringerMode
@@ -38,8 +43,11 @@ fun Context.isPhoneSilent(): Boolean {
  */
 fun Context.playTone(tone: Int, durationMs: Int) {
     if (tone != -1 && isPhoneSilent()) {
-        synchronized(_toneGeneratorLock) {
-            ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME).startTone(tone, durationMs) // Start the new tone (will stop any playing tone)
+        synchronized(toneGeneratorLock) {
+            ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME).startTone(
+                tone,
+                durationMs
+            ) // Start the new tone (will stop any playing tone)
         }
     }
 }
