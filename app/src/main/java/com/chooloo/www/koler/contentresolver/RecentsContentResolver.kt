@@ -27,8 +27,7 @@ class RecentsContentResolver(
         }
     }
 
-    override val requiredPermissions: Array<String>
-        get() = arrayOf(READ_CALL_LOG, READ_VOICEMAIL)
+    override val requiredPermissions: Array<String> = arrayOf(READ_CALL_LOG)
 
     override fun onGetUri(): Uri = CallLog.Calls.CONTENT_URI
     override fun onGetFilterUri(): Uri = CallLog.Calls.CONTENT_FILTER_URI

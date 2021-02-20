@@ -11,17 +11,17 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
-    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
-    private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
-    private val _presenter by lazy { RecentsPresenter<RecentsMvpView>() }
-
     companion object {
         fun newInstance(): RecentsFragment = RecentsFragment()
     }
 
+    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
+    private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
+    private val _presenter by lazy { RecentsPresenter<RecentsMvpView>() }
+
     override fun onGetAdapter() = RecentsAdapter(_activity).apply {
-        setOnRecentItemClickListener { recent -> _presenter.onRecentItemClick(recent) }
-        setOnRecentItemLongClickListener { recent -> _presenter.onRecentItemLongClick(recent) }
+        setOnRecentItemClickListener(_presenter::onRecentItemClick)
+        setOnRecentItemLongClickListener(_presenter::onRecentItemLongClick)
     }
 
     override fun onSetup() {
@@ -40,11 +40,12 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }
 
     override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions, {
-        _recentsLiveData.observe(viewLifecycleOwner) { listAdapter.updateRecents(it) }
+        _recentsLiveData.observe(viewLifecycleOwner, listAdapter::updateRecents)
         _searchViewModel.apply {
-            number.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
-            text.observe(viewLifecycleOwner) { _recentsLiveData.setFilter(it) }
+            number.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
+            text.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
         }
+        showNoPermissions(false)
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openRecent(recent: Recent) {

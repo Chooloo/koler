@@ -20,8 +20,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     private val _presenter: ContactsMvpPresenter<ContactsMvpView> by lazy { ContactsPresenter() }
 
     override fun onGetAdapter() = ContactsAdapter().apply {
-        setOnContactItemClick { contact -> _presenter.onContactItemClick(contact) }
-        setOnContactItemLongClickListener { contact -> _presenter.onContactItemLongClick(contact) }
+        setOnContactItemClick(_presenter::onContactItemClick)
+        setOnContactItemLongClickListener(_presenter::onContactItemLongClick)
     }
 
     override fun onSetup() {
@@ -42,9 +42,10 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions, {
         _contactsLiveData.observe(viewLifecycleOwner, listAdapter::updateContacts)
         _searchViewModel.apply {
-            number.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
-            text.observe(viewLifecycleOwner) { _contactsLiveData.setFilter(it) }
+            number.observe(viewLifecycleOwner, _contactsLiveData::setFilter)
+            text.observe(viewLifecycleOwner, _contactsLiveData::setFilter)
         }
+        showNoPermissions(false)
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openContact(contact: Contact) {

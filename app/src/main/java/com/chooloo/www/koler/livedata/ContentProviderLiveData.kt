@@ -10,8 +10,7 @@ abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
 ) : LiveData<T>() {
     private val _contentResolver: C by lazy { onGetContentResolver() }
 
-    val requiredPermissions: Array<String>
-        get() = _contentResolver.requiredPermissions
+    val requiredPermissions: Array<String> = _contentResolver.requiredPermissions
 
     override fun onActive() {
         _contentResolver.apply {
