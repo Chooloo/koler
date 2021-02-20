@@ -15,12 +15,6 @@ If you like the app and want us to fix and improve it, please consider giving us
 
 <img src="https://github.com/Chooloo/call_manage/blob/master/art/screenshots.png" height="250">
 
-<a href='https://play.google.com/store/apps/details?id=com.chooloo.www.callmanager&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
- <img alt='Get it on Google Play'
-      src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'
-      height="80"/>
-</a>
-
 ## Support Availablity
 We are aware the app needs more support and updates, due to feature requests and minor bugs
 We are currently not fully availale for supporting the app due to lack of support (The app is free to use)
