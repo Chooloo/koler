@@ -4,15 +4,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.entity.Recent
 import com.chooloo.www.koler.livedata.RecentsProviderLiveData
+import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListFragment
-import com.chooloo.www.koler.ui.recent.RecentBottomDialogFragment
+import com.chooloo.www.koler.ui.recent.RecentFragment
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
 
     companion object {
-        fun newInstance(): RecentsFragment = RecentsFragment()
+        fun newInstance() = RecentsFragment()
     }
 
     private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
@@ -49,7 +50,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openRecent(recent: Recent) {
-        RecentBottomDialogFragment.newInstance(recent.id)
-            .show(_activity.supportFragmentManager, RecentBottomDialogFragment.TAG)
+        BottomFragment.newInstance(RecentFragment.newInstance(recent.id))
+            .show(_activity.supportFragmentManager, RecentFragment.TAG)
     }
 }

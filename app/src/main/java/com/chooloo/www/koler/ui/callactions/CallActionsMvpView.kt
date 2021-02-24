@@ -4,7 +4,7 @@ import com.chooloo.www.koler.ui.base.MvpView
 
 interface CallActionsMvpView : MvpView {
     fun addCall()
-    fun openKeypad()
+    fun openDialpad()
     fun startRecording()
     fun stopRecording()
     fun toggleHold(isHold: Boolean)

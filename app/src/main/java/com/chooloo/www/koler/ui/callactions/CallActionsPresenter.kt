@@ -4,7 +4,7 @@ import com.chooloo.www.koler.ui.base.BasePresenter
 
 class CallActionsPresenter<V : CallActionsMvpView> : BasePresenter<V>(), CallActionsMvpPresenter<V> {
     override fun onKeypadClick() {
-        mvpView?.openKeypad()
+        mvpView?.openDialpad()
     }
 
     override fun onAddCallClick() {

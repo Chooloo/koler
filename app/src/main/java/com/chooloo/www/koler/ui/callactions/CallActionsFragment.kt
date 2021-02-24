@@ -8,19 +8,24 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.databinding.FragmentCallActionsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.util.call.CallManager
 
 class CallActionsFragment : BaseFragment(), CallActionsMvpView {
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
-    private val _bottomDialpadFragment by lazy { DialpadBottomFragment.newInstance(false) }
+    private val _dialpadFragment by lazy { DialpadFragment.newInstance(false) }
     private val _audioManager by lazy { _activity.getSystemService(AppCompatActivity.AUDIO_SERVICE) as AudioManager }
 
     companion object {
         fun newInstance() = CallActionsFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return _binding.root
     }
 
@@ -31,8 +36,9 @@ class CallActionsFragment : BaseFragment(), CallActionsMvpView {
         TODO("Not yet implemented")
     }
 
-    override fun openKeypad() {
-        _bottomDialpadFragment.show(_activity.supportFragmentManager, _bottomDialpadFragment.tag)
+    override fun openDialpad() {
+        BottomFragment.newInstance(_dialpadFragment)
+            .show(_activity.supportFragmentManager, DialpadFragment.TAG)
     }
 
     override fun startRecording() {

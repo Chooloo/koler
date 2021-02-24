@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.fragment.app.FragmentManager
 import com.chooloo.www.koler.databinding.FragmentBottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpView {
+class BottomFragment(
+    private val fragment: BaseFragment
+) : BottomSheetDialogFragment(), MvpView {
 
     private lateinit var _binding: FragmentBottomDialogBinding
-    protected val _activity by lazy { context as BaseActivity }
-    var isShown = false
+    private val _activity by lazy { context as BaseActivity }
 
+    companion object {
+        fun newInstance(fragment: BaseFragment) = BottomFragment(fragment)
+    }
+
+    //region lifecycle
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context !is BaseActivity) {
@@ -24,7 +29,11 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         _activity.onAttachFragment(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentBottomDialogBinding.inflate(inflater, container, false)
         return _binding.root
     }
@@ -34,20 +43,12 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
         onSetup()
     }
 
-    override fun show(manager: FragmentManager, tag: String?) {
-        if (!isShown) {
-            super.show(manager, tag)
-            isShown = true
-        }
+    override fun onSetup() {
+        putFragment(fragment)
     }
+    //endregion
 
-    override fun dismiss() {
-        if (isShown) {
-            super.dismiss()
-            isShown = false
-        }
-    }
-
+    //region permissions
     override fun hasPermission(permission: String): Boolean {
         return false
     }
@@ -63,7 +64,9 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
         requestPermissions(permissions, requestCode ?: 1)
     }
+    //endregion
 
+    //region messages
     override fun showMessage(message: String) {
         _activity.showMessage(message)
     }
@@ -79,12 +82,14 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), MvpV
     override fun showError(@StringRes stringResId: Int) {
         _activity.showError(getString(stringResId))
     }
+    //endregion
 
-    protected fun putFragment(fragment: BaseFragment) {
-        childFragmentManager.beginTransaction().replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
+    private fun putFragment(fragment: BaseFragment) {
+        childFragmentManager.beginTransaction()
+            .replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
 
-    protected val argsSafely: Bundle
+    private val argsSafely: Bundle
         get() = arguments
-                ?: throw IllegalArgumentException("Always create fragment with newInstance()")
+            ?: throw IllegalArgumentException("Always create fragment with newInstance()")
 }

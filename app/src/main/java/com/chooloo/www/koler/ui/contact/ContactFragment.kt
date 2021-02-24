@@ -14,6 +14,7 @@ import com.chooloo.www.koler.util.call.call
 
 class ContactFragment : BaseFragment(), ContactMvpView {
     companion object {
+        const val TAG = "contact_fragment"
         const val ARG_CONTACT_ID = "contact_id"
 
         fun newInstance(contactId: Long) = ContactFragment().apply {
@@ -51,7 +52,11 @@ class ContactFragment : BaseFragment(), ContactMvpView {
             }
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return _binding.root
     }
 

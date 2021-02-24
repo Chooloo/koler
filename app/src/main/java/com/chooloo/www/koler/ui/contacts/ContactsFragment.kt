@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.livedata.ContactsProviderLiveData
-import com.chooloo.www.koler.ui.contact.ContactBottomDialogFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
@@ -49,7 +50,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openContact(contact: Contact) {
-        ContactBottomDialogFragment.newInstance(contact.id)
-            .show(_activity.supportFragmentManager, ContactBottomDialogFragment.TAG)
+        BottomFragment.newInstance(ContactFragment.newInstance(contact.id)).apply {
+            show(_activity.supportFragmentManager, ContactFragment.TAG)
+        }
     }
 }

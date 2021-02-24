@@ -13,6 +13,7 @@ class MenuFragment : ListFragment<MenuAdapter>(), MenuMvpView {
     private var _onMenuItemClickListener: ((MenuItem) -> Unit?)? = null
 
     companion object {
+        const val TAG = "menu_fragment"
         const val ARG_MENU_LAYOUT = "menu_layout"
 
         fun newInstance(@MenuRes menuLayout: Int) = MenuFragment().apply {

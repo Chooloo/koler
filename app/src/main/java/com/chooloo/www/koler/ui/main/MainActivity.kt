@@ -13,9 +13,9 @@ import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.ActivityMainBinding
 import com.chooloo.www.koler.ui.about.AboutActivity
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.dialpad.DialpadBottomFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.ui.menu.MenuBottomFragment
+import com.chooloo.www.koler.ui.menu.MenuFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.permissions.requestDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
@@ -26,30 +26,14 @@ class MainActivity : BaseActivity(), MainMvpView {
 
     private val _presenter by lazy { MainPresenter<MainMvpView>() }
     private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val _dialpadBottomFragment by lazy { DialpadBottomFragment.newInstance(true) }
-    private val _menuBottomFragment by lazy { MenuBottomFragment.newInstance(R.menu.main_actions) }
+    private val _dialpadFragment by lazy { DialpadFragment.newInstance(true) }
+    private val _menuFragment by lazy { MenuFragment.newInstance(R.menu.main_actions) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
     override var dialpadNumber: String
-        get() = _dialpadBottomFragment.number
+        get() = _dialpadFragment.number
         set(value) {
-            _dialpadBottomFragment.number = value
-        }
-
-    override var isDialpadVisible: Boolean
-        get() = _dialpadBottomFragment.isShown
-        set(value) {
-            _dialpadBottomFragment.apply {
-                if (value) show(supportFragmentManager, DialpadFragment.TAG) else dismiss()
-            }
-        }
-
-    override var isMenuVisible: Boolean
-        get() = _menuBottomFragment.isShown
-        set(value) {
-            _menuBottomFragment.apply {
-                if (value) show(supportFragmentManager, "main_menu_fragment") else dismiss()
-            }
+            _dialpadFragment.number = value
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +65,7 @@ class MainActivity : BaseActivity(), MainMvpView {
     override fun onSetup() {
         _presenter.attach(this)
 
-        _menuBottomFragment.setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
+        _menuFragment.setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
 
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
@@ -97,6 +81,15 @@ class MainActivity : BaseActivity(), MainMvpView {
 
         requestDefaultDialer()
         checkIntent()
+    }
+
+    override fun openDialpad() {
+        BottomFragment.newInstance(_dialpadFragment)
+            .show(supportFragmentManager, DialpadFragment.TAG)
+    }
+
+    override fun openMenu() {
+        BottomFragment.newInstance(_menuFragment).show(supportFragmentManager, MenuFragment.TAG)
     }
 
     override fun goToSettings() {

@@ -22,6 +22,7 @@ class RecentFragment : BaseFragment(), RecentMvpView {
     private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
 
     companion object {
+        const val TAG = "recent_fragment"
         const val ARG_RECENT_ID = "recent_id"
 
         fun newInstance(recentId: Long) = RecentFragment().apply {

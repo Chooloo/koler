@@ -5,11 +5,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.telecom.Call
 import android.telecom.Call.Details
-import android.view.View.VISIBLE
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.callactions.CallActionsBottomFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 import com.chooloo.www.koler.util.ProximitySensor
 import com.chooloo.www.koler.util.call.CallManager
 import com.chooloo.www.koler.util.disableKeyboard
@@ -21,7 +21,8 @@ class CallActivity : BaseActivity(), CallMvpView {
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
     private val _presenter: CallMvpPresenter<CallMvpView> by lazy { CallPresenter() }
-    private val _bottomCallActionsFragment by lazy { CallActionsBottomFragment.newInstance() }
+    private val _callActionsFragment by lazy { CallActionsFragment.newInstance() }
+    private val _bottomCallActionsFragment by lazy { BottomFragment.newInstance(_callActionsFragment) }
     private val _audioManager by lazy { applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager }
 
     override var status: String?
@@ -36,7 +37,7 @@ class CallActivity : BaseActivity(), CallMvpView {
             _binding.callNameText.text = value
         }
 
-    override var callerImage:Uri?
+    override var callerImage: Uri?
         get() = null
         set(value) {
             _binding.callImage.setImageURI(value)
