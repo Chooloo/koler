@@ -34,7 +34,8 @@
     </style>
 
     <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">@dimen/headline_4</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">@dimen/headline_3</item>
         <item name="android:textStyle">bold</item>
     </style>
 
