@@ -35,11 +35,16 @@ class IconButton : FloatingActionButton {
         backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
 
         setImageDrawable(_iconDefault?.let { getDrawable(context, it) })
-        setOnClickListener {
+        setOnClickListener {}
+    }
+
+    override fun setOnClickListener(l: OnClickListener?) {
+        super.setOnClickListener {
             isActivated = !isActivated
             if (_iconOnClick != NO_ID) {
                 (if (isActivated) _iconOnClick else _iconDefault)?.let { setImageResource(it) }
             }
+            l?.onClick(it)
         }
     }
 }

@@ -9,7 +9,6 @@ interface CallMvpView : MvpView {
     var callerNameText: String?
     var callerImageURI: Uri?
 
-    fun setAudioInCall()
     fun getContact(number: String): Contact
     fun switchToActiveCallUI()
 }

@@ -1,8 +1,18 @@
 package com.chooloo.www.koler.ui.callactions
 
+import android.view.KeyEvent
 import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.util.call.CallManager
 
-class CallActionsPresenter<V : CallActionsMvpView> : BasePresenter<V>(), CallActionsMvpPresenter<V> {
+class CallActionsPresenter<V : CallActionsMvpView> :
+    BasePresenter<V>(),
+    CallActionsMvpPresenter<V> {
+
+    private var _isMuted = false
+    private var _isSpeaker = false
+    private var _isRecording = false
+    private var _isHolding = false
+
     override fun onKeypadClick() {
         mvpView?.openDialpad()
     }
@@ -11,19 +21,33 @@ class CallActionsPresenter<V : CallActionsMvpView> : BasePresenter<V>(), CallAct
         mvpView?.addCall()
     }
 
-    override fun onHoldClick(isActivated: Boolean) {
-        mvpView?.toggleHold(!isActivated)
+    override fun onHoldClick() {
+        _isHolding = !_isHolding.also {
+            CallManager.hold(!it)
+        }
     }
 
-    override fun onMuteClick(isActivated: Boolean) {
-        mvpView?.toggleMute(!isActivated)
+    override fun onMuteClick() {
+        _isMuted = !_isMuted.also {
+            mvpView?.toggleMute(!it)
+        }
     }
 
-    override fun onRecordClick(isActivated: Boolean) {
-        mvpView?.startRecording()
+    override fun onRecordClick() {
+        if (_isRecording) {
+            mvpView?.stopRecording()
+        } else {
+            mvpView?.startRecording()
+        }
     }
 
-    override fun onSpeakerClick(isActivated: Boolean) {
-        mvpView?.stopRecording()
+    override fun onSpeakerClick() {
+        _isSpeaker = !_isSpeaker.also {
+            mvpView?.toggleSpeaker(!it)
+        }
+    }
+
+    override fun onKeypadKey(keyCode: Int, event: KeyEvent) {
+        CallManager.keypad(event.number)
     }
 }

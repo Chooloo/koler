@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
     </ConstraintSet>
+
     <ConstraintSet android:id="@+id/active_call">
         <Constraint
             android:id="@+id/call_reject_button"

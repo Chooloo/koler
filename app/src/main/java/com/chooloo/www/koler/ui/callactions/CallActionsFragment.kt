@@ -1,25 +1,25 @@
 package com.chooloo.www.koler.ui.callactions
 
 import android.media.AudioManager
+import android.media.AudioManager.MODE_IN_CALL
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.databinding.FragmentCallActionsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.util.call.CallManager
 
 class CallActionsFragment : BaseFragment(), CallActionsMvpView {
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
+    private val _presenter by lazy { CallActionsPresenter<CallActionsMvpView>() }
     private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(false)) }
     private val _audioManager by lazy { _activity.getSystemService(AppCompatActivity.AUDIO_SERVICE) as AudioManager }
 
     companion object {
-        const val TAG = "call_actions_fragment"
-
         fun newInstance() = CallActionsFragment()
     }
 
@@ -32,6 +32,18 @@ class CallActionsFragment : BaseFragment(), CallActionsMvpView {
     }
 
     override fun onSetup() {
+        _presenter.attach(this)
+
+        _binding.apply {
+            callActionHold.setOnClickListener { _presenter.onHoldClick() }
+            callActionAddCall.setOnClickListener { _presenter.onAddCallClick() }
+            callActionKeypad.setOnClickListener { _presenter.onKeypadClick() }
+            callActionMute.setOnClickListener { _presenter.onMuteClick() }
+            callActionRecord.setOnClickListener { _presenter.onRecordClick() }
+            callActionSpeaker.setOnClickListener { _presenter.onSpeakerClick() }
+        }
+
+        _bottomDialpadFragment.fragment.setOnKeyDownListener(_presenter::onKeypadKey)
     }
 
     override fun addCall() {
@@ -39,7 +51,7 @@ class CallActionsFragment : BaseFragment(), CallActionsMvpView {
     }
 
     override fun openDialpad() {
-        _bottomDialpadFragment.show(_activity.supportFragmentManager, DialpadFragment.TAG)
+        _bottomDialpadFragment.show(childFragmentManager, DialpadFragment.TAG)
     }
 
     override fun startRecording() {
@@ -50,19 +62,11 @@ class CallActionsFragment : BaseFragment(), CallActionsMvpView {
         TODO("Not yet implemented")
     }
 
-    override fun toggleHold(isHold: Boolean) {
-        CallManager.hold(isHold)
-    }
-
     override fun toggleSpeaker(isSpeaker: Boolean) {
         _audioManager.isSpeakerphoneOn = isSpeaker
     }
 
     override fun toggleMute(isMute: Boolean) {
         _audioManager.isMicrophoneMute = isMute
-    }
-
-    override fun applyCallKeypad(keyChar: Char) {
-        CallManager.keypad(keyChar)
     }
 }

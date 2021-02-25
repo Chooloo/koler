@@ -7,8 +7,6 @@ interface CallActionsMvpView : MvpView {
     fun openDialpad()
     fun startRecording()
     fun stopRecording()
-    fun toggleHold(isHold: Boolean)
     fun toggleSpeaker(isSpeaker: Boolean)
     fun toggleMute(isMute: Boolean)
-    fun applyCallKeypad(keyChar: Char)
 }

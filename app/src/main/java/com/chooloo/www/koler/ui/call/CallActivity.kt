@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.call
 
 import android.media.AudioManager
+import android.media.AudioManager.MODE_IN_CALL
 import android.net.Uri
 import android.os.Bundle
 import android.view.View.GONE
@@ -17,7 +18,6 @@ class CallActivity : BaseActivity(), CallMvpView {
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
     private val _presenter: CallMvpPresenter<CallMvpView> by lazy { CallPresenter() }
     private val _callActionsFragment by lazy { CallActionsFragment.newInstance() }
-    private val _audioManager by lazy { applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager }
 
     override var stateText: String?
         get() = _binding.callStatusText.text.toString()
@@ -60,6 +60,8 @@ class CallActivity : BaseActivity(), CallMvpView {
         disableKeyboard()
         setShowWhenLocked()
 
+        (getSystemService(AUDIO_SERVICE) as AudioManager).mode = MODE_IN_CALL
+
         _presenter.onInitialUI()
     }
 
@@ -67,10 +69,6 @@ class CallActivity : BaseActivity(), CallMvpView {
         super.onDestroy()
         _presenter.detach()
         _proximitySensor.release()
-    }
-
-    override fun setAudioInCall() {
-        _audioManager.mode = AudioManager.MODE_IN_CALL
     }
 
     override fun getContact(number: String) = lookupContact(number)
