@@ -37,7 +37,7 @@ fun runLayoutAnimation(recyclerView: RecyclerView) {
     recyclerView.scheduleLayoutAnimation()
 }
 
-fun animateViews(views: Array<View>, delay: Int = 70, isShow: Boolean) {
+fun animateViews(views: Array<View>, delay: Int = 50, isShow: Boolean) {
     views.forEach { it.visibility = INVISIBLE }
     views.indices.forEach {
         val view = views[it]

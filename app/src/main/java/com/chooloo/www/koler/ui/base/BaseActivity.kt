@@ -20,6 +20,10 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, PermissionListener {
         onSetup()
     }
 
+    override fun finish() {
+        super<AppCompatActivity>.finish()
+    }
+
     override fun hasPermission(permission: String): Boolean {
         return checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
     }
@@ -60,6 +64,9 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, PermissionListener {
     override fun onPermissionDenied(response: PermissionDeniedResponse?) {
     }
 
-    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+    override fun onPermissionRationaleShouldBeShown(
+        permission: PermissionRequest?,
+        token: PermissionToken?
+    ) {
     }
 }

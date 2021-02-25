@@ -14,10 +14,12 @@ import com.chooloo.www.koler.util.call.CallManager
 
 class CallActionsFragment : BaseFragment(), CallActionsMvpView {
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
-    private val _dialpadFragment by lazy { DialpadFragment.newInstance(false) }
+    private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(false)) }
     private val _audioManager by lazy { _activity.getSystemService(AppCompatActivity.AUDIO_SERVICE) as AudioManager }
 
     companion object {
+        const val TAG = "call_actions_fragment"
+
         fun newInstance() = CallActionsFragment()
     }
 
@@ -37,8 +39,7 @@ class CallActionsFragment : BaseFragment(), CallActionsMvpView {
     }
 
     override fun openDialpad() {
-        BottomFragment.newInstance(_dialpadFragment)
-            .show(_activity.supportFragmentManager, DialpadFragment.TAG)
+        _bottomDialpadFragment.show(_activity.supportFragmentManager, DialpadFragment.TAG)
     }
 
     override fun startRecording() {

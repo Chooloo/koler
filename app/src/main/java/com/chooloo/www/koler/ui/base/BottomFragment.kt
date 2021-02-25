@@ -9,16 +9,12 @@ import androidx.annotation.StringRes
 import com.chooloo.www.koler.databinding.FragmentBottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class BottomFragment(
-    private val fragment: BaseFragment
+class BottomFragment<FragmentType : BaseFragment>(
+    val fragment: FragmentType
 ) : BottomSheetDialogFragment(), MvpView {
 
     private lateinit var _binding: FragmentBottomDialogBinding
     private val _activity by lazy { context as BaseActivity }
-
-    companion object {
-        fun newInstance(fragment: BaseFragment) = BottomFragment(fragment)
-    }
 
     //region lifecycle
     override fun onAttach(context: Context) {
@@ -46,16 +42,17 @@ class BottomFragment(
     override fun onSetup() {
         putFragment(fragment)
     }
+
+    override fun finish() {
+        dismiss()
+    }
     //endregion
 
     //region permissions
-    override fun hasPermission(permission: String): Boolean {
-        return false
-    }
+    override fun hasPermission(permission: String) = false
 
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
-    }
+    override fun hasPermissions(permissions: Array<String>) =
+        permissions.any { p -> _activity.hasPermission(p) }
 
     override fun askForPermission(permission: String, requestCode: Int?) {
         askForPermissions(arrayOf(permission), requestCode)

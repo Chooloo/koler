@@ -66,7 +66,10 @@ abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
     override fun onPermissionDenied(response: PermissionDeniedResponse?) {
     }
 
-    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
+    override fun onPermissionRationaleShouldBeShown(
+        permission: PermissionRequest?,
+        token: PermissionToken?
+    ) {
     }
 
     protected val argsSafely: Bundle

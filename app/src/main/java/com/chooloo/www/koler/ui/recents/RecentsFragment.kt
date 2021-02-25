@@ -50,7 +50,9 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openRecent(recent: Recent) {
-        BottomFragment.newInstance(RecentFragment.newInstance(recent.id))
-            .show(_activity.supportFragmentManager, RecentFragment.TAG)
+        BottomFragment(RecentFragment.newInstance(recent.id)).show(
+            _activity.supportFragmentManager,
+            RecentFragment.TAG
+        )
     }
 }

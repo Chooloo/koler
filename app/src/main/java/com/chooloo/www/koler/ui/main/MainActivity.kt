@@ -26,14 +26,14 @@ class MainActivity : BaseActivity(), MainMvpView {
 
     private val _presenter by lazy { MainPresenter<MainMvpView>() }
     private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val _dialpadFragment by lazy { DialpadFragment.newInstance(true) }
-    private val _menuFragment by lazy { MenuFragment.newInstance(R.menu.main_actions) }
+    private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(true)) }
+    private val _bottomMenuFragment by lazy { BottomFragment(MenuFragment.newInstance(R.menu.main_actions)) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
     override var dialpadNumber: String
-        get() = _dialpadFragment.number
+        get() = _bottomDialpadFragment.fragment.number
         set(value) {
-            _dialpadFragment.number = value
+            _bottomDialpadFragment.fragment.number = value
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +65,7 @@ class MainActivity : BaseActivity(), MainMvpView {
     override fun onSetup() {
         _presenter.attach(this)
 
-        _menuFragment.setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
+        _bottomMenuFragment.fragment.setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
 
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
@@ -84,12 +84,11 @@ class MainActivity : BaseActivity(), MainMvpView {
     }
 
     override fun openDialpad() {
-        BottomFragment.newInstance(_dialpadFragment)
-            .show(supportFragmentManager, DialpadFragment.TAG)
+        _bottomDialpadFragment.show(supportFragmentManager, DialpadFragment.TAG)
     }
 
     override fun openMenu() {
-        BottomFragment.newInstance(_menuFragment).show(supportFragmentManager, MenuFragment.TAG)
+        _bottomMenuFragment.show(supportFragmentManager, MenuFragment.TAG)
     }
 
     override fun goToSettings() {

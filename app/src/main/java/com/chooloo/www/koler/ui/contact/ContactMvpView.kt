@@ -13,5 +13,4 @@ interface ContactMvpView : MvpView {
     fun editContact()
     fun openContact()
     fun deleteContact()
-    fun animateLayout()
 }

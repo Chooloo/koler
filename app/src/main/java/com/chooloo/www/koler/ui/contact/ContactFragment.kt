@@ -77,8 +77,6 @@ class ContactFragment : BaseFragment(), ContactMvpView {
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
             contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
         }
-
-        animateLayout()
     }
 
     override fun callContact() {
@@ -99,11 +97,5 @@ class ContactFragment : BaseFragment(), ContactMvpView {
 
     override fun deleteContact() {
         _activity.deleteContact(_contact.id)
-    }
-
-    override fun animateLayout() {
-        _binding.apply {
-            animateViews(views = arrayOf(contactTextName, contactTextNumber), isShow = true)
-        }
     }
 }

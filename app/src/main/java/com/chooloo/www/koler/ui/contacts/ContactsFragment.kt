@@ -50,8 +50,9 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openContact(contact: Contact) {
-        BottomFragment.newInstance(ContactFragment.newInstance(contact.id)).apply {
-            show(_activity.supportFragmentManager, ContactFragment.TAG)
-        }
+        BottomFragment(ContactFragment.newInstance(contact.id)).show(
+            _activity.supportFragmentManager,
+            ContactFragment.TAG
+        )
     }
 }

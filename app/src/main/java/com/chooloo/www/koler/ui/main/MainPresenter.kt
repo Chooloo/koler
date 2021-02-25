@@ -9,7 +9,7 @@ import java.net.URLDecoder
 
 class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
     override fun onDialpadFabClick() {
-        mvpView?.isDialpadVisible = true
+        mvpView?.openDialpad()
     }
 
     override fun onOptionsItemSelected(item: MenuItem) {
@@ -20,7 +20,7 @@ class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
     }
 
     override fun onMenuClick() {
-        mvpView?.isMenuVisible = true
+        mvpView?.openMenu()
     }
 
     override fun onViewIntent(intent: Intent) {
@@ -33,7 +33,7 @@ class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
 
         if (intentText.contains("tel:")) {
             mvpView?.apply {
-                isDialpadVisible = true
+                openDialpad()
                 dialpadNumber = intentText
             }
         } else {

@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 
 interface MvpView {
     fun onSetup()
+    fun finish() {}
 
     fun hasPermission(permission: String): Boolean
     fun hasPermissions(permissions: Array<String>): Boolean

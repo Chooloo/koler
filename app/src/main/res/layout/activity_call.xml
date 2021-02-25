@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Koler.Call.Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.call.OngoingCallActivity">
+    app:layoutDescription="@xml/incoming_to_active_scene"
+    tools:context=".ui.call.CallActivity">
 
     <!-- call timer -->
     <TextView
@@ -14,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:text="00:00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,6 +27,7 @@
         style="@style/Koler.Call.Text.Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Incoming Call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_time_text"
@@ -49,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
+        android:text="Nahum Balunka"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_status_text"
         tools:text="John Baba" />
@@ -60,6 +64,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
+
+    <FrameLayout
+        android:id="@+id/call_actions_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        app:layout_constraintBottom_toTopOf="@id/call_reject_button"
+        tools:layout="@layout/fragment_call_actions" />
 
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -74,19 +86,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_actions_button"
-        style="@style/Koler.Call.Button.Bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:backgroundTint="?colorSecondaryVariant"
-        android:contentDescription="@string/content_description_call_actions_button"
-        android:src="@drawable/ic_drag_indicator_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/call_reject_button"
-        app:layout_constraintStart_toEndOf="@id/call_answer_button" />
-
     <!-- Reject Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/call_reject_button"
@@ -99,4 +98,4 @@
         android:src="@drawable/ic_call_end_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

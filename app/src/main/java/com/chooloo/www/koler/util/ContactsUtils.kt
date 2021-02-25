@@ -21,10 +21,11 @@ fun Context.lookupContact(contactId: Long): Contact {
     }
 }
 
-fun Context.lookupContact(number: String): Contact {
-    PhoneLookupContentResolver(this, number).content.also {
-        return if (it.isNotEmpty()) it[0] else Contact.UNKNOWN
-    }
+fun Context.lookupContact(number: String?) = if (number == null) {
+    Contact.UNKNOWN
+} else {
+    val contacts = PhoneLookupContentResolver(this, number).content
+    if (contacts.isNotEmpty()) contacts[0] else Contact.UNKNOWN
 }
 
 fun Context.openContact(contactId: Long) {
