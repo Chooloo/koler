@@ -13,13 +13,16 @@ import timber.log.Timber
 import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
+
     private val _presenter by lazy { SettingsPresenter<SettingsMvpView>() }
 
     companion object {
-        fun newInstance(): SettingsFragment = SettingsFragment()
+        const val TAG = "settings_fragment"
+
+        fun newInstance() = SettingsFragment()
     }
 
-    override fun onCreatePreferences(savedInstanceState: Bundle, rootKey: String) {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)
         findPreference<Preference>(getString(R.string.pref_app_color_key))?.onPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { preference, newValue ->

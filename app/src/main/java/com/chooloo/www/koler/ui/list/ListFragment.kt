@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.ui.list
 
-import android.Manifest.permission
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,8 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.runLayoutAnimation
 
-abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(), ListMvpView {
+abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(),
+    ListMvpView {
 
     protected val listAdapter by lazy { onGetAdapter() }
     private val _presenter by lazy { ListPresenter<ListMvpView>() }
@@ -22,12 +22,14 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     override val itemCount: Int
         get() = listAdapter.itemCount
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return _binding.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = _binding.root
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _presenter.detach()
     }
 
@@ -43,10 +45,8 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
             })
         }
 
-        // TODO make this no permission handling better
-        if (!hasPermission(permission.READ_CONTACTS)) {
-            _presenter.onNoPermissions()
-        }
+        showPermissionsPage(false)
+        showEmptyPage(false)
     }
 
     override fun showEmptyPage(isShow: Boolean) {
@@ -59,7 +59,7 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
         }
     }
 
-    override fun showNoPermissions(isShow: Boolean) {
+    override fun showPermissionsPage(isShow: Boolean) {
         _binding.apply {
             emptyState.apply {
                 emptyTitle.text = getString(R.string.empty_list_no_permissions)

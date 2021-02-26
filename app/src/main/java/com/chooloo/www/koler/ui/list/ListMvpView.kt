@@ -6,6 +6,6 @@ interface ListMvpView : MvpView {
     val itemCount: Int
 
     fun showEmptyPage(isShow: Boolean)
-    fun showNoPermissions(isShow: Boolean)
+    fun showPermissionsPage(isShow: Boolean)
     fun animateListView()
 }

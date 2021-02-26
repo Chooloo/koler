@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.settings
 
 import android.os.Bundle
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivitySettingsBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.settingsfragment.SettingsFragment
@@ -15,12 +14,10 @@ class SettingsActivity : BaseActivity(), SettingsMvpView {
     }
 
     override fun onSetup() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, SettingsFragment.newInstance(), TAG_FRAGMENT).commitNow()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(_binding.fragment.id, SettingsFragment.newInstance(), SettingsFragment.TAG)
+            .commitNow()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    companion object {
-        private const val TAG_FRAGMENT = "fragment"
     }
 }

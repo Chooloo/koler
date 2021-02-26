@@ -11,6 +11,6 @@ class ContactsPresenter<V : ContactsMvpView> : ListPresenter<V>(), ContactsMvpPr
     override fun onContactItemLongClick(contact: Contact) = true
 
     override fun onPermissionsBlocked() {
-        mvpView?.showNoPermissions(true)
+        mvpView?.showPermissionsPage(true)
     }
 }

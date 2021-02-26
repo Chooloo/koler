@@ -6,7 +6,7 @@ import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.entity.Recent
 
 fun Context.getRecentById(recentId: Long): Recent {
-    RecentsContentResolver(this, recentId).content.also {
+    RecentsContentResolver(this, recentId).content.recents.also {
         return if (it.isNotEmpty()) it[0] else Recent.UNKNOWN
     }
 }

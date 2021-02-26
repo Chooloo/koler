@@ -31,7 +31,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
         _presenter.attach(this)
 
         showEmptyPage(false)
-        showNoPermissions(false)
+        showPermissionsPage(false)
         observe()
     }
 
@@ -46,7 +46,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
             number.observe(viewLifecycleOwner, _contactsLiveData::setFilter)
             text.observe(viewLifecycleOwner, _contactsLiveData::setFilter)
         }
-        showNoPermissions(false)
+        showPermissionsPage(false)
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openContact(contact: Contact) {

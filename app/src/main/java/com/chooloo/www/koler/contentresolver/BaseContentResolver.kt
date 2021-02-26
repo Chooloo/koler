@@ -72,9 +72,16 @@ abstract class BaseContentResolver<T>(
     open inner class SelectionBuilder {
         private val selections = arrayListOf<String>()
 
-        fun addSelection(key: String, value: Any?): SelectionBuilder {
+        fun addSelection(key: String, value: Any?) = this.also {
             value?.let { selections.add("$key = $value") }
-            return this
+        }
+
+        fun addNotNull(key: String) = this.also {
+            selections.add("$key IS NOT NULL")
+        }
+
+        fun addString(string: String) = this.also {
+            selections.add(string)
         }
 
         fun build() = selections.joinToString(separator = " AND ")

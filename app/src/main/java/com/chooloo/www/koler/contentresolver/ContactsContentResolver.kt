@@ -11,7 +11,7 @@ import android.provider.ContactsContract.REMOVE_DUPLICATE_ENTRIES
 import com.chooloo.www.koler.entity.Contact
 import com.chooloo.www.koler.entity.ContactsBundle
 
-class ContactsContentResolver(
+open class ContactsContentResolver(
     context: Context
 ) : BaseContentResolver<ContactsBundle>(context) {
 
@@ -29,7 +29,10 @@ class ContactsContentResolver(
         .appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true")
         .build()
 
-    override fun onGetSelection() = "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL"
+    override fun onGetSelection() = SelectionBuilder()
+        .addNotNull(Contacts.DISPLAY_NAME_PRIMARY)
+        .build()
+
     override fun onGetSortOrder() = "${Contacts.SORT_KEY_PRIMARY} ASC"
     override fun onGetProjection() = arrayOf(
         Contacts._ID,

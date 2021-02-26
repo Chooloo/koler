@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
@@ -29,8 +30,6 @@ class ListItem : LinearLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-
-        setImageBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
 
         context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
             bigText = it.getString(R.styleable.Koler_ListItem_bigText)
@@ -60,6 +59,9 @@ class ListItem : LinearLayout {
         get() = _binding.listItemHeaderText.text.toString()
         set(value) {
             _binding.listItemHeaderText.text = value
+            if (value == null) {
+                isHeaderVisible = false
+            }
         }
 
     var isHeaderVisible: Boolean
@@ -72,10 +74,12 @@ class ListItem : LinearLayout {
         get() = _binding.listItemImage.drawable
         set(value) {
             _binding.listItemImage.setImageDrawable(value)
+            setImageBackgroundColor(if (value != null) Color.TRANSPARENT else context.getAttrColor(R.attr.colorSecondary))
         }
 
     fun setImageUri(image: Uri?) {
         _binding.listItemImage.setImageURI(image)
+        setImageBackgroundColor(if (image != null) Color.TRANSPARENT else context.getAttrColor(R.attr.colorSecondary))
     }
 
     fun setImageBackgroundColor(@ColorInt color: Int) {

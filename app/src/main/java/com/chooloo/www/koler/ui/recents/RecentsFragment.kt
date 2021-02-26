@@ -31,7 +31,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.attach(this)
 
         showEmptyPage(false)
-        showNoPermissions(false)
+        showPermissionsPage(false)
         observe()
     }
 
@@ -46,7 +46,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
             number.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
             text.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
         }
-        showNoPermissions(false)
+        showPermissionsPage(false)
     }, blockedCallback = { _presenter.onPermissionsBlocked() })
 
     override fun openRecent(recent: Recent) {

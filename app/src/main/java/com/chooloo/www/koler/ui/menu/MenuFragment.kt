@@ -23,13 +23,13 @@ class MenuFragment : ListFragment<MenuAdapter>(), MenuMvpView {
         }
     }
 
-    override fun onGetAdapter(): MenuAdapter {
-        val menu = PopupMenu(_activity, null).menu.also {
+    override fun onGetAdapter() = MenuAdapter(
+        context = _activity,
+        menu = PopupMenu(_activity, null).menu.also {
             MenuInflater(_activity).inflate(argsSafely.getInt(ARG_MENU_LAYOUT), it)
         }
-        return MenuAdapter(_activity, menu).apply {
-            setOnMenuItemClickListener(_onMenuItemClickListener)
-        }
+    ).apply {
+        setOnMenuItemClickListener(_onMenuItemClickListener)
     }
 
     fun setOnMenuItemClickListener(onMenuItemClickListener: ((MenuItem) -> Unit?)?) {
