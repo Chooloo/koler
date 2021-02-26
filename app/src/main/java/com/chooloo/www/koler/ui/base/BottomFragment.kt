@@ -13,7 +13,7 @@ class BottomFragment<FragmentType : BaseFragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), MvpView {
 
-    private lateinit var _binding: FragmentBottomDialogBinding
+    private val _binding by lazy { FragmentBottomDialogBinding.inflate(layoutInflater) }
     private val _activity by lazy { context as BaseActivity }
 
     //region lifecycle
@@ -29,10 +29,7 @@ class BottomFragment<FragmentType : BaseFragment>(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentBottomDialogBinding.inflate(inflater, container, false)
-        return _binding.root
-    }
+    ) = _binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

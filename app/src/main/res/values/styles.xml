@@ -104,10 +104,15 @@
     </style>
 
     <style name="Koler.ListItem.Header">
-        <item name="android:textSize">@dimen/list_item_header_text_size</item>
+        <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
+        <item name="android:paddingEnd">@dimen/list_item_padding_sides</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textAlignment">viewStart</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
-        </item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
     </style>
 
     <style name="Koler.ListItem.Text">

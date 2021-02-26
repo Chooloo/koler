@@ -4,6 +4,7 @@ import android.net.Uri
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.entity.ContactsBundle
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.setFadeUpAnimation
 
@@ -12,17 +13,16 @@ open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
     private var _contacts: Array<Contact> = arrayOf()
     private var _onContactItemClickListener: ((Contact) -> Unit?)? = null
     private var _onContactItemLongClickListener: ((Contact) -> Unit)? = null
-    private var headersCounts: Array<Int> = arrayOf()
-    private var headers: Array<String> = arrayOf()
+    private var _headersCounts: Array<Int> = arrayOf()
+    private var _headers: Array<String> = arrayOf()
 
     override fun getItemCount() = _contacts.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
-        return ListItemHolder(parent.context)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ListItemHolder(parent.context)
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
-        val contact = _contacts.get(position)
+        val contact = _contacts[position]
         holder.listItem.apply {
             bigText = contact.name
             headerText = getHeader(position)
@@ -39,7 +39,7 @@ open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
 
     private fun isFirstInHeader(position: Int): Boolean {
         var total = 0
-        headersCounts.forEach { count ->
+        _headersCounts.forEach { count ->
             when (position) {
                 total -> return true
                 else -> total += count
@@ -50,17 +50,19 @@ open class ContactsAdapter : RecyclerView.Adapter<ListItemHolder>() {
 
     private fun getHeader(position: Int): String {
         var total = 0
-        headersCounts.withIndex().forEach { (index, headerCount) ->
+        _headersCounts.withIndex().forEach { (index, headerCount) ->
             when {
-                position <= total -> return headers.get(index)
+                position <= total -> return _headers.get(index)
                 else -> total += headerCount
             }
         }
         return ""
     }
 
-    fun updateContacts(newContacts: Array<Contact>) {
-        _contacts = newContacts
+    fun updateContacts(contactsBundle: ContactsBundle) {
+        _contacts = contactsBundle.contacts
+        _headers = contactsBundle.headers
+        _headersCounts = contactsBundle.headersCounts
         notifyDataSetChanged()
     }
 

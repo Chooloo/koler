@@ -29,11 +29,11 @@ class RecentsAdapter(
         val recent = _recents[position]
         val contact = context.lookupContact(recent.number)
 
-        holder.listItem.run {
+        holder.listItem.apply {
             bigText = contact.name ?: recent.number
             smallText = if (recent.date != null) recent.relativeTime else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(recent.type))
-            
+
             setImageBackgroundColor(Color.TRANSPARENT)
             setOnClickListener { _onRecentItemClickListener?.invoke(recent) }
             setOnLongClickListener {

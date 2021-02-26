@@ -37,7 +37,7 @@ class ListItem : LinearLayout {
             smallText = it.getString(R.styleable.Koler_ListItem_smallText)
             imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
             headerText = it.getString(R.styleable.Koler_ListItem_header)
-//            showHeader(_binding.listItemHeaderText.text != null)
+            isHeaderVisible = _binding.listItemHeaderText.text !in arrayOf(null, "")
         }
     }
 
@@ -63,9 +63,9 @@ class ListItem : LinearLayout {
         }
 
     var isHeaderVisible: Boolean
-        get() = _binding.listItemHeaderLayout.visibility == VISIBLE
+        get() = _binding.listItemHeaderText.visibility == VISIBLE
         set(value) {
-            _binding.listItemHeaderLayout.visibility = if (value) VISIBLE else GONE
+            _binding.listItemHeaderText.visibility = if (value) VISIBLE else GONE
         }
 
     var imageDrawable: Drawable?
