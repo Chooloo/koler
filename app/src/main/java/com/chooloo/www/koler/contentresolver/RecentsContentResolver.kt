@@ -1,20 +1,20 @@
 package com.chooloo.www.koler.contentresolver
 
 import android.Manifest.permission.READ_CALL_LOG
-import android.Manifest.permission.READ_VOICEMAIL
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.entity.Recent
+import com.chooloo.www.koler.entity.RecentsBundle
 import java.util.*
 
 class RecentsContentResolver(
     context: Context,
     private val recentId: Long? = null,
     private val number: String? = null,
-) : BaseContentResolver<Array<Recent>>(context) {
+) : BaseContentResolver<RecentsBundle>(context) {
 
     companion object {
         fun getCallTypeImage(@Recent.CallType callType: Int) = when (callType) {
@@ -47,20 +47,23 @@ class RecentsContentResolver(
         .addSelection(CallLog.Calls.NUMBER, number)
         .build()
 
-    override fun convertCursorToContent(cursor: Cursor?) = ArrayList<Recent>().apply {
-        while (cursor != null && cursor.moveToNext()) cursor.apply {
-            add(
-                Recent(
-                    id = getLong(getColumnIndex(CallLog.Calls._ID)),
-                    number = getString(getColumnIndex(CallLog.Calls.NUMBER)),
-                    duration = getString(getColumnIndex(CallLog.Calls.DURATION)),
-                    date = Date(getLong(getColumnIndex(CallLog.Calls.DATE))),
-                    type = getInt(getColumnIndex(CallLog.Calls.TYPE)),
-                    cachedName = getString(getColumnIndex(CallLog.Calls.CACHED_NAME))
+    override fun convertCursorToContent(cursor: Cursor?) = RecentsBundle(
+        recents = ArrayList<Recent>().apply {
+            while (cursor != null && cursor.moveToNext()) cursor.apply {
+                add(
+                    Recent(
+                        id = getLong(getColumnIndex(CallLog.Calls._ID)),
+                        number = getString(getColumnIndex(CallLog.Calls.NUMBER)),
+                        duration = getString(getColumnIndex(CallLog.Calls.DURATION)),
+                        date = Date(getLong(getColumnIndex(CallLog.Calls.DATE))),
+                        type = getInt(getColumnIndex(CallLog.Calls.TYPE)),
+                        cachedName = getString(getColumnIndex(CallLog.Calls.CACHED_NAME))
+                    )
                 )
-            )
-        }
+            }
+        }.toTypedArray()
+    ).also {
         cursor?.close()
-    }.toTypedArray()
+    }
 
 }

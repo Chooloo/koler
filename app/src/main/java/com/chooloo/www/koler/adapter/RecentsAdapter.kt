@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.entity.Recent
+import com.chooloo.www.koler.entity.RecentsBundle
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.lookupContact
 import com.chooloo.www.koler.util.setFadeUpAnimation
@@ -44,8 +45,8 @@ class RecentsAdapter(
         }
     }
 
-    fun updateRecents(newRecents: Array<Recent>) {
-        _recents = newRecents
+    fun updateRecents(recentsBundle: RecentsBundle) {
+        _recents = recentsBundle.recents
         notifyDataSetChanged()
     }
 
