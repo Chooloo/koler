@@ -31,6 +31,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
+                android:contentDescription="@string/content_description_menu_button"
                 android:src="@drawable/ic_more_vert_black_24dp" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>

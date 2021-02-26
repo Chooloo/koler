@@ -9,8 +9,11 @@
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_secondary</item>
         <item name="colorSecondaryVariant">@color/color_secondary_dark</item>
+        <item name="colorOnSecondary">?colorSecondaryVariant</item>
         <item name="colorAccent">?colorSecondaryVariant</item>
         <item name="colorError">@color/color_error</item>
+
+        <item name="android:textColorSecondary">?colorPrimaryDark</item>
 
         <!-- views colors -->
         <item name="android:windowBackground">?attr/colorPrimary</item>

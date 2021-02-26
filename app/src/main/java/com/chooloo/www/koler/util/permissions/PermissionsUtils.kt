@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.telecom.TelecomManager
+import android.telecom.TelecomManager.ACTION_CHANGE_DEFAULT_DIALER
+import android.telecom.TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 
@@ -12,19 +14,26 @@ const val RC_DEFAULT_DIALER = 0
 const val RC_READ_CONTACTS = 1
 const val RC_DEFAULT = 2
 
-// default dialer
-
-fun Context.isDefaultDialer() =
-    this.getSystemService(TelecomManager::class.java)?.defaultDialerPackage == this.applicationContext?.packageName
-
-fun Activity.requestDefaultDialer() {
-    startActivityForResult(Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).also {
-        it.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
-    }, RC_DEFAULT_DIALER)
+//region default dialer
+fun Activity.checkDefaultDialer() {
+    if (!isDefaultDialer()) {
+        requestDefaultDialer()
+    }
 }
 
-// general permissions
+fun Context.isDefaultDialer() =
+    getSystemService(TelecomManager::class.java)?.defaultDialerPackage == applicationContext?.packageName
 
+fun Activity.requestDefaultDialer() {
+    val intent = Intent(ACTION_CHANGE_DEFAULT_DIALER).putExtra(
+        EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,
+        packageName
+    )
+    startActivityForResult(intent, RC_DEFAULT_DIALER)
+}
+//endregion
+
+//region general permissions
 fun Activity.hasSelfPermission(permission: String) =
     checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
 
@@ -83,3 +92,4 @@ fun Activity.checkPermissions(
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     })
 }
+//endregion

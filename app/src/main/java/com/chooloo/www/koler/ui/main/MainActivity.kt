@@ -17,7 +17,7 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.menu.MenuFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
-import com.chooloo.www.koler.util.permissions.requestDefaultDialer
+import com.chooloo.www.koler.util.permissions.checkDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -79,7 +79,7 @@ class MainActivity : BaseActivity(), MainMvpView {
             }.attach()
         }
 
-        requestDefaultDialer()
+        checkDefaultDialer()
         checkIntent()
     }
 
