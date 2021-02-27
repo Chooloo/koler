@@ -43,18 +43,6 @@
     <string name="pref_sim_select_default_value">0</string>
     <string name="pref_sim_select_disabled">Выбор сима отключен из-за одной сим-карты</string>
 
-    <string name="pref_reject_call_timer_key">end_call_timer</string>
-    <string name="pref_reject_call_timer_title">Таймер завершения вызова</string>
-    <string name="pref_reject_call_timer_default_value">10</string>
-
-    <string name="pref_answer_call_timer_key">answer_call_timer</string>
-    <string name="pref_answer_call_timer_title">Таймер ответа на звонок</string>
-    <string name="pref_answer_call_timer_default_value">10</string>
-
-    <string name="pref_default_page_key">default_page</string>
-    <string name="pref_default_page_title">Страница по умолчанию</string>
-    <string name="pref_default_page_value">1</string>
-
     <string name="pref_last_version_key">last_version</string>
 
     <string name="pref_is_biometric_key">is_biometric</string>
@@ -71,13 +59,6 @@
 
     <!--Errors-->
     <string name="please_enter_a_number">Пожалуйста, сначала введите номер</string>
-
-    <!--Dialog-->
-    <string name="dialog_changelog_title">Изменения</string>
-
-    <!--Empty-->
-
-    <string name="empty_cgroups_title">Здесь ничего нет ... пока</string>
 
     <!--About-->
     <string name="about_version_title">Версия</string>

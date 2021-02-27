@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Koler.Call.Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.call.OngoingCallActivity">
+    app:layoutDescription="@xml/incoming_to_active_scene"
+    tools:context=".ui.call.CallActivity">
 
     <!-- call timer -->
     <TextView
@@ -14,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:text="00:00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,6 +27,7 @@
         style="@style/Koler.Call.Text.Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Incoming Call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_time_text"
@@ -49,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
+        android:text="Nahum Balunka"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_status_text"
         tools:text="John Baba" />
@@ -61,81 +65,18 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.3" />
 
-    <TableLayout
-        android:id="@+id/call_actions_table"
+    <FrameLayout
+        android:id="@+id/call_actions_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@id/answer_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TableRow>
-            <!-- action hold -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
-                android:id="@+id/call_action_hold"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:activatedIcon="@drawable/ic_play_arrow_black_24dp"
-                app:activatedText="@string/call_action_unhold"
-                app:icon="@drawable/ic_pause_black_24dp"
-                app:text="@string/call_action_hold" />
-
-            <!-- action mute -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
-                android:id="@+id/call_action_mute"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:activatedIcon="@drawable/ic_mic_off_black_24dp"
-                app:activatedText="@string/call_action_unmute"
-                app:icon="@drawable/ic_mic_black_24dp"
-                app:text="@string/call_action_mute" />
-
-            <!-- action speaker -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
-                android:id="@+id/call_action_speaker"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:activatedIcon="@drawable/ic_volume_down_black_24dp"
-                app:activatedText="@string/call_action_speaker_off"
-                app:icon="@drawable/ic_volume_up_black_24dp"
-                app:text="@string/call_action_speaker" />
-        </TableRow>
-
-        <TableRow>
-            <!-- action record -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
-                android:id="@+id/call_action_record"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:activatedIcon="@drawable/ic_stop_circle_black_24dp"
-                app:activatedText="@string/call_action_record_stop"
-                app:icon="@drawable/ic_radio_button_checked_black_24dp"
-                app:text="@string/call_action_record" />
-
-            <!-- action keypad -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
-                android:id="@+id/call_action_keypad"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:icon="@drawable/ic_dialpad_black_24dp"
-                app:text="@string/call_action_keypad" />
-
-            <!-- action add call -->
-            <com.chooloo.www.callmanager.ui.widgets.CallActionButton
-                android:id="@+id/call_action_add_call"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                app:icon="@drawable/ic_add_black_24dp"
-                app:text="@string/call_action_add_call" />
-        </TableRow>
-    </TableLayout>
+        android:layout_margin="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/call_reject_button"
+        tools:layout="@layout/fragment_call_actions" />
 
     <!-- Answer Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/answer_btn"
+        android:id="@+id/call_answer_button"
         style="@style/Koler.Call.Button.Bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -148,7 +89,7 @@
 
     <!-- Reject Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/reject_btn"
+        android:id="@+id/call_reject_button"
         style="@style/Koler.Call.Button.Bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -158,5 +99,4 @@
         android:src="@drawable/ic_call_end_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

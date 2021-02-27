@@ -14,25 +14,19 @@
 
     <!-- view pager -->
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toBottomOf="@id/appbar_main" />
 
     <!-- dialer button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/dialpad_fab_button"
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/main_dialpad_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_margin="10dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="@string/dialpad_button"
-        android:src="@drawable/ic_dialpad_black_24dp"
-        app:backgroundTint="@color/white"
-        app:fabSize="auto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_margin="20dp"
+        app:icon="@drawable/ic_dialpad_black_24dp" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

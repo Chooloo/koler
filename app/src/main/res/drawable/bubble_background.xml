@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?android:attr/colorControlHighlight">
-    <item android:id="@android:id/mask">
-        <shape android:shape="rectangle">
-            <!--Needs to have a solid in order to work - doesn't matter which color-->
-            <solid android:color="@color/white" />
-            <corners android:radius="@dimen/bubble_corner_radius" />
-        </shape>
-    </item>
+    android:color="?colorSecondaryVariant">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/transparent" />
+            <corners android:radius="@dimen/bubble_corner_radius" />
+            <solid android:color="?colorSecondary" />
         </shape>
     </item>
 </ripple>

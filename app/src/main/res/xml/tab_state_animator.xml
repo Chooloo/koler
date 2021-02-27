@@ -5,7 +5,7 @@
             <objectAnimator
                 android:duration="0"
                 android:propertyName="color"
-                android:valueTo="@color/soft_black" />
+                android:valueTo="?android:textColor" />
         </set>
     </item>
     <item>
@@ -13,7 +13,7 @@
             <objectAnimator
                 android:duration="0"
                 android:propertyName="color"
-                android:valueTo="@color/grey_300" />
+                android:valueTo="?colorSecondaryVariant" />
         </set>
     </item>
 </selector>

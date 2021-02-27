@@ -3,40 +3,49 @@
     <style name="Koler" />
 
     <!-- text -->
-    <style name="Koler.Text">
-        <item name="android:textColor">@color/black</item>
+    <style name="Koler.Text" parent="android:TextAppearance">
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="Koler.Text.Headline1">
         <item name="android:textSize">@dimen/headline_1</item>
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Headline2">
         <item name="android:textSize">@dimen/headline_2</item>
-        <!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Headline3">
         <item name="android:textSize">@dimen/headline_3</item>
-        <item name="android:textColor">@color/soft_black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Koler.Text.Subtitle1">
+    <style name="Koler.Text.Subtitle1" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">@dimen/subtitle_1</item>
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Subtitle2">
         <item name="android:textSize">@dimen/subtitle_2</item>
-        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Koler.Text.Caption">
         <item name="android:textSize">@dimen/caption_1</item>
-        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColor">?android:textColorHint</item>
+    </style>
+
+    <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">@dimen/headline_3</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- button -->
+    <style name="Koler.Button" parent="Widget.MaterialComponents.Button" />
+
+    <style name="Koler.Button.Icon" parent="Widget.MaterialComponents.Button.Icon">
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:inset">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/Koler.ShapeAppearance.Circle</item>
     </style>
 
     <!-- image view -->
@@ -82,7 +91,6 @@
         <item name="android:scrollbars">none</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
-        <item name="android:clipToPadding">false</item>
     </style>
 
     <!-- list item -->
@@ -92,15 +100,19 @@
         <item name="android:padding">@dimen/list_item_padding</item>
         <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
         <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="Koler.ListItem.Header">
-        <item name="android:textSize">@dimen/list_item_header_text_size</item>
+        <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
+        <item name="android:paddingEnd">@dimen/list_item_padding_sides</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:textAlignment">viewStart</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6
-        </item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
     </style>
 
     <style name="Koler.ListItem.Text">
@@ -112,16 +124,11 @@
     <style name="Koler.ListItem.Text.Big">
         <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
         <item name="android:layout_marginStart">@dimen/list_item_padding</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="Koler.ListItem.Text.Small">
         <item name="android:textAppearance">@style/Koler.Text.Caption</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/list_item_small_text_top_margin</item>
-        <item name="android:textColor">@color/grey_500</item>
     </style>
 
     <!-- dialpad -->
@@ -159,14 +166,6 @@
 
     <style name="Koler.Call.Button.Action" />
 
-    <style name="Koler.Call.Button.Action.Layout">
-        <item name="android:elevation">5dp</item>
-        <item name="android:clickable">true</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:padding">@dimen/call_action_padding</item>
-    </style>
-
     <style name="Koler.Call.Button.Action.Text">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
         <item name="android:layout_marginTop">10dp</item>
@@ -174,7 +173,7 @@
     </style>
 
     <style name="Koler.Call.Button.Bottom">
-        <item name="android:tint">@color/white</item>
+        <item name="android:tint">?colorPrimary</item>
         <item name="android:scaleType">center</item>
         <item name="fabCustomSize">70dp</item>
         <item name="elevation">0dp</item>
@@ -209,34 +208,11 @@
         <item name="layout_scrollFlags">scroll</item>
     </style>
 
-    <!-- search bar -->
-    <style name="Koler.SearchBar" />
+    <!-- shape appearance -->
+    <style name="Koler.ShapeAppearance" />
 
-    <style name="Koler.SearchBar.Layout">
-        <item name="android:background">@drawable/search_bar_background_selector</item>
-    </style>
-
-    <style name="Koler.SearchBar.EditText">
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:paddingStart">15dp</item>
-        <item name="android:drawableStart">@drawable/ic_search_black_24dp</item>
-        <item name="drawableTint">@color/grey_200</item>
-        <item name="android:paddingEnd">15dp</item>
-        <item name="android:background">@null</item>
-        <item name="android:hint">@string/search_hint</item>
-        <item name="android:inputType">textPersonName</item>
-        <item name="android:textColorHint">@color/grey_200</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
-    <!-- contact fragment -->
-    <style name="Koler.Contact" />
-
-    <style name="Koler.Contact.Button" />
-
-    <style name="Koler.Contact.Button.Action">
-        <item name="android:elevation">5dp</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:padding">10dp</item>
+    <style name="Koler.ShapeAppearance.Circle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

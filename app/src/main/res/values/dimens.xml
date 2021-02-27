@@ -5,15 +5,20 @@
     <dimen name="headline_1">46sp</dimen>
     <dimen name="headline_2">34sp</dimen>
     <dimen name="headline_3">24sp</dimen>
+    <dimen name="headline_4">18sp</dimen>
     <dimen name="subtitle_1">16sp</dimen>
     <dimen name="subtitle_2">14sp</dimen>
-    <dimen name="caption_1">12sp</dimen>
+    <dimen name="caption_1">13sp</dimen>
     <dimen name="image_size_small">40dp</dimen>
     <dimen name="image_size_big">100dp</dimen>
-    <dimen name="icon_size_small">30dp</dimen>
+    <dimen name="icon_size_small">50dp</dimen>
+    <dimen name="icon_size_big">70dp</dimen>
 
-    <!-- call -->
-    <dimen name="call_action_padding">10dp</dimen>
+    <!-- icon button -->
+    <dimen name="icon_button_size_small">30dp</dimen>
+    <dimen name="icon_button_size_normal">50dp</dimen>
+    <dimen name="icon_button_size_big">70dp</dimen>
+    <dimen name="icon_button_padding">10dp</dimen>
 
     <!-- smart tab layout -->
     <dimen name="smart_tab_height">40dp</dimen>
@@ -28,8 +33,7 @@
     <!-- list item -->
     <dimen name="list_item_padding">15dp</dimen>
     <dimen name="list_item_padding_sides">20dp</dimen>
-    <dimen name="list_item_small_text_top_margin">4dp</dimen>
-    <dimen name="list_item_header_text_size">20sp</dimen>
+    <dimen name="list_item_small_text_top_margin">1dp</dimen>
 
     <!-- bottom sheet dialog -->
     <dimen name="swipe_indicator_height">5dp</dimen>
@@ -37,7 +41,8 @@
     <dimen name="swipe_indicator_margin">10dp</dimen>
 
     <!-- search bar -->
-    <dimen name="search_bar_height">40dp</dimen>
+    <dimen name="search_bar_height">36dp</dimen>
+    <dimen name="search_bar_drawable_padding">10dp</dimen>
 
     <!-- contact fragment -->
     <dimen name="contact_action_button_height">60dp</dimen>

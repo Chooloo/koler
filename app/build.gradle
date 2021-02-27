@@ -77,6 +77,15 @@ dependencies {
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    // quick permissions
+    implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
+    
+    // permissions
+    implementation 'com.nabinbhandari.android:permissions:3.8'
+
+    // dexter
+    implementation 'com.karumi:dexter:5.0.0'
+
     // apache poi
     implementation 'org.apache.poi:poi:4.0.1'
     implementation 'org.apache.poi:poi-ooxml:4.0.1'

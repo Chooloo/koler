@@ -2,43 +2,16 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/pref_category_call">
-
+    <PreferenceCategory
+        android:title="@string/pref_category_call"
+        app:iconSpaceReserved="false">
 
         <ListPreference
             android:defaultValue="@string/pref_sim_select_default_value"
             android:key="@string/pref_sim_select_key"
             android:title="@string/pref_sim_select_title" />
-
-        <ListPreference
-            android:defaultValue="@string/pref_reject_call_timer_default_value"
-            android:entries="@array/pref_call_timer_entries"
-            android:entryValues="@array/pref_call_timer_entry_values"
-            android:key="@string/pref_reject_call_timer_key"
-            android:title="@string/pref_reject_call_timer_title" />
-
-        <ListPreference
-            android:defaultValue="@string/pref_answer_call_timer_default_value"
-            android:entries="@array/pref_call_timer_entries"
-            android:entryValues="@array/pref_call_timer_entry_values"
-            android:key="@string/pref_answer_call_timer_key"
-            android:title="@string/pref_answer_call_timer_title" />
-
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_category_pages"
-        app:iconSpaceReserved="false">
-
-        <ListPreference
-            android:defaultValue="@string/pref_default_page_value"
-            android:entries="@array/pref_default_page_entries"
-            android:entryValues="@array/pref_default_page_entry_values"
-            android:key="@string/pref_default_page_key"
-            android:title="@string/pref_default_page_title" />
-
-    </PreferenceCategory>
-    
     <PreferenceCategory
         android:title="@string/pref_category_scurity"
         app:iconSpaceReserved="false">
@@ -47,7 +20,5 @@
             android:defaultValue="false"
             android:key="@string/pref_is_biometric_key"
             android:title="@string/pref_is_biometric_title" />
-
     </PreferenceCategory>
-
 </PreferenceScreen>

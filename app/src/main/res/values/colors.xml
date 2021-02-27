@@ -1,33 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">@color/color_accent</color>
+    <color name="ic_launcher_background">?colorPrimary</color>
 
-    <!-- Themes -->
-    <color name="color_primary">@color/white</color>
-    <color name="color_accent">#F572BEFF</color>
-    <color name="color_secondary">@color/grey_100</color>
-    <color name="color_accent_light">#F9FDFF</color>
+    <!--region base colors-->
+    <color name="color_primary">#FFFFFF</color>
+    <color name="color_primary_dark">#E8E8E8</color>
+    <color name="color_secondary">#F6FCFF</color>
+    <color name="color_secondary_dark">#72BEFF</color>
+    <color name="color_error">#B00020</color>
+    <!--endregion-->
 
-    <!-- Blacks -->
-    <color name="soft_black">#3D3D3D</color>
-
-    <!-- Whites -->
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-
-    <!-- Greys -->
-    <color name="grey_100">#F5F5F5</color>
-    <color name="grey_200">#CDCDCD</color>
-    <color name="grey_300">#BDBDBD</color>
-    <color name="grey_400">#A6A6A6</color>
-    <color name="grey_500">#9E9E9E</color>
-    <color name="grey_800">#424242</color>
-
-    <color name="green_phone">#66bb6a</color>
-
-    <color name="red_phone">#ef5350</color>
-
+    <color name="green_phone">#9966BB6A</color>
+    <color name="red_phone">#99EF5350</color>
     <color name="star_yellow">#FFEE00</color>
-
-    <!-- backgrounds -->
 </resources>
