@@ -198,6 +198,7 @@
 
     <style name="Koler.Call.Text.Name">
         <item name="android:textAppearance">@style/Koler.Text.Headline2</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- appbar -->

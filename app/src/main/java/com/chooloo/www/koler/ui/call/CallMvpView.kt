@@ -11,4 +11,5 @@ interface CallMvpView : MvpView {
 
     fun getContact(number: String): Contact
     fun switchToActiveCallUI()
+    fun setStateRed()
 }

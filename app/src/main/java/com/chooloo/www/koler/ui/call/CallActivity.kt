@@ -4,13 +4,11 @@ import android.media.AudioManager
 import android.media.AudioManager.MODE_IN_CALL
 import android.net.Uri
 import android.os.Bundle
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.util.ProximitySensor
-import com.chooloo.www.koler.util.disableKeyboard
-import com.chooloo.www.koler.util.lookupContact
-import com.chooloo.www.koler.util.setShowWhenLocked
+import com.chooloo.www.koler.util.*
 
 class CallActivity : BaseActivity(), CallMvpView {
     private val _proximitySensor by lazy { ProximitySensor(this) }
@@ -19,9 +17,9 @@ class CallActivity : BaseActivity(), CallMvpView {
     private val _callActionsFragment by lazy { CallActionsFragment.newInstance() }
 
     override var stateText: String?
-        get() = _binding.callStatusText.text.toString()
+        get() = _binding.callStateText.text.toString()
         set(value) {
-            _binding.callStatusText.text = value
+            _binding.callStateText.text = value
         }
 
     override var callerNameText: String?
@@ -73,5 +71,9 @@ class CallActivity : BaseActivity(), CallMvpView {
 
     override fun switchToActiveCallUI() {
         _binding.root.transitionToEnd()
+    }
+
+    override fun setStateRed() {
+        _binding.callStateText.setTextColor(getAttrColor(R.color.red_phone))
     }
 }

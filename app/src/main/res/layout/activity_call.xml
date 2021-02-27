@@ -23,7 +23,7 @@
 
     <!-- call status -->
     <TextView
-        android:id="@+id/call_status_text"
+        android:id="@+id/call_state_text"
         style="@style/Koler.Call.Text.Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         android:layout_marginTop="30dp"
         android:text="Nahum Balunka"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_status_text"
+        app:layout_constraintTop_toBottomOf="@id/call_state_text"
         tools:text="John Baba" />
 
     <!-- eye level guideline -->
