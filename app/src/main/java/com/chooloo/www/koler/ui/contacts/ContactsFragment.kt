@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.contacts
 
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.ContactsAdapter
-import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.livedata.ContactsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
@@ -21,8 +21,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     private val _presenter: ContactsMvpPresenter<ContactsMvpView> by lazy { ContactsPresenter() }
 
     override fun onGetAdapter() = ContactsAdapter().apply {
-        setOnContactItemClick(_presenter::onContactItemClick)
-        setOnContactItemLongClickListener(_presenter::onContactItemLongClick)
+        setOnItemClickListener(_presenter::onContactItemClick)
+        setOnItemLongClickListener(_presenter::onContactItemLongClick)
     }
 
     override fun onSetup() {
@@ -41,7 +41,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }
 
     override fun observe() = runWithPermissions(_contactsLiveData.requiredPermissions, {
-        _contactsLiveData.observe(viewLifecycleOwner, listAdapter::updateContacts)
+        _contactsLiveData.observe(viewLifecycleOwner) { listAdapter.data = it.listBundleByLetters }
         _searchViewModel.apply {
             number.observe(viewLifecycleOwner, _contactsLiveData::setFilter)
             text.observe(viewLifecycleOwner, _contactsLiveData::setFilter)

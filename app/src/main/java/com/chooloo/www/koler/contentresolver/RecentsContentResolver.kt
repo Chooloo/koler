@@ -6,8 +6,8 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.entity.Recent
-import com.chooloo.www.koler.entity.RecentsBundle
+import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.RecentsBundle
 import java.util.*
 
 class RecentsContentResolver(

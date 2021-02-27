@@ -1,16 +1,23 @@
-package com.chooloo.www.koler.entity
+package com.chooloo.www.koler.data
 
 data class ContactsBundle(
     val contacts: Array<Contact>,
     val headers: Array<String> = arrayOf(),
     val headersCounts: Array<Int> = arrayOf()
 ) {
+    val listBundle = ListBundle(contacts)
 
-    val contactsWithFavs: ContactsBundle
+    val listBundleByLetters = ListBundle(
+        items = contacts,
+        headers = headers,
+        headersCounts = headersCounts
+    )
+
+    val listBundleWithFavs: ListBundle<Contact>
         get() {
             val favs = contacts.filter { it.starred }.toTypedArray()
-            return ContactsBundle(
-                contacts = favs + contacts,
+            return ListBundle(
+                items = favs + contacts,
                 headers = arrayOf("★") + headers,
                 headersCounts = arrayOf(favs.size) + headersCounts
             )

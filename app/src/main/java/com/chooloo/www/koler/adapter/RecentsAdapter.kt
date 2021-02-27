@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
-import com.chooloo.www.koler.entity.Recent
+import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.lookupContact
 
 class RecentsAdapter(
-    private val context: Context,
+    private val context: Context
 ) : ListAdapter<Recent>() {
     override fun onBindListItem(listItem: ListItem, item: Recent) {
         val contact = context.lookupContact(item.number)

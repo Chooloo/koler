@@ -6,11 +6,12 @@ import android.view.MenuItem
 import android.widget.PopupMenu
 import androidx.annotation.MenuRes
 import com.chooloo.www.koler.adapter.MenuAdapter
+import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.list.ListFragment
 
 class MenuFragment : ListFragment<MenuAdapter>(), MenuMvpView {
 
-    private var _onMenuItemClickListener: ((MenuItem) -> Unit?)? = null
+    private var _onMenuItemClickListener: (MenuItem) -> Unit? = {}
 
     companion object {
         const val TAG = "menu_fragment"
@@ -23,16 +24,17 @@ class MenuFragment : ListFragment<MenuAdapter>(), MenuMvpView {
         }
     }
 
-    override fun onGetAdapter() = MenuAdapter(
-        context = _activity,
-        menu = PopupMenu(_activity, null).menu.also {
+    override fun onGetAdapter(): MenuAdapter {
+        val menu = PopupMenu(_activity, null).menu.also {
             MenuInflater(_activity).inflate(argsSafely.getInt(ARG_MENU_LAYOUT), it)
         }
-    ).apply {
-        setOnMenuItemClickListener(_onMenuItemClickListener)
+        return MenuAdapter().apply {
+            data = ListBundle((0 until menu.size()).map { menu.getItem(it) }.toTypedArray())
+            setOnItemClickListener { _onMenuItemClickListener.invoke(it) }
+        }
     }
 
-    fun setOnMenuItemClickListener(onMenuItemClickListener: ((MenuItem) -> Unit?)?) {
+    fun setOnMenuItemClickListener(onMenuItemClickListener: (MenuItem) -> Unit?) {
         _onMenuItemClickListener = onMenuItemClickListener
     }
 }

@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.contacts
 
-import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.list.ListPresenter
 
 class ContactsPresenter<V : ContactsMvpView> : ListPresenter<V>(), ContactsMvpPresenter<V> {

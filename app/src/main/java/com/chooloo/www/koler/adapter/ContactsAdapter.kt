@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.adapter
 
 import android.net.Uri
-import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.widgets.ListItem
 
 class ContactsAdapter : ListAdapter<Contact>() {

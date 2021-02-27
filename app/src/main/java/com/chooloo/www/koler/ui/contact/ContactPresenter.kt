@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.ui.contact
 
 import android.net.Uri
-import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class ContactPresenter<V : ContactMvpView> : BasePresenter<V>(), ContactMvpPresenter<V> {

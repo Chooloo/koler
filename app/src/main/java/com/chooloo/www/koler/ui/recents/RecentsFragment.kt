@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.recents
 
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.RecentsAdapter
-import com.chooloo.www.koler.entity.Recent
+import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListFragment
@@ -21,8 +21,8 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     private val _presenter by lazy { RecentsPresenter<RecentsMvpView>() }
 
     override fun onGetAdapter() = RecentsAdapter(_activity).apply {
-        setOnRecentItemClickListener(_presenter::onRecentItemClick)
-        setOnRecentItemLongClickListener(_presenter::onRecentItemLongClick)
+        setOnItemClickListener(_presenter::onRecentItemClick)
+        setOnItemLongClickListener(_presenter::onRecentItemLongClick)
     }
 
     override fun onSetup() {
@@ -41,7 +41,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
     }
 
     override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions, {
-        _recentsLiveData.observe(viewLifecycleOwner, listAdapter::updateRecents)
+        _recentsLiveData.observe(viewLifecycleOwner) { listAdapter.data = it.listBundleByDates  }
         _searchViewModel.apply {
             number.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
             text.observe(viewLifecycleOwner, _recentsLiveData::setFilter)

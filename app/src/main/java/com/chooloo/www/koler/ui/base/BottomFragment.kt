@@ -25,6 +25,11 @@ class BottomFragment<FragmentType : BaseFragment>(
         _activity.onAttachFragment(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        showsDialog = true
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

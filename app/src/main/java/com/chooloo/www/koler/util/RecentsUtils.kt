@@ -3,7 +3,7 @@ package com.chooloo.www.koler.util
 import android.content.Context
 import android.provider.CallLog
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver
-import com.chooloo.www.koler.entity.Recent
+import com.chooloo.www.koler.data.Recent
 
 fun Context.getRecentById(recentId: Long): Recent {
     RecentsContentResolver(this, recentId).content.recents.also {

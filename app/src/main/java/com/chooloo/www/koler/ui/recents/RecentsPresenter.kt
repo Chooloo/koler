@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.recents
 
-import com.chooloo.www.koler.entity.Recent
+import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.ui.list.ListPresenter
 
 class RecentsPresenter<V : RecentsMvpView> : ListPresenter<V>(), RecentsMvpPresenter<V> {

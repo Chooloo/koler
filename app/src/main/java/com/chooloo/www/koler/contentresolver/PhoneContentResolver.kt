@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
-import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.data.Contact
 
 class PhoneContentResolver(
     context: Context,

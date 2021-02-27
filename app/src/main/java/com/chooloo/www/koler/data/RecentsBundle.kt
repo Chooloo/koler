@@ -1,9 +1,11 @@
-package com.chooloo.www.koler.entity
+package com.chooloo.www.koler.data
 
 data class RecentsBundle(
     val recents: Array<Recent>
 ) {
-    val recentsByDates: ListBundle<Recent>
+    val listBundle = ListBundle(items = recents)
+
+    val listBundleByDates: ListBundle<Recent>
         get() {
             val headers: ArrayList<String> = arrayListOf()
             val headersCounts: ArrayList<Int> = arrayListOf()

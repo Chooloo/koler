@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.entity
+package com.chooloo.www.koler.data
 
 import android.provider.CallLog
 import androidx.annotation.IntDef

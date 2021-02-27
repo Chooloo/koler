@@ -8,8 +8,8 @@ import android.provider.ContactsContract.CommonDataKinds.Callable.EXTRA_ADDRESS_
 import android.provider.ContactsContract.CommonDataKinds.Callable.EXTRA_ADDRESS_BOOK_INDEX_TITLES
 import android.provider.ContactsContract.Contacts
 import android.provider.ContactsContract.REMOVE_DUPLICATE_ENTRIES
-import com.chooloo.www.koler.entity.Contact
-import com.chooloo.www.koler.entity.ContactsBundle
+import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.ContactsBundle
 
 open class ContactsContentResolver(
     context: Context

@@ -3,7 +3,7 @@ package com.chooloo.www.koler.util.call
 import android.content.Context
 import android.telecom.Call
 import android.telecom.VideoProfile
-import com.chooloo.www.koler.entity.Contact
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.util.lookupContact
 import java.net.URLDecoder
 
