@@ -59,9 +59,7 @@ class ListItem : LinearLayout {
         get() = _binding.listItemHeaderText.text.toString()
         set(value) {
             _binding.listItemHeaderText.text = value
-            if (value == null) {
-                isHeaderVisible = false
-            }
+            isHeaderVisible = value != null
         }
 
     var isHeaderVisible: Boolean
