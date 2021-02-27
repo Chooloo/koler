@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
+        app:borderWidth="0dp"
         app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
@@ -65,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
+        app:borderWidth="0dp"
         app:icon="@drawable/ic_edit_black_24dp"
         app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
         app:layout_constraintStart_toEndOf="@id/contact_button_call"
@@ -76,6 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
+        app:borderWidth="0dp"
         app:icon="@drawable/ic_delete_black_24dp"
         app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
         app:layout_constraintStart_toEndOf="@id/contact_button_edit"
@@ -87,6 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
+        app:borderWidth="0dp"
         app:icon="@drawable/ic_sms_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />

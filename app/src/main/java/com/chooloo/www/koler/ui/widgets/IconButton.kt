@@ -29,8 +29,8 @@ class IconButton : FloatingActionButton {
             _iconOnClick = it.getResourceId(R.styleable.Koler_IconButton_activatedIcon, NO_ID)
         }
 
-        compatElevation = 0f
         elevation = 0f
+        compatElevation = 0f
         imageTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
         backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
 
