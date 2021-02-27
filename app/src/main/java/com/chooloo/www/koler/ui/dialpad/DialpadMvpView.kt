@@ -5,16 +5,21 @@ import com.chooloo.www.koler.ui.base.MvpView
 interface DialpadMvpView : MvpView {
     val isDialer: Boolean
     var number: String
+    var isDeleteButtonVisible: Boolean
+    var isAddContactButtonVisible: Boolean
 
-    fun showDeleteButton(isShow: Boolean)
-    fun showAddContactButton(isShow: Boolean)
-    fun toggleDialerView(isToggle: Boolean)
-    fun registerKeyEvent(keyCode: Int)
-    fun setViewModelNumber(number:String?)
-    fun backspace()
+    //region phone actions
     fun call()
-    fun callVoicemail()
     fun addContact()
+    fun callVoicemail()
+    //endregion
+
+    //region key actions
     fun vibrate()
     fun playTone(keyCode: Int)
+    fun registerKeyEvent(keyCode: Int)
+    //endregion
+
+    fun backspace()
+    fun setViewModelNumber(number: String?)
 }

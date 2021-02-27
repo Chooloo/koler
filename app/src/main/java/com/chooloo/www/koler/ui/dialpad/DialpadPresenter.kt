@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import android.view.KeyEvent
+import android.view.KeyEvent.*
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class DialpadPresenter<V : DialpadMvpView> : BasePresenter<V>(), DialpadMvpPresenter<V> {
@@ -8,6 +8,18 @@ class DialpadPresenter<V : DialpadMvpView> : BasePresenter<V>(), DialpadMvpPrese
         mvpView?.vibrate()
         mvpView?.playTone(keyCode)
         mvpView?.registerKeyEvent(keyCode)
+    }
+
+    override fun onLongKeyClick(keyCode: Int) = when (keyCode) {
+        KEYCODE_0 -> {
+            onKeyClick(KEYCODE_PLUS)
+            true
+        }
+        KEYCODE_1 -> {
+            if (mvpView?.isDialer == true) mvpView?.callVoicemail()
+            mvpView?.isDialer ?: false
+        }
+        else -> true
     }
 
     override fun onCallClick() {
@@ -27,21 +39,11 @@ class DialpadPresenter<V : DialpadMvpView> : BasePresenter<V>(), DialpadMvpPrese
         return true
     }
 
-    override fun onLongOneClick(): Boolean {
-        if (mvpView?.isDialer == true) {
-            mvpView?.callVoicemail()
-        }
-        return mvpView?.isDialer ?: false
-    }
-
-    override fun onLongZeroClick(): Boolean {
-        onKeyClick(KeyEvent.KEYCODE_PLUS)
-        return true
-    }
-
     override fun onTextChanged(text: String) {
-        mvpView?.showDeleteButton(text.isNotEmpty())
-        mvpView?.showAddContactButton(text.isNotEmpty())
-        mvpView?.setViewModelNumber(text)
+        if (mvpView?.isDialer == true) {
+            mvpView?.isDeleteButtonVisible = text.isNotEmpty()
+            mvpView?.isAddContactButtonVisible = text.isNotEmpty()
+            mvpView?.setViewModelNumber(text)
+        }
     }
 }
