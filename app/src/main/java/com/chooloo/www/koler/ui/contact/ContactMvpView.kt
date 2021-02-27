@@ -7,6 +7,7 @@ interface ContactMvpView : MvpView {
     var contactName: String?
     var contactNumber: String?
     var contactImage: Uri?
+    var starImageVisibility: Boolean
 
     fun callContact()
     fun smsContact()

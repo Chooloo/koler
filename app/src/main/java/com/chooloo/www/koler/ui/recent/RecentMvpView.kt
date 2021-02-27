@@ -6,5 +6,4 @@ interface RecentMvpView : MvpView {
     fun callRecent()
     fun smsRecent()
     fun deleteRecent()
-    fun animateLayout()
 }

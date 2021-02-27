@@ -11,8 +11,8 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
 class CallActionsFragment : BaseFragment(), CallActionsMvpView {
-    private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
     private val _presenter by lazy { CallActionsPresenter<CallActionsMvpView>() }
+    private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
     private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(false)) }
     private val _audioManager by lazy { _activity.getSystemService(AppCompatActivity.AUDIO_SERVICE) as AudioManager }
 

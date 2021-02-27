@@ -40,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="5dp"
+        android:padding="5dp"
         android:src="@drawable/ic_call_missed_black_24dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/recent_text_date"

@@ -2,8 +2,10 @@ package com.chooloo.www.koler.util
 
 import android.content.Context
 import android.media.AudioManager
+import android.media.AudioManager.MODE_IN_COMMUNICATION
 import android.media.ToneGenerator
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
 // Stream type used to play the DTMF tones off call, and mapped to the volume control keys
@@ -72,3 +74,4 @@ fun Context.playToneByKey(keyCode: Int) {
     keyToTone[KeyEvent.KEYCODE_STAR] = ToneGenerator.TONE_DTMF_S
     playTone(keyToTone.getOrDefault(keyCode, -1))
 }
+

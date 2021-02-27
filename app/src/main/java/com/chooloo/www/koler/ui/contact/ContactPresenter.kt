@@ -11,6 +11,7 @@ class ContactPresenter<V : ContactMvpView> : BasePresenter<V>(), ContactMvpPrese
             contactName = contact.name
             contact.number?.let { contactNumber = contact.number }
             contact.photoUri?.let { contactImage = Uri.parse(it) }
+            starImageVisibility = contact.starred
         }
     }
 

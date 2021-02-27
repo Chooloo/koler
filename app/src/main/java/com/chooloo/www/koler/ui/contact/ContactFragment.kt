@@ -3,7 +3,6 @@ package com.chooloo.www.koler.ui.contact
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -52,13 +51,17 @@ class ContactFragment : BaseFragment(), ContactMvpView {
             }
         }
 
+    override var starImageVisibility: Boolean
+        get() = _binding.contactImageStar.visibility == VISIBLE
+        set(value) {
+            _binding.contactImageStar.visibility = if (value) VISIBLE else GONE
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        return _binding.root
-    }
+    ) = _binding.root
 
     override fun onDestroy() {
         super.onDestroy()
