@@ -1,8 +1,10 @@
 package com.chooloo.www.koler.ui.recents
 
+import android.Manifest.permission.READ_CONTACTS
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.RecentsBundle
 import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListFragment
@@ -40,19 +42,31 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
         _presenter.detach()
     }
 
-    override fun observe() = runWithPermissions(_recentsLiveData.requiredPermissions, {
-        _recentsLiveData.observe(viewLifecycleOwner) { listAdapter.data = it.listBundleByDates  }
-        _searchViewModel.apply {
-            number.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
-            text.observe(viewLifecycleOwner, _recentsLiveData::setFilter)
-        }
-        showPermissionsPage(false)
-    }, blockedCallback = { _presenter.onPermissionsBlocked() })
+    override fun observe() = runWithPermissions(
+        permissions = _recentsLiveData.requiredPermissions + READ_CONTACTS,
+        grantedCallback = {
+            _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
+            _searchViewModel.apply {
+                number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
+                text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
+            }
+            showPermissionsPage(false)
+        },
+        blockedCallback = _presenter::onPermissionsBlocked
+    )
 
     override fun openRecent(recent: Recent) {
         BottomFragment(RecentFragment.newInstance(recent.id)).show(
             _activity.supportFragmentManager,
             RecentFragment.TAG
         )
+    }
+
+    override fun updateRecents(recentsBundle: RecentsBundle) {
+        listAdapter.data = recentsBundle.listBundleByDates
+    }
+
+    override fun setRecentsFilter(filter: String?) {
+        _recentsLiveData.setFilter(filter)
     }
 }

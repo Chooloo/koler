@@ -13,7 +13,7 @@ data class ContactsBundle(
         headersCounts = headersCounts
     )
 
-    val listBundleWithFavs: ListBundle<Contact>
+    val listBundleByLettersWithFavs: ListBundle<Contact>
         get() {
             val favs = contacts.filter { it.starred }.toTypedArray()
             return ListBundle(

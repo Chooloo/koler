@@ -3,8 +3,6 @@ package com.chooloo.www.koler.data
 data class RecentsBundle(
     val recents: Array<Recent>
 ) {
-    val listBundle = ListBundle(items = recents)
-
     val listBundleByDates: ListBundle<Recent>
         get() {
             val headers: ArrayList<String> = arrayListOf()

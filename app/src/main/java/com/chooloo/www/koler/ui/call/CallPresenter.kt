@@ -55,7 +55,7 @@ class CallPresenter<V : CallMvpView> : BasePresenter<V>(), CallMvpPresenter<V> {
         )
 
         when (state) {
-            STATE_ACTIVE -> mvpView?.switchToActiveCallUI()
+            STATE_ACTIVE, STATE_DIALING, STATE_CONNECTING -> mvpView?.switchToActiveCallUI()
             STATE_DISCONNECTED -> mvpView?.finish()
         }
     }

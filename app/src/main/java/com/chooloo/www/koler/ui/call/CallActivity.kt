@@ -4,7 +4,6 @@ import android.media.AudioManager
 import android.media.AudioManager.MODE_IN_CALL
 import android.net.Uri
 import android.os.Bundle
-import android.view.View.GONE
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
@@ -54,7 +53,6 @@ class CallActivity : BaseActivity(), CallMvpView {
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
-            callActionsPlaceholder.visibility = GONE
         }
 
         disableKeyboard()
