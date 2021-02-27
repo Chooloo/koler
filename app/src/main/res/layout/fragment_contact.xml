@@ -10,13 +10,11 @@
         android:id="@+id/contact_image_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
         android:src="@drawable/ic_star_black_24dp"
         android:tint="@color/star_yellow"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
@@ -26,9 +24,9 @@
         android:layout_marginEnd="15dp"
         android:textAlignment="viewStart"
         android:textAppearance="@style/Koler.Text.Headline3"
-        app:layout_constraintBottom_toBottomOf="@id/contact_image_star"
-        app:layout_constraintStart_toEndOf="@id/contact_image_star"
-        app:layout_constraintTop_toTopOf="@id/contact_image_star"
+        app:layout_constraintBottom_toTopOf="@id/contact_text_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_image_star"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Jesus" />
 
@@ -38,7 +36,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Koler.Text.Caption"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/contact_image_star"
+        app:layout_constraintStart_toStartOf="@id/contact_text_name"
         app:layout_constraintTop_toBottomOf="@id/contact_text_name"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="01234567"
