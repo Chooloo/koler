@@ -34,24 +34,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
                 _presenter.refresh()
                 _presenter.onListPreferenceChange(preference, newValue)
             }
-        findPreference<Preference>(getString(R.string.pref_reject_call_timer_key))?.setOnPreferenceChangeListener { preference, newValue ->
-            _presenter.onListPreferenceChange(
-                preference,
-                newValue
-            )
-        }
-        findPreference<Preference>(getString(R.string.pref_answer_call_timer_key))?.setOnPreferenceChangeListener { preference, newValue ->
-            _presenter.onListPreferenceChange(
-                preference,
-                newValue
-            )
-        }
-        findPreference<Preference>(getString(R.string.pref_default_page_key))?.setOnPreferenceChangeListener { preference, newValue ->
-            _presenter.onListPreferenceChange(
-                preference,
-                newValue
-            )
-        }
         findPreference<Preference>(getString(R.string.pref_sim_select_key))?.setOnPreferenceChangeListener { preference, newValue ->
             _presenter.onListPreferenceChange(
                 preference,

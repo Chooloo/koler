@@ -2,11 +2,10 @@ package com.chooloo.www.koler.util.permissions
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.TELECOM_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.telecom.TelecomManager
-import android.telecom.TelecomManager.ACTION_CHANGE_DEFAULT_DIALER
-import android.telecom.TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 
@@ -22,13 +21,11 @@ fun Activity.checkDefaultDialer() {
 }
 
 fun Context.isDefaultDialer() =
-    getSystemService(TelecomManager::class.java)?.defaultDialerPackage == applicationContext?.packageName
+    packageName == (getSystemService(TELECOM_SERVICE) as TelecomManager).defaultDialerPackage
 
 fun Activity.requestDefaultDialer() {
-    val intent = Intent(ACTION_CHANGE_DEFAULT_DIALER).putExtra(
-        EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,
-        packageName
-    )
+    val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
+        .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
     startActivityForResult(intent, RC_DEFAULT_DIALER)
 }
 //endregion

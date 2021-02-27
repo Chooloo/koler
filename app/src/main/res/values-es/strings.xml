@@ -43,18 +43,6 @@
     <string name="pref_sim_select_default_value">0</string>
     <string name="pref_sim_select_disabled">Selección de SIM desactivada al detectar un solo chip</string>
 
-    <string name="pref_reject_call_timer_key">end_call_timer</string>
-    <string name="pref_reject_call_timer_title">Tiempo para terminar llamada</string>
-    <string name="pref_reject_call_timer_default_value">10</string>
-
-    <string name="pref_answer_call_timer_key">answer_call_timer</string>
-    <string name="pref_answer_call_timer_title">Tiempo para responder llamada</string>
-    <string name="pref_answer_call_timer_default_value">10</string>
-
-    <string name="pref_default_page_key">default_page</string>
-    <string name="pref_default_page_title">Página predeterminada</string>
-    <string name="pref_default_page_value">1</string>
-
     <string name="pref_last_version_key">last_version</string>
 
     <string name="pref_is_biometric_key">is_biometric</string>
@@ -71,13 +59,6 @@
 
     <!--Errors-->
     <string name="please_enter_a_number">Por favor, introduzca el número primero</string>
-
-    <!--Dialog-->
-    <string name="dialog_changelog_title">Lista de cambios</string>
-
-    <!--Empty-->
-
-    <string name="empty_cgroups_title">No hay nada aquí... por ahora</string>
 
     <!--About-->
     <string name="about_version_title">Versión</string>
