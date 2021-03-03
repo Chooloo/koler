@@ -4,12 +4,19 @@
     android:id="@+id/appbar_main"
     style="@style/Koler.Appbar.Layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:layout_scrollFlags="scroll">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways">
+        android:paddingTop="@dimen/toolbar_padding"
+        android:paddingBottom="@dimen/toolbar_padding"
+        app:contentInsetEnd="@dimen/toolbar_padding"
+        app:contentInsetLeft="@dimen/toolbar_padding"
+        app:contentInsetRight="@dimen/toolbar_padding"
+        app:contentInsetStart="@dimen/toolbar_padding"
+        app:layout_scrollFlags="scroll">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,30 +27,40 @@
                 android:id="@+id/main_tab_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:tabGravity="start"
                 app:tabIndicator="@null"
                 app:tabMode="scrollable"
-                app:tabTextAppearance="@style/Koler.Text.TabLayout" />
+                app:tabPadding="-10dp"
+                app:tabRippleColor="@null"
+                app:tabTextAppearance="@style/Koler.Text.TabLayout">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contacts" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recents" />
+            </com.google.android.material.tabs.TabLayout>
 
             <ImageView
                 android:id="@+id/main_menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
                 android:contentDescription="@string/content_description_menu_button"
                 android:src="@drawable/ic_more_vert_black_24dp" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- search fragment -->
     <com.chooloo.www.koler.ui.widgets.SearchBar
         android:id="@+id/main_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="8dp" />
-
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
 </com.google.android.material.appbar.AppBarLayout>

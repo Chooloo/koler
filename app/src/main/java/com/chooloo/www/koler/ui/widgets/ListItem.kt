@@ -17,7 +17,6 @@ import com.chooloo.www.koler.util.getAttrColor
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
-
     private val _binding by lazy {
         ListItemBinding.inflate(LayoutInflater.from(context), this, true)
     }

@@ -13,7 +13,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @SuppressLint("Recycle", "CustomViewStyleable")
 class IconButton : FloatingActionButton {
-
     @DrawableRes private var _iconDefault: Int? = null
     @DrawableRes private var _iconOnClick: Int? = null
 

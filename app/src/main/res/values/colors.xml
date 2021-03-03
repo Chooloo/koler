@@ -6,11 +6,11 @@
     <color name="color_primary">#FFFFFF</color>
     <color name="color_primary_dark">#E8E8E8</color>
     <color name="color_secondary">#F6FCFF</color>
-    <color name="color_secondary_dark">#72BEFF</color>
+    <color name="color_secondary_dark">#6DBCFF</color>
     <color name="color_error">#B00020</color>
     <!--endregion-->
 
     <color name="green_phone">#9966BB6A</color>
     <color name="red_phone">#99EF5350</color>
-    <color name="star_yellow">#FFEE00</color>
+    <color name="star_yellow">#ADFFEE00</color>
 </resources>

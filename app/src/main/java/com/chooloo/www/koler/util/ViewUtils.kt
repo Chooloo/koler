@@ -8,19 +8,20 @@ import androidx.core.content.ContextCompat
 
 
 fun Context.hasNavBar(): Boolean {
-    val id = resources.getIdentifier("config_showNavigationBar", "bool", "android")
-    return id > 0 && resources.getBoolean(id)
+    resources.getIdentifier("config_showNavigationBar", "bool", "android").also {
+        return it > 0 && resources.getBoolean(it)
+    }
 }
 
 fun Context.navBarHeight(): Int {
-    val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    return if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+    resources.getIdentifier("navigation_bar_height", "dimen", "android").also {
+        return if (it > 0) resources.getDimensionPixelSize(it) else 0
+    }
 }
 
 @ColorInt
-fun Context.getAttrColor(@AttrRes attrRes: Int): Int {
-    return TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data
-}
+fun Context.getAttrColor(@AttrRes attrRes: Int) =
+    TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data
 
 fun Context.getSelectableItemBackgroundDrawable() = ContextCompat.getDrawable(
     this,

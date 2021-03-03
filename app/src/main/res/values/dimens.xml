@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- generic -->
+    <!--region generic sizes-->
     <dimen name="headline_1">46sp</dimen>
-    <dimen name="headline_2">34sp</dimen>
+    <dimen name="headline_2">30sp</dimen>
     <dimen name="headline_3">24sp</dimen>
     <dimen name="headline_4">18sp</dimen>
     <dimen name="subtitle_1">16sp</dimen>
@@ -13,37 +13,23 @@
     <dimen name="image_size_big">100dp</dimen>
     <dimen name="icon_size_small">50dp</dimen>
     <dimen name="icon_size_big">70dp</dimen>
+    <dimen name="corner_radius">13dp</dimen>
+    <!--endregion-->
 
-    <!-- icon button -->
-    <dimen name="icon_button_size_small">30dp</dimen>
-    <dimen name="icon_button_size_normal">50dp</dimen>
-    <dimen name="icon_button_size_big">70dp</dimen>
-    <dimen name="icon_button_padding">10dp</dimen>
-
-    <!-- smart tab layout -->
-    <dimen name="smart_tab_height">40dp</dimen>
-
-    <!-- bubble -->
-    <dimen name="bubble_corner_radius">13dp</dimen>
-
-    <!-- dialpad -->
-    <dimen name="dialpad_key_number_text_size">33dp</dimen>
-    <dimen name="dialpad_key_letters_text_size">10dp</dimen>
-
-    <!-- list item -->
-    <dimen name="list_item_padding">15dp</dimen>
+    <!--region list item -->
+    <dimen name="list_item_padding">10dp</dimen>
     <dimen name="list_item_padding_sides">20dp</dimen>
     <dimen name="list_item_small_text_top_margin">1dp</dimen>
+    <!--endregion-->
 
-    <!-- bottom sheet dialog -->
+    <!--region bottom sheet dialog -->
     <dimen name="swipe_indicator_height">5dp</dimen>
     <dimen name="swipe_indicator_width">30dp</dimen>
     <dimen name="swipe_indicator_margin">10dp</dimen>
+    <!--endregion-->
 
-    <!-- search bar -->
-    <dimen name="search_bar_height">36dp</dimen>
-    <dimen name="search_bar_drawable_padding">10dp</dimen>
+    <!--region toolbar-->
+    <dimen name="toolbar_padding">10dp</dimen>
+    <!--endregion-->
 
-    <!-- contact fragment -->
-    <dimen name="contact_action_button_height">60dp</dimen>
 </resources>

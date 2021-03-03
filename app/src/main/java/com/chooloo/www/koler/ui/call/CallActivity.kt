@@ -74,6 +74,6 @@ class CallActivity : BaseActivity(), CallMvpView {
     }
 
     override fun setStateRed() {
-        _binding.callStateText.setTextColor(getAttrColor(R.color.red_phone))
+        _binding.callStateText.setTextColor(getColor(R.color.red_phone))
     }
 }

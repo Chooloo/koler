@@ -7,7 +7,9 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getAttrColor
@@ -33,20 +35,16 @@ class SearchBar : TextInputLayout {
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
             hint = resources.getString(R.string.search_hint)
-            compoundDrawablePadding =
-                resources.getDimension(R.dimen.search_bar_drawable_padding).toInt()
+            compoundDrawablePadding = context.sizeInDp(5)
             compoundDrawableTintList =
                 ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
-            layoutParams = LayoutParams(
-                MATCH_PARENT,
-                resources.getDimension(R.dimen.search_bar_height).toInt()
-            )
+            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Subtitle1)
             setTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
             setHintTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
             setOnFocusChangeListener { _, isFocused -> showIcon(!isFocused) }
-            setPadding(context.sizeInDp(15), 0, context.sizeInDp(15), 0)
+            setPadding(context.sizeInDp(5))
 
             addTextChangedListener(
                 afterTextChanged = {},
