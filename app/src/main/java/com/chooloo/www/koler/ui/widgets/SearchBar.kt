@@ -35,7 +35,7 @@ class SearchBar : TextInputLayout {
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
             hint = resources.getString(R.string.search_hint)
-            compoundDrawablePadding = context.sizeInDp(5)
+            compoundDrawablePadding = context.sizeInDp(8)
             compoundDrawableTintList =
                 ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)

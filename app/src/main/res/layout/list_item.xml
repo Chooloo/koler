@@ -37,6 +37,7 @@
             style="@style/Koler.ListItem.Text.Big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing"
             app:layout_constraintBottom_toTopOf="@id/list_item_small_text"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/list_item_image"

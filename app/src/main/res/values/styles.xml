@@ -40,7 +40,7 @@
     <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">@dimen/headline_2</item>
-        <item name="fontFamily">@font/google_sans_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <!--endregion-->
 
@@ -104,7 +104,6 @@
 
     <style name="Koler.ListItem.Text.Big">
         <item name="android:textAppearance">@style/Koler.Text.Headline4</item>
-        <item name="android:layout_marginStart">@dimen/list_item_padding</item>
     </style>
 
     <style name="Koler.ListItem.Text.Small">

@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.ActivityMainBinding
@@ -74,6 +75,18 @@ class MainActivity : BaseActivity(), MainMvpView {
                 mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
                 mainSearchBar.setOnTextChangedListener(_presenter::onSearchTextChanged)
             }
+            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    appbarMain.mainTabHeader.text = getText(
+                        when (position) {
+                            0 -> R.string.contacts
+                            1 -> R.string.recents
+                            else -> R.string.contacts
+                        }
+                    )
+                }
+            })
             TabLayoutMediator(appbarMain.mainTabLayout, mainViewPager) { tab, position ->
                 tab.text = getString(if (position == 0) R.string.contacts else R.string.recents)
             }.attach()
