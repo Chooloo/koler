@@ -3,27 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/contact_image_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_margin="@dimen/default_spacing"
         android:src="@drawable/ic_star_black_24dp"
-        android:tint="@color/star_yellow"
+        android:tint="@color/orange_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
+        style="@style/Koler.Contact.Text.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/Koler.Text.Headline3"
         app:layout_constraintBottom_toTopOf="@id/contact_text_number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_image_star"
@@ -32,9 +31,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_number"
+        style="@style/Koler.Contact.Text.Number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/Koler.Text.Caption"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/contact_text_name"
         app:layout_constraintTop_toBottomOf="@id/contact_text_name"
@@ -46,8 +45,8 @@
         android:id="@+id/contact_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="5dp"
-        android:src="@drawable/ic_person_black_24dp"
+        style="@style/Koler.Contact.Image"
+        android:layout_marginEnd="@dimen/default_spacing"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
         app:layout_constraintDimensionRatio="1:1"
@@ -60,10 +59,13 @@
         android:id="@+id/contact_button_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_call_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 
@@ -71,10 +73,12 @@
         android:id="@+id/contact_button_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_edit_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
         app:layout_constraintStart_toEndOf="@id/contact_button_call"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
@@ -83,10 +87,12 @@
         android:id="@+id/contact_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_delete_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
         app:layout_constraintStart_toEndOf="@id/contact_button_edit"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
@@ -95,10 +101,13 @@
         android:id="@+id/contact_button_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_sms_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
 

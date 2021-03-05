@@ -20,7 +20,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Koler.Text.Subtitle1" parent="TextAppearance.MaterialComponents.Headline6">
+    <style name="Koler.Text.Headline4">
+        <item name="android:textSize">@dimen/headline_4</item>
+    </style>
+
+    <style name="Koler.Text.Subtitle1">
         <item name="android:textSize">@dimen/subtitle_1</item>
     </style>
 
@@ -36,7 +40,7 @@
     <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">@dimen/headline_2</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/google_sans_bold</item>
     </style>
     <!--endregion-->
 
@@ -58,16 +62,6 @@
         <item name="borderWidth">0dp</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
-    </style>
-
-    <style name="Koler.Image.Profile.Big">
-        <item name="android:layout_width">@dimen/image_size_big</item>
-        <item name="android:layout_height">@dimen/image_size_big</item>
-    </style>
-
-    <style name="Koler.Image.Profile.Small">
-        <item name="android:layout_width">@dimen/image_size_small</item>
-        <item name="android:layout_height">@dimen/image_size_small</item>
     </style>
     <!--endregion-->
 
@@ -101,24 +95,6 @@
     <!--region list item -->
     <style name="Koler.ListItem" />
 
-    <style name="Koler.ListItem.Layout">
-        <item name="android:padding">@dimen/list_item_padding</item>
-        <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
-        <item name="android:clickable">true</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-    </style>
-
-    <style name="Koler.ListItem.Header">
-        <item name="android:paddingStart">@dimen/list_item_padding_sides</item>
-        <item name="android:paddingEnd">@dimen/list_item_padding_sides</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:textAlignment">viewStart</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:clickable">false</item>
-        <item name="android:focusable">false</item>
-        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
-    </style>
 
     <style name="Koler.ListItem.Text">
         <item name="android:ellipsize">end</item>
@@ -127,9 +103,8 @@
     </style>
 
     <style name="Koler.ListItem.Text.Big">
-        <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
+        <item name="android:textAppearance">@style/Koler.Text.Headline4</item>
         <item name="android:layout_marginStart">@dimen/list_item_padding</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Koler.ListItem.Text.Small">
@@ -206,7 +181,6 @@
 
     <style name="Koler.Call.Text.Name">
         <item name="android:textAppearance">@style/Koler.Text.Headline2</item>
-        <item name="android:textStyle">bold</item>
     </style>
     <!--endregion-->
 
@@ -218,6 +192,28 @@
         <item name="layout_scrollFlags">scroll</item>
     </style>
     <!--endregion-->
+
+    <!--region contact-->
+    <style name="Koler.Contact" />
+
+    <style name="Koler.Contact.Text">
+        <item name="android:padding">2dp</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+    <style name="Koler.Contact.Text.Name">
+        <item name="android:textAppearance">@style/Koler.Text.Headline3</item>
+    </style>
+
+    <style name="Koler.Contact.Text.Number">
+        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
+        <item name="android:textSize">@dimen/subtitle_2</item>
+    </style>
+
+    <style name="Koler.Contact.Image">
+        <item name="android:padding">4dp</item>
+        <item name="android:src">@drawable/ic_person_black_24dp</item>
+    </style>
 
     <!--region shape appearance -->
     <style name="Koler.ShapeAppearance" />

@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.data
 
-import com.chooloo.www.koler.util.RelativeTime
 import com.chooloo.www.koler.util.RelativeTime.getRelativeDateString
 
 data class RecentsBundle(
@@ -8,6 +7,9 @@ data class RecentsBundle(
 ) {
     val listBundleByDates: ListBundle<Recent>
         get() {
+            if (recents.isEmpty()) {
+                return ListBundle()
+            }
             val headers: ArrayList<String> = arrayListOf()
             val headersCounts: ArrayList<Int> = arrayListOf()
             var currentCount = 1

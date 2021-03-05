@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.widgets
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
@@ -14,6 +15,8 @@ import androidx.annotation.ColorInt
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ListItemBinding
 import com.chooloo.www.koler.util.getAttrColor
+import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
+import com.chooloo.www.koler.util.sizeInDp
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
@@ -35,7 +38,33 @@ class ListItem : LinearLayout {
             smallText = it.getString(R.styleable.Koler_ListItem_smallText)
             imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
             headerText = it.getString(R.styleable.Koler_ListItem_header)
-            isHeaderVisible = _binding.listItemHeaderText.text !in arrayOf(null, "")
+        }
+
+        _binding.listItemPersonLayout.apply {
+            background = context.getSelectableItemBackgroundDrawable()
+            isClickable = true
+
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.default_spacing),
+                resources.getDimensionPixelSize(R.dimen.default_spacing_small),
+                resources.getDimensionPixelSize(R.dimen.default_spacing),
+                resources.getDimensionPixelSize(R.dimen.default_spacing_small),
+            )
+        }
+
+        _binding.listItemHeaderText.apply {
+            textAlignment = TEXT_ALIGNMENT_VIEW_START
+            isClickable = true
+            isFocusable = true
+
+            setTextAppearance(R.style.Koler_Text_Caption)
+            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.default_spacing),
+                resources.getDimensionPixelSize(R.dimen.default_spacing_small),
+                context.sizeInDp(5),
+                resources.getDimensionPixelSize(R.dimen.default_spacing_small),
+            )
         }
     }
 
@@ -57,21 +86,19 @@ class ListItem : LinearLayout {
     var headerText: String?
         get() = _binding.listItemHeaderText.text.toString()
         set(value) {
-            _binding.listItemHeaderText.text = value
-            isHeaderVisible = value != null
-        }
-
-    var isHeaderVisible: Boolean
-        get() = _binding.listItemHeaderText.visibility == VISIBLE
-        set(value) {
-            _binding.listItemHeaderText.visibility = if (value) VISIBLE else GONE
+            _binding.listItemHeaderText.apply {
+                text = value
+                visibility = if (value != null && value != "") VISIBLE else GONE
+            }
         }
 
     var imageDrawable: Drawable?
         get() = _binding.listItemImage.drawable
         set(value) {
             _binding.listItemImage.setImageDrawable(value)
-            setImageBackgroundColor(if (value != null) Color.TRANSPARENT else context.getAttrColor(R.attr.colorSecondary))
+            setImageBackgroundColor(
+                if (value != null) Color.TRANSPARENT else context.getColor(R.color.color_disabled)
+            )
         }
 
     fun setImageUri(image: Uri?) {

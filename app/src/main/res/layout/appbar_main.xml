@@ -10,12 +10,10 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/toolbar_padding"
+        android:paddingTop="@dimen/default_spacing"
         android:paddingBottom="@dimen/toolbar_padding"
-        app:contentInsetEnd="@dimen/toolbar_padding"
+        app:contentInsetEnd="@dimen/default_spacing"
         app:contentInsetLeft="@dimen/toolbar_padding"
-        app:contentInsetRight="@dimen/toolbar_padding"
-        app:contentInsetStart="@dimen/toolbar_padding"
         app:layout_scrollFlags="scroll">
 
         <RelativeLayout
@@ -61,6 +59,6 @@
         android:id="@+id/main_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing" />
 </com.google.android.material.appbar.AppBarLayout>

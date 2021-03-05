@@ -14,6 +14,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getSelectableItemBackgroundBorderlessDrawable
 import com.chooloo.www.koler.util.sizeInDp
 
+
 @SuppressLint("Recycle", "CustomViewStyleable")
 class DialpadKey : LinearLayout {
 
@@ -44,6 +45,7 @@ class DialpadKey : LinearLayout {
             textAlignment = TEXT_ALIGNMENT_CENTER
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
+            setPadding(0, context.sizeInDp(5), 0, 0)
             setTextAppearance(R.style.Koler_Text_Caption)
         }.also {
             addView(it)
@@ -52,10 +54,10 @@ class DialpadKey : LinearLayout {
         orientation = VERTICAL
         layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         background = context.getSelectableItemBackgroundBorderlessDrawable()
-
-        setPadding(context.sizeInDp(8))
         digit = context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey)
             .getString(R.styleable.Koler_DialpadKey_digit)
+
+        setPadding(context.sizeInDp(13))
     }
 
     var digit: String?

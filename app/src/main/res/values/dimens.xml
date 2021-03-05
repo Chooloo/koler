@@ -9,15 +9,15 @@
     <dimen name="subtitle_1">16sp</dimen>
     <dimen name="subtitle_2">14sp</dimen>
     <dimen name="caption_1">13sp</dimen>
-    <dimen name="image_size_small">40dp</dimen>
-    <dimen name="image_size_big">100dp</dimen>
-    <dimen name="icon_size_small">50dp</dimen>
-    <dimen name="icon_size_big">70dp</dimen>
+    <dimen name="image_size_small">35dp</dimen>
+    <dimen name="image_size_big">70dp</dimen>
     <dimen name="corner_radius">13dp</dimen>
+    <dimen name="default_spacing">20dp</dimen>
+    <dimen name="default_spacing_small">12dp</dimen>
     <!--endregion-->
 
     <!--region list item -->
-    <dimen name="list_item_padding">10dp</dimen>
+    <dimen name="list_item_padding">15dp</dimen>
     <dimen name="list_item_padding_sides">20dp</dimen>
     <dimen name="list_item_small_text_top_margin">1dp</dimen>
     <!--endregion-->

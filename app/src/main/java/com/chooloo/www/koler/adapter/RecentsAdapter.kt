@@ -18,6 +18,7 @@ class RecentsAdapter(
             bigText = contact.name ?: item.number
             smallText = if (item.date != null) RelativeTime.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
+            
             setImageBackgroundColor(Color.TRANSPARENT)
         }
     }

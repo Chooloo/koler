@@ -10,9 +10,9 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getAttrColor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-
-@SuppressLint("Recycle", "CustomViewStyleable")
+@SuppressLint("Recycle", "CustomViewStyleable", "WrongConstant")
 class IconButton : FloatingActionButton {
+    private var _customSize: Int = NO_CUSTOM_SIZE
     @DrawableRes private var _iconDefault: Int? = null
     @DrawableRes private var _iconOnClick: Int? = null
 
@@ -30,7 +30,8 @@ class IconButton : FloatingActionButton {
 
         elevation = 0f
         compatElevation = 0f
-        imageTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
+        imageTintList = imageTintList
+            ?: ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
         backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
 
         setImageDrawable(_iconDefault?.let { getDrawable(context, it) })

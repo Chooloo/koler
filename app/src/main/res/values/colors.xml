@@ -5,12 +5,27 @@
     <!--region base colors-->
     <color name="color_primary">#FFFFFF</color>
     <color name="color_primary_dark">#E8E8E8</color>
-    <color name="color_secondary">#E8F0FD</color>
-    <color name="color_secondary_dark">#4F9FE1</color>
+    <color name="color_secondary">@color/blue_light</color>
+    <color name="color_secondary_dark">@color/blue_dark</color>
     <color name="color_error">#B00020</color>
+    <color name="color_disabled">#F7F7F7</color>
     <!--endregion-->
+    .
+    <color name="green_phone">@color/green_dark</color>
+    <color name="red_phone">@color/red_dark</color>
 
-    <color name="green_phone">#9966BB6A</color>
-    <color name="red_phone">#99EF5350</color>
-    <color name="star_yellow">#ADFFEE00</color>
+    <color name="blue_light">#E8F0FD</color>
+    <color name="blue_dark">#4F9FE1</color>
+
+    <color name="orange_light">#FDEFE2</color>
+    <color name="orange_dark">#F1974D</color>
+
+    <color name="green_light">#E7F4EA</color>
+    <color name="green_dark">#4FA266</color>
+
+    <color name="purple_light">#F4E8FE</color>
+    <color name="purple_dark">#AF66EC</color>
+
+    <color name="red_light">#FCE8E7</color>
+    <color name="red_dark">#D54E45</color>
 </resources>

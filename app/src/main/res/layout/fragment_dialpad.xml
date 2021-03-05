@@ -5,15 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:layout_height="wrap_content">
 
     <com.chooloo.www.koler.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         style="@style/Koler.Text.Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="@dimen/default_spacing"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +23,7 @@
         android:id="@+id/dialpad_keys_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="@dimen/default_spacing"
         android:stretchColumns="*"
         app:layout_constraintBottom_toTopOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,6 +94,7 @@
         android:id="@+id/dialpad_button_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_spacing"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -111,6 +111,7 @@
         app:icon="@drawable/ic_arrow_back_ios_24px"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toEndOf="@id/dialpad_button_call"
         app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
         tools:visibility="visible" />
@@ -125,6 +126,7 @@
         app:icon="@drawable/ic_person_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toStartOf="@id/dialpad_button_call"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
         tools:visibility="visible" />

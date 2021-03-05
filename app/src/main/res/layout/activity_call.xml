@@ -36,13 +36,16 @@
     <!-- caller image -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/call_image"
-        style="@style/Koler.Image.Profile.Small"
+        android:layout_width="@dimen/image_size_big"
+        android:layout_height="@dimen/image_size_big"
         android:layout_marginEnd="24dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/call_name_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/call_name_text"
-        tools:src="@drawable/ic_account_circle_black_24dp" />
+        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
+        tools:src="@drawable/ic_account_circle_black_24dp"
+        tools:visibility="visible" />
 
     <!-- caller name -->
     <TextView
@@ -75,28 +78,35 @@
         tools:layout="@layout/fragment_call_actions" />
 
     <!-- Answer Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_answer_button"
-        style="@style/Koler.Call.Button.Bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        android:backgroundTint="@color/green_phone"
-        android:contentDescription="@string/content_description_answer_button"
-        android:src="@drawable/ic_call_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Reject Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/call_reject_button"
-        style="@style/Koler.Call.Button.Bottom"
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/call_answer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:backgroundTint="@color/red_phone"
-        android:contentDescription="@string/content_description_reject_button"
-        android:src="@drawable/ic_call_end_black_24dp"
+        android:backgroundTint="@color/green_light"
+        android:contentDescription="@string/content_description_answer_button"
+        android:tint="@color/green_dark"
+        app:borderWidth="0dp"
+        app:fabCustomSize="70dp"
+        app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:maxImageSize="36dp" />
+
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/call_reject_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:backgroundTint="@color/red_light"
+        android:contentDescription="@string/content_description_reject_button"
+        android:tint="@color/red_dark"
+        app:borderWidth="0dp"
+        app:fabCustomSize="70dp"
+        app:icon="@drawable/ic_call_end_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="36dp" />
 </androidx.constraintlayout.motion.widget.MotionLayout>
