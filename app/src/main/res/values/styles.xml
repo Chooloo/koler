@@ -129,6 +129,7 @@
     <style name="Koler.ListItem.Text.Big">
         <item name="android:textAppearance">@style/Koler.Text.Subtitle1</item>
         <item name="android:layout_marginStart">@dimen/list_item_padding</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Koler.ListItem.Text.Small">

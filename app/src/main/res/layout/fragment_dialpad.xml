@@ -5,14 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="20dp">
 
     <com.chooloo.www.koler.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         style="@style/Koler.Text.Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +24,7 @@
         android:id="@+id/dialpad_keys_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="22dp"
+        android:layout_marginBottom="20dp"
         android:stretchColumns="*"
         app:layout_constraintBottom_toTopOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,12 +108,12 @@
         android:backgroundTint="?colorPrimary"
         android:visibility="gone"
         app:borderWidth="0dp"
-        app:fabSize="mini"
         app:icon="@drawable/ic_arrow_back_ios_24px"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/dialpad_button_call"
-        app:layout_constraintTop_toTopOf="@id/dialpad_button_call" />
+        app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
+        tools:visibility="visible" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/dialpad_button_add_contact"
@@ -121,10 +122,10 @@
         android:backgroundTint="?colorPrimary"
         android:visibility="gone"
         app:borderWidth="0dp"
-        app:fabSize="mini"
         app:icon="@drawable/ic_person_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toStartOf="@id/dialpad_button_call"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dialpad_button_call" />
+        app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

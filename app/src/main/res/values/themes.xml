@@ -4,7 +4,7 @@
     <!-- Theme Styles -->
 
     <style name="KolerTheme" parent="Theme.MaterialComponents.Light.Bridge">
-        <!-- attribute colors -->
+        <!--region attr colors-->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorSecondary">@color/color_secondary</item>
@@ -12,18 +12,20 @@
         <item name="colorOnSecondary">?colorSecondaryVariant</item>
         <item name="colorAccent">?colorSecondaryVariant</item>
         <item name="colorError">@color/color_error</item>
+        <!--endregion-->
 
+        <!--region android colors-->
         <item name="android:textColorSecondary">?colorPrimaryDark</item>
-
-        <!-- views colors -->
         <item name="android:windowBackground">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!--endregion-->
 
-        <!-- other -->
-        <item name="android:fontFamily">@font/ibm_plex_sans_medium</item>
+        <!--region other-->
+        <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="bottomSheetDialogTheme">@style/Koler.BottomDialog.Theme</item>
+        <!--endregion-->
     </style>
 
     <style name="KolerTheme.NoActionBar" parent="KolerTheme">

@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import com.chooloo.www.koler.databinding.FragmentBottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+
 class BottomFragment<FragmentType : BaseFragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), MvpView {
