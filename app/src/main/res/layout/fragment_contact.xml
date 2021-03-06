@@ -9,7 +9,8 @@
         android:id="@+id/contact_image_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:src="@drawable/ic_star_black_24dp"
         android:tint="@color/orange_light"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,9 +44,9 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/contact_image"
+        style="@style/Koler.Contact.Image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        style="@style/Koler.Contact.Image"
         android:layout_marginEnd="@dimen/default_spacing"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
