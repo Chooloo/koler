@@ -14,6 +14,7 @@
     <dimen name="corner_radius">13dp</dimen>
     <dimen name="default_spacing">20dp</dimen>
     <dimen name="default_spacing_small">12dp</dimen>
+    <dimen name="default_spacing_big">32dp</dimen>
     <!--endregion-->
 
     <!--region list item -->

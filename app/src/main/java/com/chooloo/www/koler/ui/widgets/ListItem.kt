@@ -96,9 +96,9 @@ class ListItem : LinearLayout {
         get() = _binding.listItemImage.drawable
         set(value) {
             _binding.listItemImage.setImageDrawable(value)
-            setImageBackgroundColor(
-                if (value != null) Color.TRANSPARENT else context.getColor(R.color.color_disabled)
-            )
+//            setImageBackgroundColor(
+//                if (value != null) Color.TRANSPARENT else context.getColor(R.color.color_disabled)
+//            )
         }
 
     fun setImageUri(image: Uri?) {

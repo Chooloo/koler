@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +22,6 @@ import com.chooloo.www.koler.ui.menu.MenuFragment
 import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
-import com.google.android.material.tabs.TabLayoutMediator
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainMvpView {
@@ -78,18 +79,20 @@ class MainActivity : BaseActivity(), MainMvpView {
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    appbarMain.mainTabHeader.text = getText(
-                        when (position) {
-                            0 -> R.string.contacts
-                            1 -> R.string.recents
-                            else -> R.string.contacts
+                    when (position) {
+                        0 -> appbarMain.apply {
+                            mainTabHeader.text = getText(R.string.contacts)
+                            mainTabLeftArrow.visibility = GONE
+                            mainTabRightArrow.visibility = VISIBLE
                         }
-                    )
+                        1 -> appbarMain.apply {
+                            mainTabHeader.text = getText(R.string.recents)
+                            mainTabLeftArrow.visibility = VISIBLE
+                            mainTabRightArrow.visibility = GONE
+                        }
+                    }
                 }
             })
-            TabLayoutMediator(appbarMain.mainTabLayout, mainViewPager) { tab, position ->
-                tab.text = getString(if (position == 0) R.string.contacts else R.string.recents)
-            }.attach()
         }
 
         checkDefaultDialer()

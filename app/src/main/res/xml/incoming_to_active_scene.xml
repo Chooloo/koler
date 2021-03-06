@@ -11,21 +11,22 @@
             android:id="@+id/call_answer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginLeft="@dimen/default_spacing"
+            android:layout_marginBottom="@dimen/default_spacing"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="24dp" />
+            app:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/call_reject_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="@dimen/default_spacing"
+            android:layout_marginRight="@dimen/default_spacing"
+            android:layout_marginBottom="@dimen/default_spacing"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
         <Constraint
-            android:id="@+id/call_actions_placeholder"
+            android:id="@+id/call_actions_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
@@ -36,7 +37,7 @@
             android:id="@+id/call_reject_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/default_spacing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
         <Constraint
@@ -47,12 +48,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
         <Constraint
-            android:id="@+id/call_actions_placeholder"
+            android:id="@+id/call_actions_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginEnd="@dimen/default_spacing"
+            android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toTopOf="@id/call_reject_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

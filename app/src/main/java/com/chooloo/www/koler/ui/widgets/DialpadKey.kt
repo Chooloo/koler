@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.KeyEvent
@@ -47,6 +48,7 @@ class DialpadKey : LinearLayout {
 
             setPadding(0, context.sizeInDp(5), 0, 0)
             setTextAppearance(R.style.Koler_Text_Caption)
+            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
         }.also {
             addView(it)
         }
@@ -57,7 +59,7 @@ class DialpadKey : LinearLayout {
         digit = context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey)
             .getString(R.styleable.Koler_DialpadKey_digit)
 
-        setPadding(context.sizeInDp(13))
+        setPadding(context.sizeInDp(10))
     }
 
     var digit: String?

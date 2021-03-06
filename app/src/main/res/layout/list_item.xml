@@ -27,7 +27,7 @@
             android:layout_width="@dimen/image_size_small"
             android:layout_height="@dimen/image_size_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/Koler.Image.Profile" />
 
@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/default_spacing"
             app:layout_constraintBottom_toTopOf="@id/list_item_small_text"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/list_item_image"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="Simta Kumta" />

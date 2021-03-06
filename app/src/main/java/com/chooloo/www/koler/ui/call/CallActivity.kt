@@ -8,13 +8,15 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.ProximitySensor
+import com.chooloo.www.koler.util.disableKeyboard
+import com.chooloo.www.koler.util.lookupContact
+import com.chooloo.www.koler.util.setShowWhenLocked
 
 class CallActivity : BaseActivity(), CallMvpView {
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
     private val _presenter: CallMvpPresenter<CallMvpView> by lazy { CallPresenter() }
-    private val _callActionsFragment by lazy { CallActionsFragment.newInstance() }
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
@@ -43,11 +45,6 @@ class CallActivity : BaseActivity(), CallMvpView {
         _presenter.attach(this)
         _proximitySensor.acquire()
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(_binding.callActionsPlaceholder.id, _callActionsFragment)
-            .commitNow()
-
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
@@ -71,6 +68,10 @@ class CallActivity : BaseActivity(), CallMvpView {
 
     override fun switchToActiveCallUI() {
         _binding.root.transitionToEnd()
+        supportFragmentManager
+            .beginTransaction()
+            .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
+            .commitNow()
     }
 
     override fun setStateRed() {

@@ -16,10 +16,20 @@
         app:contentInsetStart="@dimen/default_spacing"
         app:layout_scrollFlags="scroll">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_tab_left_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:tint="?colorPrimaryDark"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/main_tab_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/main_tab_header" />
 
             <TextView
                 android:id="@+id/main_tab_header"
@@ -28,41 +38,34 @@
                 android:layout_marginTop="40dp"
                 android:text="Contacts"
                 android:textAppearance="@style/Koler.Text.TabLayout"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                app:layout_constraintStart_toEndOf="@id/main_tab_left_arrow"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/main_tab_layout"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_tab_right_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:tint="?colorPrimaryDark"
                 android:visibility="gone"
-                app:tabGravity="start"
-                app:tabIndicator="@null"
-                app:tabMode="scrollable"
-                app:tabPadding="-10dp"
-                app:tabRippleColor="@null"
-                app:tabTextAppearance="@style/Koler.Text.TabLayout">
+                app:layout_constraintBottom_toBottomOf="@id/main_tab_header"
+                app:layout_constraintStart_toEndOf="@id/main_tab_header"
+                app:layout_constraintTop_toTopOf="@id/main_tab_header" />
 
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Contacts" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Recents" />
-            </com.google.android.material.tabs.TabLayout>
-
-            <ImageView
+            <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/main_menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:backgroundTint="?colorPrimary"
                 android:contentDescription="@string/content_description_menu_button"
-                android:src="@drawable/ic_more_vert_black_24dp" />
-        </RelativeLayout>
+                app:borderWidth="0dp"
+                app:fabSize="mini"
+                app:icon="@drawable/ic_more_vert_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <com.chooloo.www.koler.ui.widgets.SearchBar
