@@ -5,7 +5,7 @@ import com.chooloo.www.koler.databinding.ActivitySettingsBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.settingsfragment.SettingsFragment
 
-class SettingsActivity : BaseActivity(), SettingsMvpView {
+class SettingsActivity : BaseActivity(), SettingsContract.View {
     private val _binding by lazy { ActivitySettingsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

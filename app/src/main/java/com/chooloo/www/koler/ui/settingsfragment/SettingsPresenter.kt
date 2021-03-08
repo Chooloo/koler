@@ -3,7 +3,8 @@ package com.chooloo.www.koler.ui.settingsfragment
 import androidx.preference.Preference
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class SettingsPresenter<V : SettingsMvpView> : BasePresenter<V>(), SettingsMvpPresenter<V> {
+class SettingsPresenter<V : SettingsFragmentContract.View> : BasePresenter<V>(),
+    SettingsFragmentContract.Presenter<V> {
     override fun onRequestPermissionResult(requestCode: Int, grantResults: IntArray) {
         mvpView?.setupSimSelection()
     }

@@ -12,10 +12,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomFragment<FragmentType : BaseFragment>(
     val fragment: FragmentType
-) : BottomSheetDialogFragment(), MvpView {
-
-    private val _binding by lazy { FragmentBottomDialogBinding.inflate(layoutInflater) }
+) : BottomSheetDialogFragment(), BaseContract.View {
     private val _activity by lazy { context as BaseActivity }
+    private val _binding by lazy { FragmentBottomDialogBinding.inflate(layoutInflater) }
 
     //region lifecycle
     override fun onAttach(context: Context) {
@@ -56,14 +55,6 @@ class BottomFragment<FragmentType : BaseFragment>(
 
     override fun hasPermissions(permissions: Array<String>) =
         permissions.any { p -> _activity.hasPermission(p) }
-
-    override fun askForPermission(permission: String, requestCode: Int?) {
-        askForPermissions(arrayOf(permission), requestCode)
-    }
-
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
-        requestPermissions(permissions, requestCode ?: 1)
-    }
     //endregion
 
     //region messages

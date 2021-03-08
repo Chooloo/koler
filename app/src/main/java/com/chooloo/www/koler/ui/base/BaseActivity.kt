@@ -4,17 +4,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
-import com.chooloo.www.koler.util.PreferencesManager
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 
-abstract class BaseActivity : AppCompatActivity(), MvpView, PermissionListener {
-    protected val preferences by lazy { PreferencesManager.getInstance(this) }
-
+abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun onStart() {
         super.onStart()
         onSetup()
@@ -24,22 +16,14 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, PermissionListener {
         super<AppCompatActivity>.finish()
     }
 
-    override fun hasPermission(permission: String): Boolean {
-        return checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
-    }
+    //region permissions
+    override fun hasPermission(permission: String) =
+        checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
 
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.any(this::hasPermission)
-    }
+    override fun hasPermissions(permissions: Array<String>) = permissions.any(this::hasPermission)
+    //endregion
 
-    override fun askForPermission(permission: String, requestCode: Int?) {
-        Dexter.withActivity(this).withPermission(permission).withListener(this)
-    }
-
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
-        permissions.forEach { permission -> askForPermission(permission, requestCode) }
-    }
-
+    //region messages
     override fun showMessage(message: String) {
         // TODO implement a custom scack bar
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -57,16 +41,6 @@ abstract class BaseActivity : AppCompatActivity(), MvpView, PermissionListener {
     override fun showError(stringResId: Int) {
         showError(getString(stringResId))
     }
+    //endregion
 
-    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-    }
-
-    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-    }
-
-    override fun onPermissionRationaleShouldBeShown(
-        permission: PermissionRequest?,
-        token: PermissionToken?
-    ) {
-    }
 }

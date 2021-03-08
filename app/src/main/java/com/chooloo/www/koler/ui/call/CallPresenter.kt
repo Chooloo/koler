@@ -8,7 +8,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.util.call.CallManager
 
-class CallPresenter<V : CallMvpView> : BasePresenter<V>(), CallMvpPresenter<V> {
+class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Presenter<V> {
     private val _callCallback by lazy { CallCallback() }
 
     override fun attach(mvpView: V) {
@@ -34,7 +34,7 @@ class CallPresenter<V : CallMvpView> : BasePresenter<V>(), CallMvpPresenter<V> {
         CallManager.reject()
     }
 
-    override fun onDetailsChanged(details: Call.Details?) {
+    override fun onDetailsChanged(details: Details?) {
         mvpView?.getContact(details?.handle.toString())?.let {
             mvpView?.callerNameText = it.name
             it.photoUri?.let { mvpView?.callerImageURI = Uri.parse(it) }
@@ -69,7 +69,7 @@ class CallPresenter<V : CallMvpView> : BasePresenter<V>(), CallMvpPresenter<V> {
             onStateChanged(state)
         }
 
-        override fun onDetailsChanged(call: Call, details: Call.Details) {
+        override fun onDetailsChanged(call: Call, details: Details) {
             super.onDetailsChanged(call, details)
             onDetailsChanged(details)
         }

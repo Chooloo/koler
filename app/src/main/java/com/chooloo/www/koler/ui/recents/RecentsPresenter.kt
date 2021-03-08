@@ -4,7 +4,8 @@ import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.data.RecentsBundle
 import com.chooloo.www.koler.ui.list.ListPresenter
 
-class RecentsPresenter<V : RecentsMvpView> : ListPresenter<V>(), RecentsMvpPresenter<V> {
+class RecentsPresenter<V : RecentsContract.View> : ListPresenter<V>(),
+    RecentsContract.Presenter<V> {
     override fun onRecentsChanged(recentsBundle: RecentsBundle) {
         mvpView?.updateRecents(recentsBundle)
     }
@@ -23,7 +24,7 @@ class RecentsPresenter<V : RecentsMvpView> : ListPresenter<V>(), RecentsMvpPrese
 
     override fun onRecentItemLongClick(recent: Recent) {}
 
-    override fun onPermissionsBlocked(permissions:Array<String>) {
+    override fun onPermissionsBlocked(permissions: Array<String>) {
         mvpView?.showPermissionsPage(true)
     }
 }

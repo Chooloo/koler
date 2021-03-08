@@ -19,7 +19,12 @@ import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.call.callVoicemail
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
-class DialpadFragment : BaseFragment(), DialpadMvpView {
+class DialpadFragment : BaseFragment(), DialpadContract.View {
+    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
+    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
+    private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
+    private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
+    private val _searchViewModel by lazy { ViewModelProvider(_activity).get(SearchViewModel::class.java) }
 
     companion object {
         const val ARG_IS_DIALER = "dialer"
@@ -31,12 +36,6 @@ class DialpadFragment : BaseFragment(), DialpadMvpView {
             }
         }
     }
-
-    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
-    private val _presenter by lazy { DialpadPresenter<DialpadMvpView>() }
-    private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
-    private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    private val _searchViewModel by lazy { ViewModelProvider(_activity).get(SearchViewModel::class.java) }
 
     override var number: String
         get() = _binding.dialpadEditText.text.toString()

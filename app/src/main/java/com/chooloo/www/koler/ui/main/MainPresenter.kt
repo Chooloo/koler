@@ -7,7 +7,7 @@ import com.chooloo.www.koler.ui.base.BasePresenter
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
-class MainPresenter<V : MainMvpView> : BasePresenter<V>(), MainMvpPresenter<V> {
+class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Presenter<V> {
     override fun onDialpadFabClick() {
         mvpView?.openDialpad()
     }

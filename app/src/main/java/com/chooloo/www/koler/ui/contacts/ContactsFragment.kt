@@ -11,15 +11,14 @@ import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
-class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
+class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View {
+    private val _contactsLiveData by lazy { ContactsProviderLiveData(_activity) }
+    private val _presenter by lazy { ContactsPresenter<ContactsContract.View>() }
+    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
 
     companion object {
         fun newInstance() = ContactsFragment()
     }
-
-    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
-    private val _contactsLiveData by lazy { ContactsProviderLiveData(_activity) }
-    private val _presenter: ContactsMvpPresenter<ContactsMvpView> by lazy { ContactsPresenter() }
 
     override fun onGetAdapter() = ContactsAdapter().apply {
         setOnItemClickListener(_presenter::onContactItemClick)
@@ -42,8 +41,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsMvpView {
     }
 
     override fun observe() = runWithPermissions(
-        permissions = _contactsLiveData.requiredPermissions,
-        grantedCallback = {
+        _contactsLiveData.requiredPermissions,
+        {
             _contactsLiveData.observe(viewLifecycleOwner, _presenter::onContactsChanged)
             _searchViewModel.apply {
                 number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)

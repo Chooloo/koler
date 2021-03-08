@@ -12,15 +12,14 @@ import com.chooloo.www.koler.ui.recent.RecentFragment
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
-class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsMvpView {
+class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
+    private val _presenter by lazy { RecentsPresenter<RecentsContract.View>() }
+    private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
+    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
 
     companion object {
         fun newInstance() = RecentsFragment()
     }
-
-    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
-    private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
-    private val _presenter by lazy { RecentsPresenter<RecentsMvpView>() }
 
     override fun onGetAdapter() = RecentsAdapter(_activity).apply {
         setOnItemClickListener(_presenter::onRecentItemClick)

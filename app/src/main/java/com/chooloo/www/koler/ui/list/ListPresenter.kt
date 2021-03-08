@@ -1,10 +1,8 @@
 package com.chooloo.www.koler.ui.list
 
-import android.Manifest.permission
 import com.chooloo.www.koler.ui.base.BasePresenter
-import com.chooloo.www.koler.util.permissions.RC_READ_CONTACTS
 
-open class ListPresenter<V : ListMvpView> : BasePresenter<V>(), ListMvpPresenter<V> {
+open class ListPresenter<V : ListContract.View> : BasePresenter<V>(), ListContract.Presenter<V> {
     override fun onNoPermissions() {
         onNoResults()
     }
@@ -18,6 +16,6 @@ open class ListPresenter<V : ListMvpView> : BasePresenter<V>(), ListMvpPresenter
     }
 
     override fun onEnablePermissionClick() {
-        mvpView?.askForPermission(permission.READ_CONTACTS, RC_READ_CONTACTS)
+//        mvpView?.askForPermission(permission.READ_CONTACTS, RC_READ_CONTACTS)
     }
 }

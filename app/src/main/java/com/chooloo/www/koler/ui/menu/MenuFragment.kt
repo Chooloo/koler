@@ -9,8 +9,7 @@ import com.chooloo.www.koler.adapter.MenuAdapter
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.list.ListFragment
 
-class MenuFragment : ListFragment<MenuAdapter>(), MenuMvpView {
-
+class MenuFragment : ListFragment<MenuAdapter>(), MenuContract.View {
     private var _onMenuItemClickListener: (MenuItem) -> Unit? = {}
 
     companion object {

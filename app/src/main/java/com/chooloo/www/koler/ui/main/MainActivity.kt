@@ -24,13 +24,12 @@ import com.chooloo.www.koler.util.permissions.checkDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
-class MainActivity : BaseActivity(), MainMvpView {
-
-    private val _presenter by lazy { MainPresenter<MainMvpView>() }
+class MainActivity : BaseActivity(), MainContract.View {
+    private val _presenter by lazy { MainPresenter<MainContract.View>() }
     private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(true)) }
-    private val _bottomMenuFragment by lazy { BottomFragment(MenuFragment.newInstance(R.menu.main_actions)) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
+    private val _bottomMenuFragment by lazy { BottomFragment(MenuFragment.newInstance(R.menu.main_actions)) }
 
     override var dialpadNumber: String
         get() = _bottomDialpadFragment.fragment.number

@@ -27,9 +27,14 @@
             app:layout_constraintEnd_toEndOf="parent" />
         <Constraint
             android:id="@+id/call_actions_container"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginEnd="@dimen/default_spacing"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toTopOf="@id/call_reject_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/active_call">

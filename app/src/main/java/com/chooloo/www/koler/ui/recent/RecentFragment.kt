@@ -13,10 +13,9 @@ import com.chooloo.www.koler.util.deleteRecent
 import com.chooloo.www.koler.util.getRecentById
 import com.chooloo.www.koler.util.smsNumber
 
-class RecentFragment : BaseFragment(), RecentMvpView {
-
+class RecentFragment : BaseFragment(), RecentContract.View {
+    private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
     private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
-    private val _presenter: RecentMvpPresenter<RecentMvpView> by lazy { RecentPresenter() }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
 
     companion object {

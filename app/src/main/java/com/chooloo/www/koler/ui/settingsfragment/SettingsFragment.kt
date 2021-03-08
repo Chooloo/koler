@@ -9,12 +9,12 @@ import android.widget.Toast
 import androidx.preference.*
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
+import com.chooloo.www.koler.ui.settings.SettingsContract
 import timber.log.Timber
 import java.util.*
 
-class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
-
-    private val _presenter by lazy { SettingsPresenter<SettingsMvpView>() }
+class SettingsFragment : PreferenceFragmentCompat(), SettingsFragmentContract.View {
+    private val _presenter by lazy { SettingsPresenter<SettingsFragmentContract.View>() }
 
     companion object {
         const val TAG = "settings_fragment"
@@ -127,14 +127,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsMvpView {
 
     override fun hasPermissions(permissions: Array<String>): Boolean {
         return true
-    }
-
-    override fun askForPermission(permission: String, requestCode: Int?) {
-        requestPermissions(arrayOf(permission), requestCode ?: 1)
-    }
-
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
-        requestPermissions(permissions, requestCode ?: 1)
     }
 
     override fun showMessage(message: String) {

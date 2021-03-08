@@ -12,10 +12,9 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(),
-    ListMvpView {
-
+    ListContract.View {
     protected val listAdapter by lazy { onGetAdapter() }
-    private val _presenter by lazy { ListPresenter<ListMvpView>() }
+    private val _presenter by lazy { ListPresenter<ListContract.View>() }
     private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
     private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
 

@@ -4,7 +4,8 @@ import android.net.Uri
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class ContactPresenter<V : ContactMvpView> : BasePresenter<V>(), ContactMvpPresenter<V> {
+class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
+    ContactContract.Presenter<V> {
 
     override fun onLoadContact(contact: Contact) {
         mvpView?.apply {

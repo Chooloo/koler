@@ -3,7 +3,8 @@ package com.chooloo.www.koler.ui.dialpad
 import android.view.KeyEvent.*
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class DialpadPresenter<V : DialpadMvpView> : BasePresenter<V>(), DialpadMvpPresenter<V> {
+class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
+    DialpadContract.Presenter<V> {
     override fun onKeyClick(keyCode: Int) {
         mvpView?.vibrate()
         mvpView?.playTone(keyCode)

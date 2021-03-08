@@ -5,14 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
 
-abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
+abstract class BaseFragment : Fragment(), BaseContract.View {
     protected val _activity by lazy { context as BaseActivity }
 
     override fun onAttach(context: Context) {
@@ -28,22 +22,14 @@ abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
         onSetup()
     }
 
-    override fun hasPermission(permission: String): Boolean {
-        return false
-    }
+    //region permissions
+    override fun hasPermission(permission: String) = _activity.hasPermission(permission)
 
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.filter { p -> _activity.hasPermission(p) }.isNotEmpty()
-    }
+    override fun hasPermissions(permissions: Array<String>) =
+        permissions.any { p -> _activity.hasPermission(p) }
+    //endregion
 
-    override fun askForPermission(permission: String, requestCode: Int?) {
-        Dexter.withActivity(activity).withPermission(permission).withListener(this)
-    }
-
-    override fun askForPermissions(permissions: Array<String>, requestCode: Int?) {
-        permissions.forEach { permission -> askForPermission(permission, requestCode) }
-    }
-
+    //region messages
     override fun showMessage(message: String) {
         _activity.showMessage(message)
     }
@@ -59,18 +45,7 @@ abstract class BaseFragment : Fragment(), MvpView, PermissionListener {
     override fun showError(@StringRes stringResId: Int) {
         _activity.showError(getString(stringResId))
     }
-
-    override fun onPermissionGranted(response: PermissionGrantedResponse?) {
-    }
-
-    override fun onPermissionDenied(response: PermissionDeniedResponse?) {
-    }
-
-    override fun onPermissionRationaleShouldBeShown(
-        permission: PermissionRequest?,
-        token: PermissionToken?
-    ) {
-    }
+    //endregion
 
     protected val argsSafely: Bundle
         get() = arguments ?: Bundle()

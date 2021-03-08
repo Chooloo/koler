@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.recent
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class RecentPresenter<V : RecentMvpView> : BasePresenter<V>(), RecentMvpPresenter<V> {
+class RecentPresenter<V : RecentContract.View> : BasePresenter<V>(), RecentContract.Presenter<V> {
     override fun onActionCall() {
         mvpView?.callRecent()
     }

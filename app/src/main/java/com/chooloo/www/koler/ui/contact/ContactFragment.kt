@@ -11,7 +11,11 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 
-class ContactFragment : BaseFragment(), ContactMvpView {
+class ContactFragment : BaseFragment(), ContactContract.View {
+    private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
+    private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
+    private val _contact by lazy { _activity.lookupContact(argsSafely.getLong(ARG_CONTACT_ID)) }
+
     companion object {
         const val TAG = "contact_fragment"
         const val ARG_CONTACT_ID = "contact_id"
@@ -22,10 +26,6 @@ class ContactFragment : BaseFragment(), ContactMvpView {
             }
         }
     }
-
-    private val _presenter by lazy { ContactPresenter<ContactMvpView>() }
-    private val _contact by lazy { _activity.lookupContact(argsSafely.getLong(ARG_CONTACT_ID)) }
-    private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
