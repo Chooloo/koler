@@ -8,8 +8,8 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ActivityAboutBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 
-class AboutActivity : BaseActivity(), AboutMvpView {
-    private val _presenter: AboutMvpPresenter<AboutMvpView> by lazy { AboutPresenter() }
+class AboutActivity : BaseActivity(), AboutContract.View {
+    private val _presenter by lazy { AboutPresenter<AboutContract.View>() }
     private val _binding by lazy { ActivityAboutBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.about
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class AboutPresenter<V : AboutMvpView> : BasePresenter<V>(), AboutMvpPresenter<V> {
+class AboutPresenter<V : AboutContract.View> : BasePresenter<V>(), AboutContract.Presenter<V> {
     override fun onOpenSourceClick() {
         mvpView?.openSource()
     }
