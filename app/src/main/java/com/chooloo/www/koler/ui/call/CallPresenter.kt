@@ -56,11 +56,12 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         )
 
         when (state) {
-            STATE_ACTIVE, STATE_DIALING, STATE_CONNECTING -> mvpView?.switchToActiveCallUI()
+            STATE_ACTIVE -> mvpView?.setStateActive()
             STATE_DISCONNECTED -> {
                 mvpView?.setStateEnded()
                 Handler().postDelayed({ mvpView?.finish() }, 2000)
             }
+            STATE_ACTIVE, STATE_DIALING, STATE_CONNECTING -> mvpView?.switchToActiveCallUI()
         }
     }
 
