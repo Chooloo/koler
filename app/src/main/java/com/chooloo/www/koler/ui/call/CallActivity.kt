@@ -69,6 +69,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
             .commitNow()
         showView(_binding.callActionsContainer, true)
+        _binding.root.transitionToEnd()
     }
 
     override fun setStateActive() {
