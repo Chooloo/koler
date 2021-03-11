@@ -7,7 +7,6 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface CallContract : BaseContract {
     interface View : BaseContract.View {
-        var timeText: String?
         var stateText: String?
         var callerNameText: String?
         var callerImageURI: Uri?

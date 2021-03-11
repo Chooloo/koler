@@ -9,17 +9,15 @@
     tools:context=".ui.call.CallActivity">
 
     <!-- call timer -->
-    <TextView
-        android:id="@+id/call_time_text"
+    <Chronometer
+        android:id="@+id/call_chronometer"
         style="@style/Koler.Call.Text.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
-        android:text="00:00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="00:00" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- call status -->
     <TextView
@@ -31,7 +29,7 @@
         android:text="Incoming Call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_time_text"
+        app:layout_constraintTop_toBottomOf="@id/call_chronometer"
         tools:text="@string/status_call_incoming" />
 
     <!-- caller image -->

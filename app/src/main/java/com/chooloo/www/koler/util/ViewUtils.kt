@@ -7,6 +7,12 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 
 
+@ColorInt
+fun Context.getAttrColor(@AttrRes attrRes: Int) =
+    TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data
+
+fun Context.sizeInDp(sizeInDp: Int) = (sizeInDp * resources.displayMetrics.density + 0.5f).toInt()
+
 fun Context.hasNavBar(): Boolean {
     resources.getIdentifier("config_showNavigationBar", "bool", "android").also {
         return it > 0 && resources.getBoolean(it)
@@ -18,10 +24,6 @@ fun Context.navBarHeight(): Int {
         return if (it > 0) resources.getDimensionPixelSize(it) else 0
     }
 }
-
-@ColorInt
-fun Context.getAttrColor(@AttrRes attrRes: Int) =
-    TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data
 
 fun Context.getSelectableItemBackgroundDrawable() = ContextCompat.getDrawable(
     this,
@@ -36,5 +38,3 @@ fun Context.getSelectableItemBackgroundBorderlessDrawable() = ContextCompat.getD
         theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, it, true)
     }.resourceId
 )
-
-fun Context.sizeInDp(sizeInDp: Int) = (sizeInDp * resources.displayMetrics.density + 0.5f).toInt()

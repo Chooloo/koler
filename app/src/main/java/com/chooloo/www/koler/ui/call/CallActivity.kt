@@ -15,12 +15,6 @@ class CallActivity : BaseActivity(), CallContract.View {
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
 
-    override var timeText: String?
-        get() = _binding.callTimeText.text.toString()
-        set(value) {
-            _binding.callTimeText.text = value
-        }
-
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
         set(value) {
@@ -80,10 +74,12 @@ class CallActivity : BaseActivity(), CallContract.View {
     override fun setStateActive() {
         _binding.callStateText.setTextColor(getColor(R.color.green_dark))
         blinkView(_binding.callStateText, 400, 2000)
+        _binding.callChronometer.start()
     }
 
     override fun setStateEnded() {
         _binding.callStateText.setTextColor(getColor(R.color.red_dark))
         blinkView(_binding.callStateText, 400, 3000)
+        _binding.callChronometer.stop()
     }
 }
