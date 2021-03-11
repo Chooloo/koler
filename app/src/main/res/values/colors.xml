@@ -10,9 +10,6 @@
     <color name="color_error">#B00020</color>
     <color name="color_disabled">#F7F7F7</color>
     <!--endregion-->
-    .
-    <color name="green_phone">@color/green_dark</color>
-    <color name="red_phone">@color/red_dark</color>
 
     <color name="blue_light">#E8F0FD</color>
     <color name="blue_dark">#4F9FE1</color>

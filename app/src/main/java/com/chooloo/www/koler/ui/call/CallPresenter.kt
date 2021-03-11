@@ -1,14 +1,18 @@
 package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
+import android.os.Handler
 import android.telecom.Call
 import android.telecom.Call.*
 import com.chooloo.www.koler.App
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.util.Stopwatch
 import com.chooloo.www.koler.util.call.CallManager
 
 class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Presenter<V> {
+    private val _timeHandler by lazy { Handler() }
+    private val _stopwatch by lazy { Stopwatch() }
     private val _callCallback by lazy { CallCallback() }
 
     override fun attach(mvpView: V) {
@@ -56,9 +60,14 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
 
         when (state) {
             STATE_ACTIVE, STATE_DIALING, STATE_CONNECTING -> mvpView?.switchToActiveCallUI()
+            STATE_ACTIVE -> _stopwatch.apply {
+                registerListener { mvpView?.timeText = it }
+                start()
+            }
             STATE_DISCONNECTED -> {
-                mvpView?.setStateRed()
-                mvpView?.finish()
+                _stopwatch.stop()
+                mvpView?.setStateEnded()
+                Handler().postDelayed({ mvpView?.finish() }, 2000)
             }
         }
     }

@@ -1,12 +1,13 @@
 package com.chooloo.www.koler.util
 
+import android.os.Handler
 import android.view.View
 import android.view.View.INVISIBLE
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
-
-const val ANIMATION_DURATION = 500
 
 fun showView(view: View, isShow: Boolean) {
     view.visibility = if (isShow) View.VISIBLE else View.GONE
@@ -46,4 +47,14 @@ fun animateViews(views: Array<View>, delay: Int = 50, isShow: Boolean) {
             showView(view, isShow)
         }, it * delay.toLong())
     }
+}
+
+fun blinkView(view: View, duration: Long, totalDuration: Long) {
+    view.startAnimation(AlphaAnimation(0.0f, 1.0f).apply {
+        setDuration(duration)
+        startOffset = 20
+        repeatMode = Animation.REVERSE
+        repeatCount = Animation.INFINITE
+    })
+    Handler().postDelayed({ view.clearAnimation() }, totalDuration)
 }

@@ -1,29 +1,37 @@
 package com.chooloo.www.koler.util
 
+import android.os.Handler
 import java.util.*
 
 /**
  * Just a simple stopwatch class
  */
 class Stopwatch {
-    private var startTime: Long = 0
-    private var stopTime: Long = 0
-    private var isRunning = false
+    private var _startTime: Long = 0
+    private var _stopTime: Long = 0
+    private var _isRunning = false
+    private var _handler: Handler? = null
+    private var _onTimeStringChanged: (String) -> Unit = {}
 
     val elapsedTime: Long
-        get() = if (isRunning) System.currentTimeMillis() - startTime else stopTime - startTime
+        get() = if (_isRunning) System.currentTimeMillis() - _startTime else _stopTime - _startTime
 
     val elapsedTimeSecs: Long
-        get() = if (isRunning) (System.currentTimeMillis() - startTime) / 1000 else (stopTime - startTime) / 1000
+        get() = if (_isRunning) (System.currentTimeMillis() - _startTime) / 1000 else (_stopTime - _startTime) / 1000
 
     fun start() {
-        startTime = System.currentTimeMillis()
-        isRunning = true
+        _startTime = System.currentTimeMillis()
+        _isRunning = true
+        _handler = Handler().apply {
+            postDelayed({ _onTimeStringChanged.invoke(stringTime) }, 1000)
+        }
     }
 
     fun stop() {
-        stopTime = System.currentTimeMillis()
-        isRunning = false
+        _stopTime = System.currentTimeMillis()
+        _isRunning = false
+        _handler?.removeCallbacksAndMessages(null)
+        _handler = null
     }
 
     val stringTime: String
@@ -36,4 +44,8 @@ class Stopwatch {
             minutes -= hours * 60
             return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds)
         }
+
+    fun registerListener(onTimeChangedListener: (String) -> Unit = {}) {
+        _onTimeStringChanged = onTimeChangedListener
+    }
 }
