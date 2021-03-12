@@ -56,12 +56,23 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         )
 
         when (state) {
-            STATE_ACTIVE -> mvpView?.setStateActive()
+            STATE_ACTIVE -> {
+                mvpView?.getColor(R.color.green_dark)?.let { mvpView?.stateTextColor = it }
+                mvpView?.blinkStateText()
+                mvpView?.startStopwatch()
+                mvpView?.transitionToActiveUI()
+            }
             STATE_DISCONNECTED -> {
-                mvpView?.setStateEnded()
+                mvpView?.getColor(R.color.red_dark)?.let { mvpView?.stateTextColor = it }
+                mvpView?.blinkStateText()
+                mvpView?.stopStopwatch()
                 Handler().postDelayed({ mvpView?.finish() }, 2000)
             }
-            STATE_ACTIVE, STATE_DIALING, STATE_CONNECTING -> mvpView?.switchToActiveCallUI()
+            STATE_HOLDING -> {
+                mvpView?.getColor(R.color.red_dark)?.let { mvpView?.stateTextColor = it }
+                mvpView?.blinkStateText()
+            }
+            STATE_CONNECTING -> mvpView?.transitionToActiveUI()
         }
     }
 

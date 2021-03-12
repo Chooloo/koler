@@ -8,13 +8,15 @@ import com.chooloo.www.koler.ui.base.BaseContract
 interface CallContract : BaseContract {
     interface View : BaseContract.View {
         var stateText: String?
+        var stateTextColor: Int
         var callerNameText: String?
         var callerImageURI: Uri?
 
         fun getContact(number: String): Contact
-        fun switchToActiveCallUI()
-        fun setStateActive()
-        fun setStateEnded()
+        fun transitionToActiveUI()
+        fun blinkStateText()
+        fun startStopwatch()
+        fun stopStopwatch()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.preference.*
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
-import com.chooloo.www.koler.ui.settings.SettingsContract
 import timber.log.Timber
 import java.util.*
 
@@ -144,4 +143,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsFragmentContract.Vi
     override fun showError(stringResId: Int) {
         showMessage(stringResId)
     }
+
+    override fun getColor(color: Int) = resources.getColor(color)
 }

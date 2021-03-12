@@ -21,6 +21,12 @@ class CallActivity : BaseActivity(), CallContract.View {
             _binding.callStateText.text = value
         }
 
+    override var stateTextColor: Int
+        get() = _binding.callStateText.currentTextColor
+        set(value) {
+            _binding.callStateText.setTextColor(value)
+        }
+
     override var callerNameText: String?
         get() = _binding.callNameText.text.toString()
         set(value) {
@@ -63,24 +69,26 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun getContact(number: String) = lookupContact(number)
 
-    override fun switchToActiveCallUI() {
-        supportFragmentManager
-            .beginTransaction()
-            .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
-            .commitNow()
-        showView(_binding.callActionsContainer, true)
-        _binding.root.transitionToEnd()
+    override fun transitionToActiveUI() {
+        if (_binding.root.currentState == R.id.incoming_call) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
+                .commitNow()
+            showView(_binding.callActionsContainer, true)
+            _binding.root.transitionToEnd()
+        }
     }
 
-    override fun setStateActive() {
-        _binding.callStateText.setTextColor(getColor(R.color.green_dark))
-        blinkView(_binding.callStateText, 400, 2000)
+    override fun blinkStateText() {
+        blinkView(_binding.callStateText, 400, 2500)
+    }
+
+    override fun startStopwatch() {
         _binding.callChronometer.start()
     }
 
-    override fun setStateEnded() {
-        _binding.callStateText.setTextColor(getColor(R.color.red_dark))
-        blinkView(_binding.callStateText, 400, 3000)
+    override fun stopStopwatch() {
         _binding.callChronometer.stop()
     }
 }

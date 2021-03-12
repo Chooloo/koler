@@ -45,6 +45,8 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
     override fun showError(@StringRes stringResId: Int) {
         _activity.showError(getString(stringResId))
     }
+
+    override fun getColor(color: Int) = _activity.getColor(color)
     //endregion
 
     protected val argsSafely: Bundle

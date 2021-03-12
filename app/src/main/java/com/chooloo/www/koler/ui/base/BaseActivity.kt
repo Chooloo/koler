@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.base
 
+import android.content.res.Resources
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker

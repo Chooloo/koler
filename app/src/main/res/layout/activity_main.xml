@@ -29,5 +29,4 @@
         android:layout_margin="20dp"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_dialpad_black_24dp" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

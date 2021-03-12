@@ -80,6 +80,8 @@ class BottomFragment<FragmentType : BaseFragment>(
             .replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
 
+    override fun getColor(color: Int) = _activity.getColor(color)
+    
     private val argsSafely: Bundle
         get() = arguments
             ?: throw IllegalArgumentException("Always create fragment with newInstance()")
