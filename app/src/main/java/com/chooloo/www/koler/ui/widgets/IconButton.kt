@@ -12,7 +12,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @SuppressLint("Recycle", "CustomViewStyleable", "WrongConstant")
 class IconButton : FloatingActionButton {
-    private var _customSize: Int = NO_CUSTOM_SIZE
     @DrawableRes private var _iconDefault: Int? = null
     @DrawableRes private var _iconOnClick: Int? = null
 
@@ -41,6 +40,7 @@ class IconButton : FloatingActionButton {
     override fun setOnClickListener(l: OnClickListener?) {
         super.setOnClickListener {
             isActivated = !isActivated
+            l?.onClick(it)
         }
     }
 

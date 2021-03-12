@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.callactions
 
 import android.media.AudioManager
+import android.media.AudioManager.MODE_IN_CALL
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,6 +29,8 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 
     override fun onSetup() {
         _presenter.attach(this)
+
+        _audioManager.mode = MODE_IN_CALL
 
         _binding.apply {
             callActionHold.setOnClickListener { _presenter.onHoldClick() }

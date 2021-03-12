@@ -4,8 +4,7 @@ import android.view.KeyEvent
 import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.util.call.CallManager
 
-class CallActionsPresenter<V : CallActionsContract.View>
-    :
+class CallActionsPresenter<V : CallActionsContract.View> :
     BasePresenter<V>(),
     CallActionsContract.Presenter<V> {
 
@@ -23,15 +22,11 @@ class CallActionsPresenter<V : CallActionsContract.View>
     }
 
     override fun onHoldClick() {
-        _isHolding = !_isHolding.also {
-            CallManager.hold(!it)
-        }
+        _isHolding = !_isHolding.also { CallManager.hold(!it) }
     }
 
     override fun onMuteClick() {
-        _isMuted = !_isMuted.also {
-            mvpView?.toggleMute(!it)
-        }
+        _isMuted = !_isMuted.also { mvpView?.toggleMute(!it) }
     }
 
     override fun onRecordClick() {
@@ -43,9 +38,7 @@ class CallActionsPresenter<V : CallActionsContract.View>
     }
 
     override fun onSpeakerClick() {
-        _isSpeaker = !_isSpeaker.also {
-            mvpView?.toggleSpeaker(!it)
-        }
+        _isSpeaker = !_isSpeaker.also { mvpView?.toggleSpeaker(!it) }
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {

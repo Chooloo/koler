@@ -53,7 +53,6 @@ class ListItem : LinearLayout {
         }
 
         _binding.listItemHeaderText.apply {
-            textAlignment = TEXT_ALIGNMENT_VIEW_START
             isClickable = true
             isFocusable = true
 
@@ -96,9 +95,6 @@ class ListItem : LinearLayout {
         get() = _binding.listItemImage.drawable
         set(value) {
             _binding.listItemImage.setImageDrawable(value)
-//            setImageBackgroundColor(
-//                if (value != null) Color.TRANSPARENT else context.getColor(R.color.color_disabled)
-//            )
         }
 
     fun setImageUri(image: Uri?) {

@@ -56,8 +56,6 @@ class CallActivity : BaseActivity(), CallContract.View {
         disableKeyboard()
         setShowWhenLocked()
 
-        (getSystemService(AUDIO_SERVICE) as AudioManager).mode = MODE_IN_CALL
-
         _presenter.onInitialUI()
     }
 
