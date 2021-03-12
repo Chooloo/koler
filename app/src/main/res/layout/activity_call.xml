@@ -59,14 +59,6 @@
         app:layout_constraintTop_toBottomOf="@id/call_state_text"
         tools:text="John Baba" />
 
-    <!-- eye level guideline -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guide_eye_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/call_actions_container"
         android:layout_width="match_parent"
@@ -74,9 +66,11 @@
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginEnd="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing_big"
+        app:flow_verticalBias="1"
         app:layout_constraintBottom_toTopOf="@id/call_reject_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/call_name_text"
         tools:layout="@layout/fragment_call_actions" />
 
     <!-- answer button -->

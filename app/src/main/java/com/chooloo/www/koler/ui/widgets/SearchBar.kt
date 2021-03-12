@@ -7,9 +7,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.core.content.ContextCompat
-import androidx.core.view.setPadding
 import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getAttrColor
@@ -19,9 +17,8 @@ import com.google.android.material.textfield.TextInputLayout
 
 @SuppressLint("UseCompatTextViewDrawableApis")
 class SearchBar : TextInputLayout {
-
-    private var _onTextChangedListener: ((text: String) -> Unit?)? = null
     private var _textInputEditText: TextInputEditText
+    private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
@@ -31,20 +28,23 @@ class SearchBar : TextInputLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
+            hint = resources.getString(R.string.search_hint)
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
-            hint = resources.getString(R.string.search_hint)
-            compoundDrawablePadding = context.sizeInDp(8)
+            layoutParams = LayoutParams(MATCH_PARENT, context.sizeInDp(34))
             compoundDrawableTintList =
                 ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Subtitle1)
             setTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
             setHintTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
-            setOnFocusChangeListener { _, isFocused -> showIcon(!isFocused) }
-            setPadding(context.sizeInDp(5))
+            setPadding(
+                context.sizeInDp(8),
+                context.sizeInDp(5),
+                context.sizeInDp(5),
+                context.sizeInDp(5)
+            )
 
             addTextChangedListener(
                 afterTextChanged = {},
@@ -59,6 +59,7 @@ class SearchBar : TextInputLayout {
         endIconMode = END_ICON_CLEAR_TEXT
         background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
         endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp)
+        _textInputEditText.setOnFocusChangeListener { _, isFocused -> showIcon(!isFocused) }
 
         showIcon(true)
         setEndIconTintList(ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant)))
@@ -66,10 +67,11 @@ class SearchBar : TextInputLayout {
 
     private fun showIcon(isShow: Boolean) {
         _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(
-            if (isShow) ContextCompat.getDrawable(
-                context,
-                R.drawable.ic_search_black_24dp
-            ) else null, null, null, null
+            if (isShow) {
+                ContextCompat.getDrawable(context, R.drawable.ic_search_black_24dp)
+            } else {
+                null
+            }, null, null, null
         )
     }
 
