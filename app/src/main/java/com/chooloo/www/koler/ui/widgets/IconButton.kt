@@ -41,10 +41,13 @@ class IconButton : FloatingActionButton {
     override fun setOnClickListener(l: OnClickListener?) {
         super.setOnClickListener {
             isActivated = !isActivated
-            if (_iconOnClick != NO_ID) {
-                (if (isActivated) _iconOnClick else _iconDefault)?.let { setImageResource(it) }
-            }
-            l?.onClick(it)
+        }
+    }
+
+    override fun setActivated(activated: Boolean) {
+        super.setActivated(activated)
+        if (_iconOnClick != NO_ID) {
+            (if (isActivated) _iconOnClick else _iconDefault)?.let { setImageResource(it) }
         }
     }
 }

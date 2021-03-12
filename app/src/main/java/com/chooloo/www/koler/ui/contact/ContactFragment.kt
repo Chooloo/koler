@@ -51,10 +51,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             }
         }
 
-    override var starImageVisibility: Boolean
-        get() = _binding.contactImageStar.visibility == VISIBLE
+    override var isStarIconActivated: Boolean
+        get() = _binding.contactButtonFav.isActivated
         set(value) {
-            _binding.contactImageStar.visibility = if (value) VISIBLE else GONE
+            _binding.contactButtonFav.isActivated = value
         }
 
     override fun onCreateView(
@@ -79,6 +79,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
             contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
+            contactButtonFav.setOnClickListener { _presenter.onActionFav() }
         }
     }
 
@@ -100,5 +101,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     override fun deleteContact() {
         _activity.deleteContact(_contact.id)
+        finish()
+    }
+
+    override fun setFavorite(isFavorite: Boolean) {
+        _activity.setFavorite(_contact.id, isFavorite)
     }
 }

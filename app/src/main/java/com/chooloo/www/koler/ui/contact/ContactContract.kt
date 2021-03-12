@@ -9,13 +9,14 @@ interface ContactContract : BaseContract {
         var contactName: String?
         var contactNumber: String?
         var contactImage: Uri?
-        var starImageVisibility: Boolean
+        var isStarIconActivated: Boolean
 
         fun callContact()
         fun smsContact()
         fun editContact()
         fun openContact()
         fun deleteContact()
+        fun setFavorite(isFavorite: Boolean)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
@@ -25,5 +26,6 @@ interface ContactContract : BaseContract {
         fun onActionEdit()
         fun onActionInfo()
         fun onActionDelete()
+        fun onActionFav()
     }
 }

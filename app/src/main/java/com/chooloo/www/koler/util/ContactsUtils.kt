@@ -2,6 +2,7 @@ package com.chooloo.www.koler.util
 
 import android.Manifest.permission.WRITE_CONTACTS
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -55,4 +56,15 @@ fun Context.deleteContact(contactId: Long) = runWithPermissions(WRITE_CONTACTS) 
 fun Context.smsNumber(number: String?) {
     val uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
     startActivity(Intent(Intent.ACTION_SENDTO, uri))
+}
+
+fun Context.setFavorite(contactId: Long, isFavorite: Boolean) = runWithPermissions(WRITE_CONTACTS) {
+    contentResolver.update(
+        Contacts.CONTENT_URI,
+        ContentValues().apply {
+            put(Contacts.STARRED, if (isFavorite) 1 else 0)
+        },
+        "${Contacts._ID}= $contactId",
+        null
+    );
 }

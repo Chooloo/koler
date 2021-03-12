@@ -5,14 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/contact_image_star"
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing"
-        android:src="@drawable/ic_star_black_24dp"
-        android:tint="@color/orange_light"
+        android:backgroundTint="@color/orange_light"
+        android:tint="@color/orange_dark"
+        app:activatedIcon="@drawable/ic_star_black_24dp"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:icon="@drawable/ic_star_outline_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +30,7 @@
         android:layout_marginEnd="15dp"
         app:layout_constraintBottom_toTopOf="@id/contact_text_number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_image_star"
+        app:layout_constraintTop_toBottomOf="@id/contact_button_fav"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Jesus" />
 
