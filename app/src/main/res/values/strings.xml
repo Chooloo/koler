@@ -65,6 +65,10 @@
     <string name="pref_is_biometric_title">Use Biometrics</string>
     <!--endregion-->
 
+    <!--region call recording-->
+    <string name="pref_call_recording_format_key">call_recording_format</string>
+    <!--endregion-->
+
     <!--region call state-->
     <string name="status_call_disconnected">Call ended</string>
     <string name="status_call_incoming">Incoming Call</string>
