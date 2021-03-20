@@ -17,6 +17,7 @@ class PhoneLookupContentResolver(
         .build()
 
     override fun onGetFilterUri(): Uri = PhoneLookup.CONTENT_FILTER_URI
+
     override fun onGetProjection() = arrayOf(
         PhoneLookup.CONTACT_ID,
         PhoneLookup.DISPLAY_NAME_PRIMARY,

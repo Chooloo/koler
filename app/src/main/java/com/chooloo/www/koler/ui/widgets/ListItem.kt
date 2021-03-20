@@ -55,9 +55,9 @@ class ListItem : LinearLayout {
         _binding.listItemHeaderText.apply {
             isClickable = true
             isFocusable = true
+            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             setPadding(
                 resources.getDimensionPixelSize(R.dimen.default_spacing),
                 resources.getDimensionPixelSize(R.dimen.default_spacing_small),
@@ -95,6 +95,14 @@ class ListItem : LinearLayout {
         get() = _binding.listItemImage.drawable
         set(value) {
             _binding.listItemImage.setImageDrawable(value)
+        }
+
+    var personStartPadding: Int
+        get() = _binding.listItemPersonLayout.paddingStart
+        set(value) {
+            _binding.listItemPersonLayout.apply {
+                setPadding(value, paddingTop, paddingEnd, paddingBottom)
+            }
         }
 
     fun setImageUri(image: Uri?) {

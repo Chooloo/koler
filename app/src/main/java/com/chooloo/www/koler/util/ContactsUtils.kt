@@ -26,7 +26,7 @@ fun Context.lookupContact(number: String?) = if (number == null) {
     Contact.UNKNOWN
 } else {
     val contacts = PhoneLookupContentResolver(this, number).content
-    if (contacts.isNotEmpty()) contacts[0] else Contact.UNKNOWN
+    if (contacts.isNotEmpty()) contacts[0] else Contact(-1, null, number)
 }
 
 fun Context.openContact(contactId: Long) {

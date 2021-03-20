@@ -1,7 +1,5 @@
 package com.chooloo.www.koler.ui.call
 
-import android.media.AudioManager
-import android.media.AudioManager.MODE_IN_CALL
 import android.net.Uri
 import android.os.Bundle
 import com.chooloo.www.koler.R

@@ -37,7 +37,7 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
 
     override fun onDetailsChanged(details: Details?) {
         mvpView?.getContact(details?.handle.toString())?.let {
-            mvpView?.callerNameText = it.name
+            mvpView?.callerNameText = it.name ?: it.number
             it.photoUri?.let { mvpView?.callerImageURI = Uri.parse(it) }
         }
     }

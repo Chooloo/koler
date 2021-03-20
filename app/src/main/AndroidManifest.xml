@@ -62,6 +62,7 @@
         <activity
             android:name="com.chooloo.www.koler.ui.call.CallActivity"
             android:label="@string/activity_call"
+            android:screenOrientation="portrait"
             android:theme="@style/KolerTheme.NoActionBar" />
 
         <activity

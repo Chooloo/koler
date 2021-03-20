@@ -2,6 +2,7 @@ package com.chooloo.www.koler.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
@@ -27,6 +28,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         holder.listItem.apply {
             headerText = getHeader(position)
+
             setFadeUpAnimation(this)
             setOnClickListener { _onItemClickListener.invoke(_data.items[position]) }
             setOnLongClickListener {
