@@ -12,7 +12,7 @@ interface CallContract : BaseContract {
         var callerNameText: String?
         var callerImageURI: Uri?
 
-        fun getContact(number: String): Contact
+        fun getContact(number: String?): Contact
         fun transitionToActiveUI()
         fun blinkStateText()
         fun startStopwatch()

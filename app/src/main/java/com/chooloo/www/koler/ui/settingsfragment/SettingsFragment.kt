@@ -4,58 +4,30 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.telephony.SubscriptionManager
+import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
-import androidx.preference.*
+import androidx.annotation.StringRes
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
+import com.chooloo.www.koler.util.PreferencesManager
+import dev.sasikanth.colorsheet.ColorSheet
 import timber.log.Timber
 import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat(), SettingsFragmentContract.View {
     private val _presenter by lazy { SettingsPresenter<SettingsFragmentContract.View>() }
+    private val _preferencesManager by lazy { context?.let { PreferencesManager.getInstance(it) } }
 
     companion object {
-        const val TAG = "settings_fragment"
-
         fun newInstance() = SettingsFragment()
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)
-        findPreference<Preference>(getString(R.string.pref_app_color_key))?.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, newValue ->
-                _presenter.refresh()
-                _presenter.onListPreferenceChange(preference, newValue)
-            }
-        findPreference<Preference>(getString(R.string.pref_app_theme_key))?.onPreferenceChangeListener =
-            Preference.OnPreferenceChangeListener { preference, newValue ->
-                _presenter.refresh()
-                _presenter.onListPreferenceChange(preference, newValue)
-            }
-        findPreference<Preference>(getString(R.string.pref_sim_select_key))?.setOnPreferenceChangeListener { preference, newValue ->
-            _presenter.onListPreferenceChange(
-                preference,
-                newValue
-            )
-        }
-        findPreference<Preference>(getString(R.string.pref_is_biometric_key))?.setOnPreferenceChangeListener { preference, newValue ->
-            _presenter.onSwitchPreferenceChange(
-                preference,
-                newValue
-            )
-        }
-
-        setupSimSelection()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        _presenter.onRequestPermissionResult(requestCode, grantResults)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,6 +37,20 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsFragmentContract.Vi
 
     override fun onSetup() {
         _presenter.attach(this)
+
+        getPreference<ListPreference>(R.string.pref_sim_select_key)?.setOnPreferenceChangeListener { _, newValue ->
+            _presenter.onSimSelectionChanged(newValue)
+            true
+        }
+        getPreference<Preference>(R.string.pref_app_color_key)?.setOnPreferenceClickListener {
+            ColorSheet().colorPicker(
+                colors = resources.getIntArray(R.array.accent_colors),
+                listener = _presenter::onAppThemeSelectionChanged,
+                noColorOption = true
+            ).show(childFragmentManager)
+            true
+        }
+        setupSimSelection()
     }
 
     override fun onDestroy() {
@@ -72,24 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsFragmentContract.Vi
         _presenter.detach()
     }
 
-    override fun setListPreferenceSummary(preference: Preference, newValue: Any) {
-        val listPreference = preference as ListPreference
-        val entries = listPreference.entries
-        listPreference.summary = entries[listPreference.findIndexOfValue(newValue as String)]
-    }
-
-    override fun setCheckBoxPreferenceSummary(preferenece: Preference, newValue: Any) {
-        val checkBoxPreference = preferenece as CheckBoxPreference
-        checkBoxPreference.summary = checkBoxPreference.summary
-    }
-
-    override fun setSwitchPreferenceSummary(preference: Preference, newValue: Any) {
-        val switchPreference = preference as SwitchPreference
-        switchPreference.summary = switchPreference.summary
-    }
-
     override fun setupSimSelection() {
-        TODO("implement normally")
         val simSelectionPreference =
             findPreference<ListPreference>(getString(R.string.pref_sim_select_key))
 
@@ -116,33 +85,40 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsFragmentContract.Vi
         }
     }
 
+    override fun setAppColor(color: Int) {
+        activity?.theme?.resolveAttribute(R.attr.colorSecondary, TypedValue().apply {  },true)
+        when (color) {
+            getColor(R.color.blue_light)->{
+
+            }
+            getColor(R.color.green_light)->{
+
+            }
+            getColor(R.color.orange_light)->{
+
+            }
+            getColor(R.color.purple_light)->{
+
+            }
+            getColor(R.color.red_light)->{
+
+            }
+        }
+    }
+
+    private fun <T : Preference> getPreference(@StringRes keyString: Int) =
+        findPreference<T>(getString(keyString))
+
     override fun goToMainActivity() {
         startActivity(Intent(activity, MainActivity::class.java))
     }
 
-    override fun hasPermission(permission: String): Boolean {
-        return true
-    }
-
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return true
-    }
-
-    override fun showMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showMessage(stringResId: Int) {
-        showMessage(getString(stringResId))
-    }
-
-    override fun showError(message: String) {
-        showMessage(message)
-    }
-
-    override fun showError(stringResId: Int) {
-        showMessage(stringResId)
-    }
-
+    override fun hasPermission(permission: String) = true
+    override fun hasPermissions(permissions: Array<String>) = true
+    override fun showMessage(stringResId: Int) = showMessage(getString(stringResId))
+    override fun showError(message: String) = showMessage(message)
+    override fun showError(stringResId: Int) = showMessage(stringResId)
     override fun getColor(color: Int) = resources.getColor(color)
+    override fun showMessage(message: String) =
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }

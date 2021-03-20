@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/default_spacing"
+        android:paddingTop="@dimen/default_spacing_big"
         android:paddingBottom="@dimen/default_spacing_small"
         app:contentInsetEnd="@dimen/default_spacing"
         app:contentInsetStart="@dimen/default_spacing"
@@ -35,10 +35,9 @@
                 android:id="@+id/main_tab_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/default_spacing_big"
                 android:text="Contacts"
                 android:textAppearance="@style/Koler.Text.TabLayout"
-                android:textColor="#000000"
                 app:layout_constraintStart_toEndOf="@id/main_tab_left_arrow"
                 app:layout_constraintTop_toTopOf="parent" />
 

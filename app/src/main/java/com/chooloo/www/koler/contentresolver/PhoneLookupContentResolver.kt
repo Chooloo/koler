@@ -20,7 +20,7 @@ class PhoneLookupContentResolver(
 
     override fun onGetProjection() = arrayOf(
         PhoneLookup.CONTACT_ID,
-        PhoneLookup.DISPLAY_NAME_PRIMARY,
+        PhoneLookup.DISPLAY_NAME,
         PhoneLookup.NUMBER,
         PhoneLookup.PHOTO_URI,
         PhoneLookup.STARRED
@@ -32,7 +32,7 @@ class PhoneLookupContentResolver(
                 add(
                     Contact(
                         id = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
-                        name = getString(getColumnIndex(PhoneLookup.DISPLAY_NAME_PRIMARY)),
+                        name = getString(getColumnIndex(PhoneLookup.DISPLAY_NAME)),
                         number = getString(getColumnIndex(PhoneLookup.NUMBER)),
                         photoUri = getString(getColumnIndex(PhoneLookup.PHOTO_URI)),
                         starred = "1" == getString(getColumnIndex(PhoneLookup.STARRED))

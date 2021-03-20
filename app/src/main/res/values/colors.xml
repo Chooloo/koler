@@ -25,4 +25,12 @@
 
     <color name="red_light">#FCE8E7</color>
     <color name="red_dark">#D54E45</color>
+
+    <array name="accent_colors">
+        <item>@color/blue_light</item>
+        <item>@color/orange_light</item>
+        <item>@color/green_light</item>
+        <item>@color/purple_light</item>
+        <item>@color/red_light</item>
+    </array>
 </resources>

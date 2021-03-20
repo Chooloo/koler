@@ -16,8 +16,7 @@ class SettingsActivity : BaseActivity(), SettingsContract.View {
     override fun onSetup() {
         supportFragmentManager
             .beginTransaction()
-            .replace(_binding.fragment.id, SettingsFragment.newInstance(), SettingsFragment.TAG)
+            .add(_binding.settingsFragmentContainer.id, SettingsFragment.newInstance())
             .commitNow()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

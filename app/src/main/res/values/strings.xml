@@ -38,15 +38,11 @@
     <string name="action_about">About</string>
     <!--endregion-->
 
-    <!--region pref keys-->
-    <string name="pref_app_theme_key">app_theme</string>
-    <string name="pref_app_color_key">app_color</string>
-    <!--endregion-->
-
     <!--region pref categories-->
     <string name="pref_category_call">Call</string>
     <string name="pref_category_pages">Pages</string>
     <string name="pref_category_scurity">Security</string>
+    <string name="pref_category_personalization">Personalization</string>
     <!--endregion-->
 
     <!--region pref sim-->
@@ -54,6 +50,11 @@
     <string name="pref_sim_select_title">Sim Selection</string>
     <string name="pref_sim_select_default_value">0</string>
     <string name="pref_sim_select_disabled">Sim selection disabled due to one sim card</string>
+    <!--endregion-->
+
+    <!--region pref color-->
+    <string name="pref_app_color_key">accent_color</string>
+    <string name="pref_app_color_title">Accent Color</string>
     <!--endregion-->
 
     <!--region pref last-->

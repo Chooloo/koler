@@ -1,11 +1,8 @@
 package com.chooloo.www.koler.util.call
 
-import android.content.Context
 import android.telecom.Call
+import android.telecom.TelecomManager
 import android.telecom.VideoProfile
-import com.chooloo.www.koler.data.Contact
-import com.chooloo.www.koler.util.lookupContact
-import java.net.URLDecoder
 
 object CallManager {
     var sCall: Call? = null
@@ -43,17 +40,18 @@ object CallManager {
         sCall?.unregisterCallback(callback)
     }
 
-    fun getContact(context: Context): Contact {
-        return try {
-            val number =
-                URLDecoder.decode(sCall?.details?.handle.toString(), "utf-8").replace("tel:", "")
-            if (number.contains("voicemail")) {
-                Contact.VOICEMAIL
-            } else {
-                context.lookupContact(number)
+    fun getNumber(details: Call.Details?): String? {
+        details?.let {
+            for (key in arrayOf(TelecomManager.EXTRA_CALL_BACK_NUMBER, "oi")) {
+                val value = details.extras?.getString(key)
+                if (!value.isNullOrEmpty()) {
+                    return value
+                }
+                details.handle?.let {
+                    return it.schemeSpecificPart
+                }
             }
-        } catch (e: Exception) {
-            Contact.UNKNOWN
         }
+        return null
     }
 }

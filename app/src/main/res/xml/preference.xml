@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_category_personalization">
+        <Preference
+            android:key="@string/pref_app_color_key"
+            app:title="@string/pref_app_color_key" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/pref_category_call"
         app:iconSpaceReserved="false">
 
