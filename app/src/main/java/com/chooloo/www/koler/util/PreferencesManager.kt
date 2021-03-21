@@ -1,8 +1,6 @@
 package com.chooloo.www.koler.util
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.chooloo.www.koler.R
@@ -19,22 +17,10 @@ import com.chooloo.www.koler.R
 class PreferencesManager(
     private var _context: Context
 ) {
-    private val _pref: SharedPreferences
-
-    companion object {
-        @SuppressLint("StaticFieldLeak")
-        private var sPreferencesManager: PreferencesManager? = null
-
-        @JvmStatic
-        fun getInstance(context: Context): PreferencesManager? {
-            sPreferencesManager = sPreferencesManager ?: PreferencesManager(context)
-            return sPreferencesManager
-        }
-    }
+    private val _pref by lazy { PreferenceManager.getDefaultSharedPreferences(_context) }
 
     init {
-        PreferenceManager.setDefaultValues(_context, R.xml.preference, true)
-        _pref = PreferenceManager.getDefaultSharedPreferences(_context)
+        PreferenceManager.setDefaultValues(_context, R.xml.preference, false    )
     }
 
     fun putInt(@StringRes key: Int, value: Int) {

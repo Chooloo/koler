@@ -14,12 +14,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.ActivityMainBinding
-import com.chooloo.www.koler.ui.about.AboutActivity
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.menu.MenuFragment
-import com.chooloo.www.koler.ui.settings.SettingsActivity
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
@@ -66,8 +64,6 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun onSetup() {
         _presenter.attach(this)
 
-        _bottomMenuFragment.fragment.setOnMenuItemClickListener(_presenter::onOptionsItemSelected)
-
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
@@ -104,14 +100,6 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun openMenu() {
         _bottomMenuFragment.show(supportFragmentManager, MenuFragment.TAG)
-    }
-
-    override fun goToSettings() {
-        startActivity(Intent(this, SettingsActivity::class.java))
-    }
-
-    override fun goToAbout() {
-        startActivity(Intent(this, AboutActivity::class.java))
     }
 
     override fun updateSearchViewModelText(text: String?) {

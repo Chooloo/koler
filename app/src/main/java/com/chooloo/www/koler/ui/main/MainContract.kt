@@ -10,8 +10,6 @@ interface MainContract : BaseContract {
 
         fun openMenu()
         fun openDialpad()
-        fun goToSettings()
-        fun goToAbout()
         fun updateSearchViewModelText(text: String?)
         fun checkIntent()
     }
@@ -19,7 +17,6 @@ interface MainContract : BaseContract {
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onDialpadFabClick()
         fun onMenuClick()
-        fun onOptionsItemSelected(item: MenuItem)
         fun onViewIntent(intent: Intent)
         fun onSearchTextChanged(text: String)
     }

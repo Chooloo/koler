@@ -34,9 +34,9 @@
     <string name="pref_category_pages">Página</string>
     <string name="pref_category_scurity">Seguridad</string>
 
-    <string name="pref_sim_select_key">sim_select</string>
-    <string name="pref_sim_select_title">Selección de SIM</string>
-    <string name="pref_sim_select_default_value">0</string>
+    <string name="pref_key_sim_select">sim_select</string>
+    <string name="pref_title_sim_select">Selección de SIM</string>
+    <string name="pref_default_value_sim_select">0</string>
     <string name="pref_sim_select_disabled">Selección de SIM desactivada al detectar un solo chip</string>
 
     <string name="pref_last_version_key">last_version</string>
@@ -45,16 +45,16 @@
     <string name="pref_is_biometric_title">Usar la biometría</string>
 
     <!--Call State-->
-    <string name="status_call_disconnected">Llamada finalizada</string>
-    <string name="status_call_incoming">Está llamando</string>
-    <string name="status_call_active">Llamada en progreso</string>
-    <string name="status_call_dialing">Marcando…</string>
-    <string name="status_call_holding">Llamada en espera</string>
+    <string name="call_status_disconnected">Llamada finalizada</string>
+    <string name="call_status_incoming">Está llamando</string>
+    <string name="call_status_active">Llamada en progreso</string>
+    <string name="call_status_dialing">Marcando…</string>
+    <string name="call_status_holding">Llamada en espera</string>
 
     <!--Hint-->
 
     <!--Errors-->
-    <string name="please_enter_a_number">Por favor, introduzca el número primero</string>
+    <string name="error_enter_number">Por favor, introduzca el número primero</string>
 
     <!--About-->
     <string name="about_version_title">Versión</string>

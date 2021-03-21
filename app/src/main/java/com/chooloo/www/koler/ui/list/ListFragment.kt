@@ -51,7 +51,7 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     override fun showEmptyPage(isShow: Boolean) {
         _binding.apply {
             emptyState.apply {
-                emptyTitle.text = getString(R.string.empty_list_no_results)
+                emptyTitle.text = getString(R.string.error_no_results)
                 emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
             }
             itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
@@ -61,7 +61,7 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     override fun showPermissionsPage(isShow: Boolean) {
         _binding.apply {
             emptyState.apply {
-                emptyTitle.text = getString(R.string.empty_list_no_permissions)
+                emptyTitle.text = getString(R.string.error_no_permissions)
                 emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
             }
             itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE

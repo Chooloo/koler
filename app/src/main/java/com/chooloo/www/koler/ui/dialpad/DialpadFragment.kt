@@ -136,7 +136,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     //region phone actions
     override fun call() {
         if (number.isEmpty()) {
-            _activity.showMessage(R.string.please_enter_a_number)
+            _activity.showMessage(R.string.error_enter_number)
         } else {
             _activity.call(_binding.dialpadEditText.numbers)
         }

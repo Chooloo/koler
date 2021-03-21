@@ -32,15 +32,15 @@
 
     <string name="pref_app_theme_key">app_theme</string>
 
-    <string name="pref_app_color_key">app_color</string>
+    <string name="pref_key_app_color">app_color</string>
 
     <string name="pref_category_call">Вызов</string>
     <string name="pref_category_pages">страницы</string>
     <string name="pref_category_scurity">Безопасность</string>
 
-    <string name="pref_sim_select_key">sim_select</string>
-    <string name="pref_sim_select_title">Выбор Сима</string>
-    <string name="pref_sim_select_default_value">0</string>
+    <string name="pref_key_sim_select">sim_select</string>
+    <string name="pref_title_sim_select">Выбор Сима</string>
+    <string name="pref_default_value_sim_select">0</string>
     <string name="pref_sim_select_disabled">Выбор сима отключен из-за одной сим-карты</string>
 
     <string name="pref_last_version_key">last_version</string>
@@ -49,16 +49,16 @@
     <string name="pref_is_biometric_title">Используйте биометрию</string>
 
     <!--Call State-->
-    <string name="status_call_disconnected">Звонок окончен</string>
-    <string name="status_call_incoming">Звонит</string>
-    <string name="status_call_active">Звонок в процессе</string>
-    <string name="status_call_dialing">Набор номера ...</string>
-    <string name="status_call_holding">Call On Hold</string>
+    <string name="call_status_disconnected">Звонок окончен</string>
+    <string name="call_status_incoming">Звонит</string>
+    <string name="call_status_active">Звонок в процессе</string>
+    <string name="call_status_dialing">Набор номера ...</string>
+    <string name="call_status_holding">Call On Hold</string>
 
     <!--Hint-->
 
     <!--Errors-->
-    <string name="please_enter_a_number">Пожалуйста, сначала введите номер</string>
+    <string name="error_enter_number">Пожалуйста, сначала введите номер</string>
 
     <!--About-->
     <string name="about_version_title">Версия</string>

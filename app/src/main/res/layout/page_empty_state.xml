@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="40dp"
-        android:text="@string/empty_list_no_results"
+        android:text="@string/error_no_results"
         android:textAppearance="@style/Koler.Text.Headline3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

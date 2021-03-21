@@ -12,13 +12,6 @@ class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Pr
         mvpView?.openDialpad()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) {
-        when (item.itemId) {
-            R.id.action_settings -> mvpView?.goToSettings()
-            R.id.action_about -> mvpView?.goToAbout()
-        }
-    }
-
     override fun onMenuClick() {
         mvpView?.openMenu()
     }

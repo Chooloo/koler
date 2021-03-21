@@ -27,14 +27,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/KolerTheme.NoActionBar"
+        android:theme="@style/KolerTheme"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <!--region activities-->
         <activity
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
-            android:label="@string/app_name"
             android:screenOrientation="portrait">
 
             <!--region intent-filters-->
@@ -57,24 +56,11 @@
             </intent-filter>
             <!--endregion-->
         </activity>
-
         <activity
             android:name="com.chooloo.www.koler.ui.call.CallActivity"
-            android:label="@string/activity_call"
-            android:screenOrientation="portrait"
-            android:theme="@style/KolerTheme.NoActionBar" />
-
-        <activity
-            android:name="com.chooloo.www.koler.ui.settings.SettingsActivity"
-            android:label="@string/activity_settings" />
-
-        <activity
-            android:name="com.chooloo.www.koler.ui.about.AboutActivity"
-            android:label="@string/activity_about" />
-
-        <activity
-            android:name=".util.permissions.PermissionsActivity"
-            android:label="@string/activity_permissions" />
+            android:screenOrientation="portrait" />
+        <activity android:name="com.chooloo.www.koler.ui.about.AboutActivity" />
+        <activity android:name=".util.permissions.PermissionsActivity" />
         <!--endregion-->
 
         <!--region services-->

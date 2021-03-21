@@ -45,13 +45,13 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
     override fun onStateChanged(state: Int?) {
         mvpView?.stateText = App.resources?.getString(
             when (state) {
-                STATE_ACTIVE -> R.string.status_call_active
-                STATE_DISCONNECTED -> R.string.status_call_disconnected
-                STATE_RINGING -> R.string.status_call_incoming
-                STATE_DIALING -> R.string.status_call_dialing
-                STATE_CONNECTING -> R.string.status_call_dialing
-                STATE_HOLDING -> R.string.status_call_holding
-                else -> R.string.status_call_active
+                STATE_ACTIVE -> R.string.call_status_active
+                STATE_DISCONNECTED -> R.string.call_status_disconnected
+                STATE_RINGING -> R.string.call_status_incoming
+                STATE_DIALING -> R.string.call_status_dialing
+                STATE_CONNECTING -> R.string.call_status_dialing
+                STATE_HOLDING -> R.string.call_status_holding
+                else -> R.string.call_status_active
             }
         )
 

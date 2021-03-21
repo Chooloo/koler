@@ -6,8 +6,8 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref_category_personalization">
         <Preference
-            android:key="@string/pref_app_color_key"
-            app:title="@string/pref_app_color_key" />
+            android:key="@string/pref_key_app_color"
+            app:title="@string/pref_key_app_color" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -15,18 +15,32 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            android:defaultValue="@string/pref_sim_select_default_value"
-            android:key="@string/pref_sim_select_key"
-            android:title="@string/pref_sim_select_title" />
+            android:defaultValue="@string/pref_default_value_sim_select"
+            android:key="@string/pref_key_sim_select"
+            android:title="@string/pref_title_sim_select" />
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="@string/pref_category_scurity"
-        app:iconSpaceReserved="false">
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_category_support">
 
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_is_biometric_key"
-            android:title="@string/pref_is_biometric_title" />
+        <Preference
+            android:icon="@drawable/ic_bug_report_black_24dp"
+            android:key="@string/pref_key_report_bugs"
+            android:title="@string/pref_title_report_bugs" />
+
+        <Preference
+            android:icon="@drawable/ic_star_black_24dp"
+            android:key="@string/pref_key_rate"
+            android:title="@string/pref_title_rate" />
+
+        <Preference
+            android:icon="@drawable/ic_stars_black_24dp"
+            android:key="@string/pref_key_donate"
+            android:title="@string/pref_title_donate" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/pref_category_contact">
     </PreferenceCategory>
 </PreferenceScreen>

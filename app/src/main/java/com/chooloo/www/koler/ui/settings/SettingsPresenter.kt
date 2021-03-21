@@ -1,9 +1,9 @@
-package com.chooloo.www.koler.ui.settingsfragment
+package com.chooloo.www.koler.ui.settings
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class SettingsPresenter<V : SettingsFragmentContract.View> : BasePresenter<V>(),
-    SettingsFragmentContract.Presenter<V> {
+class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
+    SettingsContract.Presenter<V> {
     override fun refresh() {
         mvpView?.goToMainActivity()
     }

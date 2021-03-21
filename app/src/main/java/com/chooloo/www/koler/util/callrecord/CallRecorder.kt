@@ -31,7 +31,7 @@ class CallRecorder(val context: Context) {
         get() = _currentRecording
 
     val formatChoice: Int
-        get() = _preferences.getInt(R.string.pref_call_recording_format_key, 0)
+        get() = _preferences.getInt(R.string.pref_key_record_format, 0)
 
     fun startRecording(number: String, creationTime: Long): Boolean {
         if (_recorder != null) {

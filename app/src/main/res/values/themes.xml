@@ -5,10 +5,6 @@
 
     <style name="KolerTheme" parent="Theme.MaterialComponents.Light.Bridge">
         <!--region attr colors-->
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorSecondary">@color/color_secondary</item>
-        <item name="colorSecondaryVariant">@color/color_secondary_dark</item>
         <item name="colorOnSecondary">?colorSecondaryVariant</item>
         <item name="colorAccent">?colorSecondaryVariant</item>
         <item name="colorError">@color/color_error</item>
@@ -21,6 +17,11 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!--endregion-->
 
+        <!--region action bar-->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--endregion-->
+
         <!--region other-->
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -28,8 +29,30 @@
         <!--endregion-->
     </style>
 
-    <style name="KolerTheme.NoActionBar" parent="KolerTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="Accent" />
+
+    <style name="Accent.Blue">
+        <item name="colorSecondary">@color/blue_light</item>
+        <item name="colorSecondaryVariant">@color/blue_dark</item>
+    </style>
+
+    <style name="Accent.Orange">
+        <item name="colorSecondary">@color/orange_light</item>
+        <item name="colorSecondaryVariant">@color/orange_dark</item>
+    </style>
+
+    <style name="Accent.Green">
+        <item name="colorSecondary">@color/green_light</item>
+        <item name="colorSecondaryVariant">@color/green_dark</item>
+    </style>
+
+    <style name="Accent.Purple">
+        <item name="colorSecondary">@color/purple_light</item>
+        <item name="colorSecondaryVariant">@color/purple_dark</item>
+    </style>
+
+    <style name="Accent.Red">
+        <item name="colorSecondary">@color/red_light</item>
+        <item name="colorSecondaryVariant">@color/red_dark</item>
     </style>
 </resources>
