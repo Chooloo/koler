@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.util
+package com.chooloo.www.koler.util.preferences
 
 import android.content.Context
 import androidx.annotation.StringRes

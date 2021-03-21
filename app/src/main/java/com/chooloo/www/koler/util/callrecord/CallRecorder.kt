@@ -9,7 +9,7 @@ import android.media.MediaRecorder.AudioSource.VOICE_CALL
 import android.media.MediaRecorder.OutputFormat
 import android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.PreferencesManager
+import com.chooloo.www.koler.util.preferences.PreferencesManager
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*

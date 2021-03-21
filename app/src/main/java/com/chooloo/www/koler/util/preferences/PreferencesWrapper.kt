@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.util
+package com.chooloo.www.koler.util.preferences
 
 import android.content.Context
 import androidx.annotation.StyleRes
@@ -11,7 +11,7 @@ class PreferencesWrapper(
 
     val theme: Int
         @StyleRes
-        get() = when (PreferencesManager(context).getString(
+        get() = when (_pref.getString(
             R.string.pref_key_color,
             context.getString(R.string.pref_color_value_blue)
         )) {

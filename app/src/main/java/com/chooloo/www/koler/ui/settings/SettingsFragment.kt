@@ -14,7 +14,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
-import com.chooloo.www.koler.util.PreferencesManager
+import com.chooloo.www.koler.util.preferences.PreferencesManager
 import dev.sasikanth.colorsheet.ColorSheet
 import timber.log.Timber
 import java.util.*
@@ -81,7 +81,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         val simCount = subscriptionInfoList?.size
 
         if (simCount == 1) {
-            simSelectionPreference?.summary = getString(R.string.pref_sim_select_disabled)
+//            simSelectionPreference?.summary = getString(R.string.pref_sim_select_disabled)
             simSelectionPreference?.isEnabled = false
         } else if (simCount != null) {
             val simsEntries: MutableList<CharSequence> = ArrayList()
