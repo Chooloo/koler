@@ -18,6 +18,7 @@ import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.menu.MenuFragment
+import com.chooloo.www.koler.ui.settings.SettingsFragment
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
@@ -25,9 +26,9 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 class MainActivity : BaseActivity(), MainContract.View {
     private val _presenter by lazy { MainPresenter<MainContract.View>() }
     private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val _bottomSettingsFragment by lazy { BottomFragment(SettingsFragment.newInstance()) }
     private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(true)) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
-    private val _bottomMenuFragment by lazy { BottomFragment(MenuFragment.newInstance(R.menu.main_actions)) }
 
     override var dialpadNumber: String
         get() = _bottomDialpadFragment.fragment.number
@@ -99,7 +100,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openMenu() {
-        _bottomMenuFragment.show(supportFragmentManager, MenuFragment.TAG)
+        _bottomSettingsFragment.show(supportFragmentManager, MenuFragment.TAG)
     }
 
     override fun updateSearchViewModelText(text: String?) {

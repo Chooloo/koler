@@ -2,9 +2,10 @@ package com.chooloo.www.koler.ui.settings
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
 import android.os.Bundle
 import android.telephony.SubscriptionManager
-import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -13,12 +14,14 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
+import com.chooloo.www.koler.util.PreferencesManager
 import dev.sasikanth.colorsheet.ColorSheet
 import timber.log.Timber
 import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val _presenter by lazy { SettingsPresenter<SettingsContract.View>() }
+    private val _preferencesManager by lazy { context?.let { PreferencesManager(it) } }
 
     companion object {
         fun newInstance() = SettingsFragment()
@@ -36,19 +39,19 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     override fun onSetup() {
         _presenter.attach(this)
 
+        getPreference<Preference>(R.string.pref_key_rate)?.setOnPreferenceClickListener { _presenter.onClickedRate() }
+        getPreference<Preference>(R.string.pref_key_donate)?.setOnPreferenceClickListener { _presenter.onClickedDonate() }
+        getPreference<Preference>(R.string.pref_key_email)?.setOnPreferenceClickListener { _presenter.onClickedEmail() }
+        getPreference<Preference>(R.string.pref_key_report_bugs)?.setOnPreferenceClickListener { _presenter.onClickedReport() }
+        getPreference<Preference>(R.string.pref_key_color)?.setOnPreferenceClickListener { _presenter.onClickedColor() }
         getPreference<ListPreference>(R.string.pref_key_sim_select)?.setOnPreferenceChangeListener { _, newValue ->
-            _presenter.onSimSelectionChanged(newValue)
-            true
+            _presenter.onSelectedSim(newValue)
         }
-        getPreference<Preference>(R.string.pref_key_app_color)?.setOnPreferenceClickListener {
-            ColorSheet().colorPicker(
-                colors = resources.getIntArray(R.array.accent_colors),
-                listener = _presenter::onAppThemeSelectionChanged,
-                noColorOption = true
-            ).show(childFragmentManager)
-            true
+        getPreference<ListPreference>(R.string.pref_key_record_format)?.setOnPreferenceChangeListener { _, newValue ->
+            _presenter.onSelectedRecordFormat(newValue)
         }
-        setupSimSelection()
+
+        setupSimPreference()
     }
 
     override fun onDestroy() {
@@ -56,7 +59,19 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         _presenter.detach()
     }
 
-    override fun setupSimSelection() {
+    override fun setPrefSim(value: String?) {
+        _preferencesManager?.putString(R.string.pref_key_sim_select, value)
+    }
+
+    override fun setPrefColor(value: String?) {
+        _preferencesManager?.putString(R.string.pref_key_color, value)
+    }
+
+    override fun setPrefRecordFormat(value: String?) {
+        _preferencesManager?.putString(R.string.pref_key_record_format, value)
+    }
+
+    override fun setupSimPreference() {
         val simSelectionPreference =
             findPreference<ListPreference>(getString(R.string.pref_key_sim_select))
 
@@ -83,34 +98,50 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         }
     }
 
-    override fun setAppColor(color: Int) {
-        activity?.theme?.resolveAttribute(R.attr.colorSecondary, TypedValue().apply { }, true)
-        when (color) {
-            getColor(R.color.blue_light) -> {
+    override fun openColorPicker() {
+        ColorSheet().colorPicker(
+            colors = resources.getIntArray(R.array.accent_colors),
+            listener = _presenter::onSelectedColor,
+            noColorOption = true
+        ).show(childFragmentManager)
 
-            }
-            getColor(R.color.green_light) -> {
-
-            }
-            getColor(R.color.orange_light) -> {
-
-            }
-            getColor(R.color.purple_light) -> {
-
-            }
-            getColor(R.color.red_light) -> {
-
-            }
-        }
     }
-
-    private fun <T : Preference> getPreference(@StringRes keyString: Int) =
-        findPreference<T>(getString(keyString))
 
     override fun goToMainActivity() {
         startActivity(Intent(activity, MainActivity::class.java))
     }
 
+    override fun openSource() {
+        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.app_source_url))))
+    }
+
+    override fun sendEmail() {
+        startActivity(Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
+        })
+    }
+
+    override fun reportBug() {
+        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.app_bug_reporting_url))))
+    }
+
+    override fun rateApp() {
+        activity?.let {
+            startActivity(Intent(ACTION_VIEW).apply {
+                data = Uri.parse("market://details?id=" + it.application.packageName)
+            })
+        }
+    }
+
+    override fun donate() {
+        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.donation_link))))
+    }
+
+    private fun <T : Preference> getPreference(@StringRes keyString: Int) =
+        findPreference<T>(getString(keyString))
+
+    //region base view
     override fun hasPermission(permission: String) = true
     override fun hasPermissions(permissions: Array<String>) = true
     override fun showMessage(stringResId: Int) = showMessage(getString(stringResId))
@@ -119,4 +150,5 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     override fun getColor(color: Int) = resources.getColor(color)
     override fun showMessage(message: String) =
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    //endregion
 }

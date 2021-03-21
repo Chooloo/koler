@@ -8,11 +8,40 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
         mvpView?.goToMainActivity()
     }
 
-    override fun onSimSelectionChanged(newValue: Any?) {
-        TODO("Not yet implemented")
+    override fun onClickedRate() = run {
+        mvpView?.rateApp()
+        true
     }
 
-    override fun onAppThemeSelectionChanged(color: Int) {
-        TODO("Not yet implemented")
+    override fun onClickedEmail() = run {
+        mvpView?.sendEmail()
+        true
+    }
+
+    override fun onClickedColor() = run {
+        mvpView?.openColorPicker()
+        true
+    }
+
+    override fun onClickedDonate() = run {
+        mvpView?.donate()
+        true
+    }
+
+    override fun onClickedReport() = run {
+        mvpView?.reportBug()
+        true
+    }
+
+    override fun onSelectedColor(color: Int) = run {
+        true
+    }
+
+    override fun onSelectedSim(newValue: Any?) = run {
+        true
+    }
+
+    override fun onSelectedRecordFormat(newValue: Any?) = run {
+        true
     }
 }

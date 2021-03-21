@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.databinding.FragmentBottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomFragment<FragmentType : BaseFragment>(
+class BottomFragment<FragmentType : Fragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
     private val _activity by lazy { context as BaseActivity }
@@ -75,13 +76,13 @@ class BottomFragment<FragmentType : BaseFragment>(
     }
     //endregion
 
-    private fun putFragment(fragment: BaseFragment) {
+    private fun putFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
 
     override fun getColor(color: Int) = _activity.getColor(color)
-    
+
     private val argsSafely: Bundle
         get() = arguments
             ?: throw IllegalArgumentException("Always create fragment with newInstance()")

@@ -1,6 +1,6 @@
 <resources>
-    <string name="contacts">Contacts</string>
     <string name="recents">Recents</string>
+    <string name="contacts">Contacts</string>
 
     <!--region Koler-->
     <string name="app_name">Koler</string>
@@ -21,39 +21,40 @@
 
     <!--region call actions -->
     <string name="call_action_hold">Hold</string>
-    <string name="call_action_unhold">Resume</string>
-    <string name="call_action_speaker">Speaker</string>
-    <string name="call_action_speaker_off">Off Speaker</string>
     <string name="call_action_mute">Mute</string>
+    <string name="call_action_keypad">Keypad</string>
+    <string name="call_action_unhold">Resume</string>
     <string name="call_action_unmute">Unmute</string>
     <string name="call_action_record">Record</string>
-    <string name="call_action_record_stop">Stop Recording</string>
+    <string name="call_action_speaker">Speaker</string>
     <string name="call_action_add_call">Add Call</string>
-    <string name="call_action_keypad">Keypad</string>
+    <string name="call_action_speaker_off">Off Speaker</string>
+    <string name="call_action_record_stop">Stop Recording</string>
     <!--endregion-->
 
     <!--region call state-->
-    <string name="call_status_disconnected">Call ended</string>
-    <string name="call_status_incoming">Incoming Call</string>
-    <string name="call_status_active">Call In Progress</string>
     <string name="call_status_dialing">Dialing…</string>
     <string name="call_status_holding">Call On Hold</string>
+    <string name="call_status_incoming">Incoming Call</string>
+    <string name="call_status_disconnected">Call ended</string>
+    <string name="call_status_active">Call In Progress</string>
     <!--endregion-->
 
     <!--region pref category-->
     <string name="pref_category_call">Call</string>
     <string name="pref_category_pages">Pages</string>
-    <string name="pref_category_scurity">Security</string>
-    <string name="pref_category_personalization">Personalization</string>
     <string name="pref_category_support">Support</string>
     <string name="pref_category_contact">Contact</string>
+    <string name="pref_category_scurity">Security</string>
+    <string name="pref_category_personalization">Personalization</string>
     <!--endregion-->
 
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
+    <string name="pref_key_email">email</string>
     <string name="pref_key_donate">donate</string>
     <string name="pref_key_sim_select">sim_select</string>
-    <string name="pref_key_app_color">accent_color</string>
+    <string name="pref_key_color">accent_color</string>
     <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_record_format">record_format</string>
     <!--endregion-->
@@ -62,6 +63,7 @@
     <string name="pref_title_rate">Rate</string>
     <string name="pref_title_donate">Donate</string>
     <string name="pref_title_app_color">Accent Color</string>
+    <string name="pref_title_email">Write us an Email</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_sim_select">Sim Selection</string>
     <!--endregion-->
@@ -71,10 +73,18 @@
     <!--endregion-->
 
     <!--region errors-->
-    <string name="error_enter_number">Please enter a number first</string>
-    <string name="error_no_recents">No recent calls</string>
     <string name="error_no_results">No results :/</string>
+    <string name="error_no_recents">No recent calls</string>
+    <string name="error_enter_number">Please enter a number first</string>
     <string name="error_no_permissions">I need permissions to show you stuff here :/</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <string name="pref_color_value_red">red</string>
+    <string name="pref_color_value_blue">blue</string>
+    <string name="pref_color_value_green">green</string>
+    <string name="pref_color_value_orange">orange</string>
+    <string name="pref_color_value_purple">purple</string>
     <!--endregion-->
 
     <!--region dialpad letters-->
@@ -92,9 +102,9 @@
     <!--endregion-->
 
     <!--region content descriptions -->
+    <string name="content_description_menu_button">Menu Button</string>
     <string name="content_description_answer_button">Answer Button</string>
     <string name="content_description_reject_button">Reject Button</string>
     <string name="content_description_call_actions_button">Call Actions</string>
-    <string name="content_description_menu_button">Menu Button</string>
     <!--endregion-->
 </resources>

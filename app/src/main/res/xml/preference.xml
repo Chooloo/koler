@@ -2,27 +2,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_category_personalization">
+    <PreferenceCategory app:title="@string/pref_category_personalization">
+
         <Preference
-            android:key="@string/pref_key_app_color"
-            app:title="@string/pref_key_app_color" />
+            android:icon="@drawable/ic_invert_colors_black_24dp"
+            android:key="@string/pref_key_color"
+            android:title="@string/pref_title_app_color" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_category_call"
-        app:iconSpaceReserved="false">
+    <PreferenceCategory android:title="@string/pref_category_call">
 
         <ListPreference
             android:defaultValue="@string/pref_default_value_sim_select"
+            android:icon="@drawable/ic_sim_card_black_24dp"
             android:key="@string/pref_key_sim_select"
             android:title="@string/pref_title_sim_select" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref_category_support">
+    <PreferenceCategory app:title="@string/pref_category_support">
 
         <Preference
             android:icon="@drawable/ic_bug_report_black_24dp"
@@ -41,6 +38,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:iconSpaceReserved="false"
         app:title="@string/pref_category_contact">
+
+        <Preference
+            android:icon="@drawable/ic_email_black_24dp"
+            android:key="@string/pref_key_sim_select"
+            android:title="@string/pref_title_email" />
     </PreferenceCategory>
 </PreferenceScreen>

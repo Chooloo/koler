@@ -32,7 +32,7 @@
 
     <string name="pref_app_theme_key">app_theme</string>
 
-    <string name="pref_key_app_color">app_color</string>
+    <string name="pref_key_color">app_color</string>
 
     <string name="pref_category_call">Вызов</string>
     <string name="pref_category_pages">страницы</string>
