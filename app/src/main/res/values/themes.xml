@@ -3,56 +3,49 @@
 
     <!-- Theme Styles -->
 
-    <style name="KolerTheme" parent="Theme.MaterialComponents.Light.Bridge">
-        <!--region attr colors-->
-        <item name="colorOnSecondary">?colorSecondaryVariant</item>
-        <item name="colorAccent">?colorSecondaryVariant</item>
+    <style name="KolerTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorError">@color/color_error</item>
-        <!--endregion-->
+        <item name="colorPrimary">?android:colorBackground</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
 
-        <!--region android colors-->
-        <item name="android:textColorSecondary">?colorPrimaryDark</item>
-        <item name="android:windowBackground">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <!--endregion-->
-
-        <!--region action bar-->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <!--endregion-->
-
-        <!--region other-->
+        <item name="android:navigationBarColor">?colorPrimarySurface</item>
+        <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="bottomSheetDialogTheme">@style/Koler.BottomDialog.Theme</item>
-        <!--endregion-->
+
+        <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
     </style>
+
+    <style name="KolerBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Koler.BottomDialog.BottomSheetStyle</item>
+    </style>
+
+    <style name="bla" parent="Widget.MaterialComponents.FloatingActionButton" />
 
     <style name="Accent" />
 
     <style name="Accent.Blue">
-        <item name="colorSecondary">@color/blue_light</item>
-        <item name="colorSecondaryVariant">@color/blue_dark</item>
+        <item name="colorSecondary">@color/blue_background</item>
+        <item name="colorOnSecondary">@color/blue_foreground</item>
     </style>
 
     <style name="Accent.Orange">
-        <item name="colorSecondary">@color/orange_light</item>
-        <item name="colorSecondaryVariant">@color/orange_dark</item>
+        <item name="colorSecondary">@color/orange_background</item>
+        <item name="colorOnSecondary">@color/orange_foreground</item>
     </style>
 
     <style name="Accent.Green">
-        <item name="colorSecondary">@color/green_light</item>
-        <item name="colorSecondaryVariant">@color/green_dark</item>
+        <item name="colorSecondary">@color/green_background</item>
+        <item name="colorOnSecondary">@color/green_foreground</item>
     </style>
 
     <style name="Accent.Purple">
-        <item name="colorSecondary">@color/purple_light</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
+        <item name="colorSecondary">@color/purple_background</item>
+        <item name="colorOnSecondary">@color/purple_foreground</item>
     </style>
 
     <style name="Accent.Red">
-        <item name="colorSecondary">@color/red_light</item>
-        <item name="colorSecondaryVariant">@color/red_dark</item>
+        <item name="colorSecondary">@color/red_background</item>
+        <item name="colorOnSecondary">@color/red_foreground</item>
     </style>
 </resources>

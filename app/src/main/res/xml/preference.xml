@@ -49,7 +49,7 @@
 
         <Preference
             android:icon="@drawable/ic_email_black_24dp"
-            android:key="@string/pref_key_sim_select"
+            android:key="@string/pref_key_email"
             android:title="@string/pref_title_email" />
     </PreferenceCategory>
 </PreferenceScreen>

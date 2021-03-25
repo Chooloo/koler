@@ -34,11 +34,11 @@ class SearchBar : TextInputLayout {
             inputType = InputType.TYPE_CLASS_TEXT
             layoutParams = LayoutParams(MATCH_PARENT, context.sizeInDp(34))
             compoundDrawableTintList =
-                ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
+                ColorStateList.valueOf(context.getAttrColor(R.attr.colorOnSecondary))
 
             setTextAppearance(R.style.Koler_Text_Subtitle1)
-            setTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
-            setHintTextColor(context.getAttrColor(R.attr.colorSecondaryVariant))
+            setTextColor(context.getAttrColor(R.attr.colorOnSecondary))
+            setHintTextColor(context.getAttrColor(R.attr.colorOnSecondary))
             setPadding(
                 context.sizeInDp(8),
                 context.sizeInDp(5),

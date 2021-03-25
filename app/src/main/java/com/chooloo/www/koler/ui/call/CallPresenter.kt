@@ -36,7 +36,7 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
     }
 
     override fun onDetailsChanged(details: Details?) {
-        mvpView?.getContact(CallManager.getNumber(details))?.let {
+        mvpView?.getContact(CallManager.number)?.let {
             mvpView?.callerNameText = it.name ?: it.number
             it.photoUri?.let { mvpView?.callerImageURI = Uri.parse(it) }
         }
@@ -57,19 +57,19 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
 
         when (state) {
             STATE_ACTIVE -> {
-                mvpView?.getColor(R.color.green_dark)?.let { mvpView?.stateTextColor = it }
+                mvpView?.getColor(R.color.green_foreground)?.let { mvpView?.stateTextColor = it }
                 mvpView?.blinkStateText()
                 mvpView?.startStopwatch()
                 mvpView?.transitionToActiveUI()
             }
             STATE_DISCONNECTED -> {
-                mvpView?.getColor(R.color.red_dark)?.let { mvpView?.stateTextColor = it }
+                mvpView?.getColor(R.color.red_foreground)?.let { mvpView?.stateTextColor = it }
                 mvpView?.blinkStateText()
                 mvpView?.stopStopwatch()
                 Handler().postDelayed({ mvpView?.finish() }, 2000)
             }
             STATE_HOLDING -> {
-                mvpView?.getColor(R.color.red_dark)?.let { mvpView?.stateTextColor = it }
+                mvpView?.getColor(R.color.red_foreground)?.let { mvpView?.stateTextColor = it }
                 mvpView?.blinkStateText()
             }
             STATE_CONNECTING -> mvpView?.transitionToActiveUI()

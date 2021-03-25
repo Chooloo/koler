@@ -1,11 +1,17 @@
 package com.chooloo.www.koler.util.call
 
+import android.content.Context
 import android.telecom.Call
-import android.telecom.TelecomManager
 import android.telecom.VideoProfile
+import android.telephony.PhoneNumberUtils
+
 
 object CallManager {
     var sCall: Call? = null
+
+    val number: String?
+        get() = sCall?.details?.gatewayInfo?.originalAddress?.schemeSpecificPart
+            ?: sCall?.details?.handle?.schemeSpecificPart
 
     fun answer() {
         sCall?.answer(VideoProfile.STATE_AUDIO_ONLY)
@@ -40,18 +46,9 @@ object CallManager {
         sCall?.unregisterCallback(callback)
     }
 
-    fun getNumber(details: Call.Details?): String? {
-        details?.let {
-            for (key in arrayOf(TelecomManager.EXTRA_CALL_BACK_NUMBER, "oi")) {
-                val value = details.extras?.getString(key)
-                if (!value.isNullOrEmpty()) {
-                    return value
-                }
-                details.handle?.let {
-                    return it.schemeSpecificPart
-                }
-            }
-        }
-        return null
-    }
+    fun getValidE164Number(context: Context) =
+        PhoneNumberUtils.formatNumberToE164(number, context.resources.configuration.locale.country)
+
+    fun getNormalizedNumber(context: Context) =
+        PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
 }

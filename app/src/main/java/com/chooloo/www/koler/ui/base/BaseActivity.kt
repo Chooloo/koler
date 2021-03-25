@@ -3,16 +3,14 @@ package com.chooloo.www.koler.ui.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import com.chooloo.www.koler.util.preferences.PreferencesWrapper
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         setTheme(PreferencesWrapper(this).theme)
+        super.onCreate(savedInstanceState)
     }
 
     override fun onStart() {

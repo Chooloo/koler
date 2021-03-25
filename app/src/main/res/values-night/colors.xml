@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--region accent colors-->
+    <color name="blue_background">#566682</color>
+    <color name="blue_foreground">#AFCBFA</color>
+
+    <color name="orange_background">#816553</color>
+    <color name="orange_foreground">#EBBA96</color>
+
+    <color name="green_background">#587363</color>
+    <color name="green_foreground">#A2CFAE</color>
+
+    <color name="purple_background">#6b5781</color>
+    <color name="purple_foreground">#D7AEFC</color>
+
+    <color name="red_background">#7d5858</color>
+    <color name="red_foreground">#F5AEA8</color>
+    <!--endregion-->
+</resources>

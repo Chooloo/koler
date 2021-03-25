@@ -8,8 +8,8 @@ import com.chooloo.www.koler.ui.widgets.ListItem
 class ContactsAdapter : ListAdapter<Contact>() {
     override fun onBindListItem(listItem: ListItem, item: Contact) {
         listItem.apply {
-            bigText = item.name
-            personStartPadding = resources.getDimensionPixelSize(R.dimen.default_spacing_big)
+            titleText = item.name
+            personStartPadding = resources.getDimensionPixelSize(R.dimen.default_spacing_small)
 
             item.photoUri?.let { setImageUri(Uri.parse(it)) }
         }

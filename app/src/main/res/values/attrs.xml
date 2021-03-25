@@ -3,8 +3,8 @@
     <declare-styleable name="Koler" />
 
     <declare-styleable name="Koler.ListItem">
-        <attr name="bigText" format="string" localization="suggested" />
-        <attr name="smallText" format="string" localization="suggested" />
+        <attr name="title" format="string" localization="suggested" />
+        <attr name="caption" format="string" localization="suggested" />
         <attr name="header" format="string" />
         <attr name="src" format="reference" />
     </declare-styleable>

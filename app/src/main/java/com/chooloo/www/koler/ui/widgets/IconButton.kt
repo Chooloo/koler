@@ -30,8 +30,7 @@ class IconButton : FloatingActionButton {
         elevation = 0f
         compatElevation = 0f
         imageTintList = imageTintList
-            ?: ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant))
-        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
+            ?: ColorStateList.valueOf(context.getAttrColor(R.attr.colorOnSecondary))
 
         setImageDrawable(_iconDefault?.let { getDrawable(context, it) })
         setOnClickListener {}
