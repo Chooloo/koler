@@ -26,6 +26,11 @@ import com.google.android.material.shape.ShapeAppearanceModel
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
+    private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
+    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
+    private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
+    private val imageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
+
     private var title: AppCompatTextView
     private var image: ShapeableImageView
     private var header: AppCompatTextView
@@ -51,24 +56,14 @@ class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            setPadding(
-                resources.getDimensionPixelSize(R.dimen.default_spacing),
-                resources.getDimensionPixelSize(R.dimen.default_spacing_small),
-                context.sizeInDp(5),
-                resources.getDimensionPixelSize(R.dimen.default_spacing_small),
-            )
+            setPadding(spacing, spacingSmall, context.sizeInDp(5), spacingSmall)
         }
 
         title = AppCompatTextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(
-                    0,
-                    0,
-                    context.resources.getDimensionPixelSize(R.dimen.default_spacing),
-                    0
-                )
+                setMargins(0, 0, spacing, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Headline4)
@@ -78,12 +73,7 @@ class ListItem : LinearLayout {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(
-                    0,
-                    context.sizeInDp(1),
-                    0,
-                    0
-                )
+                setMargins(0, context.sizeInDp(2), 0, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Caption)
@@ -92,25 +82,15 @@ class ListItem : LinearLayout {
         image = ShapeableImageView(context, attrs, defStyleRes).apply {
             scaleType = FIT_CENTER
             id = View.generateViewId()
+            layoutParams = ConstraintLayout.LayoutParams(imageSize, imageSize)
             shapeAppearanceModel = ShapeAppearanceModel().withCornerSize(50f)
-            layoutParams = ConstraintLayout.LayoutParams(
-                context.resources.getDimensionPixelSize(R.dimen.image_size_small),
-                context.resources.getDimensionPixelSize(R.dimen.image_size_small)
-            )
         }
 
         personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
             id = View.generateViewId()
             background = context.getSelectableItemBackgroundDrawable()
-            layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                setMargins(
-                    resources.getDimensionPixelSize(R.dimen.default_spacing),
-                    resources.getDimensionPixelSize(R.dimen.default_spacing_small),
-                    resources.getDimensionPixelSize(R.dimen.default_spacing),
-                    resources.getDimensionPixelSize(R.dimen.default_spacing_small),
-                )
-            }
+            layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             addView(image)
             addView(title)
@@ -162,6 +142,16 @@ class ListItem : LinearLayout {
             captionText = it.getString(R.styleable.Koler_ListItem_caption)
             imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        personLayout.setPadding(
+            spacingBig,
+            spacingSmall,
+            spacing,
+            spacingSmall
+        )
     }
 
     var titleText: String?

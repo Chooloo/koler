@@ -34,14 +34,14 @@
 
     <style name="Koler.Text.Caption">
         <item name="android:textSize">@dimen/caption_1</item>
-        <item name="android:textColor">?colorOnBackground</item>
+        <item name="android:textColor">?android:textColorHint</item>
     </style>
 
     <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">@dimen/headline_2</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?colorOnPrimarySurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
     </style>
     <!--endregion-->
 
@@ -86,26 +86,6 @@
         <item name="android:scrollbars">none</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
-    </style>
-    <!--endregion-->
-
-    <!--region list item -->
-    <style name="Koler.ListItem" />
-
-
-    <style name="Koler.ListItem.Text">
-        <item name="android:ellipsize">end</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textAlignment">viewStart</item>
-    </style>
-
-    <style name="Koler.ListItem.Text.Big">
-        <item name="android:textAppearance">@style/Koler.Text.Headline4</item>
-    </style>
-
-    <style name="Koler.ListItem.Text.Small">
-        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
-        <item name="android:layout_marginTop">@dimen/list_item_small_text_top_margin</item>
     </style>
     <!--endregion-->
 

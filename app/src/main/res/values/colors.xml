@@ -3,7 +3,7 @@
     <color name="ic_launcher_background">?colorSecondary</color>
 
     <!--region base colors-->
-    <color name="color_on_background">#E8E8E8</color>
+    <color name="color_on_background">#C5C5C5</color>
     <color name="color_error">#B00020</color>
     <!--endregion-->
 

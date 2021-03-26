@@ -20,7 +20,7 @@ class PreferencesManager(
     private val _pref by lazy { PreferenceManager.getDefaultSharedPreferences(_context) }
 
     init {
-        PreferenceManager.setDefaultValues(_context, R.xml.preference, false    )
+        PreferenceManager.setDefaultValues(_context, R.xml.preference, false)
     }
 
     fun putInt(@StringRes key: Int, value: Int) {

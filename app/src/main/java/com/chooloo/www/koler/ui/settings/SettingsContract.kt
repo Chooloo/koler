@@ -1,12 +1,15 @@
 package com.chooloo.www.koler.ui.settings
 
 import com.chooloo.www.koler.ui.base.BaseContract
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 
 class SettingsContract : BaseContract {
     interface View : BaseContract.View {
-        fun setPrefSim(value:String?)
-        fun setPrefColor(value:String?)
-        fun setPrefRecordFormat(value:String?)
+        fun setPrefSim(sim: Sim)
+        fun setPrefAccentTheme(accentTheme: AccentTheme)
+        fun setPrefRecordFormat(recordFormat: RecordFormat)
         fun setupSimPreference()
         fun goToMainActivity()
         fun openColorPicker()

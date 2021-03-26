@@ -1,11 +1,11 @@
 package com.chooloo.www.koler.ui.settings
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.telephony.SubscriptionManager
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -14,14 +14,15 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
-import com.chooloo.www.koler.util.preferences.PreferencesManager
+import com.chooloo.www.koler.util.preferences.KolerPreferences
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 import dev.sasikanth.colorsheet.ColorSheet
-import timber.log.Timber
-import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val _presenter by lazy { SettingsPresenter<SettingsContract.View>() }
-    private val _preferencesManager by lazy { context?.let { PreferencesManager(it) } }
+    private val _kolerPreferences by lazy { context?.let { KolerPreferences(it) } }
 
     companion object {
         fun newInstance() = SettingsFragment()
@@ -33,6 +34,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setDivider(ColorDrawable(Color.TRANSPARENT))
+        setDividerHeight(0)
         onSetup()
     }
 
@@ -59,43 +62,19 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         _presenter.detach()
     }
 
-    override fun setPrefSim(value: String?) {
-        _preferencesManager?.putString(R.string.pref_key_sim_select, value)
+    override fun setPrefSim(sim: Sim) {
+        _kolerPreferences?.sim = sim
     }
 
-    override fun setPrefColor(value: String?) {
-        _preferencesManager?.putString(R.string.pref_key_color, value)
+    override fun setPrefAccentTheme(accentTheme: AccentTheme) {
+        _kolerPreferences?.accentTheme = accentTheme
     }
 
-    override fun setPrefRecordFormat(value: String?) {
-        _preferencesManager?.putString(R.string.pref_key_record_format, value)
+    override fun setPrefRecordFormat(recordFormat: RecordFormat) {
+        _kolerPreferences?.recordFormat = recordFormat
     }
 
     override fun setupSimPreference() {
-        val simSelectionPreference =
-            findPreference<ListPreference>(getString(R.string.pref_key_sim_select))
-
-        @SuppressLint("MissingPermission")
-        val subscriptionInfoList =
-            activity?.getSystemService(SubscriptionManager::class.java)?.activeSubscriptionInfoList
-        val simCount = subscriptionInfoList?.size
-
-        if (simCount == 1) {
-//            simSelectionPreference?.summary = getString(R.string.pref_sim_select_disabled)
-            simSelectionPreference?.isEnabled = false
-        } else if (simCount != null) {
-            val simsEntries: MutableList<CharSequence> = ArrayList()
-            for (i in 0 until simCount) {
-                val si = subscriptionInfoList[i]
-                Timber.i("Sim info " + i + " : " + si.displayName)
-                simsEntries.add(si.displayName)
-            }
-            val simsEntriesList = simsEntries.toTypedArray()
-            simSelectionPreference?.entries = simsEntriesList
-            // simsEntries.add(getString(R.string.pref_sim_select_ask_entry));
-            val simsEntryValues = arrayOf<CharSequence>("0", "1")
-            simSelectionPreference?.entryValues = simsEntryValues
-        }
     }
 
     override fun openColorPicker() {
@@ -104,7 +83,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
             listener = _presenter::onSelectedColor,
             noColorOption = true
         ).show(childFragmentManager)
-
     }
 
     override fun goToMainActivity() {

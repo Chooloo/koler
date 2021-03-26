@@ -19,7 +19,7 @@ class RecentsAdapter(
             titleText = contact.name ?: item.number
             captionText = if (item.date != null) RelativeTime.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
-            personStartPadding = resources.getDimensionPixelSize(R.dimen.default_spacing_small)
+            personStartPadding = resources.getDimensionPixelSize(R.dimen.default_spacing_big)
 
             setImageBackgroundColor(Color.TRANSPARENT)
         }

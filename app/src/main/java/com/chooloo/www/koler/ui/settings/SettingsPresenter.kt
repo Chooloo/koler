@@ -1,6 +1,8 @@
 package com.chooloo.www.koler.ui.settings
 
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme.*
 
 class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     SettingsContract.Presenter<V> {
@@ -34,6 +36,17 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     }
 
     override fun onSelectedColor(color: Int) = run {
+        mvpView?.setPrefAccentTheme(
+            when (color) {
+                mvpView?.getColor(R.color.blue_background) -> BLUE
+                mvpView?.getColor(R.color.red_background) -> RED
+                mvpView?.getColor(R.color.orange_background) -> ORANGE
+                mvpView?.getColor(R.color.green_background) -> GREEN
+                mvpView?.getColor(R.color.purple_background) -> PURPLE
+                else -> BLUE
+            }
+        )
+        mvpView?.goToMainActivity()
         true
     }
 

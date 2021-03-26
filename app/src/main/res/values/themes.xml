@@ -16,7 +16,7 @@
         <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
     </style>
 
-    <style name="KolerBottomSheet" parent="Theme.MaterialComponents.BottomSheetDialog">
+    <style name="KolerBottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Koler.BottomDialog.BottomSheetStyle</item>
     </style>
 
