@@ -44,7 +44,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         _presenter.attach(this)
 
         _binding.apply {
-            recentTextName.text = _recent.cachedName
+            recentTextName.text = _recent.cachedName ?: _recent.number
             recentTextDate.apply {
                 text = _recent.relativeTime
                 visibility = VISIBLE
