@@ -74,9 +74,8 @@
 
     <!--region errors-->
     <string name="error_no_results">No results :/</string>
-    <string name="error_no_recents">No recent calls</string>
     <string name="error_enter_number">Please enter a number first</string>
-    <string name="error_no_permissions">I need permissions to show you stuff here :/</string>
+    <string name="error_no_permissions">I need permissions :/</string>
     <!--endregion-->
 
     <!--region pref color values-->

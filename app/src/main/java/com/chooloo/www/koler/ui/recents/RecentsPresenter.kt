@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.recents
 
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.data.RecentsBundle
 import com.chooloo.www.koler.ui.list.ListPresenter
@@ -25,6 +26,6 @@ class RecentsPresenter<V : RecentsContract.View> : ListPresenter<V>(),
     override fun onRecentItemLongClick(recent: Recent) {}
 
     override fun onPermissionsBlocked(permissions: Array<String>) {
-        mvpView?.showPermissionsPage(true)
+        mvpView?.emptyMessage = mvpView?.getString(R.string.error_no_permissions)
     }
 }

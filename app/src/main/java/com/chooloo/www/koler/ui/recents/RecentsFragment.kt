@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.recents
 
 import android.Manifest.permission.READ_CONTACTS
 import androidx.lifecycle.ViewModelProvider
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.data.RecentsBundle
@@ -31,8 +32,6 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
 
         _presenter.attach(this)
 
-        showEmptyPage(false)
-        showPermissionsPage(false)
         observe()
     }
 
@@ -49,7 +48,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
                 number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
                 text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
             }
-            showPermissionsPage(false)
+            emptyMessage = getString(R.string.error_no_results)
         },
         blockedCallback = _presenter::onPermissionsBlocked
     )

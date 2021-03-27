@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.contacts
 
 import androidx.lifecycle.ViewModelProvider
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.data.ContactsBundle
@@ -30,8 +31,6 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
 
         _presenter.attach(this)
 
-        showEmptyPage(false)
-        showPermissionsPage(false)
         observe()
     }
 
@@ -48,7 +47,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
                 number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
                 text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
             }
-            showPermissionsPage(false)
+            emptyMessage = getString(R.string.error_no_results)
         },
         blockedCallback = _presenter::onPermissionsBlocked
     )

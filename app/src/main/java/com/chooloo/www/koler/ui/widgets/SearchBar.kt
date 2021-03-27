@@ -17,6 +17,8 @@ import com.google.android.material.textfield.TextInputLayout
 
 @SuppressLint("UseCompatTextViewDrawableApis")
 class SearchBar : TextInputLayout {
+    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
+
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
@@ -40,9 +42,9 @@ class SearchBar : TextInputLayout {
             setTextColor(context.getAttrColor(R.attr.colorOnSecondary))
             setHintTextColor(context.getAttrColor(R.attr.colorOnSecondary))
             setPadding(
-                context.sizeInDp(8),
+                spacingSmall,
                 context.sizeInDp(5),
-                context.sizeInDp(5),
+                spacingSmall,
                 context.sizeInDp(5)
             )
 
@@ -64,6 +66,12 @@ class SearchBar : TextInputLayout {
         showIcon(true)
         setEndIconTintList(ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant)))
     }
+
+    override fun setHint(hint: CharSequence?) {
+        _textInputEditText?.hint = hint
+    }
+
+    override fun getHint() = _textInputEditText?.hint.toString()
 
     private fun showIcon(isShow: Boolean) {
         _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(

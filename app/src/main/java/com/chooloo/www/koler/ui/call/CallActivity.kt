@@ -64,7 +64,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun getContact(number: String?) = lookupContact(number)
-    
+
     override fun transitionToActiveUI() {
         if (_binding.root.currentState == R.id.incoming_call) {
             supportFragmentManager

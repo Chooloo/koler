@@ -2,10 +2,10 @@ package com.chooloo.www.koler.ui.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
@@ -20,6 +20,12 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
 
     override val itemCount: Int
         get() = listAdapter.itemCount
+
+    override var emptyMessage: String?
+        get() = _binding.itemsNoResultsText.text.toString()
+        set(value) {
+            _binding.itemsNoResultsText.text = value
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,35 +42,30 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
         _presenter.attach(this)
 
         _binding.itemsRecyclerView.apply {
-            adapter = listAdapter
+            adapter = listAdapter.apply {
+                registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+                    override fun onChanged() {
+                        super.onChanged()
+                        if (itemCount == 0) {
+                            _presenter.onNoResults()
+                        } else {
+                            _presenter.onResults()
+                        }
+                    }
+                })
+            }
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     _onScrollStateChangedListener?.invoke(newState)
                 }
             })
         }
-
-        showPermissionsPage(false)
-        showEmptyPage(false)
     }
 
     override fun showEmptyPage(isShow: Boolean) {
         _binding.apply {
-            emptyState.apply {
-                emptyTitle.text = getString(R.string.error_no_results)
-                emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
-            }
-            itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
-        }
-    }
-
-    override fun showPermissionsPage(isShow: Boolean) {
-        _binding.apply {
-            emptyState.apply {
-                emptyTitle.text = getString(R.string.error_no_permissions)
-                emptyState.visibility = if (isShow) View.VISIBLE else View.GONE
-            }
-            itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+            itemsNoResultsText.visibility = if (isShow) VISIBLE else GONE
+            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
         }
     }
 

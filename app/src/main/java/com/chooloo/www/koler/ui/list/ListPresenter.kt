@@ -3,10 +3,6 @@ package com.chooloo.www.koler.ui.list
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 open class ListPresenter<V : ListContract.View> : BasePresenter<V>(), ListContract.Presenter<V> {
-    override fun onNoPermissions() {
-        onNoResults()
-    }
-
     override fun onResults() {
         mvpView?.showEmptyPage(false)
     }

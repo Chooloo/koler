@@ -2,7 +2,7 @@ package com.chooloo.www.koler.data
 
 import android.provider.CallLog
 import androidx.annotation.IntDef
-import com.chooloo.www.koler.util.RelativeTime.getTimeAgo
+import com.chooloo.www.koler.util.getTimeAgo
 import java.io.Serializable
 import java.util.*
 

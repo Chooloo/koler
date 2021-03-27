@@ -4,22 +4,10 @@ import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.PowerManager
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
-const val SHORT_VIBRATE_LENGTH: Long = 20
-const val DEFAULT_VIBRATE_LENGTH: Long = 100
-
-fun Context.vibrate(millis: Long = DEFAULT_VIBRATE_LENGTH) {
-    val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        vibrator.vibrate(VibrationEffect.createOneShot(millis, VibrationEffect.DEFAULT_AMPLITUDE))
-    } else {
-        vibrator.vibrate(millis)
-    }
-}
 
 fun Activity.setShowWhenLocked() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -38,5 +26,29 @@ fun Activity.disableKeyboard() {
         )
     } else {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+    }
+}
+
+class ProximitySensor(
+    activity: Activity
+) {
+    private val _powerManager by lazy { activity.getSystemService(Context.POWER_SERVICE) as PowerManager }
+    private val _wakeLock by lazy {
+        _powerManager.newWakeLock(
+            PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK,
+            activity.localClassName
+        )
+    }
+
+    fun acquire() {
+        if (!_wakeLock.isHeld) {
+            _wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/)
+        }
+    }
+
+    fun release() {
+        if (_wakeLock.isHeld) {
+            _wakeLock.release()
+        }
     }
 }

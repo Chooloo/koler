@@ -80,11 +80,13 @@ class MainActivity : BaseActivity(), MainContract.View {
                             mainTabHeader.text = getText(R.string.contacts)
                             mainTabLeftArrow.visibility = GONE
                             mainTabRightArrow.visibility = VISIBLE
+                            mainSearchBar.hint = getString(R.string.hint_search_contacts)
                         }
                         1 -> appbarMain.apply {
                             mainTabHeader.text = getText(R.string.recents)
                             mainTabLeftArrow.visibility = VISIBLE
                             mainTabRightArrow.visibility = GONE
+                            mainSearchBar.hint = getString(R.string.hint_search_recents)
                         }
                     }
                 }

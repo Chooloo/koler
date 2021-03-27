@@ -2,27 +2,21 @@ package com.chooloo.www.koler.util
 
 import android.content.Context
 import android.media.AudioManager
-import android.media.AudioManager.MODE_IN_COMMUNICATION
 import android.media.ToneGenerator
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.KeyEvent
-import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
 // Stream type used to play the DTMF tones off call, and mapped to the volume control keys
-private const val DIAL_TONE_STREAM_TYPE = AudioManager.STREAM_DTMF
-
-// The DTMF tone volume relative to other sounds in the stream
-private const val TONE_RELATIVE_VOLUME = 80
-
-// The length of DTMF tones in milliseconds
-private const val TONE_LENGTH_MS = 150
+const val DIAL_TONE_STREAM_TYPE = AudioManager.STREAM_DTMF
+const val TONE_RELATIVE_VOLUME = 80 // The DTMF tone volume relative to other sounds in the stream
+const val TONE_LENGTH_MS = 150 // The length of DTMF tones in milliseconds
+const val SHORT_VIBRATE_LENGTH: Long = 20
+const val DEFAULT_VIBRATE_LENGTH: Long = 100
 
 val toneGeneratorLock = Any()
-
-fun Context.isPhoneSilent(): Boolean {
-    val ringerMode = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).ringerMode
-    return ringerMode == AudioManager.RINGER_MODE_SILENT || ringerMode == AudioManager.RINGER_MODE_VIBRATE
-}
 
 
 /**
@@ -75,3 +69,17 @@ fun Context.playToneByKey(keyCode: Int) {
     playTone(keyToTone.getOrDefault(keyCode, -1))
 }
 
+
+fun Context.vibrate(millis: Long = DEFAULT_VIBRATE_LENGTH) {
+    val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        vibrator.vibrate(VibrationEffect.createOneShot(millis, VibrationEffect.DEFAULT_AMPLITUDE))
+    } else {
+        vibrator.vibrate(millis)
+    }
+}
+
+fun Context.isPhoneSilent(): Boolean {
+    val ringerMode = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).ringerMode
+    return ringerMode == AudioManager.RINGER_MODE_SILENT || ringerMode == AudioManager.RINGER_MODE_VIBRATE
+}
