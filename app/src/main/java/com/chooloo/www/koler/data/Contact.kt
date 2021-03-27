@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.data
 
-import java.io.Serializable
+import android.os.Parcel
+import android.os.Parcelable
 
 data class Contact(
     var id: Long = 0,
@@ -9,16 +10,28 @@ data class Contact(
     var photoUri: String? = null,
     var starred: Boolean = false,
     var lookupKey: String? = null,
-) : Serializable {
+) : Parcelable {
 
-    companion object {
+    companion object CREATOR : Parcelable.Creator<Contact> {
         val UNKNOWN = Contact(name = "Unknown")
         val VOICEMAIL = Contact(name = "Voicemail")
         val PRIVATE = Contact(name = "Private Number")
+
+        override fun createFromParcel(parcel: Parcel) = Contact(parcel)
+        override fun newArray(size: Int): Array<Contact?> = arrayOfNulls(size)
     }
 
+    constructor(parcel: Parcel) : this(
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString()
+    )
+
     override fun toString() = "Contact with id:$id name:$name"
-    
+
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + (name?.hashCode() ?: 0)
@@ -43,5 +56,16 @@ data class Contact(
 
         return true
     }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(id)
+        parcel.writeString(name)
+        parcel.writeString(number)
+        parcel.writeString(photoUri)
+        parcel.writeByte(if (starred) 1 else 0)
+        parcel.writeString(lookupKey)
+    }
+
+    override fun describeContents() = 0
 }
 

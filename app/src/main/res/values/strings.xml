@@ -2,6 +2,11 @@
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
 
+    <!--region actions-->
+    <string name="action_answer">Answer</string>
+    <string name="action_hangup">Hangup</string>
+    <!--endregion-->
+    
     <!--region Koler-->
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
@@ -105,5 +110,11 @@
     <string name="content_description_answer_button">Answer Button</string>
     <string name="content_description_reject_button">Reject Button</string>
     <string name="content_description_call_actions_button">Call Actions</string>
+    <!--endregion-->
+
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Call Notification</string>
+    <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
     <!--endregion-->
 </resources>

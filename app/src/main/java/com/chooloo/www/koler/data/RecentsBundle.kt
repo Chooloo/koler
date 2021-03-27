@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.data
 
-import com.chooloo.www.koler.util.RelativeTime.getRelativeDateString
+import com.chooloo.www.koler.util.getRelativeDateString
+
 
 data class RecentsBundle(
     val recents: Array<Recent>

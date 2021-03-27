@@ -3,15 +3,11 @@ package com.chooloo.www.koler.util.call
 import android.content.Context
 import android.telecom.Call
 import android.telecom.VideoProfile
-import android.telephony.PhoneNumberUtils
+import com.chooloo.www.koler.data.CallDetails
 
 
 object CallManager {
     var sCall: Call? = null
-
-    val number: String?
-        get() = sCall?.details?.gatewayInfo?.originalAddress?.schemeSpecificPart
-            ?: sCall?.details?.handle?.schemeSpecificPart
 
     fun answer() {
         sCall?.answer(VideoProfile.STATE_AUDIO_ONLY)
@@ -38,17 +34,27 @@ object CallManager {
         sCall?.stopDtmfTone()
     }
 
-    fun registerCallback(callback: Call.Callback) {
-        sCall?.registerCallback(callback)
+    fun registerListener(callListener: CallListener) {
+        sCall?.registerCallback(callListener)
+        sCall?.let {
+            callListener.onStateChanged(it, it.state)
+            callListener.onDetailsChanged(it, it.details)
+        }
     }
 
-    fun unregisterCallback(callback: Call.Callback) {
-        sCall?.unregisterCallback(callback)
+    fun unregisterCallback(callListener: CallListener) {
+        sCall?.unregisterCallback(callListener)
     }
 
-    fun getValidE164Number(context: Context) =
-        PhoneNumberUtils.formatNumberToE164(number, context.resources.configuration.locale.country)
+    abstract class CallListener(protected val context: Context) : Call.Callback() {
+        override fun onStateChanged(call: Call, state: Int) {
+            onCallDetailsChanged(CallDetails.fromCall(call, context))
+        }
 
-    fun getNormalizedNumber(context: Context) =
-        PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
+        override fun onDetailsChanged(call: Call, details: Call.Details) {
+            onCallDetailsChanged(CallDetails.fromCall(call, context))
+        }
+
+        abstract fun onCallDetailsChanged(callDetails: CallDetails)
+    }
 }

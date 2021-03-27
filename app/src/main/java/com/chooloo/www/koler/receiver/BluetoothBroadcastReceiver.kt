@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.service
+package com.chooloo.www.koler.receiver
 
 import android.bluetooth.BluetoothAdapter.*
 import android.content.BroadcastReceiver
@@ -9,7 +9,7 @@ import android.media.AudioManager
 import android.media.AudioManager.MODE_IN_CALL
 import android.media.AudioManager.MODE_NORMAL
 
-class BluetoothReceiver : BroadcastReceiver() {
+class BluetoothBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val audioManager = context.getSystemService(AUDIO_SERVICE) as AudioManager
         when (intent.action) {

@@ -7,11 +7,20 @@ import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.data.CallDetails
+import com.chooloo.www.koler.util.call.CallManager
 
 class CallActivity : BaseActivity(), CallContract.View {
     private val _presenter by lazy { CallPresenter<CallContract.View>() }
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
+    private val _callListener by lazy {
+        object : CallManager.CallListener(this) {
+            override fun onCallDetailsChanged(callDetails: CallDetails) {
+                _presenter.onCallDetailsChanged(callDetails)
+            }
+        }
+    }
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
@@ -53,17 +62,15 @@ class CallActivity : BaseActivity(), CallContract.View {
 
         disableKeyboard()
         setShowWhenLocked()
-
-        _presenter.onInitialUI()
+        CallManager.registerListener(_callListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        CallManager.unregisterCallback(_callListener)
         _presenter.detach()
         _proximitySensor.release()
     }
-
-    override fun getContact(number: String?) = lookupContact(number)
 
     override fun transitionToActiveUI() {
         if (_binding.root.currentState == R.id.incoming_call) {
