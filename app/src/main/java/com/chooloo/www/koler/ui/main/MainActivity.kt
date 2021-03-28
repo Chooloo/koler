@@ -81,10 +81,16 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openDialpad() {
-        BottomFragment(DialpadFragment.newInstance(true)).show(
+        BottomFragment(DialpadFragment.newInstance(true, _searchViewModel.number.value)).show(
             supportFragmentManager,
             DialpadFragment.TAG
         )
+    }
+
+    override fun checkIntent() {
+        if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
+            _presenter.onViewIntent(intent)
+        }
     }
 
     override fun openSettings() {
@@ -96,11 +102,5 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun updateSearchViewModelText(text: String?) {
         _searchViewModel.text.value = text
-    }
-
-    override fun checkIntent() {
-        if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
-            _presenter.onViewIntent(intent)
-        }
     }
 }

@@ -8,7 +8,6 @@ import com.chooloo.www.koler.ui.recents.RecentsFragment
 class MainPagerAdapter(
     fragmentActivity: FragmentActivity
 ) : FragmentStateAdapter(fragmentActivity) {
-
     override fun getItemCount() = 2
     override fun createFragment(position: Int) = when (position) {
         0 -> ContactsFragment.newInstance()

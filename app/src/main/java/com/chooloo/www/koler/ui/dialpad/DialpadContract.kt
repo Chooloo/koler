@@ -26,6 +26,6 @@ interface DialpadContract : BaseContract {
         fun onDeleteClick()
         fun onAddContactClick()
         fun onLongDeleteClick(): Boolean
-        fun onTextChanged(text: String)
+        fun onTextChanged(text: String?)
     }
 }

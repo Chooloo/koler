@@ -51,7 +51,7 @@ class PreferencesManager(
         }
     }
 
-    fun getString(@StringRes key: Int, defaultValue: String?): String? {
+    fun getString(@StringRes key: Int, defaultValue: String? = null): String? {
         return try {
             _pref.getString(_context.getString(key), defaultValue)
         } catch (e: ClassCastException) {

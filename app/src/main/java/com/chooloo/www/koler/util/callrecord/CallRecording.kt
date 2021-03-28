@@ -8,8 +8,7 @@ data class CallRecording(
     val number: String,
     val filename: String,
     val creationTime: Long,
-    val startTime: Long,
-    val mediaId: Long
+    val mediaId: Long?=null
 ) {
     companion object {
         const val RELATIVE_PATH = "Music/Koler Call Recordings"

@@ -49,7 +49,7 @@ fun animateViews(views: Array<View>, delay: Int = 50, isShow: Boolean) {
     }
 }
 
-fun blinkView(view: View, duration: Long, totalDuration: Long) {
+fun blinkView(view: View, totalDuration: Long, duration: Long = 400) {
     view.startAnimation(AlphaAnimation(0.0f, 1.0f).apply {
         setDuration(duration)
         startOffset = 20

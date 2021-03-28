@@ -34,8 +34,15 @@ class CallActionsPresenter<V : CallActionsContract.View> :
     override fun onRecordClick() {
         if (_isRecording) {
             mvpView?.stopRecording()
+            _isRecording = false
         } else {
-            mvpView?.startRecording()
+            if (CallManager.sCall != null) {
+                mvpView?.startRecording()
+                mvpView?.showMessage("Recording...")
+                _isRecording = true
+            } else {
+                mvpView?.showError("No active calls to record")
+            }
         }
     }
 

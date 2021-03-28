@@ -9,8 +9,10 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.util.audio.AudioManager
 import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.MODE_IN_CALL
+import com.chooloo.www.koler.util.callrecord.CallRecorder
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
+    private val _callRecorder by lazy { CallRecorder(_activity) }
     private val _audioManager by lazy { AudioManager(_activity.applicationContext) }
     private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
@@ -42,8 +44,13 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
         _bottomDialpadFragment.fragment.setOnKeyDownListener(_presenter::onKeypadKey)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _callRecorder.stopRecording()
+    }
+
     override fun addCall() {
-        TODO("Not yet implemented")
+        showError("Feature in development")
     }
 
     override fun openDialpad() {
@@ -51,11 +58,19 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     }
 
     override fun startRecording() {
-        showMessage("Feature in development")
+        showError("Feature in development")
+//        CallManager.sCall?.let {
+//            _callRecorder.startRecording(
+//                CallDetails.fromCall(it, _activity).contact.number ?: "Unknown"
+//            )
+//            blinkView(_binding.callActionRecord, 2000)
+//        }
     }
 
     override fun stopRecording() {
-        showMessage("Feature in development")
+        _callRecorder.stopRecording().also {
+            showMessage("Finished recording at ${it?.filename}")
+        }
     }
 
     override fun toggleSpeaker(isSpeaker: Boolean) {

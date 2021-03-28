@@ -40,11 +40,11 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
         return true
     }
 
-    override fun onTextChanged(text: String) {
+    override fun onTextChanged(text: String?) {
         mvpView?.apply {
             if (isDialer) {
-                isDeleteButtonVisible = text.isNotEmpty()
-                isAddContactButtonVisible = text.isNotEmpty()
+                isDeleteButtonVisible = text?.isNotEmpty() == true
+                isAddContactButtonVisible = text?.isNotEmpty() == true
                 setViewModelNumber(text)
             }
         }

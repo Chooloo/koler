@@ -8,10 +8,10 @@ interface MainContract : BaseContract {
     interface View : BaseContract.View {
         var dialpadNumber: String
 
-        fun openSettings()
         fun openDialpad()
-        fun updateSearchViewModelText(text: String?)
         fun checkIntent()
+        fun openSettings()
+        fun updateSearchViewModelText(text: String?)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

@@ -28,11 +28,13 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     companion object {
         const val ARG_IS_DIALER = "dialer"
+        private const val ARG_NUMBER = "number"
         const val TAG = "dialpad_bottom_dialog_fragment"
 
-        fun newInstance(isDialer: Boolean) = DialpadFragment().apply {
+        fun newInstance(isDialer: Boolean, number: String? = null) = DialpadFragment().apply {
             arguments = Bundle().apply {
                 putBoolean(ARG_IS_DIALER, isDialer)
+                putString(ARG_NUMBER, number)
             }
         }
     }
@@ -83,6 +85,8 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 isLongClickable = isDialer
                 isFocusableInTouchMode = isDialer
                 isCursorVisible = isDialer
+
+                setText(argsSafely.getString(ARG_NUMBER))
                 addTextChangedListener(
                     PhoneNumberFormattingTextWatcher(
                         resources.configuration.locales.get(0).toString()
@@ -125,10 +129,8 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                     keyHex.setOnLongClickListener(it)
                     keyStar.setOnLongClickListener(it)
                 }
-        }
 
-        _searchViewModel.number.observe(viewLifecycleOwner) { number ->
-            number?.let { _presenter.onTextChanged(it) }
+            _presenter.onTextChanged(_searchViewModel.number.value)
         }
     }
 
