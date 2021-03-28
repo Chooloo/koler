@@ -2,12 +2,14 @@ package com.chooloo.www.koler.ui.recent
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.FragmentRecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
+import com.chooloo.www.koler.util.addContact
 import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.deleteRecent
 import com.chooloo.www.koler.util.getRecentById
@@ -45,6 +47,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
         _binding.apply {
             recentTextName.text = _recent.cachedName ?: _recent.number
+            recentButtonAddContact.visibility = if (_recent.cachedName == null) VISIBLE else GONE
             recentTextDate.apply {
                 text = _recent.relativeTime
                 visibility = VISIBLE
@@ -58,15 +61,20 @@ class RecentFragment : BaseFragment(), RecentContract.View {
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonDelete.setOnClickListener { _presenter.onActionDelete() }
+            recentButtonAddContact.setOnClickListener { _presenter.onActionAddContact() }
         }
-    }
-
-    override fun callRecent() {
-        _recent.number.let { _activity.call(it) }
     }
 
     override fun smsRecent() {
         _activity.smsNumber(_recent.number)
+    }
+
+    override fun addContact() {
+        _activity.addContact(_recent.number)
+    }
+
+    override fun callRecent() {
+        _recent.number.let { _activity.call(it) }
     }
 
     override fun deleteRecent() {
