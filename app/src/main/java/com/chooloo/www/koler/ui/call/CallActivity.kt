@@ -3,11 +3,13 @@ package com.chooloo.www.koler.ui.call
 import android.net.Uri
 import android.os.Bundle
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 import com.chooloo.www.koler.util.*
-import com.chooloo.www.koler.data.CallDetails
+import com.chooloo.www.koler.util.audio.AudioManager
+import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.MODE_IN_CALL
 import com.chooloo.www.koler.util.call.CallManager
 
 class CallActivity : BaseActivity(), CallContract.View {
@@ -63,6 +65,7 @@ class CallActivity : BaseActivity(), CallContract.View {
         disableKeyboard()
         setShowWhenLocked()
         CallManager.registerListener(_callListener)
+//        AudioManager(this).audioMode = MODE_IN_CALL
     }
 
     override fun onDestroy() {

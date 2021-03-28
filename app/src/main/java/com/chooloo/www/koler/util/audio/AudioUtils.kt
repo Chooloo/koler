@@ -1,16 +1,17 @@
 package com.chooloo.www.koler.util
 
 import android.content.Context
-import android.media.AudioManager
+import android.media.AudioManager.STREAM_DTMF
 import android.media.ToneGenerator
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.KeyEvent
+import com.chooloo.www.koler.util.audio.AudioManager
 import java.util.*
 
 // Stream type used to play the DTMF tones off call, and mapped to the volume control keys
-const val DIAL_TONE_STREAM_TYPE = AudioManager.STREAM_DTMF
+const val DIAL_TONE_STREAM_TYPE = STREAM_DTMF
 const val TONE_RELATIVE_VOLUME = 80 // The DTMF tone volume relative to other sounds in the stream
 const val TONE_LENGTH_MS = 150 // The length of DTMF tones in milliseconds
 const val SHORT_VIBRATE_LENGTH: Long = 20
@@ -38,7 +39,7 @@ val toneGeneratorLock = Any()
  * @param durationMs tone length.
  */
 fun Context.playTone(tone: Int, durationMs: Int) {
-    if (tone != -1 && isPhoneSilent()) {
+    if (tone != -1 && AudioManager(this).isPhoneSilent) {
         synchronized(toneGeneratorLock) {
             ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME).startTone(
                 tone,
@@ -79,7 +80,3 @@ fun Context.vibrate(millis: Long = DEFAULT_VIBRATE_LENGTH) {
     }
 }
 
-fun Context.isPhoneSilent(): Boolean {
-    val ringerMode = (getSystemService(Context.AUDIO_SERVICE) as AudioManager).ringerMode
-    return ringerMode == AudioManager.RINGER_MODE_SILENT || ringerMode == AudioManager.RINGER_MODE_VIBRATE
-}

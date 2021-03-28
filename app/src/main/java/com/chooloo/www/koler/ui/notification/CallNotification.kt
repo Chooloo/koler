@@ -26,7 +26,7 @@ class CallNotification(private val context: Context) {
     companion object {
         const val ID = 420
         const val CHANNEL_ID = "call_notification_channel"
-        const val PRIORITY = NotificationCompat.PRIORITY_MAX
+        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
     }
 
     private val sAnswer by lazy { context.getString(R.string.action_answer) }
@@ -113,6 +113,7 @@ class CallNotification(private val context: Context) {
             .setColor(context.getAttrColor(R.attr.colorSecondary))
             .setOngoing(true)
             .setColorized(true)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setContentTitle(callDetails.contact.name ?: callDetails.contact.number)
         if (callDetails.callState == RINGING) {
             builder.addAction(R.drawable.ic_call_black_24dp, sAnswer, _answerPendingIntent)

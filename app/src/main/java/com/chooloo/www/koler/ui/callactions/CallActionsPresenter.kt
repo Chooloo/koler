@@ -22,11 +22,13 @@ class CallActionsPresenter<V : CallActionsContract.View> :
     }
 
     override fun onHoldClick() {
-        _isHolding = !_isHolding.also { CallManager.hold(!it) }
+        _isHolding = !_isHolding
+        CallManager.hold(_isHolding)
     }
 
     override fun onMuteClick() {
-        _isMuted = !_isMuted.also { mvpView?.toggleMute(!it) }
+        _isMuted = !_isMuted
+        mvpView?.toggleMute(_isMuted)
     }
 
     override fun onRecordClick() {
@@ -38,7 +40,8 @@ class CallActionsPresenter<V : CallActionsContract.View> :
     }
 
     override fun onSpeakerClick() {
-        _isSpeaker = !_isSpeaker.also { mvpView?.toggleSpeaker(!it) }
+        _isSpeaker = !_isSpeaker
+        mvpView?.toggleSpeaker(_isSpeaker)
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {

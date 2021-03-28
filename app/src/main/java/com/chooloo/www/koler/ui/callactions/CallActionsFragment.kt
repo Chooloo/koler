@@ -1,21 +1,20 @@
 package com.chooloo.www.koler.ui.callactions
 
-import android.media.AudioManager
-import android.media.AudioManager.MODE_IN_CALL
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.databinding.FragmentCallActionsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
+import com.chooloo.www.koler.util.audio.AudioManager
+import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.MODE_IN_CALL
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
+    private val _audioManager by lazy { AudioManager(_activity.applicationContext) }
     private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
     private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(false)) }
-    private val _audioManager by lazy { _activity.getSystemService(AppCompatActivity.AUDIO_SERVICE) as AudioManager }
 
     companion object {
         fun newInstance() = CallActionsFragment()
@@ -28,9 +27,8 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     ) = _binding.root
 
     override fun onSetup() {
+        _audioManager.audioMode = MODE_IN_CALL
         _presenter.attach(this)
-
-        _audioManager.mode = MODE_IN_CALL
 
         _binding.apply {
             callActionHold.setOnClickListener { _presenter.onHoldClick() }
@@ -61,10 +59,10 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     }
 
     override fun toggleSpeaker(isSpeaker: Boolean) {
-        _audioManager.isSpeakerphoneOn = isSpeaker
+        _audioManager.isSpeakerOn = isSpeaker
     }
 
     override fun toggleMute(isMute: Boolean) {
-        _audioManager.isMicrophoneMute = isMute
+        _audioManager.isMuted = isMute
     }
 }
