@@ -16,7 +16,6 @@ import androidx.core.app.NotificationCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
-import com.chooloo.www.koler.notification.NotificationActionReceiver
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
 import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.util.getAttrColor
@@ -43,7 +42,7 @@ class CallNotification(private val context: Context) {
     }
 
     private val _hangupIntent by lazy {
-        Intent(context, NotificationActionReceiver::class.java).apply {
+        Intent(context, CallBroadcastReceiver::class.java).apply {
             action = CallBroadcastReceiver.ACTION_HANGUP
             putExtra(EXTRA_NOTIFICATION_ID, ID)
         }
@@ -113,7 +112,6 @@ class CallNotification(private val context: Context) {
             .setColor(context.getAttrColor(R.attr.colorSecondary))
             .setOngoing(true)
             .setColorized(true)
-            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setContentTitle(callDetails.contact.name ?: callDetails.contact.number)
         if (callDetails.callState == RINGING) {
             builder.addAction(R.drawable.ic_call_black_24dp, sAnswer, _answerPendingIntent)

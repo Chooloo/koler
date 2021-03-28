@@ -59,7 +59,6 @@
         <activity
             android:name="com.chooloo.www.koler.ui.call.CallActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.chooloo.www.koler.ui.about.AboutActivity" />
         <activity android:name=".util.permissions.PermissionsActivity" />
         <!--endregion-->
 
@@ -84,10 +83,10 @@
         <!--endregion-->
 
         <!--region receivers-->
-        <receiver android:name="com.chooloo.www.koler.notification.NotificationActionReceiver">
+        <receiver android:name=".receiver.CallBroadcastReceiver">
             <intent-filter>
-                <action android:name="ANSWER" />
-                <action android:name="HANGUP" />
+                <action android:name="action_answer" />
+                <action android:name="action_hangup" />
             </intent-filter>
         </receiver>
         <!--endregion-->

@@ -51,11 +51,11 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     }
 
     override fun startRecording() {
-        TODO("Not yet implemented")
+        showMessage("Feature in development")
     }
 
     override fun stopRecording() {
-        TODO("Not yet implemented")
+        showMessage("Feature in development")
     }
 
     override fun toggleSpeaker(isSpeaker: Boolean) {

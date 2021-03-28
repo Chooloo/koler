@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.FragmentRecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
@@ -46,17 +46,16 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         _presenter.attach(this)
 
         _binding.apply {
-            recentTextName.text = _recent.cachedName ?: _recent.number
-            recentButtonAddContact.visibility = if (_recent.cachedName == null) VISIBLE else GONE
             recentTextDate.apply {
-                text = _recent.relativeTime
                 visibility = VISIBLE
+                text = _recent.relativeTime
             }
             recentTypeImage.apply {
                 visibility = VISIBLE
-                val drawable = ContextCompat.getDrawable(_activity, getCallTypeImage(_recent.type))
-                setImageDrawable(drawable)
+                setImageDrawable(getDrawable(_activity, getCallTypeImage(_recent.type)))
             }
+            recentTextName.text = _recent.cachedName ?: _recent.number
+            recentButtonAddContact.visibility = if (_recent.cachedName == null) VISIBLE else GONE
 
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
