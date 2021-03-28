@@ -25,6 +25,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val _kolerPreferences by lazy { context?.let { KolerPreferences(it) } }
 
     companion object {
+        const val TAG = "settings_fragment"
+        
         fun newInstance() = SettingsFragment()
     }
 

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getAttrColor
@@ -14,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class IconButton : FloatingActionButton {
     @DrawableRes private var _iconDefault: Int? = null
     @DrawableRes private var _iconOnClick: Int? = null
+
+    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -29,8 +32,12 @@ class IconButton : FloatingActionButton {
 
         elevation = 0f
         compatElevation = 0f
-        imageTintList = imageTintList
-            ?: ColorStateList.valueOf(context.getAttrColor(R.attr.colorOnSecondary))
+
+        imageTintList = if (isEnabled) {
+            imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
+        } else {
+            ColorStateList.valueOf(getColor(context, android.R.color.darker_gray))
+        }
 
         setImageDrawable(_iconDefault?.let { getDrawable(context, it) })
         setOnClickListener {}

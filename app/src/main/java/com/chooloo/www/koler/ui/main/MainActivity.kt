@@ -1,14 +1,10 @@
 package com.chooloo.www.koler.ui.main
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
@@ -17,8 +13,8 @@ import com.chooloo.www.koler.databinding.ActivityMainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.ui.menu.MenuFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
+import com.chooloo.www.koler.util.ignoreEditTextFocus
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
@@ -26,14 +22,12 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 class MainActivity : BaseActivity(), MainContract.View {
     private val _presenter by lazy { MainPresenter<MainContract.View>() }
     private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val _bottomSettingsFragment by lazy { BottomFragment(SettingsFragment.newInstance()) }
-    private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(true)) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
     override var dialpadNumber: String
-        get() = _bottomDialpadFragment.fragment.number
+        get() = _searchViewModel.number.value.toString()
         set(value) {
-            _bottomDialpadFragment.fragment.number = value
+            _searchViewModel.number.value = value
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,18 +41,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            val v = currentFocus
-            if (v is EditText) {
-                val outRect = Rect()
-                v.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    v.clearFocus()
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
-                }
-            }
-        }
+        ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 
@@ -98,11 +81,17 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openDialpad() {
-        _bottomDialpadFragment.show(supportFragmentManager, DialpadFragment.TAG)
+        BottomFragment(DialpadFragment.newInstance(true)).show(
+            supportFragmentManager,
+            DialpadFragment.TAG
+        )
     }
 
-    override fun openMenu() {
-        _bottomSettingsFragment.show(supportFragmentManager, MenuFragment.TAG)
+    override fun openSettings() {
+        BottomFragment(SettingsFragment.newInstance()).show(
+            supportFragmentManager,
+            SettingsFragment.TAG
+        )
     }
 
     override fun updateSearchViewModelText(text: String?) {

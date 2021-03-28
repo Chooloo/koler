@@ -126,6 +126,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                     keyStar.setOnLongClickListener(it)
                 }
         }
+
+        _searchViewModel.number.observe(viewLifecycleOwner) { number ->
+            number?.let { _presenter.onTextChanged(it) }
+        }
     }
 
     override fun onDestroy() {

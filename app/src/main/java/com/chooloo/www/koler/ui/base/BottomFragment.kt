@@ -49,6 +49,10 @@ class BottomFragment<FragmentType : Fragment>(
     override fun finish() {
         dismiss()
     }
+
+    override fun dismiss() {
+        super.dismiss()
+    }
     //endregion
 
     //region permissions

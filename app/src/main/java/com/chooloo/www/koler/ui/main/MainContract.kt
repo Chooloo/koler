@@ -8,7 +8,7 @@ interface MainContract : BaseContract {
     interface View : BaseContract.View {
         var dialpadNumber: String
 
-        fun openMenu()
+        fun openSettings()
         fun openDialpad()
         fun updateSearchViewModelText(text: String?)
         fun checkIntent()
