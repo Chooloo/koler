@@ -8,7 +8,7 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
     override fun onKeyClick(keyCode: Int) {
         mvpView?.vibrate()
         mvpView?.playTone(keyCode)
-        mvpView?.registerKeyEvent(keyCode)
+        mvpView?.invokeKey(keyCode)
     }
 
     override fun onLongKeyClick(keyCode: Int) = when (keyCode) {
@@ -45,7 +45,6 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
             if (isDialer) {
                 isDeleteButtonVisible = text?.isNotEmpty() == true
                 isAddContactButtonVisible = text?.isNotEmpty() == true
-                setViewModelNumber(text)
             }
         }
     }

@@ -3,13 +3,14 @@ package com.chooloo.www.koler.ui.dialpad
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.KeyEvent
+import android.view.KeyEvent.ACTION_DOWN
+import android.view.KeyEvent.KEYCODE_DEL
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentDialpadBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
@@ -17,14 +18,13 @@ import com.chooloo.www.koler.ui.widgets.DialpadKey
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.call.callVoicemail
-import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
     override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
+    private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
     private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    private val _searchViewModel by lazy { ViewModelProvider(_activity).get(SearchViewModel::class.java) }
 
     companion object {
         const val ARG_IS_DIALER = "dialer"
@@ -87,6 +87,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 isCursorVisible = isDialer
 
                 setText(argsSafely.getString(ARG_NUMBER))
+                text?.length?.let { setSelection(it) }
                 addTextChangedListener(
                     PhoneNumberFormattingTextWatcher(
                         resources.configuration.locales.get(0).toString()
@@ -94,11 +95,19 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 )
                 addTextChangedListener(
                     { _, _, _, _ -> },
-                    { s, _, _, _ -> _presenter.onTextChanged(s.toString()) },
+                    { s, _, _, _ ->
+                        _presenter.onTextChanged(s.toString())
+                        _onTextChangedListener.invoke(s.toString())
+                    },
                     {})
             }
 
-            View.OnClickListener { _presenter.onKeyClick((it as DialpadKey).keyCode) }
+            View.OnClickListener {
+                (it as DialpadKey).keyCode.also {
+                    _presenter.onKeyClick(it)
+                    _onKeyDownListener.invoke(it, KeyEvent(ACTION_DOWN, it))
+                }
+            }
                 .also {
                     key0.setOnClickListener(it)
                     key1.setOnClickListener(it)
@@ -114,7 +123,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                     keyStar.setOnClickListener(it)
                 }
 
-            View.OnLongClickListener { _presenter.onLongKeyClick((it as DialpadKey).keyCode) }
+            View.OnLongClickListener {
+                _presenter.onLongKeyClick((it as DialpadKey).keyCode)
+            }
                 .also {
                     key0.setOnLongClickListener(it)
                     key1.setOnLongClickListener(it)
@@ -130,7 +141,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                     keyStar.setOnLongClickListener(it)
                 }
 
-            _presenter.onTextChanged(_searchViewModel.number.value)
+            _presenter.onTextChanged(dialpadEditText.text.toString())
         }
     }
 
@@ -166,26 +177,22 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         context?.playToneByKey(keyCode)
     }
 
-    override fun registerKeyEvent(keyCode: Int) {
-        KeyEvent(KeyEvent.ACTION_DOWN, keyCode).also {
-            _binding.dialpadEditText.onKeyDown(keyCode, it)
-            _onKeyDownListener.invoke(keyCode, it)
-        }
+    override fun invokeKey(keyCode: Int) {
+        _binding.dialpadEditText.onKeyDown(keyCode, KeyEvent(ACTION_DOWN, keyCode))
+    }
+
+    override fun backspace() {
+        _binding.dialpadEditText.onKeyDown(KEYCODE_DEL, KeyEvent(ACTION_DOWN, KEYCODE_DEL))
     }
     //endregion
 
-    override fun backspace() {
-        val number = _binding.dialpadEditText.numbers
-        if (number.isNotEmpty()) {
-            _binding.dialpadEditText.setText(number.substring(0, number.length - 1))
-        }
-    }
-
-    override fun setViewModelNumber(number: String?) {
-        _searchViewModel.number.value = if (number == "") null else number
+    //region setters
+    fun setOnTextChangedListener(onTextChangedListener: (text: String?) -> Unit?) {
+        _onTextChangedListener = onTextChangedListener
     }
 
     fun setOnKeyDownListener(onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit?) {
         _onKeyDownListener = onKeyDownListener
     }
+    //endregion
 }

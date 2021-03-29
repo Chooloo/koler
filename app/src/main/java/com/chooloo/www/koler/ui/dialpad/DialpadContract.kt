@@ -14,14 +14,13 @@ interface DialpadContract : BaseContract {
         fun callVoicemail()
         fun vibrate()
         fun playTone(keyCode: Int)
-        fun registerKeyEvent(keyCode: Int)
+        fun invokeKey(keyCode: Int)
         fun backspace()
-        fun setViewModelNumber(number: String?)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onKeyClick(keyCode: Int)
-        fun onLongKeyClick(keyCode: Int):Boolean
+        fun onLongKeyClick(keyCode: Int): Boolean
         fun onCallClick()
         fun onDeleteClick()
         fun onAddContactClick()

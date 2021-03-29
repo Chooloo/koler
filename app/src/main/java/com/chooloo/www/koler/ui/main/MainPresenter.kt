@@ -35,4 +35,8 @@ class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Pr
     override fun onSearchTextChanged(text: String) {
         mvpView?.updateSearchViewModelText(text)
     }
+
+    override fun onDialpadTextChanged(text: String?) {
+        mvpView?.updateSearchViewModelNumber(text)
+    }
 }

@@ -81,10 +81,9 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openDialpad() {
-        BottomFragment(DialpadFragment.newInstance(true, _searchViewModel.number.value)).show(
-            supportFragmentManager,
-            DialpadFragment.TAG
-        )
+        BottomFragment(DialpadFragment.newInstance(true, _searchViewModel.number.value).apply {
+            setOnTextChangedListener(_presenter::onDialpadTextChanged)
+        }).show(supportFragmentManager, DialpadFragment.TAG)
     }
 
     override fun checkIntent() {
@@ -102,5 +101,9 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun updateSearchViewModelText(text: String?) {
         _searchViewModel.text.value = text
+    }
+
+    override fun updateSearchViewModelNumber(text: String?) {
+        _searchViewModel.number.value = text
     }
 }
