@@ -86,17 +86,17 @@ class MainActivity : BaseActivity(), MainContract.View {
         }).show(supportFragmentManager, DialpadFragment.TAG)
     }
 
-    override fun checkIntent() {
-        if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
-            _presenter.onViewIntent(intent)
-        }
-    }
-
     override fun openSettings() {
         BottomFragment(SettingsFragment.newInstance()).show(
             supportFragmentManager,
             SettingsFragment.TAG
         )
+    }
+
+    override fun checkIntent() {
+        if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
+            _presenter.onViewIntent(intent)
+        }
     }
 
     override fun updateSearchViewModelText(text: String?) {

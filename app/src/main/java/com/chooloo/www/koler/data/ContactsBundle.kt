@@ -16,10 +16,12 @@ data class ContactsBundle(
     val listBundleByLettersWithFavs: ListBundle<Contact>
         get() {
             val favs = contacts.filter { it.starred }.toTypedArray()
-            return ListBundle(
-                items = favs + contacts,
-                headers = arrayOf("★") + headers,
-                headersCounts = arrayOf(favs.size) + headersCounts
-            )
+            return if (favs.isNotEmpty()) {
+                ListBundle(
+                    items = favs + contacts,
+                    headers = arrayOf("★") + headers,
+                    headersCounts = arrayOf(favs.size) + headersCounts
+                )
+            } else listBundleByLetters
         }
 }

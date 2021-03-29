@@ -6,9 +6,11 @@ import com.chooloo.www.koler.ui.base.BasePresenter
 class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
     DialpadContract.Presenter<V> {
     override fun onKeyClick(keyCode: Int) {
-        mvpView?.vibrate()
-        mvpView?.playTone(keyCode)
-        mvpView?.invokeKey(keyCode)
+        mvpView?.apply {
+            vibrate()
+            playTone(keyCode)
+            invokeKey(keyCode)
+        }
     }
 
     override fun onLongKeyClick(keyCode: Int) = when (keyCode) {
@@ -18,7 +20,7 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
         }
         KEYCODE_1 -> {
             if (mvpView?.isDialer == true) mvpView?.callVoicemail()
-            mvpView?.isDialer ?: false
+            mvpView?.isDialer == true
         }
         else -> true
     }
