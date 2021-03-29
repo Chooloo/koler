@@ -29,29 +29,25 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
 
     override fun onSetup() {
         super.onSetup()
-
         _presenter.attach(this)
-
-        observe()
+        runWithPermissions(
+            permissions = _recentsLiveData.requiredPermissions + READ_CONTACTS,
+            grantedCallback = {
+                _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
+                _searchViewModel.apply {
+                    number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
+                    text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
+                }
+                emptyMessage = getString(R.string.error_no_results)
+            },
+            blockedCallback = _presenter::onNoPermissions
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _presenter.detach()
     }
-
-    override fun observe() = runWithPermissions(
-        permissions = _recentsLiveData.requiredPermissions + READ_CONTACTS,
-        grantedCallback = {
-            _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
-            _searchViewModel.apply {
-                number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
-                text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
-            }
-            emptyMessage = getString(R.string.error_no_results)
-        },
-        blockedCallback = _presenter::onPermissionsBlocked
-    )
 
     override fun openRecent(recent: Recent) {
         BottomFragment(RecentFragment.newInstance(recent.id)).show(

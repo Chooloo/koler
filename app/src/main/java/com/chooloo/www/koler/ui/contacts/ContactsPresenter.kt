@@ -24,8 +24,4 @@ class ContactsPresenter<V : ContactsContract.View> : ListPresenter<V>(),
     }
 
     override fun onContactItemLongClick(contact: Contact) = true
-
-    override fun onPermissionsBlocked(permissions: Array<String>) {
-        mvpView?.emptyMessage = mvpView?.getString(R.string.error_no_permissions)
-    }
 }

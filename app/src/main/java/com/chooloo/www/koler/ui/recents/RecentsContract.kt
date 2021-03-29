@@ -6,7 +6,6 @@ import com.chooloo.www.koler.ui.list.ListContract
 
 interface RecentsContract : ListContract {
     interface View : ListContract.View {
-        fun observe(): Any?
         fun openRecent(recent: Recent)
         fun updateRecents(recentsBundle: RecentsBundle)
         fun setRecentsFilter(filter: String?)
@@ -18,6 +17,5 @@ interface RecentsContract : ListContract {
         fun onDialpadNumberChanged(number: String?)
         fun onRecentItemClick(recent: Recent)
         fun onRecentItemLongClick(recent: Recent)
-        fun onPermissionsBlocked(permissions: Array<String>)
     }
 }

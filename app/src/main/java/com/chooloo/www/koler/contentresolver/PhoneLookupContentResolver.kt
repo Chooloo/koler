@@ -8,9 +8,8 @@ import com.chooloo.www.koler.data.Contact
 
 class PhoneLookupContentResolver(
     context: Context,
-    private val number: String,
+    private val number: String?,
 ) : BaseContentResolver<Array<Contact>>(context) {
-
     override fun onGetUri(): Uri = PhoneLookup.CONTENT_FILTER_URI
         .buildUpon()
         .appendPath(number)

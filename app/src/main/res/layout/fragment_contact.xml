@@ -26,25 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        app:layout_constraintBottom_toTopOf="@id/contact_text_number"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginEnd="@dimen/default_spacing_small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_button_fav"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Jesus" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/contact_text_number"
-        style="@style/Koler.Contact.Text.Number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@id/contact_text_name"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_name"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="01234567"
-        tools:visibility="visible" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/contact_image"
@@ -53,12 +40,20 @@
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/default_spacing"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/contact_text_number"
+        app:layout_constraintBottom_toBottomOf="@id/contact_text_name"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/contact_text_name"
         app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
         tools:visibility="visible" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/contact_phones_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_image" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/contact_button_call"
@@ -72,7 +67,7 @@
         app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
+        app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/contact_button_edit"
@@ -86,7 +81,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
         app:layout_constraintStart_toEndOf="@id/contact_button_call"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
+        app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/contact_button_delete"
@@ -100,7 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
         app:layout_constraintStart_toEndOf="@id/contact_button_edit"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
+        app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/contact_button_sms"
@@ -114,6 +109,6 @@
         app:icon="@drawable/ic_sms_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_number" />
+        app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

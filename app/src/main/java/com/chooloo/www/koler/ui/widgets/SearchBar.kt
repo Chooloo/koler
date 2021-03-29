@@ -22,6 +22,9 @@ class SearchBar : TextInputLayout {
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
+    private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
+    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
     constructor(
@@ -34,13 +37,12 @@ class SearchBar : TextInputLayout {
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
+            compoundDrawableTintList = ColorStateList.valueOf(colorOnSecondary)
             layoutParams = LayoutParams(MATCH_PARENT, context.sizeInDp(34))
-            compoundDrawableTintList =
-                ColorStateList.valueOf(context.getAttrColor(R.attr.colorOnSecondary))
 
             setTextAppearance(R.style.Koler_Text_Subtitle1)
-            setTextColor(context.getAttrColor(R.attr.colorOnSecondary))
-            setHintTextColor(context.getAttrColor(R.attr.colorOnSecondary))
+            setHintTextColor(colorOnSecondary)
+            setTextColor(colorOnSecondary)
             setPadding(
                 spacingSmall,
                 context.sizeInDp(5),
@@ -64,14 +66,14 @@ class SearchBar : TextInputLayout {
         _textInputEditText.setOnFocusChangeListener { _, isFocused -> showIcon(!isFocused) }
 
         showIcon(true)
-        setEndIconTintList(ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondaryVariant)))
+        setEndIconTintList(ColorStateList.valueOf(colorOnSecondary))
     }
 
     override fun setHint(hint: CharSequence?) {
-        _textInputEditText?.hint = hint
+        _textInputEditText?.hint = hint // do not remove the ?
     }
 
-    override fun getHint() = _textInputEditText?.hint.toString()
+    override fun getHint() = _textInputEditText?.hint.toString() // do not remove the ?
 
     private fun showIcon(isShow: Boolean) {
         _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(

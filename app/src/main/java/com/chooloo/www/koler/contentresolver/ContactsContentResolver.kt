@@ -12,7 +12,8 @@ import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.data.ContactsBundle
 
 open class ContactsContentResolver(
-    context: Context
+    context: Context,
+    private val contactId: Long? = null
 ) : BaseContentResolver<ContactsBundle>(context) {
 
     override val requiredPermissions = arrayOf(READ_CONTACTS)
@@ -31,9 +32,11 @@ open class ContactsContentResolver(
 
     override fun onGetSelection() = SelectionBuilder()
         .addNotNull(Contacts.DISPLAY_NAME_PRIMARY)
+        .addSelection(Contacts._ID, contactId)
         .build()
 
     override fun onGetSortOrder() = "${Contacts.SORT_KEY_PRIMARY} ASC"
+
     override fun onGetProjection() = arrayOf(
         Contacts._ID,
         Contacts.DISPLAY_NAME_PRIMARY,

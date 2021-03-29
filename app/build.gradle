@@ -9,8 +9,8 @@ android {
         applicationId "com.chooloo.www.koler"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 51
-        versionName "v1.0.1"
+        versionCode 52
+        versionName "v1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {

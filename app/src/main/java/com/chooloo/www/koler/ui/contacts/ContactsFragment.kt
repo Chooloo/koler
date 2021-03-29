@@ -28,29 +28,25 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
 
     override fun onSetup() {
         super.onSetup()
-
         _presenter.attach(this)
-
-        observe()
+        runWithPermissions(
+            _contactsLiveData.requiredPermissions,
+            {
+                _contactsLiveData.observe(viewLifecycleOwner, _presenter::onContactsChanged)
+                _searchViewModel.apply {
+                    number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
+                    text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
+                }
+                emptyMessage = getString(R.string.error_no_results)
+            },
+            blockedCallback = _presenter::onNoPermissions
+        )
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _presenter.detach()
     }
-
-    override fun observe() = runWithPermissions(
-        _contactsLiveData.requiredPermissions,
-        {
-            _contactsLiveData.observe(viewLifecycleOwner, _presenter::onContactsChanged)
-            _searchViewModel.apply {
-                number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
-                text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
-            }
-            emptyMessage = getString(R.string.error_no_results)
-        },
-        blockedCallback = _presenter::onPermissionsBlocked
-    )
 
     override fun openContact(contact: Contact) {
         BottomFragment(ContactFragment.newInstance(contact.id)).show(

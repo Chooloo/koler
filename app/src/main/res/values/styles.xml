@@ -32,7 +32,7 @@
         <item name="android:textSize">@dimen/subtitle_2</item>
     </style>
 
-    <style name="Koler.Text.Caption">
+    <style name="Koler.Text.Caption" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?android:textColorHint</item>
     </style>

@@ -14,6 +14,6 @@ interface ListContract : BaseContract {
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onResults()
         fun onNoResults()
-        fun onEnablePermissionClick()
+        fun onNoPermissions(permissions: Array<String>)
     }
 }

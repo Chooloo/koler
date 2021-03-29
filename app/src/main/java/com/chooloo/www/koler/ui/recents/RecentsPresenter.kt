@@ -24,8 +24,4 @@ class RecentsPresenter<V : RecentsContract.View> : ListPresenter<V>(),
     }
 
     override fun onRecentItemLongClick(recent: Recent) {}
-
-    override fun onPermissionsBlocked(permissions: Array<String>) {
-        mvpView?.emptyMessage = mvpView?.getString(R.string.error_no_permissions)
-    }
 }

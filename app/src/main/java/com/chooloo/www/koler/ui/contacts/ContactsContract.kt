@@ -6,7 +6,6 @@ import com.chooloo.www.koler.ui.list.ListContract
 
 interface ContactsContract : ListContract {
     interface View : ListContract.View {
-        fun observe(): Any?
         fun openContact(contact: Contact)
         fun updateContacts(contactsBundle: ContactsBundle)
         fun setContactsFilter(filter: String?)
@@ -18,6 +17,5 @@ interface ContactsContract : ListContract {
         fun onDialpadNumberChanged(number: String?)
         fun onContactItemClick(contact: Contact)
         fun onContactItemLongClick(contact: Contact): Boolean
-        fun onPermissionsBlocked(permissions: Array<String>)
     }
 }

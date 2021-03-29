@@ -6,7 +6,7 @@
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
     <!--endregion-->
-    
+
     <!--region Koler-->
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
@@ -113,9 +113,31 @@
     <string name="content_description_call_actions_button">Call Actions</string>
     <!--endregion-->
 
-
     <!--region notification-->
     <string name="call_notification_channel_name">Call Notification</string>
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
+    <!--endregion-->
+
+    <!--region phone type-->
+    <string name="phone_type_home">Home</string>
+    <string name="phone_type_mobile">Mobile</string>
+    <string name="phone_type_work">Work</string>
+    <string name="phone_type_fax_work">Fax Work</string>
+    <string name="phone_type_fax_home">Fax Home</string>
+    <string name="phone_type_pager">Pager</string>
+    <string name="phone_type_other">Other</string>
+    <string name="phone_type_callback">Callback</string>
+    <string name="phone_type_car">Car</string>
+    <string name="phone_type_company_main">Company Main</string>
+    <string name="phone_type_isdn">ISDN</string>
+    <string name="phone_type_main">Main</string>
+    <string name="phone_type_other_fax">Fax</string>
+    <string name="phone_type_radio">Radio</string>
+    <string name="phone_type_telex">Telex</string>
+    <string name="phone_type_tty_ttd">TTY TDD</string>
+    <string name="phone_type_work_mobile">Work Mobile</string>
+    <string name="phone_type_work_pager">Work Pager</string>
+    <string name="phone_type_assistant">Assistant</string>
+    <string name="phone_type_mms">MMS</string>
     <!--endregion-->
 </resources>

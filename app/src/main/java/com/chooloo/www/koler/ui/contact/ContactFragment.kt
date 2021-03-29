@@ -8,13 +8,16 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
+import com.chooloo.www.koler.ui.phones.PhonesFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 
 class ContactFragment : BaseFragment(), ContactContract.View {
+    private val _contact by lazy { _activity.lookupContact(_contactId) }
+    private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
+    private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId) }
     private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
-    private val _contact by lazy { _activity.lookupContact(argsSafely.getLong(ARG_CONTACT_ID)) }
 
     companion object {
         const val TAG = "contact_fragment"
@@ -33,14 +36,14 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             _binding.contactTextName.text = value
         }
 
-    override var contactNumber: String?
-        get() = _binding.contactTextNumber.text.toString()
-        set(value) {
-            _binding.contactTextNumber.apply {
-                text = value
-                visibility = if (value != null) VISIBLE else GONE
-            }
-        }
+//    override var contactNumber: String?
+//        get() = _binding.contactTextNumber.text.toString()
+//        set(value) {
+//            _binding.contactTextNumber.apply {
+//                text = value
+//                visibility = if (value != null) VISIBLE else GONE
+//            }
+//        }
 
     override var contactImage: Uri?
         get() = null
@@ -81,6 +84,11 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
             contactButtonFav.setOnClickListener { _presenter.onActionFav() }
         }
+
+        childFragmentManager
+            .beginTransaction()
+            .add(_binding.contactPhonesFragmentContainer.id, _phonesFragment)
+            .commitNow()
     }
 
     override fun callContact() {
