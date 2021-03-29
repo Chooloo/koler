@@ -30,11 +30,10 @@ class DialpadKey : LinearLayout {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
+        gravity = Gravity.CENTER_HORIZONTAL
 
         _digitTextView = TextView(context, attrs, defStyleRes).apply {
-            gravity = Gravity.CENTER_HORIZONTAL
-            textAlignment = TEXT_ALIGNMENT_CENTER
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Headline2)
         }.also {
@@ -42,13 +41,11 @@ class DialpadKey : LinearLayout {
         }
 
         _lettersTextView = TextView(context, attrs, defStyleRes).apply {
-            gravity = Gravity.CENTER_HORIZONTAL
-            textAlignment = TEXT_ALIGNMENT_CENTER
-            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setPadding(0, context.sizeInDp(5), 0, 0)
             setTextAppearance(R.style.Koler_Text_Caption)
-            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
         }.also {
             addView(it)
         }
@@ -73,7 +70,7 @@ class DialpadKey : LinearLayout {
                 }
                 "1" -> {
                     keyCode = KeyEvent.KEYCODE_1
-                    _lettersTextView.text = context.getString(R.string.dialpad_0_letters)
+                    _lettersTextView.setBackgroundResource(R.drawable.ic_voicemail_black_24dp)
                 }
                 "2" -> {
                     keyCode = KeyEvent.KEYCODE_2
