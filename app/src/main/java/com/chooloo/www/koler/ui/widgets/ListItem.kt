@@ -2,7 +2,6 @@ package com.chooloo.www.koler.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -18,7 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.getAttrColor
 import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
 import com.chooloo.www.koler.util.sizeInDp
 import com.google.android.material.imageview.ShapeableImageView
@@ -192,7 +190,6 @@ class ListItem : LinearLayout {
 
     fun setImageUri(imageUri: Uri?) {
         image.setImageURI(imageUri)
-        setImageBackgroundColor(if (imageUri != null) Color.TRANSPARENT else context.getAttrColor(R.attr.colorSecondary))
     }
 
     fun setImageBackgroundColor(@ColorInt color: Int) {

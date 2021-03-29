@@ -10,8 +10,8 @@ class ContactsAdapter : ListAdapter<Contact>() {
         listItem.apply {
             titleText = item.name
             personStartPadding = resources.getDimensionPixelSize(R.dimen.default_spacing_big)
-            
-            item.photoUri?.let { setImageUri(Uri.parse(it)) }
+
+            setImageUri(if (item.photoUri != null) Uri.parse(item.photoUri) else null)
         }
     }
 }
