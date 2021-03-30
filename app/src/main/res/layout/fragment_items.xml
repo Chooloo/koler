@@ -5,21 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/items_top_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing_small"
-        android:alpha="0.7"
-        android:background="@drawable/bubble_background"
-        android:padding="@dimen/default_spacing_small"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Header Text" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/items_recycler_view"
         style="@style/Koler.ListView"
@@ -30,13 +15,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/items_no_results_text"
+        android:id="@+id/items_empty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:padding="@dimen/default_spacing_big"
         android:text="@string/error_no_results"
-        android:textAppearance="@style/Koler.Text.Headline3"
+        android:textAppearance="@style/Koler.Text.Headline4"
         android:textColor="?android:textColorHint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -13,7 +13,6 @@ class MenuFragment : ListFragment<MenuAdapter>(), MenuContract.View {
     private var _onMenuItemClickListener: (MenuItem) -> Unit? = {}
 
     companion object {
-        const val TAG = "menu_fragment"
         const val ARG_MENU_LAYOUT = "menu_layout"
 
         fun newInstance(@MenuRes menuLayout: Int) = MenuFragment().apply {
@@ -23,17 +22,18 @@ class MenuFragment : ListFragment<MenuAdapter>(), MenuContract.View {
         }
     }
 
-    override fun onGetAdapter(): MenuAdapter {
-        val menu = PopupMenu(_activity, null).menu.also {
-            MenuInflater(_activity).inflate(argsSafely.getInt(ARG_MENU_LAYOUT), it)
-        }
-        return MenuAdapter().apply {
-            data = ListBundle((0 until menu.size()).map { menu.getItem(it) }.toTypedArray())
-            setOnItemClickListener { _onMenuItemClickListener.invoke(it) }
-        }
+    override fun onGetAdapter() = MenuAdapter().apply {
+        setOnItemClickListener { _onMenuItemClickListener.invoke(it) }
     }
 
     fun setOnMenuItemClickListener(onMenuItemClickListener: (MenuItem) -> Unit?) {
         _onMenuItemClickListener = onMenuItemClickListener
+    }
+
+    override fun onAttachData() {
+        PopupMenu(_activity, null).menu.also { m ->
+            MenuInflater(_activity).inflate(argsSafely.getInt(ARG_MENU_LAYOUT), m)
+            listAdapter.data = ListBundle((0 until m.size()).map { m.getItem(it) }.toTypedArray())
+        }
     }
 }

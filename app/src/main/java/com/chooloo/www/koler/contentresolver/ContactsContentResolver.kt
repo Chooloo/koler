@@ -15,35 +15,37 @@ open class ContactsContentResolver(
     context: Context,
     private val contactId: Long? = null
 ) : BaseContentResolver<ContactsBundle>(context) {
-
     override val requiredPermissions = arrayOf(READ_CONTACTS)
 
-    override fun onGetUri(): Uri = Contacts.CONTENT_URI
+
+    override val uri: Uri = Contacts.CONTENT_URI
         .buildUpon()
         .appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true")
         .appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true")
         .build()
 
-    override fun onGetFilterUri(): Uri = Contacts.CONTENT_FILTER_URI
+    override val filterUri: Uri = Contacts.CONTENT_FILTER_URI
         .buildUpon()
         .appendQueryParameter(Contacts.EXTRA_ADDRESS_BOOK_INDEX, "true")
         .appendQueryParameter(REMOVE_DUPLICATE_ENTRIES, "true")
         .build()
 
-    override fun onGetSelection() = SelectionBuilder()
+    override val selection = SelectionBuilder()
         .addNotNull(Contacts.DISPLAY_NAME_PRIMARY)
         .addSelection(Contacts._ID, contactId)
         .build()
 
-    override fun onGetSortOrder() = "${Contacts.SORT_KEY_PRIMARY} ASC"
+    override val sortOrder = "${Contacts.SORT_KEY_PRIMARY} ASC"
 
-    override fun onGetProjection() = arrayOf(
+    override val projection = arrayOf(
         Contacts._ID,
         Contacts.DISPLAY_NAME_PRIMARY,
         Contacts.PHOTO_THUMBNAIL_URI,
         Contacts.STARRED,
         Contacts.LOOKUP_KEY
     )
+
+    override val selectionArgs: Array<String>? = null
 
     override fun convertCursorToContent(cursor: Cursor?) = ContactsBundle(
         contacts = ArrayList<Contact>().apply {

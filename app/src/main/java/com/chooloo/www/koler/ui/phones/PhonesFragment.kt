@@ -4,14 +4,21 @@ import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.PhonesAdapter
 import com.chooloo.www.koler.data.PhonesBundle
-import com.chooloo.www.koler.livedata.PhonesProviderLiveData
+import com.chooloo.www.koler.livedata.PhoneProviderLiveData
 import com.chooloo.www.koler.ui.list.ListFragment
-import com.chooloo.www.koler.util.permissions.runWithPermissions
+import com.chooloo.www.koler.util.call.call
 
 class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
     private val _presenter by lazy { PhonesPresenter<PhonesContract.View>() }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _phonesLiveData by lazy { PhonesProviderLiveData(_activity, _contactId) }
+    private val _phonesLiveData by lazy { PhoneProviderLiveData(_activity, _contactId) }
+
+    //region list args
+    override val noResultsMessage by lazy { getString(R.string.error_no_results_phones) }
+    override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_phones) }
+    override val requiredPermissions
+        get() = _phonesLiveData.requiredPermissions
+    //endregion
 
     companion object {
         private const val ARG_CONTACT_ID = "contact_id"
@@ -23,20 +30,17 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
         }
     }
 
-    override fun onGetAdapter() = PhonesAdapter()
+    override fun onGetAdapter() = PhonesAdapter().apply {
+        setOnItemClickListener(_presenter::onPhoneItemClick)
+    }
 
     override fun onSetup() {
         super.onSetup()
         _presenter.attach(this)
-        runWithPermissions(
-            _phonesLiveData.requiredPermissions,
-            {
-                _phonesLiveData.observe(viewLifecycleOwner, _presenter::onPhonesChanged)
-                emptyMessage = getString(R.string.error_no_results)
-            },
-            blockedCallback = _presenter::onNoPermissions
-        )
-        _presenter.onPhonesChanged(_phonesLiveData.onGetContentResolver().content)
+    }
+
+    override fun onAttachData() {
+        _phonesLiveData.observe(viewLifecycleOwner, _presenter::onPhonesChanged)
     }
 
     override fun onDestroy() {
@@ -46,5 +50,9 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
 
     override fun updatePhoneAccounts(phonesBundle: PhonesBundle) {
         listAdapter.data = phonesBundle.getListBundleByType(_activity)
+    }
+
+    override fun callNumber(number: String) {
+        _activity.call(number)
     }
 }

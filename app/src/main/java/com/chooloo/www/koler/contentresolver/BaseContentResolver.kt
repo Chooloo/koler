@@ -9,10 +9,15 @@ import android.net.Uri
 abstract class BaseContentResolver<T>(
     private val context: Context,
 ) : ContentResolver(context) {
-
     private var _filter: String? = null
-    private var _observer: ContentObserver
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
+    private val _observer by lazy {
+        object : ContentObserver(null) {
+            override fun onChange(selfChange: Boolean) {
+                _onContentChangedListener?.invoke(content)
+            }
+        }
+    }
 
     val content: T
         get() = convertCursorToContent(queryContent())
@@ -20,28 +25,18 @@ abstract class BaseContentResolver<T>(
     open val requiredPermissions: Array<String>
         get() = arrayOf()
 
-    init {
-        _observer = object : ContentObserver(null) {
-            override fun onChange(selfChange: Boolean) {
-                _onContentChangedListener?.invoke(content)
-            }
-        }
-    }
-
-    private fun getUri(): Uri {
-        return if (_filter != null) {
-            Uri.withAppendedPath(onGetFilterUri(), _filter)
-        } else {
-            onGetUri()
-        }
+    private fun chooseUri() = if (_filter != null) {
+        Uri.withAppendedPath(filterUri, _filter)
+    } else {
+        uri
     }
 
     private fun queryContent() = context.contentResolver.query(
-        getUri(),
-        onGetProjection(),
-        onGetSelection(),
-        onGetSelectionArgs(),
-        onGetSortOrder()
+        chooseUri(),
+        projection,
+        selection,
+        selectionArgs,
+        sortOrder
     )
 
     fun setFilter(filter: String?) {
@@ -49,24 +44,25 @@ abstract class BaseContentResolver<T>(
     }
 
     fun observe() {
-        registerContentObserver(onGetUri(), true, _observer)
+        registerContentObserver(uri, true, _observer)
     }
 
     fun detach() {
         unregisterContentObserver(_observer)
     }
 
-    fun setOnContentChangedListener(onContentChangedListener: ((T?) -> Unit?)?) {
+    fun setOnContentChangedListener(onContentChangedListener: (T?) -> Unit? = { _ -> }) {
         _onContentChangedListener = onContentChangedListener
     }
 
-    open fun onGetSelection(): String? = null
-    open fun onGetSortOrder(): String? = null
-    open fun onGetSelectionArgs(): Array<String>? = null
 
-    abstract fun onGetUri(): Uri
-    abstract fun onGetFilterUri(): Uri
-    abstract fun onGetProjection(): Array<String>?
+    abstract val uri: Uri
+    abstract val filterUri: Uri
+    abstract val selection: String?
+    abstract val sortOrder: String?
+    abstract val projection: Array<String>?
+    abstract val selectionArgs: Array<String>?
+
     abstract fun convertCursorToContent(cursor: Cursor?): T
 
     open inner class SelectionBuilder {

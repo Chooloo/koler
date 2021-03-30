@@ -29,10 +29,18 @@ class RecentsContentResolver(
 
     override val requiredPermissions: Array<String> = arrayOf(READ_CALL_LOG)
 
-    override fun onGetUri(): Uri = CallLog.Calls.CONTENT_URI
-    override fun onGetFilterUri(): Uri = CallLog.Calls.CONTENT_FILTER_URI
-    override fun onGetSortOrder() = "${CallLog.Calls.DATE} DESC"
-    override fun onGetProjection() = arrayOf(
+    override val uri: Uri = CallLog.Calls.CONTENT_URI
+    
+    override val filterUri: Uri = CallLog.Calls.CONTENT_FILTER_URI
+
+    override val sortOrder = "${CallLog.Calls.DATE} DESC"
+
+    override val selection = SelectionBuilder()
+        .addSelection(CallLog.Calls._ID, recentId)
+        .addSelection(CallLog.Calls.NUMBER, number)
+        .build()
+
+    override val projection = arrayOf(
         CallLog.Calls._ID,
         CallLog.Calls.NUMBER,
         CallLog.Calls.NUMBER_PRESENTATION,
@@ -42,10 +50,7 @@ class RecentsContentResolver(
         CallLog.Calls.TYPE
     )
 
-    override fun onGetSelection() = SelectionBuilder()
-        .addSelection(CallLog.Calls._ID, recentId)
-        .addSelection(CallLog.Calls.NUMBER, number)
-        .build()
+    override val selectionArgs: Array<String>? = null
 
     override fun convertCursorToContent(cursor: Cursor?) = RecentsBundle(
         recents = ArrayList<Recent>().apply {

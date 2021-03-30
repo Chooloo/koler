@@ -7,7 +7,6 @@ import com.chooloo.www.koler.ui.base.BaseContract
 interface ContactContract : BaseContract {
     interface View : BaseContract.View {
         var contactName: String?
-//        var contactNumber: String?
         var contactImage: Uri?
         var isStarIconActivated: Boolean
 

@@ -1,40 +1,49 @@
 package com.chooloo.www.koler.contentresolver
 
+import PhoneAccount.PhoneAccountType
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.PhoneLookup
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.PhoneLookupAccount
 
 class PhoneLookupContentResolver(
     context: Context,
     private val number: String?,
-) : BaseContentResolver<Array<Contact>>(context) {
-    override fun onGetUri(): Uri = PhoneLookup.CONTENT_FILTER_URI
+) : BaseContentResolver<Array<PhoneLookupAccount>>(context) {
+    override val uri: Uri = PhoneLookup.CONTENT_FILTER_URI
         .buildUpon()
         .appendPath(number)
         .build()
 
-    override fun onGetFilterUri(): Uri = PhoneLookup.CONTENT_FILTER_URI
+    override val filterUri: Uri = PhoneLookup.CONTENT_FILTER_URI
 
-    override fun onGetProjection() = arrayOf(
+    override val selection: String? = null
+
+    override val sortOrder: String? = null
+
+    override val projection = arrayOf(
+        PhoneLookup.TYPE,
+        PhoneLookup.NUMBER,
+        PhoneLookup.STARRED,
+        PhoneLookup.PHOTO_URI,
         PhoneLookup.CONTACT_ID,
         PhoneLookup.DISPLAY_NAME,
-        PhoneLookup.NUMBER,
-        PhoneLookup.PHOTO_URI,
-        PhoneLookup.STARRED
     )
 
-    override fun convertCursorToContent(cursor: Cursor?): Array<Contact> =
-        ArrayList<Contact>().apply {
+    override val selectionArgs: Array<String>? = null
+
+    override fun convertCursorToContent(cursor: Cursor?) =
+        ArrayList<PhoneLookupAccount>().apply {
             while (cursor != null && cursor.moveToNext()) cursor.apply {
                 add(
-                    Contact(
-                        id = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
-                        name = getString(getColumnIndex(PhoneLookup.DISPLAY_NAME)),
+                    PhoneLookupAccount(
                         number = getString(getColumnIndex(PhoneLookup.NUMBER)),
+                        name = getString(getColumnIndex(PhoneLookup.DISPLAY_NAME)),
+                        contactId = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
                         photoUri = getString(getColumnIndex(PhoneLookup.PHOTO_URI)),
-                        starred = "1" == getString(getColumnIndex(PhoneLookup.STARRED))
+                        starred = "1" == getString(getColumnIndex(PhoneLookup.STARRED)),
+                        type = PhoneAccountType.fromType(getInt(getColumnIndex(PhoneLookup.TYPE)))
                     )
                 )
             }

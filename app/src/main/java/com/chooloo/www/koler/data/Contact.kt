@@ -1,12 +1,14 @@
 package com.chooloo.www.koler.data
 
+import PhoneAccount
+
 data class Contact(
     val id: Long = 0,
     val name: String? = null,
-    val number: String? = null,
     val photoUri: String? = null,
     val starred: Boolean = false,
-    val lookupKey: String? = null
+    val lookupKey: String? = null,
+    var phoneAccounts: Array<PhoneAccount> = arrayOf()
 ) {
     companion object {
         val UNKNOWN = Contact(name = "Unknown")

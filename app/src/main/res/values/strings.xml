@@ -79,8 +79,16 @@
 
     <!--region errors-->
     <string name="error_no_results">No results :/</string>
-    <string name="error_enter_number">Please enter a number first</string>
+    <string name="error_no_results_phones">No phone numbers :/</string>
+    <string name="error_no_results_contacts">No contacts :/</string>
+    <string name="error_no_results_recents">No recents :/</string>
+
     <string name="error_no_permissions">I need permissions :/</string>
+    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_recents">I need permission to read call log :)</string>
+    <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
+
+    <string name="error_enter_number">Please enter a number first</string>
     <!--endregion-->
 
     <!--region pref color values-->

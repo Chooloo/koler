@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
+import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.util.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(),
@@ -19,13 +20,19 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
     private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
 
+    //region list args
+    override val requiredPermissions: Array<String>? = null
+    override val noResultsMessage by lazy { getString(R.string.error_no_results) }
+    override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions) }
     override val itemCount: Int
         get() = listAdapter.itemCount
+    //endregion
 
-    override var emptyMessage: String?
-        get() = _binding.itemsNoResultsText.text.toString()
+    override var emptyStateText: String?
+        get() = _binding.itemsEmptyText.text.toString()
         set(value) {
-            _binding.itemsNoResultsText.text = value
+            _binding.itemsEmptyText.text = value
+
         }
 
     override fun onCreateView(
@@ -61,17 +68,29 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
                 }
             })
         }
+
+        requiredPermissions?.let {
+            runWithPermissions(
+                permissions = it,
+                grantedCallback = _presenter::onPermissionsGranted,
+                blockedCallback = _presenter::onPermissionsBlocked
+            )
+        } ?: _presenter.onPermissionsGranted()
     }
 
-    override fun showEmptyPage(isShow: Boolean) {
-        _binding.apply {
-            itemsNoResultsText.visibility = if (isShow) VISIBLE else GONE
-            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
-        }
+    override fun attachData() {
+        onAttachData()
     }
 
     override fun animateListView() {
         runLayoutAnimation(_binding.itemsRecyclerView)
+    }
+
+    override fun showEmptyPage(isShow: Boolean) {
+        _binding.apply {
+            itemsEmptyText.visibility = if (isShow) VISIBLE else GONE
+            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
+        }
     }
 
     fun setOnScrollStateChangedListener(onScrollStateChangedListener: ((newState: Int) -> Unit?)?) {
@@ -79,4 +98,5 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     }
 
     abstract fun onGetAdapter(): A
+    abstract fun onAttachData()
 }

@@ -5,15 +5,20 @@ import com.chooloo.www.koler.ui.base.BaseContract
 interface ListContract : BaseContract {
     interface View : BaseContract.View {
         val itemCount: Int
-        var emptyMessage: String?
+        var emptyStateText: String?
+        val noResultsMessage: String
+        val noPermissionsMessage: String
+        val requiredPermissions: Array<String>?
 
-        fun showEmptyPage(isShow: Boolean)
+        fun attachData()
         fun animateListView()
+        fun showEmptyPage(isShow: Boolean)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onResults()
         fun onNoResults()
-        fun onNoPermissions(permissions: Array<String>)
+        fun onPermissionsGranted()
+        fun onPermissionsBlocked(permissions: Array<String>)
     }
 }

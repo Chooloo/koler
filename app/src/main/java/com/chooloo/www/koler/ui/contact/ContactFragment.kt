@@ -36,15 +36,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             _binding.contactTextName.text = value
         }
 
-//    override var contactNumber: String?
-//        get() = _binding.contactTextNumber.text.toString()
-//        set(value) {
-//            _binding.contactTextNumber.apply {
-//                text = value
-//                visibility = if (value != null) VISIBLE else GONE
-//            }
-//        }
-
     override var contactImage: Uri?
         get() = null
         set(value) {
@@ -92,11 +83,11 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun callContact() {
-        _contact.number?.let { _activity.call(it) }
+        _contact.phoneAccounts.getOrNull(0)?.let { _activity.call(it.number) }
     }
 
     override fun smsContact() {
-        _activity.smsNumber(_contact.number)
+        _contact.phoneAccounts.getOrNull(0)?.let { _activity.smsNumber(it.number) }
     }
 
     override fun editContact() {

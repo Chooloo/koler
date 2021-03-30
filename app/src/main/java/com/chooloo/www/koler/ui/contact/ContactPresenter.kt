@@ -12,7 +12,6 @@ class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
         _contact = contact
         mvpView?.apply {
             contactName = contact.name
-//            contact.number?.let { contactNumber = contact.number }
             contact.photoUri?.let { contactImage = Uri.parse(it) }
             isStarIconActivated = contact.starred
         }

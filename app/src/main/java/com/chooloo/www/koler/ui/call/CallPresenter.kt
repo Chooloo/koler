@@ -26,7 +26,7 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         val contact = callDetails.contact
         val callState = callDetails.callState
 
-        mvpView?.callerNameText = contact.name ?: contact.number
+        mvpView?.callerNameText = contact.name ?: contact.number ?: "Unknown"
         contact.photoUri?.let { mvpView?.callerImageURI = Uri.parse(it) }
 
         mvpView?.stateText = App.resources?.getString(

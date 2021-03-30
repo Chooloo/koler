@@ -2,11 +2,11 @@ package com.chooloo.www.koler.data
 
 import android.content.Context
 import android.telecom.Call
-import com.chooloo.www.koler.util.call.getCallerContact
+import com.chooloo.www.koler.util.call.lookupContact
 
 data class CallDetails(
     val callState: CallState,
-    val contact: Contact
+    val contact: PhoneLookupAccount
 ) {
     enum class CallState(val state: Int) {
         ACTIVE(Call.STATE_ACTIVE),
@@ -26,7 +26,7 @@ data class CallDetails(
         fun fromCall(call: Call, context: Context) = CallDetails(
             callState = CallState.values().associateBy(CallState::state)
                 .getOrDefault(call.state, CallState.UNKNOWN),
-            contact = call.getCallerContact(context)
+            contact = call.lookupContact(context)
         )
     }
 }

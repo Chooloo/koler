@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.util
 
+import PhoneAccount.PhoneAccountType.*
 import android.Manifest.permission.WRITE_CONTACTS
 import android.app.Activity
 import android.content.ContentUris
@@ -11,25 +12,31 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
-import com.chooloo.www.koler.contentresolver.PhonesContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
+import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.PhoneLookupAccount
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 
-fun Context.lookupContact(number: String?): Contact {
+fun Context.lookupContact(number: String?): PhoneLookupAccount {
     PhoneLookupContentResolver(this, number).content.also {
-        return if (it.isNotEmpty()) it[0] else Contact.UNKNOWN
+        return if (it.isNotEmpty()) it[0] else PhoneLookupAccount(null, number, type = OTHER)
     }
 }
 
 fun Context.lookupContact(contactId: Long): Contact {
-    ContactsContentResolver(this, contactId).content.also {
-        return if (it.contacts.isNotEmpty()) it.contacts[0] else Contact.UNKNOWN
+    val contacts = ContactsContentResolver(this, contactId).content.contacts
+    if (contacts.isEmpty()) {
+        return Contact.UNKNOWN
+    }
+    return contacts[0].apply {
+        phoneAccounts =
+            PhoneContentResolver(this@lookupContact, contactId).content.phoneAccounts
     }
 }
 
 fun Context.lookupPhoneAccounts(contactId: Long) =
-    PhonesContentResolver(this, contactId).content
+    PhoneContentResolver(this, contactId).content
 
 fun Context.openContact(contactId: Long) {
     startActivity(Intent(Intent.ACTION_VIEW).apply {

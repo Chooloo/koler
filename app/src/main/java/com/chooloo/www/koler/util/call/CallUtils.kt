@@ -14,5 +14,5 @@ fun Call.getValidE164Number(context: Context) =
 fun Call.getNormalizedNumber(context: Context) =
     PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
 
-fun Call.getCallerContact(context: Context) =
+fun Call.lookupContact(context: Context) =
     context.lookupContact(getNumber())

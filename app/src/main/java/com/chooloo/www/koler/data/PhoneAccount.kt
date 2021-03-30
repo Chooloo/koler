@@ -5,10 +5,8 @@ import com.chooloo.www.koler.R
 data class PhoneAccount(
     val number: String,
     val contactId: Long,
-    val starred: Boolean,
-    val photoUri: String,
     val displayName: String,
-    val type: PhoneAccountType
+    val type: PhoneAccountType = PhoneAccountType.OTHER
 ) {
     enum class PhoneAccountType(val phoneType: Int, @StringRes val stringRes: Int) {
         CAR(Phone.TYPE_CAR, R.string.phone_type_car),
