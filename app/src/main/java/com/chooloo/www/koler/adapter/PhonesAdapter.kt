@@ -6,6 +6,7 @@ import com.chooloo.www.koler.ui.widgets.ListItem
 class PhonesAdapter : ListAdapter<PhoneAccount>() {
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
         listItem.apply {
+            isCompact = true
             titleText = item.number
         }
     }

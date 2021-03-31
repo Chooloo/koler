@@ -9,7 +9,6 @@ class ContactsAdapter : ListAdapter<Contact>() {
         listItem.apply {
             titleText = item.name
             isCompact = true
-
             setImageUri(if (item.photoUri != null) Uri.parse(item.photoUri) else null)
         }
     }

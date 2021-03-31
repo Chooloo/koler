@@ -55,7 +55,6 @@ class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            setPadding(spacing, spacingSmall, context.sizeInDp(5), spacingSmall)
         }
 
         title = AppCompatTextView(context, attrs, defStyleRes).apply {
@@ -141,6 +140,7 @@ class ListItem : LinearLayout {
             headerText = it.getString(R.styleable.Koler_ListItem_header)
             captionText = it.getString(R.styleable.Koler_ListItem_caption)
             imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
+            isCompact = it.getBoolean(R.styleable.Koler_ListItem_compact, false)
         }
     }
 
@@ -178,19 +178,11 @@ class ListItem : LinearLayout {
         get() = _isCompact
         set(value) {
             if (value) {
-                personLayout.setPadding(
-                    spacingBig,
-                    3,
-                    spacing,
-                    3
-                )
+                personLayout.setPadding(spacingBig, 3, spacing, 3)
+                header.setPadding(spacing, spacingSmall, spacing, 3)
             } else {
-                personLayout.setPadding(
-                    spacingBig,
-                    spacingSmall,
-                    spacing,
-                    spacingSmall
-                )
+                personLayout.setPadding(spacingBig, spacingSmall, spacing, spacingSmall)
+                header.setPadding(spacing, spacingSmall, context.sizeInDp(5), spacingSmall)
             }
         }
 
