@@ -34,6 +34,7 @@ class ListItem : LinearLayout {
     private var header: AppCompatTextView
     private var caption: AppCompatTextView
     private var personLayout: ConstraintLayout
+    private var _isCompact: Boolean = false
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -90,6 +91,7 @@ class ListItem : LinearLayout {
             background = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
+            setPadding(spacingBig, spacingSmall, spacing, spacingSmall)
             addView(image)
             addView(title)
             addView(caption)
@@ -142,16 +144,6 @@ class ListItem : LinearLayout {
         }
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        personLayout.setPadding(
-            spacingBig,
-            spacingSmall,
-            spacing,
-            spacingSmall
-        )
-    }
-
     var titleText: String?
         get() = title.text.toString()
         set(value) {
@@ -182,10 +174,24 @@ class ListItem : LinearLayout {
             image.setImageDrawable(value)
         }
 
-    var personStartPadding: Int
-        get() = personLayout.paddingStart
+    var isCompact: Boolean
+        get() = _isCompact
         set(value) {
-            personLayout.setPadding(value, paddingTop, paddingEnd, paddingBottom)
+            if (value) {
+                personLayout.setPadding(
+                    spacingBig,
+                    3,
+                    spacing,
+                    3
+                )
+            } else {
+                personLayout.setPadding(
+                    spacingBig,
+                    spacingSmall,
+                    spacing,
+                    spacingSmall
+                )
+            }
         }
 
     fun setImageUri(imageUri: Uri?) {

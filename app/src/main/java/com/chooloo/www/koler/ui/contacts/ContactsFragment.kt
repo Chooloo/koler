@@ -17,8 +17,8 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
     private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
 
     //region list args
+    override val requiredPermissions by lazy { _contactsLiveData.requiredPermissions }
     override val noResultsMessage by lazy { getString(R.string.error_no_results_contacts) }
-    override val requiredPermissions get() = _contactsLiveData.requiredPermissions
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_contacts) }
     override val adapter by lazy {
         ContactsAdapter().apply {
@@ -62,6 +62,6 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
     }
 
     override fun setContactsFilter(filter: String?) {
-        _contactsLiveData.setFilter(filter)
+        _contactsLiveData.filter = filter
     }
 }

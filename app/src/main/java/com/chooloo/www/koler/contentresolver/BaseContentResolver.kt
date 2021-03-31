@@ -22,6 +22,12 @@ abstract class BaseContentResolver<T>(
     val content: T
         get() = convertCursorToContent(queryContent())
 
+    var filter: String?
+        get() = _filter
+        set(value) {
+            _filter = if (value == "") null else value
+        }
+
     open val requiredPermissions: Array<String>
         get() = arrayOf()
 
@@ -39,10 +45,6 @@ abstract class BaseContentResolver<T>(
         sortOrder
     )
 
-    fun setFilter(filter: String?) {
-        _filter = if (filter == "") null else filter
-    }
-
     fun observe() {
         registerContentObserver(uri, true, _observer)
     }
@@ -55,14 +57,12 @@ abstract class BaseContentResolver<T>(
         _onContentChangedListener = onContentChangedListener
     }
 
-
     abstract val uri: Uri
     abstract val filterUri: Uri
     abstract val selection: String?
     abstract val sortOrder: String?
     abstract val projection: Array<String>?
     abstract val selectionArgs: Array<String>?
-
     abstract fun convertCursorToContent(cursor: Cursor?): T
 
     open inner class SelectionBuilder {

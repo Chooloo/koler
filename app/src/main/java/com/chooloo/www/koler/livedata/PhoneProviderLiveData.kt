@@ -8,5 +8,5 @@ class PhoneProviderLiveData(
     context: Context,
     private val contactId: Long
 ) : ContentProviderLiveData<PhoneContentResolver, PhonesBundle>(context) {
-    override fun onGetContentResolver() = PhoneContentResolver(context, contactId)
+    override val contentResolver by lazy { PhoneContentResolver(context, contactId) }
 }

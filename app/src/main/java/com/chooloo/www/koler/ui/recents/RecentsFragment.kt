@@ -62,6 +62,6 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
     }
 
     override fun setRecentsFilter(filter: String?) {
-        _recentsLiveData.setFilter(filter)
+        _recentsLiveData.filter = filter
     }
 }

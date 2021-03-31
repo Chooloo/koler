@@ -8,31 +8,32 @@ import com.chooloo.www.koler.contentresolver.BaseContentResolver
 abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
     protected val context: Context,
 ) : LiveData<T>() {
-    private val _contentResolver: C by lazy { onGetContentResolver() }
+    abstract val contentResolver: C
 
-    val requiredPermissions: Array<String> = _contentResolver.requiredPermissions
+    val requiredPermissions: Array<String> get() = contentResolver.requiredPermissions
+
+    var filter: String?
+        get() = contentResolver.filter
+        set(value) {
+            contentResolver.filter = value
+            updateData()
+        }
 
     override fun onActive() {
-        _contentResolver.apply {
+        contentResolver.apply {
             observe()
             setOnContentChangedListener { updateData() }
+            updateData()
         }
     }
 
     override fun onInactive() {
-        _contentResolver.detach()
+        contentResolver.detach()
     }
 
     private fun updateData() {
         Handler(context.mainLooper).post {
-            value = _contentResolver.content
+            value = contentResolver.content
         }
     }
-
-    fun setFilter(filter: String?) {
-        _contentResolver.setFilter(filter)
-        updateData()
-    }
-
-    abstract fun onGetContentResolver(): C
 }

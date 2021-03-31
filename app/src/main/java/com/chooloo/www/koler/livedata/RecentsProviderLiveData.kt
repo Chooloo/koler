@@ -7,5 +7,5 @@ import com.chooloo.www.koler.data.RecentsBundle
 class RecentsProviderLiveData(
     context: Context
 ) : ContentProviderLiveData<RecentsContentResolver, RecentsBundle>(context) {
-    override fun onGetContentResolver() = RecentsContentResolver(context)
+    override val contentResolver by lazy { RecentsContentResolver(context) }
 }

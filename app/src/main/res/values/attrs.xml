@@ -7,6 +7,7 @@
         <attr name="caption" format="string" localization="suggested" />
         <attr name="header" format="string" />
         <attr name="src" format="reference" />
+        <attr name="compact" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="Koler.DialpadKey">
