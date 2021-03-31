@@ -14,10 +14,19 @@
         <item name="android:windowLightStatusBar">true</item>
 
         <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
+        <item name="alertDialogTheme">@style/KolerAlertDialog</item>
     </style>
 
     <style name="KolerBottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/Koler.BottomDialog.BottomSheetStyle</item>
+    </style>
+
+    <style name="KolerAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/KolerAlertDialogButton</item>
+    </style>
+
+    <style name="KolerAlertDialogButton" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/blue_foreground</item>
     </style>
 
     <style name="bla" parent="Widget.MaterialComponents.FloatingActionButton" />

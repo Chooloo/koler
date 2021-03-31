@@ -1,10 +1,15 @@
 <resources>
+    <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
+    <!--endregion-->
 
     <!--region actions-->
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
+    <string name="action_yes">Yap</string>
+    <string name="action_no">Nope</string>
+    <string name="action_cancel">Cancel</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -16,6 +21,10 @@
     <string name="hint_search">Search</string>
     <string name="hint_search_contacts">Search Contacts</string>
     <string name="hint_search_recents">Search Recents</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
     <!--endregion-->
 
     <!--region urls-->
