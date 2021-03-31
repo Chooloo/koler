@@ -15,7 +15,6 @@ import com.chooloo.www.koler.util.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(),
     ListContract.View {
-    protected val listAdapter by lazy { onGetAdapter() }
     private val _presenter by lazy { ListPresenter<ListContract.View>() }
     private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
     private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
@@ -24,8 +23,8 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     override val requiredPermissions: Array<String>? = null
     override val noResultsMessage by lazy { getString(R.string.error_no_results) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions) }
-    override val itemCount: Int
-        get() = listAdapter.itemCount
+    override val itemCount get() = adapter.itemCount
+    abstract val adapter: A
     //endregion
 
     override var emptyStateText: String?
@@ -50,7 +49,7 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
         _presenter.attach(this)
 
         _binding.itemsRecyclerView.apply {
-            adapter = listAdapter.apply {
+            adapter = this@ListFragment.adapter.apply {
                 registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                     override fun onChanged() {
                         super.onChanged()
@@ -97,6 +96,5 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
         _onScrollStateChangedListener = onScrollStateChangedListener
     }
 
-    abstract fun onGetAdapter(): A
     abstract fun onAttachData()
 }

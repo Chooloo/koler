@@ -18,18 +18,18 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
 
     //region list args
     override val noResultsMessage by lazy { getString(R.string.error_no_results_contacts) }
+    override val requiredPermissions get() = _contactsLiveData.requiredPermissions
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_contacts) }
-    override val requiredPermissions
-        get() = _contactsLiveData.requiredPermissions
+    override val adapter by lazy {
+        ContactsAdapter().apply {
+            setOnItemClickListener(_presenter::onContactItemClick)
+            setOnItemLongClickListener(_presenter::onContactItemLongClick)
+        }
+    }
     //endregion
 
     companion object {
         fun newInstance() = ContactsFragment()
-    }
-
-    override fun onGetAdapter() = ContactsAdapter().apply {
-        setOnItemClickListener(_presenter::onContactItemClick)
-        setOnItemLongClickListener(_presenter::onContactItemLongClick)
     }
 
     override fun onSetup() {
@@ -58,7 +58,7 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
     }
 
     override fun updateContacts(contactsBundle: ContactsBundle) {
-        listAdapter.data = contactsBundle.listBundleByLettersWithFavs
+        adapter.data = contactsBundle.listBundleByLettersWithFavs
     }
 
     override fun setContactsFilter(filter: String?) {

@@ -18,18 +18,18 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
 
     //region list args
     override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
+    override val requiredPermissions get() = _recentsLiveData.requiredPermissions
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
-    override val requiredPermissions
-        get() = _recentsLiveData.requiredPermissions
+    override val adapter by lazy {
+        RecentsAdapter(_activity).apply {
+            setOnItemClickListener(_presenter::onRecentItemClick)
+            setOnItemLongClickListener(_presenter::onRecentItemLongClick)
+        }
+    }
     //endregion
 
     companion object {
         fun newInstance() = RecentsFragment()
-    }
-
-    override fun onGetAdapter() = RecentsAdapter(_activity).apply {
-        setOnItemClickListener(_presenter::onRecentItemClick)
-        setOnItemLongClickListener(_presenter::onRecentItemLongClick)
     }
 
     override fun onSetup() {
@@ -58,7 +58,7 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
     }
 
     override fun updateRecents(recentsBundle: RecentsBundle) {
-        listAdapter.data = recentsBundle.listBundleByDates
+        adapter.data = recentsBundle.listBundleByDates
     }
 
     override fun setRecentsFilter(filter: String?) {

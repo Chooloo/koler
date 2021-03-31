@@ -14,10 +14,14 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
     private val _phonesLiveData by lazy { PhoneProviderLiveData(_activity, _contactId) }
 
     //region list args
+    override val requiredPermissions get() = _phonesLiveData.requiredPermissions
     override val noResultsMessage by lazy { getString(R.string.error_no_results_phones) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_phones) }
-    override val requiredPermissions
-        get() = _phonesLiveData.requiredPermissions
+    override val adapter by lazy {
+        PhonesAdapter().apply {
+            setOnItemClickListener(_presenter::onPhoneItemClick)
+        }
+    }
     //endregion
 
     companion object {
@@ -28,10 +32,6 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
                 putLong(ARG_CONTACT_ID, contactId)
             }
         }
-    }
-
-    override fun onGetAdapter() = PhonesAdapter().apply {
-        setOnItemClickListener(_presenter::onPhoneItemClick)
     }
 
     override fun onSetup() {
@@ -49,7 +49,7 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
     }
 
     override fun updatePhoneAccounts(phonesBundle: PhonesBundle) {
-        listAdapter.data = phonesBundle.getListBundleByType(_activity)
+        adapter.data = phonesBundle.getListBundleByType(_activity)
     }
 
     override fun callNumber(number: String) {
