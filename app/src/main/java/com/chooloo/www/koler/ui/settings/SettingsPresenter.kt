@@ -57,4 +57,10 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     override fun onSelectedRecordFormat(newValue: Any?) = run {
         true
     }
+
+    override fun onToggledCompactMode(isToggled: Boolean) = run {
+        mvpView?.setPrefCompact(isToggled)
+        refresh()
+        true
+    }
 }

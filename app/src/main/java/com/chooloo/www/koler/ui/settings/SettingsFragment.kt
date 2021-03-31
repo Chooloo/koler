@@ -12,6 +12,7 @@ import androidx.annotation.StringRes
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
 import com.chooloo.www.koler.util.preferences.KolerPreferences
@@ -24,9 +25,18 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val _presenter by lazy { SettingsPresenter<SettingsContract.View>() }
     private val _kolerPreferences by lazy { context?.let { KolerPreferences(it) } }
 
+    private val ratePreference by lazy { getPreference<Preference>(R.string.pref_key_rate) }
+    private val colorPreference by lazy { getPreference<Preference>(R.string.pref_key_color) }
+    private val emailPreference by lazy { getPreference<Preference>(R.string.pref_key_email) }
+    private val donatePreference by lazy { getPreference<Preference>(R.string.pref_key_donate) }
+    private val reportPreference by lazy { getPreference<Preference>(R.string.pref_key_report_bugs) }
+    private val simPreference by lazy { getPreference<ListPreference>(R.string.pref_key_sim_select) }
+    private val recordPreference by lazy { getPreference<ListPreference>(R.string.pref_key_record_format) }
+    private val compactPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_compact) }
+
     companion object {
         const val TAG = "settings_fragment"
-        
+
         fun newInstance() = SettingsFragment()
     }
 
@@ -44,16 +54,19 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     override fun onSetup() {
         _presenter.attach(this)
 
-        getPreference<Preference>(R.string.pref_key_rate)?.setOnPreferenceClickListener { _presenter.onClickedRate() }
-        getPreference<Preference>(R.string.pref_key_donate)?.setOnPreferenceClickListener { _presenter.onClickedDonate() }
-        getPreference<Preference>(R.string.pref_key_email)?.setOnPreferenceClickListener { _presenter.onClickedEmail() }
-        getPreference<Preference>(R.string.pref_key_report_bugs)?.setOnPreferenceClickListener { _presenter.onClickedReport() }
-        getPreference<Preference>(R.string.pref_key_color)?.setOnPreferenceClickListener { _presenter.onClickedColor() }
-        getPreference<ListPreference>(R.string.pref_key_sim_select)?.setOnPreferenceChangeListener { _, newValue ->
+        ratePreference?.setOnPreferenceClickListener { _presenter.onClickedRate() }
+        donatePreference?.setOnPreferenceClickListener { _presenter.onClickedDonate() }
+        emailPreference?.setOnPreferenceClickListener { _presenter.onClickedEmail() }
+        reportPreference?.setOnPreferenceClickListener { _presenter.onClickedReport() }
+        colorPreference?.setOnPreferenceClickListener { _presenter.onClickedColor() }
+        simPreference?.setOnPreferenceChangeListener { _, newValue ->
             _presenter.onSelectedSim(newValue)
         }
-        getPreference<ListPreference>(R.string.pref_key_record_format)?.setOnPreferenceChangeListener { _, newValue ->
+        recordPreference?.setOnPreferenceChangeListener { _, newValue ->
             _presenter.onSelectedRecordFormat(newValue)
+        }
+        compactPreference?.setOnPreferenceChangeListener { _, newValue ->
+            _presenter.onToggledCompactMode(newValue as Boolean)
         }
 
         setupSimPreference()
@@ -68,6 +81,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         _kolerPreferences?.sim = sim
     }
 
+    override fun setPrefCompact(isCompact: Boolean) {
+        _kolerPreferences?.isCompact = isCompact
+    }
+
     override fun setPrefAccentTheme(accentTheme: AccentTheme) {
         _kolerPreferences?.accentTheme = accentTheme
     }
@@ -76,7 +93,31 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         _kolerPreferences?.recordFormat = recordFormat
     }
 
-    override fun setupSimPreference() {
+    override fun donate() {
+        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.donation_link))))
+    }
+
+    override fun rateApp() {
+        activity?.let {
+            startActivity(Intent(ACTION_VIEW).apply {
+                data = Uri.parse("market://details?id=" + it.application.packageName)
+            })
+        }
+    }
+
+    override fun reportBug() {
+        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.app_bug_reporting_url))))
+    }
+
+    override fun sendEmail() {
+        startActivity(Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
+        })
+    }
+
+    override fun openSource() {
+        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.app_source_url))))
     }
 
     override fun openColorPicker() {
@@ -91,31 +132,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         startActivity(Intent(activity, MainActivity::class.java))
     }
 
-    override fun openSource() {
-        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.app_source_url))))
-    }
-
-    override fun sendEmail() {
-        startActivity(Intent(Intent.ACTION_SEND).apply {
-            type = "message/rfc822"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
-        })
-    }
-
-    override fun reportBug() {
-        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.app_bug_reporting_url))))
-    }
-
-    override fun rateApp() {
-        activity?.let {
-            startActivity(Intent(ACTION_VIEW).apply {
-                data = Uri.parse("market://details?id=" + it.application.packageName)
-            })
-        }
-    }
-
-    override fun donate() {
-        startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.donation_link))))
+    override fun setupSimPreference() {
     }
 
     private fun <T : Preference> getPreference(@StringRes keyString: Int) =

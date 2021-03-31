@@ -6,6 +6,12 @@
         android:key="@string/pref_key_color"
         android:title="@string/pref_title_app_color" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_value_compact"
+        android:icon="@drawable/ic_view_compact_black_24dp"
+        android:key="@string/pref_key_compact"
+        android:title="@string/pref_title_compact" />
+
     <ListPreference
         android:defaultValue="@string/pref_default_value_sim_select"
         android:enabled="false"

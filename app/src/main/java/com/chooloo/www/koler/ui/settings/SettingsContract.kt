@@ -7,20 +7,25 @@ import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 
 class SettingsContract : BaseContract {
     interface View : BaseContract.View {
+        //region pref
         fun setPrefSim(sim: Sim)
+        fun setPrefCompact(isCompact: Boolean)
         fun setPrefAccentTheme(accentTheme: AccentTheme)
         fun setPrefRecordFormat(recordFormat: RecordFormat)
-        fun setupSimPreference()
-        fun goToMainActivity()
-        fun openColorPicker()
-        fun openSource()
-        fun sendEmail()
-        fun reportBug()
-        fun rateApp()
+        //endregion
+
         fun donate()
+        fun rateApp()
+        fun reportBug()
+        fun sendEmail()
+        fun openSource()
+        fun openColorPicker()
+        fun goToMainActivity()
+        fun setupSimPreference()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
+        fun refresh()
         fun onClickedRate(): Boolean
         fun onClickedEmail(): Boolean
         fun onClickedColor(): Boolean
@@ -29,6 +34,6 @@ class SettingsContract : BaseContract {
         fun onSelectedColor(color: Int): Boolean
         fun onSelectedSim(newValue: Any?): Boolean
         fun onSelectedRecordFormat(newValue: Any?): Boolean
-        fun refresh()
+        fun onToggledCompactMode(isToggled: Boolean): Boolean
     }
 }

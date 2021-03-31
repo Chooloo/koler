@@ -8,6 +8,7 @@ import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString
 import com.chooloo.www.koler.util.lookupContact
+import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 class RecentsAdapter(
     private val context: Context
@@ -16,6 +17,7 @@ class RecentsAdapter(
         val contact = context.lookupContact(item.number)
         listItem.apply {
             titleText = contact.name ?: item.number
+            isCompact = KolerPreferences(context).isCompact
             captionText = if (item.date != null) getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
 

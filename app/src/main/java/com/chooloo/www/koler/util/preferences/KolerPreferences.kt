@@ -29,7 +29,7 @@ class KolerPreferences(
             MPEG_4("mpeg_4", OutputFormat.MPEG_4, AudioEncoder.AAC, "mp4"),
             DEFAULT(AMR_WB.key, AMR_WB.outputFormat, AMR_WB.audioEncoder, AMR_WB.encoding)
         }
-        
+
         enum class Sim(val key: String, val number: Int) {
             TRY("Asdas", 1),
             DEFAULT(TRY.key, TRY.number)
@@ -64,6 +64,15 @@ class KolerPreferences(
         )]!!
         set(value) {
             _pref.putString(R.string.pref_key_record_format, value.key)
+        }
+
+    var isCompact: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_compact,
+            context.resources.getBoolean(R.bool.pref_default_value_compact)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_compact, value)
         }
     //endregion
 }

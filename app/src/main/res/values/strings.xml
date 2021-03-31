@@ -45,21 +45,13 @@
     <string name="call_status_active">Call In Progress</string>
     <!--endregion-->
 
-    <!--region pref category-->
-    <string name="pref_category_call">Call</string>
-    <string name="pref_category_pages">Pages</string>
-    <string name="pref_category_support">Support</string>
-    <string name="pref_category_contact">Contact</string>
-    <string name="pref_category_scurity">Security</string>
-    <string name="pref_category_personalization">Personalization</string>
-    <!--endregion-->
-
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
     <string name="pref_key_email">email</string>
     <string name="pref_key_donate">donate</string>
-    <string name="pref_key_sim_select">sim_select</string>
+    <string name="pref_key_compact">compact</string>
     <string name="pref_key_color">accent_color</string>
+    <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_record_format">record_format</string>
     <!--endregion-->
@@ -67,6 +59,7 @@
     <!--region pref title-->
     <string name="pref_title_rate">Rate</string>
     <string name="pref_title_donate">Donate</string>
+    <string name="pref_title_compact">Compact Mode</string>
     <string name="pref_title_app_color">Accent Color</string>
     <string name="pref_title_email">Write us an Email</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
