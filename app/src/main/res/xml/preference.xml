@@ -12,6 +12,12 @@
         android:key="@string/pref_key_compact"
         android:title="@string/pref_title_compact" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_value_animations"
+        android:icon="@drawable/ic_animation_black_24dp"
+        android:key="@string/pref_key_animations"
+        android:title="@string/pref_title_animations" />
+
     <ListPreference
         android:defaultValue="@string/pref_default_value_sim_select"
         android:enabled="false"

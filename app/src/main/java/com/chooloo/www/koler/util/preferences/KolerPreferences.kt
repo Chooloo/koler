@@ -39,15 +39,6 @@ class KolerPreferences(
     private val _pref by lazy { PreferencesManager(context) }
 
     //region values
-    var accentTheme: AccentTheme
-        get() = AccentTheme.values().associateBy(AccentTheme::key)[_pref.getString(
-            R.string.pref_key_color,
-            AccentTheme.DEFAULT.key
-        )]!!
-        set(value) {
-            _pref.putString(R.string.pref_key_color, value.key)
-        }
-
     var sim: Sim
         get() = Sim.values().associateBy(Sim::key)[_pref.getString(
             R.string.pref_key_sim_select,
@@ -55,6 +46,15 @@ class KolerPreferences(
         )]!!
         set(value) {
             _pref.putString(R.string.pref_key_sim_select, value.key)
+        }
+
+    var accentTheme: AccentTheme
+        get() = AccentTheme.values().associateBy(AccentTheme::key)[_pref.getString(
+            R.string.pref_key_color,
+            AccentTheme.DEFAULT.key
+        )]!!
+        set(value) {
+            _pref.putString(R.string.pref_key_color, value.key)
         }
 
     var recordFormat: RecordFormat
@@ -73,6 +73,15 @@ class KolerPreferences(
         )
         set(value) {
             _pref.putBoolean(R.string.pref_key_compact, value)
+        }
+
+    var isAnimations: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_animations,
+            context.resources.getBoolean(R.bool.pref_default_value_animations)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_animations, value)
         }
     //endregion
 }

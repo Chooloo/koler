@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
-import com.chooloo.www.koler.util.setFadeUpAnimation
+import com.chooloo.www.koler.util.AnimationManager
 
 abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     private var _data: ListBundle<DataType> = ListBundle()
@@ -28,7 +28,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         holder.listItem.apply {
             headerText = getHeader(position)
 
-            setFadeUpAnimation(this)
+            AnimationManager(context).setFadeUpAnimation(this)
             setOnClickListener { _onItemClickListener.invoke(_data.items[position]) }
             setOnLongClickListener {
                 _onItemLongClickListener.invoke(_data.items[position])

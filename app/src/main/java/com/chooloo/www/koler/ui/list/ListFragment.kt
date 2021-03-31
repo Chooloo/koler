@@ -10,8 +10,8 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
+import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.permissions.runWithPermissions
-import com.chooloo.www.koler.util.runLayoutAnimation
 
 abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(),
     ListContract.View {
@@ -82,7 +82,7 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
     }
 
     override fun animateListView() {
-        runLayoutAnimation(_binding.itemsRecyclerView)
+        AnimationManager(_activity).runLayoutAnimation(_binding.itemsRecyclerView)
     }
 
     override fun showEmptyPage(isShow: Boolean) {

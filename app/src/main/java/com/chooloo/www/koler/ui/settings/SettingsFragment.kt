@@ -33,6 +33,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val simPreference by lazy { getPreference<ListPreference>(R.string.pref_key_sim_select) }
     private val recordPreference by lazy { getPreference<ListPreference>(R.string.pref_key_record_format) }
     private val compactPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_compact) }
+    private val animationsPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_animations) }
 
     companion object {
         const val TAG = "settings_fragment"
@@ -68,6 +69,9 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         compactPreference?.setOnPreferenceChangeListener { _, newValue ->
             _presenter.onToggledCompactMode(newValue as Boolean)
         }
+        animationsPreference?.setOnPreferenceChangeListener { _, newValue ->
+            _presenter.onToggledAnimation(newValue as Boolean)
+        }
 
         setupSimPreference()
     }
@@ -83,6 +87,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
 
     override fun setPrefCompact(isCompact: Boolean) {
         _kolerPreferences?.isCompact = isCompact
+    }
+
+    override fun setPrefAnimations(isAnimations: Boolean) {
+        _kolerPreferences?.isAnimations = isAnimations
     }
 
     override fun setPrefAccentTheme(accentTheme: AccentTheme) {

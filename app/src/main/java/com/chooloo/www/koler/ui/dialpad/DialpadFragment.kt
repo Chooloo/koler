@@ -20,6 +20,7 @@ import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.call.callVoicemail
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
+    private val _animationManager by lazy { AnimationManager(_activity) }
     override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
@@ -49,7 +50,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (_binding.dialpadButtonAddContact.visibility == (if (value) GONE else VISIBLE)) {
-                showView(_binding.dialpadButtonAddContact, value)
+                _animationManager.showView(_binding.dialpadButtonAddContact, value)
             }
         }
 
@@ -57,7 +58,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (_binding.dialpadButtonDelete.visibility == (if (value) GONE else VISIBLE)) {
-                showView(_binding.dialpadButtonDelete, value)
+                _animationManager.showView(_binding.dialpadButtonDelete, value)
             }
         }
 

@@ -58,8 +58,14 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
         true
     }
 
-    override fun onToggledCompactMode(isToggled: Boolean) = run {
-        mvpView?.setPrefCompact(isToggled)
+    override fun onToggledAnimation(isToggle: Boolean) = run {
+        mvpView?.setPrefAnimations(isToggle)
+        refresh()
+        true
+    }
+
+    override fun onToggledCompactMode(isToggle: Boolean) = run {
+        mvpView?.setPrefCompact(isToggle)
         refresh()
         true
     }

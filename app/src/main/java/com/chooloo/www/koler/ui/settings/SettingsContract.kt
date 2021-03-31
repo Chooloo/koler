@@ -10,6 +10,7 @@ class SettingsContract : BaseContract {
         //region pref
         fun setPrefSim(sim: Sim)
         fun setPrefCompact(isCompact: Boolean)
+        fun setPrefAnimations(isAnimations: Boolean)
         fun setPrefAccentTheme(accentTheme: AccentTheme)
         fun setPrefRecordFormat(recordFormat: RecordFormat)
         //endregion
@@ -34,6 +35,7 @@ class SettingsContract : BaseContract {
         fun onSelectedColor(color: Int): Boolean
         fun onSelectedSim(newValue: Any?): Boolean
         fun onSelectedRecordFormat(newValue: Any?): Boolean
-        fun onToggledCompactMode(isToggled: Boolean): Boolean
+        fun onToggledAnimation(isToggle: Boolean): Boolean
+        fun onToggledCompactMode(isToggle: Boolean): Boolean
     }
 }

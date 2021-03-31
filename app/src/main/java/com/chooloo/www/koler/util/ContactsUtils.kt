@@ -12,8 +12,8 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
-import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
+import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.data.PhoneLookupAccount
 import com.chooloo.www.koler.util.permissions.runWithPermissions

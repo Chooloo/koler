@@ -52,6 +52,7 @@
     <string name="pref_key_compact">compact</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_sim_select">sim_select</string>
+    <string name="pref_key_animations">animations</string>
     <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_record_format">record_format</string>
     <!--endregion-->
@@ -64,6 +65,7 @@
     <string name="pref_title_email">Write us an Email</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_sim_select">Sim Selection</string>
+    <string name="pref_title_animations">Enable Animations</string>
     <!--endregion-->
 
     <!--region pref default value-->

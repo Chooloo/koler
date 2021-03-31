@@ -7,11 +7,14 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.ActivityCallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.ui.notification.CallNotification
-import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.AnimationManager
+import com.chooloo.www.koler.util.ProximitySensor
 import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.util.disableKeyboard
+import com.chooloo.www.koler.util.setShowWhenLocked
 
 class CallActivity : BaseActivity(), CallContract.View {
+    private val _animationManager by lazy { AnimationManager(this) }
     private val _presenter by lazy { CallPresenter<CallContract.View>() }
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
@@ -79,13 +82,13 @@ class CallActivity : BaseActivity(), CallContract.View {
                 .beginTransaction()
                 .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
                 .commitNow()
-            showView(_binding.callActionsContainer, true)
+            _animationManager.showView(_binding.callActionsContainer, true)
             _binding.root.transitionToEnd()
         }
     }
 
     override fun blinkStateText() {
-        blinkView(_binding.callStateText, 2500)
+        _animationManager.blinkView(_binding.callStateText, 2500)
     }
 
     override fun startStopwatch() {
