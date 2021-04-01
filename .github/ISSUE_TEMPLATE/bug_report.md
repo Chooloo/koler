@@ -13,13 +13,7 @@ assignees: ''
 
 - [x] I am using the latest version - x.xx.x <!-- Check  https://github.com/Chooloo/koler/releases-->
 - [] I checked, but didn't find any duplicates (open OR closed) of this issue in the repo. <!-- Seriously, check. O_O -->
-- [] I have read the contribution guidelines given at https://github.com/TeamNewPipe/NewPipe/blob/HEAD/.github/CONTRIBUTING.md.
 - [] This issue contains only one bug. I will open one issue for every bug report I want to file.
-
-
-
-**Describe the bug**
-A clear and concise description of what the bug is.
 
 
 
@@ -33,21 +27,18 @@ A clear and concise description of what the bug is.
 <!-- If you can't cause the bug to show up again reliably (and hence don't have a proper set of steps to give us), please still try to give as many details as possible on how you think you encountered the bug. -->
 
 
+### Actual behaviour
+<!-- Tell us what happens with the steps given above. -->
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+
+
+### Expected behavior
+<!-- Tell us what you expect to happen. -->
 
 
 
 ### Screenshots/Screen recordings
-<!-- If applicable, add screenshots or a screen recording to help explain your problem. GitHub supports uploading them directly in the issue text box. If your file is too big for Github to accept, feel free to paste a link from an image/video hoster here instead. -->
-
-
-
-### Logs
-<!-- If your bug includes a crash (where you're shown the Error Report page with a bunch of info), tap on "Copy formatted report" at the bottom and paste it here: -->
-
-<!-- That's right, here! -->
+<!-- If applicable, add screenshots or a screen recording to help explain your problem. GitHub supports uploading them directly in the issue text box or you may sites like transfer.sh and share link here -->
 
 
 
@@ -55,8 +46,4 @@ A clear and concise description of what you expected to happen.
 
  - Android version/Custom ROM version:
  - Device model:
-
-
-**Additional context**
-Add any other context about the problem here.
 
