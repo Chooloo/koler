@@ -12,8 +12,7 @@ import java.util.*
 
 class RecentsContentResolver(
     context: Context,
-    private val recentId: Long? = null,
-    private val number: String? = null,
+    private val recentId: Long? = null
 ) : BaseContentResolver<RecentsBundle>(context) {
 
     companion object {
@@ -30,15 +29,16 @@ class RecentsContentResolver(
     override val requiredPermissions: Array<String> = arrayOf(READ_CALL_LOG)
 
     override val uri: Uri = CallLog.Calls.CONTENT_URI
-    
-    override val filterUri: Uri = CallLog.Calls.CONTENT_FILTER_URI
+
+    override val filterUri: Uri? = null
 
     override val sortOrder = "${CallLog.Calls.DATE} DESC"
 
-    override val selection = SelectionBuilder()
-        .addSelection(CallLog.Calls._ID, recentId)
-        .addSelection(CallLog.Calls.NUMBER, number)
-        .build()
+    override val selection
+        get() = SelectionBuilder()
+            .addSelection(CallLog.Calls._ID, recentId)
+            .addString("(${CallLog.Calls.CACHED_NAME} LIKE '%$filter%' OR ${CallLog.Calls.NUMBER} LIKE '%$filter%')")
+            .build()
 
     override val projection = arrayOf(
         CallLog.Calls._ID,

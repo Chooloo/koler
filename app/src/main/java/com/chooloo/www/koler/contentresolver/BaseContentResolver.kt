@@ -9,7 +9,7 @@ import android.net.Uri
 abstract class BaseContentResolver<T>(
     private val context: Context,
 ) : ContentResolver(context) {
-    private var _filter: String? = null
+    private var _filter: String = ""
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
     private val _observer by lazy {
         object : ContentObserver(null) {
@@ -25,13 +25,13 @@ abstract class BaseContentResolver<T>(
     var filter: String?
         get() = _filter
         set(value) {
-            _filter = if (value == "") null else value
+            _filter = value ?: ""
         }
 
     open val requiredPermissions: Array<String>
         get() = arrayOf()
 
-    private fun chooseUri() = if (_filter != null) {
+    protected fun chooseUri() = if (filterUri != null && _filter.isNotEmpty()) {
         Uri.withAppendedPath(filterUri, _filter)
     } else {
         uri
@@ -58,7 +58,7 @@ abstract class BaseContentResolver<T>(
     }
 
     abstract val uri: Uri
-    abstract val filterUri: Uri
+    abstract val filterUri: Uri?
     abstract val selection: String?
     abstract val sortOrder: String?
     abstract val projection: Array<String>?
@@ -80,6 +80,6 @@ abstract class BaseContentResolver<T>(
             selections.add(string)
         }
 
-        fun build() = selections.joinToString(separator = " AND ")
+        fun build() = selections.joinToString(" AND ")
     }
 }
