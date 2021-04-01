@@ -74,7 +74,6 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     override fun onSelectedDefaultPage(pageKey: String) = run {
         mvpView?.setPrefDefaultPage(Page.fromKey(pageKey))
         refresh()
-        refresh()
         true
     }
 }
