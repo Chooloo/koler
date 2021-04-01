@@ -56,7 +56,7 @@ class DialpadKey : LinearLayout {
         digit = context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey)
             .getString(R.styleable.Koler_DialpadKey_digit)
 
-        setPadding(context.sizeInDp(10))
+        setPadding(context.sizeInDp(7))
     }
 
     var digit: String?
