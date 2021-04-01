@@ -172,23 +172,23 @@
     <!--endregion-->
 
     <!--region contact-->
-    <style name="Koler.Contact" />
+    <style name="Koler.Bottom" />
 
-    <style name="Koler.Contact.Text">
+    <style name="Koler.Bottom.Text">
         <item name="android:padding">2dp</item>
         <item name="android:textAlignment">viewStart</item>
     </style>
 
-    <style name="Koler.Contact.Text.Name">
+    <style name="Koler.Bottom.Text.Title">
         <item name="android:textAppearance">@style/Koler.Text.Headline3</item>
     </style>
 
-    <style name="Koler.Contact.Text.Number">
+    <style name="Koler.Bottom.Text.Caption">
         <item name="android:textAppearance">@style/Koler.Text.Caption</item>
         <item name="android:textSize">@dimen/subtitle_2</item>
     </style>
 
-    <style name="Koler.Contact.Image">
+    <style name="Koler.Bottom.Image">
         <item name="android:padding">4dp</item>
         <item name="android:src">@drawable/ic_person_black_24dp</item>
     </style>

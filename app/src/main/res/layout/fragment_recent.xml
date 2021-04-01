@@ -7,7 +7,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recent_text_name"
-        style="@style/Koler.Contact.Text.Name"
+        style="@style/Koler.Bottom.Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
@@ -20,19 +20,41 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recent_text_date"
-        style="@style/Koler.Contact.Text.Number"
+        style="@style/Koler.Bottom.Text.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/recent_text_name"
         app:layout_constraintTop_toBottomOf="@id/recent_text_name"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="01234567"
+        tools:text="4 hours ago"
         tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/recent_text_seperator"
+        style="@style/Koler.Bottom.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="@string/dot"
+        app:layout_constraintBottom_toBottomOf="@id/recent_text_date"
+        app:layout_constraintStart_toEndOf="@id/recent_text_date"
+        app:layout_constraintTop_toTopOf="@id/recent_text_date" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/recent_text_duration"
+        style="@style/Koler.Bottom.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/recent_text_seperator"
+        app:layout_constraintStart_toEndOf="@id/recent_text_seperator"
+        app:layout_constraintTop_toTopOf="@id/recent_text_seperator"
+        tools:text="2 hours" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/recent_type_image"
-        style="@style/Koler.Contact.Image"
+        style="@style/Koler.Bottom.Image"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/default_spacing"

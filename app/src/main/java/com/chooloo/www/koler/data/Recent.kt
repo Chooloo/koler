@@ -10,7 +10,7 @@ data class Recent(
     val number: String,
     @CallType val type: Int,
     val id: Long = 0,
-    val duration: String? = null,
+    val duration: Long = 0,
     val date: Date? = null,
     val cachedName: String? = null,
 ) : Serializable {

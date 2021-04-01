@@ -22,7 +22,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
-        style="@style/Koler.Contact.Text.Name"
+        style="@style/Koler.Bottom.Text.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
@@ -35,7 +35,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/contact_image"
-        style="@style/Koler.Contact.Image"
+        style="@style/Koler.Bottom.Image"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/default_spacing"
@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginTop="@dimen/default_spacing"
+        android:paddingBottom="@dimen/default_spacing_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_image" />

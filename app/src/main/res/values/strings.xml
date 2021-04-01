@@ -152,4 +152,6 @@
     <string name="phone_type_assistant">Assistant</string>
     <string name="phone_type_mms">MMS</string>
     <!--endregion-->
+
+    <string name="dot">·</string>
 </resources>

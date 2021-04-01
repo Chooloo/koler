@@ -59,7 +59,7 @@ class RecentsContentResolver(
                     Recent(
                         id = getLong(getColumnIndex(CallLog.Calls._ID)),
                         number = getString(getColumnIndex(CallLog.Calls.NUMBER)),
-                        duration = getString(getColumnIndex(CallLog.Calls.DURATION)),
+                        duration = getLong(getColumnIndex(CallLog.Calls.DURATION)),
                         date = Date(getLong(getColumnIndex(CallLog.Calls.DATE))),
                         type = getInt(getColumnIndex(CallLog.Calls.TYPE)),
                         cachedName = getString(getColumnIndex(CallLog.Calls.CACHED_NAME))

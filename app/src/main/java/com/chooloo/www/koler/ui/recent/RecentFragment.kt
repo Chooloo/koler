@@ -9,11 +9,8 @@ import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.FragmentRecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.util.addContact
+import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
-import com.chooloo.www.koler.util.deleteRecent
-import com.chooloo.www.koler.util.getRecentById
-import com.chooloo.www.koler.util.smsNumber
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
@@ -55,6 +52,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
                 setImageDrawable(getDrawable(_activity, getCallTypeImage(_recent.type)))
             }
             recentTextName.text = _recent.cachedName ?: _recent.number
+            recentTextDuration.text = getElapsedTimeString(_recent.duration)
             recentButtonAddContact.visibility = if (_recent.cachedName == null) VISIBLE else GONE
 
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
