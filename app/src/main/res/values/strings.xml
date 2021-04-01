@@ -1,4 +1,6 @@
 <resources>
+    <string name="dot">·</string>
+
     <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
@@ -63,6 +65,7 @@
     <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_animations">animations</string>
     <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_default_page">default_page</string>
     <string name="pref_key_record_format">record_format</string>
     <!--endregion-->
 
@@ -70,11 +73,12 @@
     <string name="pref_title_rate">Rate</string>
     <string name="pref_title_donate">Donate</string>
     <string name="pref_title_compact">Compact Mode</string>
+    <string name="pref_title_animations">Animations</string>
     <string name="pref_title_app_color">Accent Color</string>
     <string name="pref_title_email">Write us an Email</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_sim_select">Sim Selection</string>
-    <string name="pref_title_animations">Enable Animations</string>
+    <string name="pref_title_default_page">Default Page</string>
     <!--endregion-->
 
     <!--region pref default value-->
@@ -101,6 +105,12 @@
     <string name="pref_color_value_green">green</string>
     <string name="pref_color_value_orange">orange</string>
     <string name="pref_color_value_purple">purple</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
     <!--endregion-->
 
     <!--region dialpad letters-->
@@ -152,6 +162,4 @@
     <string name="phone_type_assistant">Assistant</string>
     <string name="phone_type_mms">MMS</string>
     <!--endregion-->
-
-    <string name="dot">·</string>
 </resources>

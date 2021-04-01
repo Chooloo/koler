@@ -17,6 +17,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.main.MainActivity
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 import dev.sasikanth.colorsheet.ColorSheet
@@ -34,6 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val recordPreference by lazy { getPreference<ListPreference>(R.string.pref_key_record_format) }
     private val compactPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_compact) }
     private val animationsPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_animations) }
+    private val defaultPagePreference by lazy { getPreference<ListPreference>(R.string.pref_key_default_page) }
 
     companion object {
         const val TAG = "settings_fragment"
@@ -72,6 +74,9 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         animationsPreference?.setOnPreferenceChangeListener { _, newValue ->
             _presenter.onToggledAnimation(newValue as Boolean)
         }
+        defaultPagePreference?.setOnPreferenceChangeListener { _, newValue ->
+            _presenter.onSelectedDefaultPage(newValue as String)
+        }
 
         setupSimPreference()
     }
@@ -83,6 +88,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
 
     override fun setPrefSim(sim: Sim) {
         _kolerPreferences?.sim = sim
+    }
+
+    override fun setPrefDefaultPage(page: Page) {
+        _kolerPreferences?.defaultPage = page
     }
 
     override fun setPrefCompact(isCompact: Boolean) {
@@ -97,9 +106,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         _kolerPreferences?.accentTheme = accentTheme
     }
 
+
     override fun setPrefRecordFormat(recordFormat: RecordFormat) {
         _kolerPreferences?.recordFormat = recordFormat
     }
+
 
     override fun donate() {
         startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.donation_link))))

@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.settings
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme.*
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
 
 class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     SettingsContract.Presenter<V> {
@@ -66,6 +67,13 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
 
     override fun onToggledCompactMode(isToggle: Boolean) = run {
         mvpView?.setPrefCompact(isToggle)
+        refresh()
+        true
+    }
+
+    override fun onSelectedDefaultPage(pageKey: String) = run {
+        mvpView?.setPrefDefaultPage(Page.fromKey(pageKey))
+        refresh()
         refresh()
         true
     }

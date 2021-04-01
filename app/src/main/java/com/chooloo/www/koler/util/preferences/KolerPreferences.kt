@@ -16,7 +16,12 @@ class KolerPreferences(
             GREEN("green", R.style.Accent_Green),
             ORANGE("orange", R.style.Accent_Orange),
             PURPLE("purple", R.style.Accent_Purple),
-            DEFAULT(BLUE.key, BLUE.theme)
+            DEFAULT(BLUE.key, BLUE.theme);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(AccentTheme::key).getOrDefault(key ?: "", DEFAULT)
+            }
         }
 
         enum class RecordFormat(
@@ -27,12 +32,33 @@ class KolerPreferences(
         ) {
             AMR_WB("amr_wb", OutputFormat.AMR_WB, AudioEncoder.AMR_WB, "amr"),
             MPEG_4("mpeg_4", OutputFormat.MPEG_4, AudioEncoder.AAC, "mp4"),
-            DEFAULT(AMR_WB.key, AMR_WB.outputFormat, AMR_WB.audioEncoder, AMR_WB.encoding)
+            DEFAULT(AMR_WB.key, AMR_WB.outputFormat, AMR_WB.audioEncoder, AMR_WB.encoding);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(RecordFormat::key).getOrDefault(key ?: "", DEFAULT)
+            }
         }
 
         enum class Sim(val key: String, val number: Int) {
             TRY("Asdas", 1),
-            DEFAULT(TRY.key, TRY.number)
+            DEFAULT(TRY.key, TRY.number);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(Sim::key).getOrDefault(key ?: "", DEFAULT)
+            }
+        }
+
+        enum class Page(val key: String, val index: Int) {
+            CONTACTS("contacts", 0),
+            RECENTS("recents", 1),
+            DEFAULT(CONTACTS.key, CONTACTS.index);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(Page::key).getOrDefault(key ?: "", DEFAULT)
+            }
         }
     }
 
@@ -40,30 +66,32 @@ class KolerPreferences(
 
     //region values
     var sim: Sim
-        get() = Sim.values().associateBy(Sim::key)[_pref.getString(
-            R.string.pref_key_sim_select,
-            Sim.DEFAULT.key
-        )]!!
+        get() = Sim.fromKey(_pref.getString(R.string.pref_key_sim_select))
         set(value) {
             _pref.putString(R.string.pref_key_sim_select, value.key)
         }
 
     var accentTheme: AccentTheme
-        get() = AccentTheme.values().associateBy(AccentTheme::key)[_pref.getString(
-            R.string.pref_key_color,
-            AccentTheme.DEFAULT.key
-        )]!!
+        get() = AccentTheme.fromKey(
+            _pref.getString(
+                R.string.pref_key_color,
+                AccentTheme.DEFAULT.key
+            )
+        )
         set(value) {
             _pref.putString(R.string.pref_key_color, value.key)
         }
 
     var recordFormat: RecordFormat
-        get() = RecordFormat.values().associateBy(RecordFormat::key)[_pref.getString(
-            R.string.pref_key_record_format,
-            RecordFormat.DEFAULT.key
-        )]!!
+        get() = RecordFormat.fromKey(_pref.getString(R.string.pref_key_record_format))
         set(value) {
             _pref.putString(R.string.pref_key_record_format, value.key)
+        }
+
+    var defaultPage: Page
+        get() = Page.fromKey(_pref.getString(R.string.pref_key_default_page))
+        set(value) {
+            _pref.putString(R.string.pref_key_default_page, value.key)
         }
 
     var isCompact: Boolean

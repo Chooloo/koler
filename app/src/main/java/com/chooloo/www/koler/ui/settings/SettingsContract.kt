@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.settings
 
 import com.chooloo.www.koler.ui.base.BaseContract
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme
+import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 
@@ -9,6 +10,7 @@ class SettingsContract : BaseContract {
     interface View : BaseContract.View {
         //region pref
         fun setPrefSim(sim: Sim)
+        fun setPrefDefaultPage(page: Page)
         fun setPrefCompact(isCompact: Boolean)
         fun setPrefAnimations(isAnimations: Boolean)
         fun setPrefAccentTheme(accentTheme: AccentTheme)
@@ -34,8 +36,9 @@ class SettingsContract : BaseContract {
         fun onClickedReport(): Boolean
         fun onSelectedColor(color: Int): Boolean
         fun onSelectedSim(newValue: Any?): Boolean
-        fun onSelectedRecordFormat(newValue: Any?): Boolean
         fun onToggledAnimation(isToggle: Boolean): Boolean
+        fun onSelectedDefaultPage(pageKey: String): Boolean
+        fun onSelectedRecordFormat(newValue: Any?): Boolean
         fun onToggledCompactMode(isToggle: Boolean): Boolean
     }
 }

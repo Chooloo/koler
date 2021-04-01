@@ -16,6 +16,7 @@ import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 import com.chooloo.www.koler.util.ignoreEditTextFocus
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer
+import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
@@ -74,6 +75,7 @@ class MainActivity : BaseActivity(), MainContract.View {
                     }
                 }
             })
+            mainViewPager.currentItem = KolerPreferences(this@MainActivity).defaultPage.index
         }
 
         checkDefaultDialer()
