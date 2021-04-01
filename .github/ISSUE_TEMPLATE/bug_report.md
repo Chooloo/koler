@@ -44,6 +44,11 @@ assignees: ''
 
 
 
+### Logs
+<!-- Use any logcat apps, MatLog and share either error line or share txt file link from transfer.sh for example -->
+
+
+
 ### Device info
 
  - Android version/Custom ROM version:
