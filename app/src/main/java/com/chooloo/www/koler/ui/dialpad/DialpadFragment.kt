@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
+import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.KeyEvent
@@ -14,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentDialpadBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
+import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
@@ -26,6 +28,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
     private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
+    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true) }
+
+    override val suggestionsCount: Int
+        get() = _suggestionsFragment.itemCount
 
     companion object {
         const val ARG_IS_DIALER = "dialer"
@@ -70,6 +76,8 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     override fun onSetup() {
         _presenter.attach(this)
+
+        _suggestionsFragment.setOnContactsChangedListener(_presenter::onSuggestionsChanged)
 
         _binding.apply {
             dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
@@ -146,12 +154,19 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        childFragmentManager
+            .beginTransaction()
+            .add(_binding.dialpadSuggestionsContainer.id, _suggestionsFragment)
+            .commitNow()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _presenter.detach()
     }
 
-    //region phone actions
     override fun call() {
         if (number.isEmpty()) {
             _activity.showMessage(R.string.error_enter_number)
@@ -160,18 +175,20 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         }
     }
 
+    override fun vibrate() {
+        _activity.vibrate(SHORT_VIBRATE_LENGTH)
+    }
+
+    override fun backspace() {
+        _binding.dialpadEditText.onKeyDown(KEYCODE_DEL, KeyEvent(ACTION_DOWN, KEYCODE_DEL))
+    }
+
     override fun addContact() {
         _activity.addContact(_binding.dialpadEditText.numbers)
     }
 
     override fun callVoicemail() {
         _activity.callVoicemail()
-    }
-    //endregion
-
-    //region key actions
-    override fun vibrate() {
-        _activity.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun playTone(keyCode: Int) {
@@ -182,10 +199,13 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         _binding.dialpadEditText.onKeyDown(keyCode, KeyEvent(ACTION_DOWN, keyCode))
     }
 
-    override fun backspace() {
-        _binding.dialpadEditText.onKeyDown(KEYCODE_DEL, KeyEvent(ACTION_DOWN, KEYCODE_DEL))
+    override fun showSuggestions(isShow: Boolean) {
+        _animationManager.showView(_binding.dialpadSuggestionsScrollView, isShow)
     }
-    //endregion
+
+    override fun setSuggestionsFilter(filter: String) {
+        _suggestionsFragment.setContactsFilter(filter)
+    }
 
     //region setters
     fun setOnTextChangedListener(onTextChangedListener: (text: String?) -> Unit?) {

@@ -7,6 +7,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ScrollView
+        android:id="@+id/dialpad_suggestions_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/dialpad_suggestions_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
     <com.chooloo.www.koler.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         style="@style/Koler.Text.Headline2"
@@ -16,7 +30,7 @@
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialpad_suggestions_scroll_view"
         tools:text="01231293" />
 
     <TableLayout

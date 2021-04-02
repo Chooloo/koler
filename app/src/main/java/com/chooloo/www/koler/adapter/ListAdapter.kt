@@ -12,6 +12,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     private var _onItemClickListener: (item: DataType) -> Unit? = {}
     private var _onItemLongClickListener: (item: DataType) -> Unit? = {}
 
+    var isCompact = false
     var data: ListBundle<DataType>
         get() = _data
         set(value) {
@@ -27,6 +28,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         holder.listItem.apply {
             headerText = getHeader(position)
+            isCompact = this@ListAdapter.isCompact
 
             AnimationManager(context).setFadeUpAnimation(this)
             setOnClickListener { _onItemClickListener.invoke(_data.items[position]) }

@@ -18,8 +18,8 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contact by lazy { _activity.lookupContact(_contactId) }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
-    private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId) }
     private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
+    private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, true) }
 
     companion object {
         const val TAG = "contact_fragment"

@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.view.KeyEvent.*
+import com.chooloo.www.koler.data.ContactsBundle
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
@@ -47,7 +48,12 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
             if (isDialer) {
                 isDeleteButtonVisible = text?.isNotEmpty() == true
                 isAddContactButtonVisible = text?.isNotEmpty() == true
+                setSuggestionsFilter(text ?: "")
             }
         }
+    }
+
+    override fun onSuggestionsChanged(contactsBundle: ContactsBundle) {
+        mvpView?.showSuggestions(contactsBundle.contacts.isNotEmpty() && mvpView?.number?.isNotEmpty() == true)
     }
 }

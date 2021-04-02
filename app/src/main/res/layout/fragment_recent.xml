@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
         app:layout_constraintBottom_toTopOf="@id/recent_text_date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_type_image"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Jesus" />
 
@@ -55,15 +55,16 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/recent_type_image"
         style="@style/Koler.Bottom.Image"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/image_size_big"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing"
         android:src="@drawable/ic_call_missed_black_24dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/recent_text_date"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/recent_text_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
         tools:visibility="visible" />
 

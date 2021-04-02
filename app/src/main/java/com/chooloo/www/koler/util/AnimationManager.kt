@@ -3,7 +3,7 @@ package com.chooloo.www.koler.util
 import android.content.Context
 import android.os.Handler
 import android.view.View
-import android.view.View.INVISIBLE
+import android.view.View.*
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -15,7 +15,10 @@ class AnimationManager(private val context: Context) {
     private val isEnabled by lazy { KolerPreferences(context).isAnimations }
 
     fun showView(view: View, isShow: Boolean) {
-        view.visibility = if (isShow) View.VISIBLE else View.GONE
+        if (view.visibility == (if (isShow) VISIBLE else GONE)) {
+            return
+        }
+        view.visibility = if (isShow) VISIBLE else GONE
         if (isEnabled) {
             view.startAnimation(
                 AnimationUtils.loadAnimation(

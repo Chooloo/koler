@@ -59,8 +59,6 @@
     <style name="Koler.Image" />
 
     <style name="Koler.Image.Profile">
-        <item name="android:scaleType">fitCenter</item>
-        <item name="borderWidth">0dp</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
@@ -189,7 +187,6 @@
     </style>
 
     <style name="Koler.Bottom.Image">
-        <item name="android:padding">4dp</item>
         <item name="android:src">@drawable/ic_person_black_24dp</item>
     </style>
 

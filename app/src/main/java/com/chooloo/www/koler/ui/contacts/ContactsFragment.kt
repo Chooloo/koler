@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.contacts
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
@@ -11,12 +12,12 @@ import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
-class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View {
+class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ContactsContract.View {
+    private var _onContactsChangedListener: (ContactsBundle) -> Unit? = {}
     private val _contactsLiveData by lazy { ContactsProviderLiveData(_activity) }
     private val _presenter by lazy { ContactsPresenter<ContactsContract.View>() }
     private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
 
-    //region list args
     override val requiredPermissions by lazy { _contactsLiveData.requiredPermissions }
     override val noResultsMessage by lazy { getString(R.string.error_no_results_contacts) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_contacts) }
@@ -29,7 +30,11 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
     //endregion
 
     companion object {
-        fun newInstance() = ContactsFragment()
+        fun newInstance(isCompact: Boolean = false) = ContactsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_IS_COMPACT, isCompact)
+            }
+        }
     }
 
     override fun onSetup() {
@@ -38,7 +43,11 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
     }
 
     override fun onAttachData() {
-        _contactsLiveData.observe(viewLifecycleOwner, _presenter::onContactsChanged)
+        _contactsLiveData.observe(viewLifecycleOwner) {
+            _presenter.onContactsChanged(it)
+            _onContactsChangedListener.invoke(it)
+        }
+
         _searchViewModel.apply {
             number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
             text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
@@ -63,5 +72,9 @@ class ContactsFragment : ListFragment<ContactsAdapter>(), ContactsContract.View 
 
     override fun setContactsFilter(filter: String?) {
         _contactsLiveData.filter = filter
+    }
+
+    fun setOnContactsChangedListener(onContactsChangedListener: (ContactsBundle) -> Unit? = {}) {
+        _onContactsChangedListener = onContactsChangedListener
     }
 }

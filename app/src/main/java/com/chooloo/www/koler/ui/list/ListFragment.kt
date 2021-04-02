@@ -7,25 +7,29 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.FragmentItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 
-abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFragment(),
+abstract class ListFragment<DataType, Adapter : ListAdapter<DataType>> : BaseFragment(),
     ListContract.View {
     private val _presenter by lazy { ListPresenter<ListContract.View>() }
     private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
     private var _onScrollStateChangedListener: ((newState: Int) -> Unit?)? = null
 
     //region list args
+    override val itemCount get() = adapter.itemCount
     override val requiredPermissions: Array<String>? = null
     override val noResultsMessage by lazy { getString(R.string.error_no_results) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions) }
-    override val itemCount get() = adapter.itemCount
-    abstract val adapter: A
+    abstract val adapter: Adapter
     //endregion
+
+    companion object {
+        const val ARG_IS_COMPACT = "is_compact"
+    }
 
     override var emptyStateText: String?
         get() = _binding.itemsEmptyText.text.toString()
@@ -50,6 +54,8 @@ abstract class ListFragment<A : RecyclerView.Adapter<ListItemHolder>> : BaseFrag
 
         _binding.itemsRecyclerView.apply {
             adapter = this@ListFragment.adapter.apply {
+                isCompact = argsSafely.getBoolean(ARG_IS_COMPACT)
+
                 registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                     override fun onChanged() {
                         super.onChanged()

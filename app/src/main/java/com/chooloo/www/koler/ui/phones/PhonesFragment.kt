@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.phones
 
+import PhoneAccount
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.PhonesAdapter
@@ -8,7 +9,7 @@ import com.chooloo.www.koler.livedata.PhoneProviderLiveData
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.call.call
 
-class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
+class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContract.View {
     private val _presenter by lazy { PhonesPresenter<PhonesContract.View>() }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _phonesLiveData by lazy { PhoneProviderLiveData(_activity, _contactId) }
@@ -20,6 +21,7 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
     override val adapter by lazy {
         PhonesAdapter().apply {
             setOnItemClickListener(_presenter::onPhoneItemClick)
+            isCompact = true
         }
     }
     //endregion
@@ -27,9 +29,10 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
     companion object {
         private const val ARG_CONTACT_ID = "contact_id"
 
-        fun newInstance(contactId: Long) = PhonesFragment().apply {
+        fun newInstance(contactId: Long, isCompact: Boolean = false) = PhonesFragment().apply {
             arguments = Bundle().apply {
                 putLong(ARG_CONTACT_ID, contactId)
+                putBoolean(ARG_IS_COMPACT, isCompact)
             }
         }
     }

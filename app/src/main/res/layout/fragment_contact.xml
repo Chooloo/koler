@@ -9,7 +9,8 @@
         android:id="@+id/contact_button_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:backgroundTint="@color/orange_background"
         android:tint="@color/orange_foreground"
         app:activatedIcon="@drawable/ic_star_black_24dp"
@@ -17,7 +18,20 @@
         app:fabSize="mini"
         app:icon="@drawable/ic_star_outline_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_image" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/contact_image"
+        style="@style/Koler.Bottom.Image"
+        android:layout_width="@dimen/image_size_big"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_button_fav"
+        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
@@ -28,23 +42,8 @@
         android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing_small"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_button_fav"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/contact_image"
         tools:text="Jesus" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/contact_image"
-        style="@style/Koler.Bottom.Image"
-        android:layout_width="@dimen/image_size_big"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/default_spacing_small"
-        android:visibility="gone"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
-        tools:visibility="visible" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/contact_phones_fragment_container"

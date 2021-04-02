@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.databinding.FragmentBottomDialogBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -90,4 +93,13 @@ class BottomFragment<FragmentType : Fragment>(
     private val argsSafely: Bundle
         get() = arguments
             ?: throw IllegalArgumentException("Always create fragment with newInstance()")
+
+    fun setAlwaysExpanded() {
+        dialog?.setOnShowListener {
+            val d = dialog as BottomSheetDialog
+            val bottomSheet =
+                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+            BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED)
+        }
+    }
 }

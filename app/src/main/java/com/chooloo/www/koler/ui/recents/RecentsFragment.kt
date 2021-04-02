@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.recents
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
@@ -11,7 +12,7 @@ import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
-class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
+class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.View {
     private val _presenter by lazy { RecentsPresenter<RecentsContract.View>() }
     private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
     private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
@@ -29,7 +30,11 @@ class RecentsFragment : ListFragment<RecentsAdapter>(), RecentsContract.View {
     //endregion
 
     companion object {
-        fun newInstance() = RecentsFragment()
+        fun newInstance(isCompact: Boolean = false) = RecentsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_IS_COMPACT, isCompact)
+            }
+        }
     }
 
     override fun onSetup() {
