@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.contentresolver
 
 import PhoneAccount
-import PhoneAccount.PhoneAccountType
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
@@ -27,6 +26,7 @@ class PhoneContentResolver(
         Phone.TYPE,
         Phone.NUMBER,
         Phone.CONTACT_ID,
+        Phone.NORMALIZED_NUMBER,
         Phone.DISPLAY_NAME_PRIMARY
     )
 
@@ -42,7 +42,9 @@ class PhoneContentResolver(
                                 number = getString(getColumnIndex(Phone.NUMBER)),
                                 contactId = getLong(getColumnIndex(Phone.CONTACT_ID)),
                                 displayName = getString(getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
-                                type = PhoneAccountType.fromType(getInt(getColumnIndex(Phone.TYPE)))
+                                type = getInt(getColumnIndex(Phone.TYPE)),
+                                normalizedNumber = getString(getColumnIndex(Phone.NORMALIZED_NUMBER))
+                                    ?: getString(getColumnIndex(Phone.NUMBER))
                             )
                         )
                     }

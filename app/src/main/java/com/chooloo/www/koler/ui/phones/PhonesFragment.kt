@@ -49,7 +49,7 @@ class PhonesFragment : ListFragment<PhonesAdapter>(), PhonesContract.View {
     }
 
     override fun updatePhoneAccounts(phonesBundle: PhonesBundle) {
-        adapter.data = phonesBundle.getListBundleByType(_activity)
+        adapter.data = phonesBundle.getListBundleByType(_activity, true)
     }
 
     override fun callNumber(number: String) {

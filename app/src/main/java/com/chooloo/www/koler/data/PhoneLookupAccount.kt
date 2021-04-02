@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.data
 
-import PhoneAccount.PhoneAccountType
+import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds.Phone
 
 data class PhoneLookupAccount(
     val name: String?,
@@ -8,5 +9,5 @@ data class PhoneLookupAccount(
     val contactId: Long? = null,
     val photoUri: String? = null,
     val starred: Boolean? = false,
-    val type: PhoneAccountType = PhoneAccountType.OTHER
+    val type: Int = Phone.TYPE_OTHER
 )

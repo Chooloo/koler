@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.contentresolver
 
-import PhoneAccount.PhoneAccountType
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
@@ -43,7 +42,7 @@ class PhoneLookupContentResolver(
                         contactId = getLong(getColumnIndex(PhoneLookup.CONTACT_ID)),
                         photoUri = getString(getColumnIndex(PhoneLookup.PHOTO_URI)),
                         starred = "1" == getString(getColumnIndex(PhoneLookup.STARRED)),
-                        type = PhoneAccountType.fromType(getInt(getColumnIndex(PhoneLookup.TYPE)))
+                        type = getInt(getColumnIndex(PhoneLookup.TYPE))
                     )
                 )
             }

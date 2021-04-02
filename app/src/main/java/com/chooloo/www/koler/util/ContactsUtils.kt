@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.util
 
-import PhoneAccount.PhoneAccountType.*
 import android.Manifest.permission.WRITE_CONTACTS
 import android.app.Activity
 import android.content.ContentUris
@@ -9,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
@@ -20,7 +20,11 @@ import com.chooloo.www.koler.util.permissions.runWithPermissions
 
 fun Context.lookupContact(number: String?): PhoneLookupAccount {
     PhoneLookupContentResolver(this, number).content.also {
-        return if (it.isNotEmpty()) it[0] else PhoneLookupAccount(null, number, type = OTHER)
+        return if (it.isNotEmpty()) it[0] else PhoneLookupAccount(
+            null,
+            number,
+            type = Phone.TYPE_OTHER
+        )
     }
 }
 
