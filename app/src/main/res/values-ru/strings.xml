@@ -45,18 +45,8 @@
     <string name="call_status_incoming">Входящий звонок</string>
     <string name="call_status_disconnected">Звонок окончен</string>
     <string name="call_status_active">Звонок в процессе</string>
-    
 
-    
-    <string name="pref_category_call">Вызов</string>
-    <string name="pref_category_pages">Страницы</string>
-    <string name="pref_category_support">Служба поддержки</string>
-    <string name="pref_category_contact">Контакт</string>
-    <string name="pref_category_scurity">Безопасность</string>
-    <string name="pref_category_personalization">Персонализация</string>
-    
 
-    
     <string name="pref_key_rate">оценивать</string>
     <string name="pref_key_email">Эл. адрес</string>
     <string name="pref_key_donate">пожертвовать</string>

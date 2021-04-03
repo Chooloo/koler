@@ -48,15 +48,6 @@
     
 
     
-    <string name="pref_category_call">Llamar</string>
-    <string name="pref_category_pages">Paginas</string>
-    <string name="pref_category_support">Apoyo</string>
-    <string name="pref_category_contact">Contacto</string>
-    <string name="pref_category_scurity">Seguridad</string>
-    <string name="pref_category_personalization">Personalización</string>
-    
-
-    
     <string name="pref_key_rate">calificar</string>
     <string name="pref_key_email">Email</string>
     <string name="pref_key_donate">donar</string>
