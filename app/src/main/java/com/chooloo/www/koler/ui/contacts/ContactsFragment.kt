@@ -30,11 +30,15 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ContactsContr
     //endregion
 
     companion object {
-        fun newInstance(isCompact: Boolean = false) = ContactsFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_IS_COMPACT, isCompact)
+        const val ARG_OBSERVE_SEARCH = "observe_search"
+
+        fun newInstance(isCompact: Boolean = false, observeSearch: Boolean = false) =
+            ContactsFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_COMPACT, isCompact)
+                    putBoolean(ARG_OBSERVE_SEARCH, observeSearch)
+                }
             }
-        }
     }
 
     override fun onSetup() {
@@ -47,10 +51,10 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ContactsContr
             _presenter.onContactsChanged(it)
             _onContactsChangedListener.invoke(it)
         }
-
-        _searchViewModel.apply {
-            number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
-            text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
+        if (argsSafely.getBoolean(ARG_OBSERVE_SEARCH)) {
+            _searchViewModel.text.observe(viewLifecycleOwner) {
+                setContactsFilter(it)
+            }
         }
     }
 

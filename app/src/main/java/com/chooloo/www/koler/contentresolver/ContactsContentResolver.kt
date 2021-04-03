@@ -13,10 +13,9 @@ import com.chooloo.www.koler.data.ContactsBundle
 
 open class ContactsContentResolver(
     context: Context,
-    private val contactId: Long? = null
+    contactId: Long? = null
 ) : BaseContentResolver<ContactsBundle>(context) {
     override val requiredPermissions = arrayOf(READ_CONTACTS)
-
 
     override val uri: Uri = Contacts.CONTENT_URI
         .buildUpon()

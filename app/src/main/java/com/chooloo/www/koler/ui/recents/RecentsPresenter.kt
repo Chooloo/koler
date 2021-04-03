@@ -11,14 +11,6 @@ class RecentsPresenter<V : RecentsContract.View> : ListPresenter<V>(),
         mvpView?.updateRecents(recentsBundle)
     }
 
-    override fun onSearchTextChanged(text: String?) {
-        mvpView?.setRecentsFilter(text)
-    }
-
-    override fun onDialpadNumberChanged(number: String?) {
-        mvpView?.setRecentsFilter(number)
-    }
-
     override fun onRecentItemClick(recent: Recent) {
         mvpView?.openRecent(recent)
     }

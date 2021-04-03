@@ -5,10 +5,10 @@ import android.os.Handler
 import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
 
-abstract class ContentProviderLiveData<C : BaseContentResolver<T>, T : Any>(
+abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
     protected val context: Context,
 ) : LiveData<T>() {
-    abstract val contentResolver: C
+    abstract val contentResolver: ContentResolver
 
     val requiredPermissions: Array<String> get() = contentResolver.requiredPermissions
 

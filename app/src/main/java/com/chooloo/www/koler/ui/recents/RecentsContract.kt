@@ -13,8 +13,6 @@ interface RecentsContract : ListContract {
 
     interface Presenter<V : View> : ListContract.Presenter<V> {
         fun onRecentsChanged(recentsBundle: RecentsBundle)
-        fun onSearchTextChanged(text: String?)
-        fun onDialpadNumberChanged(number: String?)
         fun onRecentItemClick(recent: Recent)
         fun onRecentItemLongClick(recent: Recent)
     }

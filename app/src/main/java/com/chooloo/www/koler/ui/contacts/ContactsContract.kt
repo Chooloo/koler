@@ -13,8 +13,6 @@ interface ContactsContract : ListContract {
 
     interface Presenter<V : View> : ListContract.Presenter<V> {
         fun onContactsChanged(contactsBundle: ContactsBundle)
-        fun onSearchTextChanged(text: String?)
-        fun onDialpadNumberChanged(number: String?)
         fun onContactItemClick(contact: Contact)
         fun onContactItemLongClick(contact: Contact): Boolean
     }

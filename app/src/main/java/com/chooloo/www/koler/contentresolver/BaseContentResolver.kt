@@ -9,7 +9,7 @@ import android.net.Uri
 abstract class BaseContentResolver<T>(
     private val context: Context,
 ) : ContentResolver(context) {
-    private var _filter: String = ""
+    private var _filter: String? = null
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
     private val _observer by lazy {
         object : ContentObserver(null) {
@@ -25,13 +25,13 @@ abstract class BaseContentResolver<T>(
     var filter: String?
         get() = _filter
         set(value) {
-            _filter = value ?: ""
+            _filter = if (value == "") null else value
         }
 
     open val requiredPermissions: Array<String>
         get() = arrayOf()
 
-    protected fun chooseUri() = if (filterUri != null && _filter.isNotEmpty()) {
+    protected fun chooseUri() = if (filterUri != null && _filter?.isNotEmpty() == true) {
         Uri.withAppendedPath(filterUri, _filter)
     } else {
         uri

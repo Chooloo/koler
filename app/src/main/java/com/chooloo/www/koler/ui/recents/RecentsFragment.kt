@@ -15,7 +15,6 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.View {
     private val _presenter by lazy { RecentsPresenter<RecentsContract.View>() }
     private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
-    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
 
     //region list args
     override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
@@ -30,11 +29,15 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
     //endregion
 
     companion object {
-        fun newInstance(isCompact: Boolean = false) = RecentsFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_IS_COMPACT, isCompact)
+        const val ARG_OBSERVE_SEARCH = "observe_search"
+
+        fun newInstance(isCompact: Boolean = false, observeSearch: Boolean = false) =
+            RecentsFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_COMPACT, isCompact)
+                    putBoolean(ARG_OBSERVE_SEARCH, observeSearch)
+                }
             }
-        }
     }
 
     override fun onSetup() {
@@ -44,9 +47,10 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
 
     override fun onAttachData() {
         _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
-        _searchViewModel.apply {
-            number.observe(viewLifecycleOwner, _presenter::onDialpadNumberChanged)
-            text.observe(viewLifecycleOwner, _presenter::onSearchTextChanged)
+        if (argsSafely.getBoolean(ARG_OBSERVE_SEARCH)) {
+            ViewModelProvider(requireActivity()).get(SearchViewModel::class.java).text.observe(
+                viewLifecycleOwner, ::setRecentsFilter
+            )
         }
     }
 
