@@ -13,8 +13,10 @@ import com.chooloo.www.koler.ui.recent.RecentFragment
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.View {
+    private var _onRecentsChangedListener: (RecentsBundle) -> Unit? = {}
     private val _presenter by lazy { RecentsPresenter<RecentsContract.View>() }
     private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
+    private val _searchViewModel by lazy { ViewModelProvider(requireActivity()).get(SearchViewModel::class.java) }
 
     //region list args
     override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
@@ -46,11 +48,12 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
     }
 
     override fun onAttachData() {
-        _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
+        _recentsLiveData.observe(viewLifecycleOwner) {
+            _presenter.onRecentsChanged(it)
+            _onRecentsChangedListener.invoke(it)
+        }
         if (argsSafely.getBoolean(ARG_OBSERVE_SEARCH)) {
-            ViewModelProvider(requireActivity()).get(SearchViewModel::class.java).text.observe(
-                viewLifecycleOwner, ::setRecentsFilter
-            )
+            _searchViewModel.text.observe(viewLifecycleOwner, ::setRecentsFilter)
         }
     }
 
@@ -72,5 +75,9 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
 
     override fun setRecentsFilter(filter: String?) {
         _recentsLiveData.filter = filter
+    }
+
+    fun setOnRecentsChangedListener(onRecentsChangedListener: (RecentsBundle) -> Unit? = {}) {
+        _onRecentsChangedListener = onRecentsChangedListener
     }
 }
