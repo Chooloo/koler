@@ -95,7 +95,7 @@
         app:borderWidth="0dp"
         app:icon="@drawable/ic_delete_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/recent_button_add_contact"
+        app:layout_constraintEnd_toStartOf="@id/recent_button_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_call"
         app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
 
@@ -110,6 +110,20 @@
         app:icon="@drawable/ic_person_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/recent_button_sms"
+        app:layout_constraintStart_toEndOf="@id/recent_button_contact"
+        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/recent_button_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:gravity="center_horizontal"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_person_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recent_button_add_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_delete"
         app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
 
