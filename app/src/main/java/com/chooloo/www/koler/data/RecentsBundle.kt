@@ -13,7 +13,7 @@ data class RecentsBundle(
             }
             val headers: ArrayList<String> = arrayListOf()
             val headersCounts: ArrayList<Int> = arrayListOf()
-            var currentCount = 1
+            var currentCount = 0
             var currentHeader = getRelativeDateString(recents[0].date)
             recents.forEach {
                 val dateString = getRelativeDateString(it.date)

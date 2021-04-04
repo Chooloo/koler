@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.util
 
 import android.text.format.DateFormat
+import android.text.format.DateUtils
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,17 +28,14 @@ fun getHoursString(date: Date?) =
     date?.let { SimpleDateFormat("HH:mm").format(date).toString() } ?: ""
 
 fun getRelativeDateString(date: Date?): String {
-    if (date == null) return "Some time ago"
-
     val now = currentDate.time
-    val diff = now - date.time
-    if (diff < 0) {
-        return "In the future"
-    }
-    return when {
-        diff < DAY_MILLIS -> "Today"
-        diff < 2 * DAY_MILLIS -> "Yesterday"
-        else -> getDateString(date)
+    val date = date?.time ?: 0
+    return if (now < date && (date - now) < 864000) {
+        "Tomorrow"
+    } else if (now > date && (now - date) < 864000) {
+        "Yesterday"
+    } else {
+        DateUtils.getRelativeTimeSpanString(date, now, DateUtils.DAY_IN_MILLIS).toString()
     }
 }
 
