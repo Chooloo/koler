@@ -22,21 +22,21 @@ import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.call.callVoicemail
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
-    private val _animationManager by lazy { AnimationManager(_activity) }
-    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
-    private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
-    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
     private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
+    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
+    private val _animationManager by lazy { AnimationManager(_activity) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true) }
+    private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
 
+    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
     override val suggestionsCount: Int
         get() = _suggestionsFragment.itemCount
 
     companion object {
+        const val TAG = "dialpad_bottom_dialog_fragment"
         const val ARG_IS_DIALER = "dialer"
         private const val ARG_NUMBER = "number"
-        const val TAG = "dialpad_bottom_dialog_fragment"
 
         fun newInstance(isDialer: Boolean, number: String? = null) = DialpadFragment().apply {
             arguments = Bundle().apply {

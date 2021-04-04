@@ -83,7 +83,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openDialpad() {
-        BottomFragment(DialpadFragment.newInstance(true, _searchViewModel.number.value).apply {
+        BottomFragment(DialpadFragment.newInstance(true).apply {
             setOnTextChangedListener(_presenter::onDialpadTextChanged)
         }).show(supportFragmentManager, DialpadFragment.TAG)
     }

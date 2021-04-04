@@ -15,9 +15,9 @@ val currentDate: Date
     get() = Calendar.getInstance().time
 
 fun getElapsedTimeString(seconds: Long): String {
-    val hours = seconds / 3600
-    val minutes = (seconds % 3600) / 60
     val seconds = seconds % 60
+    val minutes = (seconds % 3600) / 60
+    val hours = seconds / 3600
     return "${if (hours != 0L) "$hours hrs " else ""}$minutes mins $seconds sec"
 }
 
