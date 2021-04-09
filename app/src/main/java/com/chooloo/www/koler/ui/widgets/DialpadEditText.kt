@@ -33,9 +33,6 @@ class DialpadEditText : AppCompatEditText {
         canScrollHorizontally(LAYOUT_DIRECTION_RTL or LAYOUT_DIRECTION_LTR)
     }
 
-    val numbers: String
-        get() = text?.filter { it.isDigit() }.toString()
-
     override fun onFocusChanged(focused: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect)
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

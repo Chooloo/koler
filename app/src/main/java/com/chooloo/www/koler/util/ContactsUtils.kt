@@ -8,25 +8,16 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
-import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.data.Contact
-import com.chooloo.www.koler.data.PhoneLookupAccount
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 
-fun Context.lookupContact(number: String?): PhoneLookupAccount {
-    PhoneLookupContentResolver(this, number).content.also {
-        return if (it.isNotEmpty()) it[0] else PhoneLookupAccount(
-            null,
-            number,
-            type = Phone.TYPE_OTHER
-        )
-    }
-}
+fun Context.lookupContact(number: String?) =
+    PhoneLookupContentResolver(this, number).content.getOrNull(0)
 
 fun Context.lookupContact(contactId: Long): Contact {
     val contacts = ContactsContentResolver(this, contactId).content.contacts

@@ -13,14 +13,6 @@ class CallActionsPresenter<V : CallActionsContract.View> :
     private var _isRecording = false
     private var _isHolding = false
 
-    override fun onKeypadClick() {
-        mvpView?.openDialpad()
-    }
-
-    override fun onAddCallClick() {
-        mvpView?.addCall()
-    }
-
     override fun onHoldClick() {
         _isHolding = !_isHolding
         CallManager.hold(_isHolding)
@@ -44,6 +36,14 @@ class CallActionsPresenter<V : CallActionsContract.View> :
                 mvpView?.showError("No active calls to record")
             }
         }
+    }
+
+    override fun onKeypadClick() {
+        mvpView?.openDialpad()
+    }
+
+    override fun onAddCallClick() {
+        mvpView?.addCall()
     }
 
     override fun onSpeakerClick() {

@@ -8,11 +8,11 @@ class AudioManager(private val context: Context) {
     private val _audioManager by lazy { context.getSystemService(AUDIO_SERVICE) as AudioManager }
 
     enum class AudioMode(val mode: Int) {
-        MODE_NORMAL(AudioManager.MODE_NORMAL),
-        MODE_IN_CALL(AudioManager.MODE_IN_CALL),
-        MODE_CURRENT(AudioManager.MODE_CURRENT),
-        MODE_RINGTONE(AudioManager.MODE_RINGTONE),
-        MODE_IN_COMMUNICATION(AudioManager.MODE_IN_COMMUNICATION)
+        NORMAL(AudioManager.MODE_NORMAL),
+        IN_CALL(AudioManager.MODE_IN_CALL),
+        CURRENT(AudioManager.MODE_CURRENT),
+        RINGTONE(AudioManager.MODE_RINGTONE),
+        IN_COMMUNICATION(AudioManager.MODE_IN_COMMUNICATION)
     }
 
     val isPhoneSilent: Boolean
@@ -21,7 +21,7 @@ class AudioManager(private val context: Context) {
 
     var audioMode: AudioMode
         get() = AudioMode.values().associateBy(AudioMode::mode)
-            .getOrDefault(_audioManager.mode, AudioMode.MODE_NORMAL)
+            .getOrDefault(_audioManager.mode, AudioMode.NORMAL)
         set(value) {
             _audioManager.mode = value.mode
         }

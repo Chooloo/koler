@@ -7,18 +7,18 @@ interface CallActionsContract : BaseContract {
     interface View : BaseContract.View {
         fun addCall()
         fun openDialpad()
-        fun startRecording()
         fun stopRecording()
-        fun toggleSpeaker(isSpeaker: Boolean)
+        fun startRecording()
         fun toggleMute(isMute: Boolean)
+        fun toggleSpeaker(isSpeaker: Boolean)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
-        fun onKeypadClick()
-        fun onAddCallClick()
         fun onHoldClick()
         fun onMuteClick()
         fun onRecordClick()
+        fun onKeypadClick()
+        fun onAddCallClick()
         fun onSpeakerClick()
         fun onKeypadKey(keyCode: Int, event: KeyEvent)
     }

@@ -8,12 +8,12 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.util.audio.AudioManager
-import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.MODE_IN_CALL
+import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.IN_CALL
 import com.chooloo.www.koler.util.callrecord.CallRecorder
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     private val _callRecorder by lazy { CallRecorder(_activity) }
-    private val _audioManager by lazy { AudioManager(_activity.applicationContext) }
+    private val _audioManager by lazy { AudioManager(requireContext()) }
     private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
     private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(false)) }
@@ -29,7 +29,7 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _audioManager.audioMode = MODE_IN_CALL
+        _audioManager.audioMode = IN_CALL
         _presenter.attach(this)
 
         _binding.apply {
@@ -57,6 +57,12 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
         _bottomDialpadFragment.show(childFragmentManager, DialpadFragment.TAG)
     }
 
+    override fun stopRecording() {
+        _callRecorder.stopRecording().also {
+            showMessage("Finished recording at ${it?.filename}")
+        }
+    }
+
     override fun startRecording() {
         showError("Feature in development")
 //        CallManager.sCall?.let {
@@ -67,17 +73,11 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 //        }
     }
 
-    override fun stopRecording() {
-        _callRecorder.stopRecording().also {
-            showMessage("Finished recording at ${it?.filename}")
-        }
+    override fun toggleMute(isMute: Boolean) {
+        _audioManager.isMuted = isMute
     }
 
     override fun toggleSpeaker(isSpeaker: Boolean) {
         _audioManager.isSpeakerOn = isSpeaker
-    }
-
-    override fun toggleMute(isMute: Boolean) {
-        _audioManager.isMuted = isMute
     }
 }

@@ -19,7 +19,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
     private val _contact by lazy { _activity.lookupContact(_recent.number) }
-    private val _isContact by lazy { _contact.contactId != null }
 
     companion object {
         const val TAG = "recent_fragment"
@@ -57,8 +56,8 @@ class RecentFragment : BaseFragment(), RecentContract.View {
             }
             recentTextName.text = _recent.cachedName ?: _recent.number
             recentTextDuration.text = getElapsedTimeString(_recent.duration)
-            recentButtonContact.visibility = if (_isContact) VISIBLE else GONE
-            recentButtonAddContact.visibility = if (_isContact) GONE else VISIBLE
+            recentButtonContact.visibility = if (_contact != null) VISIBLE else GONE
+            recentButtonAddContact.visibility = if (_contact != null) GONE else VISIBLE
 
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
@@ -81,7 +80,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun openContact() {
-        _activity.lookupContact(_recent.number).contactId?.let {
+        _contact?.contactId?.let {
             BottomFragment(ContactFragment.newInstance(it)).show(
                 _activity.supportFragmentManager,
                 ContactFragment.TAG

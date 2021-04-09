@@ -112,7 +112,7 @@ class CallNotification(private val context: Context) {
             .setColor(context.getAttrColor(R.attr.colorSecondary))
             .setOngoing(true)
             .setColorized(true)
-            .setContentTitle(callDetails.contact.name ?: callDetails.contact.number)
+            .setContentTitle(callDetails.phoneAccount?.name ?: callDetails.phoneAccount?.number)
         if (callDetails.callState == RINGING) {
             builder.addAction(R.drawable.ic_call_black_24dp, sAnswer, _answerPendingIntent)
         }

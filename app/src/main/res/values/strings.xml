@@ -6,6 +6,10 @@
     <string name="contacts">Contacts</string>
     <!--endregion-->
 
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Number copied to clipboard</string>
+    <!--endregion-->
+
     <!--region actions-->
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>

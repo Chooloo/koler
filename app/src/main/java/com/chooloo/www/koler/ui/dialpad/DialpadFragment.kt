@@ -171,7 +171,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         if (number.isEmpty()) {
             _activity.showMessage(R.string.error_enter_number)
         } else {
-            _activity.call(_binding.dialpadEditText.numbers)
+            _activity.call(_binding.dialpadEditText.text.toString())
         }
     }
 
@@ -184,7 +184,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun addContact() {
-        _activity.addContact(_binding.dialpadEditText.numbers)
+        _activity.addContact(_binding.dialpadEditText.text.toString())
     }
 
     override fun callVoicemail() {

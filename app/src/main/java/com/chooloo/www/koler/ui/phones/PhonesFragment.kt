@@ -1,6 +1,9 @@
 package com.chooloo.www.koler.ui.phones
 
 import PhoneAccount
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.PhonesAdapter
@@ -13,6 +16,7 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
     private val _presenter by lazy { PhonesPresenter<PhonesContract.View>() }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _phonesLiveData by lazy { PhoneProviderLiveData(_activity, _contactId) }
+    private val _clipboardManager by lazy { _activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
     //region list args
     override val requiredPermissions get() = _phonesLiveData.requiredPermissions
@@ -21,6 +25,7 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
     override val adapter by lazy {
         PhonesAdapter().apply {
             setOnItemClickListener(_presenter::onPhoneItemClick)
+            setOnItemLongClickListener(_presenter::onPhoneLongItemClick)
             isCompact = true
         }
     }
@@ -57,5 +62,9 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
 
     override fun callNumber(number: String) {
         _activity.call(number)
+    }
+
+    override fun clipboardText(text: String) {
+        _clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
     }
 }
