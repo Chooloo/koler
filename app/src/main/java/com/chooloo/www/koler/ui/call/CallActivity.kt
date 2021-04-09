@@ -64,8 +64,8 @@ class CallActivity : BaseActivity(), CallContract.View {
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
         }
 
-        disableKeyboard()
         setShowWhenLocked()
+        disableKeyboard()
         CallManager.registerListener(_callListener)
     }
 

@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.PowerManager
 import android.view.MotionEvent
 import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,7 @@ fun Activity.setShowWhenLocked() {
         setShowWhenLocked(true)
         setTurnScreenOn(true)
     } else {
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+        window.addFlags(FLAG_SHOW_WHEN_LOCKED or FLAG_TURN_SCREEN_ON)
     }
 }
 
@@ -29,7 +30,7 @@ fun Activity.disableKeyboard() {
             null
         )
     } else {
-        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+        window.addFlags(FLAG_DISMISS_KEYGUARD)
     }
 }
 
