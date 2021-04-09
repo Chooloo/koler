@@ -53,7 +53,7 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
             _onRecentsChangedListener.invoke(it)
         }
         if (argsSafely.getBoolean(ARG_OBSERVE_SEARCH)) {
-            _searchViewModel.text.observe(viewLifecycleOwner, ::setRecentsFilter)
+            _searchViewModel.recentsText.observe(viewLifecycleOwner, ::setRecentsFilter)
         }
     }
 

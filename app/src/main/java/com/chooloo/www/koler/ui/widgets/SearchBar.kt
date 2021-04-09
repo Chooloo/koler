@@ -25,6 +25,12 @@ class SearchBar : TextInputLayout {
     private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
     private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
 
+    var text: String?
+        get() = _textInputEditText.text.toString()
+        set(value) {
+            _textInputEditText.setText(value ?: "")
+        }
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
     constructor(

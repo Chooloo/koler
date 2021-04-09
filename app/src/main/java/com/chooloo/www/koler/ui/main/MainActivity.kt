@@ -25,10 +25,33 @@ class MainActivity : BaseActivity(), MainContract.View {
     private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
+    override var selectedPage: Int
+        get() = _binding.mainViewPager.currentItem
+        set(value) {
+            _binding.mainViewPager.currentItem = value
+        }
+
+    override var searchText: String?
+        get() = _binding.appbarMain.mainSearchBar.text
+        set(value) {
+            _binding.appbarMain.mainSearchBar.text = value
+        }
     override var dialpadNumber: String
         get() = _searchViewModel.number.value.toString()
         set(value) {
             _searchViewModel.number.value = value
+        }
+
+    override var liveContactsText: String?
+        get() = _searchViewModel.contactsText.value
+        set(value) {
+            _searchViewModel.contactsText.value = value
+        }
+
+    override var liveRecentsText: String?
+        get() = _searchViewModel.recentsText.value
+        set(value) {
+            _searchViewModel.recentsText.value = value
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +82,7 @@ class MainActivity : BaseActivity(), MainContract.View {
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
+                    _presenter.onPageSelected(position)
                     when (position) {
                         0 -> appbarMain.apply {
                             mainTabHeader.text = getText(R.string.contacts)
@@ -99,10 +123,6 @@ class MainActivity : BaseActivity(), MainContract.View {
         if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
             _presenter.onViewIntent(intent)
         }
-    }
-
-    override fun updateSearchViewModelText(text: String?) {
-        _searchViewModel.text.value = text
     }
 
     override fun updateSearchViewModelNumber(text: String?) {

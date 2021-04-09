@@ -52,7 +52,7 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ContactsContr
             _onContactsChangedListener.invoke(it)
         }
         if (argsSafely.getBoolean(ARG_OBSERVE_SEARCH)) {
-            _searchViewModel.text.observe(viewLifecycleOwner, ::setContactsFilter)
+            _searchViewModel.contactsText.observe(viewLifecycleOwner, ::setContactsFilter)
         }
     }
 

@@ -33,7 +33,21 @@ class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Pr
     }
 
     override fun onSearchTextChanged(text: String) {
-        mvpView?.updateSearchViewModelText(text)
+        mvpView?.apply {
+            when (selectedPage) {
+                0 -> liveContactsText = text
+                1 -> liveRecentsText = text
+            }
+        }
+    }
+
+    override fun onPageSelected(position: Int) {
+        mvpView?.apply {
+            when (position) {
+                0 -> searchText = liveContactsText
+                1 -> searchText = liveRecentsText
+            }
+        }
     }
 
     override fun onDialpadTextChanged(text: String?) {
