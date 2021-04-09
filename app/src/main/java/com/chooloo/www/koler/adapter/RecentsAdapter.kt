@@ -18,7 +18,7 @@ class RecentsAdapter(
         listItem.apply {
             titleText = contact?.name ?: item.number
             isCompact = KolerPreferences(context).isCompact
-            captionText = if (item.date != null) getHoursString(item.date) else null
+            captionText = if (item.date != null) getHoursString(context, item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
 
             setImageBackgroundColor(Color.TRANSPARENT)

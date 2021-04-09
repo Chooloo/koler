@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.util
 
+import android.content.Context
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import java.text.DateFormatSymbols
@@ -21,11 +22,15 @@ fun getElapsedTimeString(seconds: Long): String {
     return "${if (hours != 0L) "$hours hrs " else ""}$minutes mins $seconds sec"
 }
 
-fun getDateString(date: Date?) =
-    date?.let { SimpleDateFormat("MMMM dd, yyyy").format(date).toString() } ?: ""
+fun getDateString(context: Context, date: Date): String {
+    return SimpleDateFormat("MMMM dd, yyyy").format(date).toString()
+}
 
-fun getHoursString(date: Date?) =
-    date?.let { SimpleDateFormat("HH:mm").format(date).toString() } ?: ""
+fun getHoursString(context: Context, date: Date): String {
+    return SimpleDateFormat(if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm aa").format(
+        date
+    ).toString()
+}
 
 fun getRelativeDateString(date: Date?): String {
     val now = currentDate.time
