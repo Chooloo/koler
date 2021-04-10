@@ -8,7 +8,6 @@ assignees: ''
 ---
 
 <!-- The comments between these brackets won't show up in the submitted issue (as you can see in the Preview). -->
-
 ## Checklist
 <!-- This checklist is COMPULSORY. The first box has been checked for you to show you how it is done. -->
 
