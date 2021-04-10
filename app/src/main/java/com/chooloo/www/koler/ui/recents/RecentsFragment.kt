@@ -17,8 +17,9 @@ class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
     private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
 
     override val adapter by lazy { RecentsAdapter(_activity) }
-    override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
+    override val searchHint by lazy { getString(R.string.hint_search_recents) }
     override val requiredPermissions get() = _recentsLiveData.requiredPermissions
+    override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
 
     companion object {
