@@ -8,10 +8,7 @@
     <!-- appbar -->
     <include
         android:id="@+id/appbar_main"
-        layout="@layout/appbar_main"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        layout="@layout/appbar_main" />
 
     <!-- view pager -->
     <androidx.viewpager2.widget.ViewPager2

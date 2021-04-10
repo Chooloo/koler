@@ -31,11 +31,6 @@ class MainActivity : BaseActivity(), MainContract.View {
             _binding.mainViewPager.currentItem = value
         }
 
-    override var searchText: String?
-        get() = _binding.appbarMain.mainSearchBar.text
-        set(value) {
-            _binding.appbarMain.mainSearchBar.text = value
-        }
     override var dialpadNumber: String
         get() = _searchViewModel.number.value.toString()
         set(value) {
@@ -75,26 +70,20 @@ class MainActivity : BaseActivity(), MainContract.View {
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
-            appbarMain.apply {
-                mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-                mainSearchBar.setOnTextChangedListener(_presenter::onSearchTextChanged)
-            }
+            appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    _presenter.onPageSelected(position)
                     when (position) {
                         0 -> appbarMain.apply {
                             mainTabHeader.text = getText(R.string.contacts)
                             mainTabLeftArrow.visibility = GONE
                             mainTabRightArrow.visibility = VISIBLE
-                            mainSearchBar.hint = getString(R.string.hint_search_contacts)
                         }
                         1 -> appbarMain.apply {
                             mainTabHeader.text = getText(R.string.recents)
                             mainTabLeftArrow.visibility = VISIBLE
                             mainTabRightArrow.visibility = GONE
-                            mainSearchBar.hint = getString(R.string.hint_search_recents)
                         }
                     }
                 }

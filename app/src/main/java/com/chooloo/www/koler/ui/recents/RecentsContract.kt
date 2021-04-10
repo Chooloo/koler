@@ -5,13 +5,11 @@ import com.chooloo.www.koler.data.RecentsBundle
 import com.chooloo.www.koler.ui.list.ListContract
 
 interface RecentsContract : ListContract {
-    interface View : ListContract.View {
+    interface View : ListContract.View<Recent> {
         fun openRecent(recent: Recent)
-        fun updateRecents(recentsBundle: RecentsBundle)
-        fun setRecentsFilter(filter: String?)
     }
 
-    interface Presenter<V : View> : ListContract.Presenter<V> {
+    interface Presenter<V : View> : ListContract.Presenter<Recent, V> {
         fun onRecentsChanged(recentsBundle: RecentsBundle)
         fun onRecentItemClick(recent: Recent)
         fun onRecentItemLongClick(recent: Recent)

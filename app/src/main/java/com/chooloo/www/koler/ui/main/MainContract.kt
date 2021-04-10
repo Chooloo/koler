@@ -6,7 +6,6 @@ import com.chooloo.www.koler.ui.base.BaseContract
 interface MainContract : BaseContract {
     interface View : BaseContract.View {
         var selectedPage: Int
-        var searchText: String?
         var dialpadNumber: String
         var liveContactsText: String?
         var liveRecentsText: String?
@@ -21,8 +20,6 @@ interface MainContract : BaseContract {
         fun onMenuClick()
         fun onDialpadFabClick()
         fun onViewIntent(intent: Intent)
-        fun onPageSelected(position: Int)
-        fun onSearchTextChanged(text: String)
         fun onDialpadTextChanged(text: String?)
     }
 }

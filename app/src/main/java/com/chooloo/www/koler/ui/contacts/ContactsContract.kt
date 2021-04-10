@@ -5,13 +5,11 @@ import com.chooloo.www.koler.data.ContactsBundle
 import com.chooloo.www.koler.ui.list.ListContract
 
 interface ContactsContract : ListContract {
-    interface View : ListContract.View {
+    interface View : ListContract.View<Contact> {
         fun openContact(contact: Contact)
-        fun updateContacts(contactsBundle: ContactsBundle)
-        fun setContactsFilter(filter: String?)
     }
 
-    interface Presenter<V : View> : ListContract.Presenter<V> {
+    interface Presenter<V : View> : ListContract.Presenter<Contact, V> {
         fun onContactsChanged(contactsBundle: ContactsBundle)
         fun onContactItemClick(contact: Contact)
         fun onContactItemLongClick(contact: Contact): Boolean

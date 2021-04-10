@@ -6,12 +6,12 @@ import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
 class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Presenter<V> {
-    override fun onDialpadFabClick() {
-        mvpView?.openDialpad()
-    }
-
     override fun onMenuClick() {
         mvpView?.openSettings()
+    }
+
+    override fun onDialpadFabClick() {
+        mvpView?.openDialpad()
     }
 
     override fun onViewIntent(intent: Intent) {
@@ -29,24 +29,6 @@ class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Pr
             }
         } else {
             mvpView?.showError("No phone number detected")
-        }
-    }
-
-    override fun onSearchTextChanged(text: String) {
-        mvpView?.apply {
-            when (selectedPage) {
-                0 -> liveContactsText = text
-                1 -> liveRecentsText = text
-            }
-        }
-    }
-
-    override fun onPageSelected(position: Int) {
-        mvpView?.apply {
-            when (position) {
-                0 -> searchText = liveContactsText
-                1 -> searchText = liveRecentsText
-            }
         }
     }
 

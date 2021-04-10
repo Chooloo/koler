@@ -4,10 +4,10 @@ import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.data.ContactsBundle
 import com.chooloo.www.koler.ui.list.ListPresenter
 
-class ContactsPresenter<V : ContactsContract.View> : ListPresenter<V>(),
+class ContactsPresenter<V : ContactsContract.View> : ListPresenter<Contact, V>(),
     ContactsContract.Presenter<V> {
     override fun onContactsChanged(contactsBundle: ContactsBundle) {
-        mvpView?.updateContacts(contactsBundle)
+        mvpView?.updateData(contactsBundle.listBundleByLettersWithFavs)
     }
 
     override fun onContactItemClick(contact: Contact) {

@@ -5,9 +5,10 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.PhonesBundle
 import com.chooloo.www.koler.ui.list.ListPresenter
 
-class PhonesPresenter<V : PhonesContract.View> : ListPresenter<V>(), PhonesContract.Presenter<V> {
+class PhonesPresenter<V : PhonesContract.View> : ListPresenter<PhoneAccount, V>(),
+    PhonesContract.Presenter<V> {
     override fun onPhonesChanged(phonesBundle: PhonesBundle) {
-        mvpView?.updatePhoneAccounts(phonesBundle)
+        mvpView?.convertBundleToList(phonesBundle)?.let { mvpView?.updateData(it) }
     }
 
     override fun onPhoneItemClick(phoneAccount: PhoneAccount) {
