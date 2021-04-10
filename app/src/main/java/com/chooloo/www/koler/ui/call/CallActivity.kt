@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.ActivityCallBinding
@@ -92,7 +93,10 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun startStopwatch() {
-        _binding.callChronometer.start()
+        _binding.callChronometer.apply {
+            base = SystemClock.elapsedRealtime()
+            start()
+        }
     }
 
     override fun stopStopwatch() {
