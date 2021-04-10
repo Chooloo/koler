@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.chooloo.www.koler.ui.widgets.WrapContentableSwipeRefreshLayout
         android:id="@+id/items_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             style="@style/Koler.ListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.chooloo.www.koler.ui.widgets.WrapContentableSwipeRefreshLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/items_empty_text"
