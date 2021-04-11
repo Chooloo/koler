@@ -22,6 +22,7 @@ class RecentsContentResolver(
             Recent.TYPE_MISSED -> R.drawable.ic_call_missed_black_24dp
             Recent.TYPE_REJECTED -> R.drawable.ic_call_missed_outgoing_black_24dp
             Recent.TYPE_VOICEMAIL -> R.drawable.ic_voicemail_black_24dp
+            Recent.TYPE_BLOCKED -> R.drawable.round_block_24
             else -> R.drawable.ic_call_made_black_24dp
         }
     }

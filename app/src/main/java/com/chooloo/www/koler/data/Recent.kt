@@ -25,6 +25,7 @@ data class Recent(
         const val TYPE_MISSED = CallLog.Calls.MISSED_TYPE
         const val TYPE_VOICEMAIL = CallLog.Calls.VOICEMAIL_TYPE
         const val TYPE_REJECTED = CallLog.Calls.REJECTED_TYPE
+        const val TYPE_BLOCKED = CallLog.Calls.BLOCKED_TYPE
         const val TYPE_UNKNOWN = 6
 
         val UNKNOWN = Recent(number = "Unknown", type = TYPE_UNKNOWN)
