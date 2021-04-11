@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="iconColor" format="reference" />
-    <attr name="secondaryAccentColor" format="reference" />
-    <attr name="dialogBackgroundColor" format="reference" />
+    <declare-styleable name="Koler" />
 
-    <attr name="overlayColor" format="reference" />
-
-    <declare-styleable name="ListItem">
+    <declare-styleable name="Koler.ListItem">
         <attr name="title" format="string" localization="suggested" />
-        <attr name="description" format="string" localization="suggested" />
+        <attr name="caption" format="string" localization="suggested" />
+        <attr name="header" format="string" />
         <attr name="src" format="reference" />
+        <attr name="compact" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Koler.DialpadKey">
+        <attr name="digit" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="Koler.IconButton">
+        <attr name="icon" format="reference" />
+        <attr name="activatedIcon" format="reference" />
     </declare-styleable>
 </resources>

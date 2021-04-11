@@ -1,75 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.MainActivity">
+    android:fitsSystemWindows="true">
 
-    <!-- App Bar -->
+    <!-- appbar -->
     <include
-        android:id="@+id/appbar"
-        layout="@layout/appbar_main"
+        android:id="@+id/appbar_main"
+        layout="@layout/appbar_main" />
+
+    <!-- view pager -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@id/appbar_main" />
 
-    <!-- View Pager -->
-
-    <!-- Dialer Fragment -->
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <FrameLayout
-        android:id="@+id/dialer_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
-        app:layout_anchorGravity="bottom"
-        app:layout_behavior="@string/bottom_sheet_behavior"
-        tools:layout="@layout/dialpad_fragment" />
-
-    <!-- Left Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/left_button"
-        style="@style/ActionButton"
+    <!-- dialer button -->
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/main_dialpad_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/dialer_fragment"
-        app:layout_anchorGravity="left|bottom"
-        tools:ignore="RtlHardcoded"
-        tools:src="@drawable/ic_search_black_24dp" />
-
-    <!-- Left Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_contact_fab_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="85dp"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/dialer_fragment"
-        app:layout_anchorGravity="left|bottom"
-        tools:ignore="RtlHardcoded"
-        tools:src="@drawable/ic_add_black_24dp" />
-
-    <!-- Right Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/right_button"
-        style="@style/ActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_marginBottom="@dimen/default_padding"
-        app:layout_anchor="@+id/dialer_fragment"
-        app:layout_anchorGravity="right|bottom"
-        tools:ignore="RtlHardcoded"
-        tools:src="@drawable/ic_dialpad_black_24dp" />
-
+        android:layout_gravity="bottom|center"
+        android:layout_margin="20dp"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_dialpad_black_24dp" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

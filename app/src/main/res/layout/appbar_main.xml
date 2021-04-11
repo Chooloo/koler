@@ -1,59 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/appbar"
+    android:id="@+id/appbar_main"
+    style="@style/Koler.Appbar.Layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:elevation="0dp">
+    app:layout_scrollFlags="scroll">
 
-    <!-- Tool bar -->
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_size"
-        app:layout_scrollFlags="scroll|snap"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <!-- Tab layout -->
-        <com.ogaclejapan.smarttablayout.SmartTabLayout
-            android:id="@+id/view_pager_tab"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bubble_tab_height"
-            app:layout_scrollFlags="scroll|snap|enterAlways"
-            app:stl_clickable="true"
-            app:stl_defaultTabBackground="@drawable/bubble_background"
-            app:stl_defaultTabTextAllCaps="true"
-            app:stl_defaultTabTextColor="@drawable/tab_color_selector"
-            app:stl_defaultTabTextHorizontalPadding="16dp"
-            app:stl_defaultTabTextMinWidth="0dp"
-            app:stl_defaultTabTextSize="12sp"
-            app:stl_distributeEvenly="true"
-            app:stl_dividerColor="#4D000000"
-            app:stl_dividerThickness="0dp"
-            app:stl_drawDecorationAfterTab="false"
-            app:stl_indicatorAlwaysInCenter="false"
-            app:stl_indicatorColor="?attr/colorAccent"
-            app:stl_indicatorCornerRadius="@dimen/bubble_corner_radius"
-            app:stl_indicatorGravity="center"
-            app:stl_indicatorInFront="true"
-            app:stl_indicatorInterpolation="smart"
-            app:stl_indicatorThickness="@dimen/bubble_tab_height"
-            app:stl_indicatorWidth="auto"
-            app:stl_indicatorWithoutPadding="false"
-            app:stl_overlineColor="#4D000000"
-            app:stl_overlineThickness="0dp"
-            app:stl_titleOffset="24dp"
-            app:stl_underlineColor="#4D000000"
-            app:stl_underlineThickness="0dp" />
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <!-- Search bar container -->
-    <FrameLayout
-        android:id="@+id/search_bar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:paddingTop="@dimen/default_spacing_big"
+        android:paddingBottom="@dimen/default_spacing_small"
+        app:contentInsetEnd="@dimen/default_spacing"
+        app:contentInsetStart="@dimen/default_spacing"
+        app:layout_scrollFlags="scroll">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_tab_left_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                android:tint="?colorOnBackground"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/main_tab_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/main_tab_header" />
+
+            <TextView
+                android:id="@+id/main_tab_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_spacing_big"
+                android:text="@string/contacts"
+                android:textAppearance="@style/Koler.Text.TabLayout"
+                app:layout_constraintStart_toEndOf="@id/main_tab_left_arrow"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/main_tab_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:tint="?colorOnBackground"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/main_tab_header"
+                app:layout_constraintStart_toEndOf="@id/main_tab_header"
+                app:layout_constraintTop_toTopOf="@id/main_tab_header" />
+
+            <com.chooloo.www.koler.ui.widgets.IconButton
+                android:id="@+id/main_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="?colorPrimarySurface"
+                android:contentDescription="@string/content_description_menu_button"
+                app:borderWidth="0dp"
+                app:fabSize="mini"
+                app:icon="@drawable/ic_more_vert_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

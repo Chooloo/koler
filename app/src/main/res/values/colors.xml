@@ -1,44 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">@color/color_accent_pink</color>
+    <color name="ic_launcher_background">?colorSecondary</color>
 
-    <!-- Themes -->
-    <color name="color_primary_light">@color/white</color>
-    <color name="color_primary_dark">@color/grey_850</color>
-    <color name="color_primary_amoled">@color/black</color>
+    <!--region base colors-->
+    <color name="color_on_background">#C5C5C5</color>
+    <color name="color_error">#B00020</color>
+    <!--endregion-->
 
-    <color name="color_accent_default">@color/color_accent_blue</color>
-    <color name="color_accent_blue">#79b8ff</color>
-    <color name="color_accent_green">#47A799</color>
-    <color name="color_accent_pink">#EC134E</color>
-    <color name="color_accent_cream">#F2E2B3</color>
-    <!--    <color name="color_accent_cream">#FE898A</color>-->
+    <!--region accent colors-->
+    <color name="blue_background">#E8F0FD</color>
+    <color name="blue_foreground">#4F9FE1</color>
 
-    <color name="icon_active_light">#3D3D3D</color>
-    <color name="icon_active_dark">#FFFFFF</color>
+    <color name="orange_background">#FDEFE2</color>
+    <color name="orange_foreground">#F1974D</color>
 
-    <!-- Blacks -->
-    <color name="black">#000000</color>
-    <color name="semi_black">#DA000000</color>
+    <color name="green_background">#E7F4EA</color>
+    <color name="green_foreground">#4FA266</color>
 
-    <color name="soft_black">#3D3D3D</color>
+    <color name="purple_background">#F4E8FE</color>
+    <color name="purple_foreground">#AF66EC</color>
 
-    <!-- Whites -->
-    <color name="white">#ffffff</color>
-    <color name="semi_white">#DAFFFFFF</color>
+    <color name="red_background">#FCE8E7</color>
+    <color name="red_foreground">#D54E45</color>
+    <!--endregion-->
 
-    <!-- Greys -->
-    <color name="grey_100">#F5F5F5</color>
-    <color name="grey_400">#BDBDBD</color>
-    <color name="grey_800">#424242</color>
-    <color name="grey_850">#303030</color>
-    <color name="semi_grey_850">#DA303030</color>
-
-    <!-- Green -->
-    <color name="green_phone">#66bb6a</color>
-
-    <!-- Red -->
-    <color name="red_phone">#ef5350</color>
-
-    <color name="star_yellow">#FFEB3B</color>
+    <array name="accent_colors">
+        <item>@color/blue_background</item>
+        <item>@color/orange_background</item>
+        <item>@color/green_background</item>
+        <item>@color/purple_background</item>
+        <item>@color/red_background</item>
+    </array>
 </resources>

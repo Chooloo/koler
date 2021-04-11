@@ -1,112 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="SplashTheme" parent="AppTheme.Light">
-        <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="android:navigationBarColor">@color/ic_launcher_background</item>
-        <item name="android:statusBarColor">@color/ic_launcher_background</item>
-        <item name="android:windowLightStatusBar">false</item>
-    </style>
-
     <!-- Theme Styles -->
-    
-    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/color_primary_light</item>
-        <item name="colorPrimaryDark">?attr/colorPrimary</item>
-        <item name="colorAccent">?attr/colorAccent</item>
-        <item name="dialogBackgroundColor">?attr/colorPrimary</item>
 
-        <item name="android:windowBackground">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+    <style name="KolerTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorError">@color/color_error</item>
+        <item name="colorPrimary">?android:colorBackground</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-
-        <item name="iconColor">@color/icon_active_light</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-        <item name="overlayColor">@color/semi_white</item>
-
+        <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="actionModeStyle">@style/ActionMode.Light</item>
-        <item name="windowActionModeOverlay">true</item>
+        <item name="android:navigationBarColor">?colorPrimarySurface</item>
+
+        <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
+        <item name="alertDialogTheme">@style/KolerAlertDialog</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.Bridge">
-        <item name="colorPrimary">@color/color_primary_dark</item>
-        <item name="colorPrimaryDark">?attr/colorPrimary</item>
-        <item name="colorAccent">?attr/colorAccent</item>
-
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowBackground">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <item name="dialogBackgroundColor">@color/grey_800</item>
-
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
-        <item name="iconColor">@color/icon_active_dark</item>
-        <item name="overlayColor">@color/semi_grey_850</item>
-
-        <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="actionModeStyle">@style/ActionMode.Dark</item>
-        <item name="windowActionModeOverlay">true</item>
+    <style name="KolerBottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Koler.BottomDialog.BottomSheetStyle</item>
     </style>
 
-    <style name="AppTheme.AMOLED" parent="AppTheme.Dark">
-        <item name="colorPrimary">@color/color_primary_amoled</item>
-        <item name="dialogBackgroundColor">?attr/colorPrimary</item>
-        <item name="overlayColor">@color/semi_black</item>
+    <style name="KolerAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/KolerAlertDialogButton</item>
     </style>
 
-    <!-- Accent Colors -->
+    <style name="KolerAlertDialogButton" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/blue_foreground</item>
+    </style>
 
-    <style name="Accent"></style>
+    <style name="bla" parent="Widget.MaterialComponents.FloatingActionButton" />
+
+    <style name="Accent" />
 
     <style name="Accent.Blue">
-        <item name="colorAccent">@color/color_accent_blue</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
+        <item name="colorSecondary">@color/blue_background</item>
+        <item name="colorOnSecondary">@color/blue_foreground</item>
     </style>
 
-    <style name="Accent.Pink">
-        <item name="colorAccent">@color/color_accent_pink</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    <style name="Accent.Orange">
+        <item name="colorSecondary">@color/orange_background</item>
+        <item name="colorOnSecondary">@color/orange_foreground</item>
     </style>
 
     <style name="Accent.Green">
-        <item name="colorAccent">@color/color_accent_green</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
+        <item name="colorSecondary">@color/green_background</item>
+        <item name="colorOnSecondary">@color/green_foreground</item>
     </style>
 
-    <style name="Accent.Cream">
-        <item name="colorAccent">@color/color_accent_cream</item>
-        <item name="secondaryAccentColor">?attr/colorAccent</item>
+    <style name="Accent.Purple">
+        <item name="colorSecondary">@color/purple_background</item>
+        <item name="colorOnSecondary">@color/purple_foreground</item>
     </style>
 
-    <!-- Theme Type -->
-
-    <style name="ThemeType"></style>
-
-    <style name="ThemeType.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="ThemeType.TransparentStatusBar">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-    <!-- AppBar Overlay -->
-
-    <style name="ActionMode.Light" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/grey_100</item>
-        <item name="height">@dimen/action_bar_size</item>
-    </style>
-
-    <style name="ActionMode.Dark" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/black</item>
-        <item name="height">@dimen/action_bar_size</item>
+    <style name="Accent.Red">
+        <item name="colorSecondary">@color/red_background</item>
+        <item name="colorOnSecondary">@color/red_foreground</item>
     </style>
 </resources>

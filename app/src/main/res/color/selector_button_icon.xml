@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="?attr/iconColor" />
-    <item android:color="?attr/iconColor" android:state_activated="false" />
-    <item android:color="@color/icon_active_dark" android:state_activated="true" />
-</selector>

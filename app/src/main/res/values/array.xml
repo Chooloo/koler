@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pages">
+        <item>Contacts</item>
+        <item>Recents</item>
+    </string-array>
+
+    <string-array name="pagesValues">
+        <item>@string/pref_value_page_contacts</item>
+        <item>@string/pref_value_page_recents</item>
+    </string-array>
+</resources>

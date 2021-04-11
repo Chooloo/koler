@@ -1,96 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.chooloo.www.callmanager">
+    package="com.chooloo.www.koler">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
+        tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".App"
+        android:name="com.chooloo.www.koler.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.Light"
+        android:theme="@style/KolerTheme"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
+        <!--region activities-->
         <activity
-            android:name=".ui.activity.ContactActivity"
-            android:label="@string/title_activity_contact" />
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:name="com.chooloo.www.koler.ui.main.MainActivity"
+            android:screenOrientation="portrait">
 
-            <!-- For receiving intents -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="image/*" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="image/*" />
-            </intent-filter>
-
-            <!-- From Google's Dialer App -->
-            <intent-filter>
-                <action android:name="android.intent.action.DIAL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:mimeType="vnd.android.cursor.item/phone" />
-                <data android:mimeType="vnd.android.cursor.item/person" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.DIAL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="voicemail" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.DIAL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            <!--region intent-filters-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -101,53 +59,42 @@
 
                 <data android:scheme="tel" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.CALL_BUTTON" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
+            <!--endregion-->
         </activity>
         <activity
-            android:name=".ui.activity.CGroupActivity"
-            android:parentActivityName=".ui.activity.MainActivity" />
-        <activity
-            android:name=".ui.activity.OngoingCallActivity"
-            android:label="@string/activity_ongoing_call"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Light" />
-        <activity
-            android:name=".ui.activity.SettingsActivity"
-            android:label="@string/activity_settings"
-            android:theme="@style/AppTheme.Light" />
-        <activity
-            android:name=".ui.activity.AboutActivity"
-            android:label="@string/activity_about"
-            android:theme="@style/AppTheme.Light" />
+            android:name="com.chooloo.www.koler.ui.call.CallActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".util.permissions.PermissionsActivity" />
+        <!--endregion-->
 
-        <service android:name=".service.RecordService" />
+        <!--region services-->
+        <service android:name="com.chooloo.www.koler.service.RecordService" />
         <service
-            android:name=".service.CallService"
+            android:name="com.chooloo.www.koler.service.CallService"
             android:permission="android.permission.BIND_INCALL_SERVICE">
             <meta-data
                 android:name="android.telecom.IN_CALL_SERVICE_UI"
                 android:value="true" />
-
             <intent-filter>
                 <action android:name="android.telecom.InCallService" />
             </intent-filter>
         </service>
+        <!--endregion-->
 
+        <!--region metadatas-->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <!--endregion-->
 
-        <receiver android:name=".listener.NotificationActionReceiver">
+        <!--region receivers-->
+        <receiver android:name=".receiver.CallBroadcastReceiver">
             <intent-filter>
-                <action android:name="ANSWER" />
-                <action android:name="HANGUP" />
+                <action android:name="action_answer" />
+                <action android:name="action_hangup" />
             </intent-filter>
         </receiver>
+        <!--endregion-->
     </application>
 
 </manifest>

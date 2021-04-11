@@ -1,67 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="default_padding">16dp</dimen>
-    <dimen name="default_edge_padding">8dp</dimen>
-    <dimen name="default_spacing_padding">8dp</dimen>
+    <!--region generic sizes-->
+    <dimen name="headline_1">46sp</dimen>
+    <dimen name="headline_2">30sp</dimen>
+    <dimen name="headline_3">24sp</dimen>
+    <dimen name="headline_4">18sp</dimen>
+    <dimen name="subtitle_1">16sp</dimen>
+    <dimen name="subtitle_2">14sp</dimen>
+    <dimen name="caption_1">13sp</dimen>
+    <dimen name="image_size_small">35dp</dimen>
+    <dimen name="image_size_big">90dp</dimen>
+    <dimen name="corner_radius">12dp</dimen>
+    <dimen name="default_spacing">20dp</dimen>
+    <dimen name="default_spacing_small">12dp</dimen>
+    <dimen name="default_spacing_big">32dp</dimen>
+    <!--endregion-->
 
-    <!-- Action Bar-->
-    <dimen name="action_bar_size">48dp</dimen>
+    <!--region list item -->
+    <dimen name="list_item_padding">15dp</dimen>
+    <dimen name="list_item_padding_sides">20dp</dimen>
+    <dimen name="list_item_small_text_top_margin">1dp</dimen>
+    <!--endregion-->
 
-    <!-- On Going Call -->
-    <dimen name="caller_image_size">80dp</dimen>
-    <dimen name="caller_name_size">30dp</dimen>
+    <!--region bottom sheet dialog -->
+    <dimen name="swipe_indicator_height">5dp</dimen>
+    <dimen name="swipe_indicator_width">30dp</dimen>
+    <dimen name="swipe_indicator_margin">10dp</dimen>
+    <!--endregion-->
 
-    <!-- Button -->
-    <dimen name="flat_button_size">70dp</dimen>
-    <dimen name="flat_button_padding">16dp</dimen>
+    <!--region toolbar-->
+    <dimen name="toolbar_padding">10dp</dimen>
+    <!--endregion-->
 
-    <!-- Bubble -->
-    <dimen name="bubble_tab_height">32dp</dimen>
-    <dimen name="bubble_vertical_padding">4dp</dimen>
-    <dimen name="bubble_horizontal_padding">32dp</dimen>
-    <dimen name="bubble_corner_radius">16dp</dimen>
-
-    <!-- Fabs -->
-    <dimen name="fab_and_bottom_padding">88dp</dimen>
-
-    <!-- Dialer -->
-    <dimen name="phone_number_input_height">64dp</dimen>
-
-    <!-- List Items -->
-    <dimen name="item_contact_padding">15dp</dimen>
-    <dimen name="item_contact_topbot_padding">6dp</dimen>
-    <dimen name="item_height">64dp</dimen>
-
-    <!-- FastScroller -->
-    <dimen name="fast_scroller_touch_target_width">32dp</dimen>
-    <dimen name="fast_scroller_container_size">80dp</dimen>
-    <dimen name="fast_scroller_container_corner_radius">44dp</dimen>
-    <dimen name="fast_scroller_bottom_right_corner_radius">44dp</dimen>
-    <dimen name="fast_scroller_bottom_left_corner_radius">44dp</dimen>
-
-    <!-- Dialpad -->
-    <dimen name="dialpad_key_height">80dp</dimen>
-    <dimen name="dialpad_key_number_text_size">30dp</dimen>
-    <dimen name="dialpad_key_letters_text_size">10dp</dimen>
-    <dimen name="top_dialpad_side_padding">24dp</dimen>
-
-    <dimen name="shadow_length">10dp</dimen>
-
-    <!-- About activity -->
-    <dimen name="about_page_padding">10dp</dimen>
-    <dimen name="header_width">30dp</dimen>
-    <dimen name="item_two_line_height">64dp</dimen>
-    <!--
-    Because the window insets on round devices are larger than 15dp, this padding only applies
-    to square screens.
-    -->
-    <dimen name="box_inset_layout_padding">0dp</dimen>
-
-    <!--
-    This padding applies to both square and round screens. The total padding between the buttons
-    and the window insets is box_inset_layout_padding (above variable) on square screens and
-    inner_frame_layout_padding (below variable) on round screens.
-    -->
-    <dimen name="inner_frame_layout_padding">5dp</dimen>
 </resources>

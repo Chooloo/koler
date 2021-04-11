@@ -2,95 +2,55 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/pref_category_look_and_feel">
+    <Preference
+        android:icon="@drawable/ic_invert_colors_black_24dp"
+        android:key="@string/pref_key_color"
+        android:title="@string/pref_title_app_color" />
 
-        <ListPreference
-            android:defaultValue="@string/pref_app_theme_default_value"
-            android:entries="@array/pref_app_theme_entries"
-            android:entryValues="@array/pref_app_theme_entry_values"
-            android:key="@string/pref_app_theme_key"
-            android:title="@string/pref_app_theme_title" />
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_value_compact"
+        android:icon="@drawable/ic_view_compact_black_24dp"
+        android:key="@string/pref_key_compact"
+        android:title="@string/pref_title_compact" />
 
-        <ListPreference
-            android:defaultValue="@string/pref_app_color_default_value"
-            android:entries="@array/pref_app_color_entries"
-            android:entryValues="@array/pref_app_color_entry_values"
-            android:key="@string/pref_app_color_key"
-            android:title="@string/pref_app_color_title" />
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_value_animations"
+        android:icon="@drawable/ic_animation_black_24dp"
+        android:key="@string/pref_key_animations"
+        android:title="@string/pref_title_animations" />
 
-    </PreferenceCategory>
+    <ListPreference
+        android:defaultValue="@string/pref_value_page_default"
+        android:entries="@array/pages"
+        android:entryValues="@array/pagesValues"
+        android:icon="@drawable/round_view_carousel_24"
+        android:key="@string/pref_key_default_page"
+        app:title="@string/pref_title_default_page" />
 
-    <PreferenceCategory android:title="@string/pref_category_call">
+    <ListPreference
+        android:defaultValue="@string/pref_default_value_sim_select"
+        android:enabled="false"
+        android:icon="@drawable/ic_sim_card_black_24dp"
+        android:key="@string/pref_key_sim_select"
+        android:title="@string/pref_title_sim_select" />
 
+    <Preference
+        android:icon="@drawable/ic_bug_report_black_24dp"
+        android:key="@string/pref_key_report_bugs"
+        android:title="@string/pref_title_report_bugs" />
 
-        <ListPreference
-            android:defaultValue="@string/pref_sim_select_default_value"
-            android:key="@string/pref_sim_select_key"
-            android:title="@string/pref_sim_select_title" />
+    <Preference
+        android:icon="@drawable/ic_star_black_24dp"
+        android:key="@string/pref_key_rate"
+        android:title="@string/pref_title_rate" />
 
-        <ListPreference
-            android:defaultValue="@string/pref_reject_call_timer_default_value"
-            android:entries="@array/pref_call_timer_entries"
-            android:entryValues="@array/pref_call_timer_entry_values"
-            android:key="@string/pref_reject_call_timer_key"
-            android:title="@string/pref_reject_call_timer_title" />
+    <Preference
+        android:icon="@drawable/ic_stars_black_24dp"
+        android:key="@string/pref_key_donate"
+        android:title="@string/pref_title_donate" />
 
-        <ListPreference
-            android:defaultValue="@string/pref_answer_call_timer_default_value"
-            android:entries="@array/pref_call_timer_entries"
-            android:entryValues="@array/pref_call_timer_entry_values"
-            android:key="@string/pref_answer_call_timer_key"
-            android:title="@string/pref_answer_call_timer_title" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/pref_category_pages"
-        app:iconSpaceReserved="false">
-
-        <ListPreference
-            android:defaultValue="@string/pref_default_page_default_value"
-            android:entries="@array/pref_default_page_entries"
-            android:entryValues="@array/pref_default_page_entry_values"
-            android:key="@string/pref_default_page_key"
-            android:title="@string/pref_default_page_title" />
-
-        <CheckBoxPreference
-            android:defaultValue="@bool/pref_excel_enable_default_value"
-            android:key="@string/pref_excel_enable_key"
-            android:title="@string/pref_excel_enable_title"
-            android:checked="true"
-            app:defaultValue="@bool/pref_excel_enable_default_value" />
-
-    </PreferenceCategory>
-
-    <!--    <PreferenceCategory-->
-    <!--        android:title="@string/pref_category_noise"-->
-    <!--        app:iconSpaceReserved="false">-->
-
-    <!--        <SwitchPreference-->
-    <!--            android:enabled="false"-->
-    <!--            android:title="@string/pref_is_silent_title" />-->
-    <!--        &lt;!&ndash;android:defaultValue="false"&ndash;&gt;-->
-    <!--        &lt;!&ndash;android:key="@string/pref_is_silent_key"&ndash;&gt;-->
-
-    <!--        <SwitchPreference-->
-    <!--            android:enabled="false"-->
-    <!--            android:title="@string/pref_is_no_vibrate_title" />-->
-    <!--        &lt;!&ndash;android:defaultValue="false"&ndash;&gt;-->
-    <!--        &lt;!&ndash;android:key="@string/pref_is_no_vibrate_key"&ndash;&gt;-->
-
-    <!--    </PreferenceCategory>-->
-
-    <PreferenceCategory
-        android:title="@string/pref_category_scurity"
-        app:iconSpaceReserved="false">
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="@string/pref_is_biometric_key"
-            android:title="@string/pref_is_biometric_title" />
-
-    </PreferenceCategory>
-
+    <Preference
+        android:icon="@drawable/ic_email_black_24dp"
+        android:key="@string/pref_key_email"
+        android:title="@string/pref_title_email" />
 </PreferenceScreen>

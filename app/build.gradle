@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
+
     defaultConfig {
-        applicationId "com.chooloo.www.callmanager"
+        applicationId "com.chooloo.www.koler"
         minSdkVersion 25
-        targetSdkVersion 29
-        versionCode 46
-        versionName "v0.6.2"
+        targetSdkVersion 30
+        versionCode 54
+        versionName "v1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -16,96 +19,77 @@ android {
             }
         }
     }
+
     dataBinding {
+        //noinspection DataBindingWithoutKapt
         enabled = true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-
-    //Base
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.arch.core:core-common:2.0.1'
-    implementation 'androidx.arch.core:core-runtime:2.0.1'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.fragment:fragment:1.0.0'
-    implementation 'androidx.preference:preference:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation "com.android.support:support-compat:28.0.0"
-    implementation 'com.google.android.material:material:1.0.0'
 
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment:2.0.0"
-    implementation "androidx.navigation:navigation-ui:2.0.0"
+    annotationProcessor(
+            'androidx.room:room-compiler:2.2.6'
+    )
 
-    //Room
-    implementation "androidx.room:room-runtime:2.1.0"
-    implementation 'androidx.wear:wear:1.0.0'
-    annotationProcessor "androidx.room:room-compiler:2.1.0"
-    testImplementation "androidx.room:room-testing:2.1.0"
+    testImplementation(
+            'junit:junit:4.13.2',
+            'androidx.room:room-testing:2.2.6'
+    )
 
-    //ButterKnife
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    androidTestImplementation(
+            'androidx.test:core:1.3.0',
+            'androidx.test:runner:1.3.0',
+            'androidx.test.ext:junit:1.1.2',
+            'com.jraska.livedata:testing:1.0.0',
+            'org.mockito:mockito-android:2.24.0',
+            'androidx.arch.core:core-testing:2.1.0',
+            'androidx.test.espresso:espresso-core:3.3.0'
+    )
 
-    //Timber
-    implementation 'com.jakewharton.timber:timber:4.7.1'
-
-    //CircleImageView
-    implementation 'de.hdodenhof:circleimageview:3.0.0'
-
-    //Apache POI
-    implementation 'org.apache.poi:poi:4.0.1'
-    implementation 'org.apache.poi:poi-ooxml:4.0.1'
-    implementation 'org.apache.poi:poi-ooxml-schemas:4.0.1'
-    implementation 'org.apache.xmlbeans:xmlbeans:3.0.2'
-
-    //Material dialogs
-    implementation 'com.github.NuclearGandhi.material-dialogs:core:3.0.0'
-    implementation 'com.github.NuclearGandhi.material-dialogs:commons:3.0.0'
-
-    //Phone number formatting
-    implementation 'com.googlecode.libphonenumber:libphonenumber:8.10.5'
-
-    // Beauty Color Shadow Button
-    implementation 'com.subsub.libs:buttoncustomshadow:1.1.0'
-
-    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.3.0'
-
-    // SpringIndicator
-    implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
-
-    // SmartTabLayout
-    implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
-
-    // Android Biometrics
-    implementation 'androidx.biometric:biometric:1.0.0-alpha04'
-
-    // Fingerprint
-    implementation 'me.aflak.libraries:fingerprint:2.5.3'
-
-    //Test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:core:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation "androidx.arch.core:core-testing:2.0.1"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'org.mockito:mockito-android:2.24.0'
-    androidTestImplementation 'com.jraska.livedata:testing:1.0.0'
-    compileOnly 'com.google.android.wearable:wearable:2.5.0'
+    implementation(
+            'androidx.wear:wear:1.1.0',
+            'androidx.core:core-ktx:1.3.2',
+            'dev.sasikanth:colorsheet:1.0.1',
+            'androidx.room:room-runtime:2.2.6',
+            'androidx.cardview:cardview:1.0.0',
+            'androidx.appcompat:appcompat:1.2.0',
+            'com.jakewharton.timber:timber:4.7.1',
+            'androidx.arch.core:core-common:2.1.0',
+            'androidx.annotation:annotation:1.1.0',
+            'androidx.fragment:fragment-ktx:1.2.5',
+            'androidx.arch.core:core-runtime:2.1.0',
+            'androidx.legacy:legacy-support-v4:1.0.0',
+            'androidx.preference:preference-ktx:1.1.1',
+            'org.jetbrains.kotlin:kotlin-stdlib:1.4.21',
+            'androidx.biometric:biometric:1.2.0-alpha02',
+            'com.google.android.material:material:1.3.0',
+            'androidx.navigation:navigation-ui-ktx:2.3.3',
+            'androidx.lifecycle:lifecycle-extensions:2.2.0',
+            'androidx.constraintlayout:constraintlayout:2.0.4',
+            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
+            'androidx.navigation:navigation-fragment-ktx:2.3.3',
+            'com.googlecode.libphonenumber:libphonenumber:8.12.18'
+    )
 }
