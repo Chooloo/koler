@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getDrawable
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.FragmentRecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
@@ -98,6 +100,15 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun deleteRecent() {
-        _activity.deleteRecent(_recent.id)
+        AlertDialog.Builder(_activity)
+            .setCancelable(true)
+            .setTitle(getString(R.string.warning_delete_recent))
+            .setPositiveButton(getString(R.string.action_yes)) { _, _ ->
+                _activity.deleteRecent(_recent.id)
+                finish()
+            }
+            .setNegativeButton(getString(R.string.action_no)) { _, _ -> }
+            .create()
+            .show()
     }
 }
