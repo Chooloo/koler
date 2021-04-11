@@ -16,7 +16,6 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     private val _audioManager by lazy { AudioManager(requireContext()) }
     private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
     private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
-    private val _bottomDialpadFragment by lazy { BottomFragment(DialpadFragment.newInstance(false)) }
 
     companion object {
         fun newInstance() = CallActionsFragment()
@@ -40,8 +39,6 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
             callActionRecord.setOnClickListener { _presenter.onRecordClick() }
             callActionSpeaker.setOnClickListener { _presenter.onSpeakerClick() }
         }
-
-        _bottomDialpadFragment.fragment.setOnKeyDownListener(_presenter::onKeypadKey)
     }
 
     override fun onDestroy() {
@@ -54,7 +51,9 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     }
 
     override fun openDialpad() {
-        _bottomDialpadFragment.show(childFragmentManager, DialpadFragment.TAG)
+        BottomFragment(DialpadFragment.newInstance(false).apply {
+            setOnKeyDownListener(_presenter::onKeypadKey)
+        }).show(childFragmentManager, DialpadFragment.TAG)
     }
 
     override fun stopRecording() {
