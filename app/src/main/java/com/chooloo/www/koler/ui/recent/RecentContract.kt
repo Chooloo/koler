@@ -8,6 +8,7 @@ interface RecentContract : BaseContract {
         fun addContact()
         fun callRecent()
         fun openContact()
+        fun openHistory()
         fun deleteRecent()
     }
 
@@ -17,5 +18,6 @@ interface RecentContract : BaseContract {
         fun onActionDelete()
         fun onActionAddContact()
         fun onActionOpenContact()
+        fun onActionShowHistory()
     }
 }

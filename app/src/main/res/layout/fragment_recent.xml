@@ -5,6 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/recent_type_image"
+        style="@style/Koler.Bottom.Image"
+        android:layout_width="@dimen/image_size_big"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:src="@drawable/ic_call_missed_black_24dp"
+        android:visibility="gone"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
+        tools:visibility="visible" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recent_text_name"
         style="@style/Koler.Bottom.Text.Title"
@@ -55,41 +71,36 @@
         app:layout_constraintTop_toTopOf="@id/recent_text_seperator"
         tools:text="2 hours" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/recent_type_image"
-        style="@style/Koler.Bottom.Image"
-        android:layout_width="@dimen/image_size_big"
-        android:layout_height="0dp"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/recent_button_show_history"
+        style="@style/Koler.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_small"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:src="@drawable/ic_call_missed_black_24dp"
-        android:visibility="gone"
-        app:layout_constraintDimensionRatio="1:1"
+        android:text="Show History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/recent_button_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_call_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/recent_button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
@@ -97,13 +108,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/recent_button_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_call"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/recent_button_add_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
@@ -111,13 +122,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/recent_button_sms"
         app:layout_constraintStart_toEndOf="@id/recent_button_contact"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/recent_button_contact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
@@ -125,13 +136,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/recent_button_add_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_delete"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/recent_button_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
@@ -139,5 +150,5 @@
         app:icon="@drawable/ic_sms_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,6 @@ import com.chooloo.www.koler.ui.recent.RecentFragment
 
 class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
     RecentsContract.View {
-    private var _onRecentsChangedListener: (RecentsBundle) -> Unit? = {}
     private val _presenter by lazy { RecentsPresenter<RecentsContract.View>() }
     private val _recentsLiveData by lazy { RecentsProviderLiveData(_activity) }
 
@@ -23,11 +22,18 @@ class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
 
     companion object {
-        fun newInstance(isCompact: Boolean = false, isSearchable: Boolean = true) =
+        const val ARG_FILTER = "filter"
+
+        fun newInstance(
+            isCompact: Boolean = false,
+            isSearchable: Boolean = true,
+            filter: String? = null
+        ) =
             RecentsFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean(ARG_IS_COMPACT, isCompact)
                     putBoolean(ARG_IS_SEARCHABLE, isSearchable)
+                    putString(ARG_FILTER, filter)
                 }
             }
     }
@@ -38,10 +44,8 @@ class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
     }
 
     override fun onAttachData() {
-        _recentsLiveData.observe(viewLifecycleOwner) {
-            _presenter.onRecentsChanged(it)
-            _onRecentsChangedListener.invoke(it)
-        }
+        _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
+        argsSafely.getString(ARG_FILTER)?.let { applyFilter(it) }
     }
 
     override fun onDestroyView() {
@@ -56,15 +60,15 @@ class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
         )
     }
 
+    override fun applyFilter(filter: String) {
+        _recentsLiveData.filter = filter
+    }
+
     override fun onItemClick(item: Recent) {
         _presenter.onRecentItemClick(item)
     }
 
     override fun onItemLongClick(item: Recent) {
         _presenter.onRecentItemLongClick(item)
-    }
-
-    fun setOnRecentsChangedListener(onRecentsChangedListener: (RecentsBundle) -> Unit? = {}) {
-        _onRecentsChangedListener = onRecentsChangedListener
     }
 }

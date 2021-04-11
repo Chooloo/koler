@@ -11,14 +11,16 @@ import com.chooloo.www.koler.databinding.FragmentRecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
+import com.chooloo.www.koler.ui.recents.RecentsFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 
 class RecentFragment : BaseFragment(), RecentContract.View {
+    private val _contact by lazy { _activity.lookupContact(_recent.number) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
     private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
-    private val _contact by lazy { _activity.lookupContact(_recent.number) }
+    private val _historyFragment by lazy { RecentsFragment.newInstance(false, false) }
 
     companion object {
         const val TAG = "recent_fragment"
@@ -64,6 +66,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
             recentButtonDelete.setOnClickListener { _presenter.onActionDelete() }
             recentButtonContact.setOnClickListener { _presenter.onActionOpenContact() }
             recentButtonAddContact.setOnClickListener { _presenter.onActionAddContact() }
+            recentButtonShowHistory.setOnClickListener { _presenter.onActionShowHistory() }
         }
     }
 
@@ -86,6 +89,12 @@ class RecentFragment : BaseFragment(), RecentContract.View {
                 ContactFragment.TAG
             )
         }
+    }
+
+    override fun openHistory() {
+        BottomFragment(
+            RecentsFragment.newInstance(false, false, _recent.number)
+        ).show(_activity.supportFragmentManager, ContactFragment.TAG)
     }
 
     override fun deleteRecent() {
