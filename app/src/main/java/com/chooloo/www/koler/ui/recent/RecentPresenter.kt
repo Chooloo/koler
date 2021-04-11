@@ -22,4 +22,8 @@ class RecentPresenter<V : RecentContract.View> : BasePresenter<V>(), RecentContr
     override fun onActionOpenContact() {
         mvpView?.openContact()
     }
+
+    override fun onActionShowHistory() {
+        mvpView?.openHistory()
+    }
 }

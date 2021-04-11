@@ -67,7 +67,9 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
             }
             itemsSwipeRefreshLayout.apply {
                 setOnRefreshListener(_presenter::onSwipeRefresh)
-                isEnabled = _isSearchable
+                if(!_isSearchable){
+                    setDistanceToTriggerSync(9999999)
+                }
             }
             itemsRecyclerView.apply {
                 adapter = this@ListFragment.adapter.apply {

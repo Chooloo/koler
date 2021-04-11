@@ -43,21 +43,21 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
 
         when (callState) {
             CONNECTING -> mvpView?.transitionToActiveUI()
-            HOLDING -> {
-                mvpView?.getColor(R.color.red_foreground)?.let { mvpView?.stateTextColor = it }
-                mvpView?.blinkStateText()
+            HOLDING -> mvpView?.apply {
+                getColor(R.color.red_foreground).let { mvpView?.stateTextColor = it }
+                blinkStateText()
             }
-            ACTIVE -> {
-                mvpView?.getColor(R.color.green_foreground)?.let { mvpView?.stateTextColor = it }
-                mvpView?.blinkStateText()
-                mvpView?.startStopwatch()
-                mvpView?.transitionToActiveUI()
+            ACTIVE -> mvpView?.apply {
+                getColor(R.color.green_foreground).let { mvpView?.stateTextColor = it }
+                blinkStateText()
+                startStopwatch()
+                transitionToActiveUI()
             }
-            DISCONNECTED -> {
-                mvpView?.getColor(R.color.red_foreground)?.let { mvpView?.stateTextColor = it }
-                mvpView?.blinkStateText()
-                mvpView?.stopStopwatch()
-                Handler().postDelayed({ mvpView?.finish() }, 2000)
+            DISCONNECTED -> mvpView?.apply {
+                getColor(R.color.red_foreground).let { stateTextColor = it }
+                blinkStateText()
+                stopStopwatch()
+                Handler().postDelayed({ finish() }, 2000)
             }
         }
     }

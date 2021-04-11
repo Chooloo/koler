@@ -32,6 +32,7 @@
 
     <!--region warning-->
     <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
+    <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
     <!--endregion-->
 
     <!--region urls-->
