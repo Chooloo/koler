@@ -1,11 +1,13 @@
 package com.chooloo.www.koler.ui.settings
 
+import android.content.Context.TELECOM_SERVICE
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.telecom.TelecomManager
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -36,6 +38,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     private val compactPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_compact) }
     private val animationsPreference by lazy { getPreference<SwitchPreference>(R.string.pref_key_animations) }
     private val defaultPagePreference by lazy { getPreference<ListPreference>(R.string.pref_key_default_page) }
+    private val manageBlockedPreference by lazy { getPreference<Preference>(R.string.pref_key_manage_blocked) }
 
     companion object {
         const val TAG = "settings_fragment"
@@ -58,10 +61,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
         _presenter.attach(this)
 
         ratePreference?.setOnPreferenceClickListener { _presenter.onClickedRate() }
-        donatePreference?.setOnPreferenceClickListener { _presenter.onClickedDonate() }
         emailPreference?.setOnPreferenceClickListener { _presenter.onClickedEmail() }
-        reportPreference?.setOnPreferenceClickListener { _presenter.onClickedReport() }
         colorPreference?.setOnPreferenceClickListener { _presenter.onClickedColor() }
+        reportPreference?.setOnPreferenceClickListener { _presenter.onClickedReport() }
+        donatePreference?.setOnPreferenceClickListener { _presenter.onClickedDonate() }
+        manageBlockedPreference?.setOnPreferenceClickListener { _presenter.onManageBlocked() }
         simPreference?.setOnPreferenceChangeListener { _, newValue ->
             _presenter.onSelectedSim(newValue)
         }
@@ -152,6 +156,15 @@ class SettingsFragment : PreferenceFragmentCompat(), SettingsContract.View {
     }
 
     override fun setupSimPreference() {
+    }
+
+    override fun manageBlockedNumbers() {
+        context?.let {
+            startActivity(
+                (it.getSystemService(TELECOM_SERVICE) as TelecomManager).createManageBlockedNumbersIntent(),
+                null
+            )
+        }
     }
 
     private fun <T : Preference> getPreference(@StringRes keyString: Int) =

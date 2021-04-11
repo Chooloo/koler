@@ -25,6 +25,7 @@ class SettingsContract : BaseContract {
         fun openColorPicker()
         fun goToMainActivity()
         fun setupSimPreference()
+        fun manageBlockedNumbers()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
@@ -34,6 +35,7 @@ class SettingsContract : BaseContract {
         fun onClickedColor(): Boolean
         fun onClickedDonate(): Boolean
         fun onClickedReport(): Boolean
+        fun onManageBlocked(): Boolean
         fun onSelectedColor(color: Int): Boolean
         fun onSelectedSim(newValue: Any?): Boolean
         fun onToggledAnimation(isToggle: Boolean): Boolean

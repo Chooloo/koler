@@ -36,6 +36,11 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
         true
     }
 
+    override fun onManageBlocked() = run {
+        mvpView?.manageBlockedNumbers()
+        true
+    }
+
     override fun onSelectedColor(color: Int) = run {
         mvpView?.setPrefAccentTheme(
             when (color) {

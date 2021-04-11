@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
+        android:icon="@drawable/round_block_24"
+        android:key="@string/pref_key_manage_blocked"
+        android:title="@string/pref_title_manage_blocked" />
+
+    <Preference
         android:icon="@drawable/ic_invert_colors_black_24dp"
         android:key="@string/pref_key_color"
         android:title="@string/pref_title_app_color" />
