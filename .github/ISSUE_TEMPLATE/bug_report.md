@@ -8,8 +8,6 @@ assignees: ''
 ---
 
 <!-- The comments between these brackets won't show up in the submitted issue (as you can see in the Preview). -->
-
-
 ## Checklist
 <!-- This checklist is COMPULSORY. The first box has been checked for you to show you how it is done. -->
 
@@ -25,8 +23,8 @@ assignees: ''
 2. Press on '....'
 3. Swipe down to '....'
 -->
-
 <!-- If you can't cause the bug to show up again reliably (and hence don't have a proper set of steps to give us), please still try to give as many details as possible on how you think you encountered the bug. -->
+
 
 
 ### Actual behaviour
@@ -45,12 +43,11 @@ assignees: ''
 
 
 ### Logs
-<!-- Use any logcat apps, MatLog and share either error line or share txt file link from transfer.sh for example -->
+<!-- Use any logcat apps, MatLog for example, and share either error line or share txt file link from transfer.sh for example -->
 
 
 
 ### Device info
-
  - Android version/Custom ROM version:
  - Device model:
 
