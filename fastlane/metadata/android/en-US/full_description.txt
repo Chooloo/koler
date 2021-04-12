@@ -1,0 +1,24 @@
+<i>Koler’s</i> ongoing call UI makes everything easier. Its uses swipes and minimalistic design, making everything more beautiful, intuitive, yet still productive. In an incoming call, you can do the following before answering:
+
+* Reject and send the call a SMS
+* Reject in a specified amount of seconds
+* Answer in a specified amount of seconds
+
+In an ongoing call you can:
+
+* Reject in a specified amount of seconds
+
+The app’s main goal is to be more intuitive and comfortable, For that reason, the swipes are the main way of controlling the app, making it much smoother to use.
+
+<b>Dialer:</b>
+
+* Call - Swipe up
+* Delete number - Swipe left
+* Collapse dialer - Swipe on the contacts list
+
+<b>Incoming Call:</b>
+
+* Open keypad - Swipe up
+* Reject/End - Swipe left
+* Answer - Swipe right
+* Send sms - Swipe up on the send SMS overlay
