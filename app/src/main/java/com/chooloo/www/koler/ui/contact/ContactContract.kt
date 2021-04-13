@@ -14,17 +14,21 @@ interface ContactContract : BaseContract {
         fun smsContact()
         fun editContact()
         fun openContact()
+        fun blockContact()
+        fun unblockContact()
         fun deleteContact()
         fun setFavorite(isFavorite: Boolean)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onLoadContact(contact: Contact)
-        fun onActionCall()
         fun onActionSms()
+        fun onActionFav()
+        fun onActionCall()
         fun onActionEdit()
         fun onActionInfo()
+        fun onActionBlock()
         fun onActionDelete()
-        fun onActionFav()
+        fun onActionUnblock()
     }
 }

@@ -106,13 +106,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginEnd="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_sms_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/contact_button_unblock"
+        app:layout_constraintStart_toEndOf="@id/contact_button_delete"
         app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
 
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_unblock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:gravity="center_horizontal"
+        app:borderWidth="0dp"
+        app:icon="@drawable/round_lock_open_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/contact_button_block"
+        app:layout_constraintStart_toEndOf="@id/contact_button_sms"
+        app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
+
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/contact_button_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:gravity="center_horizontal"
+        app:borderWidth="0dp"
+        app:icon="@drawable/round_block_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_phones_fragment_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,17 @@
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/recent_text_blocked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:text="Blocked"
+        android:textAppearance="@style/Koler.Text.Error"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recent_text_name"
         style="@style/Koler.Bottom.Text.Title"
         android:layout_width="wrap_content"
@@ -80,7 +91,7 @@
         android:text="Show History"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_date" />
+        app:layout_constraintTop_toBottomOf="@id/recent_text_blocked" />
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/recent_button_call"
@@ -143,11 +154,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_small"
-        android:layout_marginEnd="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_sms_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recent_button_unblock"
+        app:layout_constraintStart_toEndOf="@id/recent_button_add_contact"
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
+
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/recent_button_unblock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:gravity="center_horizontal"
+        app:borderWidth="0dp"
+        app:icon="@drawable/round_lock_open_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recent_button_block"
+        app:layout_constraintStart_toEndOf="@id/recent_button_sms"
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
+
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/recent_button_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        android:gravity="center_horizontal"
+        app:borderWidth="0dp"
+        app:icon="@drawable/round_block_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />

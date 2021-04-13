@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.contact
 
 import android.net.Uri
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
@@ -41,5 +42,19 @@ class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
         mvpView?.setFavorite(!_contact.starred)
 //        _contact.starred = !_contact.starred
         mvpView?.isStarIconActivated = _contact.starred
+    }
+
+    override fun onActionBlock() {
+        mvpView?.apply {
+            blockContact()
+            showMessage(R.string.contact_blocked)
+        }
+    }
+
+    override fun onActionUnblock() {
+        mvpView?.apply {
+            unblockContact()
+            showMessage(R.string.contact_unblocked)
+        }
     }
 }

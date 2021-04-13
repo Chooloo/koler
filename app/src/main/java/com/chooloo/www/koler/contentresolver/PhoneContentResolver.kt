@@ -10,7 +10,7 @@ import com.chooloo.www.koler.data.PhonesBundle
 
 class PhoneContentResolver(
     context: Context,
-    private val contactId: Long? = null
+    contactId: Long? = null
 ) : BaseContentResolver<PhonesBundle>(context) {
     override val requiredPermissions = arrayOf(READ_CONTACTS)
 

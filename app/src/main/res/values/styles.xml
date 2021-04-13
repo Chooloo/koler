@@ -49,6 +49,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?colorOnSurface</item>
     </style>
+
+    <style name="Koler.Text.Error">
+        <item name="android:textSize">@dimen/headline_4</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/red_foreground</item>
+    </style>
     <!--endregion-->
 
     <!--region button -->

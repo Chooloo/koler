@@ -2,9 +2,7 @@ package com.chooloo.www.koler.ui.base
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 
@@ -49,6 +47,10 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
     }
 
     override fun getColor(color: Int) = _activity.getColor(color)
+
+    fun reattach() {
+        childFragmentManager.beginTransaction().detach(this).attach(this).commitNow()
+    }
     //endregion
 
     protected val argsSafely: Bundle

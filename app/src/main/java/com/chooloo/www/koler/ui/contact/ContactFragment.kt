@@ -20,6 +20,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
     private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
+    private val _isBlocked by lazy { _contact.phoneAccounts.all { _activity.isNumberBlocked(it.number) } }
 
     companion object {
         const val TAG = "contact_fragment"
@@ -71,11 +72,16 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         }
 
         _binding.apply {
-            contactButtonCall.setOnClickListener { _presenter.onActionCall() }
+            contactButtonBlock.visibility = if (_isBlocked) GONE else VISIBLE
+            contactButtonUnblock.visibility = if (_isBlocked) VISIBLE else GONE
+
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
-            contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
-            contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
             contactButtonFav.setOnClickListener { _presenter.onActionFav() }
+            contactButtonCall.setOnClickListener { _presenter.onActionCall() }
+            contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
+            contactButtonBlock.setOnClickListener { _presenter.onActionBlock() }
+            contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
+            contactButtonUnblock.setOnClickListener { _presenter.onActionUnblock() }
         }
 
         childFragmentManager
@@ -98,6 +104,14 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     override fun openContact() {
         _activity.openContact(_contact.id)
+    }
+
+    override fun blockContact() {
+        _contact.phoneAccounts.forEach { _activity.blockNumber(it.number) }
+    }
+
+    override fun unblockContact() {
+        _contact.phoneAccounts.forEach { _activity.unblockNumber(it.number) }
     }
 
     override fun deleteContact() {

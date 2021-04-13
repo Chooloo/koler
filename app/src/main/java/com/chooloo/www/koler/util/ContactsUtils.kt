@@ -7,6 +7,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.BlockedNumberContract
+import android.provider.BlockedNumberContract.BlockedNumbers
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
@@ -67,10 +69,25 @@ fun Activity.setFavorite(contactId: Long, isFavorite: Boolean) =
     runWithPermissions(arrayOf(WRITE_CONTACTS), grantedCallback = {
         contentResolver.update(
             Contacts.CONTENT_URI,
-            ContentValues().apply {
-                put(Contacts.STARRED, if (isFavorite) 1 else 0)
-            },
+            ContentValues().apply { put(Contacts.STARRED, if (isFavorite) 1 else 0) },
             "${Contacts._ID}= $contactId",
             null
         )
     })
+
+fun Context.isNumberBlocked(number: String) = BlockedNumberContract.isBlocked(this, number)
+
+fun Context.blockNumber(number: String) {
+    if (!isNumberBlocked(number)) {
+        val values = ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) }
+        contentResolver.insert(BlockedNumbers.CONTENT_URI, values)
+    }
+}
+
+fun Context.unblockNumber(number: String) {
+    if (isNumberBlocked(number)) {
+        val values = ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) }
+        val uri = contentResolver.insert(BlockedNumbers.CONTENT_URI, values)
+        uri?.let { contentResolver.delete(it, null, null) }
+    }
+}

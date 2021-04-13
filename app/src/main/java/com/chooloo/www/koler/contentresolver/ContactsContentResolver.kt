@@ -41,7 +41,7 @@ open class ContactsContentResolver(
         Contacts.DISPLAY_NAME_PRIMARY,
         Contacts.PHOTO_THUMBNAIL_URI,
         Contacts.STARRED,
-        Contacts.LOOKUP_KEY
+        Contacts.LOOKUP_KEY,
     )
 
     override val selectionArgs: Array<String>? = null

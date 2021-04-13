@@ -8,6 +8,10 @@
 
     <!--region messages-->
     <string name="number_copied_to_clipboard">Number copied to clipboard</string>
+    <string name="contact_blocked">Contact Blocked</string>
+    <string name="contact_unblocked">Contact Unblocked</string>
+    <string name="number_blocked">Number Blocked</string>
+    <string name="number_unblocked">Number Unblocked</string>
     <!--endregion-->
 
     <!--region actions-->

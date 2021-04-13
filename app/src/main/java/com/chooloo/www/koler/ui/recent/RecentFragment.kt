@@ -22,7 +22,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
     private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
-    private val _historyFragment by lazy { RecentsFragment.newInstance(false, false) }
+    private val _isBlocked by lazy { _activity.isNumberBlocked(_recent.number) }
 
     companion object {
         const val TAG = "recent_fragment"
@@ -60,13 +60,19 @@ class RecentFragment : BaseFragment(), RecentContract.View {
             }
             recentTextName.text = _recent.cachedName ?: _recent.number
             recentTextDuration.text = getElapsedTimeString(_recent.duration)
+
+            recentTextBlocked.visibility = if (_isBlocked) VISIBLE else GONE
+            recentButtonBlock.visibility = if (_isBlocked) GONE else VISIBLE
+            recentButtonUnblock.visibility = if (_isBlocked) VISIBLE else GONE
             recentButtonContact.visibility = if (_contact != null) VISIBLE else GONE
             recentButtonAddContact.visibility = if (_contact != null) GONE else VISIBLE
 
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
             recentButtonDelete.setOnClickListener { _presenter.onActionDelete() }
+            recentButtonBlock.setOnClickListener { _presenter.onActionBlockNumber() }
             recentButtonContact.setOnClickListener { _presenter.onActionOpenContact() }
+            recentButtonUnblock.setOnClickListener { _presenter.onActionUnblockNumber() }
             recentButtonAddContact.setOnClickListener { _presenter.onActionAddContact() }
             recentButtonShowHistory.setOnClickListener { _presenter.onActionShowHistory() }
         }
@@ -99,6 +105,10 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         ).show(_activity.supportFragmentManager, ContactFragment.TAG)
     }
 
+    override fun blockNumber() {
+        _activity.blockNumber(_recent.number)
+    }
+
     override fun deleteRecent() {
         AlertDialog.Builder(_activity)
             .setCancelable(true)
@@ -110,5 +120,9 @@ class RecentFragment : BaseFragment(), RecentContract.View {
             .setNegativeButton(getString(R.string.action_no)) { _, _ -> }
             .create()
             .show()
+    }
+
+    override fun unblockNumber() {
+        _activity.unblockNumber(_recent.number)
     }
 }

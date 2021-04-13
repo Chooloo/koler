@@ -9,7 +9,9 @@ interface RecentContract : BaseContract {
         fun callRecent()
         fun openContact()
         fun openHistory()
+        fun blockNumber()
         fun deleteRecent()
+        fun unblockNumber()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
@@ -19,5 +21,7 @@ interface RecentContract : BaseContract {
         fun onActionAddContact()
         fun onActionOpenContact()
         fun onActionShowHistory()
+        fun onActionBlockNumber()
+        fun onActionUnblockNumber()
     }
 }
