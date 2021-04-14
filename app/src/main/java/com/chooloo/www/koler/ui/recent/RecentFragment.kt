@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
@@ -16,6 +15,7 @@ import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
+import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private val _contact by lazy { _activity.lookupContact(_recent.number) }
@@ -110,16 +110,10 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun deleteRecent() {
-        AlertDialog.Builder(_activity)
-            .setCancelable(true)
-            .setTitle(getString(R.string.warning_delete_recent))
-            .setPositiveButton(getString(R.string.action_yes)) { _, _ ->
-                _activity.deleteRecent(_recent.id)
-                finish()
-            }
-            .setNegativeButton(getString(R.string.action_no)) { _, _ -> }
-            .create()
-            .show()
+        _activity.runWithPrompt(R.string.warning_delete_recent) {
+            _activity.deleteRecent(_recent.id)
+            finish()
+        }
     }
 
     override fun unblockNumber() {

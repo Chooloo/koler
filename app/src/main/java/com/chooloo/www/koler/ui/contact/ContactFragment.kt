@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
+import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contact by lazy { _activity.lookupContact(_contactId) }
@@ -115,16 +115,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun deleteContact() {
-        AlertDialog.Builder(_activity)
-            .setCancelable(true)
-            .setTitle(getString(R.string.warning_delete_contact))
-            .setPositiveButton(getString(R.string.action_yes)) { _, _ ->
-                _activity.deleteContact(_contact.id)
-                finish()
-            }
-            .setNegativeButton(getString(R.string.action_no)) { _, _ -> }
-            .create()
-            .show()
+        _activity.runWithPrompt(R.string.warning_delete_contact) {
+            _activity.deleteContact(_contact.id)
+            finish()
+        }
     }
 
     override fun setFavorite(isFavorite: Boolean) {

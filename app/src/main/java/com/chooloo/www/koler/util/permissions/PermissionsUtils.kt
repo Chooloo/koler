@@ -6,8 +6,10 @@ import android.content.Context.TELECOM_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.telecom.TelecomManager
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.chooloo.www.koler.R
 
 const val RC_DEFAULT_DIALER = 0
 const val RC_READ_CONTACTS = 1
@@ -88,5 +90,15 @@ fun Activity.checkPermissions(
         it.putExtra(PermissionsActivity.EXTRA_RATIONAL_MESSAGE, rationaleMessage)
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     })
+}
+
+fun Context.runWithPrompt(titleRes: Int, callback: () -> Unit) {
+    AlertDialog.Builder(this)
+        .setCancelable(true)
+        .setTitle(getString(titleRes))
+        .setPositiveButton(getString(R.string.action_yes)) { _, _ -> callback.invoke() }
+        .setNegativeButton(getString(R.string.action_no)) { _, _ -> }
+        .create()
+        .show()
 }
 //endregion
