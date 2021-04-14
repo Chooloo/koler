@@ -13,7 +13,7 @@ class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
         mvpView?.apply {
             contactName = contact.name
             contact.photoUri?.let { contactImage = Uri.parse(it) }
-            isStarIconActivated = contact.starred
+            isStarIconVisible = contact.starred
         }
     }
 
@@ -44,6 +44,6 @@ class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
     override fun onActionFav() {
         mvpView?.setFavorite(!_contact.starred)
 //        _contact.starred = !_contact.starred
-        mvpView?.isStarIconActivated = _contact.starred
+        mvpView?.isStarIconVisible = _contact.starred
     }
 }

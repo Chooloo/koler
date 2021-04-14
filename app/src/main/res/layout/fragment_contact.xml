@@ -13,10 +13,11 @@
         android:layout_marginBottom="@dimen/default_spacing"
         android:backgroundTint="@color/orange_background"
         android:tint="@color/orange_foreground"
+        android:visibility="gone"
         app:activatedIcon="@drawable/ic_star_black_24dp"
         app:borderWidth="0dp"
         app:fabSize="mini"
-        app:icon="@drawable/ic_star_outline_black_24dp"
+        app:icon="@drawable/ic_star_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +25,7 @@
         android:id="@+id/contact_button_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_spacing_small"
+        android:layout_margin="@dimen/default_spacing"
         app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
         app:fabSize="mini"

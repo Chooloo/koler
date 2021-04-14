@@ -52,11 +52,17 @@ class RecentMenuFragment : MenuFragment(), RecentMenuContract.View {
 
     override fun blockNumber() {
         _number?.let {
-            _activity.runWithPrompt(R.string.warning_block_number) { _activity.blockNumber(it) }
+            _activity.runWithPrompt(R.string.warning_block_number) {
+                _activity.blockNumber(it)
+                showMessage(R.string.number_blocked)
+            }
         }
     }
 
     override fun unblockNumber() {
-        _number?.let { _activity.unblockNumber(it) }
+        _number?.let {
+            _activity.unblockNumber(it)
+            showMessage(R.string.number_unblocked)
+        }
     }
 }

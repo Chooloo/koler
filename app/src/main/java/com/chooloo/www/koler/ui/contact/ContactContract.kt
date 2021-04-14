@@ -8,7 +8,7 @@ interface ContactContract : BaseContract {
     interface View : BaseContract.View {
         var contactName: String?
         var contactImage: Uri?
-        var isStarIconActivated: Boolean
+        var isStarIconVisible: Boolean
 
         fun showMenu()
         fun smsContact()

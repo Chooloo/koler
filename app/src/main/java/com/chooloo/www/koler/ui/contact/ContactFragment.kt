@@ -22,7 +22,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
     private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
-    private val _isBlocked by lazy { _contact.phoneAccounts.all { _activity.isNumberBlocked(it.number) } }
 
     companion object {
         const val TAG = "contact_fragment"
@@ -50,10 +49,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             }
         }
 
-    override var isStarIconActivated: Boolean
-        get() = _binding.contactButtonFav.isActivated
+    override var isStarIconVisible: Boolean
+        get() = _binding.contactButtonFav.visibility == VISIBLE
         set(value) {
-            _binding.contactButtonFav.isActivated = value
+            _binding.contactButtonFav.visibility = if (value) VISIBLE else GONE
         }
 
     override fun onCreateView(
@@ -78,8 +77,8 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             contactButtonFav.setOnClickListener { _presenter.onActionFav() }
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
-            contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
             contactButtonMenu.setOnClickListener { _presenter.onActionMenu() }
+            contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
         }
 
         childFragmentManager
