@@ -12,14 +12,22 @@
     <string name="contact_unblocked">Contact Unblocked</string>
     <string name="number_blocked">Number Blocked</string>
     <string name="number_unblocked">Number Unblocked</string>
+    <string name="contact_set_favorite">Contact Set As Favorite</string>
+    <string name="contact_unset_favorite">Contact Unset As Favorite</string>
     <!--endregion-->
 
     <!--region actions-->
-    <string name="action_answer">Answer</string>
-    <string name="action_hangup">Hangup</string>
     <string name="action_yes">Yap</string>
     <string name="action_no">Nope</string>
+    <string name="action_answer">Answer</string>
+    <string name="action_hangup">Hangup</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_block_number">Block Number</string>
+    <string name="action_block_contact">Block Contact</string>
+    <string name="action_like_contact">Set As Favorite</string>
+    <string name="action_unblock_number">Unblock Number</string>
+    <string name="action_unblock_contact">Unblock Contact</string>
+    <string name="action_unlike_contact">Unset As Favorite</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -37,6 +45,8 @@
     <!--region warning-->
     <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
     <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
+    <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
+    <string name="warning_block_number">Are you sure you want to block this number?</string>
     <!--endregion-->
 
     <!--region urls-->

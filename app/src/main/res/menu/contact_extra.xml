@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/contact_extra_block"
+        android:icon="@drawable/round_block_24"
+        android:title="@string/action_block_contact" />
+
+    <item
+        android:id="@+id/contact_extra_unblock"
+        android:icon="@drawable/round_lock_open_24"
+        android:title="@string/action_unblock_contact" />
+
+    <item
+        android:id="@+id/contact_extra_like"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="@string/action_like_contact" />
+
+    <item
+        android:id="@+id/contact_extra_unlike"
+        android:icon="@drawable/ic_star_outline_black_24dp"
+        android:title="@string/action_unlike_contact" />
+</menu>

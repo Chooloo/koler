@@ -10,12 +10,11 @@ interface ContactContract : BaseContract {
         var contactImage: Uri?
         var isStarIconActivated: Boolean
 
-        fun callContact()
+        fun showMenu()
         fun smsContact()
+        fun callContact()
         fun editContact()
         fun openContact()
-        fun blockContact()
-        fun unblockContact()
         fun deleteContact()
         fun setFavorite(isFavorite: Boolean)
     }
@@ -27,8 +26,7 @@ interface ContactContract : BaseContract {
         fun onActionCall()
         fun onActionEdit()
         fun onActionInfo()
-        fun onActionBlock()
+        fun onActionMenu()
         fun onActionDelete()
-        fun onActionUnblock()
     }
 }

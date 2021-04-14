@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/recent_extra_block"
+        android:icon="@drawable/round_block_24"
+        android:title="@string/action_block_number" />
+    <item
+        android:id="@+id/recent_extra_unblock"
+        android:icon="@drawable/round_lock_open_24"
+        android:title="@string/action_unblock_number" />
+</menu>

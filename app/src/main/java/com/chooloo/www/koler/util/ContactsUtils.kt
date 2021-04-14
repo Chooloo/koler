@@ -18,17 +18,17 @@ import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.util.permissions.runWithPermissions
 
-fun Context.lookupContact(number: String?) =
+fun Context.lookupContactNumber(number: String?) =
     PhoneLookupContentResolver(this, number).content.getOrNull(0)
 
-fun Context.lookupContact(contactId: Long): Contact {
+fun Context.lookupContactId(contactId: Long): Contact {
     val contacts = ContactsContentResolver(this, contactId).content.contacts
     if (contacts.isEmpty()) {
         return Contact.UNKNOWN
     }
     return contacts[0].apply {
         phoneAccounts =
-            PhoneContentResolver(this@lookupContact, contactId).content.phoneAccounts
+            PhoneContentResolver(this@lookupContactId, contactId).content.phoneAccounts
     }
 }
 
@@ -76,6 +76,9 @@ fun Activity.setFavorite(contactId: Long, isFavorite: Boolean) =
     })
 
 fun Context.isNumberBlocked(number: String) = BlockedNumberContract.isBlocked(this, number)
+
+fun Context.isContactBlocked(contact: Contact) =
+    contact.phoneAccounts.all { isNumberBlocked(it.number) }
 
 fun Context.blockNumber(number: String) {
     if (!isNumberBlocked(number)) {

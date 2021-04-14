@@ -12,7 +12,7 @@ import android.telephony.PhoneNumberUtils
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.lookupContact
+import com.chooloo.www.koler.util.lookupContactNumber
 import com.chooloo.www.koler.util.permissions.hasSelfPermission
 import com.chooloo.www.koler.util.permissions.isDefaultDialer
 import com.chooloo.www.koler.util.permissions.requestDefaultDialer
@@ -29,7 +29,7 @@ fun Call.getNormalizedNumber(context: Context): String =
     PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
 
 fun Call.lookupContact(context: Context) =
-    context.lookupContact(getNumber())
+    context.lookupContactNumber(getNumber())
 //endregion
 
 //region activity related functions

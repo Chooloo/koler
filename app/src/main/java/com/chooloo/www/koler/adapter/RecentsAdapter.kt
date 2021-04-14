@@ -7,14 +7,14 @@ import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.ge
 import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString
-import com.chooloo.www.koler.util.lookupContact
+import com.chooloo.www.koler.util.lookupContactNumber
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 class RecentsAdapter(
     private val context: Context
 ) : ListAdapter<Recent>() {
     override fun onBindListItem(listItem: ListItem, item: Recent) {
-        val contact = context.lookupContact(item.number)
+        val contact = context.lookupContactNumber(item.number)
         listItem.apply {
             titleText = contact?.name ?: item.number
             isCompact = KolerPreferences(context).isCompact

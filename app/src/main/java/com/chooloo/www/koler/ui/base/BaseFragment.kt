@@ -2,6 +2,8 @@ package com.chooloo.www.koler.ui.base
 
 import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.KeyEvent.*
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -50,6 +52,13 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
 
     fun reattach() {
         childFragmentManager.beginTransaction().detach(this).attach(this).commitNow()
+    }
+
+    fun pressBack() {
+        _activity.apply {
+            dispatchKeyEvent(KeyEvent(ACTION_DOWN, KEYCODE_BACK))
+            dispatchKeyEvent(KeyEvent(ACTION_UP, KEYCODE_BACK))
+        }
     }
     //endregion
 

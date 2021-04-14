@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.FragmentContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.menu.contact.ContactMenuFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class ContactFragment : BaseFragment(), ContactContract.View {
-    private val _contact by lazy { _activity.lookupContact(_contactId) }
+    private val _contact by lazy { _activity.lookupContactId(_contactId) }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
     private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
@@ -72,16 +74,12 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         }
 
         _binding.apply {
-            contactButtonBlock.visibility = if (_isBlocked) GONE else VISIBLE
-            contactButtonUnblock.visibility = if (_isBlocked) VISIBLE else GONE
-
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonFav.setOnClickListener { _presenter.onActionFav() }
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
-            contactButtonBlock.setOnClickListener { _presenter.onActionBlock() }
             contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
-            contactButtonUnblock.setOnClickListener { _presenter.onActionUnblock() }
+            contactButtonMenu.setOnClickListener { _presenter.onActionMenu() }
         }
 
         childFragmentManager
@@ -90,12 +88,19 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .commitNow()
     }
 
-    override fun callContact() {
-        _contact.phoneAccounts.getOrNull(0)?.let { _activity.call(it.number) }
+    override fun showMenu() {
+        BottomFragment(ContactMenuFragment.newInstance(_contact.id)).show(
+            childFragmentManager,
+            null
+        )
     }
 
     override fun smsContact() {
         _contact.phoneAccounts.getOrNull(0)?.let { _activity.smsNumber(it.number) }
+    }
+
+    override fun callContact() {
+        _contact.phoneAccounts.getOrNull(0)?.let { _activity.call(it.number) }
     }
 
     override fun editContact() {
@@ -104,14 +109,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     override fun openContact() {
         _activity.openContact(_contact.id)
-    }
-
-    override fun blockContact() {
-        _contact.phoneAccounts.forEach { _activity.blockNumber(it.number) }
-    }
-
-    override fun unblockContact() {
-        _contact.phoneAccounts.forEach { _activity.unblockNumber(it.number) }
     }
 
     override fun deleteContact() {

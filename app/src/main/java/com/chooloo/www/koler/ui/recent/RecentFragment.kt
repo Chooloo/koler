@@ -12,17 +12,18 @@ import com.chooloo.www.koler.databinding.FragmentRecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
+import com.chooloo.www.koler.ui.menu.recent.RecentMenuFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    private val _contact by lazy { _activity.lookupContact(_recent.number) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
+    private val _isBlocked by lazy { _activity.isNumberBlocked(_recent.number) }
+    private val _contact by lazy { _activity.lookupContactNumber(_recent.number) }
     private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
-    private val _isBlocked by lazy { _activity.isNumberBlocked(_recent.number) }
 
     companion object {
         const val TAG = "recent_fragment"
@@ -62,20 +63,24 @@ class RecentFragment : BaseFragment(), RecentContract.View {
             recentTextDuration.text = getElapsedTimeString(_recent.duration)
 
             recentTextBlocked.visibility = if (_isBlocked) VISIBLE else GONE
-            recentButtonBlock.visibility = if (_isBlocked) GONE else VISIBLE
-            recentButtonUnblock.visibility = if (_isBlocked) VISIBLE else GONE
             recentButtonContact.visibility = if (_contact != null) VISIBLE else GONE
             recentButtonAddContact.visibility = if (_contact != null) GONE else VISIBLE
 
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
+            recentButtonMenu.setOnClickListener { _presenter.onActionMenu() }
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
             recentButtonDelete.setOnClickListener { _presenter.onActionDelete() }
-            recentButtonBlock.setOnClickListener { _presenter.onActionBlockNumber() }
             recentButtonContact.setOnClickListener { _presenter.onActionOpenContact() }
-            recentButtonUnblock.setOnClickListener { _presenter.onActionUnblockNumber() }
             recentButtonAddContact.setOnClickListener { _presenter.onActionAddContact() }
             recentButtonShowHistory.setOnClickListener { _presenter.onActionShowHistory() }
         }
+    }
+
+    override fun showMenu() {
+        BottomFragment(RecentMenuFragment.newInstance(_recent.number)).show(
+            childFragmentManager,
+            null
+        )
     }
 
     override fun smsRecent() {
@@ -105,18 +110,11 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         ).show(_activity.supportFragmentManager, ContactFragment.TAG)
     }
 
-    override fun blockNumber() {
-        _activity.blockNumber(_recent.number)
-    }
-
     override fun deleteRecent() {
-        _activity.runWithPrompt(R.string.warning_delete_recent) {
-            _activity.deleteRecent(_recent.id)
-            finish()
+        _activity.apply {
+            runWithPrompt(R.string.warning_delete_recent) {
+                deleteRecent(_recent.id)
+            }
         }
-    }
-
-    override fun unblockNumber() {
-        _activity.unblockNumber(_recent.number)
     }
 }

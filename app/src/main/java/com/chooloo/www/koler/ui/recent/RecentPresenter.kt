@@ -1,9 +1,12 @@
 package com.chooloo.www.koler.ui.recent
 
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class RecentPresenter<V : RecentContract.View> : BasePresenter<V>(), RecentContract.Presenter<V> {
+    override fun onActionMenu() {
+        mvpView?.showMenu()
+    }
+
     override fun onActionSms() {
         mvpView?.smsRecent()
     }
@@ -26,19 +29,5 @@ class RecentPresenter<V : RecentContract.View> : BasePresenter<V>(), RecentContr
 
     override fun onActionShowHistory() {
         mvpView?.openHistory()
-    }
-
-    override fun onActionBlockNumber() {
-        mvpView?.apply {
-            blockNumber()
-            showMessage(R.string.number_blocked)
-        }
-    }
-
-    override fun onActionUnblockNumber() {
-        mvpView?.apply {
-            unblockNumber()
-            showMessage(R.string.number_unblocked)
-        }
     }
 }
