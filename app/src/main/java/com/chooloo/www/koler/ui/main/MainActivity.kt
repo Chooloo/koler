@@ -60,7 +60,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-//        ignoreEditTextFocus(event)
+        ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 

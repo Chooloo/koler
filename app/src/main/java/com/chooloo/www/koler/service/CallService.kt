@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.telecom.Call
+import android.telecom.DisconnectCause
 import android.telecom.InCallService
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.ui.call.CallActivity
@@ -44,6 +45,13 @@ class CallService : InCallService() {
         super.onCallRemoved(call)
         CallManager.sCall = null
         cancelCallNotification()
+        call.details?.let {
+            if (call.details.disconnectCause.code == DisconnectCause.MISSED) {
+                CallNotification(applicationContext).show(
+                    CallDetails.fromCall(call, applicationContext)
+                )
+            }
+        }
     }
 
     private fun cancelCallNotification() {

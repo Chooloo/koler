@@ -11,6 +11,8 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
+import android.telecom.Call
+import android.telecom.DisconnectCause
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.chooloo.www.koler.R
@@ -96,7 +98,8 @@ class CallNotification(private val context: Context) {
             .setPriority(PRIORITY)
             .setContentText(
                 context.getString(
-                    when (callDetails.callState) {
+                    if (callDetails.details.disconnectCause.code == DisconnectCause.MISSED) R.string.call_status_missed
+                    else when (callDetails.callState) {
                         ACTIVE -> R.string.call_status_active
                         DISCONNECTED -> R.string.call_status_disconnected
                         RINGING -> R.string.call_status_incoming
@@ -112,7 +115,7 @@ class CallNotification(private val context: Context) {
             .setColor(context.getAttrColor(R.attr.colorSecondary))
             .setOngoing(true)
             .setColorized(true)
-            .setContentTitle(callDetails.phoneAccount?.name ?: callDetails.phoneAccount?.number)
+            .setContentTitle(callDetails.phoneAccount.name ?: callDetails.phoneAccount.number)
         if (callDetails.callState == RINGING) {
             builder.addAction(R.drawable.ic_call_black_24dp, sAnswer, _answerPendingIntent)
         }

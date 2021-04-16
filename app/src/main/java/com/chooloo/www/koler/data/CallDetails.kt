@@ -8,7 +8,8 @@ import com.chooloo.www.koler.util.call.lookupContact
 
 data class CallDetails(
     val callState: CallState,
-    val phoneAccount: PhoneLookupAccount
+    val details: Call.Details,
+    val phoneAccount: PhoneLookupAccount,
 ) {
     enum class CallState(val state: Int) {
         ACTIVE(Call.STATE_ACTIVE),
@@ -28,6 +29,7 @@ data class CallDetails(
         fun fromCall(call: Call, context: Context) = CallDetails(
             callState = CallState.values().associateBy(CallState::state)
                 .getOrDefault(call.state, CallState.UNKNOWN),
+            details = call.details,
             phoneAccount = call.lookupContact(context)
                 ?: PhoneLookupAccount(
                     name = null,

@@ -74,6 +74,7 @@
     <string name="call_status_incoming">Incoming Call</string>
     <string name="call_status_disconnected">Call ended</string>
     <string name="call_status_active">Call In Progress</string>
+    <string name="call_status_missed">Missed Call</string>
     <!--endregion-->
 
     <!--region pref key-->
