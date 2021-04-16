@@ -8,7 +8,7 @@
     <!-- appbar -->
     <include
         android:id="@+id/appbar_main"
-        layout="@layout/appbar_main" />
+        layout="@layout/appbar" />
 
     <!-- view pager -->
     <androidx.viewpager2.widget.ViewPager2

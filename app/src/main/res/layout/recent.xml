@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_spacing_small"
         app:backgroundTint="?colorPrimarySurface"
+        app:borderWidth="0dp"
         app:fabSize="mini"
         app:icon="@drawable/ic_more_vert_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
