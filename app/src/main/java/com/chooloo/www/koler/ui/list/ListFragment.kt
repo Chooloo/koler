@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.databinding.FragmentItemsBinding
+import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.permissions.runWithPermissions
@@ -17,7 +17,7 @@ import com.chooloo.www.koler.util.permissions.runWithPermissions
 abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
     ListContract.View<ItemType> {
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
-    private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
+    private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
 
     override val itemCount get() = adapter.itemCount

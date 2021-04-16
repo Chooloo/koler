@@ -7,7 +7,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.databinding.FragmentContactBinding
+import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.menu.contact.ContactMenuFragment
@@ -20,7 +20,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contact by lazy { _activity.lookupContactId(_contactId) }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
-    private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
+    private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
 
     companion object {

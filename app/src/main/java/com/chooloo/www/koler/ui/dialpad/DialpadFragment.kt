@@ -13,7 +13,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.databinding.FragmentDialpadBinding
+import com.chooloo.www.koler.databinding.DialpadBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
@@ -25,7 +25,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private val _animationManager by lazy { AnimationManager(_activity) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
-    private val _binding by lazy { FragmentDialpadBinding.inflate(layoutInflater) }
+    private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
 

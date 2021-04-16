@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
-import com.chooloo.www.koler.databinding.FragmentRecentBinding
+import com.chooloo.www.koler.databinding.RecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
@@ -22,7 +22,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
     private val _isBlocked by lazy { _activity.isNumberBlocked(_recent.number) }
     private val _contact by lazy { _activity.lookupContactNumber(_recent.number) }
-    private val _binding by lazy { FragmentRecentBinding.inflate(layoutInflater) }
+    private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
 
     companion object {

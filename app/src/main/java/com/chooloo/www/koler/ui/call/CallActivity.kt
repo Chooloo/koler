@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
-import com.chooloo.www.koler.databinding.ActivityCallBinding
+import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 import com.chooloo.www.koler.util.AnimationManager
@@ -18,7 +18,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     private val _animationManager by lazy { AnimationManager(this) }
     private val _presenter by lazy { CallPresenter<CallContract.View>() }
     private val _proximitySensor by lazy { ProximitySensor(this) }
-    private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
+    private val _binding by lazy { CallBinding.inflate(layoutInflater) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
             override fun onCallDetailsChanged(callDetails: CallDetails) {

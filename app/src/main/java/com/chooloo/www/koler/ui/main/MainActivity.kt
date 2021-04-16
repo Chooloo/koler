@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
-import com.chooloo.www.koler.databinding.ActivityMainBinding
+import com.chooloo.www.koler.databinding.MainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
@@ -22,7 +22,7 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
     private val _presenter by lazy { MainPresenter<MainContract.View>() }
-    private val _binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val _binding by lazy { MainBinding.inflate(layoutInflater) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
     override var selectedPage: Int
@@ -60,7 +60,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        ignoreEditTextFocus(event)
+//        ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 
