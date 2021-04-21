@@ -29,6 +29,7 @@ class AudioManager(private val context: Context) {
     var isSpeakerOn: Boolean
         get() = _audioManager.isSpeakerphoneOn
         set(value) {
+            audioMode = AudioMode.IN_CALL
             _audioManager.isSpeakerphoneOn = value
         }
 

@@ -55,10 +55,10 @@ class ContactMenuFragment : MenuFragment(), ContactMenuContract.View {
     }
 
     override fun setContactFavorite() {
-        _activity.setFavorite(_contact.id, true)
+        _activity.setContactFavorite(_contact.id, true)
     }
 
     override fun unsetContactFavorite() {
-        _activity.setFavorite(_contact.id, false)
+        _activity.setContactFavorite(_contact.id, false)
     }
 }

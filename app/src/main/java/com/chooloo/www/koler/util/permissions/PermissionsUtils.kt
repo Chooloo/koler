@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.telecom.TelecomManager
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.R
 
@@ -38,10 +37,6 @@ fun Activity.hasSelfPermission(permission: String) =
 
 fun Activity.hasSelfPermissions(permissions: Array<String>) =
     permissions.all { hasSelfPermission(it) }
-
-fun Activity.requestPermissions(permissions: Array<String>) {
-    ActivityCompat.requestPermissions(this, permissions, 0)
-}
 
 fun Fragment.runWithPermissions(
     permissions: Array<String>,
@@ -85,11 +80,12 @@ fun Activity.checkPermissions(
         sBlockedCallback = blockedCallback
         sDeniedCallback = deniedCallback
     }
-    startActivity(Intent(this, PermissionsActivity::class.java).also {
-        it.putExtra(PermissionsActivity.EXTRA_PERMISSIONS, permissions)
-        it.putExtra(PermissionsActivity.EXTRA_RATIONAL_MESSAGE, rationaleMessage)
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    })
+    val intent = Intent(this, PermissionsActivity::class.java).apply {
+        putExtra(PermissionsActivity.EXTRA_PERMISSIONS, permissions)
+        putExtra(PermissionsActivity.EXTRA_RATIONAL_MESSAGE, rationaleMessage)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    startActivity(intent)
 }
 
 fun Context.runWithPrompt(titleRes: Int, callback: () -> Unit) {

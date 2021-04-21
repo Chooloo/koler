@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.util
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -20,21 +21,18 @@ fun Context.hasNavBar(): Boolean {
 }
 
 fun Context.navBarHeight(): Int {
-    resources.getIdentifier("navigation_bar_height", "dimen", "android").also {
-        return if (it > 0) resources.getDimensionPixelSize(it) else 0
-    }
+    val height = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    return if (height > 0) resources.getDimensionPixelSize(height) else 0
 }
 
-fun Context.getSelectableItemBackgroundDrawable() = ContextCompat.getDrawable(
-    this,
-    TypedValue().also {
-        theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
-    }.resourceId
-)
+fun Context.getSelectableItemBackgroundDrawable(): Drawable? {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
+    return ContextCompat.getDrawable(this, typedValue.resourceId)
+}
 
-fun Context.getSelectableItemBackgroundBorderlessDrawable() = ContextCompat.getDrawable(
-    this,
-    TypedValue().also {
-        theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, it, true)
-    }.resourceId
-)
+fun Context.getSelectableItemBackgroundBorderlessDrawable(): Drawable? {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, typedValue, true)
+    return ContextCompat.getDrawable(this, typedValue.resourceId)
+}

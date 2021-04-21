@@ -3,10 +3,11 @@ package com.chooloo.www.koler.util
 import android.content.Context
 import android.media.AudioManager.STREAM_DTMF
 import android.media.ToneGenerator
+import android.media.ToneGenerator.*
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.KeyEvent
+import android.view.KeyEvent.*
 import com.chooloo.www.koler.util.audio.AudioManager
 import java.util.*
 
@@ -18,7 +19,22 @@ const val SHORT_VIBRATE_LENGTH: Long = 20
 const val DEFAULT_VIBRATE_LENGTH: Long = 100
 
 val toneGeneratorLock = Any()
-
+val keyToTone by lazy {
+    HashMap<Int, Int>().apply {
+        put(KEYCODE_0, TONE_DTMF_0)
+        put(KEYCODE_1, TONE_DTMF_1)
+        put(KEYCODE_2, TONE_DTMF_2)
+        put(KEYCODE_3, TONE_DTMF_3)
+        put(KEYCODE_4, TONE_DTMF_4)
+        put(KEYCODE_5, TONE_DTMF_5)
+        put(KEYCODE_6, TONE_DTMF_6)
+        put(KEYCODE_7, TONE_DTMF_7)
+        put(KEYCODE_8, TONE_DTMF_8)
+        put(KEYCODE_9, TONE_DTMF_9)
+        put(KEYCODE_POUND, TONE_DTMF_P)
+        put(KEYCODE_STAR, TONE_DTMF_S)
+    }
+}
 
 /**
  * Play the specified tone for the specified milliseconds
@@ -54,19 +70,6 @@ fun Context.playTone(tone: Int) {
 }
 
 fun Context.playToneByKey(keyCode: Int) {
-    val keyToTone = HashMap<Int, Int>()
-    keyToTone[KeyEvent.KEYCODE_0] = ToneGenerator.TONE_DTMF_0
-    keyToTone[KeyEvent.KEYCODE_1] = ToneGenerator.TONE_DTMF_1
-    keyToTone[KeyEvent.KEYCODE_2] = ToneGenerator.TONE_DTMF_2
-    keyToTone[KeyEvent.KEYCODE_3] = ToneGenerator.TONE_DTMF_3
-    keyToTone[KeyEvent.KEYCODE_4] = ToneGenerator.TONE_DTMF_4
-    keyToTone[KeyEvent.KEYCODE_5] = ToneGenerator.TONE_DTMF_5
-    keyToTone[KeyEvent.KEYCODE_6] = ToneGenerator.TONE_DTMF_6
-    keyToTone[KeyEvent.KEYCODE_7] = ToneGenerator.TONE_DTMF_7
-    keyToTone[KeyEvent.KEYCODE_8] = ToneGenerator.TONE_DTMF_8
-    keyToTone[KeyEvent.KEYCODE_9] = ToneGenerator.TONE_DTMF_9
-    keyToTone[KeyEvent.KEYCODE_POUND] = ToneGenerator.TONE_DTMF_P
-    keyToTone[KeyEvent.KEYCODE_STAR] = ToneGenerator.TONE_DTMF_S
     playTone(keyToTone.getOrDefault(keyCode, -1))
 }
 

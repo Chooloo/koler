@@ -9,8 +9,5 @@ fun Context.deleteRecent(recentId: Long) {
     contentResolver.delete(CallLog.Calls.CONTENT_URI, "${CallLog.Calls._ID} = $recentId", null)
 }
 
-fun Context.getRecentById(recentId: Long): Recent {
-    RecentsContentResolver(this, recentId).content.recents.also {
-        return if (it.isNotEmpty()) it[0] else Recent.UNKNOWN
-    }
-}
+fun Context.getRecentById(recentId: Long) =
+    RecentsContentResolver(this, recentId).content.recents.getOrNull(0) ?: Recent.UNKNOWN

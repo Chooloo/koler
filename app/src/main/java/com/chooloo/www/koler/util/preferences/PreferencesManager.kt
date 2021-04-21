@@ -43,44 +43,34 @@ class PreferencesManager(
         _pref.edit().putLong(_context.getString(key), value).apply()
     }
 
-    fun getInt(@StringRes key: Int, defaultValue: Int): Int {
-        return try {
-            _pref.getInt(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
+    fun getInt(@StringRes key: Int, defaultValue: Int) = try {
+        _pref.getInt(_context.getString(key), defaultValue)
+    } catch (e: ClassCastException) {
+        defaultValue
     }
 
-    fun getString(@StringRes key: Int, defaultValue: String? = null): String? {
-        return try {
-            _pref.getString(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
+    fun getString(@StringRes key: Int, defaultValue: String? = null) = try {
+        _pref.getString(_context.getString(key), defaultValue)
+    } catch (e: ClassCastException) {
+        defaultValue
     }
 
-    fun getBoolean(@StringRes key: Int, defaultValue: Boolean): Boolean {
-        return try {
-            _pref.getBoolean(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
+    fun getBoolean(@StringRes key: Int, defaultValue: Boolean) = try {
+        _pref.getBoolean(_context.getString(key), defaultValue)
+    } catch (e: ClassCastException) {
+        defaultValue
     }
 
-    fun getFloat(@StringRes key: Int, defaultValue: Float): Float {
-        return try {
-            _pref.getFloat(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
+    fun getFloat(@StringRes key: Int, defaultValue: Float) = try {
+        _pref.getFloat(_context.getString(key), defaultValue)
+    } catch (e: ClassCastException) {
+        defaultValue
     }
 
-    fun getLong(@StringRes key: Int, defaultValue: Long): Long {
-        return try {
-            _pref.getLong(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
+    fun getLong(@StringRes key: Int, defaultValue: Long) = try {
+        _pref.getLong(_context.getString(key), defaultValue)
+    } catch (e: ClassCastException) {
+        defaultValue
     }
 
 }

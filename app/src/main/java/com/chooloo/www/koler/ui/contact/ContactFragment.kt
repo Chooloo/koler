@@ -22,6 +22,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
+    private val _firstPhone by lazy { _contact.phoneAccounts.getOrNull(0) }
 
     companion object {
         const val TAG = "contact_fragment"
@@ -95,11 +96,11 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun smsContact() {
-        _contact.phoneAccounts.getOrNull(0)?.let { _activity.smsNumber(it.number) }
+        _firstPhone?.let { _activity.smsNumber(it.number) }
     }
 
     override fun callContact() {
-        _contact.phoneAccounts.getOrNull(0)?.let { _activity.call(it.number) }
+        _firstPhone?.let { _activity.call(it.number) }
     }
 
     override fun editContact() {
@@ -118,6 +119,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun setFavorite(isFavorite: Boolean) {
-        _activity.setFavorite(_contact.id, isFavorite)
+        _activity.setContactFavorite(_contact.id, isFavorite)
     }
 }

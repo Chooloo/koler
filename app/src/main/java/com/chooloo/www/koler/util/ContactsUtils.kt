@@ -6,6 +6,7 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.*
 import android.net.Uri
 import android.provider.BlockedNumberContract
 import android.provider.BlockedNumberContract.BlockedNumbers
@@ -23,49 +24,55 @@ fun Context.lookupContactNumber(number: String?) =
 
 fun Context.lookupContactId(contactId: Long): Contact {
     val contacts = ContactsContentResolver(this, contactId).content.contacts
-    if (contacts.isEmpty()) {
-        return Contact.UNKNOWN
-    }
-    return contacts[0].apply {
-        phoneAccounts =
-            PhoneContentResolver(this@lookupContactId, contactId).content.phoneAccounts
+    return if (contacts.isEmpty()) {
+        Contact.UNKNOWN
+    } else {
+        contacts[0].apply {
+            phoneAccounts =
+                PhoneContentResolver(this@lookupContactId, contactId).content.phoneAccounts
+        }
     }
 }
 
-fun Context.lookupPhoneAccounts(contactId: Long) =
-    PhoneContentResolver(this, contactId).content
-
 fun Context.openContact(contactId: Long) {
-    startActivity(Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
-    })
+    val intent = Intent(ACTION_VIEW)
+    intent.data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
+    startActivity(intent)
 }
 
 fun Context.addContact(number: String) {
-    startActivity(Intent(Intent.ACTION_INSERT).apply {
+    val intent = Intent(ACTION_INSERT).apply {
         type = Contacts.CONTENT_TYPE
         putExtra(ContactsContract.Intents.Insert.PHONE, number)
-    })
+    }
+    startActivity(intent)
 }
 
 fun Context.editContact(contactId: Long) {
-    startActivity(Intent(Intent.ACTION_EDIT, Contacts.CONTENT_URI).apply {
-        data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
-    })
+    val intent = Intent(ACTION_EDIT, Contacts.CONTENT_URI)
+    intent.data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
+    startActivity(intent)
 }
 
-fun Activity.deleteContact(contactId: Long) =
+fun Activity.deleteContact(contactId: Long) {
     runWithPermissions(arrayOf(WRITE_CONTACTS), grantedCallback = {
-        val uri = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
-        contentResolver.delete(uri, null, null)
+        contentResolver.delete(
+            Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString()),
+            null,
+            null
+        )
     })
+}
 
 fun Context.smsNumber(number: String?) {
-    val uri = Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
-    startActivity(Intent(Intent.ACTION_SENDTO, uri))
+    val intent = Intent(
+        ACTION_SENDTO,
+        Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
+    )
+    startActivity(intent)
 }
 
-fun Activity.setFavorite(contactId: Long, isFavorite: Boolean) =
+fun Activity.setContactFavorite(contactId: Long, isFavorite: Boolean) =
     runWithPermissions(arrayOf(WRITE_CONTACTS), grantedCallback = {
         contentResolver.update(
             Contacts.CONTENT_URI,
@@ -75,22 +82,26 @@ fun Activity.setFavorite(contactId: Long, isFavorite: Boolean) =
         )
     })
 
-fun Context.isNumberBlocked(number: String) = BlockedNumberContract.isBlocked(this, number)
+fun Context.isNumberBlocked(number: String) =
+    BlockedNumberContract.isBlocked(this, number)
 
 fun Context.isContactBlocked(contact: Contact) =
     contact.phoneAccounts.all { isNumberBlocked(it.number) }
 
 fun Context.blockNumber(number: String) {
     if (!isNumberBlocked(number)) {
-        val values = ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) }
+        val values = ContentValues()
+        values.put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number)
         contentResolver.insert(BlockedNumbers.CONTENT_URI, values)
     }
 }
 
 fun Context.unblockNumber(number: String) {
     if (isNumberBlocked(number)) {
-        val values = ContentValues().apply { put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number) }
-        val uri = contentResolver.insert(BlockedNumbers.CONTENT_URI, values)
-        uri?.let { contentResolver.delete(it, null, null) }
+        val values = ContentValues()
+        values.put(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number)
+        contentResolver.insert(BlockedNumbers.CONTENT_URI, values)?.let {
+            contentResolver.delete(it, null, null)
+        }
     }
 }
