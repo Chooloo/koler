@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.base
 
+import android.os.Bundle
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 

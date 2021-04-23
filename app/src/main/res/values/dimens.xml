@@ -13,7 +13,7 @@
     <dimen name="image_size_big">90dp</dimen>
     <dimen name="corner_radius">12dp</dimen>
     <dimen name="default_spacing">20dp</dimen>
-    <dimen name="default_spacing_small">12dp</dimen>
+    <dimen name="default_spacing_small">10dp</dimen>
     <dimen name="default_spacing_big">32dp</dimen>
     <!--endregion-->
 

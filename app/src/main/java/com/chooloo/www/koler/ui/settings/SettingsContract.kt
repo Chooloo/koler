@@ -30,17 +30,17 @@ class SettingsContract : BaseContract {
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun refresh()
-        fun onClickedRate(): Boolean
-        fun onClickedEmail(): Boolean
-        fun onClickedColor(): Boolean
-        fun onClickedDonate(): Boolean
-        fun onClickedReport(): Boolean
-        fun onManageBlocked(): Boolean
-        fun onSelectedColor(color: Int): Boolean
-        fun onSelectedSim(newValue: Any?): Boolean
-        fun onToggledAnimation(isToggle: Boolean): Boolean
-        fun onSelectedDefaultPage(pageKey: String): Boolean
-        fun onSelectedRecordFormat(newValue: Any?): Boolean
-        fun onToggledCompactMode(isToggle: Boolean): Boolean
+        fun onClickedRate()
+        fun onClickedEmail()
+        fun onClickedColor()
+        fun onClickedDonate()
+        fun onClickedReport()
+        fun onClickedManageBlocked()
+        fun onSelectedColor(color: Int)
+        fun onSelectedSim(newValue: Any?)
+        fun onToggledAnimation(isToggle: Boolean)
+        fun onSelectedDefaultPage(pageKey: String)
+        fun onSelectedRecordFormat(newValue: Any?)
+        fun onToggledCompactMode(isToggle: Boolean)
     }
 }

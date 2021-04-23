@@ -22,12 +22,6 @@
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
     <string name="action_cancel">Cancel</string>
-    <string name="action_block_number">Block Number</string>
-    <string name="action_block_contact">Block Contact</string>
-    <string name="action_like_contact">Set As Favorite</string>
-    <string name="action_unblock_number">Unblock Number</string>
-    <string name="action_unblock_contact">Unblock Contact</string>
-    <string name="action_unlike_contact">Unset As Favorite</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -89,6 +83,12 @@
     <string name="pref_key_default_page">default_page</string>
     <string name="pref_key_record_format">record_format</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_set_favorite">set_favorite</string>
+    <string name="pref_key_unset_favorite">unset_favorite</string>
+    <string name="pref_key_block_contact">block_contact</string>
+    <string name="pref_key_unblock_contact">unblock_contact</string>
+    <string name="pref_key_block_number">block_number</string>
+    <string name="pref_key_unblock_number">unblock_number</string>
     <!--endregion-->
 
     <!--region pref title-->
@@ -102,6 +102,12 @@
     <string name="pref_title_sim_select">Sim Selection</string>
     <string name="pref_title_default_page">Default Page</string>
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
+    <string name="pref_title_set_favorite">Set as Favorite</string>
+    <string name="pref_title_unset_favorite">Unset as Favorite</string>
+    <string name="pref_title_block_contact">Block Contact</string>
+    <string name="pref_title_unblock_contact">Unblock Contact</string>
+    <string name="pref_title_block_number">Block Number</string>
+    <string name="pref_title_unblock_number">Unblock Number</string>
     <!--endregion-->
 
     <!--region pref default value-->

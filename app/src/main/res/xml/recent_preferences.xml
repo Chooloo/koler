@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/round_block_24"
+        android:key="@string/pref_key_block_number"
+        android:title="@string/pref_title_block_number" />
+
+    <Preference
+        android:icon="@drawable/round_lock_open_24"
+        android:key="@string/pref_key_unblock_number"
+        android:title="@string/pref_title_unblock_number" />
+</PreferenceScreen>

@@ -17,8 +17,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class BottomFragment<FragmentType : Fragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
-    private val _activity by lazy { context as BaseActivity }
+    protected val _activity by lazy { context as BaseActivity }
     private val _binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
+
+    val argsSafely: Bundle
+        get() = arguments ?: Bundle()
 
     //region lifecycle
     override fun onAttach(context: Context) {
@@ -89,10 +92,6 @@ class BottomFragment<FragmentType : Fragment>(
     }
 
     override fun getColor(color: Int) = _activity.getColor(color)
-
-    private val argsSafely: Bundle
-        get() = arguments
-            ?: throw IllegalArgumentException("Always create fragment with newInstance()")
 
     fun setAlwaysExpanded() {
         dialog?.setOnShowListener {

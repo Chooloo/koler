@@ -13,7 +13,7 @@ import com.chooloo.www.koler.util.callrecord.CallRecorder
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     private val _callRecorder by lazy { CallRecorder(_activity) }
-    private val _audioManager by lazy { AudioManager(requireContext()) }
+    private val _audioManager by lazy { AudioManager(_activity.applicationContext) }
     private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
     private val _binding by lazy { CallActionsBinding.inflate(layoutInflater) }
 

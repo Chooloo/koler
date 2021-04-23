@@ -12,7 +12,7 @@ import com.chooloo.www.koler.databinding.RecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
-import com.chooloo.www.koler.ui.menu.recent.RecentMenuFragment
+import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
@@ -77,7 +77,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun showMenu() {
-        BottomFragment(RecentMenuFragment.newInstance(_recent.number)).show(
+        BottomFragment(RecentPreferencesFragment.newInstance(_recent.number)).show(
             childFragmentManager,
             null
         )

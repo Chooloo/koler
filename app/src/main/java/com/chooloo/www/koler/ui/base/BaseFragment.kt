@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment : Fragment(), BaseContract.View {
     protected val _activity by lazy { context as BaseActivity }
 
+    val argsSafely: Bundle
+        get() = arguments ?: Bundle()
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context !is BaseActivity) {
@@ -61,7 +64,4 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
         }
     }
     //endregion
-
-    protected val argsSafely: Bundle
-        get() = arguments ?: Bundle()
 }

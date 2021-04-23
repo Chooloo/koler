@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
+import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
 import com.chooloo.www.koler.util.sizeInDp
@@ -90,7 +91,8 @@ class ListItem : LinearLayout {
             background = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
-            setPadding(spacingBig, spacingSmall, spacing, spacingSmall)
+            setPadding(spacingSmall)
+//            setPadding(spacingSmall, spacingSmall, spacingSmall, spacingSmall)
             addView(image)
             addView(title)
             addView(caption)
@@ -185,6 +187,13 @@ class ListItem : LinearLayout {
                 header.setPadding(spacing, spacingSmall, context.sizeInDp(5), spacingSmall)
             }
         }
+
+
+    fun setLeftPadding(padding: Int) {
+        personLayout.also {
+            it.setPadding(padding, it.paddingTop, it.paddingRight, it.paddingBottom)
+        }
+    }
 
     fun setImageUri(imageUri: Uri?) {
         image.setImageURI(imageUri)

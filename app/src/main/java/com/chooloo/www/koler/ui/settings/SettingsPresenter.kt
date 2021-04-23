@@ -11,37 +11,31 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
         mvpView?.goToMainActivity()
     }
 
-    override fun onClickedRate() = run {
+    override fun onClickedRate() {
         mvpView?.rateApp()
-        true
     }
 
-    override fun onClickedEmail() = run {
+    override fun onClickedEmail() {
         mvpView?.sendEmail()
-        true
     }
 
-    override fun onClickedColor() = run {
+    override fun onClickedColor() {
         mvpView?.openColorPicker()
-        true
     }
 
-    override fun onClickedDonate() = run {
+    override fun onClickedDonate() {
         mvpView?.donate()
-        true
     }
 
-    override fun onClickedReport() = run {
+    override fun onClickedReport() {
         mvpView?.reportBug()
-        true
     }
 
-    override fun onManageBlocked() = run {
+    override fun onClickedManageBlocked() {
         mvpView?.manageBlockedNumbers()
-        true
     }
 
-    override fun onSelectedColor(color: Int) = run {
+    override fun onSelectedColor(color: Int) {
         mvpView?.setPrefAccentTheme(
             when (color) {
                 mvpView?.getColor(R.color.blue_background) -> BLUE
@@ -53,32 +47,26 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
             }
         )
         mvpView?.goToMainActivity()
-        true
     }
 
-    override fun onSelectedSim(newValue: Any?) = run {
-        true
+    override fun onSelectedSim(newValue: Any?) {
     }
 
-    override fun onSelectedRecordFormat(newValue: Any?) = run {
-        true
+    override fun onSelectedRecordFormat(newValue: Any?) {
     }
 
-    override fun onToggledAnimation(isToggle: Boolean) = run {
+    override fun onToggledAnimation(isToggle: Boolean) {
         mvpView?.setPrefAnimations(isToggle)
         refresh()
-        true
     }
 
-    override fun onToggledCompactMode(isToggle: Boolean) = run {
+    override fun onToggledCompactMode(isToggle: Boolean) {
         mvpView?.setPrefCompact(isToggle)
         refresh()
-        true
     }
 
-    override fun onSelectedDefaultPage(pageKey: String) = run {
+    override fun onSelectedDefaultPage(pageKey: String) {
         mvpView?.setPrefDefaultPage(Page.fromKey(pageKey))
         refresh()
-        true
     }
 }

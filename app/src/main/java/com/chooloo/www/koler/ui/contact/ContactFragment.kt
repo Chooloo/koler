@@ -10,7 +10,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
-import com.chooloo.www.koler.ui.menu.contact.ContactMenuFragment
+import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
@@ -88,7 +88,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun showMenu() {
-        BottomFragment(ContactMenuFragment.newInstance(_contact.id)).show(
+        BottomFragment(ContactPreferencesFragment.newInstance(_contact.id)).show(
             childFragmentManager,
             null
         )
