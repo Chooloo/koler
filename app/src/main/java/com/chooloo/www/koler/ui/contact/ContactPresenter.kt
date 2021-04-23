@@ -42,8 +42,10 @@ class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
     }
 
     override fun onActionFav() {
-        mvpView?.setFavorite(!_contact.starred)
+        mvpView?.apply {
+            setFavorite(!_contact.starred)
+            isStarIconVisible = _contact.starred
 //        _contact.starred = !_contact.starred
-        mvpView?.isStarIconVisible = _contact.starred
+        }
     }
 }

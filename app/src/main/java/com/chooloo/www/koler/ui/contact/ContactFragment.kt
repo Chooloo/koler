@@ -75,7 +75,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
-            contactButtonFav.setOnClickListener { _presenter.onActionFav() }
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
             contactButtonMenu.setOnClickListener { _presenter.onActionMenu() }

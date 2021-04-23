@@ -37,9 +37,9 @@ class RecentMenuFragment : MenuFragment(), RecentMenuContract.View {
 
     override fun onAttachMenu(menu: Menu) {
         when {
-            _number == null -> {
-                menu.getItem(R.id.recent_extra_block).isEnabled = false
-                menu.removeItem(R.id.recent_extra_unblock)
+            _number == null -> menu.apply {
+                getItem(R.id.recent_extra_block).isEnabled = false
+                removeItem(R.id.recent_extra_unblock)
             }
             _activity.isNumberBlocked(_number!!) -> menu.removeItem(R.id.recent_extra_block)
             else -> menu.removeItem(R.id.recent_extra_unblock)
