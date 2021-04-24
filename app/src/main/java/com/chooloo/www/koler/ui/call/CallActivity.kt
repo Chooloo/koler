@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.call
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
@@ -8,12 +9,10 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.ProximitySensor
+import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.CallManager
-import com.chooloo.www.koler.util.disableKeyboard
-import com.chooloo.www.koler.util.setShowWhenLocked
 
+@SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
     private val _animationManager by lazy { AnimationManager(this) }
     private val _presenter by lazy { CallPresenter<CallContract.View>() }
@@ -63,6 +62,15 @@ class CallActivity : BaseActivity(), CallContract.View {
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
+            root.setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
+                override fun onSwipeLeft() {
+                    _presenter.onScreenSwipeLeft()
+                }
+
+                override fun onSwipeRight() {
+                    _presenter.onScreenSwipeRight()
+                }
+            })
         }
 
         setShowWhenLocked()

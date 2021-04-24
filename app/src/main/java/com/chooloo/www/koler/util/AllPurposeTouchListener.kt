@@ -9,9 +9,9 @@ import android.view.View
 import android.view.View.OnTouchListener
 import kotlin.math.abs
 
-class AllPurposeTouchListener(ctx: Context?) : OnTouchListener {
+open class AllPurposeTouchListener(context: Context) : OnTouchListener {
     private val _gestureListener by lazy { GestureListener() }
-    private val _gestureDetector by lazy { GestureDetector(ctx, _gestureListener) }
+    private val _gestureDetector by lazy { GestureDetector(context, _gestureListener) }
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
@@ -68,11 +68,11 @@ class AllPurposeTouchListener(ctx: Context?) : OnTouchListener {
         }
     }
 
-    fun onSwipeTop() {}
-    fun onSwipeLeft() {}
-    fun onSwipeRight() {}
-    fun onSwipeBottom() {}
-    fun onLongPress(v: View?) {}
-    fun onSingleTapUp(v: View?) = false
-    fun onSingleTapConfirmed(v: View?) = false
+    open fun onSwipeTop() {}
+    open fun onSwipeLeft() {}
+    open fun onSwipeRight() {}
+    open fun onSwipeBottom() {}
+    open fun onLongPress(v: View?) {}
+    open fun onSingleTapUp(v: View?) = false
+    open fun onSingleTapConfirmed(v: View?) = false
 }

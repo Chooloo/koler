@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
-import com.chooloo.www.koler.ui.base.BaseContract
 import com.chooloo.www.koler.data.CallDetails
+import com.chooloo.www.koler.ui.base.BaseContract
 
 interface CallContract : BaseContract {
     interface View : BaseContract.View {
@@ -20,6 +20,8 @@ interface CallContract : BaseContract {
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onAnswerClick()
         fun onRejectClick()
+        fun onScreenSwipeLeft()
+        fun onScreenSwipeRight()
         fun onCallDetailsChanged(callDetails: CallDetails?)
     }
 }
