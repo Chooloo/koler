@@ -3,6 +3,7 @@ package com.chooloo.www.koler.util.audio
 import android.content.Context
 import android.content.Context.AUDIO_SERVICE
 import android.media.AudioManager
+import com.chooloo.www.koler.service.CallService
 
 class AudioManager(private val context: Context) {
     private val _audioManager by lazy { context.getSystemService(AUDIO_SERVICE) as AudioManager }
@@ -29,8 +30,12 @@ class AudioManager(private val context: Context) {
     var isSpeakerOn: Boolean
         get() = _audioManager.isSpeakerphoneOn
         set(value) {
-            audioMode = AudioMode.IN_CALL
-            _audioManager.isSpeakerphoneOn = value
+            if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.P) {
+                CallService.toggleSpeakerRoute(value)
+            } else {
+                audioMode = AudioMode.IN_CALL
+                _audioManager.isSpeakerphoneOn = value
+            }
         }
 
     var isMuted: Boolean
