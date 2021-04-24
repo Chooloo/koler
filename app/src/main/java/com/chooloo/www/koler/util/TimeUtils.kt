@@ -29,12 +29,10 @@ fun Context.getHoursString(date: Date) =
 fun getRelativeDateString(date: Date?): String {
     val now = currentDate.time
     val time = date?.time ?: currentDate.time
-    return if (DateUtils.isToday(time - DateUtils.DAY_IN_MILLIS)) {
-        "Tomorrow"
-    } else if (DateUtils.isToday(time + DateUtils.DAY_IN_MILLIS)) {
-        "Yesterday"
-    } else {
-        DateUtils.getRelativeTimeSpanString(time, now, DateUtils.DAY_IN_MILLIS).toString()
+    return when {
+        DateUtils.isToday(time - DateUtils.DAY_IN_MILLIS) -> "Tomorrow"
+        DateUtils.isToday(time + DateUtils.DAY_IN_MILLIS) -> "Yesterday"
+        else -> DateUtils.getRelativeTimeSpanString(time, now, DateUtils.DAY_IN_MILLIS).toString()
     }
 }
 
