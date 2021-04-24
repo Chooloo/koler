@@ -52,6 +52,10 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     override fun onSelectedSim(newValue: Any?) {
     }
 
+    override fun onToggledRecords(isToggle: Boolean) {
+        mvpView?.setPrefRecordsEnabled(isToggle)
+    }
+
     override fun onSelectedRecordFormat(newValue: Any?) {
     }
 

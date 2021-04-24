@@ -13,6 +13,7 @@ class SettingsContract : BaseContract {
         fun setPrefDefaultPage(page: Page)
         fun setPrefCompact(isCompact: Boolean)
         fun setPrefAnimations(isAnimations: Boolean)
+        fun setPrefRecordsEnabled(isEnabled: Boolean)
         fun setPrefAccentTheme(accentTheme: AccentTheme)
         fun setPrefRecordFormat(recordFormat: RecordFormat)
         //endregion
@@ -38,6 +39,7 @@ class SettingsContract : BaseContract {
         fun onClickedManageBlocked()
         fun onSelectedColor(color: Int)
         fun onSelectedSim(newValue: Any?)
+        fun onToggledRecords(isToggle: Boolean)
         fun onToggledAnimation(isToggle: Boolean)
         fun onSelectedDefaultPage(pageKey: String)
         fun onSelectedRecordFormat(newValue: Any?)

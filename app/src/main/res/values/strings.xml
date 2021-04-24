@@ -80,15 +80,16 @@
     <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_animations">animations</string>
     <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_set_favorite">set_favorite</string>
+    <string name="pref_key_block_number">block_number</string>
     <string name="pref_key_default_page">default_page</string>
     <string name="pref_key_record_format">record_format</string>
-    <string name="pref_key_manage_blocked">manage_blocked</string>
-    <string name="pref_key_set_favorite">set_favorite</string>
-    <string name="pref_key_unset_favorite">unset_favorite</string>
     <string name="pref_key_block_contact">block_contact</string>
-    <string name="pref_key_unblock_contact">unblock_contact</string>
-    <string name="pref_key_block_number">block_number</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_unset_favorite">unset_favorite</string>
     <string name="pref_key_unblock_number">unblock_number</string>
+    <string name="pref_key_records_enabled">record_enabled</string>
+    <string name="pref_key_unblock_contact">unblock_contact</string>
     <!--endregion-->
 
     <!--region pref title-->
@@ -108,6 +109,7 @@
     <string name="pref_title_unblock_contact">Unblock Contact</string>
     <string name="pref_title_block_number">Block Number</string>
     <string name="pref_title_unblock_number">Unblock Number</string>
+    <string name="pref_title_records_enabled">Record Calls</string>
     <!--endregion-->
 
     <!--region pref default value-->

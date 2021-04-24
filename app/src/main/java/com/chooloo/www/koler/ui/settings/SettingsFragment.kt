@@ -48,6 +48,7 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
             getString(R.string.pref_key_compact) -> _presenter.onToggledCompactMode(newValue as Boolean)
             getString(R.string.pref_key_animations) -> _presenter.onToggledAnimation(newValue as Boolean)
             getString(R.string.pref_key_default_page) -> _presenter.onSelectedDefaultPage(newValue as String)
+            getString(R.string.pref_key_records_enabled) -> _presenter.onToggledRecords(newValue as Boolean)
         }
     }
 
@@ -70,6 +71,10 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
 
     override fun setPrefAnimations(isAnimations: Boolean) {
         kolerPreferences?.isAnimations = isAnimations
+    }
+
+    override fun setPrefRecordsEnabled(isEnabled: Boolean) {
+        kolerPreferences?.recordsEnabled = isEnabled
     }
 
     override fun setPrefAccentTheme(accentTheme: AccentTheme) {

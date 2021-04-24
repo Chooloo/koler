@@ -111,5 +111,14 @@ class KolerPreferences(
         set(value) {
             _pref.putBoolean(R.string.pref_key_animations, value)
         }
+
+    var recordsEnabled: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_records_enabled,
+            context.resources.getBoolean(R.bool.pref_default_value_records_enabled)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_records_enabled, value)
+        }
     //endregion
 }
