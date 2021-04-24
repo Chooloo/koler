@@ -28,7 +28,8 @@
         android:defaultValue="@bool/pref_default_value_records_enabled"
         android:icon="@drawable/ic_radio_button_checked_black_24dp"
         android:key="@string/pref_key_records_enabled"
-        android:title="@string/pref_title_records_enabled" />
+        android:title="@string/pref_title_records_enabled"
+        app:isPreferenceVisible="false" />
 
     <ListPreference
         android:defaultValue="@string/pref_value_page_default"

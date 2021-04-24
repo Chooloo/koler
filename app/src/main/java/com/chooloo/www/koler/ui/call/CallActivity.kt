@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
+import android.view.View.VISIBLE
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
@@ -102,6 +103,7 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun startStopwatch() {
         _binding.callChronometer.apply {
+            visibility = VISIBLE
             base = SystemClock.elapsedRealtime()
             start()
         }

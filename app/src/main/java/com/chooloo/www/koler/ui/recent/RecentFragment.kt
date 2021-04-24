@@ -59,12 +59,16 @@ class RecentFragment : BaseFragment(), RecentContract.View {
                 visibility = VISIBLE
                 setImageDrawable(getDrawable(_activity, getCallTypeImage(_recent.type)))
             }
+            recentTextDuration.apply {
+                text = getElapsedTimeString(_recent.duration)
+                visibility = if (_recent.duration == 0.toLong()) GONE else VISIBLE
+            }
             recentTextName.text = _recent.cachedName ?: _recent.number
-            recentTextDuration.text = getElapsedTimeString(_recent.duration)
 
             recentTextBlocked.visibility = if (_isBlocked) VISIBLE else GONE
             recentButtonContact.visibility = if (_contact != null) VISIBLE else GONE
             recentButtonAddContact.visibility = if (_contact != null) GONE else VISIBLE
+            recentTextSeperator.visibility = if (_recent.duration == 0.toLong()) GONE else VISIBLE
 
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonMenu.setOnClickListener { _presenter.onActionMenu() }
