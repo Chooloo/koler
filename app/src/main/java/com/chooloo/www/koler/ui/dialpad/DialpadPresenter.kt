@@ -20,8 +20,8 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
             true
         }
         KEYCODE_1 -> {
-            if (mvpView?.isDialer == true) mvpView?.callVoicemail()
-            mvpView?.isDialer == true
+            if (mvpView?._isDialer == true) mvpView?.callVoicemail()
+            mvpView?._isDialer == true
         }
         else -> true
     }
@@ -45,7 +45,7 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
 
     override fun onTextChanged(text: String?) {
         mvpView?.apply {
-            if (isDialer) {
+            if (_isDialer) {
                 isDeleteButtonVisible = text?.isNotEmpty() == true
                 isAddContactButtonVisible = text?.isNotEmpty() == true
                 setSuggestionsFilter(text ?: "")

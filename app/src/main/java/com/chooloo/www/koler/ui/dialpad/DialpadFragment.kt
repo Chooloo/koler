@@ -1,8 +1,10 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.content.Context
+import android.content.Context.TELEPHONY_SERVICE
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.telephony.TelephonyManager
 import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
 import android.view.KeyEvent.KEYCODE_DEL
@@ -11,7 +13,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.DialpadBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
@@ -24,12 +25,13 @@ import com.chooloo.www.koler.util.call.callVoicemail
 class DialpadFragment : BaseFragment(), DialpadContract.View {
     private val _animationManager by lazy { AnimationManager(_activity) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
-    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
+    override val _isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
+    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
+    private val _telephonyManager by lazy { _activity.getSystemService(TELEPHONY_SERVICE) as TelephonyManager }
 
-    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
     override val suggestionsCount: Int
         get() = _suggestionsFragment.itemCount
 
@@ -82,7 +84,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         _binding.apply {
             dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
             dialpadButtonCall.apply {
-                visibility = if (isDialer) VISIBLE else GONE
+                visibility = if (_isDialer) VISIBLE else GONE
                 setOnClickListener { _presenter.onCallClick() }
             }
             dialpadButtonDelete.apply {
@@ -90,25 +92,19 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 setOnLongClickListener { _presenter.onLongDeleteClick() }
             }
             dialpadEditText.apply {
-                isClickable = isDialer
-                isLongClickable = isDialer
-                isFocusableInTouchMode = isDialer
-                isCursorVisible = isDialer
+                isClickable = _isDialer
+                isLongClickable = _isDialer
+                isFocusableInTouchMode = _isDialer
+                isCursorVisible = _isDialer
 
+                if (_isDialer) {
+                    addTextChangedListener(PhoneNumberFormattingTextWatcher())
+                }
                 setText(argsSafely.getString(ARG_NUMBER))
-                text?.length?.let { setSelection(it) }
-                addTextChangedListener(
-                    PhoneNumberFormattingTextWatcher(
-                        resources.configuration.locales.get(0).toString()
-                    )
-                )
-                addTextChangedListener(
-                    { _, _, _, _ -> },
-                    { s, _, _, _ ->
-                        _presenter.onTextChanged(s.toString())
-                        _onTextChangedListener.invoke(s.toString())
-                    },
-                    {})
+                addOnTextChangedListener {
+                    _presenter.onTextChanged(it)
+                    _onTextChangedListener.invoke(it)
+                }
             }
 
             View.OnClickListener {
