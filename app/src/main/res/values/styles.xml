@@ -43,13 +43,6 @@
         <item name="android:textColor">?colorOnSecondary</item>
     </style>
 
-    <style name="Koler.Text.TabLayout" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">false</item>
-        <item name="android:textSize">@dimen/headline_2</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?colorOnSurface</item>
-    </style>
-
     <style name="Koler.Text.Error">
         <item name="android:textSize">@dimen/headline_4</item>
         <item name="android:textStyle">bold</item>

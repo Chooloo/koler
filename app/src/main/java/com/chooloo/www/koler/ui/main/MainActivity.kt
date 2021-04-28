@@ -3,10 +3,7 @@ package com.chooloo.www.koler.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.MainBinding
@@ -71,23 +68,26 @@ class MainActivity : BaseActivity(), MainContract.View {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
             appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    when (position) {
-                        0 -> appbarMain.apply {
-                            mainTabHeader.text = getText(R.string.contacts)
-                            mainTabLeftArrow.visibility = GONE
-                            mainTabRightArrow.visibility = VISIBLE
-                        }
-                        1 -> appbarMain.apply {
-                            mainTabHeader.text = getText(R.string.recents)
-                            mainTabLeftArrow.visibility = VISIBLE
-                            mainTabRightArrow.visibility = GONE
-                        }
-                    }
-                }
-            })
+            appbarMain.mainTabs.headers =
+                arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
+            appbarMain.mainTabs.viewPager = mainViewPager
+//            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//                override fun onPageSelected(position: Int) {
+//                    super.onPageSelected(position)
+//                    when (position) {
+//                        0 -> appbarMain.apply {
+//                            mainTabHeader.text = getText(R.string.contacts)
+//                            mainTabLeftArrow.visibility = GONE
+//                            mainTabRightArrow.visibility = VISIBLE
+//                        }
+//                        1 -> appbarMain.apply {
+//                            mainTabHeader.text = getText(R.string.recents)
+//                            mainTabLeftArrow.visibility = VISIBLE
+//                            mainTabRightArrow.visibility = GONE
+//                        }
+//                    }
+//                }
+//            })
             mainViewPager.currentItem = KolerPreferences(this@MainActivity).defaultPage.index
         }
 

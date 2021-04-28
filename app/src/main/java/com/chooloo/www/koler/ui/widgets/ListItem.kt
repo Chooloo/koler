@@ -26,16 +26,16 @@ import com.google.android.material.shape.ShapeAppearanceModel
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
     private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
-    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
-    private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     private val imageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
+    private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
+    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     private var title: AppCompatTextView
-    private var image: ShapeableImageView
     private var header: AppCompatTextView
+    private var image: ShapeableImageView
     private var caption: AppCompatTextView
-    private var personLayout: ConstraintLayout
     private var _isCompact: Boolean = false
+    private var personLayout: ConstraintLayout
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

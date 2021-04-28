@@ -24,6 +24,8 @@
     <color name="red_foreground">#D54E45</color>
     <!--endregion-->
 
+    <color name="hint">#DADADA</color>
+
     <array name="accent_colors">
         <item>@color/blue_background</item>
         <item>@color/orange_background</item>

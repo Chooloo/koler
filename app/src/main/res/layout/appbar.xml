@@ -20,38 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/main_tab_left_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
-                android:tint="?colorOnBackground"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/main_tab_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/main_tab_header" />
-
-            <TextView
-                android:id="@+id/main_tab_header"
+            <com.chooloo.www.koler.ui.widgets.Tabs
+                android:id="@+id/main_tabs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_spacing_big"
-                android:text="@string/contacts"
-                android:textAppearance="@style/Koler.Text.TabLayout"
-                app:layout_constraintStart_toEndOf="@id/main_tab_left_arrow"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/main_tab_right_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
-                android:tint="?colorOnBackground"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/main_tab_header"
-                app:layout_constraintStart_toEndOf="@id/main_tab_header"
-                app:layout_constraintTop_toTopOf="@id/main_tab_header" />
-
+.
             <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/main_menu_button"
                 android:layout_width="wrap_content"

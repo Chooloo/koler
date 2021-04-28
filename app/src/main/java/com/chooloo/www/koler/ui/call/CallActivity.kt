@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.View.GONE
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
@@ -61,7 +60,6 @@ class CallActivity : BaseActivity(), CallContract.View {
         _proximitySensor.acquire()
 
         _binding.apply {
-            callChronometer.visibility = GONE
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
             root.setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
@@ -104,7 +102,6 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun startStopwatch() {
         _binding.callChronometer.apply {
-            _animationManager.showView(this, true)
             base = SystemClock.elapsedRealtime()
             start()
         }
