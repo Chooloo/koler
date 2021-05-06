@@ -47,8 +47,8 @@ class ListItem : LinearLayout {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         orientation = VERTICAL
+        layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
         header = AppCompatTextView(context, attrs, defStyleRes).apply {
             isClickable = true
@@ -56,10 +56,11 @@ class ListItem : LinearLayout {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
-            layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
+                setMargins(0, spacingSmall, 0, 0)
+            }
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            setPadding(paddingLeft, spacingBig, paddingRight, paddingBottom)
         }
 
         title = AppCompatTextView(context, attrs, defStyleRes).apply {
@@ -208,6 +209,12 @@ class ListItem : LinearLayout {
                 personLayout.setPadding(spacing, spacingSmall, spacing, spacingSmall)
                 header.setPadding(spacing, spacingSmall, context.sizeInDp(5), spacingSmall)
             }
+        }
+
+    var imageVisibility: Boolean
+        get() = image.visibility == VISIBLE
+        set(value) {
+            image.visibility = if (value) VISIBLE else GONE
         }
 
     fun setImageInitials(text: String?) {
