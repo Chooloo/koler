@@ -2,26 +2,27 @@ package com.chooloo.www.koler.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.ImageView.ScaleType.FIT_CENTER
 import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
 import com.chooloo.www.koler.util.sizeInDp
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.android.material.shape.ShapeAppearanceModel
+import com.github.abdularis.civ.AvatarImageView
+import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
+import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 class ListItem : LinearLayout {
@@ -32,10 +33,12 @@ class ListItem : LinearLayout {
 
     private var title: AppCompatTextView
     private var header: AppCompatTextView
-    private var image: ShapeableImageView
+
     private var caption: AppCompatTextView
     private var _isCompact: Boolean = false
     private var personLayout: ConstraintLayout
+    private var image: AvatarImageView
+//    private var image: NameInitialsCircleImageView
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -52,17 +55,18 @@ class ListItem : LinearLayout {
             isFocusable = true
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
-            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
+            setPadding(paddingLeft, spacingBig, paddingRight, paddingBottom)
         }
 
         title = AppCompatTextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(0, 0, spacing, 0)
+                setMargins(spacingSmall + 15, 0, spacing, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Headline4)
@@ -78,11 +82,14 @@ class ListItem : LinearLayout {
             setTextAppearance(R.style.Koler_Text_Caption)
         }
 
-        image = ShapeableImageView(context, attrs, defStyleRes).apply {
-            scaleType = FIT_CENTER
-            id = View.generateViewId()
+        image = AvatarImageView(context, attrs).apply {
+            state = SHOW_INITIAL
+            id = generateViewId()
+            textSize = resources.getDimension(R.dimen.caption_1)
             layoutParams = ConstraintLayout.LayoutParams(imageSize, imageSize)
-            shapeAppearanceModel = ShapeAppearanceModel().withCornerSize(50f)
+            textColor = ContextCompat.getColor(context, R.color.color_image_placeholder_foreground)
+            avatarBackgroundColor =
+                ContextCompat.getColor(context, R.color.color_image_placeholder_background)
         }
 
         personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
@@ -92,7 +99,6 @@ class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             setPadding(spacingSmall)
-//            setPadding(spacingSmall, spacingSmall, spacingSmall, spacingSmall)
             addView(image)
             addView(title)
             addView(caption)
@@ -102,16 +108,31 @@ class ListItem : LinearLayout {
             clone(personLayout)
 
             //region image
+            // image on left
             connect(image.id, BOTTOM, PARENT_ID, BOTTOM)
-            connect(image.id, END, PARENT_ID, END)
+            connect(image.id, START, PARENT_ID, START)
             connect(image.id, TOP, PARENT_ID, TOP)
+
+            // image on right
+//            connect(image.id, BOTTOM, PARENT_ID, BOTTOM)
+//            connect(image.id, END, PARENT_ID, END)
+//            connect(image.id, TOP, PARENT_ID, TOP)
             //endregion
 
             //region title
+
+            // title on left
+//            connect(title.id, BOTTOM, caption.id, TOP)
+//            connect(title.id, END, image.id, START)
+//            connect(title.id, START, PARENT_ID, START)
+//            connect(title.id, TOP, PARENT_ID, TOP)
+
+            // title on right of image
             connect(title.id, BOTTOM, caption.id, TOP)
-            connect(title.id, END, image.id, START)
-            connect(title.id, START, PARENT_ID, START)
+            connect(title.id, START, image.id, END)
+            connect(title.id, END, PARENT_ID, END)
             connect(title.id, TOP, PARENT_ID, TOP)
+
             setHorizontalBias(title.id, 0F)
             //endregion
 
@@ -174,29 +195,29 @@ class ListItem : LinearLayout {
         get() = image.drawable
         set(value) {
             image.setImageDrawable(value)
+            image.state = SHOW_IMAGE
         }
 
     var isCompact: Boolean
         get() = _isCompact
         set(value) {
             if (value) {
-                personLayout.setPadding(spacingBig, 3, spacing, 3)
+                personLayout.setPadding(spacing, 3, spacing, 3)
                 header.setPadding(spacing, spacingSmall, spacing, 3)
             } else {
-                personLayout.setPadding(spacingBig, spacingSmall, spacing, spacingSmall)
+                personLayout.setPadding(spacing, spacingSmall, spacing, spacingSmall)
                 header.setPadding(spacing, spacingSmall, context.sizeInDp(5), spacingSmall)
             }
         }
 
-
-    fun setLeftPadding(padding: Int) {
-        personLayout.also {
-            it.setPadding(padding, it.paddingTop, it.paddingRight, it.paddingBottom)
-        }
+    fun setImageInitials(text: String?) {
+        image.text = text
+        text?.let { image.state = SHOW_INITIAL }
     }
 
     fun setImageUri(imageUri: Uri?) {
         image.setImageURI(imageUri)
+        image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
     }
 
     fun setImageBackgroundColor(@ColorInt color: Int) {

@@ -10,6 +10,7 @@ import com.chooloo.www.koler.R
 class Tabs : LinearLayout {
     private var _tabs: Array<Tab> = arrayOf()
     private var _viewPager: ViewPager2? = null
+    private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     var viewPager: ViewPager2?
@@ -48,7 +49,7 @@ class Tabs : LinearLayout {
     private fun getTab(headerText: String) = Tab(context).apply {
         text = headerText
         layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-            marginEnd = spacingSmall
+            marginEnd = spacingSmall + 10
         }
     }
 

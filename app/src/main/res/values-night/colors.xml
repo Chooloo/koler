@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_hint">#B6B6B6</color>
+    <color name="color_image_placeholder_background">#C5C5C5</color>
+    <color name="color_image_placeholder_foreground">#222222</color>
+
     <!--region accent colors-->
     <color name="blue_background">#566682</color>
     <color name="blue_foreground">#AFCBFA</color>

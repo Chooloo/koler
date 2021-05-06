@@ -3,16 +3,17 @@ package com.chooloo.www.koler.ui.widgets
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.getAttrColor
 import java.util.*
 
 class Tab : AppCompatTextView {
-    private val disabledColor by lazy { resources.getColor(R.color.hint) }
+    private val disabledColor by lazy { ContextCompat.getColor(context, R.color.color_hint) }
     private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
 
     constructor(context: Context) : this(context, null)
@@ -22,11 +23,11 @@ class Tab : AppCompatTextView {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        textSize = 26f
+        textSize = 27.5f
         text = text.toString().capitalize(Locale.ROOT)
+        typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
 
         setTextColor(enabledColor)
-        setTypeface(null, Typeface.BOLD)
     }
 
     override fun setEnabled(enabled: Boolean) {

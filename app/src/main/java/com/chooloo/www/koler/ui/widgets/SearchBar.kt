@@ -17,13 +17,14 @@ import com.google.android.material.textfield.TextInputLayout
 
 @SuppressLint("UseCompatTextViewDrawableApis")
 class SearchBar : TextInputLayout {
-    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
-
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
     private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
     private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
+    private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
+    private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
+    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     var text: String?
         get() = _textInputEditText.text.toString()
@@ -39,21 +40,22 @@ class SearchBar : TextInputLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
-            hint = resources.getString(R.string.hint_search)
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
+            compoundDrawablePadding = 5
+            hint = resources.getString(R.string.hint_search)
+            layoutParams = LayoutParams(MATCH_PARENT, spacingBig)
+            hintTextColor = ColorStateList.valueOf(colorOnSecondary)
             compoundDrawableTintList = ColorStateList.valueOf(colorOnSecondary)
-            layoutParams = LayoutParams(MATCH_PARENT, context.sizeInDp(34))
 
-            setTextAppearance(R.style.Koler_Text_Subtitle1)
-            setHintTextColor(colorOnSecondary)
             setTextColor(colorOnSecondary)
+            setTextAppearance(R.style.Koler_Text_Subtitle1)
             setPadding(
                 spacingSmall,
-                context.sizeInDp(5),
+                context.sizeInDp(4),
                 spacingSmall,
-                context.sizeInDp(5)
+                context.sizeInDp(4)
             )
 
             addTextChangedListener(

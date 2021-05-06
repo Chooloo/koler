@@ -50,7 +50,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     annotationProcessor(
-            'androidx.room:room-compiler:2.2.6'
+            'androidx.room:room-compiler:2.3.0'
     )
 
     testImplementation(
@@ -81,15 +81,18 @@ dependencies {
             'androidx.fragment:fragment-ktx:1.2.5',
             'androidx.arch.core:core-runtime:2.1.0',
             'androidx.legacy:legacy-support-v4:1.0.0',
+            'com.stedi.randomimagegenerator:rig:1.1.0',
             'androidx.preference:preference-ktx:1.1.1',
             'org.jetbrains.kotlin:kotlin-stdlib:1.4.21',
             'androidx.biometric:biometric:1.2.0-alpha02',
             'com.google.android.material:material:1.3.0',
+            'com.github.abdularis:circularimageview:1.5',
             'androidx.navigation:navigation-ui-ktx:2.3.3',
             'androidx.lifecycle:lifecycle-extensions:2.2.0',
             'androidx.constraintlayout:constraintlayout:2.0.4',
             'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
             'androidx.navigation:navigation-fragment-ktx:2.3.3',
-            'com.googlecode.libphonenumber:libphonenumber:8.12.18'
+            'com.googlecode.libphonenumber:libphonenumber:8.12.18',
+            'io.github.informramiz:nameinitialscircleimageview:1.6',
     )
 }
