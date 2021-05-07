@@ -60,17 +60,23 @@ class CallActivity : BaseActivity(), CallContract.View {
         _proximitySensor.acquire()
 
         _binding.apply {
-            callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
-            callRejectButton.setOnClickListener { _presenter.onRejectClick() }
-            root.setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
-                override fun onSwipeLeft() {
-                    _presenter.onScreenSwipeLeft()
-                }
+            callAnswerButton.apply {
+                setOnClickListener { _presenter.onAnswerClick() }
+                setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
+                    override fun onSwipeRight() {
+                        _presenter.onScreenSwipeRight()
+                    }
+                })
+            }
 
-                override fun onSwipeRight() {
-                    _presenter.onScreenSwipeRight()
-                }
-            })
+            callRejectButton.apply {
+                setOnClickListener { _presenter.onRejectClick() }
+                setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
+                    override fun onSwipeLeft() {
+                        _presenter.onScreenSwipeLeft()
+                    }
+                })
+            }
         }
 
         setShowWhenLocked()

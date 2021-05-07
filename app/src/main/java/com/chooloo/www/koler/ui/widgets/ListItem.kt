@@ -57,7 +57,7 @@ class ListItem : LinearLayout {
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                setMargins(0, spacingSmall, 0, 0)
+                setMargins(0, spacingSmall, 0, 12)
             }
 
             setTextAppearance(R.style.Koler_Text_Caption)
