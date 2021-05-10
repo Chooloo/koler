@@ -31,14 +31,12 @@ class ListItem : LinearLayout {
     private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
+    private var image: AvatarImageView
     private var title: AppCompatTextView
     private var header: AppCompatTextView
-
     private var caption: AppCompatTextView
     private var _isCompact: Boolean = false
     private var personLayout: ConstraintLayout
-    private var image: AvatarImageView
-//    private var image: NameInitialsCircleImageView
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -57,7 +55,7 @@ class ListItem : LinearLayout {
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                setMargins(0, spacingSmall, 0, 12)
+                setMargins(5, spacing, 0, 12)
             }
 
             setTextAppearance(R.style.Koler_Text_Caption)
@@ -99,7 +97,7 @@ class ListItem : LinearLayout {
             background = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
-            setPadding(spacingSmall)
+            setPadding(spacing)
             addView(image)
             addView(title)
             addView(caption)

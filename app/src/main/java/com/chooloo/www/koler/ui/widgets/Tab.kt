@@ -23,7 +23,7 @@ class Tab : AppCompatTextView {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        textSize = 27.5f
+        textSize = 28f
         text = text.toString().capitalize(Locale.ROOT)
         typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
 

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/default_spacing_big"
-        android:paddingBottom="@dimen/default_spacing_small"
+        android:paddingBottom="@dimen/default_spacing"
         app:contentInsetEnd="@dimen/default_spacing"
         app:contentInsetStart="@dimen/default_spacing"
         app:layout_scrollFlags="scroll">
@@ -27,7 +27,8 @@
                 android:layout_marginTop="@dimen/default_spacing_big"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-.
+            .
+
             <com.chooloo.www.koler.ui.widgets.IconButton
                 android:id="@+id/main_menu_button"
                 android:layout_width="wrap_content"
