@@ -89,6 +89,7 @@ dependencies {
             'com.github.abdularis:circularimageview:1.5',
             'androidx.navigation:navigation-ui-ktx:2.3.3',
             'androidx.lifecycle:lifecycle-extensions:2.2.0',
+            'com.daimajia.androidanimations:library:2.4@aar',
             'androidx.constraintlayout:constraintlayout:2.0.4',
             'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
             'androidx.navigation:navigation-fragment-ktx:2.3.3',

@@ -20,8 +20,6 @@ interface CallContract : BaseContract {
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onAnswerClick()
         fun onRejectClick()
-        fun onScreenSwipeLeft()
-        fun onScreenSwipeRight()
         fun onCallDetailsChanged(callDetails: CallDetails?)
     }
 }

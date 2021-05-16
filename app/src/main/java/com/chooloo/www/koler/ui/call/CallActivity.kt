@@ -9,14 +9,17 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.AnimationManager
+import com.chooloo.www.koler.util.ProximitySensor
 import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.util.disableKeyboard
+import com.chooloo.www.koler.util.setShowWhenLocked
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private val _animationManager by lazy { AnimationManager(this) }
     private val _presenter by lazy { CallPresenter<CallContract.View>() }
     private val _proximitySensor by lazy { ProximitySensor(this) }
+    private val _animationManager by lazy { AnimationManager(this) }
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
@@ -60,23 +63,8 @@ class CallActivity : BaseActivity(), CallContract.View {
         _proximitySensor.acquire()
 
         _binding.apply {
-            callAnswerButton.apply {
-                setOnClickListener { _presenter.onAnswerClick() }
-                setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
-                    override fun onSwipeRight() {
-                        _presenter.onScreenSwipeRight()
-                    }
-                })
-            }
-
-            callRejectButton.apply {
-                setOnClickListener { _presenter.onRejectClick() }
-                setOnTouchListener(object : AllPurposeTouchListener(this@CallActivity) {
-                    override fun onSwipeLeft() {
-                        _presenter.onScreenSwipeLeft()
-                    }
-                })
-            }
+            callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
+            callRejectButton.setOnClickListener { _presenter.onRejectClick() }
         }
 
         setShowWhenLocked()
@@ -103,7 +91,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun blinkStateText() {
-        _animationManager.blinkView(_binding.callStateText, 2500)
+        _animationManager.blink(_binding.callStateText, 2500)
     }
 
     override fun startStopwatch() {

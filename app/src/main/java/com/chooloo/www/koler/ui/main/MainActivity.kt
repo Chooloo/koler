@@ -71,23 +71,6 @@ class MainActivity : BaseActivity(), MainContract.View {
             appbarMain.mainTabs.headers =
                 arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
             appbarMain.mainTabs.viewPager = mainViewPager
-//            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//                override fun onPageSelected(position: Int) {
-//                    super.onPageSelected(position)
-//                    when (position) {
-//                        0 -> appbarMain.apply {
-//                            mainTabHeader.text = getText(R.string.contacts)
-//                            mainTabLeftArrow.visibility = GONE
-//                            mainTabRightArrow.visibility = VISIBLE
-//                        }
-//                        1 -> appbarMain.apply {
-//                            mainTabHeader.text = getText(R.string.recents)
-//                            mainTabLeftArrow.visibility = VISIBLE
-//                            mainTabRightArrow.visibility = GONE
-//                        }
-//                    }
-//                }
-//            })
             mainViewPager.currentItem = KolerPreferences(this@MainActivity).defaultPage.index
         }
 

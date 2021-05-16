@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.getAttrColor
 import java.util.*
 
@@ -30,9 +31,16 @@ class Tab : AppCompatTextView {
         setTextColor(enabledColor)
     }
 
-    override fun setEnabled(enabled: Boolean) {
-        super.setEnabled(enabled)
-        setColor(if (enabled) enabledColor else disabledColor)
+    override fun setActivated(activated: Boolean) {
+        super.setActivated(activated)
+        setColor(if (activated) enabledColor else disabledColor)
+        if (activated) {
+            animateAttension()
+        }
+    }
+
+    private fun animateAttension() {
+        AnimationManager(context).bounceInUp(this)
     }
 
     private fun setColor(@ColorInt color: Int) {

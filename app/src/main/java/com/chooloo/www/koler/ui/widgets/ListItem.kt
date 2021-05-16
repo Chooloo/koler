@@ -369,7 +369,7 @@ open class ListItem : LinearLayout {
     //endregion
 
     fun blinkCaption() {
-        _animationManager.blinkView(_caption, 2500)
+        _animationManager.blink(_caption, 2500)
     }
 
     override fun setOnClickListener(onClickListener: OnClickListener?) {

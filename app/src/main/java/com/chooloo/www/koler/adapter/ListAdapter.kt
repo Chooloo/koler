@@ -30,7 +30,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
             headerText = getHeader(position)
             isCompact = this@ListAdapter.isCompact
 
-            AnimationManager(context).setFadeUpAnimation(this)
+            AnimationManager(context).bounceInUp(this)
             setOnClickListener { _onItemClickListener.invoke(_data.items[position]) }
             setOnLongClickListener {
                 _onItemLongClickListener.invoke(_data.items[position])

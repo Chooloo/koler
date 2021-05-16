@@ -18,14 +18,6 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         CallManager.reject()
     }
 
-    override fun onScreenSwipeLeft() {
-        onRejectClick()
-    }
-
-    override fun onScreenSwipeRight() {
-        onAnswerClick()
-    }
-
     override fun onCallDetailsChanged(callDetails: CallDetails?) {
         if (callDetails == null) {
             return

@@ -8,9 +8,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 
 class Tabs : LinearLayout {
-    private var _tabs: Array<Tab> = arrayOf()
     private var _viewPager: ViewPager2? = null
-    private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
+    private var _tabs: ArrayList<Tab> = arrayListOf()
+
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     var viewPager: ViewPager2?
@@ -27,7 +27,7 @@ class Tabs : LinearLayout {
     var headers: Array<String>
         get() = _tabs.map { it.text.toString() }.toTypedArray()
         set(value) {
-            updateTabs(value.map { getTab(it) }.toTypedArray())
+            replaceTabs(value.map { getTab(it) }.toTypedArray())
         }
 
     constructor(context: Context) : this(context, null)
@@ -40,10 +40,16 @@ class Tabs : LinearLayout {
         orientation = HORIZONTAL
     }
 
-    private fun updateTabs(tabs: Array<Tab>) {
+    private fun addTab(tab: Tab) {
+        addView(tab)
+        _tabs.add(tab)
+        tab.setOnClickListener { _viewPager?.currentItem = _tabs.indexOf(tab) }
+    }
+
+    private fun replaceTabs(tabs: Array<Tab>) {
         _tabs.forEach { removeView(it) }
-        tabs.forEach { addView(it) }
-        _tabs = tabs
+        _tabs = arrayListOf()
+        tabs.forEach { tab -> addTab(tab) }
     }
 
     private fun getTab(headerText: String) = Tab(context).apply {
@@ -54,6 +60,6 @@ class Tabs : LinearLayout {
     }
 
     private fun selectTab(position: Int) {
-        _tabs.forEachIndexed { index, tab -> tab.isEnabled = index == position }
+        _tabs.forEachIndexed { index, tab -> tab.isActivated = index == position }
     }
 }
