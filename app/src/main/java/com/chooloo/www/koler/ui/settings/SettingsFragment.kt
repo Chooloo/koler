@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.settings
 
 import android.content.Context.TELECOM_SERVICE
 import android.content.Intent
-import android.content.Intent.ACTION_VIEW
+import android.content.Intent.*
 import android.net.Uri
 import android.telecom.TelecomManager
 import androidx.preference.Preference
@@ -123,7 +123,9 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
     }
 
     override fun goToMainActivity() {
-        startActivity(Intent(activity, MainActivity::class.java))
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.flags = gFLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     override fun setupSimPreference() {
