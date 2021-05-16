@@ -59,8 +59,8 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun onSetup() {
-        _presenter.attach(this)
         _proximitySensor.acquire()
+        _presenter.attach(this)
 
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
@@ -85,13 +85,13 @@ class CallActivity : BaseActivity(), CallContract.View {
                 .beginTransaction()
                 .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
                 .commitNow()
-            _animationManager.showView(_binding.callActionsContainer, true)
+            _animationManager.bounceInUp(_binding.callActionsContainer)
             _binding.root.transitionToEnd()
         }
     }
 
-    override fun blinkStateText() {
-        _animationManager.blink(_binding.callStateText, 2500)
+    override fun animateStateTextAttention() {
+        _animationManager.tada(_binding.callStateText)
     }
 
     override fun startStopwatch() {

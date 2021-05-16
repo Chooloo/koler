@@ -12,7 +12,7 @@ interface CallContract : BaseContract {
         var callerImageURI: Uri?
 
         fun transitionToActiveUI()
-        fun blinkStateText()
+        fun animateStateTextAttention()
         fun startStopwatch()
         fun stopStopwatch()
     }
