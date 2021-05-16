@@ -59,7 +59,7 @@ open class ContactsContentResolver(
                     )
                 )
             }
-        }.toTypedArray(),
+        },
         headers = cursor?.extras?.getStringArray(EXTRA_ADDRESS_BOOK_INDEX_TITLES)
             ?: arrayOf(),
         headersCounts = cursor?.extras?.getIntArray(EXTRA_ADDRESS_BOOK_INDEX_COUNTS)?.toTypedArray()

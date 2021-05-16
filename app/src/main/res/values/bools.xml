@@ -3,4 +3,5 @@
     <bool name="pref_default_value_compact">false</bool>
     <bool name="pref_default_value_animations">true</bool>
     <bool name="pref_default_value_records_enabled">false</bool>
+    <bool name="pref_showed_default_value_default_dialer_blocked_notice">false</bool>
 </resources>

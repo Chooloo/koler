@@ -13,11 +13,15 @@ import android.provider.BlockedNumberContract.BlockedNumbers
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
+import android.widget.Toast
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.util.permissions.isDefaultDialer
 import com.chooloo.www.koler.util.permissions.runWithPermissions
+import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 fun Context.lookupContactNumber(number: String?) =
     PhoneLookupContentResolver(this, number).content.getOrNull(0)
@@ -29,7 +33,10 @@ fun Context.lookupContactId(contactId: Long): Contact {
     } else {
         contacts[0].apply {
             phoneAccounts =
-                PhoneContentResolver(this@lookupContactId, contactId).content.phoneAccounts
+                PhoneContentResolver(
+                    this@lookupContactId,
+                    contactId
+                ).content.phoneAccounts.toTypedArray()
         }
     }
 }
@@ -83,7 +90,21 @@ fun Activity.setContactFavorite(contactId: Long, isFavorite: Boolean) =
     })
 
 fun Context.isNumberBlocked(number: String) =
-    BlockedNumberContract.isBlocked(this, number)
+    if (isDefaultDialer()) {
+        BlockedNumberContract.isBlocked(this, number)
+    } else {
+        KolerPreferences(this).apply {
+            if (!showedDefaultDialerBlockedNotice) {
+                Toast.makeText(
+                    this@isNumberBlocked,
+                    getString(R.string.error_not_default_dialer_blocked),
+                    Toast.LENGTH_SHORT
+                ).show()
+                showedDefaultDialerBlockedNotice = true
+            }
+        }
+        false
+    }
 
 fun Context.isContactBlocked(contact: Contact) =
     contact.phoneAccounts.all { isNumberBlocked(it.number) }

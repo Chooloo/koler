@@ -5,14 +5,14 @@ import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Phone
 
 data class PhonesBundle(
-    val phoneAccounts: Array<PhoneAccount>
+    val phoneAccounts: ArrayList<PhoneAccount>
 ) {
     fun getListBundleByType(
         context: Context,
         distinctNormalizedNumber: Boolean = false
     ): ListBundle<PhoneAccount> {
         val items = if (distinctNormalizedNumber) {
-            phoneAccounts.toList().distinctBy { it.normalizedNumber }.toTypedArray()
+            ArrayList(phoneAccounts.toList().distinctBy { it.normalizedNumber })
         } else {
             phoneAccounts
         }

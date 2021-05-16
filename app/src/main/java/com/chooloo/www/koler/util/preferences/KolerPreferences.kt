@@ -120,5 +120,14 @@ class KolerPreferences(
         set(value) {
             _pref.putBoolean(R.string.pref_key_records_enabled, value)
         }
+
+    var showedDefaultDialerBlockedNotice: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_default_dialer_blocked_notice,
+            context.resources.getBoolean(R.bool.pref_showed_default_value_default_dialer_blocked_notice)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_default_dialer_blocked_notice, value)
+        }
     //endregion
 }

@@ -49,6 +49,6 @@ class PhoneContentResolver(
                         )
                     }
                 }
-            }.toTypedArray()
+            }
         )
 }

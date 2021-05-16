@@ -5,6 +5,7 @@ import androidx.preference.Preference
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 import com.chooloo.www.koler.util.*
+import com.chooloo.www.koler.util.permissions.runWithDefaultDialer
 import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesContract.View {
@@ -50,14 +51,16 @@ class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesC
     }
 
     override fun toggleContactBlocked(isBlock: Boolean) {
-        if (isBlock) {
-            _activity.runWithPrompt(R.string.warning_block_contact) {
-                _contact.phoneAccounts.forEach { _activity.blockNumber(it.number) }
-                showMessage(R.string.contact_blocked)
+        _activity.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+            if (isBlock) {
+                _activity.runWithPrompt(R.string.warning_block_contact) {
+                    _contact.phoneAccounts.forEach { _activity.blockNumber(it.number) }
+                    showMessage(R.string.contact_blocked)
+                }
+            } else {
+                _contact.phoneAccounts.forEach { _activity.unblockNumber(it.number) }
+                showMessage(R.string.contact_unblocked)
             }
-        } else {
-            _contact.phoneAccounts.forEach { _activity.unblockNumber(it.number) }
-            showMessage(R.string.contact_unblocked)
         }
     }
 

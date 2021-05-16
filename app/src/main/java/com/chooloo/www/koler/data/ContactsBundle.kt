@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.data
 
 data class ContactsBundle(
-    val contacts: Array<Contact>,
+    val contacts: ArrayList<Contact>,
     val headers: Array<String> = arrayOf(),
     val headersCounts: Array<Int> = arrayOf()
 ) {
@@ -15,10 +15,10 @@ data class ContactsBundle(
 
     val listBundleByLettersWithFavs: ListBundle<Contact>
         get() {
-            val favs = contacts.filter { it.starred }.toTypedArray()
+            val favs = ArrayList(contacts.filter { it.starred })
             return if (favs.isNotEmpty()) {
                 ListBundle(
-                    items = favs + contacts,
+                    items = ArrayList(favs + contacts),
                     headers = arrayOf("★") + headers,
                     headersCounts = arrayOf(favs.size) + headersCounts
                 )

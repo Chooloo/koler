@@ -19,18 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- call status -->
-    <TextView
-        android:id="@+id/call_state_text"
-        style="@style/Koler.Call.Text.Status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_chronometer"
-        tools:text="@string/call_status_incoming" />
-
     <!-- caller image -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/call_image"
@@ -44,6 +32,18 @@
         app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
         tools:src="@drawable/ic_account_circle_black_24dp"
         tools:visibility="visible" />
+
+    <!-- call status -->
+    <TextView
+        android:id="@+id/call_state_text"
+        style="@style/Koler.Call.Text.Status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/call_chronometer"
+        tools:text="@string/call_status_incoming" />
 
     <!-- caller name -->
     <TextView

@@ -4,7 +4,7 @@ import com.chooloo.www.koler.util.getRelativeDateString
 
 
 data class RecentsBundle(
-    val recents: Array<Recent>
+    val recents: ArrayList<Recent>
 ) {
     val listBundleByDates: ListBundle<Recent>
         get() {

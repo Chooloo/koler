@@ -63,12 +63,18 @@
     <!--endregion-->
 
     <!--region call state-->
+    <string name="call_status_new">New Call</string>
     <string name="call_status_dialing">Dialing…</string>
-    <string name="call_status_holding">Call On Hold</string>
-    <string name="call_status_incoming">Incoming Call</string>
-    <string name="call_status_disconnected">Call ended</string>
-    <string name="call_status_active">Call In Progress</string>
     <string name="call_status_missed">Missed Call</string>
+    <string name="call_status_holding">Call On Hold</string>
+    <string name="call_status_connecting">Connecting…</string>
+    <string name="call_status_incoming">Incoming Call</string>
+    <string name="call_status_active">Call In Progress</string>
+    <string name="call_status_disconnected">Call ended</string>
+    <string name="call_status_pulling_call">Pulling Call…</string>
+    <string name="call_status_unknown">Unknown call status</string>
+    <string name="call_status_disconnecting">Call Disconnecting…</string>
+    <string name="call_status_phone_account">Select phone account</string>
     <!--endregion-->
 
     <!--region pref key-->
@@ -90,6 +96,7 @@
     <string name="pref_key_unblock_number">unblock_number</string>
     <string name="pref_key_records_enabled">record_enabled</string>
     <string name="pref_key_unblock_contact">unblock_contact</string>
+    <string name="pref_key_default_dialer_blocked_notice">default_dialer_blocked</string>
     <!--endregion-->
 
     <!--region pref title-->
@@ -118,9 +125,13 @@
 
     <!--region errors-->
     <string name="error_no_results">No results :/</string>
-    <string name="error_no_results_phones">No phone numbers :/</string>
-    <string name="error_no_results_contacts">No contacts :/</string>
+    <string name="error_no_results_calls">No calls :/</string>
     <string name="error_no_results_recents">No recents :/</string>
+    <string name="error_no_results_contacts">No contacts :/</string>
+    <string name="error_no_results_phones">No phone numbers :/</string>
+    <string name="error_not_default_dialer">Please set as default dialer</string>
+    <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
+    <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
 
     <string name="error_no_permissions">I need permissions :/</string>
     <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>

@@ -39,7 +39,9 @@ class IconButton : FloatingActionButton {
             ColorStateList.valueOf(getColor(context, android.R.color.darker_gray))
         }
 
-        setImageDrawable(_iconDefault?.let { getDrawable(context, it) })
+        if (_iconDefault != NO_ID) {
+            _iconDefault?.let { setImageDrawable(getDrawable(context, it)) }
+        }
         setOnClickListener {}
     }
 

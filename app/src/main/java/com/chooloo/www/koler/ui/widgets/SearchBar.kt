@@ -54,9 +54,9 @@ class SearchBar : TextInputLayout {
             setHintTextColor(ColorStateList.valueOf(colorOnSecondary))
             setPadding(
                 spacingSmall,
-                context.sizeInDp(3),
+                context.sizeInDp(2),
                 spacingSmall,
-                context.sizeInDp(3)
+                context.sizeInDp(2)
             )
 
             addTextChangedListener(

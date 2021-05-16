@@ -19,10 +19,10 @@ import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class RecentFragment : BaseFragment(), RecentContract.View {
+    private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
     private val _isBlocked by lazy { _activity.isNumberBlocked(_recent.number) }
     private val _contact by lazy { _activity.lookupContactNumber(_recent.number) }
-    private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
     private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
 
     companion object {
@@ -110,7 +110,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
     override fun openHistory() {
         BottomFragment(
-            RecentsFragment.newInstance(false, false, _recent.number)
+            RecentsFragment.newInstance(isSearchable = false, filter = _recent.number)
         ).show(_activity.supportFragmentManager, ContactFragment.TAG)
     }
 

@@ -28,7 +28,7 @@ open class MenuFragment : ListFragment<MenuItem, Int, MenuAdapter>(), MenuContra
         val menu = PopupMenu(_activity, null).menu
         MenuInflater(_activity).inflate(menuRes, menu)
         onAttachMenu(menu)
-        adapter.data = ListBundle((0 until menu.size()).map { menu.getItem(it) }.toTypedArray())
+        adapter.data = ListBundle(ArrayList((0 until menu.size()).map { menu.getItem(it) }))
     }
 
     override fun onItemClick(item: MenuItem) {

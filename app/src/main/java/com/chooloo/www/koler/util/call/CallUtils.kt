@@ -11,11 +11,11 @@ import android.telecom.PhoneAccountHandle
 import android.telephony.PhoneNumberUtils
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.util.lookupContactNumber
 import com.chooloo.www.koler.util.permissions.hasSelfPermission
-import com.chooloo.www.koler.util.permissions.isDefaultDialer
-import com.chooloo.www.koler.util.permissions.requestDefaultDialer
+import com.chooloo.www.koler.util.permissions.runWithDefaultDialer
 
 
 //region call functions
@@ -34,13 +34,10 @@ fun Call.lookupContact(context: Context) =
 
 //region activity related functions
 fun BaseActivity.call(number: String) {
-    if (isDefaultDialer()) {
+    runWithDefaultDialer(R.string.error_not_default_dialer_call) {
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.data = Uri.parse("tel:${Uri.encode(number)}")
         startActivity(callIntent)
-    } else {
-        requestDefaultDialer()
-        showError("Set Koler as your default dialer to make calls")
     }
 }
 

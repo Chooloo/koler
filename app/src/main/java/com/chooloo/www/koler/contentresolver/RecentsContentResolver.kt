@@ -68,7 +68,7 @@ class RecentsContentResolver(
                     )
                 )
             }
-        }.toTypedArray()
+        }
     ).also {
         cursor?.close()
     }
