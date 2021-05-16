@@ -26,13 +26,15 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesBundle, PhonesAdapter>()
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_phones) }
 
     companion object {
-        fun newInstance(contactId: Long, isSearchable: Boolean) = PhonesFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_IS_COMPACT, true)
-                putLong(ARG_CONTACT_ID, contactId)
-                putBoolean(ARG_IS_SEARCHABLE, isSearchable)
+        fun newInstance(contactId: Long, isSearchable: Boolean, isHideNoResults: Boolean = false) =
+            PhonesFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_IS_COMPACT, true)
+                    putLong(ARG_CONTACT_ID, contactId)
+                    putBoolean(ARG_IS_SEARCHABLE, isSearchable)
+                    putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
+                }
             }
-        }
     }
 
     override fun onSetup() {

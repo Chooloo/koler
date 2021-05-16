@@ -13,8 +13,8 @@ class CallBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            ACTION_ANSWER -> CallsManager.primaryCall?.answer()
-            ACTION_HANGUP -> CallsManager.primaryCall?.reject()
+            ACTION_ANSWER -> CallsManager.firstCall?.answer()
+            ACTION_HANGUP -> CallsManager.firstCall?.reject()
         }
     }
 }

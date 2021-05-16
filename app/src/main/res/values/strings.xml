@@ -63,12 +63,18 @@
     <!--endregion-->
 
     <!--region call state-->
+    <string name="call_status_new">New Call</string>
     <string name="call_status_dialing">Dialing…</string>
-    <string name="call_status_holding">Call On Hold</string>
-    <string name="call_status_incoming">Incoming Call</string>
-    <string name="call_status_disconnected">Call ended</string>
-    <string name="call_status_active">Call In Progress</string>
     <string name="call_status_missed">Missed Call</string>
+    <string name="call_status_holding">Call On Hold</string>
+    <string name="call_status_connecting">Connecting…</string>
+    <string name="call_status_incoming">Incoming Call</string>
+    <string name="call_status_active">Call In Progress</string>
+    <string name="call_status_disconnected">Call ended</string>
+    <string name="call_status_pulling_call">Pulling Call…</string>
+    <string name="call_status_unknown">Unknown call status</string>
+    <string name="call_status_disconnecting">Call Disconnecting…</string>
+    <string name="call_status_phone_account">Select phone account</string>
     <!--endregion-->
 
     <!--region pref key-->

@@ -16,21 +16,23 @@ import com.chooloo.www.koler.util.permissions.runWithPermissions
 
 abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
     ListContract.View<ItemType> {
-    private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
+    private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
 
     override val itemCount get() = adapter.itemCount
     override val requiredPermissions: Array<String>? = null
     override val noResultsMessage by lazy { getString(R.string.error_no_results) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions) }
     override val searchHint by lazy { getString(R.string.hint_search_items) }
+    override val hideNoResults by lazy { argsSafely.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
 
     abstract val adapter: Adapter
 
     companion object {
         const val ARG_IS_COMPACT = "is_compact"
         const val ARG_IS_SEARCHABLE = "is_searchable"
+        const val ARG_IS_HIDE_NO_RESULTS = "is_hide_no_results"
     }
 
     override var emptyStateText: String?
@@ -108,8 +110,8 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
 
     override fun showEmptyPage(isShow: Boolean) {
         _binding.apply {
-            itemsEmptyText.visibility = if (isShow) VISIBLE else GONE
-            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
+            itemsEmptyText.visibility = if (isShow && !hideNoResults) VISIBLE else GONE
+            itemsRecyclerView.visibility = if (isShow && !hideNoResults) GONE else VISIBLE
         }
     }
 

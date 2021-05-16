@@ -27,13 +27,15 @@ class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
         fun newInstance(
             isCompact: Boolean = false,
             isSearchable: Boolean = true,
+            isHideNoResults: Boolean = false,
             filter: String? = null
         ) =
             RecentsFragment().apply {
                 arguments = Bundle().apply {
+                    putString(ARG_FILTER, filter)
                     putBoolean(ARG_IS_COMPACT, isCompact)
                     putBoolean(ARG_IS_SEARCHABLE, isSearchable)
-                    putString(ARG_FILTER, filter)
+                    putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
                 }
             }
     }

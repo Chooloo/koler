@@ -15,7 +15,7 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         CallsManager.registerListener(object : CallsManager.CallsListener {
             override fun onCallChanged(callItem: CallItem) {
                 super.onCallChanged(callItem)
-                if (callItem.isTheSameCall(CallsManager.primaryCall)) {
+                if (callItem.isTheSameCall(CallsManager.firstCall)) {
                     displayPrimaryCall(callItem)
                 } else {
                     mvpView.updateSecondaryCall(callItem)
@@ -25,35 +25,25 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
     }
 
     override fun onAnswerClick() {
-        CallsManager.primaryCall?.answer()
+        CallsManager.firstCall?.answer()
     }
 
     override fun onRejectClick() {
-        CallsManager.primaryCall?.reject()
+        CallsManager.firstCall?.reject()
     }
 
     override fun onDisplayCalls() {
-        CallsManager.primaryCall?.let { displayPrimaryCall(it) }
+        CallsManager.firstCall?.let { displayPrimaryCall(it) }
         CallsManager.secondaryCalls.forEach { mvpView?.updateSecondaryCall(it) }
     }
 
     private fun displayPrimaryCall(callItem: CallItem) {
-        mvpView?.getCallAccount(callItem)?.apply {
-            mvpView?.callerNameText = name ?: number ?: "Unknown"
-            photoUri?.let { mvpView?.callerImageURI = Uri.parse(it) }
+        val account = mvpView?.getCallAccount(callItem)
+        mvpView?.apply {
+            account?.photoUri?.let { callerImageURI = Uri.parse(it) }
+            stateText = App.resources?.getString(callItem.state.stringRes)
+            callerNameText = account?.name ?: account?.number ?: "Unknown"
         }
-
-        mvpView?.stateText = App.resources?.getString(
-            when (callItem.state) {
-                ACTIVE -> R.string.call_status_active
-                DISCONNECTED -> R.string.call_status_disconnected
-                RINGING -> R.string.call_status_incoming
-                DIALING -> R.string.call_status_dialing
-                CONNECTING -> R.string.call_status_dialing
-                HOLDING -> R.string.call_status_holding
-                else -> R.string.call_status_active
-            }
-        )
 
         when (callItem.state) {
             CONNECTING -> mvpView?.transitionToActiveUI()
@@ -71,7 +61,9 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
                 getColor(R.color.red_foreground).let { stateTextColor = it }
                 blinkStateText()
                 stopStopwatch()
-                Handler().postDelayed({ finish() }, 2000)
+                if (CallsManager.sCalls.size == 0) {
+                    Handler().postDelayed({ finish() }, 2000)
+                }
             }
             else -> {
             }

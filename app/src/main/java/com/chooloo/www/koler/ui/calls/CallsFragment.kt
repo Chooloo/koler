@@ -8,13 +8,16 @@ import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.call.CallItem
 
 class CallsFragment : ListFragment<CallItem, CallsBundle, CallsAdapter>(), CallsContract.View {
-    override val adapter by lazy { CallsAdapter() }
     private val _presenter by lazy { CallsPresenter<CallsFragment>() }
+
+    override val adapter by lazy { CallsAdapter() }
     override val noResultsMessage by lazy { getString(R.string.error_no_results_calls) }
 
     companion object {
-        fun newInstance() = CallsFragment().apply {
-            arguments = Bundle()
+        fun newInstance(isHideNoResults: Boolean = false) = CallsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
+            }
         }
     }
 

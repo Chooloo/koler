@@ -22,6 +22,7 @@ class CallService : InCallService() {
         }
     }
 
+    private var _firstCall: Call? = null
     private val _callNotification by lazy { CallNotification(this) }
     private val _callNotificationCallback by lazy {
         object : CallsManager.CallsListener {
@@ -43,26 +44,30 @@ class CallService : InCallService() {
 
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
+        _firstCall = _firstCall ?: call
         CallsManager.addCall(call)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            _callNotification.show(CallItem(call))
-            CallsManager.registerListener(_callNotificationCallback)
+        if (CallsManager.sCalls.size == 1) {
+            startActivity(Intent(this, CallActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                _callNotification.show(CallItem(call))
+                CallsManager.registerListener(_callNotificationCallback)
+            }
         }
-
-        startActivity(Intent(this, CallActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
     }
 
     override fun onCallRemoved(call: Call) {
         super.onCallRemoved(call)
         CallsManager.removeCall(call)
 
-        cancelCallNotification()
-        call.details?.let {
-            if (call.details.disconnectCause.code == DisconnectCause.MISSED) {
-                CallNotification(applicationContext).show(CallItem(call))
+        if (call == _firstCall) {
+            cancelCallNotification()
+            call.details?.let {
+                if (call.details.disconnectCause.code == DisconnectCause.MISSED) {
+                    CallNotification(applicationContext).show(CallItem(call))
+                }
             }
         }
     }

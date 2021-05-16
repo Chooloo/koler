@@ -110,7 +110,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
     override fun openHistory() {
         BottomFragment(
-            RecentsFragment.newInstance(false, false, _recent.number)
+            RecentsFragment.newInstance(isSearchable = false, filter = _recent.number)
         ).show(_activity.supportFragmentManager, ContactFragment.TAG)
     }
 

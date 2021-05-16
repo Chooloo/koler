@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.CallBinding
@@ -23,7 +22,11 @@ class CallActivity : BaseActivity(), CallContract.View {
     private val _presenter by lazy { CallPresenter<CallContract.View>() }
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _animationManager by lazy { AnimationManager(this) }
-    private val _secondaryCallsFragment by lazy { CallsFragment.newInstance() }
+    private val _secondaryCallsFragment by lazy { CallsFragment.newInstance(true) }
+
+    companion object {
+        private const val SECONDARY_CALLS_FRAGMENT_TAG = "secondary_calls_fragment"
+    }
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
@@ -52,7 +55,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     override var secondaryCallsVisibility: Boolean
         get() = _binding.callListContainer.visibility == VISIBLE
         set(value) {
-            _binding.callListContainer.visibility = if (value) VISIBLE else GONE
+            _animationManager.showView(_binding.callListContainer, value)
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,8 +110,28 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun updateSecondaryCall(callItem: CallItem) {
+        attachSecondaryCallsFragment()
         _secondaryCallsFragment.updateCallItem(callItem)
+        if (_secondaryCallsFragment.itemCount == 0) {
+            secondaryCallsVisibility = false
+        } else if (!secondaryCallsVisibility) {
+            secondaryCallsVisibility = true
+        }
     }
 
     override fun getCallAccount(callItem: CallItem) = callItem.getAccount(this)
+
+    private fun attachSecondaryCallsFragment() {
+        if (supportFragmentManager.findFragmentByTag(SECONDARY_CALLS_FRAGMENT_TAG) == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(
+                    _binding.callListContainer.id,
+                    _secondaryCallsFragment,
+                    SECONDARY_CALLS_FRAGMENT_TAG
+                )
+                .commitNow()
+            _animationManager.showView(_binding.callListContainer, true)
+        }
+    }
 }

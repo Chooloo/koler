@@ -1,9 +1,12 @@
 package com.chooloo.www.koler.adapter
 
 import android.net.Uri
+import androidx.core.content.ContextCompat
+import com.chooloo.www.koler.App
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.call.CallItem
+import com.chooloo.www.koler.util.call.CallItem.Companion.CallState.*
 
 class CallsAdapter : ListAdapter<CallItem>() {
     fun updateCallItem(callItem: CallItem) {
@@ -22,16 +25,35 @@ class CallsAdapter : ListAdapter<CallItem>() {
     }
 
     override fun onBindListItem(listItem: ListItem, item: CallItem) {
-        listItem.apply {
-            leftButtonVisibility = true
-            rightButtonVisibility = true
+        val context = listItem.context
+        val account = item.getAccount(context)
 
-            setOnLeftButtonClickListener { item.reject() }
-            setOnRightButtonClickListener { item.answer() }
+        listItem.apply {
+            leftButtonVisibility = !item.isConnected
+            rightButtonVisibility = !item.isConnected
+            titleText = account.name ?: account.number ?: "Unknown"
+            captionText = App.resources?.getString(item.state.stringRes)
+
+            setImageUri(Uri.parse(account.photoUri))
             setLeftButtonTintColor(R.color.green_foreground)
-            setLeftButtonDrawable(R.drawable.ic_call_black_24dp)
-            setRightButtonDrawable(R.drawable.ic_call_end_black_24dp)
-            setImageUri(Uri.parse(item.getAccount(listItem.context).photoUri))
+            setRightButtonDrawable(R.drawable.round_swap_calls_24)
+            setOnLeftButtonClickListener { item.mergeConference() }
+            setOnRightButtonClickListener { item.swapConference() }
+            setLeftButtonDrawable(R.drawable.ic_call_merge_black_24dp)
+
+            when (item.state) {
+                HOLDING -> {
+                    setCaptionTextColor(ContextCompat.getColor(context, R.color.red_foreground))
+                }
+                ACTIVE -> {
+                    setCaptionTextColor(ContextCompat.getColor(context, R.color.green_foreground))
+                }
+                DISCONNECTED -> {
+                    setCaptionTextColor(ContextCompat.getColor(context, R.color.red_foreground))
+                }
+                else -> {
+                }
+            }
         }
     }
 }

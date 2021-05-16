@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.util.call
 
 import android.telecom.Call
+import com.chooloo.www.koler.util.call.CallItem.Companion.CallState.DISCONNECTED
 
 
 object CallsManager : Call.Callback() {
@@ -13,20 +14,38 @@ object CallsManager : Call.Callback() {
         fun onCallDetailsChanged(callItem: CallItem) {}
     }
 
-    val primaryCall: CallItem?
+    val firstCall: CallItem?
         get() = sCalls.maxByOrNull { it.timeConnected }
 
+    val activeCalls: ArrayList<CallItem>
+        get() = ArrayList(sCalls.filter { !it.isDisconnected && it.timeConnected > 0 })
+
+    val incomingCalls: ArrayList<CallItem>
+        get() = ArrayList(sCalls.filter { !it.isDisconnected && it.timeConnected == 0L })
+
     val secondaryCalls: ArrayList<CallItem>
-        get() = ArrayList(sCalls.filter { it != primaryCall })
+        get() = ArrayList(sCalls.filter { it != firstCall })
+
+    fun addCall(callItem: CallItem) {
+        sCalls.add(callItem)
+        callItem.registerListener(this)
+    }
+
+    fun removeCall(callItem: CallItem) {
+        sCalls.remove(callItem)
+        callItem.unregisterListener(this)
+    }
 
     fun addCall(call: Call) {
-        sCalls.add(CallItem(call))
-        call.registerCallback(this)
+        val callItem = CallItem(call)
+        sCalls.add(callItem)
+        callItem.registerListener(this)
     }
 
     fun removeCall(call: Call) {
-        sCalls.remove(CallItem(call))
-        call.unregisterCallback(this)
+        val callItem = CallItem(call)
+        sCalls.remove(callItem)
+        callItem.unregisterListener(this)
     }
 
     fun registerListener(callsListener: CallsListener) {
@@ -48,9 +67,13 @@ object CallsManager : Call.Callback() {
 
     override fun onStateChanged(call: Call, state: Int) {
         super.onStateChanged(call, state)
+        val callItem = CallItem(call)
+        if (callItem.state == DISCONNECTED) {
+            removeCall(callItem)
+        }
         sListeners.forEach {
-            it.onCallStateChanged(CallItem(call))
-            it.onCallChanged(CallItem(call))
+            it.onCallStateChanged(callItem)
+            it.onCallChanged(callItem)
         }
     }
     //endregion

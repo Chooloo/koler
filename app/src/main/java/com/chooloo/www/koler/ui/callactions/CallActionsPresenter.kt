@@ -15,7 +15,7 @@ class CallActionsPresenter<V : CallActionsContract.View> :
 
     override fun onHoldClick() {
         _isHolding = !_isHolding
-        CallsManager.primaryCall?.hold()
+        CallsManager.firstCall?.hold()
     }
 
     override fun onMuteClick() {
@@ -28,7 +28,7 @@ class CallActionsPresenter<V : CallActionsContract.View> :
             mvpView?.stopRecording()
             _isRecording = false
         } else {
-            CallsManager.primaryCall?.let {
+            CallsManager.firstCall?.let {
                 mvpView?.startRecording()
                 mvpView?.showMessage("Recording...")
                 _isRecording = true
@@ -52,6 +52,6 @@ class CallActionsPresenter<V : CallActionsContract.View> :
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {
-        CallsManager.primaryCall?.invokeKeypadChar(event.number)
+        CallsManager.firstCall?.invokeKeypadChar(event.number)
     }
 }

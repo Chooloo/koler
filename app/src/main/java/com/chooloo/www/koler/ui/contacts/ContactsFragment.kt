@@ -23,11 +23,16 @@ class ContactsFragment : ListFragment<Contact, ContactsBundle, ContactsAdapter>(
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_contacts) }
 
     companion object {
-        fun newInstance(isCompact: Boolean = false, isSearchable: Boolean = true) =
+        fun newInstance(
+            isCompact: Boolean = false,
+            isSearchable: Boolean = true,
+            isHideNoResults: Boolean = false
+        ) =
             ContactsFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean(ARG_IS_COMPACT, isCompact)
                     putBoolean(ARG_IS_SEARCHABLE, isSearchable)
+                    putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
                 }
             }
     }

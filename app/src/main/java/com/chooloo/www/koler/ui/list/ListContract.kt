@@ -7,6 +7,7 @@ interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
         val itemCount: Int
         val searchHint: String?
+        val hideNoResults: Boolean
         var emptyStateText: String?
         val noResultsMessage: String
         val noPermissionsMessage: String
