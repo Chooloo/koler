@@ -49,6 +49,9 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
             getString(R.string.pref_key_animations) -> _presenter.onToggledAnimation(newValue as Boolean)
             getString(R.string.pref_key_default_page) -> _presenter.onSelectedDefaultPage(newValue as String)
             getString(R.string.pref_key_records_enabled) -> _presenter.onToggledRecords(newValue as Boolean)
+            getString(R.string.pref_key_scroll_indicator) -> _presenter.onToggledScrollIndicator(
+                newValue as Boolean
+            )
         }
     }
 
@@ -66,16 +69,21 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
     }
 
     override fun setPrefCompact(isCompact: Boolean) {
-        kolerPreferences?.isCompact = isCompact
+        kolerPreferences?.compact = isCompact
     }
 
     override fun setPrefAnimations(isAnimations: Boolean) {
-        kolerPreferences?.isAnimations = isAnimations
+        kolerPreferences?.animations = isAnimations
     }
 
     override fun setPrefRecordsEnabled(isEnabled: Boolean) {
         kolerPreferences?.recordsEnabled = isEnabled
     }
+
+    override fun setPrefScrollIndicator(isEnabled: Boolean) {
+        kolerPreferences?.scrollIndicator = isEnabled
+    }
+
 
     override fun setPrefAccentTheme(accentTheme: AccentTheme) {
         kolerPreferences?.accentTheme = accentTheme
@@ -85,7 +93,6 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
     override fun setPrefRecordFormat(recordFormat: RecordFormat) {
         kolerPreferences?.recordFormat = recordFormat
     }
-
 
     override fun donate() {
         startActivity(Intent(ACTION_VIEW, Uri.parse(getString(R.string.donation_link))))

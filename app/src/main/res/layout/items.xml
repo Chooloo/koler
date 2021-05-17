@@ -15,6 +15,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.reddit.indicatorfastscroll.FastScrollerView
+        android:id="@+id/items_fast_scroller"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/default_spacing"
+        android:elevation="10dp"
+        android:textAppearance="@style/Koler.Text.Caption"
+        android:textColor="?colorOnSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
+
+    <com.reddit.indicatorfastscroll.FastScrollerThumbView
+        android:id="@+id/items_fast_scroller_thumb"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/default_spacing_small"
+        android:textColor="?colorOnSecondary"
+        app:fastScrollerIconColor="?colorSecondary"
+        app:fastScrollerThumbColor="?colorSecondary"
+        app:layout_constraintBottom_toBottomOf="@id/items_fast_scroller"
+        app:layout_constraintEnd_toStartOf="@id/items_fast_scroller"
+        app:layout_constraintTop_toTopOf="@id/items_fast_scroller" />
+
     <com.chooloo.www.koler.ui.widgets.WrapContentableSwipeRefreshLayout
         android:id="@+id/items_swipe_refresh_layout"
         android:layout_width="match_parent"

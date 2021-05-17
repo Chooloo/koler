@@ -13,9 +13,12 @@ import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.permissions.runWithPermissions
+import com.chooloo.www.koler.util.preferences.KolerPreferences
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
 abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
     ListContract.View<ItemType> {
+    private val _preferences by lazy { KolerPreferences(_activity) }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
@@ -87,6 +90,10 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
             }
         }
 
+        if (_preferences.scrollIndicator) {
+            setupScrollIndicator()
+        }
+
         requiredPermissions?.let {
             runWithPermissions(
                 permissions = it,
@@ -121,6 +128,15 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
 
     override fun toggleRefreshing(isRefreshing: Boolean) {
         _binding.itemsSwipeRefreshLayout.isRefreshing = isRefreshing
+    }
+
+    private fun setupScrollIndicator() {
+        _binding.apply {
+            itemsFastScroller.setupWithRecyclerView(itemsRecyclerView, { position ->
+                adapter.getHeader(position)?.let { FastScrollItemIndicator.Text(it) }
+            })
+            itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
+        }
     }
 
     open fun onAttachData() {}

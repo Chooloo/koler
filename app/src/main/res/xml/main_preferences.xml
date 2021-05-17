@@ -31,6 +31,12 @@
         android:title="@string/pref_title_records_enabled"
         app:isPreferenceVisible="false" />
 
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_scroll_indicator"
+        android:icon="@drawable/round_sort_by_alpha_24"
+        android:key="@string/pref_key_scroll_indicator"
+        android:title="@string/pref_title_scroll_indicator" />
+
     <ListPreference
         android:defaultValue="@string/pref_value_page_default"
         android:entries="@array/pages"

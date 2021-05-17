@@ -80,6 +80,7 @@ dependencies {
             'androidx.annotation:annotation:1.1.0',
             'androidx.fragment:fragment-ktx:1.2.5',
             'androidx.arch.core:core-runtime:2.1.0',
+            'com.reddit:indicator-fast-scroll:1.4.0',
             'androidx.legacy:legacy-support-v4:1.0.0',
             'com.stedi.randomimagegenerator:rig:1.1.0',
             'androidx.preference:preference-ktx:1.1.1',

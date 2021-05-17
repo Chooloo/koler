@@ -17,7 +17,7 @@ class RecentsAdapter(
         val contact = context.lookupContactNumber(item.number)
         listItem.apply {
             titleText = contact?.name ?: item.number
-            isCompact = KolerPreferences(context).isCompact
+            isCompact = KolerPreferences(context).compact
             captionText = if (item.date != null) context.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
 

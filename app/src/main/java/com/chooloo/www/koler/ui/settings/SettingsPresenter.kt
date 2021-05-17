@@ -73,4 +73,9 @@ class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
         mvpView?.setPrefDefaultPage(Page.fromKey(pageKey))
         refresh()
     }
+
+    override fun onToggledScrollIndicator(isToggle: Boolean) {
+        mvpView?.setPrefScrollIndicator(isToggle)
+        refresh()
+    }
 }

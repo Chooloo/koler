@@ -40,7 +40,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         }
     }
 
-    private fun getHeader(position: Int): String? {
+    fun getHeader(position: Int): String? {
         var total = 0
         _data.headersCounts.withIndex().forEach { (index, count) ->
             when (position) {

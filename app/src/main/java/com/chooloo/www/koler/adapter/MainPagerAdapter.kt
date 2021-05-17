@@ -9,7 +9,7 @@ import com.chooloo.www.koler.util.preferences.KolerPreferences
 class MainPagerAdapter(
     private val activity: BaseActivity
 ) : FragmentStateAdapter(activity) {
-    private val isCompactPref by lazy { KolerPreferences(activity).isCompact }
+    private val isCompactPref by lazy { KolerPreferences(activity).compact }
 
     override fun getItemCount() = 2
     override fun createFragment(position: Int) = when (position) {

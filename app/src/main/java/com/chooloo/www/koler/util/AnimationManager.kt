@@ -19,7 +19,7 @@ class AnimationManager(private val context: Context) {
         private const val DEFAULT_DURATION = 500L
     }
 
-    private val isEnabled by lazy { KolerPreferences(context).isAnimations }
+    private val isEnabled by lazy { KolerPreferences(context).animations }
 
     fun showView(view: View, isShow: Boolean) {
         if (view.visibility == (if (isShow) VISIBLE else GONE)) {

@@ -14,6 +14,7 @@ class SettingsContract : BaseContract {
         fun setPrefCompact(isCompact: Boolean)
         fun setPrefAnimations(isAnimations: Boolean)
         fun setPrefRecordsEnabled(isEnabled: Boolean)
+        fun setPrefScrollIndicator(isEnabled: Boolean)
         fun setPrefAccentTheme(accentTheme: AccentTheme)
         fun setPrefRecordFormat(recordFormat: RecordFormat)
         //endregion
@@ -44,5 +45,6 @@ class SettingsContract : BaseContract {
         fun onSelectedDefaultPage(pageKey: String)
         fun onSelectedRecordFormat(newValue: Any?)
         fun onToggledCompactMode(isToggle: Boolean)
+        fun onToggledScrollIndicator(isToggle: Boolean)
     }
 }

@@ -94,7 +94,7 @@ class KolerPreferences(
             _pref.putString(R.string.pref_key_default_page, value.key)
         }
 
-    var isCompact: Boolean
+    var compact: Boolean
         get() = _pref.getBoolean(
             R.string.pref_key_compact,
             context.resources.getBoolean(R.bool.pref_default_value_compact)
@@ -103,7 +103,7 @@ class KolerPreferences(
             _pref.putBoolean(R.string.pref_key_compact, value)
         }
 
-    var isAnimations: Boolean
+    var animations: Boolean
         get() = _pref.getBoolean(
             R.string.pref_key_animations,
             context.resources.getBoolean(R.bool.pref_default_value_animations)
@@ -121,10 +121,19 @@ class KolerPreferences(
             _pref.putBoolean(R.string.pref_key_records_enabled, value)
         }
 
+    var scrollIndicator: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_scroll_indicator,
+            context.resources.getBoolean(R.bool.pref_default_scroll_indicator)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_scroll_indicator, value)
+        }
+
     var showedDefaultDialerBlockedNotice: Boolean
         get() = _pref.getBoolean(
             R.string.pref_key_default_dialer_blocked_notice,
-            context.resources.getBoolean(R.bool.pref_showed_default_value_default_dialer_blocked_notice)
+            context.resources.getBoolean(R.bool.pref_default_value_default_dialer_blocked_notice)
         )
         set(value) {
             _pref.putBoolean(R.string.pref_key_default_dialer_blocked_notice, value)
