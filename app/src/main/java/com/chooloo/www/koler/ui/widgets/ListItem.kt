@@ -75,7 +75,7 @@ open class ListItem : LinearLayout {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(dimenSpacing, 0, dimenSpacing, 0)
+                setMargins(dimenSpacing - 10, 0, dimenSpacing, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Headline4)

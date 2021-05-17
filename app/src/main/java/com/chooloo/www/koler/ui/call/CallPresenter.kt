@@ -42,7 +42,7 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         )
 
         when (callState) {
-            CONNECTING -> mvpView?.transitionToActiveUI()
+            CONNECTING, DIALING -> mvpView?.transitionToActiveUI()
             HOLDING -> mvpView?.apply {
                 getColor(R.color.red_foreground).let { mvpView?.stateTextColor = it }
                 animateStateTextAttention()
