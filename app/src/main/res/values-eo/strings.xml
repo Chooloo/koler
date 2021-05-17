@@ -138,7 +138,7 @@
     <string name="content_description_menu_button">Menua butono</string>
     <string name="content_description_answer_button">Responda butono</string>
     <string name="content_description_reject_button">Malakcpeta butono</string>
-    <string name="content_description_call_actions_button">Alvokan agoj</string>
+    <string name="content_description_call_actions_button">Alvokajn agoj</string>
     <!--endregion-->
 
     <!--region notification-->
