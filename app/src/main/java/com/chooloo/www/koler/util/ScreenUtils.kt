@@ -3,11 +3,11 @@ package com.chooloo.www.koler.util
 import android.app.Activity
 import android.app.KeyguardManager
 import android.content.Context
+import android.content.Context.KEYGUARD_SERVICE
 import android.graphics.Rect
 import android.os.Build
 import android.os.PowerManager
 import android.view.MotionEvent
-import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -18,8 +18,9 @@ fun Activity.setShowWhenLocked() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
         setShowWhenLocked(true)
         setTurnScreenOn(true)
+        (getSystemService(KEYGUARD_SERVICE) as KeyguardManager).requestDismissKeyguard(this, null)
     } else {
-        window.addFlags(FLAG_SHOW_WHEN_LOCKED or FLAG_TURN_SCREEN_ON)
+        window.addFlags(FLAG_SHOW_WHEN_LOCKED or FLAG_TURN_SCREEN_ON or FLAG_DISMISS_KEYGUARD)
     }
 }
 
