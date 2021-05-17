@@ -1,1 +1,171 @@
+<resources>
+    <string name="dot">·</string>
 
+    <!--region titles-->
+    <string name="recents">Lastatempaj</string>
+    <string name="contacts">Kontaktoj</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Numero kopiita al tondejo</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_answer">Respondi</string>
+    <string name="action_hangup">Finigi</string>
+    <string name="action_yes">Jes</string>
+    <string name="action_no">Ne</string>
+    <string name="action_cancel">Rezigni</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Serĉi</string>
+    <string name="hint_search_items">Serĉi en elementoj</string>
+    <string name="hint_search_contacts">Serĉi en kontaktoj</string>
+    <string name="hint_search_recents">Serĉi en lastatempajn</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="warning_delete_contact">Ĉu vi certe volas forigi tiun kontakton?</string>
+    <string name="warning_delete_recent">Ĉu vi certe volas forigi tiun lastatempan telefonalvokon?</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_hold">Paŭzigi</string>
+    <string name="call_action_mute">Silentigi</string>
+    <string name="call_action_keypad">Ciferklavaro</string>
+    <string name="call_action_unhold">Daŭrigi</string>
+    <string name="call_action_unmute">Malsilentigi</string>
+    <string name="call_action_record">Registri</string>
+    <string name="call_action_speaker">Laŭtigi</string>
+    <string name="call_action_add_call">Aldoni alvokon</string>
+    <string name="call_action_speaker_off">Ne laŭtigi</string>
+    <string name="call_action_record_stop">Halti registri</string>
+    <!--endregion-->
+
+    <!--region call state-->
+    <string name="call_status_dialing">Telefonas…</string>
+    <string name="call_status_holding">Alvoko paŭzigita</string>
+    <string name="call_status_incoming">Venanta alvoko</string>
+    <string name="call_status_disconnected">Alvoko finis</string>
+    <string name="call_status_active">Alvoko farata</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">taksi</string>
+    <string name="pref_key_email">retpoŝtmesaĝi</string>
+    <string name="pref_key_donate">doni</string>
+    <string name="pref_key_compact">kompakta</string>
+    <string name="pref_key_color">akcenta_koloro</string>
+    <string name="pref_key_sim_select">sim_elekto</string>
+    <string name="pref_key_animations">animacioj</string>
+    <string name="pref_key_report_bugs">raporti_cimigoj</string>
+    <string name="pref_key_default_page">defaŭlta_paĝ</string>
+    <string name="pref_key_record_format">registra_formato</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Taksi</string>
+    <string name="pref_title_donate">Doni</string>
+    <string name="pref_title_compact">Kompakta modo</string>
+    <string name="pref_title_animations">Animacioj</string>
+    <string name="pref_title_app_color">Akcenta koloro</string>
+    <string name="pref_title_email">Sendi retpoŝtmesaĝon al ni</string>
+    <string name="pref_title_report_bugs">Raporti cimigoj</string>
+    <string name="pref_title_sim_select">Elekto de sim-karto</string>
+    <string name="pref_title_default_page">Defaŭlta paĝo</string>
+    <!--endregion-->
+
+    <!--region pref default value-->
+    <string name="pref_default_value_sim_select">0</string>
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">Sen rezultoj :/</string>
+    <string name="error_no_results_phones">Neniu telefonaj numeroj :/</string>
+    <string name="error_no_results_contacts">Neniu kontaktoj :/</string>
+    <string name="error_no_results_recents">Neniu lastatempaj :/</string>
+
+    <string name="error_no_permissions">Mi bezonas peremesojn :/</string>
+    <string name="error_no_permissions_contacts">Mi bezonas permeson por legi kontaktojn :)</string>
+    <string name="error_no_permissions_recents">Mi bezonas permeson por legi alvokan protokolon :)</string>
+    <string name="error_no_permissions_phones">Mi bezonas permeson por legi kontaktojn :)</string>
+
+    <string name="error_enter_number">Bonvolu unue enigi numeron</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <string name="pref_color_value_red">ruĝa</string>
+    <string name="pref_color_value_blue">blua</string>
+    <string name="pref_color_value_green">verda</string>
+    <string name="pref_color_value_orange">oranĝa</string>
+    <string name="pref_color_value_purple">purpura</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">kontaktoj</string>
+    <string name="pref_value_page_recents">lastatempaj</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Voĉmesaĝaro</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters"></string>
+    <string name="dialpad_pound_letters"></string>
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_menu_button">Menua butono</string>
+    <string name="content_description_answer_button">Responda butono</string>
+    <string name="content_description_reject_button">Malakcpeta butono</string>
+    <string name="content_description_call_actions_button">Alvokan agoj</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Alvoka sciigo</string>
+    <string name="call_notification_channel_description">Sciigo de farata alvoko, montrata por komforta uzado</string>
+    <!--endregion-->
+
+    <!--region phone type-->
+    <string name="phone_type_home">Hejmo</string>
+    <string name="phone_type_mobile">Poŝa</string>
+    <string name="phone_type_work">Laboro</string>
+    <string name="phone_type_fax_work">Labora fakso</string>
+    <string name="phone_type_fax_home">Hejma fakso</string>
+    <string name="phone_type_pager">Televokilo</string>
+    <string name="phone_type_other">Alia</string>
+    <string name="phone_type_callback">Revoko</string>
+    <string name="phone_type_car">Aŭto</string>
+    <string name="phone_type_company_main">Firmo ĉefa</string>
+    <string name="phone_type_isdn">ISDN</string>
+    <string name="phone_type_main">Ĉefa</string>
+    <string name="phone_type_other_fax">Fakso</string>
+    <string name="phone_type_radio">Radio</string>
+    <string name="phone_type_telex">Telekso</string>
+    <string name="phone_type_tty_ttd">TTY TDD</string>
+    <string name="phone_type_work_mobile">Labora poŝa</string>
+    <string name="phone_type_work_pager">Labora televokilo</string>
+    <string name="phone_type_assistant">Asistanto</string>
+    <string name="phone_type_mms">MMS</string>
+    <!--endregion-->
+</resources>
