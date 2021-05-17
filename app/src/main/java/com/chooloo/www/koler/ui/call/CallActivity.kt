@@ -85,7 +85,7 @@ class CallActivity : BaseActivity(), CallContract.View {
                 .beginTransaction()
                 .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
                 .commitNow()
-            _animationManager.bounceInUp(_binding.callActionsContainer)
+            _animationManager.bounceIn(_binding.callActionsContainer)
             _binding.root.transitionToEnd()
         }
     }

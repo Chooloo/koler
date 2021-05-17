@@ -19,6 +19,7 @@ import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
     ListContract.View<ItemType> {
     private val _preferences by lazy { KolerPreferences(_activity) }
+    private val _animationManager by lazy { AnimationManager(_activity) }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
@@ -86,7 +87,11 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
                             _presenter.onDataChanged()
                         }
                     })
+                    setOnSelectingChangeListener { _presenter.onSelectingChanged(it) }
                 }
+            }
+            itemsDeleteButton.setOnClickListener {
+                onDeleteItems((itemsRecyclerView.adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
             }
         }
 
@@ -122,6 +127,16 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
         }
     }
 
+    override fun showSelecting(isSelecting: Boolean) {
+        _binding.itemsDeleteButton.apply {
+            if (isSelecting) {
+                _animationManager.bounceIn(this)
+            } else {
+                _animationManager.showView(this, false)
+            }
+        }
+    }
+
     override fun updateData(data: ListBundle<ItemType>) {
         adapter.data = data
     }
@@ -142,4 +157,5 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
     open fun onAttachData() {}
     open fun onItemClick(item: ItemType) {}
     open fun onItemLongClick(item: ItemType) {}
+    open fun onDeleteItems(items: ArrayList<ItemType>) {}
 }

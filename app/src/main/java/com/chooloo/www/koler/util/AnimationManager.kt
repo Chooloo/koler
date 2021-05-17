@@ -22,25 +22,24 @@ class AnimationManager(private val context: Context) {
     private val isEnabled by lazy { KolerPreferences(context).animations }
 
     fun showView(view: View, isShow: Boolean) {
-        if (view.visibility == (if (isShow) VISIBLE else GONE)) {
-            return
-        }
-        view.visibility = if (isShow) VISIBLE else GONE
         if (isEnabled) {
-            view.startAnimation(
-                AnimationUtils.loadAnimation(
-                    view.context,
-                    if (isShow) {
-                        R.anim.animation_fall_down_show
-                    } else {
-                        R.anim.animation_fall_down_hide
-                    }
-                )
-            )
+            if (isShow && view.visibility != VISIBLE) {
+                YoYo.with(Techniques.FadeInUp)
+                    .duration(400)
+                    .playOn(view)
+            } else if (!isShow && view.visibility == VISIBLE) {
+                YoYo.with(Techniques.FadeOutDown)
+                    .duration(400)
+                    .onEnd { view.visibility = GONE }
+                    .playOn(view)
+            }
+        } else {
+            view.visibility = if (isShow) VISIBLE else GONE
         }
     }
 
-    fun bounceInUp(view: View) {
+    fun bounceIn(view: View) {
+        view.visibility = VISIBLE
         if (isEnabled) {
             YoYo.with(Techniques.BounceInUp)
                 .duration(400)

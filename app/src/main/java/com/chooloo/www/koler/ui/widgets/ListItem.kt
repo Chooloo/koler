@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.AnimationManager
+import com.chooloo.www.koler.util.getAttrColor
 import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
 import com.chooloo.www.koler.util.sizeInDp
 import com.github.abdularis.civ.AvatarImageView
@@ -200,6 +201,15 @@ open class ListItem : LinearLayout {
             captionText = it.getString(R.styleable.Koler_ListItem_caption)
             imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
             isCompact = it.getBoolean(R.styleable.Koler_ListItem_compact, false)
+        }
+    }
+
+    override fun setSelected(selected: Boolean) {
+        super.setSelected(selected)
+        if (selected) {
+            _personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
+        } else {
+            _personLayout.background = context.getSelectableItemBackgroundDrawable()
         }
     }
 

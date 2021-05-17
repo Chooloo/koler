@@ -39,7 +39,7 @@ class Tab : AppCompatTextView {
     }
 
     private fun animateAttension() {
-        AnimationManager(context).bounceInUp(this)
+        AnimationManager(context).bounceIn(this)
     }
 
     private fun setColor(@ColorInt color: Int) {

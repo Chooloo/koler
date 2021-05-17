@@ -10,6 +10,7 @@ import com.chooloo.www.koler.databinding.MainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
+import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 import com.chooloo.www.koler.util.ignoreEditTextFocus
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer

@@ -43,6 +43,10 @@ open class ListPresenter<ItemType, V : ListContract.View<ItemType>> : BasePresen
         mvpView?.applyFilter(text)
     }
 
+    override fun onSelectingChanged(isSelecting: Boolean) {
+        mvpView?.showSelecting(isSelecting)
+    }
+
     override fun onPermissionsBlocked(permissions: Array<String>) {
         mvpView?.emptyStateText = mvpView?.noPermissionsMessage
     }

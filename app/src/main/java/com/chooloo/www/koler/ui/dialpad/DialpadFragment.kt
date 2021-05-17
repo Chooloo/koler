@@ -1,10 +1,8 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.content.Context
-import android.content.Context.TELEPHONY_SERVICE
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.telephony.TelephonyManager
 import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
 import android.view.KeyEvent.KEYCODE_DEL
@@ -30,7 +28,6 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
-    private val _telephonyManager by lazy { _activity.getSystemService(TELEPHONY_SERVICE) as TelephonyManager }
 
     override val suggestionsCount: Int
         get() = _suggestionsFragment.itemCount
@@ -57,16 +54,20 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     override var isAddContactButtonVisible: Boolean
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
-            if (_binding.dialpadButtonAddContact.visibility == (if (value) GONE else VISIBLE)) {
-                _animationManager.showView(_binding.dialpadButtonAddContact, value)
+            if (value && !isAddContactButtonVisible) {
+                _animationManager.bounceIn(_binding.dialpadButtonAddContact)
+            } else if (!value && isAddContactButtonVisible) {
+                _animationManager.showView(_binding.dialpadButtonAddContact, false)
             }
         }
 
     override var isDeleteButtonVisible: Boolean
-        get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
+        get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
-            if (_binding.dialpadButtonDelete.visibility == (if (value) GONE else VISIBLE)) {
-                _animationManager.showView(_binding.dialpadButtonDelete, value)
+            if (value && !isDeleteButtonVisible) {
+                _animationManager.bounceIn(_binding.dialpadButtonDelete)
+            } else if (!value && isDeleteButtonVisible) {
+                _animationManager.showView(_binding.dialpadButtonDelete, false)
             }
         }
 

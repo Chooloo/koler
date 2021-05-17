@@ -9,6 +9,8 @@ import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
+import com.chooloo.www.koler.util.deleteRecent
+import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
     RecentsContract.View {
@@ -72,5 +74,11 @@ class RecentsFragment : ListFragment<Recent, RecentsBundle, RecentsAdapter>(),
 
     override fun onItemLongClick(item: Recent) {
         _presenter.onRecentItemLongClick(item)
+    }
+
+    override fun onDeleteItems(items: ArrayList<Recent>) {
+        context?.runWithPrompt(R.string.warning_delete_recents) {
+            items.forEach { this@RecentsFragment.context?.deleteRecent(it.id) }
+        }
     }
 }

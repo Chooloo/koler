@@ -10,7 +10,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -51,14 +50,6 @@ class BottomFragment<FragmentType : Fragment>(
 
     override fun onSetup() {
         putFragment(fragment)
-    }
-
-    override fun finish() {
-        dismiss()
-    }
-
-    override fun dismiss() {
-        super.dismiss()
     }
     //endregion
 

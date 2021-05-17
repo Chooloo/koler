@@ -18,6 +18,7 @@ interface ListContract : BaseContract {
         fun requestSearchFocus()
         fun applyFilter(filter: String) {}
         fun showEmptyPage(isShow: Boolean)
+        fun showSelecting(isSelecting: Boolean)
         fun updateData(data: ListBundle<ItemType>)
         fun toggleRefreshing(isRefreshing: Boolean)
     }
@@ -29,6 +30,7 @@ interface ListContract : BaseContract {
         fun onSwipeRefresh()
         fun onPermissionsGranted()
         fun onSearchTextChanged(text: String)
+        fun onSelectingChanged(isSelecting: Boolean)
         fun onPermissionsBlocked(permissions: Array<String>)
     }
 }
