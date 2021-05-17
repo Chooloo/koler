@@ -51,6 +51,16 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
             _binding.dialpadEditText.setText(value)
         }
 
+    override var isSuggestionsVisible: Boolean
+        get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
+        set(value) {
+            if (value && !isSuggestionsVisible) {
+                _animationManager.bounceIn(_binding.dialpadSuggestionsScrollView)
+            } else if (!value && isSuggestionsVisible) {
+                _binding.dialpadSuggestionsScrollView.visibility = GONE
+            }
+        }
+
     override var isAddContactButtonVisible: Boolean
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
@@ -194,10 +204,6 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     override fun invokeKey(keyCode: Int) {
         _binding.dialpadEditText.onKeyDown(keyCode, KeyEvent(ACTION_DOWN, keyCode))
-    }
-
-    override fun showSuggestions(isShow: Boolean) {
-        _animationManager.showView(_binding.dialpadSuggestionsScrollView, isShow)
     }
 
     override fun setSuggestionsFilter(filter: String) {

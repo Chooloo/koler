@@ -54,6 +54,7 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
     }
 
     override fun onSuggestionsChanged(contactsBundle: ContactsBundle) {
-        mvpView?.showSuggestions(contactsBundle.contacts.isNotEmpty() && mvpView?.number?.isNotEmpty() == true)
+        mvpView?.isSuggestionsVisible =
+            contactsBundle.contacts.isNotEmpty() && mvpView?.number?.isNotEmpty() == true
     }
 }

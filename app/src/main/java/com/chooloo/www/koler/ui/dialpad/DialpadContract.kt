@@ -8,6 +8,7 @@ interface DialpadContract : BaseContract {
         val _isDialer: Boolean
         var number: String
         val suggestionsCount: Int
+        var isSuggestionsVisible: Boolean
         var isDeleteButtonVisible: Boolean
         var isAddContactButtonVisible: Boolean
 
@@ -18,7 +19,6 @@ interface DialpadContract : BaseContract {
         fun callVoicemail()
         fun playTone(keyCode: Int)
         fun invokeKey(keyCode: Int)
-        fun showSuggestions(isShow: Boolean)
         fun setSuggestionsFilter(filter: String)
     }
 
