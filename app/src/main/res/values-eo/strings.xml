@@ -71,7 +71,7 @@
     <string name="pref_key_sim_select">sim_elekto</string>
     <string name="pref_key_animations">animacioj</string>
     <string name="pref_key_report_bugs">raporti_cimigoj</string>
-    <string name="pref_key_default_page">defaŭlta_paĝ</string>
+    <string name="pref_key_default_page">defaŭlta_paĝo</string>
     <string name="pref_key_record_format">registra_formato</string>
     <!--endregion-->
 
