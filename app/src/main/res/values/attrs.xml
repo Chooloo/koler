@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--region colors-->
+    <attr name="colorTextHint" format="color" />
+    <attr name="colorTextDisabled" format="color" />
+    <!--endregion-->
+
+    <!--region styleables-->
     <declare-styleable name="Koler" />
 
     <declare-styleable name="Koler.ListItem">
@@ -18,4 +24,5 @@
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
     </declare-styleable>
+    <!--endregion-->
 </resources>

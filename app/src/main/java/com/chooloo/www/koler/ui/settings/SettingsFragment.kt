@@ -124,7 +124,7 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
 
     override fun goToMainActivity() {
         val intent = Intent(activity, MainActivity::class.java)
-        intent.flags = gFLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK
+        intent.flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TOP or FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 

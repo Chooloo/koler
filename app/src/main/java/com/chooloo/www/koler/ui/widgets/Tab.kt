@@ -6,7 +6,6 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.AnimationManager
@@ -14,8 +13,8 @@ import com.chooloo.www.koler.util.getAttrColor
 import java.util.*
 
 class Tab : AppCompatTextView {
-    private val disabledColor by lazy { ContextCompat.getColor(context, R.color.color_hint) }
     private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
+    private val disabledColor by lazy { context.getAttrColor(R.attr.colorTextHint) }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

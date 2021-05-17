@@ -17,11 +17,12 @@
 
     <style name="Koler.Text.Headline3">
         <item name="android:textSize">@dimen/headline_3</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
     <style name="Koler.Text.Headline4">
         <item name="android:textSize">@dimen/headline_4</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
     <style name="Koler.Text.Subtitle1">
@@ -30,11 +31,14 @@
 
     <style name="Koler.Text.Subtitle2">
         <item name="android:textSize">@dimen/subtitle_2</item>
+        <item name="android:textColor">?colorTextDisabled</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
     <style name="Koler.Text.Caption" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/caption_1</item>
-        <item name="android:textColor">?android:textColorHint</item>
+        <item name="android:textColor">?colorTextDisabled</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
     <style name="Koler.Text.Button">
@@ -45,8 +49,8 @@
 
     <style name="Koler.Text.Error">
         <item name="android:textSize">@dimen/headline_4</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/red_foreground</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
     <!--endregion-->
 
@@ -186,15 +190,6 @@
     <style name="Koler.Bottom.Text">
         <item name="android:padding">2dp</item>
         <item name="android:textAlignment">viewStart</item>
-    </style>
-
-    <style name="Koler.Bottom.Text.Title">
-        <item name="android:textAppearance">@style/Koler.Text.Headline3</item>
-    </style>
-
-    <style name="Koler.Bottom.Text.Caption">
-        <item name="android:textAppearance">@style/Koler.Text.Caption</item>
-        <item name="android:textSize">@dimen/subtitle_2</item>
     </style>
 
     <style name="Koler.Bottom.Image">

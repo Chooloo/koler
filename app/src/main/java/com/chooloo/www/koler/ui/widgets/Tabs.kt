@@ -62,4 +62,4 @@ class Tabs : LinearLayout {
     private fun selectTab(position: Int) {
         _tabs.forEachIndexed { index, tab -> tab.isActivated = index == position }
     }
-}
+ }

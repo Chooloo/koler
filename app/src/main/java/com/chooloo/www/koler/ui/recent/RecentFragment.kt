@@ -51,24 +51,25 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         _presenter.attach(this)
 
         _binding.apply {
-            recentTextDate.apply {
+            recentTextCaption.apply {
                 visibility = VISIBLE
                 text = _recent.relativeTime
+                if (_recent.duration > 0) {
+                    text = "$text, ${getElapsedTimeString(_recent.duration)}"
+                }
+                if (_isBlocked) {
+                    text = "$text, ${getString(R.string.error_blocked).toUpperCase()})"
+                }
             }
+
             recentTypeImage.apply {
                 visibility = VISIBLE
                 setImageDrawable(getDrawable(_activity, getCallTypeImage(_recent.type)))
             }
-            recentTextDuration.apply {
-                text = getElapsedTimeString(_recent.duration)
-                visibility = if (_recent.duration == 0.toLong()) GONE else VISIBLE
-            }
             recentTextName.text = _recent.cachedName ?: _recent.number
 
-            recentTextBlocked.visibility = if (_isBlocked) VISIBLE else GONE
             recentButtonContact.visibility = if (_contact != null) VISIBLE else GONE
             recentButtonAddContact.visibility = if (_contact != null) GONE else VISIBLE
-            recentTextSeperator.visibility = if (_recent.duration == 0.toLong()) GONE else VISIBLE
 
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonMenu.setOnClickListener { _presenter.onActionMenu() }

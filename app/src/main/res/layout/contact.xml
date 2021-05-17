@@ -49,7 +49,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
-        style="@style/Koler.Bottom.Text.Title"
+        style="@style/Koler.Text.Headline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"

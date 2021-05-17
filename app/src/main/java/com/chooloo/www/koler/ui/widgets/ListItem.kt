@@ -19,7 +19,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
@@ -46,6 +45,7 @@ open class ListItem : LinearLayout {
 
     private val dimenSpacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     private val dimenImageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
+    private val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     private val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     constructor(context: Context) : this(context, null)
@@ -63,19 +63,19 @@ open class ListItem : LinearLayout {
             isFocusable = true
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
-            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                setMargins(5, dimenSpacing, 0, 12)
+                setMargins(dimenSpacingSmall, dimenSpacing, dimenSpacingBig, dimenSpacingSmall)
             }
 
             setTextAppearance(R.style.Koler_Text_Caption)
+            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
         }
 
         _title = AppCompatTextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(dimenSpacingSmall + 20, 0, dimenSpacing, 0)
+                setMargins(dimenSpacing, 0, dimenSpacing, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Headline4)
@@ -84,11 +84,10 @@ open class ListItem : LinearLayout {
         _caption = AppCompatTextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
-            layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(0, context.sizeInDp(2), 0, 0)
-            }
+            layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
+            setPadding(0, context.sizeInDp(2), 0, 0)
         }
 
         _image = AvatarImageView(context, attrs).apply {
@@ -137,7 +136,6 @@ open class ListItem : LinearLayout {
             background = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
-            setPadding(dimenSpacingSmall)
             addView(_image)
             addView(_title)
             addView(_caption)
@@ -208,23 +206,18 @@ open class ListItem : LinearLayout {
     var isCompact: Boolean
         get() = _isCompact
         set(value) {
-            if (value) {
-                _personLayout.setPadding(dimenSpacing, 3, dimenSpacing, 3)
-                _header.setPadding(dimenSpacing, dimenSpacingSmall, dimenSpacing, 3)
-            } else {
-                _personLayout.setPadding(
-                    dimenSpacing,
-                    dimenSpacingSmall,
-                    dimenSpacing,
-                    dimenSpacingSmall
-                )
-                _header.setPadding(
-                    dimenSpacing,
-                    dimenSpacingSmall,
-                    context.sizeInDp(5),
-                    dimenSpacingSmall
-                )
-            }
+            _personLayout.setPadding(
+                dimenSpacing,
+                if (value) 3 else dimenSpacingSmall,
+                dimenSpacing,
+                if (value) 3 else dimenSpacingSmall
+            )
+            _header.setPadding(
+                dimenSpacing,
+                dimenSpacingSmall,
+                dimenSpacing,
+                if (value) dimenSpacingSmall - 10 else dimenSpacingSmall
+            )
         }
 
     //region header

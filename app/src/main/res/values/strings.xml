@@ -124,6 +124,7 @@
     <!--endregion-->
 
     <!--region errors-->
+    <string name="error_blocked">Blocked</string>
     <string name="error_no_results">No results :/</string>
     <string name="error_no_results_calls">No calls :/</string>
     <string name="error_no_results_recents">No recents :/</string>
