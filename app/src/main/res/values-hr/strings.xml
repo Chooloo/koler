@@ -137,7 +137,7 @@
     <!--region content descriptions -->
     <string name="content_description_menu_button">Tipka izbornika</string>
     <string name="content_description_answer_button">Tipka za prihvat poziva</string>
-    <string name="content_description_reject_button">TIpka za odbijanje poziva</string>
+    <string name="content_description_reject_button">Tipka za odbijanje poziva</string>
     <string name="content_description_call_actions_button">Radnje poziva</string>
     <!--endregion-->
 
