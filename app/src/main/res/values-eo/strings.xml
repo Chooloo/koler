@@ -49,17 +49,17 @@
     <string name="call_action_unmute">Malsilentigi</string>
     <string name="call_action_record">Registri</string>
     <string name="call_action_speaker">Laŭtigi</string>
-    <string name="call_action_add_call">Aldoni alvokon</string>
+    <string name="call_action_add_call">Aldoni telefonadon</string>
     <string name="call_action_speaker_off">Ne laŭtigi</string>
     <string name="call_action_record_stop">Halti registri</string>
     <!--endregion-->
 
     <!--region call state-->
     <string name="call_status_dialing">Telefonas…</string>
-    <string name="call_status_holding">Alvoko paŭzigita</string>
-    <string name="call_status_incoming">Venanta alvoko</string>
-    <string name="call_status_disconnected">Alvoko finis</string>
-    <string name="call_status_active">Alvoko farata</string>
+    <string name="call_status_holding">Telefonado paŭzigita</string>
+    <string name="call_status_incoming">Venanta telefonado</string>
+    <string name="call_status_disconnected">Telefonado finis</string>
+    <string name="call_status_active">Telefonado farata</string>
     <!--endregion-->
 
     <!--region pref key-->
@@ -142,7 +142,7 @@
     <!--endregion-->
 
     <!--region notification-->
-    <string name="call_notification_channel_name">Alvoka sciigo</string>
+    <string name="call_notification_channel_name">Telefonada sciigo</string>
     <string name="call_notification_channel_description">Sciigo de farata alvoko, montrata por komforta uzado</string>
     <!--endregion-->
 
