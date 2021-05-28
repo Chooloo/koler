@@ -1,5 +1,9 @@
 
-# Koler
+&nbsp;
+
+# Koler <img src="./app/src/main/ic_launcher-web.png" width="90" align="left">
+[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
+
 &nbsp;
 
 **An update, I'm currently working on a massive code redesign from scratch, will probably take some time, but will be better**
@@ -25,5 +29,4 @@ If you want to help us and support us so we can put more attention into the app,
 Feel free to contact us for every little thing
 
 ## ⚙️ Install
- * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
-
+[<img src="https://github.com/machiav3lli/oandbackupx/blob/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/Chooloo/koler/releases)
