@@ -1,8 +1,10 @@
+
 # Koler
+&nbsp;
 
-**An update, I'm currently working on a massive code redesign from scratch, will probably take some time, but will be better**<br>
+**An update, I'm currently working on a massive code redesign from scratch, will probably take some time, but will be better**
 
-A uniquely stylized phone app for Android, designed with the user in mind.
+Koler is a uniquely stylized phone app for Android, designed with the user in mind.
 Believe us we want to make it good, as we use it ourselves.
 </br>
 
@@ -22,6 +24,6 @@ We'll do our best to slowly push updates and add requested feature
 If you want to help us and support us so we can put more attention into the app, please consider supporting us (Bottom of the page)
 Feel free to contact us for every little thing
 
-## ⚙️ GET THE APP
+## ⚙️ Install
  * Download it from Github under [Releases](https://github.com/Chooloo/call_manage/releases "Releases")
 
