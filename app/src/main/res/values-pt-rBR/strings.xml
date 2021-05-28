@@ -55,7 +55,7 @@
     <!--endregion-->
 
     <!--region call state-->
-    <string name="call_status_dialing">Marcando…</string>
+    <string name="call_status_dialing">Conectando…</string>
     <string name="call_status_holding">Chamada em espera</string>
     <string name="call_status_incoming">Chamada recebida</string>
     <string name="call_status_disconnected">Chamada concluída</string>
