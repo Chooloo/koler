@@ -10,7 +10,7 @@ import com.chooloo.www.koler.adapter.MenuAdapter
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.list.ListFragment
 
-open class MenuFragment : ListFragment<MenuItem, Int, MenuAdapter>(), MenuContract.View {
+open class MenuFragment : ListFragment<MenuItem, MenuAdapter>(), MenuContract.View {
     override val adapter by lazy { MenuAdapter() }
     open val menuRes by lazy { argsSafely.getInt(ARG_MENU_LAYOUT) }
 

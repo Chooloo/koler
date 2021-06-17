@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import com.chooloo.www.koler.data.ContactsBundle
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface DialpadContract : BaseContract {
@@ -30,6 +30,6 @@ interface DialpadContract : BaseContract {
         fun onAddContactClick()
         fun onLongDeleteClick(): Boolean
         fun onTextChanged(text: String?)
-        fun onSuggestionsChanged(contactsBundle: ContactsBundle)
+        fun onSuggestionsChanged(contacts: ArrayList<Contact>)
     }
 }

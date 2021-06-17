@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.view.KeyEvent.*
-import com.chooloo.www.koler.data.ContactsBundle
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
@@ -53,8 +53,9 @@ class DialpadPresenter<V : DialpadContract.View> : BasePresenter<V>(),
         }
     }
 
-    override fun onSuggestionsChanged(contactsBundle: ContactsBundle) {
-        mvpView?.isSuggestionsVisible =
-            contactsBundle.contacts.isNotEmpty() && mvpView?.number?.isNotEmpty() == true
+    override fun onSuggestionsChanged(contacts: ArrayList<Contact>) {
+        mvpView?.apply {
+            isSuggestionsVisible = contacts.isNotEmpty() && number.isNotEmpty() == true
+        }
     }
 }

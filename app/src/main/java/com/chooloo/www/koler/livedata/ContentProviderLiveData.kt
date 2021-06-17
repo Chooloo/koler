@@ -10,8 +10,6 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
 ) : LiveData<T>() {
     abstract val contentResolver: ContentResolver
 
-    val requiredPermissions: Array<String> get() = contentResolver.requiredPermissions
-
     var filter: String?
         get() = contentResolver.filter
         set(value) {

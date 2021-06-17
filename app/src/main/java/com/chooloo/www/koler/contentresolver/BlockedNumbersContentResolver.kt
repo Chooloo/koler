@@ -5,35 +5,29 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.BlockedNumberContract.BlockedNumbers
 
-class BlockedNumbersContentResolver(
-    context: Context,
-    number: String? = null
-) : BaseContentResolver<Array<String>>(context) {
-    override val uri = BlockedNumbers.CONTENT_URI
+class BlockedNumbersContentResolver(context: Context, number: String? = null) :
+    BaseItemsContentResolver<String>(context) {
+    companion object {
+        val URI: Uri = BlockedNumbers.CONTENT_URI;
+        val PROJECTION: Array<String> = arrayOf(
+            BlockedNumbers.COLUMN_ID,
+            BlockedNumbers.COLUMN_E164_NUMBER,
+            BlockedNumbers.COLUMN_ORIGINAL_NUMBER
+        )
+    }
 
+    override val uri: Uri = URI
     override val filterUri: Uri? = null
-
-    override val selection = SelectionBuilder()
-        .addSelection(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number)
-        .build()
-
     override val sortOrder: String? = null
-
-    override val projection = arrayOf(
-        BlockedNumbers.COLUMN_ID,
-        BlockedNumbers.COLUMN_E164_NUMBER,
-        BlockedNumbers.COLUMN_ORIGINAL_NUMBER,
-    )
-
     override val selectionArgs: Array<String>? = null
+    override val projection: Array<String> = PROJECTION
+    override val selection: String by lazy {
+        SelectionBuilder()
+            .addSelection(BlockedNumbers.COLUMN_ORIGINAL_NUMBER, number)
+            .build()
+    }
 
-    override fun convertCursorToContent(cursor: Cursor?): Array<String> {
-        val numbers = arrayListOf<String>()
-        cursor?.let {
-            while (cursor.moveToNext()) {
-                numbers.add(it.getString(it.getColumnIndex(BlockedNumbers.COLUMN_ORIGINAL_NUMBER)))
-            }
-        }
-        return numbers.toTypedArray()
+    override fun convertCursorToItem(cursor: Cursor): String {
+        return cursor.getString(cursor.getColumnIndex(BlockedNumbers.COLUMN_ORIGINAL_NUMBER))
     }
 }

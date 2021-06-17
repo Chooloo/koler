@@ -16,14 +16,14 @@ import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
-abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
+abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
     ListContract.View<ItemType> {
     private val _preferences by lazy { KolerPreferences(_activity) }
     private val _animationManager by lazy { AnimationManager(_activity) }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
-
+    
     override val itemCount get() = adapter.itemCount
     override val requiredPermissions: Array<String>? = null
     override val noResultsMessage by lazy { getString(R.string.error_no_results) }

@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.recents
 
 import com.chooloo.www.koler.data.Recent
-import com.chooloo.www.koler.data.RecentsBundle
 import com.chooloo.www.koler.ui.list.ListContract
 
 interface RecentsContract : ListContract {
@@ -10,7 +9,7 @@ interface RecentsContract : ListContract {
     }
 
     interface Presenter<V : View> : ListContract.Presenter<Recent, V> {
-        fun onRecentsChanged(recentsBundle: RecentsBundle)
+        fun onRecentsChanged(recents: ArrayList<Recent>)
         fun onRecentItemClick(recent: Recent)
         fun onRecentItemLongClick(recent: Recent)
     }

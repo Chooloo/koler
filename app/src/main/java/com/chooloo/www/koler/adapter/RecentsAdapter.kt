@@ -11,13 +11,17 @@ import com.chooloo.www.koler.util.lookupContactNumber
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 class RecentsAdapter(
-    private val context: Context
+    private val _context: Context
 ) : ListAdapter<Recent>() {
+    private val _prefIsCompact by lazy { _kolerPreferences.compact }
+    private val _kolerPreferences by lazy { KolerPreferences(_context) }
+
     override fun onBindListItem(listItem: ListItem, item: Recent) {
-        val contact = context.lookupContactNumber(item.number)
+        val contact = _context.lookupContactNumber(item.number)
+
         listItem.apply {
+            isCompact = _prefIsCompact
             titleText = contact?.name ?: item.number
-            isCompact = KolerPreferences(context).compact
             captionText = if (item.date != null) context.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
 

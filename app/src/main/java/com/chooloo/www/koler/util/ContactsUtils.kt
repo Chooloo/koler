@@ -27,16 +27,13 @@ fun Context.lookupContactNumber(number: String?) =
     PhoneLookupContentResolver(this, number).content.getOrNull(0)
 
 fun Context.lookupContactId(contactId: Long): Contact {
-    val contacts = ContactsContentResolver(this, contactId).content.contacts
+    val contacts = ContactsContentResolver(this, contactId).content
     return if (contacts.isEmpty()) {
         Contact.UNKNOWN
     } else {
         contacts[0].apply {
             phoneAccounts =
-                PhoneContentResolver(
-                    this@lookupContactId,
-                    contactId
-                ).content.phoneAccounts.toTypedArray()
+                PhoneContentResolver(this@lookupContactId, contactId).content.toTypedArray()
         }
     }
 }

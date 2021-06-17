@@ -10,4 +10,4 @@ fun Context.deleteRecent(recentId: Long) {
 }
 
 fun Context.getRecentById(recentId: Long) =
-    RecentsContentResolver(this, recentId).content.recents.getOrNull(0) ?: Recent.UNKNOWN
+    RecentsContentResolver(this, recentId).content.getOrNull(0) ?: Recent.UNKNOWN

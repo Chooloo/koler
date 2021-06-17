@@ -8,15 +8,32 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.AnimationManager
 
 abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
-    private var _isSelecting = false
-    private var _isSelectable = true
-    private var _data: ListBundle<DataType> = ListBundle()
-    private var _selectedItems: ArrayList<DataType> = arrayListOf()
+    //region listeners
+
     private var _onItemClickListener: (item: DataType) -> Unit = {}
     private var _onItemLongClickListener: (item: DataType) -> Unit = {}
     private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
     private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
-    var isCompact = false
+
+    //endregion
+
+    //region private variables
+
+    private var _isCompact = false
+    private var _isSelecting = false
+    private var _isSelectable = true
+    private var _data: ListBundle<DataType> = ListBundle()
+    private var _selectedItems: ArrayList<DataType> = arrayListOf()
+
+    //endregion
+
+    //region public variables
+
+    var isCompact
+        get() = _isCompact
+        set(value) {
+            _isCompact = value
+        }
 
     var data: ListBundle<DataType>
         get() = _data
@@ -31,10 +48,13 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     val selectedItems: ArrayList<DataType>
         get() = _selectedItems
 
-    override fun getItemCount() = _data.items.size
+    //endregion
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ListItemHolder(parent.context)
+    //region lifecycle methods
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
+        return ListItemHolder(parent.context)
+    }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val dataItem = _data.items[position]
@@ -75,6 +95,14 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         }
     }
 
+    //endregion
+
+    //region public methods
+
+    override fun getItemCount(): Int {
+        return _data.items.size
+    }
+
     fun getHeader(position: Int): String? {
         var total = 0
         _data.headersCounts.withIndex().forEach { (index, count) ->
@@ -85,6 +113,10 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         }
         return null
     }
+
+    //endregion
+
+    //region listeners setters
 
     fun setOnItemClickListener(onItemClickListener: (item: DataType) -> Unit) {
         _onItemClickListener = onItemClickListener
@@ -101,6 +133,8 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     fun setOnItemsSelectedListener(onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit) {
         _onItemsSelectedListener = onItemsSelectedListener
     }
+
+    //endregion
 
     abstract fun onBindListItem(listItem: ListItem, item: DataType)
 }

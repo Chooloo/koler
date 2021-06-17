@@ -7,21 +7,22 @@ import android.content.Context
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.PhonesAdapter
-import com.chooloo.www.koler.data.PhonesBundle
+import com.chooloo.www.koler.contentresolver.PhoneContentResolver
+import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.livedata.PhoneProviderLiveData
 import com.chooloo.www.koler.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.call.call
 
-class PhonesFragment : ListFragment<PhoneAccount, PhonesBundle, PhonesAdapter>(),
+class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(),
     PhonesContract.View {
     private val _presenter by lazy { PhonesPresenter<PhonesContract.View>() }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _phonesLiveData by lazy { PhoneProviderLiveData(_activity, _contactId) }
     private val _clipboardManager by lazy { _activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
-    override val adapter by lazy { PhonesAdapter() }
-    override val requiredPermissions get() = _phonesLiveData.requiredPermissions
+    override val adapter by lazy { PhonesAdapter(_activity) }
+    override val requiredPermissions = PhoneContentResolver.REQUIRED_PERMISSIONS
     override val noResultsMessage by lazy { getString(R.string.error_no_results_phones) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_phones) }
 
@@ -59,8 +60,9 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesBundle, PhonesAdapter>()
         _clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
     }
 
-    override fun convertBundleToList(phonesBundle: PhonesBundle) =
-        phonesBundle.getListBundleByType(_activity, true)
+    override fun convertBundleToList(phones: ArrayList<PhoneAccount>): ListBundle<PhoneAccount> {
+        return ListBundle.fromPhones(_activity, phones, true)
+    }
 
     override fun onItemClick(item: PhoneAccount) {
         _presenter.onPhoneItemClick(item)

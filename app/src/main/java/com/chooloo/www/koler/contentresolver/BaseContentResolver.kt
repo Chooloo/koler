@@ -9,15 +9,15 @@ import android.net.Uri
 abstract class BaseContentResolver<T>(
     private val context: Context,
 ) : ContentResolver(context) {
+    //region private variables
+
     private var _filter: String? = null
+    private var _observer: ContentObserver? = null
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
-    private val _observer by lazy {
-        object : ContentObserver(null) {
-            override fun onChange(selfChange: Boolean) {
-                _onContentChangedListener?.invoke(content)
-            }
-        }
-    }
+
+    //endregion
+
+    //region public variables
 
     val content: T
         get() = convertCursorToContent(queryContent())
@@ -28,34 +28,53 @@ abstract class BaseContentResolver<T>(
             _filter = if (value == "") null else value
         }
 
-    open val requiredPermissions: Array<String>
-        get() = arrayOf()
+    //endregion
 
-    protected fun chooseUri() = if (filterUri != null && _filter?.isNotEmpty() == true) {
-        Uri.withAppendedPath(filterUri, _filter)
-    } else {
-        uri
+    //region private methods
+
+    private fun chooseUri(): Uri {
+        return if (filterUri != null && _filter?.isNotEmpty() == true) {
+            Uri.withAppendedPath(filterUri, _filter)
+        } else {
+            uri
+        }
     }
 
-    private fun queryContent() = context.contentResolver.query(
-        chooseUri(),
-        projection,
-        selection,
-        selectionArgs,
-        sortOrder
-    )
+    private fun queryContent(): Cursor? {
+        return context.contentResolver.query(
+            chooseUri(),
+            projection,
+            selection,
+            selectionArgs,
+            sortOrder
+        )
+    }
+
+    //endregion
+
+    //region public methods
 
     fun observe() {
-        registerContentObserver(uri, true, _observer)
+        _observer = object : ContentObserver(null) {
+            override fun onChange(selfChange: Boolean) {
+                _onContentChangedListener?.invoke(content)
+            }
+        }
+        _observer?.let { registerContentObserver(uri, true, it) }
     }
 
     fun detach() {
-        unregisterContentObserver(_observer)
+        _observer?.let { unregisterContentObserver(it) }
+        _observer = null
     }
 
     fun setOnContentChangedListener(onContentChangedListener: (T?) -> Unit? = { _ -> }) {
         _onContentChangedListener = onContentChangedListener
     }
+
+    //endregion
+
+    //region base resolver data abstract getters
 
     abstract val uri: Uri
     abstract val filterUri: Uri?
@@ -64,6 +83,8 @@ abstract class BaseContentResolver<T>(
     abstract val projection: Array<String>?
     abstract val selectionArgs: Array<String>?
     abstract fun convertCursorToContent(cursor: Cursor?): T
+
+    //endregion
 
     open inner class SelectionBuilder {
         private val selections = arrayListOf<String>()
