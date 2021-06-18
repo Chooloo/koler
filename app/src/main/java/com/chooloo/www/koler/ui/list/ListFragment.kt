@@ -16,28 +16,22 @@ import com.chooloo.www.koler.util.permissions.runWithPermissions
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
-abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
+abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
+    BaseFragment(),
     ListContract.View<ItemType> {
-    private val _preferences by lazy { KolerPreferences(_activity) }
-    private val _animationManager by lazy { AnimationManager(_activity) }
+
+    private val _preferences by lazy { KolerPreferences(baseActivity) }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
+    private val _animationManager by lazy { AnimationManager(baseActivity) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
-    private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
-    
+    private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>(this) }
+
     override val itemCount get() = adapter.itemCount
     override val requiredPermissions: Array<String>? = null
+    override val searchHint by lazy { getString(R.string.hint_search_items) }
     override val noResultsMessage by lazy { getString(R.string.error_no_results) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions) }
-    override val searchHint by lazy { getString(R.string.hint_search_items) }
     override val hideNoResults by lazy { argsSafely.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
-
-    abstract val adapter: Adapter
-
-    companion object {
-        const val ARG_IS_COMPACT = "is_compact"
-        const val ARG_IS_SEARCHABLE = "is_searchable"
-        const val ARG_IS_HIDE_NO_RESULTS = "is_hide_no_results"
-    }
 
     override var emptyStateText: String?
         get() = _binding.itemsEmptyText.text.toString()
@@ -46,20 +40,16 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> : BaseFra
 
         }
 
+    abstract val adapter: Adapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = _binding.root
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
     override fun onSetup() {
-        _presenter.attach(this)
-
         adapter.apply {
             setOnItemClickListener(::onItemClick)
             setOnItemLongClickListener(::onItemLongClick)
@@ -108,12 +98,15 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> : BaseFra
         } ?: _presenter.onPermissionsGranted()
     }
 
+
+    //region list view
+
     override fun attachData() {
         onAttachData()
     }
 
     override fun animateListView() {
-        AnimationManager(_activity).runLayoutAnimation(_binding.itemsRecyclerView)
+        AnimationManager(baseActivity).runLayoutAnimation(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -145,6 +138,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> : BaseFra
         _binding.itemsSwipeRefreshLayout.isRefreshing = isRefreshing
     }
 
+    //endregion
+
+
     private fun setupScrollIndicator() {
         _binding.apply {
             itemsFastScroller.setupWithRecyclerView(itemsRecyclerView, { position ->
@@ -154,8 +150,20 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> : BaseFra
         }
     }
 
+
+    //region opened methods
+
     open fun onAttachData() {}
     open fun onItemClick(item: ItemType) {}
     open fun onItemLongClick(item: ItemType) {}
     open fun onDeleteItems(items: ArrayList<ItemType>) {}
+
+    //endregion
+
+
+    companion object {
+        const val ARG_IS_COMPACT = "is_compact"
+        const val ARG_IS_SEARCHABLE = "is_searchable"
+        const val ARG_IS_HIDE_NO_RESULTS = "is_hide_no_results"
+    }
 }

@@ -17,10 +17,10 @@ import com.chooloo.www.koler.util.setShowWhenLocked
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private val _presenter by lazy { CallPresenter<CallContract.View>() }
+    private val _binding by lazy { CallBinding.inflate(layoutInflater) }
     private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _animationManager by lazy { AnimationManager(this) }
-    private val _binding by lazy { CallBinding.inflate(layoutInflater) }
+    private val _presenter by lazy { CallPresenter<CallContract.View>(this) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
             override fun onCallDetailsChanged(callDetails: CallDetails) {
@@ -28,6 +28,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             }
         }
     }
+
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
@@ -53,6 +54,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             _binding.callImage.setImageURI(value)
         }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(_binding.root)
@@ -60,7 +62,6 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun onSetup() {
         _proximitySensor.acquire()
-        _presenter.attach(this)
 
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
@@ -75,8 +76,21 @@ class CallActivity : BaseActivity(), CallContract.View {
     override fun onDestroy() {
         super.onDestroy()
         CallManager.unregisterCallback(_callListener)
-        _presenter.detach()
         _proximitySensor.release()
+    }
+
+
+    //region call view
+
+    override fun stopStopwatch() {
+        _binding.callChronometer.stop()
+    }
+
+    override fun startStopwatch() {
+        _binding.callChronometer.apply {
+            base = SystemClock.elapsedRealtime()
+            start()
+        }
     }
 
     override fun transitionToActiveUI() {
@@ -94,14 +108,5 @@ class CallActivity : BaseActivity(), CallContract.View {
         _animationManager.tada(_binding.callStateText)
     }
 
-    override fun startStopwatch() {
-        _binding.callChronometer.apply {
-            base = SystemClock.elapsedRealtime()
-            start()
-        }
-    }
-
-    override fun stopStopwatch() {
-        _binding.callChronometer.stop()
-    }
+    //endregion
 }

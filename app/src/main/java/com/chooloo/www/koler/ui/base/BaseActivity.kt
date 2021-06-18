@@ -18,18 +18,14 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
         onSetup()
     }
 
+
     //region base view
+
     override fun finish() {
         super<AppCompatActivity>.finish()
     }
 
-    override fun hasPermission(permission: String) =
-        checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
-
-    override fun hasPermissions(permissions: Array<String>) = permissions.any(this::hasPermission)
-
     override fun showMessage(message: String) {
-        // TODO implement a custom scack bar
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -38,12 +34,20 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     }
 
     override fun showError(message: String) {
-        // TODO implement a custom scack bar
         Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showError(stringResId: Int) {
         showError(getString(stringResId))
     }
+
+    override fun hasPermission(permission: String): Boolean {
+        return checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
+    }
+
+    override fun hasPermissions(permissions: Array<String>): Boolean {
+        return permissions.any(this::hasPermission)
+    }
+
     //endregion
 }

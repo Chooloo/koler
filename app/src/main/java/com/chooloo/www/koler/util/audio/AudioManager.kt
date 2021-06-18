@@ -8,14 +8,6 @@ import com.chooloo.www.koler.service.CallService
 class AudioManager(private val context: Context) {
     private val _audioManager by lazy { context.getSystemService(AUDIO_SERVICE) as AudioManager }
 
-    enum class AudioMode(val mode: Int) {
-        NORMAL(AudioManager.MODE_NORMAL),
-        IN_CALL(AudioManager.MODE_IN_CALL),
-        CURRENT(AudioManager.MODE_CURRENT),
-        RINGTONE(AudioManager.MODE_RINGTONE),
-        IN_COMMUNICATION(AudioManager.MODE_IN_COMMUNICATION)
-    }
-
     val isPhoneSilent: Boolean
         get() = _audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT ||
                 _audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE
@@ -43,4 +35,13 @@ class AudioManager(private val context: Context) {
         set(value) {
             _audioManager.isMicrophoneMute = value
         }
+
+
+    enum class AudioMode(val mode: Int) {
+        NORMAL(AudioManager.MODE_NORMAL),
+        IN_CALL(AudioManager.MODE_IN_CALL),
+        CURRENT(AudioManager.MODE_CURRENT),
+        RINGTONE(AudioManager.MODE_RINGTONE),
+        IN_COMMUNICATION(AudioManager.MODE_IN_COMMUNICATION)
+    }
 }

@@ -2,32 +2,35 @@ package com.chooloo.www.koler.ui.recent
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class RecentPresenter<V : RecentContract.View> : BasePresenter<V>(), RecentContract.Presenter<V> {
+class RecentPresenter<V : RecentContract.View>(mvpView: V) :
+    BasePresenter<V>(mvpView),
+    RecentContract.Presenter<V> {
+    
     override fun onActionMenu() {
-        mvpView?.showMenu()
+        mvpView.showMenu()
     }
 
     override fun onActionSms() {
-        mvpView?.smsRecent()
+        mvpView.smsRecent()
     }
 
     override fun onActionCall() {
-        mvpView?.callRecent()
+        mvpView.callRecent()
     }
 
     override fun onActionDelete() {
-        mvpView?.deleteRecent()
+        mvpView.deleteRecent()
     }
 
     override fun onActionAddContact() {
-        mvpView?.addContact()
+        mvpView.addContact()
     }
 
     override fun onActionOpenContact() {
-        mvpView?.openContact()
+        mvpView.openContact()
     }
 
     override fun onActionShowHistory() {
-        mvpView?.openHistory()
+        mvpView.openHistory()
     }
 }

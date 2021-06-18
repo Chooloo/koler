@@ -49,6 +49,113 @@ open class ListItem : LinearLayout {
     private val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     private val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
+    var isCompact: Boolean
+        get() = _isCompact
+        set(value) {
+            _personLayout.setPadding(
+                dimenSpacing,
+                if (value) 3 else dimenSpacingSmall,
+                dimenSpacing,
+                if (value) 3 else dimenSpacingSmall
+            )
+            _header.setPadding(
+                dimenSpacing,
+                dimenSpacingSmall,
+                dimenSpacing,
+                if (value) dimenSpacingSmall - 10 else dimenSpacingSmall
+            )
+        }
+
+
+    var headerText: String?
+        get() = _header.text.toString()
+        set(value) {
+            _header.apply {
+                text = value
+                visibility = if (value != null && value != "") VISIBLE else GONE
+            }
+        }
+
+
+    var imageSize: Int
+        get() = _image.height
+        set(value) {
+            _image.layoutParams = LayoutParams(value, value)
+        }
+
+    var imageTextSize: Float
+        get() = _image.textSize
+        set(value) {
+            _image.textSize = value
+        }
+
+    var imageVisibility: Boolean
+        get() = _image.visibility == VISIBLE
+        set(value) {
+            _image.visibility = if (value) VISIBLE else GONE
+        }
+
+    var imageDrawable: Drawable?
+        get() = _image.drawable
+        set(value) {
+            _image.setImageDrawable(value)
+            _image.state = SHOW_IMAGE
+        }
+
+    fun setImageInitials(text: String?) {
+        _image.text = text
+        text?.let { _image.state = SHOW_INITIAL }
+    }
+
+    fun setImageUri(imageUri: Uri?) {
+        _image.setImageURI(imageUri)
+        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+    }
+
+    fun setImageBackgroundColor(@ColorInt color: Int) {
+        _image.setBackgroundColor(color)
+    }
+
+
+    var titleText: String?
+        get() = _title.text.toString()
+        set(value) {
+            _title.text = value ?: ""
+        }
+
+    fun setTitleTextColor(@ColorInt color: Int) {
+        _title.setTextColor(color)
+    }
+
+
+    var captionText: String?
+        get() = _caption.text.toString()
+        set(value) {
+            _caption.apply {
+                text = value ?: ""
+                visibility = if (value == null) GONE else VISIBLE
+            }
+        }
+
+    fun setCaptionTextColor(@ColorInt color: Int) {
+        _caption.setTextColor(color)
+    }
+
+
+    var leftButtonVisibility: Boolean
+        get() = _buttonLeft.visibility == VISIBLE
+        set(value) {
+            _buttonLeft.visibility = if (value) VISIBLE else GONE
+        }
+
+
+    var rightButtonVisibility: Boolean
+        get() = _buttonRight.visibility == VISIBLE
+        set(value) {
+            _buttonRight.visibility = if (value) VISIBLE else GONE
+        }
+
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(
@@ -204,6 +311,7 @@ open class ListItem : LinearLayout {
         }
     }
 
+
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
@@ -213,117 +321,14 @@ open class ListItem : LinearLayout {
         }
     }
 
-    var isCompact: Boolean
-        get() = _isCompact
-        set(value) {
-            _personLayout.setPadding(
-                dimenSpacing,
-                if (value) 3 else dimenSpacingSmall,
-                dimenSpacing,
-                if (value) 3 else dimenSpacingSmall
-            )
-            _header.setPadding(
-                dimenSpacing,
-                dimenSpacingSmall,
-                dimenSpacing,
-                if (value) dimenSpacingSmall - 10 else dimenSpacingSmall
-            )
-        }
-
-    //region header
-
-    var headerText: String?
-        get() = _header.text.toString()
-        set(value) {
-            _header.apply {
-                text = value
-                visibility = if (value != null && value != "") VISIBLE else GONE
-            }
-        }
-
-    //endregion
-
-    //region image
-
-    var imageSize: Int
-        get() = _image.height
-        set(value) {
-            _image.layoutParams = LayoutParams(value, value)
-        }
-
-    var imageTextSize: Float
-        get() = _image.textSize
-        set(value) {
-            _image.textSize = value
-        }
-
-    var imageVisibility: Boolean
-        get() = _image.visibility == VISIBLE
-        set(value) {
-            _image.visibility = if (value) VISIBLE else GONE
-        }
-
-    var imageDrawable: Drawable?
-        get() = _image.drawable
-        set(value) {
-            _image.setImageDrawable(value)
-            _image.state = SHOW_IMAGE
-        }
-
-    fun setImageInitials(text: String?) {
-        _image.text = text
-        text?.let { _image.state = SHOW_INITIAL }
+    override fun setOnClickListener(onClickListener: OnClickListener?) {
+        _personLayout.setOnClickListener(onClickListener)
     }
 
-    fun setImageUri(imageUri: Uri?) {
-        _image.setImageURI(imageUri)
-        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+    override fun setOnLongClickListener(onLongClickListener: OnLongClickListener?) {
+        _personLayout.setOnLongClickListener(onLongClickListener)
     }
 
-    fun setImageBackgroundColor(@ColorInt color: Int) {
-        _image.setBackgroundColor(color)
-    }
-
-    //endregion
-
-    //region title
-
-    var titleText: String?
-        get() = _title.text.toString()
-        set(value) {
-            _title.text = value ?: ""
-        }
-
-    fun setTitleTextColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
-    }
-
-    //endregion
-
-    //region caption
-
-    var captionText: String?
-        get() = _caption.text.toString()
-        set(value) {
-            _caption.apply {
-                text = value ?: ""
-                visibility = if (value == null) GONE else VISIBLE
-            }
-        }
-
-    fun setCaptionTextColor(@ColorInt color: Int) {
-        _caption.setTextColor(color)
-    }
-
-    //endregion
-
-    //region left button
-
-    var leftButtonVisibility: Boolean
-        get() = _buttonLeft.visibility == VISIBLE
-        set(value) {
-            _buttonLeft.visibility = if (value) VISIBLE else GONE
-        }
 
     fun setLeftButtonTintColor(@ColorRes colorRes: Int) {
         _buttonLeft.imageTintList =
@@ -342,16 +347,6 @@ open class ListItem : LinearLayout {
         _onLeftButtonClickListener = onLeftButtonClickListener
     }
 
-    //endregion
-
-    //region right button
-
-    var rightButtonVisibility: Boolean
-        get() = _buttonRight.visibility == VISIBLE
-        set(value) {
-            _buttonRight.visibility = if (value) VISIBLE else GONE
-        }
-
     fun setRightButtonTintColor(@ColorRes colorRes: Int) {
         _buttonRight.imageTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
@@ -369,17 +364,7 @@ open class ListItem : LinearLayout {
         _onRightButtonClickListener = onRightButtonClickListener
     }
 
-    //endregion
-
     fun blinkCaption() {
         _animationManager.blink(_caption, 2500)
-    }
-
-    override fun setOnClickListener(onClickListener: OnClickListener?) {
-        _personLayout.setOnClickListener(onClickListener)
-    }
-
-    override fun setOnLongClickListener(onLongClickListener: OnLongClickListener?) {
-        _personLayout.setOnLongClickListener(onLongClickListener)
     }
 }

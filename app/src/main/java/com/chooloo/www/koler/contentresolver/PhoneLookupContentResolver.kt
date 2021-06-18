@@ -6,21 +6,8 @@ import android.net.Uri
 import android.provider.ContactsContract.PhoneLookup
 import com.chooloo.www.koler.data.PhoneLookupAccount
 
-class PhoneLookupContentResolver(
-    context: Context,
-    private val number: String?,
-) : BaseItemsContentResolver<PhoneLookupAccount>(context) {
-    companion object {
-        val URI: Uri = PhoneLookup.CONTENT_FILTER_URI
-        val PROJECTION: Array<String> = arrayOf(
-            PhoneLookup.TYPE,
-            PhoneLookup.NUMBER,
-            PhoneLookup.STARRED,
-            PhoneLookup.PHOTO_URI,
-            PhoneLookup.CONTACT_ID,
-            PhoneLookup.DISPLAY_NAME,
-        )
-    }
+class PhoneLookupContentResolver(context: Context, number: String?) :
+    BaseItemsContentResolver<PhoneLookupAccount>(context) {
 
     override val filterUri: Uri = URI
     override val selection: String? = null
@@ -37,6 +24,18 @@ class PhoneLookupContentResolver(
             photoUri = cursor.getString(cursor.getColumnIndex(PhoneLookup.PHOTO_URI)),
             starred = "1" == cursor.getString(cursor.getColumnIndex(PhoneLookup.STARRED)),
             type = cursor.getInt(cursor.getColumnIndex(PhoneLookup.TYPE))
+        )
+    }
+
+    companion object {
+        val URI: Uri = PhoneLookup.CONTENT_FILTER_URI
+        val PROJECTION: Array<String> = arrayOf(
+            PhoneLookup.TYPE,
+            PhoneLookup.NUMBER,
+            PhoneLookup.STARRED,
+            PhoneLookup.PHOTO_URI,
+            PhoneLookup.CONTACT_ID,
+            PhoneLookup.DISPLAY_NAME,
         )
     }
 }

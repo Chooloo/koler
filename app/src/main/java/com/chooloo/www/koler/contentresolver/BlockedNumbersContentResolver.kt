@@ -7,14 +7,6 @@ import android.provider.BlockedNumberContract.BlockedNumbers
 
 class BlockedNumbersContentResolver(context: Context, number: String? = null) :
     BaseItemsContentResolver<String>(context) {
-    companion object {
-        val URI: Uri = BlockedNumbers.CONTENT_URI;
-        val PROJECTION: Array<String> = arrayOf(
-            BlockedNumbers.COLUMN_ID,
-            BlockedNumbers.COLUMN_E164_NUMBER,
-            BlockedNumbers.COLUMN_ORIGINAL_NUMBER
-        )
-    }
 
     override val uri: Uri = URI
     override val filterUri: Uri? = null
@@ -27,7 +19,15 @@ class BlockedNumbersContentResolver(context: Context, number: String? = null) :
             .build()
     }
 
-    override fun convertCursorToItem(cursor: Cursor): String {
-        return cursor.getString(cursor.getColumnIndex(BlockedNumbers.COLUMN_ORIGINAL_NUMBER))
+    override fun convertCursorToItem(cursor: Cursor): String =
+        cursor.getString(cursor.getColumnIndex(BlockedNumbers.COLUMN_ORIGINAL_NUMBER))
+
+    companion object {
+        val URI: Uri = BlockedNumbers.CONTENT_URI;
+        val PROJECTION: Array<String> = arrayOf(
+            BlockedNumbers.COLUMN_ID,
+            BlockedNumbers.COLUMN_E164_NUMBER,
+            BlockedNumbers.COLUMN_ORIGINAL_NUMBER
+        )
     }
 }

@@ -12,14 +12,11 @@ import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.IN_CALL
 import com.chooloo.www.koler.util.callrecord.CallRecorder
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
-    private val _callRecorder by lazy { CallRecorder(_activity) }
-    private val _audioManager by lazy { AudioManager(_activity.applicationContext) }
-    private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
+    private val _callRecorder by lazy { CallRecorder(baseActivity) }
     private val _binding by lazy { CallActionsBinding.inflate(layoutInflater) }
+    private val _audioManager by lazy { AudioManager(baseActivity.applicationContext) }
+    private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>(this) }
 
-    companion object {
-        fun newInstance() = CallActionsFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +26,6 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 
     override fun onSetup() {
         _audioManager.audioMode = IN_CALL
-        _presenter.attach(this)
 
         _binding.apply {
             callActionHold.setOnClickListener { _presenter.onHoldClick() }
@@ -45,6 +41,9 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
         super.onDestroy()
         _callRecorder.stopRecording()
     }
+
+
+    //region call actions view
 
     override fun addCall() {
         showError("Feature in development")
@@ -78,5 +77,12 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 
     override fun toggleSpeaker(isSpeaker: Boolean) {
         _audioManager.isSpeakerOn = isSpeaker
+    }
+
+    //endregion
+
+
+    companion object {
+        fun newInstance() = CallActionsFragment()
     }
 }

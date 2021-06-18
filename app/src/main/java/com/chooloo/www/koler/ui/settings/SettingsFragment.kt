@@ -16,17 +16,12 @@ import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 import dev.sasikanth.colorsheet.ColorSheet
 
 class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
-    override val preferenceResource = R.xml.main_preferences
     private val _presenter by lazy { SettingsPresenter<SettingsContract.View>() }
 
-    companion object {
-        const val TAG = "settings_fragment"
+    override val preferenceResource = R.xml.main_preferences
 
-        fun newInstance() = SettingsFragment()
-    }
-
+    
     override fun onSetup() {
-        _presenter.attach(this)
         setupSimPreference()
     }
 
@@ -55,10 +50,8 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
+
+    //region settings view
 
     override fun setPrefSim(sim: Sim) {
         kolerPreferences?.sim = sim
@@ -88,7 +81,6 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
     override fun setPrefAccentTheme(accentTheme: AccentTheme) {
         kolerPreferences?.accentTheme = accentTheme
     }
-
 
     override fun setPrefRecordFormat(recordFormat: RecordFormat) {
         kolerPreferences?.recordFormat = recordFormat
@@ -145,5 +137,14 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
                 null
             )
         }
+    }
+
+    //endregion
+
+
+    companion object {
+        const val TAG = "settings_fragment"
+
+        fun newInstance() = SettingsFragment()
     }
 }

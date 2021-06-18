@@ -20,9 +20,7 @@ class SearchBar : TextInputLayout {
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
-    private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
     private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
-    private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
@@ -31,6 +29,7 @@ class SearchBar : TextInputLayout {
         set(value) {
             _textInputEditText.setText(value ?: "")
         }
+
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
@@ -83,6 +82,7 @@ class SearchBar : TextInputLayout {
     }
 
     override fun getHint() = _textInputEditText?.hint.toString() // do not remove the ?
+
 
     private fun showIcon(isShow: Boolean) {
         _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(

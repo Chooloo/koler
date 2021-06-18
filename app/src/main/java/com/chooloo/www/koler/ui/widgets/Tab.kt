@@ -16,6 +16,7 @@ class Tab : AppCompatTextView {
     private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
     private val disabledColor by lazy { context.getAttrColor(R.attr.colorTextHint) }
 
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(
@@ -30,6 +31,7 @@ class Tab : AppCompatTextView {
         setTextColor(enabledColor)
     }
 
+
     override fun setActivated(activated: Boolean) {
         super.setActivated(activated)
         setColor(if (activated) enabledColor else disabledColor)
@@ -37,6 +39,7 @@ class Tab : AppCompatTextView {
             animateAttension()
         }
     }
+
 
     private fun animateAttension() {
         AnimationManager(context).bounceIn(this)

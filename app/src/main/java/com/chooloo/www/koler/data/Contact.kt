@@ -8,14 +8,14 @@ data class Contact(
     val photoUri: String? = null,
     val starred: Boolean = false,
     val lookupKey: String? = null,
-    var phoneAccounts: Array<PhoneAccount> = arrayOf()
+    var phoneAccounts: Array<PhoneAccount> = arrayOf(),
 ) {
+    override fun toString() = "Contact with id:$id name:$name"
+
     companion object {
         val UNKNOWN = Contact(name = "Unknown")
         val VOICEMAIL = Contact(name = "Voicemail")
         val PRIVATE = Contact(name = "Private Number")
     }
-
-    override fun toString() = "Contact with id:$id name:$name"
 }
 

@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -13,20 +12,19 @@ import androidx.preference.PreferenceGroup
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract.View {
+    protected val argsSafely get() = arguments ?: Bundle()
+    protected val baseActivity by lazy { context as BaseActivity }
+    protected val kolerPreferences by lazy { context?.let { KolerPreferences(it) } }
+
     abstract val preferenceResource: Int
 
-    protected val kolerPreferences by lazy { context?.let { KolerPreferences(it) } }
-    protected val _activity by lazy { context as BaseActivity }
-
-    val argsSafely: Bundle
-        get() = arguments ?: Bundle()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        _activity.onAttachFragment(this)
+        baseActivity.onAttachFragment(this)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -43,6 +41,45 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
 
     override fun onSetup() {}
 
+
+    //region base view
+
+    override fun showMessage(message: String) {
+        baseActivity.showMessage(message)
+    }
+
+    override fun showMessage(@StringRes stringResId: Int) {
+        baseActivity.showMessage(stringResId)
+    }
+
+    override fun showError(message: String) {
+        baseActivity.showError(message)
+    }
+
+    override fun showError(@StringRes stringResId: Int) {
+        baseActivity.showError(getString(stringResId))
+    }
+
+    override fun getColor(color: Int): Int {
+        return baseActivity.getColor(color)
+    }
+
+    override fun hasPermission(permission: String): Boolean {
+        return baseActivity.hasPermission(permission)
+    }
+
+    override fun hasPermissions(permissions: Array<String>): Boolean {
+        return permissions.any { p -> baseActivity.hasPermission(p) }
+    }
+
+    //endregion
+
+
+    //region preference helpers
+
+    /**
+     * Apply to all preferences click and change listeners recursively
+     */
     private fun initAllPreferences() {
         (0 until preferenceScreen.preferenceCount).forEach { x ->
             val preference = preferenceScreen.getPreference(x)
@@ -63,6 +100,9 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
         }
     }
 
+    /**
+     * Apply click and change listeners to a given preference
+     */
     private fun initPreference(preference: Preference) {
         preference.apply {
             setOnPreferenceClickListener {
@@ -76,18 +116,17 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
         }
     }
 
-    protected fun <T : Preference> getPreference(@StringRes keyString: Int) =
-        findPreference<T>(getString(keyString))
+    protected fun <T : Preference> getPreference(@StringRes keyString: Int): T? {
+        return findPreference<T>(getString(keyString))
+    }
 
-    override fun hasPermission(permission: String) = true
-    override fun hasPermissions(permissions: Array<String>) = true
-    override fun showMessage(stringResId: Int) = showMessage(getString(stringResId))
-    override fun showError(message: String) = showMessage(message)
-    override fun showError(stringResId: Int) = showMessage(stringResId)
-    override fun getColor(color: Int) = resources.getColor(color)
-    override fun showMessage(message: String) =
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    //endregion
+
+
+    //region preference listeners
 
     open fun onPreferenceClickListener(preference: Preference) {}
     open fun onPreferenceChangeListener(preference: Preference, newValue: Any) {}
+
+    //endregion
 }

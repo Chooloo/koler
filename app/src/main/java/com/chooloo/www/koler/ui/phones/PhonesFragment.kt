@@ -14,17 +14,50 @@ import com.chooloo.www.koler.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.util.call.call
 
-class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(),
-    PhonesContract.View {
-    private val _presenter by lazy { PhonesPresenter<PhonesContract.View>() }
+class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _phonesLiveData by lazy { PhoneProviderLiveData(_activity, _contactId) }
-    private val _clipboardManager by lazy { _activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
+    private val _presenter by lazy { PhonesPresenter<PhonesContract.View>(this) }
+    private val _phonesLiveData by lazy { PhoneProviderLiveData(baseActivity, _contactId) }
+    private val _clipboardManager by lazy { baseActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
-    override val adapter by lazy { PhonesAdapter(_activity) }
+    override val adapter by lazy { PhonesAdapter(baseActivity) }
     override val requiredPermissions = PhoneContentResolver.REQUIRED_PERMISSIONS
     override val noResultsMessage by lazy { getString(R.string.error_no_results_phones) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_phones) }
+
+
+    //region list fragment
+
+    override fun onAttachData() {
+        _phonesLiveData.observe(viewLifecycleOwner, _presenter::onPhonesChanged)
+    }
+
+    override fun onItemClick(item: PhoneAccount) {
+        _presenter.onPhoneItemClick(item)
+    }
+
+    override fun onItemLongClick(item: PhoneAccount) {
+        _presenter.onPhoneLongItemClick(item)
+    }
+
+    //endregion
+
+    //region phones view
+
+    override fun callNumber(number: String) {
+        baseActivity.call(number)
+    }
+
+    override fun clipboardText(text: String) {
+        _clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
+    }
+
+    override fun convertBundleToList(phones: ArrayList<PhoneAccount>): ListBundle<PhoneAccount> {
+        return ListBundle.fromPhones(baseActivity, phones, true)
+    }
+
+    //endregion
+
 
     companion object {
         fun newInstance(contactId: Long, isSearchable: Boolean, isHideNoResults: Boolean = false) =
@@ -36,39 +69,5 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(),
                     putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
                 }
             }
-    }
-
-    override fun onSetup() {
-        super.onSetup()
-        _presenter.attach(this)
-    }
-
-    override fun onAttachData() {
-        _phonesLiveData.observe(viewLifecycleOwner, _presenter::onPhonesChanged)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
-    override fun callNumber(number: String) {
-        _activity.call(number)
-    }
-
-    override fun clipboardText(text: String) {
-        _clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
-    }
-
-    override fun convertBundleToList(phones: ArrayList<PhoneAccount>): ListBundle<PhoneAccount> {
-        return ListBundle.fromPhones(_activity, phones, true)
-    }
-
-    override fun onItemClick(item: PhoneAccount) {
-        _presenter.onPhoneItemClick(item)
-    }
-
-    override fun onItemLongClick(item: PhoneAccount) {
-        _presenter.onPhoneLongItemClick(item)
     }
 }

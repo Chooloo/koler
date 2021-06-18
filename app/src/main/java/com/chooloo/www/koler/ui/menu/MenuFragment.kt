@@ -11,22 +11,14 @@ import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.list.ListFragment
 
 open class MenuFragment : ListFragment<MenuItem, MenuAdapter>(), MenuContract.View {
-    override val adapter by lazy { MenuAdapter() }
     open val menuRes by lazy { argsSafely.getInt(ARG_MENU_LAYOUT) }
 
-    companion object {
-        const val ARG_MENU_LAYOUT = "menu_layout"
+    override val adapter by lazy { MenuAdapter() }
 
-        fun newInstance(@MenuRes menuLayout: Int) = MenuFragment().apply {
-            arguments = Bundle().apply {
-                putInt(ARG_MENU_LAYOUT, menuLayout)
-            }
-        }
-    }
 
     override fun onAttachData() {
-        val menu = PopupMenu(_activity, null).menu
-        MenuInflater(_activity).inflate(menuRes, menu)
+        val menu = PopupMenu(baseActivity, null).menu
+        MenuInflater(baseActivity).inflate(menuRes, menu)
         onAttachMenu(menu)
         adapter.data = ListBundle(ArrayList((0 until menu.size()).map { menu.getItem(it) }))
     }
@@ -38,5 +30,16 @@ open class MenuFragment : ListFragment<MenuItem, MenuAdapter>(), MenuContract.Vi
     }
 
     open fun onAttachMenu(menu: Menu) {
+    }
+
+
+    companion object {
+        const val ARG_MENU_LAYOUT = "menu_layout"
+
+        fun newInstance(@MenuRes menuLayout: Int) = MenuFragment().apply {
+            arguments = Bundle().apply {
+                putInt(ARG_MENU_LAYOUT, menuLayout)
+            }
+        }
     }
 }

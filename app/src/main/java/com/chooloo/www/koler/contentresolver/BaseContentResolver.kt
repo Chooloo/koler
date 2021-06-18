@@ -6,18 +6,11 @@ import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
 
-abstract class BaseContentResolver<T>(
-    private val context: Context,
-) : ContentResolver(context) {
-    //region private variables
-
+abstract class BaseContentResolver<T>(private val context: Context) : ContentResolver(context) {
     private var _filter: String? = null
     private var _observer: ContentObserver? = null
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
 
-    //endregion
-
-    //region public variables
 
     val content: T
         get() = convertCursorToContent(queryContent())
@@ -28,9 +21,6 @@ abstract class BaseContentResolver<T>(
             _filter = if (value == "") null else value
         }
 
-    //endregion
-
-    //region private methods
 
     private fun chooseUri(): Uri {
         return if (filterUri != null && _filter?.isNotEmpty() == true) {
@@ -50,9 +40,6 @@ abstract class BaseContentResolver<T>(
         )
     }
 
-    //endregion
-
-    //region public methods
 
     fun observe() {
         _observer = object : ContentObserver(null) {
@@ -72,7 +59,6 @@ abstract class BaseContentResolver<T>(
         _onContentChangedListener = onContentChangedListener
     }
 
-    //endregion
 
     //region base resolver data abstract getters
 
@@ -86,6 +72,7 @@ abstract class BaseContentResolver<T>(
 
     //endregion
 
+    
     open inner class SelectionBuilder {
         private val selections = arrayListOf<String>()
 

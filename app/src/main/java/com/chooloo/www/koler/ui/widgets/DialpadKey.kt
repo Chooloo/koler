@@ -18,7 +18,6 @@ import com.chooloo.www.koler.util.sizeInDp
 
 @SuppressLint("Recycle", "CustomViewStyleable")
 class DialpadKey : LinearLayout {
-
     var keyCode = 0
     private var _digitTextView: TextView
     private var _lettersTextView: TextView

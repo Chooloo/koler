@@ -7,22 +7,8 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 
-class PhoneContentResolver(
-    context: Context,
-    contactId: Long? = null
-) : BaseItemsContentResolver<PhoneAccount>(context) {
-    companion object {
-        val URI: Uri = Phone.CONTENT_URI
-        val FILTER_URI: Uri = Phone.CONTENT_FILTER_URI
-        val REQUIRED_PERMISSIONS = arrayOf(READ_CONTACTS)
-        val PROJECTION: Array<String> = arrayOf(
-            Phone.TYPE,
-            Phone.NUMBER,
-            Phone.CONTACT_ID,
-            Phone.NORMALIZED_NUMBER,
-            Phone.DISPLAY_NAME_PRIMARY
-        )
-    }
+class PhoneContentResolver(context: Context, contactId: Long? = null) :
+    BaseItemsContentResolver<PhoneAccount>(context) {
 
     override val uri: Uri = URI
     override val sortOrder: String? = null
@@ -41,4 +27,18 @@ class PhoneContentResolver(
                 ?: cursor.getString(cursor.getColumnIndex(Phone.NUMBER))
         )
     }
+
+    companion object {
+        val URI: Uri = Phone.CONTENT_URI
+        val FILTER_URI: Uri = Phone.CONTENT_FILTER_URI
+        val REQUIRED_PERMISSIONS = arrayOf(READ_CONTACTS)
+        val PROJECTION: Array<String> = arrayOf(
+            Phone.TYPE,
+            Phone.NUMBER,
+            Phone.CONTACT_ID,
+            Phone.NORMALIZED_NUMBER,
+            Phone.DISPLAY_NAME_PRIMARY
+        )
+    }
+
 }

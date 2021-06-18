@@ -22,11 +22,8 @@ import timber.log.Timber;
 
 @SuppressLint("Registered")
 public class RecordService extends Service {
-
     public static final int RECORD_SERVICE_START = 1;
     public static final int RECORD_SERVICE_STOP = 2;
-
-    // Recorder Constants
     private static final int AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     private static final int AUDIO_FORMAT = MediaRecorder.OutputFormat.THREE_GPP;
     private static final int AUDIO_ENCODER = MediaRecorder.AudioEncoder.AMR_NB;

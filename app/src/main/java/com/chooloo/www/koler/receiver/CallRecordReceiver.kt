@@ -12,18 +12,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class CallRecordReceiver() : PhoneCallReceiver() {
-    companion object {
-        const val AUDIO_SOURCE = MediaRecorder.AudioSource.MIC
-        const val AUDIO_ENCODER = MediaRecorder.AudioEncoder.AMR_NB
-        const val DIR_NAME = "kolerRecordings"
-
-        const val ACTION_IN = "android.intent.action.PHONE_STATE"
-        const val ACTION_OUT = "android.intent.action.NEW_OUTGOING_CALL"
-        const val EXTRA_PHONE_NUMBER = "android.intent.extra.PHONE_NUMBER"
-        private var recorder: MediaRecorder? = null
-    }
-
+open class CallRecordReceiver : PhoneCallReceiver() {
     private var audioFile: File? = null
     private var isRecordStarted = false
 
@@ -148,4 +137,16 @@ open class CallRecordReceiver() : PhoneCallReceiver() {
 
     protected fun onRecordingStarted(context: Context, audioFile: File?) {}
     protected fun onRecordingFinished(context: Context, audioFile: File?) {}
+
+
+    companion object {
+        const val AUDIO_SOURCE = MediaRecorder.AudioSource.MIC
+        const val AUDIO_ENCODER = MediaRecorder.AudioEncoder.AMR_NB
+        const val DIR_NAME = "kolerRecordings"
+
+        const val ACTION_IN = "android.intent.action.PHONE_STATE"
+        const val ACTION_OUT = "android.intent.action.NEW_OUTGOING_CALL"
+        const val EXTRA_PHONE_NUMBER = "android.intent.extra.PHONE_NUMBER"
+        private var recorder: MediaRecorder? = null
+    }
 }

@@ -4,13 +4,16 @@ import android.net.Uri
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
+class ContactPresenter<V : ContactContract.View>(mvpView: V) :
+    BasePresenter<V>(mvpView),
     ContactContract.Presenter<V> {
+
     private lateinit var _contact: Contact
+
 
     override fun onLoadContact(contact: Contact) {
         _contact = contact
-        mvpView?.apply {
+        mvpView.apply {
             contactName = contact.name
             isStarIconVisible = contact.starred
             contact.photoUri?.let { contactImage = Uri.parse(it) }
@@ -18,31 +21,31 @@ class ContactPresenter<V : ContactContract.View> : BasePresenter<V>(),
     }
 
     override fun onActionCall() {
-        mvpView?.callContact()
+        mvpView.callContact()
     }
 
     override fun onActionSms() {
-        mvpView?.smsContact()
+        mvpView.smsContact()
     }
 
     override fun onActionEdit() {
-        mvpView?.editContact()
+        mvpView.editContact()
     }
 
     override fun onActionInfo() {
-        mvpView?.openContact()
+        mvpView.openContact()
     }
 
     override fun onActionDelete() {
-        mvpView?.deleteContact()
+        mvpView.deleteContact()
     }
 
     override fun onActionMenu() {
-        mvpView?.showMenu()
+        mvpView.showMenu()
     }
 
     override fun onActionFav() {
-        mvpView?.apply {
+        mvpView.apply {
             setFavorite(!_contact.starred)
             isStarIconVisible = _contact.starred
         }

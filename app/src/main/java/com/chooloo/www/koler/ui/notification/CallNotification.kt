@@ -24,12 +24,6 @@ import com.chooloo.www.koler.util.getAttrColor
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification(private val context: Context) {
-    companion object {
-        const val ID = 420
-        const val CHANNEL_ID = "call_notification_channel"
-        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
-    }
-
     private val sAnswer by lazy { context.getString(R.string.action_answer) }
     private val sHangup by lazy { context.getString(R.string.action_hangup) }
     private val sChannelName by lazy { context.getString(R.string.call_notification_channel_name) }
@@ -92,6 +86,7 @@ class CallNotification(private val context: Context) {
         }
     }
 
+
     private fun buildNotification(callDetails: CallDetails): Notification {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setWhen(0)
@@ -125,6 +120,7 @@ class CallNotification(private val context: Context) {
         return builder.build()
     }
 
+
     fun show(callDetails: CallDetails) {
         _notificationManager.notify(ID, buildNotification(callDetails))
     }
@@ -135,5 +131,12 @@ class CallNotification(private val context: Context) {
 
     fun createNotificationChannel() {
         _notificationManager.createNotificationChannel(_channel)
+    }
+
+
+    companion object {
+        const val ID = 420
+        const val CHANNEL_ID = "call_notification_channel"
+        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
     }
 }

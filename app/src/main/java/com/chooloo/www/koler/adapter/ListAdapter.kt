@@ -8,26 +8,17 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.AnimationManager
 
 abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
-    //region listeners
-
-    private var _onItemClickListener: (item: DataType) -> Unit = {}
-    private var _onItemLongClickListener: (item: DataType) -> Unit = {}
-    private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
-    private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
-
-    //endregion
-
-    //region private variables
-
     private var _isCompact = false
     private var _isSelecting = false
     private var _isSelectable = true
     private var _data: ListBundle<DataType> = ListBundle()
     private var _selectedItems: ArrayList<DataType> = arrayListOf()
 
-    //endregion
+    private var _onItemClickListener: (item: DataType) -> Unit = {}
+    private var _onItemLongClickListener: (item: DataType) -> Unit = {}
+    private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
+    private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
 
-    //region public variables
 
     var isCompact
         get() = _isCompact
@@ -48,9 +39,6 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     val selectedItems: ArrayList<DataType>
         get() = _selectedItems
 
-    //endregion
-
-    //region lifecycle methods
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
         return ListItemHolder(parent.context)
@@ -95,13 +83,10 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         }
     }
 
-    //endregion
-
-    //region public methods
-
     override fun getItemCount(): Int {
         return _data.items.size
     }
+
 
     fun getHeader(position: Int): String? {
         var total = 0
@@ -114,7 +99,6 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         return null
     }
 
-    //endregion
 
     //region listeners setters
 
@@ -135,6 +119,7 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     }
 
     //endregion
+
 
     abstract fun onBindListItem(listItem: ListItem, item: DataType)
 }

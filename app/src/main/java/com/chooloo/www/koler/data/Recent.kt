@@ -19,19 +19,18 @@ data class Recent(
     @IntDef(TYPE_INCOMING, TYPE_OUTGOING, TYPE_MISSED, TYPE_VOICEMAIL, TYPE_REJECTED, TYPE_UNKNOWN)
     annotation class CallType
 
-    companion object {
-        const val TYPE_INCOMING = CallLog.Calls.INCOMING_TYPE
-        const val TYPE_OUTGOING = CallLog.Calls.OUTGOING_TYPE
-        const val TYPE_MISSED = CallLog.Calls.MISSED_TYPE
-        const val TYPE_VOICEMAIL = CallLog.Calls.VOICEMAIL_TYPE
-        const val TYPE_REJECTED = CallLog.Calls.REJECTED_TYPE
-        const val TYPE_BLOCKED = CallLog.Calls.BLOCKED_TYPE
-        const val TYPE_UNKNOWN = 6
-
-        val UNKNOWN = Recent(number = "Unknown", type = TYPE_UNKNOWN)
-    }
-
     val relativeTime: String?
         get() = date?.time?.let { getTimeAgo(it) }
 
+    companion object {
+        const val TYPE_UNKNOWN = 6
+        const val TYPE_MISSED = CallLog.Calls.MISSED_TYPE
+        const val TYPE_BLOCKED = CallLog.Calls.BLOCKED_TYPE
+        const val TYPE_INCOMING = CallLog.Calls.INCOMING_TYPE
+        const val TYPE_OUTGOING = CallLog.Calls.OUTGOING_TYPE
+        const val TYPE_REJECTED = CallLog.Calls.REJECTED_TYPE
+        const val TYPE_VOICEMAIL = CallLog.Calls.VOICEMAIL_TYPE
+
+        val UNKNOWN = Recent(number = "Unknown", type = TYPE_UNKNOWN)
+    }
 }

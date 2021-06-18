@@ -8,6 +8,7 @@ import com.chooloo.www.koler.contentresolver.BaseContentResolver
 abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
     protected val context: Context,
 ) : LiveData<T>() {
+
     abstract val contentResolver: ContentResolver
 
     var filter: String?
@@ -16,6 +17,7 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
             contentResolver.filter = value
             updateData()
         }
+
 
     override fun onActive() {
         contentResolver.apply {
@@ -29,6 +31,7 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
         contentResolver.detach()
     }
 
+    
     private fun updateData() {
         Handler(context.mainLooper).post {
             value = contentResolver.content

@@ -5,31 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.databinding.BottomDialogBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class BottomFragment<FragmentType : Fragment>(
+open class BottomFragment<FragmentType : Fragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
-    protected val _activity by lazy { context as BaseActivity }
     private val _binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
 
-    val argsSafely: Bundle
-        get() = arguments ?: Bundle()
+    protected val argsSafely get() = arguments ?: Bundle()
+    protected val baseActivity by lazy { context as BaseActivity }
 
-    //region lifecycle
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        _activity.onAttachFragment(this)
+        baseActivity.onAttachFragment(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,48 +45,40 @@ class BottomFragment<FragmentType : Fragment>(
     }
 
     override fun onSetup() {
-        putFragment(fragment)
-    }
-    //endregion
-
-    //region permissions
-    override fun hasPermission(permission: String) = false
-
-    override fun hasPermissions(permissions: Array<String>) =
-        permissions.any { p -> _activity.hasPermission(p) }
-    //endregion
-
-    //region messages
-    override fun showMessage(message: String) {
-        _activity.showMessage(message)
-    }
-
-    override fun showMessage(@StringRes stringResId: Int) {
-        _activity.showMessage(stringResId)
-    }
-
-    override fun showError(message: String) {
-        _activity.showError(message)
-    }
-
-    override fun showError(@StringRes stringResId: Int) {
-        _activity.showError(getString(stringResId))
-    }
-    //endregion
-
-    private fun putFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
 
-    override fun getColor(color: Int) = _activity.getColor(color)
 
-    fun setAlwaysExpanded() {
-        dialog?.setOnShowListener {
-            val d = dialog as BottomSheetDialog
-            val bottomSheet =
-                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-            BottomSheetBehavior.from(bottomSheet).setState(BottomSheetBehavior.STATE_EXPANDED)
-        }
+    //region base view
+
+    override fun showMessage(message: String) {
+        baseActivity.showMessage(message)
     }
+
+    override fun showMessage(@StringRes stringResId: Int) {
+        baseActivity.showMessage(stringResId)
+    }
+
+    override fun showError(message: String) {
+        baseActivity.showError(message)
+    }
+
+    override fun showError(@StringRes stringResId: Int) {
+        baseActivity.showError(getString(stringResId))
+    }
+
+    override fun getColor(color: Int): Int {
+        return baseActivity.getColor(color)
+    }
+
+    override fun hasPermission(permission: String): Boolean {
+        return baseActivity.hasPermission(permission)
+    }
+
+    override fun hasPermissions(permissions: Array<String>): Boolean {
+        return permissions.any { p -> baseActivity.hasPermission(p) }
+    }
+
+    //endregion
 }

@@ -11,10 +11,10 @@ interface CallContract : BaseContract {
         var callerNameText: String?
         var callerImageURI: Uri?
 
+        fun stopStopwatch()
+        fun startStopwatch()
         fun transitionToActiveUI()
         fun animateStateTextAttention()
-        fun startStopwatch()
-        fun stopStopwatch()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

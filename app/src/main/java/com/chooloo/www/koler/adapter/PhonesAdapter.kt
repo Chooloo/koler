@@ -7,9 +7,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.isNumberBlocked
 
-class PhonesAdapter(
-    private val _context: Context
-) : ListAdapter<PhoneAccount>() {
+class PhonesAdapter(private val _context: Context) : ListAdapter<PhoneAccount>() {
     private val _blockedDrawable by lazy {
         ContextCompat.getDrawable(_context, R.drawable.round_block_black_24)
     }

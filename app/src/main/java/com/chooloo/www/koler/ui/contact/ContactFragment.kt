@@ -17,23 +17,13 @@ import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.permissions.runWithPrompt
 
 class ContactFragment : BaseFragment(), ContactContract.View {
-    private val _contact by lazy { _activity.lookupContactId(_contactId) }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
+    private val _contact by lazy { baseActivity.lookupContactId(_contactId) }
     private val _firstPhone by lazy { _contact.phoneAccounts.getOrNull(0) }
+    private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
+    private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
 
-    companion object {
-        const val TAG = "contact_fragment"
-        const val ARG_CONTACT_ID = "contact_id"
-
-        fun newInstance(contactId: Long) = ContactFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_CONTACT_ID, contactId)
-            }
-        }
-    }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -56,22 +46,15 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             _binding.contactButtonFav.visibility = if (value) VISIBLE else GONE
         }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = _binding.root
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
     override fun onSetup() {
-        _presenter.apply {
-            attach(this@ContactFragment)
-            onLoadContact(_contact)
-        }
+        _presenter.onLoadContact(_contact)
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
@@ -87,6 +70,9 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .commitNow()
     }
 
+
+    //region contact view
+
     override fun showMenu() {
         BottomFragment(ContactPreferencesFragment.newInstance(_contact.id)).show(
             childFragmentManager,
@@ -95,29 +81,43 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun smsContact() {
-        _firstPhone?.let { _activity.smsNumber(it.number) }
+        _firstPhone?.let { baseActivity.smsNumber(it.number) }
     }
 
     override fun callContact() {
-        _firstPhone?.let { _activity.call(it.number) }
+        _firstPhone?.let { baseActivity.call(it.number) }
     }
 
     override fun editContact() {
-        _activity.editContact(_contact.id)
+        baseActivity.editContact(_contact.id)
     }
 
     override fun openContact() {
-        _activity.openContact(_contact.id)
+        baseActivity.openContact(_contact.id)
     }
 
     override fun deleteContact() {
-        _activity.runWithPrompt(R.string.warning_delete_contact) {
-            _activity.deleteContact(_contact.id)
+        baseActivity.runWithPrompt(R.string.warning_delete_contact) {
+            baseActivity.deleteContact(_contact.id)
             finish()
         }
     }
 
     override fun setFavorite(isFavorite: Boolean) {
-        _activity.setContactFavorite(_contact.id, isFavorite)
+        baseActivity.setContactFavorite(_contact.id, isFavorite)
+    }
+
+    //endregion
+
+
+    companion object {
+        const val TAG = "contact_fragment"
+        const val ARG_CONTACT_ID = "contact_id"
+
+        fun newInstance(contactId: Long) = ContactFragment().apply {
+            arguments = Bundle().apply {
+                putLong(ARG_CONTACT_ID, contactId)
+            }
+        }
     }
 }

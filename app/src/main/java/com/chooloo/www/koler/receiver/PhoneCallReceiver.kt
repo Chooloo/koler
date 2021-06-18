@@ -7,13 +7,6 @@ import android.telephony.TelephonyManager
 import java.util.*
 
 abstract class PhoneCallReceiver : BroadcastReceiver() {
-    companion object {
-        private var isIncoming: Boolean = false
-        private var savedNumber: String? = null
-        private var callStartTime: Date = Date()
-        private var lastState = TelephonyManager.CALL_STATE_IDLE
-    }
-
     override fun onReceive(context: Context, intent: Intent) {
         //We listen to two intents.  The new outgoing call only tells us of an outgoing call.  We use it to get the number.
         if (intent.action == CallRecordReceiver.ACTION_OUT) {
@@ -93,5 +86,13 @@ abstract class PhoneCallReceiver : BroadcastReceiver() {
                 }
         }
         lastState = state
+    }
+
+
+    companion object {
+        private var isIncoming: Boolean = false
+        private var savedNumber: String? = null
+        private var callStartTime: Date = Date()
+        private var lastState = TelephonyManager.CALL_STATE_IDLE
     }
 }

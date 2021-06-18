@@ -7,10 +7,31 @@ import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import com.chooloo.www.koler.data.Contact
 
-open class ContactsContentResolver(
-    context: Context,
-    contactId: Long? = null
-) : BaseItemsContentResolver<Contact>(context) {
+open class ContactsContentResolver(context: Context, contactId: Long? = null) :
+    BaseItemsContentResolver<Contact>(context) {
+
+    override val uri: Uri = URI
+    override val filterUri: Uri = FILTER_URI
+    override val sortOrder: String = SORT_ORDER
+    override val selectionArgs: Array<String>? = null
+    override val projection: Array<String> = PROJECTION
+    override val selection by lazy {
+        SelectionBuilder()
+            .addNotNull(Contacts.DISPLAY_NAME_PRIMARY)
+            .addSelection(Contacts._ID, contactId)
+            .build()
+    }
+
+    override fun convertCursorToItem(cursor: Cursor): Contact {
+        return Contact(
+            id = cursor.getLong(cursor.getColumnIndex(Contacts._ID)),
+            lookupKey = cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY)),
+            starred = "1" == cursor.getString(cursor.getColumnIndex(Contacts.STARRED)),
+            name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
+            photoUri = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI))
+        )
+    }
+
     companion object {
         val URI: Uri = Contacts.CONTENT_URI
         val FILTER_URI: Uri = Contacts.CONTENT_FILTER_URI
@@ -23,25 +44,5 @@ open class ContactsContentResolver(
             Contacts.PHOTO_THUMBNAIL_URI,
         )
         const val SORT_ORDER = "${Contacts.SORT_KEY_PRIMARY} ASC"
-    }
-
-    override val uri: Uri = URI
-    override val filterUri: Uri = FILTER_URI
-    override val sortOrder: String = SORT_ORDER
-    override val selectionArgs: Array<String>? = null
-    override val projection: Array<String> = PROJECTION
-    override val selection = SelectionBuilder()
-        .addNotNull(Contacts.DISPLAY_NAME_PRIMARY)
-        .addSelection(Contacts._ID, contactId)
-        .build()
-
-    override fun convertCursorToItem(cursor: Cursor): Contact {
-        return Contact(
-            id = cursor.getLong(cursor.getColumnIndex(Contacts._ID)),
-            lookupKey = cursor.getString(cursor.getColumnIndex(Contacts.LOOKUP_KEY)),
-            starred = "1" == cursor.getString(cursor.getColumnIndex(Contacts.STARRED)),
-            name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
-            photoUri = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI))
-        )
     }
 }

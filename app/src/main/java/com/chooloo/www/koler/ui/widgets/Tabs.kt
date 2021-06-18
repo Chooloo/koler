@@ -30,6 +30,7 @@ class Tabs : LinearLayout {
             replaceTabs(value.map { getTab(it) }.toTypedArray())
         }
 
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(
@@ -39,6 +40,7 @@ class Tabs : LinearLayout {
     ) : super(context, attrs, defStyleRes) {
         orientation = HORIZONTAL
     }
+
 
     private fun addTab(tab: Tab) {
         addView(tab)

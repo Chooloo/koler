@@ -8,74 +8,74 @@ import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
 class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
     SettingsContract.Presenter<V> {
     override fun refresh() {
-        mvpView?.goToMainActivity()
+        mvpView.goToMainActivity()
     }
 
     override fun onClickedRate() {
-        mvpView?.rateApp()
+        mvpView.rateApp()
     }
 
     override fun onClickedEmail() {
-        mvpView?.sendEmail()
+        mvpView.sendEmail()
     }
 
     override fun onClickedColor() {
-        mvpView?.openColorPicker()
+        mvpView.openColorPicker()
     }
 
     override fun onClickedDonate() {
-        mvpView?.donate()
+        mvpView.donate()
     }
 
     override fun onClickedReport() {
-        mvpView?.reportBug()
+        mvpView.reportBug()
     }
 
     override fun onClickedManageBlocked() {
-        mvpView?.manageBlockedNumbers()
+        mvpView.manageBlockedNumbers()
     }
 
     override fun onSelectedColor(color: Int) {
-        mvpView?.setPrefAccentTheme(
+        mvpView.setPrefAccentTheme(
             when (color) {
-                mvpView?.getColor(R.color.blue_background) -> BLUE
-                mvpView?.getColor(R.color.red_background) -> RED
-                mvpView?.getColor(R.color.orange_background) -> ORANGE
-                mvpView?.getColor(R.color.green_background) -> GREEN
-                mvpView?.getColor(R.color.purple_background) -> PURPLE
+                mvpView.getColor(R.color.blue_background) -> BLUE
+                mvpView.getColor(R.color.red_background) -> RED
+                mvpView.getColor(R.color.orange_background) -> ORANGE
+                mvpView.getColor(R.color.green_background) -> GREEN
+                mvpView.getColor(R.color.purple_background) -> PURPLE
                 else -> BLUE
             }
         )
-        mvpView?.goToMainActivity()
+        mvpView.goToMainActivity()
     }
 
     override fun onSelectedSim(newValue: Any?) {
     }
 
     override fun onToggledRecords(isToggle: Boolean) {
-        mvpView?.setPrefRecordsEnabled(isToggle)
+        mvpView.setPrefRecordsEnabled(isToggle)
     }
 
     override fun onSelectedRecordFormat(newValue: Any?) {
     }
 
     override fun onToggledAnimation(isToggle: Boolean) {
-        mvpView?.setPrefAnimations(isToggle)
+        mvpView.setPrefAnimations(isToggle)
         refresh()
     }
 
     override fun onToggledCompactMode(isToggle: Boolean) {
-        mvpView?.setPrefCompact(isToggle)
+        mvpView.setPrefCompact(isToggle)
         refresh()
     }
 
     override fun onSelectedDefaultPage(pageKey: String) {
-        mvpView?.setPrefDefaultPage(Page.fromKey(pageKey))
+        mvpView.setPrefDefaultPage(Page.fromKey(pageKey))
         refresh()
     }
 
     override fun onToggledScrollIndicator(isToggle: Boolean) {
-        mvpView?.setPrefScrollIndicator(isToggle)
+        mvpView.setPrefScrollIndicator(isToggle)
         refresh()
     }
 }

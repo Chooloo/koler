@@ -21,29 +21,17 @@ import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.call.callVoicemail
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
-    private val _animationManager by lazy { AnimationManager(_activity) }
+    private val _animationManager by lazy { AnimationManager(baseActivity) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
-    override val _isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
-    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>() }
+    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>(this) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
 
+    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
+
     override val suggestionsCount: Int
         get() = _suggestionsFragment.itemCount
-
-    companion object {
-        const val TAG = "dialpad_bottom_dialog_fragment"
-        const val ARG_IS_DIALER = "dialer"
-        private const val ARG_NUMBER = "number"
-
-        fun newInstance(isDialer: Boolean, number: String? = null) = DialpadFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_IS_DIALER, isDialer)
-                putString(ARG_NUMBER, number)
-            }
-        }
-    }
 
     override var number: String
         get() = _binding.dialpadEditText.text.toString()
@@ -81,6 +69,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
             }
         }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,14 +77,12 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _presenter.attach(this)
-
         _suggestionsFragment.setOnContactsChangedListener(_presenter::onSuggestionsChanged)
 
         _binding.apply {
             dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
             dialpadButtonCall.apply {
-                visibility = if (_isDialer) VISIBLE else GONE
+                visibility = if (isDialer) VISIBLE else GONE
                 setOnClickListener { _presenter.onCallClick() }
             }
             dialpadButtonDelete.apply {
@@ -103,12 +90,12 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 setOnLongClickListener { _presenter.onLongDeleteClick() }
             }
             dialpadEditText.apply {
-                isClickable = _isDialer
-                isLongClickable = _isDialer
-                isFocusableInTouchMode = _isDialer
-                isCursorVisible = _isDialer
+                isClickable = isDialer
+                isLongClickable = isDialer
+                isFocusableInTouchMode = isDialer
+                isCursorVisible = isDialer
 
-                if (_isDialer) {
+                if (isDialer) {
                     addTextChangedListener(PhoneNumberFormattingTextWatcher())
                 }
                 setText(argsSafely.getString(ARG_NUMBER))
@@ -169,21 +156,19 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
             .commitNow()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
+
+    //region dialpad view
 
     override fun call() {
         if (number.isEmpty()) {
-            _activity.showMessage(R.string.error_enter_number)
+            baseActivity.showMessage(R.string.error_enter_number)
         } else {
-            _activity.call(_binding.dialpadEditText.text.toString())
+            baseActivity.call(_binding.dialpadEditText.text.toString())
         }
     }
 
     override fun vibrate() {
-        _activity.vibrate(SHORT_VIBRATE_LENGTH)
+        baseActivity.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun backspace() {
@@ -191,11 +176,11 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun addContact() {
-        _activity.addContact(_binding.dialpadEditText.text.toString())
+        baseActivity.addContact(_binding.dialpadEditText.text.toString())
     }
 
     override fun callVoicemail() {
-        _activity.callVoicemail()
+        baseActivity.callVoicemail()
     }
 
     override fun playTone(keyCode: Int) {
@@ -210,7 +195,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         _suggestionsFragment.applyFilter(filter)
     }
 
-    //region setters
+    //endregion
+
+
     fun setOnTextChangedListener(onTextChangedListener: (text: String?) -> Unit?) {
         _onTextChangedListener = onTextChangedListener
     }
@@ -218,5 +205,19 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     fun setOnKeyDownListener(onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit?) {
         _onKeyDownListener = onKeyDownListener
     }
-    //endregion
+
+
+    companion object {
+        const val TAG = "dialpad_bottom_dialog_fragment"
+        const val ARG_IS_DIALER = "dialer"
+        private const val ARG_NUMBER = "number"
+
+        fun newInstance(isDialer: Boolean, number: String? = null) = DialpadFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_IS_DIALER, isDialer)
+                putString(ARG_NUMBER, number)
+            }
+        }
+    }
+
 }

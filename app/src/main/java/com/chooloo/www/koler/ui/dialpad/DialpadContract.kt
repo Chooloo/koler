@@ -5,8 +5,8 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface DialpadContract : BaseContract {
     interface View : BaseContract.View {
-        val _isDialer: Boolean
         var number: String
+        val isDialer: Boolean
         val suggestionsCount: Int
         var isSuggestionsVisible: Boolean
         var isDeleteButtonVisible: Boolean

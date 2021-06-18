@@ -6,5 +6,6 @@ import com.chooloo.www.koler.data.Contact
 
 class ContactsProviderLiveData(context: Context) :
     ContentProviderLiveData<ContactsContentResolver, ArrayList<Contact>>(context) {
+
     override val contentResolver by lazy { ContactsContentResolver(context) }
 }

@@ -10,33 +10,19 @@ import com.chooloo.www.koler.util.permissions.runWithPrompt
 import com.chooloo.www.koler.util.unblockNumber
 
 class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesContract.View {
-    override val preferenceResource = R.xml.recent_preferences
     private val _number by lazy { argsSafely.getString(ARG_NUMBER) }
-    private val _presenter by lazy { RecentPreferencesPresenter<RecentPreferencesContract.View>() }
+    private val _presenter by lazy { RecentPreferencesPresenter<RecentPreferencesContract.View>(this) }
 
-    companion object {
-        const val ARG_NUMBER = "number"
+    override val preferenceResource = R.xml.recent_preferences
 
-        fun newInstance(number: String) = RecentPreferencesFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_NUMBER, number)
-            }
-        }
-    }
 
     override fun onSetup() {
         super.onSetup()
-        _presenter.attach(this)
 
         getPreference<Preference>(R.string.pref_key_block_number)?.isVisible =
-            _number?.let { !_activity.isNumberBlocked(it) } ?: false
+            _number?.let { !baseActivity.isNumberBlocked(it) } ?: false
         getPreference<Preference>(R.string.pref_key_unblock_number)?.isVisible =
-            _number?.let { _activity.isNumberBlocked(it) } ?: false
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
+            _number?.let { baseActivity.isNumberBlocked(it) } ?: false
     }
 
     override fun onPreferenceClickListener(preference: Preference) {
@@ -46,18 +32,33 @@ class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesCon
         }
     }
 
+    //region recent preferences view
+
     override fun toggleNumberBlocked(isBlocked: Boolean) {
         if (isBlocked) {
             _number?.let {
-                _activity.runWithPrompt(R.string.warning_block_number) {
-                    _activity.blockNumber(it)
+                baseActivity.runWithPrompt(R.string.warning_block_number) {
+                    baseActivity.blockNumber(it)
                     showMessage(R.string.number_blocked)
                 }
             }
         } else {
             _number?.let {
-                _activity.unblockNumber(it)
+                baseActivity.unblockNumber(it)
                 showMessage(R.string.number_unblocked)
+            }
+        }
+    }
+
+    //endregion
+
+
+    companion object {
+        const val ARG_NUMBER = "number"
+
+        fun newInstance(number: String) = RecentPreferencesFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_NUMBER, number)
             }
         }
     }

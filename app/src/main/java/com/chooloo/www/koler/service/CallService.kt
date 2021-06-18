@@ -14,14 +14,6 @@ import com.chooloo.www.koler.util.call.CallManager
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {
-    companion object {
-        private lateinit var sInstance: CallService
-
-        fun toggleSpeakerRoute(isSpeakerOn: Boolean) {
-            sInstance.setAudioRoute(if (isSpeakerOn) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_WIRED_OR_EARPIECE)
-        }
-    }
-
     private val _callNotification by lazy { CallNotification(this) }
     private val _callNotificationCallback by lazy {
         object : CallManager.CallListener(this) {
@@ -30,6 +22,7 @@ class CallService : InCallService() {
             }
         }
     }
+
 
     override fun onCreate() {
         super.onCreate()
@@ -68,10 +61,20 @@ class CallService : InCallService() {
         }
     }
 
+
     private fun cancelCallNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             _callNotification.cancel()
             CallManager.unregisterCallback(_callNotificationCallback)
+        }
+    }
+
+
+    companion object {
+        private lateinit var sInstance: CallService
+
+        fun toggleSpeakerRoute(isSpeakerOn: Boolean) {
+            sInstance.setAudioRoute(if (isSpeakerOn) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_WIRED_OR_EARPIECE)
         }
     }
 }

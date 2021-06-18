@@ -10,7 +10,6 @@ import com.chooloo.www.koler.databinding.MainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 import com.chooloo.www.koler.util.ignoreEditTextFocus
 import com.chooloo.www.koler.util.permissions.checkDefaultDialer
@@ -19,8 +18,8 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
-    private val _presenter by lazy { MainPresenter<MainContract.View>() }
     private val _binding by lazy { MainBinding.inflate(layoutInflater) }
+    private val _presenter by lazy { MainPresenter<MainContract.View>(this) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
     override var selectedPage: Int
@@ -47,24 +46,13 @@ class MainActivity : BaseActivity(), MainContract.View {
             _searchViewModel.recentsText.value = value
         }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(_binding.root)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
-    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        ignoreEditTextFocus(event)
-        return super.dispatchTouchEvent(event)
-    }
-
     override fun onSetup() {
-        _presenter.attach(this)
-
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
@@ -78,6 +66,14 @@ class MainActivity : BaseActivity(), MainContract.View {
         checkDefaultDialer()
         checkIntent()
     }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        ignoreEditTextFocus(event)
+        return super.dispatchTouchEvent(event)
+    }
+
+
+    //region main view
 
     override fun openDialpad() {
         BottomFragment(DialpadFragment.newInstance(true).apply {
@@ -101,4 +97,6 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun updateSearchViewModelNumber(text: String?) {
         _searchViewModel.number.value = text
     }
+
+    //endregion
 }

@@ -9,6 +9,7 @@ import com.chooloo.www.koler.receiver.CallRecordReceiver
 open class CallRecordService : Service() {
     private var _callRecordReceiver: CallRecordReceiver? = null
 
+
     @Nullable
     override fun onBind(intent: Intent): Nothing? = null
 
@@ -21,6 +22,7 @@ open class CallRecordService : Service() {
         super.onDestroy()
         stopCallReceiver()
     }
+
 
     private fun startCallReceiver() {
         if (_callRecordReceiver == null) {

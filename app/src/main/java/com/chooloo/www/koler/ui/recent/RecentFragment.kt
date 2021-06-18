@@ -17,24 +17,15 @@ import com.chooloo.www.koler.ui.recents.RecentsFragment
 import com.chooloo.www.koler.util.*
 import com.chooloo.www.koler.util.call.call
 import com.chooloo.www.koler.util.permissions.runWithPrompt
+import java.util.*
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
-    private val _presenter by lazy { RecentPresenter<RecentContract.View>() }
-    private val _isBlocked by lazy { _activity.isNumberBlocked(_recent.number) }
-    private val _contact by lazy { _activity.lookupContactNumber(_recent.number) }
-    private val _recent by lazy { _activity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
+    private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }
+    private val _isBlocked by lazy { baseActivity.isNumberBlocked(_recent.number) }
+    private val _contact by lazy { baseActivity.lookupContactNumber(_recent.number) }
+    private val _recent by lazy { baseActivity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
 
-    companion object {
-        const val TAG = "recent_fragment"
-        const val ARG_RECENT_ID = "recent_id"
-
-        fun newInstance(recentId: Long) = RecentFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_RECENT_ID, recentId)
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +33,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         savedInstanceState: Bundle?
     ) = _binding.root
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
     override fun onSetup() {
-        _presenter.attach(this)
-
         _binding.apply {
             recentTextCaption.apply {
                 visibility = VISIBLE
@@ -58,13 +42,13 @@ class RecentFragment : BaseFragment(), RecentContract.View {
                     text = "$text, ${getElapsedTimeString(_recent.duration)}"
                 }
                 if (_isBlocked) {
-                    text = "$text, ${getString(R.string.error_blocked).toUpperCase()})"
+                    text = "$text, ${getString(R.string.error_blocked).toUpperCase(Locale.ROOT)})"
                 }
             }
 
             recentTypeImage.apply {
                 visibility = VISIBLE
-                setImageDrawable(getDrawable(_activity, getCallTypeImage(_recent.type)))
+                setImageDrawable(getDrawable(baseActivity, getCallTypeImage(_recent.type)))
             }
             recentTextName.text = _recent.cachedName ?: _recent.number
 
@@ -81,6 +65,9 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         }
     }
 
+
+    //region recents view
+
     override fun showMenu() {
         BottomFragment(RecentPreferencesFragment.newInstance(_recent.number)).show(
             childFragmentManager,
@@ -89,21 +76,21 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun smsRecent() {
-        _activity.smsNumber(_recent.number)
+        baseActivity.smsNumber(_recent.number)
     }
 
     override fun addContact() {
-        _activity.addContact(_recent.number)
+        baseActivity.addContact(_recent.number)
     }
 
     override fun callRecent() {
-        _recent.number.let { _activity.call(it) }
+        _recent.number.let { baseActivity.call(it) }
     }
 
     override fun openContact() {
         _contact?.contactId?.let {
             BottomFragment(ContactFragment.newInstance(it)).show(
-                _activity.supportFragmentManager,
+                baseActivity.supportFragmentManager,
                 ContactFragment.TAG
             )
         }
@@ -112,13 +99,27 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     override fun openHistory() {
         BottomFragment(
             RecentsFragment.newInstance(isSearchable = false, filter = _recent.number)
-        ).show(_activity.supportFragmentManager, ContactFragment.TAG)
+        ).show(baseActivity.supportFragmentManager, ContactFragment.TAG)
     }
 
     override fun deleteRecent() {
-        _activity.apply {
+        baseActivity.apply {
             runWithPrompt(R.string.warning_delete_recent) {
                 deleteRecent(_recent.id)
+            }
+        }
+    }
+
+    //endregion
+
+
+    companion object {
+        const val TAG = "recent_fragment"
+        const val ARG_RECENT_ID = "recent_id"
+
+        fun newInstance(recentId: Long) = RecentFragment().apply {
+            arguments = Bundle().apply {
+                putLong(ARG_RECENT_ID, recentId)
             }
         }
     }
