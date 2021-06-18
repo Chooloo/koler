@@ -16,11 +16,11 @@ import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 import dev.sasikanth.colorsheet.ColorSheet
 
 class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
-    private val _presenter by lazy { SettingsPresenter<SettingsContract.View>() }
+    private val _presenter by lazy { SettingsPresenter<SettingsContract.View>(this) }
 
     override val preferenceResource = R.xml.main_preferences
 
-    
+
     override fun onSetup() {
         setupSimPreference()
     }

@@ -5,8 +5,10 @@ import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme.*
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
 
-class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
+class SettingsPresenter<V : SettingsContract.View>(mvpView: V) :
+    BasePresenter<V>(mvpView),
     SettingsContract.Presenter<V> {
+    
     override fun refresh() {
         mvpView.goToMainActivity()
     }
