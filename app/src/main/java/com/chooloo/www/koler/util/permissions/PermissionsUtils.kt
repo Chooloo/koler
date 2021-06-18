@@ -1,10 +1,12 @@
 package com.chooloo.www.koler.util.permissions
 
 import android.app.Activity
+import android.app.role.RoleManager
 import android.content.Context
 import android.content.Context.TELECOM_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.telecom.TelecomManager
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -12,7 +14,7 @@ import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BaseActivity
 
-const val RC_DEFAULT_DIALER = 0
+const val RC_DEFAULT_DIALER = 120
 const val RC_READ_CONTACTS = 1
 const val RC_DEFAULT = 2
 
@@ -27,9 +29,17 @@ fun Context.isDefaultDialer() =
     packageName == (getSystemService(TELECOM_SERVICE) as TelecomManager).defaultDialerPackage
 
 fun Activity.requestDefaultDialer() {
-    val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
-        .putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
-    startActivityForResult(intent, RC_DEFAULT_DIALER)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val roleManager = getSystemService(Context.ROLE_SERVICE) as RoleManager
+        startActivityForResult(
+            roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER),
+            RC_DEFAULT_DIALER
+        )
+    } else {
+        val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
+        intent.putExtra(TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME, packageName)
+        startActivityForResult(intent, RC_DEFAULT_DIALER)
+    }
 }
 //endregion
 
@@ -68,7 +78,10 @@ fun Activity.runWithPermissions(
     rationaleMessage
 )
 
-fun BaseActivity.runWithDefaultDialer(@StringRes errorMessageRes: Int? = null, callback: () -> Unit) {
+fun BaseActivity.runWithDefaultDialer(
+    @StringRes errorMessageRes: Int? = null,
+    callback: () -> Unit
+) {
     if (!isDefaultDialer()) {
         showError(getString(errorMessageRes ?: R.string.error_not_default_dialer))
         requestDefaultDialer()
