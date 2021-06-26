@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.chooloo.www.koler">
 
+
+    <!--region permissions-->
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -25,6 +28,9 @@
         android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
         tools:ignore="ProtectedPermissions" />
 
+    <!--endregion-->
+
+
     <application
         android:name="com.chooloo.www.koler.App"
         android:allowBackup="true"
@@ -37,11 +43,14 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <!--region activities-->
+
         <activity
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
             android:screenOrientation="portrait">
 
+
             <!--region intent-filters-->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -59,16 +68,24 @@
 
                 <data android:scheme="tel" />
             </intent-filter>
+
             <!--endregion-->
+
+
         </activity>
+
         <activity
             android:name="com.chooloo.www.koler.ui.call.CallActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".util.permissions.PermissionsActivity" />
+
         <!--endregion-->
 
+
         <!--region services-->
+
         <service android:name="com.chooloo.www.koler.service.RecordService" />
+
         <service
             android:name="com.chooloo.www.koler.service.CallService"
             android:permission="android.permission.BIND_INCALL_SERVICE">
@@ -79,15 +96,30 @@
                 <action android:name="android.telecom.InCallService" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".service.Accessibility"
+            android:label="@string/accessibility_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+        </service>
+
         <!--endregion-->
 
+
         <!--region metadatas-->
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <!--endregion-->
 
+
         <!--region receivers-->
+
         <receiver android:name=".receiver.CallBroadcastReceiver">
             <intent-filter>
                 <action android:name="action_answer" />
@@ -101,7 +133,9 @@
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
-        <!--endregion-->
-    </application>
 
+        <!--endregion-->
+
+
+    </application>
 </manifest>

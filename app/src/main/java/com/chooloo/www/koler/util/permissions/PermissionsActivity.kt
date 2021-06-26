@@ -1,36 +1,27 @@
 package com.chooloo.www.koler.util.permissions
 
 import android.R
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import com.chooloo.www.koler.ui.base.BaseActivity
 
-class PermissionsActivity : Activity() {
+class PermissionsActivity : BaseActivity() {
+    private val _permissionsManager by lazy { PermissionsManager(this) }
     private val _rationaleMessage by lazy { intent.getStringExtra(EXTRA_RATIONAL_MESSAGE) }
     private val _allPermissions by lazy { intent.getStringArrayExtra(EXTRA_PERMISSIONS) }
 
-    companion object {
-        private const val RC_PERMISSION = 6937
-        private const val RC_SETTINGS = 6739
-
-        const val EXTRA_RATIONAL_MESSAGE = "extra_rationale"
-        const val EXTRA_PERMISSIONS = "extra_permissions"
-
-        var sGrantedCallback: (() -> Unit)? = null
-        var sBlockedCallback: ((permissions: Array<String>) -> Unit)? = null
-        var sDeniedCallback: (() -> Unit)? = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setFinishOnTouchOutside(true)
         window.statusBarColor = 0
 
-        val deniedPermissions = _allPermissions.filter { !hasSelfPermission(it) }.toTypedArray()
+        val deniedPermissions =
+            _allPermissions.filter { !_permissionsManager.hasSelfPermission(it) }.toTypedArray()
         if (deniedPermissions.isEmpty()) {
             onGranted()
         } else {
@@ -43,7 +34,7 @@ class PermissionsActivity : Activity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (hasSelfPermissions(permissions as Array<String>)) {
+        if (_permissionsManager.hasSelfPermissions(permissions as Array<String>)) {
             onGranted()
         }
 
@@ -62,7 +53,7 @@ class PermissionsActivity : Activity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SETTINGS) {
-            checkPermissions(
+            _permissionsManager.checkPermissions(
                 _allPermissions,
                 sGrantedCallback,
                 sDeniedCallback,
@@ -74,12 +65,16 @@ class PermissionsActivity : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onSetup() {
+    }
+
     override fun finish() {
         sBlockedCallback = null
         sGrantedCallback = null
         sDeniedCallback = null
         super.finish()
     }
+
 
     private fun onGranted() {
         val callback = sGrantedCallback
@@ -99,6 +94,7 @@ class PermissionsActivity : Activity() {
         callback?.invoke(blockedPermissions)
     }
 
+
     private fun sendToSettings(message: String) {
         AlertDialog.Builder(this).setTitle("Required Permissions")
             .setMessage(message)
@@ -115,7 +111,19 @@ class PermissionsActivity : Activity() {
             .create().show()
     }
 
-    private fun checkGrantResult(grantResult: Int): Boolean {
-        return grantResult == PackageManager.PERMISSION_GRANTED
+    private fun checkGrantResult(grantResult: Int) =
+        grantResult == PackageManager.PERMISSION_GRANTED
+
+
+    companion object {
+        private const val RC_PERMISSION = 6937
+        private const val RC_SETTINGS = 6739
+
+        const val EXTRA_RATIONAL_MESSAGE = "extra_rationale"
+        const val EXTRA_PERMISSIONS = "extra_permissions"
+
+        var sGrantedCallback: (() -> Unit)? = null
+        var sBlockedCallback: ((permissions: Array<String>) -> Unit)? = null
+        var sDeniedCallback: (() -> Unit)? = null
     }
 }

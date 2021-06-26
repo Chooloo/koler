@@ -12,7 +12,7 @@ import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.livedata.PhoneProviderLiveData
 import com.chooloo.www.koler.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.koler.ui.list.ListFragment
-import com.chooloo.www.koler.util.call.call
+import com.chooloo.www.koler.call.CallManager
 
 class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
@@ -45,7 +45,7 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
     //region phones view
 
     override fun callNumber(number: String) {
-        baseActivity.call(number)
+        CallManager.call(baseActivity, number)
     }
 
     override fun clipboardText(text: String) {

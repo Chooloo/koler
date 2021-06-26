@@ -10,8 +10,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.getAttrColor
-import com.chooloo.www.koler.util.sizeInDp
+import com.chooloo.www.koler.util.ViewManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -20,7 +19,8 @@ class SearchBar : TextInputLayout {
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
-    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
+    private val _viewManager by lazy { ViewManager(context) }
+    private val colorOnSecondary by lazy { _viewManager.getAttrColor(R.attr.colorOnSecondary) }
     private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
@@ -53,9 +53,9 @@ class SearchBar : TextInputLayout {
             setHintTextColor(ColorStateList.valueOf(colorOnSecondary))
             setPadding(
                 spacingSmall,
-                context.sizeInDp(2),
+                _viewManager.sizeInDp(2),
                 spacingSmall,
-                context.sizeInDp(2)
+                _viewManager.sizeInDp(2)
             )
 
             addTextChangedListener(

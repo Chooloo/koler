@@ -1,21 +1,16 @@
 package com.chooloo.www.koler.util.call
 
+import ContactsManager
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.telecom.Call
 import android.telecom.PhoneAccountHandle
 import android.telephony.PhoneNumberUtils
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.lookupContactNumber
-import com.chooloo.www.koler.util.permissions.hasSelfPermission
-import com.chooloo.www.koler.util.permissions.runWithDefaultDialer
+import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 
 //region call functions
@@ -29,32 +24,16 @@ fun Call.getNormalizedNumber(context: Context): String =
     PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
 
 fun Call.lookupContact(context: Context) =
-    context.lookupContactNumber(getNumber())
+    ContactsManager(context).lookupAccountByNumber(getNumber())
 //endregion
 
-//region activity related functions
-fun BaseActivity.call(number: String) {
-    runWithDefaultDialer(R.string.error_not_default_dialer_call) {
-        val callIntent = Intent(Intent.ACTION_CALL)
-        callIntent.data = Uri.parse("tel:${Uri.encode(number)}")
-        startActivity(callIntent)
-    }
-}
-
-fun BaseActivity.callVoicemail() {
-    try {
-        val intent = Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1"))
-        startActivity(intent)
-    } catch (e: SecurityException) {
-        showError("Couldn't start voicemail, no permissions")
-    }
-}
 
 fun isUSSDCode(string: String) = string.startsWith("*") && string.endsWith("#")
 
 @SuppressLint("MissingPermission")
-fun Activity.getSubscriptionInfo(phoneAccountHandle: PhoneAccountHandle): SubscriptionInfo? {
-    if (phoneAccountHandle.id.isEmpty() || hasSelfPermission(Manifest.permission.READ_PHONE_STATE)) {
+fun BaseActivity.getSubscriptionInfo(phoneAccountHandle: PhoneAccountHandle): SubscriptionInfo? {
+    val permissionsManager = PermissionsManager(this)
+    if (phoneAccountHandle.id.isEmpty() || permissionsManager.hasSelfPermission(Manifest.permission.READ_PHONE_STATE)) {
         return null
     }
     getSystemService(SubscriptionManager::class.java).activeSubscriptionInfoList.forEach {

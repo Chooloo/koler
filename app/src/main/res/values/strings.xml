@@ -186,7 +186,9 @@
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
     <!--endregion-->
 
+
     <!--region phone type-->
+
     <string name="phone_type_home">Home</string>
     <string name="phone_type_mobile">Mobile</string>
     <string name="phone_type_work">Work</string>
@@ -207,5 +209,15 @@
     <string name="phone_type_work_pager">Work Pager</string>
     <string name="phone_type_assistant">Assistant</string>
     <string name="phone_type_mms">MMS</string>
+
     <!--endregion-->
+
+
+    <!--region labels-->
+
+    <string name="accessibility_service_label">accessibility service</string>
+
+    <!--endregion-->
+
+
 </resources>

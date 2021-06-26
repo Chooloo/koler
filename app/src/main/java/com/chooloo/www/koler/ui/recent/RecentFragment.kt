@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.recent
 
+import ContactsManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -14,17 +15,19 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
-import com.chooloo.www.koler.util.*
-import com.chooloo.www.koler.util.call.call
-import com.chooloo.www.koler.util.permissions.runWithPrompt
+import com.chooloo.www.koler.util.RecentsManager
+import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.util.getElapsedTimeString
 import java.util.*
 
 class RecentFragment : BaseFragment(), RecentContract.View {
+    private val _recentsManager by lazy { RecentsManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsManager(baseActivity) }
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
+    private val _contact by lazy { _contactsManager.lookupAccountByNumber(_recent.number) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }
-    private val _isBlocked by lazy { baseActivity.isNumberBlocked(_recent.number) }
-    private val _contact by lazy { baseActivity.lookupContactNumber(_recent.number) }
-    private val _recent by lazy { baseActivity.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
+    private val _isBlocked by lazy { _contactsManager.queryIsNumberBlocked(_recent.number) }
+    private val _recent by lazy { _recentsManager.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
 
 
     override fun onCreateView(
@@ -76,15 +79,15 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun smsRecent() {
-        baseActivity.smsNumber(_recent.number)
+        _contactsManager.openSmsView(_recent.number)
     }
 
     override fun addContact() {
-        baseActivity.addContact(_recent.number)
+        _contactsManager.openAddContactView(_recent.number)
     }
 
     override fun callRecent() {
-        _recent.number.let { baseActivity.call(it) }
+        _recent.number.let { CallManager.call(baseActivity, it) }
     }
 
     override fun openContact() {
@@ -103,11 +106,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun deleteRecent() {
-        baseActivity.apply {
-            runWithPrompt(R.string.warning_delete_recent) {
-                deleteRecent(_recent.id)
-            }
-        }
+        _recentsManager.deleteRecent(_recent.id)
     }
 
     //endregion

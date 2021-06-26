@@ -7,7 +7,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.ui.base.BasePresenter
-import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.call.CallManager
 
 class CallPresenter<V : CallContract.View>(mvpView: V) :
     BasePresenter<V>(mvpView),

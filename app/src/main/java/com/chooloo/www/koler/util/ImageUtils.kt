@@ -15,7 +15,7 @@ fun Context.generateRandomImage(onBitmapListener: (Bitmap) -> Unit) =
     Rig.Builder()
         .setGenerator(ColoredCirclesGenerator(2))
         .setFixedSize(1920, 1920)
-        .setPalette(RigPalette.fromColor(getAttrColor(R.attr.colorSecondary)))
+        .setPalette(RigPalette.fromColor(ViewManager(this).getAttrColor(R.attr.colorSecondary)))
         .setCallback(object : GenerateCallback {
             override fun onGenerated(imageParams: ImageParams, bitmap: Bitmap) {
                 onBitmapListener.invoke(bitmap)

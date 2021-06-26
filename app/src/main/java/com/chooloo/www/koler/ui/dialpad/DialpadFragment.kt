@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
+import ContactsManager
 import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -17,13 +18,15 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
 import com.chooloo.www.koler.util.*
-import com.chooloo.www.koler.util.call.call
-import com.chooloo.www.koler.util.call.callVoicemail
+import com.chooloo.www.koler.util.AudioManager.Companion.SHORT_VIBRATE_LENGTH
+import com.chooloo.www.koler.call.CallManager
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
-    private val _animationManager by lazy { AnimationManager(baseActivity) }
+    private val _audioManager by lazy { AudioManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsManager(baseActivity) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
+    private val _animationManager by lazy { AnimationManager(baseActivity) }
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>(this) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
@@ -163,12 +166,12 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         if (number.isEmpty()) {
             baseActivity.showMessage(R.string.error_enter_number)
         } else {
-            baseActivity.call(_binding.dialpadEditText.text.toString())
+            CallManager.call(baseActivity, _binding.dialpadEditText.text.toString())
         }
     }
 
     override fun vibrate() {
-        baseActivity.vibrate(SHORT_VIBRATE_LENGTH)
+        _audioManager.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun backspace() {
@@ -176,15 +179,15 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun addContact() {
-        baseActivity.addContact(_binding.dialpadEditText.text.toString())
+        _contactsManager.openAddContactView(_binding.dialpadEditText.text.toString())
     }
 
     override fun callVoicemail() {
-        baseActivity.callVoicemail()
+        CallManager.callVoicemail(baseActivity)
     }
 
     override fun playTone(keyCode: Int) {
-        context?.playToneByKey(keyCode)
+        _audioManager.playToneByKey(keyCode)
     }
 
     override fun invokeKey(keyCode: Int) {

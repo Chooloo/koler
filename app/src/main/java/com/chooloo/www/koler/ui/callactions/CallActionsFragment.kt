@@ -7,9 +7,9 @@ import com.chooloo.www.koler.databinding.CallActionsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.util.audio.AudioManager
-import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.IN_CALL
-import com.chooloo.www.koler.util.callrecord.CallRecorder
+import com.chooloo.www.koler.util.AudioManager
+import com.chooloo.www.koler.util.AudioManager.AudioMode.IN_CALL
+import com.chooloo.www.koler.call.CallRecorder
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     private val _callRecorder by lazy { CallRecorder(baseActivity) }

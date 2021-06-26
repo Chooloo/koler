@@ -10,7 +10,7 @@ import android.telecom.InCallService
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.ui.notification.CallNotification
-import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.call.CallManager
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {

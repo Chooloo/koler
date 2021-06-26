@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.callactions
 
 import android.view.KeyEvent
 import com.chooloo.www.koler.ui.base.BasePresenter
-import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.call.CallManager
 
 class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
     BasePresenter<V>(mvpView),

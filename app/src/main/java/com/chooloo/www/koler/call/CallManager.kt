@@ -1,9 +1,14 @@
-package com.chooloo.www.koler.util.call
+package com.chooloo.www.koler.call
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.telecom.Call
 import android.telecom.VideoProfile
+import android.widget.Toast
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
+import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 
 object CallManager {
@@ -44,6 +49,24 @@ object CallManager {
 
     fun unregisterCallback(callListener: CallListener) {
         sCall?.unregisterCallback(callListener)
+    }
+
+    fun call(context: Context, number: String) {
+        PermissionsManager(context).runWithDefaultDialer(R.string.error_not_default_dialer_call) {
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:${Uri.encode(number)}")
+            context.startActivity(callIntent)
+        }
+    }
+
+    fun callVoicemail(context: Context) {
+        try {
+            val intent = Intent(Intent.ACTION_CALL, Uri.parse("voicemail:1"))
+            context.startActivity(intent)
+        } catch (e: SecurityException) {
+            Toast.makeText(context, "Couldn't start voicemail, no permissions", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
     abstract class CallListener(protected val context: Context) : Call.Callback() {

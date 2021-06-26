@@ -19,9 +19,11 @@ class PreferencesManager(
 ) {
     private val _pref by lazy { PreferenceManager.getDefaultSharedPreferences(_context) }
 
+
     init {
         PreferenceManager.setDefaultValues(_context, R.xml.main_preferences, false)
     }
+
 
     fun putInt(@StringRes key: Int, value: Int) {
         _pref.edit().putInt(_context.getString(key), value).apply()
@@ -43,6 +45,7 @@ class PreferencesManager(
         _pref.edit().putLong(_context.getString(key), value).apply()
     }
 
+    
     fun getInt(@StringRes key: Int, defaultValue: Int) =
         _pref.getInt(_context.getString(key), defaultValue)
 

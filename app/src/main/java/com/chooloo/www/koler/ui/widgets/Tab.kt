@@ -9,12 +9,13 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.getAttrColor
+import com.chooloo.www.koler.util.ViewManager
 import java.util.*
 
 class Tab : AppCompatTextView {
-    private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
-    private val disabledColor by lazy { context.getAttrColor(R.attr.colorTextHint) }
+    private val _viewManager by lazy { ViewManager(context) }
+    private val enabledColor by lazy { _viewManager.getAttrColor(R.attr.colorOnSurface) }
+    private val disabledColor by lazy { _viewManager.getAttrColor(R.attr.colorTextHint) }
 
 
     constructor(context: Context) : this(context, null)

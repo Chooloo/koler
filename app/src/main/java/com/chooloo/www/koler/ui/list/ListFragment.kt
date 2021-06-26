@@ -12,7 +12,7 @@ import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.permissions.runWithPermissions
+import com.chooloo.www.koler.util.permissions.PermissionsManager
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
@@ -23,6 +23,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     private val _preferences by lazy { KolerPreferences(baseActivity) }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _animationManager by lazy { AnimationManager(baseActivity) }
+    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>(this) }
 
@@ -90,7 +91,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         }
 
         requiredPermissions?.let {
-            runWithPermissions(
+            _permissionsManager.runWithPermissions(
                 permissions = it,
                 grantedCallback = _presenter::onPermissionsGranted,
                 blockedCallback = _presenter::onPermissionsBlocked

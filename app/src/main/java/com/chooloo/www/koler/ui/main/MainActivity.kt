@@ -11,14 +11,16 @@ import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
-import com.chooloo.www.koler.util.ignoreEditTextFocus
-import com.chooloo.www.koler.util.permissions.checkDefaultDialer
+import com.chooloo.www.koler.util.ScreenManager
+import com.chooloo.www.koler.util.permissions.PermissionsManager
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
+    private val _screenManager by lazy { ScreenManager(this) }
     private val _binding by lazy { MainBinding.inflate(layoutInflater) }
+    private val _permissionsManager by lazy { PermissionsManager(this) }
     private val _presenter by lazy { MainPresenter<MainContract.View>(this) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
@@ -63,12 +65,12 @@ class MainActivity : BaseActivity(), MainContract.View {
             mainViewPager.currentItem = KolerPreferences(this@MainActivity).defaultPage.index
         }
 
-        checkDefaultDialer()
+        _permissionsManager.checkDefaultDialer()
         checkIntent()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        ignoreEditTextFocus(event)
+        _screenManager.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 

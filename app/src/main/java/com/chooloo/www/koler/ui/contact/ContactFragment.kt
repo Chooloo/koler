@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.contact
 
+import ContactsManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,17 +13,18 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
-import com.chooloo.www.koler.util.*
-import com.chooloo.www.koler.util.call.call
-import com.chooloo.www.koler.util.permissions.runWithPrompt
+import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
+    private val _contactsManager by lazy { ContactsManager(baseActivity) }
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _contact by lazy { baseActivity.lookupContactId(_contactId) }
-    private val _firstPhone by lazy { _contact.phoneAccounts.getOrNull(0) }
+    private val _contact by lazy { _contactsManager.queryContact(_contactId) }
+    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
+    private val _firstPhone by lazy { _contactsManager.queryContactAccounts(_contactId).getOrNull(0) }
 
 
     override var contactName: String?
@@ -81,30 +83,30 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun smsContact() {
-        _firstPhone?.let { baseActivity.smsNumber(it.number) }
+        _firstPhone?.let { _contactsManager.openSmsView(it.number) }
     }
 
     override fun callContact() {
-        _firstPhone?.let { baseActivity.call(it.number) }
+        _firstPhone?.let { CallManager.call(baseActivity, it.number) }
     }
 
     override fun editContact() {
-        baseActivity.editContact(_contact.id)
+        _contactsManager.openEditContactView(_contactId)
     }
 
     override fun openContact() {
-        baseActivity.openContact(_contact.id)
+        _contactsManager.openContactView(_contactId)
     }
 
     override fun deleteContact() {
-        baseActivity.runWithPrompt(R.string.warning_delete_contact) {
-            baseActivity.deleteContact(_contact.id)
-            finish()
+        _permissionsManager.runWithPrompt(R.string.warning_delete_contact) {
+            _contactsManager.deleteContact(_contactId)
+            parentFragmentManager.popBackStack()
         }
     }
 
     override fun setFavorite(isFavorite: Boolean) {
-        baseActivity.setContactFavorite(_contact.id, isFavorite)
+        _contactsManager.toggleContactFavorite(_contactId, isFavorite)
     }
 
     //endregion

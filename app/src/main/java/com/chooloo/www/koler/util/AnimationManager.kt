@@ -15,14 +15,11 @@ import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 
 class AnimationManager(private val context: Context) {
-    companion object {
-        private const val DEFAULT_DURATION = 500L
-    }
+    private val _isEnabled by lazy { KolerPreferences(context).animations }
 
-    private val isEnabled by lazy { KolerPreferences(context).animations }
 
     fun showView(view: View, isShow: Boolean) {
-        if (isEnabled) {
+        if (_isEnabled) {
             if (isShow && view.visibility != VISIBLE) {
                 YoYo.with(Techniques.FadeInUp)
                     .duration(400)
@@ -40,7 +37,7 @@ class AnimationManager(private val context: Context) {
 
     fun bounceIn(view: View) {
         view.visibility = VISIBLE
-        if (isEnabled) {
+        if (_isEnabled) {
             YoYo.with(Techniques.BounceInUp)
                 .duration(400)
                 .playOn(view)
@@ -48,7 +45,7 @@ class AnimationManager(private val context: Context) {
     }
 
     fun tada(view: View) {
-        if (isEnabled) {
+        if (_isEnabled) {
             YoYo.with(Techniques.Tada)
                 .duration(200)
                 .playOn(view)
@@ -56,7 +53,7 @@ class AnimationManager(private val context: Context) {
     }
 
     fun blink(view: View, totalDuration: Long, duration: Long = 400) {
-        if (isEnabled) {
+        if (_isEnabled) {
             view.startAnimation(AlphaAnimation(0.0f, 1.0f).apply {
                 setDuration(duration)
                 startOffset = 20
@@ -68,7 +65,7 @@ class AnimationManager(private val context: Context) {
     }
 
     fun runLayoutAnimation(recyclerView: RecyclerView) {
-        if (isEnabled) {
+        if (_isEnabled) {
             recyclerView.apply {
                 layoutAnimation = AnimationUtils.loadLayoutAnimation(
                     recyclerView.context,

@@ -5,66 +5,10 @@ import android.media.MediaRecorder.AudioEncoder
 import android.media.MediaRecorder.OutputFormat
 import com.chooloo.www.koler.R
 
-class KolerPreferences(
-    private val context: Context
-) {
-
-    companion object {
-        enum class AccentTheme(val key: String, val theme: Int) {
-            RED("red", R.style.Accent_Red),
-            BLUE("blue", R.style.Accent_Blue),
-            GREEN("green", R.style.Accent_Green),
-            ORANGE("orange", R.style.Accent_Orange),
-            PURPLE("purple", R.style.Accent_Purple),
-            DEFAULT(BLUE.key, BLUE.theme);
-
-            companion object {
-                fun fromKey(key: String?) =
-                    values().associateBy(AccentTheme::key).getOrDefault(key ?: "", DEFAULT)
-            }
-        }
-
-        enum class RecordFormat(
-            val key: String,
-            val outputFormat: Int,
-            val audioEncoder: Int,
-            val encoding: String
-        ) {
-            AMR_WB("amr_wb", OutputFormat.AMR_WB, AudioEncoder.AMR_WB, "amr"),
-            MPEG_4("mpeg_4", OutputFormat.MPEG_4, AudioEncoder.AAC, "mp4"),
-            DEFAULT(AMR_WB.key, AMR_WB.outputFormat, AMR_WB.audioEncoder, AMR_WB.encoding);
-
-            companion object {
-                fun fromKey(key: String?) =
-                    values().associateBy(RecordFormat::key).getOrDefault(key ?: "", DEFAULT)
-            }
-        }
-
-        enum class Sim(val key: String, val number: Int) {
-            TRY("Asdas", 1),
-            DEFAULT(TRY.key, TRY.number);
-
-            companion object {
-                fun fromKey(key: String?) =
-                    values().associateBy(Sim::key).getOrDefault(key ?: "", DEFAULT)
-            }
-        }
-
-        enum class Page(val key: String, val index: Int) {
-            CONTACTS("contacts", 0),
-            RECENTS("recents", 1),
-            DEFAULT(CONTACTS.key, CONTACTS.index);
-
-            companion object {
-                fun fromKey(key: String?) =
-                    values().associateBy(Page::key).getOrDefault(key ?: "", DEFAULT)
-            }
-        }
-    }
-
+class KolerPreferences(private val context: Context) {
     private val _pref by lazy { PreferencesManager(context) }
 
-    //region values
+
     var sim: Sim
         get() = Sim.fromKey(_pref.getString(R.string.pref_key_sim_select))
         set(value) {
@@ -138,5 +82,58 @@ class KolerPreferences(
         set(value) {
             _pref.putBoolean(R.string.pref_key_default_dialer_blocked_notice, value)
         }
-    //endregion
+
+
+    companion object {
+        enum class AccentTheme(val key: String, val theme: Int) {
+            RED("red", R.style.Accent_Red),
+            BLUE("blue", R.style.Accent_Blue),
+            GREEN("green", R.style.Accent_Green),
+            ORANGE("orange", R.style.Accent_Orange),
+            PURPLE("purple", R.style.Accent_Purple),
+            DEFAULT(BLUE.key, BLUE.theme);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(AccentTheme::key).getOrDefault(key ?: "", DEFAULT)
+            }
+        }
+
+        enum class RecordFormat(
+            val key: String,
+            val outputFormat: Int,
+            val audioEncoder: Int,
+            val encoding: String
+        ) {
+            AMR_WB("amr_wb", OutputFormat.AMR_WB, AudioEncoder.AMR_WB, "amr"),
+            MPEG_4("mpeg_4", OutputFormat.MPEG_4, AudioEncoder.AAC, "mp4"),
+            DEFAULT(AMR_WB.key, AMR_WB.outputFormat, AMR_WB.audioEncoder, AMR_WB.encoding);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(RecordFormat::key).getOrDefault(key ?: "", DEFAULT)
+            }
+        }
+
+        enum class Sim(val key: String, val number: Int) {
+            TRY("Asdas", 1),
+            DEFAULT(TRY.key, TRY.number);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(Sim::key).getOrDefault(key ?: "", DEFAULT)
+            }
+        }
+
+        enum class Page(val key: String, val index: Int) {
+            CONTACTS("contacts", 0),
+            RECENTS("recents", 1),
+            DEFAULT(CONTACTS.key, CONTACTS.index);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(Page::key).getOrDefault(key ?: "", DEFAULT)
+            }
+        }
+    }
 }
