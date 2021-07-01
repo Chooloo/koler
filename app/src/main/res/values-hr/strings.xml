@@ -1,0 +1,171 @@
+<resources>
+    <string name="dot">·</string>
+
+    <!--region titles-->
+    <string name="recents">Nedavno</string>
+    <string name="contacts">Kontakti</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Broj kopiran u međuspremnik</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_answer">Prihvati</string>
+    <string name="action_hangup">Odbij</string>
+    <string name="action_yes">Da</string>
+    <string name="action_no">Ne</string>
+    <string name="action_cancel">Odustani</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Traži</string>
+    <string name="hint_search_items">Pretraži stavke</string>
+    <string name="hint_search_contacts">Pretraži kontakte</string>
+    <string name="hint_search_recents">Pretraži nedavno</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="warning_delete_contact">Jeste li sigurni da želite izbrisati taj kontakt?</string>
+    <string name="warning_delete_recent">Jeste li sigurni da želite izbrisati taj nedavni poziv?</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_hold">Na čekanju</string>
+    <string name="call_action_mute">Isključi zvuk</string>
+    <string name="call_action_keypad">Brojčanik</string>
+    <string name="call_action_unhold">Nastavi</string>
+    <string name="call_action_unmute">Uključi zvuk</string>
+    <string name="call_action_record">Snimi</string>
+    <string name="call_action_speaker">Zvučnik</string>
+    <string name="call_action_add_call">Dodaj poziv</string>
+    <string name="call_action_speaker_off">Isključi zvučnik</string>
+    <string name="call_action_record_stop">Zaustavi snimanje</string>
+    <!--endregion-->
+
+    <!--region call state-->
+    <string name="call_status_dialing">Pozivanje…</string>
+    <string name="call_status_holding">Poziv na čekanju</string>
+    <string name="call_status_incoming">Dolazni poziv</string>
+    <string name="call_status_disconnected">Poziv završen</string>
+    <string name="call_status_active">Poziv u tijeku</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_email">email</string>
+    <string name="pref_key_donate">donate</string>
+    <string name="pref_key_compact">compact</string>
+    <string name="pref_key_color">accent_color</string>
+    <string name="pref_key_sim_select">sim_select</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_record_format">record_format</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Ocijeni</string>
+    <string name="pref_title_donate">Doniraj</string>
+    <string name="pref_title_compact">Kompaktni način</string>
+    <string name="pref_title_animations">Animacije</string>
+    <string name="pref_title_app_color">Boja teme</string>
+    <string name="pref_title_email">Pošalji nam e-poštu</string>
+    <string name="pref_title_report_bugs">Prijavi grešku</string>
+    <string name="pref_title_sim_select">Odabir SIM-a</string>
+    <string name="pref_title_default_page">Zadana stranica</string>
+    <!--endregion-->
+
+    <!--region pref default value-->
+    <string name="pref_default_value_sim_select">0</string>
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">Nema rezultata :/</string>
+    <string name="error_no_results_phones">Nema telefonskih brojeva :/</string>
+    <string name="error_no_results_contacts">Nema kontakata :/</string>
+    <string name="error_no_results_recents">Nema nedavnog :/</string>
+
+    <string name="error_no_permissions">Trebaju mi dozvole :/</string>
+    <string name="error_no_permissions_contacts">Treba mi dozvola za čitanje kontakata :)</string>
+    <string name="error_no_permissions_recents">Treba mi dozvola za čitanje nedavnih poziva :)</string>
+    <string name="error_no_permissions_phones">Treba mi dozvola za čitanje kontakata :)</string>
+
+    <string name="error_enter_number">Prvo unesite broj</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <string name="pref_color_value_red">red</string>
+    <string name="pref_color_value_blue">blue</string>
+    <string name="pref_color_value_green">green</string>
+    <string name="pref_color_value_orange">orange</string>
+    <string name="pref_color_value_purple">purple</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Govorna pošta</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters"></string>
+    <string name="dialpad_pound_letters"></string>
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_menu_button">Tipka izbornika</string>
+    <string name="content_description_answer_button">Tipka za prihvat poziva</string>
+    <string name="content_description_reject_button">Tipka za odbijanje poziva</string>
+    <string name="content_description_call_actions_button">Radnje poziva</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Obavijesti o pozivima</string>
+    <string name="call_notification_channel_description">Obavijesti aktivnih poziva, prikazane za ugodno korištenje</string>
+    <!--endregion-->
+
+    <!--region phone type-->
+    <string name="phone_type_home">Kućni</string>
+    <string name="phone_type_mobile">Mobilni</string>
+    <string name="phone_type_work">Posao</string>
+    <string name="phone_type_fax_work">Faks (posao)</string>
+    <string name="phone_type_fax_home">Faks (kućni)</string>
+    <string name="phone_type_pager">Pager</string>
+    <string name="phone_type_other">Ostalo</string>
+    <string name="phone_type_callback">Callback</string>
+    <string name="phone_type_car">Auto</string>
+    <string name="phone_type_company_main">Tvrtka (glavni)</string>
+    <string name="phone_type_isdn">ISDN</string>
+    <string name="phone_type_main">Glavni</string>
+    <string name="phone_type_other_fax">Faks</string>
+    <string name="phone_type_radio">Radio</string>
+    <string name="phone_type_telex">Telex</string>
+    <string name="phone_type_tty_ttd">TTY TDD</string>
+    <string name="phone_type_work_mobile">Posao (mobilni)</string>
+    <string name="phone_type_work_pager">Posao (pager)</string>
+    <string name="phone_type_assistant">Asistent</string>
+    <string name="phone_type_mms">MMS</string>
+    <!--endregion-->
+</resources>
