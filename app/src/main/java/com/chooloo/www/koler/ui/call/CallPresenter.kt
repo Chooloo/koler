@@ -7,9 +7,12 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.ui.base.BasePresenter
-import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.call.CallManager
 
-class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Presenter<V> {
+class CallPresenter<V : CallContract.View>(mvpView: V) :
+    BasePresenter<V>(mvpView),
+    CallContract.Presenter<V> {
+
     override fun onAnswerClick() {
         CallManager.answer()
     }
@@ -26,10 +29,10 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         val phoneAccount = callDetails.phoneAccount
         val callState = callDetails.callState
 
-        mvpView?.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
-        phoneAccount.photoUri?.let { mvpView?.callerImageURI = Uri.parse(it) }
+        mvpView.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
+        phoneAccount.photoUri?.let { mvpView.callerImageURI = Uri.parse(it) }
 
-        mvpView?.stateText = App.resources?.getString(
+        mvpView.stateText = App.resources?.getString(
             when (callState) {
                 ACTIVE -> R.string.call_status_active
                 DISCONNECTED -> R.string.call_status_disconnected
@@ -42,20 +45,20 @@ class CallPresenter<V : CallContract.View> : BasePresenter<V>(), CallContract.Pr
         )
 
         when (callState) {
-            CONNECTING -> mvpView?.transitionToActiveUI()
-            HOLDING -> mvpView?.apply {
-                getColor(R.color.red_foreground).let { mvpView?.stateTextColor = it }
-                blinkStateText()
+            CONNECTING, DIALING -> mvpView.transitionToActiveUI()
+            HOLDING -> mvpView.apply {
+                getColor(R.color.red_foreground).let { mvpView.stateTextColor = it }
+                animateStateTextAttention()
             }
-            ACTIVE -> mvpView?.apply {
-                getColor(R.color.green_foreground).let { mvpView?.stateTextColor = it }
-                blinkStateText()
+            ACTIVE -> mvpView.apply {
+                getColor(R.color.green_foreground).let { mvpView.stateTextColor = it }
+                animateStateTextAttention()
                 startStopwatch()
                 transitionToActiveUI()
             }
-            DISCONNECTED -> mvpView?.apply {
+            DISCONNECTED -> mvpView.apply {
                 getColor(R.color.red_foreground).let { stateTextColor = it }
-                blinkStateText()
+                animateStateTextAttention()
                 stopStopwatch()
                 Handler().postDelayed({ finish() }, 2000)
             }

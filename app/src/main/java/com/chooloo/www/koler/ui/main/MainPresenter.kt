@@ -5,34 +5,37 @@ import com.chooloo.www.koler.ui.base.BasePresenter
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
-class MainPresenter<V : MainContract.View> : BasePresenter<V>(), MainContract.Presenter<V> {
+class MainPresenter<V : MainContract.View>(mvpView: V) :
+    BasePresenter<V>(mvpView),
+    MainContract.Presenter<V> {
+    
     override fun onMenuClick() {
-        mvpView?.openSettings()
+        mvpView.openSettings()
     }
 
     override fun onDialpadFabClick() {
-        mvpView?.openDialpad()
+        mvpView.openDialpad()
     }
 
     override fun onViewIntent(intent: Intent) {
         val intentText = try {
             URLDecoder.decode(intent.dataString, "utf-8")
         } catch (e: UnsupportedEncodingException) {
-            mvpView?.showError("An error occurred when trying to get phone number :(")
+            mvpView.showError("An error occurred when trying to get phone number :(")
             return
         }
 
         if (intentText.contains("tel:")) {
-            mvpView?.apply {
+            mvpView.apply {
                 openDialpad()
                 dialpadNumber = intentText
             }
         } else {
-            mvpView?.showError("No phone number detected")
+            mvpView.showError("No phone number detected")
         }
     }
 
     override fun onDialpadTextChanged(text: String?) {
-        mvpView?.updateSearchViewModelNumber(text)
+        mvpView.updateSearchViewModelNumber(text)
     }
 }

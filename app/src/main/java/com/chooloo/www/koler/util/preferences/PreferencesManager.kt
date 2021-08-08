@@ -19,9 +19,11 @@ class PreferencesManager(
 ) {
     private val _pref by lazy { PreferenceManager.getDefaultSharedPreferences(_context) }
 
+
     init {
-        PreferenceManager.setDefaultValues(_context, R.xml.preference, false)
+        PreferenceManager.setDefaultValues(_context, R.xml.main_preferences, false)
     }
+
 
     fun putInt(@StringRes key: Int, value: Int) {
         _pref.edit().putInt(_context.getString(key), value).apply()
@@ -43,44 +45,19 @@ class PreferencesManager(
         _pref.edit().putLong(_context.getString(key), value).apply()
     }
 
-    fun getInt(@StringRes key: Int, defaultValue: Int): Int {
-        return try {
-            _pref.getInt(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
-    }
+    
+    fun getInt(@StringRes key: Int, defaultValue: Int) =
+        _pref.getInt(_context.getString(key), defaultValue)
 
-    fun getString(@StringRes key: Int, defaultValue: String? = null): String? {
-        return try {
-            _pref.getString(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
-    }
+    fun getString(@StringRes key: Int, defaultValue: String? = null) =
+        _pref.getString(_context.getString(key), defaultValue)
 
-    fun getBoolean(@StringRes key: Int, defaultValue: Boolean): Boolean {
-        return try {
-            _pref.getBoolean(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
-    }
+    fun getBoolean(@StringRes key: Int, defaultValue: Boolean) =
+        _pref.getBoolean(_context.getString(key), defaultValue)
 
-    fun getFloat(@StringRes key: Int, defaultValue: Float): Float {
-        return try {
-            _pref.getFloat(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
-    }
+    fun getFloat(@StringRes key: Int, defaultValue: Float) =
+        _pref.getFloat(_context.getString(key), defaultValue)
 
-    fun getLong(@StringRes key: Int, defaultValue: Long): Long {
-        return try {
-            _pref.getLong(_context.getString(key), defaultValue)
-        } catch (e: ClassCastException) {
-            defaultValue
-        }
-    }
-
+    fun getLong(@StringRes key: Int, defaultValue: Long) =
+        _pref.getLong(_context.getString(key), defaultValue)
 }

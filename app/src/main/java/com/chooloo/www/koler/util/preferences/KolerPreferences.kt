@@ -5,9 +5,84 @@ import android.media.MediaRecorder.AudioEncoder
 import android.media.MediaRecorder.OutputFormat
 import com.chooloo.www.koler.R
 
-class KolerPreferences(
-    private val context: Context
-) {
+class KolerPreferences(private val context: Context) {
+    private val _pref by lazy { PreferencesManager(context) }
+
+
+    var sim: Sim
+        get() = Sim.fromKey(_pref.getString(R.string.pref_key_sim_select))
+        set(value) {
+            _pref.putString(R.string.pref_key_sim_select, value.key)
+        }
+
+    var accentTheme: AccentTheme
+        get() = AccentTheme.fromKey(
+            _pref.getString(
+                R.string.pref_key_color,
+                AccentTheme.DEFAULT.key
+            )
+        )
+        set(value) {
+            _pref.putString(R.string.pref_key_color, value.key)
+        }
+
+    var recordFormat: RecordFormat
+        get() = RecordFormat.fromKey(_pref.getString(R.string.pref_key_record_format))
+        set(value) {
+            _pref.putString(R.string.pref_key_record_format, value.key)
+        }
+
+    var defaultPage: Page
+        get() = Page.fromKey(_pref.getString(R.string.pref_key_default_page))
+        set(value) {
+            _pref.putString(R.string.pref_key_default_page, value.key)
+        }
+
+    var compact: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_compact,
+            context.resources.getBoolean(R.bool.pref_default_value_compact)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_compact, value)
+        }
+
+    var animations: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_animations,
+            context.resources.getBoolean(R.bool.pref_default_value_animations)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_animations, value)
+        }
+
+    var recordsEnabled: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_records_enabled,
+            context.resources.getBoolean(R.bool.pref_default_value_records_enabled)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_records_enabled, value)
+        }
+
+    var scrollIndicator: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_scroll_indicator,
+            context.resources.getBoolean(R.bool.pref_default_scroll_indicator)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_scroll_indicator, value)
+        }
+
+    var showedDefaultDialerBlockedNotice: Boolean
+        get() = _pref.getBoolean(
+            R.string.pref_key_default_dialer_blocked_notice,
+            context.resources.getBoolean(R.bool.pref_default_value_default_dialer_blocked_notice)
+        )
+        set(value) {
+            _pref.putBoolean(R.string.pref_key_default_dialer_blocked_notice, value)
+        }
+
 
     companion object {
         enum class AccentTheme(val key: String, val theme: Int) {
@@ -61,55 +136,4 @@ class KolerPreferences(
             }
         }
     }
-
-    private val _pref by lazy { PreferencesManager(context) }
-
-    //region values
-    var sim: Sim
-        get() = Sim.fromKey(_pref.getString(R.string.pref_key_sim_select))
-        set(value) {
-            _pref.putString(R.string.pref_key_sim_select, value.key)
-        }
-
-    var accentTheme: AccentTheme
-        get() = AccentTheme.fromKey(
-            _pref.getString(
-                R.string.pref_key_color,
-                AccentTheme.DEFAULT.key
-            )
-        )
-        set(value) {
-            _pref.putString(R.string.pref_key_color, value.key)
-        }
-
-    var recordFormat: RecordFormat
-        get() = RecordFormat.fromKey(_pref.getString(R.string.pref_key_record_format))
-        set(value) {
-            _pref.putString(R.string.pref_key_record_format, value.key)
-        }
-
-    var defaultPage: Page
-        get() = Page.fromKey(_pref.getString(R.string.pref_key_default_page))
-        set(value) {
-            _pref.putString(R.string.pref_key_default_page, value.key)
-        }
-
-    var isCompact: Boolean
-        get() = _pref.getBoolean(
-            R.string.pref_key_compact,
-            context.resources.getBoolean(R.bool.pref_default_value_compact)
-        )
-        set(value) {
-            _pref.putBoolean(R.string.pref_key_compact, value)
-        }
-
-    var isAnimations: Boolean
-        get() = _pref.getBoolean(
-            R.string.pref_key_animations,
-            context.resources.getBoolean(R.bool.pref_default_value_animations)
-        )
-        set(value) {
-            _pref.putBoolean(R.string.pref_key_animations, value)
-        }
-    //endregion
 }

@@ -7,6 +7,7 @@ interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
         val itemCount: Int
         val searchHint: String?
+        val hideNoResults: Boolean
         var emptyStateText: String?
         val noResultsMessage: String
         val noPermissionsMessage: String
@@ -17,6 +18,7 @@ interface ListContract : BaseContract {
         fun requestSearchFocus()
         fun applyFilter(filter: String) {}
         fun showEmptyPage(isShow: Boolean)
+        fun showSelecting(isSelecting: Boolean)
         fun updateData(data: ListBundle<ItemType>)
         fun toggleRefreshing(isRefreshing: Boolean)
     }
@@ -28,6 +30,7 @@ interface ListContract : BaseContract {
         fun onSwipeRefresh()
         fun onPermissionsGranted()
         fun onSearchTextChanged(text: String)
+        fun onSelectingChanged(isSelecting: Boolean)
         fun onPermissionsBlocked(permissions: Array<String>)
     }
 }

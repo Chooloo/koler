@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.telecom.Call
+import android.telecom.CallAudioState
+import android.telecom.DisconnectCause
 import android.telecom.InCallService
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.ui.notification.CallNotification
-import com.chooloo.www.koler.util.call.CallManager
+import com.chooloo.www.koler.call.CallManager
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {
@@ -19,6 +21,12 @@ class CallService : InCallService() {
                 CallNotification(context).show(callDetails)
             }
         }
+    }
+
+
+    override fun onCreate() {
+        super.onCreate()
+        sInstance = this
     }
 
     override fun onDestroy() {
@@ -44,7 +52,15 @@ class CallService : InCallService() {
         super.onCallRemoved(call)
         CallManager.sCall = null
         cancelCallNotification()
+        call.details?.let {
+            if (call.details.disconnectCause.code == DisconnectCause.MISSED) {
+                CallNotification(applicationContext).show(
+                    CallDetails.fromCall(call, applicationContext)
+                )
+            }
+        }
     }
+
 
     private fun cancelCallNotification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -53,4 +69,12 @@ class CallService : InCallService() {
         }
     }
 
+
+    companion object {
+        private lateinit var sInstance: CallService
+
+        fun toggleSpeakerRoute(isSpeakerOn: Boolean) {
+            sInstance.setAudioRoute(if (isSpeakerOn) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_WIRED_OR_EARPIECE)
+        }
+    }
 }

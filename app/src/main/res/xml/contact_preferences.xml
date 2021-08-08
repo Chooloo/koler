@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:icon="@drawable/ic_star_black_24dp"
+        android:key="@string/pref_key_set_favorite"
+        android:title="@string/pref_title_set_favorite" />
+
+    <Preference
+        android:icon="@drawable/ic_star_outline_black_24dp"
+        android:key="@string/pref_key_unset_favorite"
+        android:title="@string/pref_title_unset_favorite" />
+
+    <Preference
+        android:icon="@drawable/round_lock_open_24"
+        android:key="@string/pref_key_unblock_contact"
+        android:title="@string/pref_title_unblock_contact" />
+
+    <Preference
+        android:icon="@drawable/round_block_24"
+        android:key="@string/pref_key_block_contact"
+        android:title="@string/pref_title_block_contact" />
+</PreferenceScreen>

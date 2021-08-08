@@ -8,8 +8,23 @@ import com.chooloo.www.koler.util.call.lookupContact
 
 data class CallDetails(
     val callState: CallState,
-    val phoneAccount: PhoneLookupAccount
+    val details: Call.Details,
+    val phoneAccount: PhoneLookupAccount,
 ) {
+    companion object {
+        fun fromCall(call: Call, context: Context) = CallDetails(
+            callState = CallState.values().associateBy(CallState::state)
+                .getOrDefault(call.state, CallState.UNKNOWN),
+            details = call.details,
+            phoneAccount = call.lookupContact(context)
+                ?: PhoneLookupAccount(
+                    name = null,
+                    number = call.getNumber(),
+                    type = Phone.TYPE_OTHER
+                )
+        )
+    }
+
     enum class CallState(val state: Int) {
         ACTIVE(Call.STATE_ACTIVE),
         CONNECTING(Call.STATE_CONNECTING),
@@ -22,18 +37,5 @@ data class CallDetails(
         RINGING(Call.STATE_RINGING),
         SELECT_PHONE_ACCOUNT(Call.STATE_SELECT_PHONE_ACCOUNT),
         UNKNOWN(-1)
-    }
-
-    companion object {
-        fun fromCall(call: Call, context: Context) = CallDetails(
-            callState = CallState.values().associateBy(CallState::state)
-                .getOrDefault(call.state, CallState.UNKNOWN),
-            phoneAccount = call.lookupContact(context)
-                ?: PhoneLookupAccount(
-                    name = null,
-                    number = call.getNumber(),
-                    type = Phone.TYPE_OTHER
-                )
-        )
     }
 }

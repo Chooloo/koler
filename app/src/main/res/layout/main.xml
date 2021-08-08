@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- appbar -->
+    <include
+        android:id="@+id/appbar_main"
+        layout="@layout/appbar" />
+
+    <!-- view pager -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- dialer button -->
+    <com.chooloo.www.koler.ui.widgets.IconButton
+        android:id="@+id/main_dialpad_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="20dp"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_dialpad_black_24dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,24 +1,28 @@
 package com.chooloo.www.koler.ui.call
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
-import com.chooloo.www.koler.databinding.ActivityCallBinding
+import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.ProximitySensor
-import com.chooloo.www.koler.util.call.CallManager
-import com.chooloo.www.koler.util.disableKeyboard
-import com.chooloo.www.koler.util.setShowWhenLocked
+import com.chooloo.www.koler.util.ScreenManager
+import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.util.call.getNumber
+import com.chooloo.www.koler.call.CallRecorder
 
+@SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private val _animationManager by lazy { AnimationManager(this) }
-    private val _presenter by lazy { CallPresenter<CallContract.View>() }
+    private val _screenManager by lazy { ScreenManager(this) }
+    private val _binding by lazy { CallBinding.inflate(layoutInflater) }
     private val _proximitySensor by lazy { ProximitySensor(this) }
-    private val _binding by lazy { ActivityCallBinding.inflate(layoutInflater) }
+    private val _animationManager by lazy { AnimationManager(this) }
+    private val _presenter by lazy { CallPresenter<CallContract.View>(this) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
             override fun onCallDetailsChanged(callDetails: CallDetails) {
@@ -26,6 +30,9 @@ class CallActivity : BaseActivity(), CallContract.View {
             }
         }
     }
+
+    private val _callRecorder by lazy { CallRecorder(this) }
+
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
@@ -51,13 +58,13 @@ class CallActivity : BaseActivity(), CallContract.View {
             _binding.callImage.setImageURI(value)
         }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(_binding.root)
     }
 
     override fun onSetup() {
-        _presenter.attach(this)
         _proximitySensor.acquire()
 
         _binding.apply {
@@ -65,31 +72,25 @@ class CallActivity : BaseActivity(), CallContract.View {
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
         }
 
-        setShowWhenLocked()
-        disableKeyboard()
+        _screenManager.disableKeyboard()
+        _screenManager.setShowWhenLocked()
         CallManager.registerListener(_callListener)
+
+        CallManager.sCall?.getNumber()?.let { _callRecorder.initRecording(it) }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         CallManager.unregisterCallback(_callListener)
-        _presenter.detach()
         _proximitySensor.release()
+        _callRecorder.stopRecording()
     }
 
-    override fun transitionToActiveUI() {
-        if (_binding.root.currentState == R.id.incoming_call) {
-            supportFragmentManager
-                .beginTransaction()
-                .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
-                .commitNow()
-            _animationManager.showView(_binding.callActionsContainer, true)
-            _binding.root.transitionToEnd()
-        }
-    }
 
-    override fun blinkStateText() {
-        _animationManager.blinkView(_binding.callStateText, 2500)
+    //region call view
+
+    override fun stopStopwatch() {
+        _binding.callChronometer.stop()
     }
 
     override fun startStopwatch() {
@@ -99,7 +100,20 @@ class CallActivity : BaseActivity(), CallContract.View {
         }
     }
 
-    override fun stopStopwatch() {
-        _binding.callChronometer.stop()
+    override fun transitionToActiveUI() {
+        if (_binding.root.currentState == R.id.incoming_call) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
+                .commitNow()
+            _animationManager.bounceIn(_binding.callActionsContainer)
+            _binding.root.transitionToEnd()
+        }
     }
+
+    override fun animateStateTextAttention() {
+        _animationManager.tada(_binding.callStateText)
+    }
+
+    //endregion
 }

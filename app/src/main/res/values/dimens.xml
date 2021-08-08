@@ -2,19 +2,27 @@
 <resources>
 
     <!--region generic sizes-->
+
+    <!--region text size-->
+    <dimen name="caption_1">13sp</dimen>
     <dimen name="headline_1">46sp</dimen>
     <dimen name="headline_2">30sp</dimen>
     <dimen name="headline_3">24sp</dimen>
     <dimen name="headline_4">18sp</dimen>
     <dimen name="subtitle_1">16sp</dimen>
     <dimen name="subtitle_2">14sp</dimen>
-    <dimen name="caption_1">13sp</dimen>
-    <dimen name="image_size_small">35dp</dimen>
-    <dimen name="image_size_big">90dp</dimen>
-    <dimen name="corner_radius">12dp</dimen>
-    <dimen name="default_spacing">20dp</dimen>
-    <dimen name="default_spacing_small">12dp</dimen>
+    <!--endregion-->
+
+    <!--region default spacings-->
+    <dimen name="default_spacing">18dp</dimen>
     <dimen name="default_spacing_big">32dp</dimen>
+    <dimen name="default_spacing_small">6dp</dimen>
+    <!--endregion-->
+
+    <!--region image size-->
+    <dimen name="image_size_big">90dp</dimen>
+    <dimen name="image_size_small">35dp</dimen>
+    <dimen name="corner_radius">10dp</dimen>
     <!--endregion-->
 
     <!--region list item -->

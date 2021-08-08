@@ -4,6 +4,7 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface RecentContract : BaseContract {
     interface View : BaseContract.View {
+        fun showMenu()
         fun smsRecent()
         fun addContact()
         fun callRecent()
@@ -15,6 +16,7 @@ interface RecentContract : BaseContract {
     interface Presenter<V : View> : BaseContract.Presenter<V> {
         fun onActionSms()
         fun onActionCall()
+        fun onActionMenu()
         fun onActionDelete()
         fun onActionAddContact()
         fun onActionOpenContact()

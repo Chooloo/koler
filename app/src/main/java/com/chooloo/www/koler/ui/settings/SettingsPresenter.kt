@@ -5,75 +5,79 @@ import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme.*
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
 
-class SettingsPresenter<V : SettingsContract.View> : BasePresenter<V>(),
+class SettingsPresenter<V : SettingsContract.View>(mvpView: V) :
+    BasePresenter<V>(mvpView),
     SettingsContract.Presenter<V> {
+    
     override fun refresh() {
-        mvpView?.goToMainActivity()
+        mvpView.goToMainActivity()
     }
 
-    override fun onClickedRate() = run {
-        mvpView?.rateApp()
-        true
+    override fun onClickedRate() {
+        mvpView.rateApp()
     }
 
-    override fun onClickedEmail() = run {
-        mvpView?.sendEmail()
-        true
+    override fun onClickedEmail() {
+        mvpView.sendEmail()
     }
 
-    override fun onClickedColor() = run {
-        mvpView?.openColorPicker()
-        true
+    override fun onClickedColor() {
+        mvpView.openColorPicker()
     }
 
-    override fun onClickedDonate() = run {
-        mvpView?.donate()
-        true
+    override fun onClickedDonate() {
+        mvpView.donate()
     }
 
-    override fun onClickedReport() = run {
-        mvpView?.reportBug()
-        true
+    override fun onClickedReport() {
+        mvpView.reportBug()
     }
 
-    override fun onSelectedColor(color: Int) = run {
-        mvpView?.setPrefAccentTheme(
+    override fun onClickedManageBlocked() {
+        mvpView.manageBlockedNumbers()
+    }
+
+    override fun onSelectedColor(color: Int) {
+        mvpView.setPrefAccentTheme(
             when (color) {
-                mvpView?.getColor(R.color.blue_background) -> BLUE
-                mvpView?.getColor(R.color.red_background) -> RED
-                mvpView?.getColor(R.color.orange_background) -> ORANGE
-                mvpView?.getColor(R.color.green_background) -> GREEN
-                mvpView?.getColor(R.color.purple_background) -> PURPLE
+                mvpView.getColor(R.color.blue_background) -> BLUE
+                mvpView.getColor(R.color.red_background) -> RED
+                mvpView.getColor(R.color.orange_background) -> ORANGE
+                mvpView.getColor(R.color.green_background) -> GREEN
+                mvpView.getColor(R.color.purple_background) -> PURPLE
                 else -> BLUE
             }
         )
-        mvpView?.goToMainActivity()
-        true
+        mvpView.goToMainActivity()
     }
 
-    override fun onSelectedSim(newValue: Any?) = run {
-        true
+    override fun onSelectedSim(newValue: Any?) {
     }
 
-    override fun onSelectedRecordFormat(newValue: Any?) = run {
-        true
+    override fun onToggledRecords(isToggle: Boolean) {
+        mvpView.setPrefRecordsEnabled(isToggle)
     }
 
-    override fun onToggledAnimation(isToggle: Boolean) = run {
-        mvpView?.setPrefAnimations(isToggle)
+    override fun onSelectedRecordFormat(newValue: Any?) {
+    }
+
+    override fun onToggledAnimation(isToggle: Boolean) {
+        mvpView.setPrefAnimations(isToggle)
         refresh()
-        true
     }
 
-    override fun onToggledCompactMode(isToggle: Boolean) = run {
-        mvpView?.setPrefCompact(isToggle)
+    override fun onToggledCompactMode(isToggle: Boolean) {
+        mvpView.setPrefCompact(isToggle)
         refresh()
-        true
     }
 
-    override fun onSelectedDefaultPage(pageKey: String) = run {
-        mvpView?.setPrefDefaultPage(Page.fromKey(pageKey))
+    override fun onSelectedDefaultPage(pageKey: String) {
+        mvpView.setPrefDefaultPage(Page.fromKey(pageKey))
         refresh()
-        true
+    }
+
+    override fun onToggledScrollIndicator(isToggle: Boolean) {
+        mvpView.setPrefScrollIndicator(isToggle)
+        refresh()
     }
 }

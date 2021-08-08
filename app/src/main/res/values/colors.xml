@@ -3,8 +3,12 @@
     <color name="ic_launcher_background">?colorSecondary</color>
 
     <!--region base colors-->
-    <color name="color_on_background">#C5C5C5</color>
+    <color name="color_hint">#DADADA</color>
     <color name="color_error">#B00020</color>
+    <color name="color_disabled">#C8C8C8</color>
+    <color name="color_on_background">#C5C5C5</color>
+    <color name="color_image_placeholder_background">#ABEDEDED</color>
+    <color name="color_image_placeholder_foreground">#95ACACAC</color>
     <!--endregion-->
 
     <!--region accent colors-->

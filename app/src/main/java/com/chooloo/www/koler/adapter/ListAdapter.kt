@@ -8,11 +8,24 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.AnimationManager
 
 abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
+    private var _isCompact = false
+    private var _isSelecting = false
+    private var _isSelectable = true
     private var _data: ListBundle<DataType> = ListBundle()
-    private var _onItemClickListener: (item: DataType) -> Unit? = {}
-    private var _onItemLongClickListener: (item: DataType) -> Unit? = {}
+    private var _selectedItems: ArrayList<DataType> = arrayListOf()
 
-    var isCompact = false
+    private var _onItemClickListener: (item: DataType) -> Unit = {}
+    private var _onItemLongClickListener: (item: DataType) -> Unit = {}
+    private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
+    private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
+
+
+    var isCompact
+        get() = _isCompact
+        set(value) {
+            _isCompact = value
+        }
+
     var data: ListBundle<DataType>
         get() = _data
         set(value) {
@@ -20,27 +33,62 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun getItemCount() = _data.items.size
+    val isSelecting: Boolean
+        get() = _isSelecting
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ListItemHolder(parent.context)
+    val selectedItems: ArrayList<DataType>
+        get() = _selectedItems
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
+        return ListItemHolder(parent.context)
+    }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
+        val dataItem = _data.items[position]
         holder.listItem.apply {
             headerText = getHeader(position)
             isCompact = this@ListAdapter.isCompact
 
-            AnimationManager(context).setFadeUpAnimation(this)
-            setOnClickListener { _onItemClickListener.invoke(_data.items[position]) }
+            setOnClickListener {
+                if (isSelected && _isSelectable) {
+                    isSelected = false
+                    _selectedItems.remove(dataItem)
+                    if (_selectedItems.size == 0) {
+                        _isSelecting = false
+                        _onSelectingChangeListener.invoke(false)
+                    }
+                } else if (!isSelected && _isSelecting) {
+                    isSelected = true
+                    _selectedItems.add(dataItem)
+                    _onItemsSelectedListener.invoke(_selectedItems)
+                } else {
+                    _onItemClickListener.invoke(_data.items[position])
+                }
+            }
             setOnLongClickListener {
-                _onItemLongClickListener.invoke(_data.items[position])
+                if (_isSelectable) {
+                    isSelected = true
+                    _isSelecting = true
+                    _selectedItems.add(dataItem)
+                    _onItemsSelectedListener.invoke(_selectedItems)
+                    _onSelectingChangeListener.invoke(true)
+                } else {
+                    _onItemLongClickListener.invoke(dataItem)
+                }
                 true
             }
+            AnimationManager(context).bounceIn(this)
             onBindListItem(this, _data.items[position])
         }
     }
 
-    private fun getHeader(position: Int): String? {
+    override fun getItemCount(): Int {
+        return _data.items.size
+    }
+
+
+    fun getHeader(position: Int): String? {
         var total = 0
         _data.headersCounts.withIndex().forEach { (index, count) ->
             when (position) {
@@ -51,6 +99,9 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
         return null
     }
 
+
+    //region listeners setters
+
     fun setOnItemClickListener(onItemClickListener: (item: DataType) -> Unit) {
         _onItemClickListener = onItemClickListener
     }
@@ -58,6 +109,17 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     fun setOnItemLongClickListener(onItemLongClickListener: (item: DataType) -> Unit) {
         _onItemLongClickListener = onItemLongClickListener
     }
+
+    fun setOnSelectingChangeListener(onSelectingChangeListener: (isSelecting: Boolean) -> Unit) {
+        _onSelectingChangeListener = onSelectingChangeListener
+    }
+
+    fun setOnItemsSelectedListener(onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit) {
+        _onItemsSelectedListener = onItemsSelectedListener
+    }
+
+    //endregion
+
 
     abstract fun onBindListItem(listItem: ListItem, item: DataType)
 }

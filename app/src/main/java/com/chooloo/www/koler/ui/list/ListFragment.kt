@@ -9,29 +9,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.databinding.FragmentItemsBinding
+import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.permissions.runWithPermissions
+import com.chooloo.www.koler.util.permissions.PermissionsManager
+import com.chooloo.www.koler.util.preferences.KolerPreferences
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
-abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>> : BaseFragment(),
+abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
+    BaseFragment(),
     ListContract.View<ItemType> {
-    private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>() }
-    private val _binding by lazy { FragmentItemsBinding.inflate(layoutInflater) }
+
+    private val _preferences by lazy { KolerPreferences(baseActivity) }
+    private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
+    private val _animationManager by lazy { AnimationManager(baseActivity) }
+    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
+    private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>(this) }
 
     override val itemCount get() = adapter.itemCount
     override val requiredPermissions: Array<String>? = null
+    override val searchHint by lazy { getString(R.string.hint_search_items) }
     override val noResultsMessage by lazy { getString(R.string.error_no_results) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions) }
-    override val searchHint by lazy { getString(R.string.hint_search_items) }
-
-    abstract val adapter: Adapter
-
-    companion object {
-        const val ARG_IS_COMPACT = "is_compact"
-        const val ARG_IS_SEARCHABLE = "is_searchable"
-    }
+    override val hideNoResults by lazy { argsSafely.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
 
     override var emptyStateText: String?
         get() = _binding.itemsEmptyText.text.toString()
@@ -40,20 +41,16 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
 
         }
 
+    abstract val adapter: Adapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = _binding.root
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
     override fun onSetup() {
-        _presenter.attach(this)
-
         adapter.apply {
             setOnItemClickListener(::onItemClick)
             setOnItemLongClickListener(::onItemLongClick)
@@ -67,7 +64,7 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
             }
             itemsSwipeRefreshLayout.apply {
                 setOnRefreshListener(_presenter::onSwipeRefresh)
-                if(!_isSearchable){
+                if (!_isSearchable) {
                     setDistanceToTriggerSync(9999999)
                 }
             }
@@ -81,12 +78,20 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
                             _presenter.onDataChanged()
                         }
                     })
+                    setOnSelectingChangeListener { _presenter.onSelectingChanged(it) }
                 }
+            }
+            itemsDeleteButton.setOnClickListener {
+                onDeleteItems((itemsRecyclerView.adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
             }
         }
 
+        if (_preferences.scrollIndicator) {
+            setupScrollIndicator()
+        }
+
         requiredPermissions?.let {
-            runWithPermissions(
+            _permissionsManager.runWithPermissions(
                 permissions = it,
                 grantedCallback = _presenter::onPermissionsGranted,
                 blockedCallback = _presenter::onPermissionsBlocked
@@ -94,12 +99,15 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
         } ?: _presenter.onPermissionsGranted()
     }
 
+
+    //region list view
+
     override fun attachData() {
         onAttachData()
     }
 
     override fun animateListView() {
-        AnimationManager(_activity).runLayoutAnimation(_binding.itemsRecyclerView)
+        AnimationManager(baseActivity).runLayoutAnimation(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -108,8 +116,18 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
 
     override fun showEmptyPage(isShow: Boolean) {
         _binding.apply {
-            itemsEmptyText.visibility = if (isShow) VISIBLE else GONE
-            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
+            itemsEmptyText.visibility = if (isShow && !hideNoResults) VISIBLE else GONE
+            itemsRecyclerView.visibility = if (isShow && !hideNoResults) GONE else VISIBLE
+        }
+    }
+
+    override fun showSelecting(isSelecting: Boolean) {
+        _binding.itemsDeleteButton.apply {
+            if (isSelecting) {
+                _animationManager.bounceIn(this)
+            } else {
+                _animationManager.showView(this, false)
+            }
         }
     }
 
@@ -121,7 +139,32 @@ abstract class ListFragment<ItemType, DataType, Adapter : ListAdapter<ItemType>>
         _binding.itemsSwipeRefreshLayout.isRefreshing = isRefreshing
     }
 
-    abstract fun onAttachData()
-    abstract fun onItemClick(item: ItemType)
-    abstract fun onItemLongClick(item: ItemType)
+    //endregion
+
+
+    private fun setupScrollIndicator() {
+        _binding.apply {
+            itemsFastScroller.setupWithRecyclerView(itemsRecyclerView, { position ->
+                adapter.getHeader(position)?.let { FastScrollItemIndicator.Text(it) }
+            })
+            itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
+        }
+    }
+
+
+    //region opened methods
+
+    open fun onAttachData() {}
+    open fun onItemClick(item: ItemType) {}
+    open fun onItemLongClick(item: ItemType) {}
+    open fun onDeleteItems(items: ArrayList<ItemType>) {}
+
+    //endregion
+
+
+    companion object {
+        const val ARG_IS_COMPACT = "is_compact"
+        const val ARG_IS_SEARCHABLE = "is_searchable"
+        const val ARG_IS_HIDE_NO_RESULTS = "is_hide_no_results"
+    }
 }

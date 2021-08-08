@@ -2,21 +2,22 @@ package com.chooloo.www.koler.ui.phones
 
 import PhoneAccount
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.PhonesBundle
 import com.chooloo.www.koler.ui.list.ListPresenter
 
-class PhonesPresenter<V : PhonesContract.View> : ListPresenter<PhoneAccount, V>(),
+class PhonesPresenter<V : PhonesContract.View>(mvpView: V) :
+    ListPresenter<PhoneAccount, V>(mvpView),
     PhonesContract.Presenter<V> {
-    override fun onPhonesChanged(phonesBundle: PhonesBundle) {
-        mvpView?.convertBundleToList(phonesBundle)?.let { mvpView?.updateData(it) }
+
+    override fun onPhonesChanged(phones: ArrayList<PhoneAccount>) {
+        mvpView.convertBundleToList(phones).let { mvpView.updateData(it) }
     }
 
     override fun onPhoneItemClick(phoneAccount: PhoneAccount) {
-        mvpView?.callNumber(phoneAccount.number)
+        mvpView.callNumber(phoneAccount.number)
     }
 
     override fun onPhoneLongItemClick(phoneAccount: PhoneAccount) {
-        mvpView?.apply {
+        mvpView.apply {
             clipboardText(phoneAccount.number)
             showMessage(getString(R.string.number_copied_to_clipboard))
         }

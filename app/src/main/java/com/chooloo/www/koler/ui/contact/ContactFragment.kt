@@ -1,36 +1,31 @@
 package com.chooloo.www.koler.ui.contact
 
+import ContactsManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.databinding.FragmentContactBinding
+import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
-import com.chooloo.www.koler.util.*
-import com.chooloo.www.koler.util.call.call
+import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactFragment : BaseFragment(), ContactContract.View {
-    private val _contact by lazy { _activity.lookupContact(_contactId) }
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _presenter by lazy { ContactPresenter<ContactContract.View>() }
-    private val _binding by lazy { FragmentContactBinding.inflate(layoutInflater) }
+    private val _contactsManager by lazy { ContactsManager(baseActivity) }
+    private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
+    private val _contact by lazy { _contactsManager.queryContact(_contactId) }
+    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
+    private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
+    private val _firstPhone by lazy { _contactsManager.queryContactAccounts(_contactId).getOrNull(0) }
 
-    companion object {
-        const val TAG = "contact_fragment"
-        const val ARG_CONTACT_ID = "contact_id"
-
-        fun newInstance(contactId: Long) = ContactFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_CONTACT_ID, contactId)
-            }
-        }
-    }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -47,11 +42,12 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             }
         }
 
-    override var isStarIconActivated: Boolean
-        get() = _binding.contactButtonFav.isActivated
+    override var isStarIconVisible: Boolean
+        get() = _binding.contactButtonFav.visibility == VISIBLE
         set(value) {
-            _binding.contactButtonFav.isActivated = value
+            _binding.contactButtonFav.visibility = if (value) VISIBLE else GONE
         }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,23 +55,15 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         savedInstanceState: Bundle?
     ) = _binding.root
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _presenter.detach()
-    }
-
     override fun onSetup() {
-        _presenter.apply {
-            attach(this@ContactFragment)
-            onLoadContact(_contact)
-        }
+        _presenter.onLoadContact(_contact)
 
         _binding.apply {
-            contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
+            contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
+            contactButtonMenu.setOnClickListener { _presenter.onActionMenu() }
             contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
-            contactButtonFav.setOnClickListener { _presenter.onActionFav() }
         }
 
         childFragmentManager
@@ -84,36 +72,54 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .commitNow()
     }
 
-    override fun callContact() {
-        _contact.phoneAccounts.getOrNull(0)?.let { _activity.call(it.number) }
+
+    //region contact view
+
+    override fun showMenu() {
+        BottomFragment(ContactPreferencesFragment.newInstance(_contact.id)).show(
+            childFragmentManager,
+            null
+        )
     }
 
     override fun smsContact() {
-        _contact.phoneAccounts.getOrNull(0)?.let { _activity.smsNumber(it.number) }
+        _firstPhone?.let { _contactsManager.openSmsView(it.number) }
+    }
+
+    override fun callContact() {
+        _firstPhone?.let { CallManager.call(baseActivity, it.number) }
     }
 
     override fun editContact() {
-        _activity.editContact(_contact.id)
+        _contactsManager.openEditContactView(_contactId)
     }
 
     override fun openContact() {
-        _activity.openContact(_contact.id)
+        _contactsManager.openContactView(_contactId)
     }
 
     override fun deleteContact() {
-        AlertDialog.Builder(_activity)
-            .setCancelable(true)
-            .setTitle(getString(R.string.warning_delete_contact))
-            .setPositiveButton(getString(R.string.action_yes)) { _, _ ->
-                _activity.deleteContact(_contact.id)
-                finish()
-            }
-            .setNegativeButton(getString(R.string.action_no)) { _, _ -> }
-            .create()
-            .show()
+        _permissionsManager.runWithPrompt(R.string.warning_delete_contact) {
+            _contactsManager.deleteContact(_contactId)
+            parentFragmentManager.popBackStack()
+        }
     }
 
     override fun setFavorite(isFavorite: Boolean) {
-        _activity.setFavorite(_contact.id, isFavorite)
+        _contactsManager.toggleContactFavorite(_contactId, isFavorite)
+    }
+
+    //endregion
+
+
+    companion object {
+        const val TAG = "contact_fragment"
+        const val ARG_CONTACT_ID = "contact_id"
+
+        fun newInstance(contactId: Long) = ContactFragment().apply {
+            arguments = Bundle().apply {
+                putLong(ARG_CONTACT_ID, contactId)
+            }
+        }
     }
 }

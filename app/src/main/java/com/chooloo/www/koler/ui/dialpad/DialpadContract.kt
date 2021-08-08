@@ -1,13 +1,14 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import com.chooloo.www.koler.data.ContactsBundle
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface DialpadContract : BaseContract {
     interface View : BaseContract.View {
-        val isDialer: Boolean
         var number: String
+        val isDialer: Boolean
         val suggestionsCount: Int
+        var isSuggestionsVisible: Boolean
         var isDeleteButtonVisible: Boolean
         var isAddContactButtonVisible: Boolean
 
@@ -18,7 +19,6 @@ interface DialpadContract : BaseContract {
         fun callVoicemail()
         fun playTone(keyCode: Int)
         fun invokeKey(keyCode: Int)
-        fun showSuggestions(isShow: Boolean)
         fun setSuggestionsFilter(filter: String)
     }
 
@@ -30,6 +30,6 @@ interface DialpadContract : BaseContract {
         fun onAddContactClick()
         fun onLongDeleteClick(): Boolean
         fun onTextChanged(text: String?)
-        fun onSuggestionsChanged(contactsBundle: ContactsBundle)
+        fun onSuggestionsChanged(contacts: ArrayList<Contact>)
     }
 }

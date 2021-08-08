@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
-import com.chooloo.www.koler.ui.base.BaseContract
 import com.chooloo.www.koler.data.CallDetails
+import com.chooloo.www.koler.ui.base.BaseContract
 
 interface CallContract : BaseContract {
     interface View : BaseContract.View {
@@ -11,10 +11,10 @@ interface CallContract : BaseContract {
         var callerNameText: String?
         var callerImageURI: Uri?
 
-        fun transitionToActiveUI()
-        fun blinkStateText()
-        fun startStopwatch()
         fun stopStopwatch()
+        fun startStopwatch()
+        fun transitionToActiveUI()
+        fun animateStateTextAttention()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

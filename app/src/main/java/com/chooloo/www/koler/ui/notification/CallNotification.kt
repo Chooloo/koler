@@ -11,6 +11,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
+import android.telecom.DisconnectCause
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.chooloo.www.koler.R
@@ -18,20 +19,16 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
 import com.chooloo.www.koler.ui.call.CallActivity
-import com.chooloo.www.koler.util.getAttrColor
+import com.chooloo.www.koler.util.ViewManager
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification(private val context: Context) {
-    companion object {
-        const val ID = 420
-        const val CHANNEL_ID = "call_notification_channel"
-        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
-    }
+    private val _answer by lazy { context.getString(R.string.action_answer) }
+    private val _hangup by lazy { context.getString(R.string.action_hangup) }
+    private val _channelName by lazy { context.getString(R.string.call_notification_channel_name) }
+    private val _channelDescription by lazy { context.getString(R.string.call_notification_channel_description) }
 
-    private val sAnswer by lazy { context.getString(R.string.action_answer) }
-    private val sHangup by lazy { context.getString(R.string.action_hangup) }
-    private val sChannelName by lazy { context.getString(R.string.call_notification_channel_name) }
-    private val sChannelDescription by lazy { context.getString(R.string.call_notification_channel_description) }
+    private val _viewManager by lazy { ViewManager(context) }
     private val _notificationManager by lazy { context.getSystemService(NotificationManager::class.java) as NotificationManager }
 
     private val _answerIntent by lazy {
@@ -80,15 +77,16 @@ class CallNotification(private val context: Context) {
     private val _channel by lazy {
         NotificationChannel(
             CHANNEL_ID,
-            sChannelName,
+            _channelName,
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = sChannelDescription
-            lightColor = context.getAttrColor(R.attr.colorSecondary)
+            description = _channelDescription
+            lightColor = _viewManager.getAttrColor(R.attr.colorSecondary)
 
             enableLights(true)
         }
     }
+
 
     private fun buildNotification(callDetails: CallDetails): Notification {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -96,7 +94,8 @@ class CallNotification(private val context: Context) {
             .setPriority(PRIORITY)
             .setContentText(
                 context.getString(
-                    when (callDetails.callState) {
+                    if (callDetails.details.disconnectCause.code == DisconnectCause.MISSED) R.string.call_status_missed
+                    else when (callDetails.callState) {
                         ACTIVE -> R.string.call_status_active
                         DISCONNECTED -> R.string.call_status_disconnected
                         RINGING -> R.string.call_status_incoming
@@ -109,18 +108,19 @@ class CallNotification(private val context: Context) {
             )
             .setSmallIcon(R.drawable.icon_full_144)
             .setContentIntent(_contentPendingIntent)
-            .setColor(context.getAttrColor(R.attr.colorSecondary))
+            .setColor(_viewManager.getAttrColor(R.attr.colorSecondary))
             .setOngoing(true)
             .setColorized(true)
-            .setContentTitle(callDetails.phoneAccount?.name ?: callDetails.phoneAccount?.number)
+            .setContentTitle(callDetails.phoneAccount.name ?: callDetails.phoneAccount.number)
         if (callDetails.callState == RINGING) {
-            builder.addAction(R.drawable.ic_call_black_24dp, sAnswer, _answerPendingIntent)
+            builder.addAction(R.drawable.ic_call_black_24dp, _answer, _answerPendingIntent)
         }
         if (callDetails.callState !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-            builder.addAction(R.drawable.ic_call_end_black_24dp, sHangup, _hangupPendingIntent)
+            builder.addAction(R.drawable.ic_call_end_black_24dp, _hangup, _hangupPendingIntent)
         }
         return builder.build()
     }
+
 
     fun show(callDetails: CallDetails) {
         _notificationManager.notify(ID, buildNotification(callDetails))
@@ -132,5 +132,12 @@ class CallNotification(private val context: Context) {
 
     fun createNotificationChannel() {
         _notificationManager.createNotificationChannel(_channel)
+    }
+
+
+    companion object {
+        const val ID = 420
+        const val CHANNEL_ID = "call_notification_channel"
+        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
     }
 }

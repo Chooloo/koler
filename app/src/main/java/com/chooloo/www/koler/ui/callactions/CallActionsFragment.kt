@@ -3,23 +3,20 @@ package com.chooloo.www.koler.ui.callactions
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.chooloo.www.koler.databinding.FragmentCallActionsBinding
+import com.chooloo.www.koler.databinding.CallActionsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.util.audio.AudioManager
-import com.chooloo.www.koler.util.audio.AudioManager.AudioMode.IN_CALL
-import com.chooloo.www.koler.util.callrecord.CallRecorder
+import com.chooloo.www.koler.util.AudioManager
+import com.chooloo.www.koler.util.AudioManager.AudioMode.IN_CALL
+import com.chooloo.www.koler.call.CallRecorder
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
-    private val _callRecorder by lazy { CallRecorder(_activity) }
-    private val _audioManager by lazy { AudioManager(requireContext()) }
-    private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>() }
-    private val _binding by lazy { FragmentCallActionsBinding.inflate(layoutInflater) }
+    private val _callRecorder by lazy { CallRecorder(baseActivity) }
+    private val _binding by lazy { CallActionsBinding.inflate(layoutInflater) }
+    private val _audioManager by lazy { AudioManager(baseActivity.applicationContext) }
+    private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>(this) }
 
-    companion object {
-        fun newInstance() = CallActionsFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +26,6 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 
     override fun onSetup() {
         _audioManager.audioMode = IN_CALL
-        _presenter.attach(this)
 
         _binding.apply {
             callActionHold.setOnClickListener { _presenter.onHoldClick() }
@@ -45,6 +41,9 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
         super.onDestroy()
         _callRecorder.stopRecording()
     }
+
+
+    //region call actions view
 
     override fun addCall() {
         showError("Feature in development")
@@ -78,5 +77,12 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 
     override fun toggleSpeaker(isSpeaker: Boolean) {
         _audioManager.isSpeakerOn = isSpeaker
+    }
+
+    //endregion
+
+
+    companion object {
+        fun newInstance() = CallActionsFragment()
     }
 }

@@ -10,26 +10,26 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.getAttrColor
-import com.chooloo.www.koler.util.sizeInDp
+import com.chooloo.www.koler.util.ViewManager
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 @SuppressLint("UseCompatTextViewDrawableApis")
 class SearchBar : TextInputLayout {
-    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
-
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
-    private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
-    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
+    private val _viewManager by lazy { ViewManager(context) }
+    private val colorOnSecondary by lazy { _viewManager.getAttrColor(R.attr.colorOnSecondary) }
+    private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
+    private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     var text: String?
         get() = _textInputEditText.text.toString()
         set(value) {
             _textInputEditText.setText(value ?: "")
         }
+
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
@@ -39,21 +39,23 @@ class SearchBar : TextInputLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
-            hint = resources.getString(R.string.hint_search)
+            compoundDrawablePadding = 8
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
+            hint = resources.getString(R.string.hint_search)
+            layoutParams = LayoutParams(MATCH_PARENT, spacingBig)
+            hintTextColor = ColorStateList.valueOf(colorOnSecondary)
             compoundDrawableTintList = ColorStateList.valueOf(colorOnSecondary)
-            layoutParams = LayoutParams(MATCH_PARENT, context.sizeInDp(34))
 
-            setTextAppearance(R.style.Koler_Text_Subtitle1)
-            setHintTextColor(colorOnSecondary)
             setTextColor(colorOnSecondary)
+            setTextAppearance(R.style.Koler_Text_Subtitle1)
+            setHintTextColor(ColorStateList.valueOf(colorOnSecondary))
             setPadding(
                 spacingSmall,
-                context.sizeInDp(5),
+                _viewManager.sizeInDp(2),
                 spacingSmall,
-                context.sizeInDp(5)
+                _viewManager.sizeInDp(2)
             )
 
             addTextChangedListener(
@@ -80,6 +82,7 @@ class SearchBar : TextInputLayout {
     }
 
     override fun getHint() = _textInputEditText?.hint.toString() // do not remove the ?
+
 
     private fun showIcon(isShow: Boolean) {
         _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(

@@ -22,25 +22,17 @@ fun getElapsedTimeString(seconds: Long): String {
     return "${if (hours != 0L) "$hours hrs " else ""}$minutes mins $seconds sec"
 }
 
-fun getDateString(context: Context, date: Date): String {
-    return SimpleDateFormat("MMMM dd, yyyy").format(date).toString()
-}
-
-fun getHoursString(context: Context, date: Date): String {
-    return SimpleDateFormat(if (DateFormat.is24HourFormat(context)) "HH:mm" else "hh:mm aa").format(
-        date
-    ).toString()
-}
+fun Context.getHoursString(date: Date) =
+    SimpleDateFormat(if (DateFormat.is24HourFormat(this)) "HH:mm" else "hh:mm aa").format(date)
+        .toString()
 
 fun getRelativeDateString(date: Date?): String {
     val now = currentDate.time
-    val date = date?.time ?: 0
-    return if (now < date && (date - now) < 864000) {
-        "Tomorrow"
-    } else if (now > date && (now - date) < 864000) {
-        "Yesterday"
-    } else {
-        DateUtils.getRelativeTimeSpanString(date, now, DateUtils.DAY_IN_MILLIS).toString()
+    val time = date?.time ?: currentDate.time
+    return when {
+        DateUtils.isToday(time - DateUtils.DAY_IN_MILLIS) -> "Tomorrow"
+        DateUtils.isToday(time + DateUtils.DAY_IN_MILLIS) -> "Yesterday"
+        else -> DateUtils.getRelativeTimeSpanString(time, now, DateUtils.DAY_IN_MILLIS).toString()
     }
 }
 
