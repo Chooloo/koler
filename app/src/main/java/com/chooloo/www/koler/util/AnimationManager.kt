@@ -17,7 +17,6 @@ import com.daimajia.androidanimations.library.YoYo
 class AnimationManager(private val context: Context) {
     private val _isEnabled by lazy { KolerPreferences(context).animations }
 
-
     fun showView(view: View, isShow: Boolean) {
         if (_isEnabled) {
             if (isShow && view.visibility != VISIBLE) {
