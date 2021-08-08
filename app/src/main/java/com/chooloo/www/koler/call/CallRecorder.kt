@@ -5,16 +5,13 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.media.MediaRecorder.AudioSource
 import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
-import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
 
 @SuppressLint("SimpleDateFormat")
 class CallRecorder(val context: Context) {
