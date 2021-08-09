@@ -13,7 +13,6 @@ import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 import com.chooloo.www.koler.util.ScreenManager
 import com.chooloo.www.koler.util.permissions.PermissionsManager
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination

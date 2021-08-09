@@ -5,7 +5,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 class MainPagerAdapter(private val activity: BaseActivity) : FragmentStateAdapter(activity) {
     private val _isCompactPref by lazy { _kolerPreferences.compact }

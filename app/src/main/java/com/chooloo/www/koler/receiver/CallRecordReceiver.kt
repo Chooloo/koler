@@ -5,8 +5,7 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.os.Environment
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.preferences.KolerPreferences
-import com.chooloo.www.koler.util.preferences.PreferencesManager
+import com.chooloo.www.koler.util.PreferencesManager
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat

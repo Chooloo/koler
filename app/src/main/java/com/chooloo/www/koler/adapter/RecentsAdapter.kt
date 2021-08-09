@@ -8,7 +8,6 @@ import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.ge
 import com.chooloo.www.koler.data.Recent
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 class RecentsAdapter(private val _context: Context) : ListAdapter<Recent>() {
     private val _prefIsCompact by lazy { _kolerPreferences.compact }

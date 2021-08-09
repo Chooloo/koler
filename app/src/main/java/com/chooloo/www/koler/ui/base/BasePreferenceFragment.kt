@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract.View {
     protected val argsSafely get() = arguments ?: Bundle()

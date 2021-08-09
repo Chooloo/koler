@@ -1,10 +1,10 @@
-package com.chooloo.www.koler.util.preferences
+package com.chooloo.www.koler.util
 
 import android.content.Context
+import androidx.annotation.BoolRes
 import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.SingletonHolder
 
 /*
  * A Singleton for managing your SharedPreferences.
@@ -47,17 +47,17 @@ class PreferencesManager private constructor(val _context: Context) {
     fun getInt(@StringRes key: Int, defaultValue: Int) =
         _pref.getInt(_context.getString(key), defaultValue)
 
-    fun getString(@StringRes key: Int, defaultValue: String? = null) =
-        _pref.getString(_context.getString(key), defaultValue)
-
-    fun getBoolean(@StringRes key: Int, defaultValue: Boolean) =
-        _pref.getBoolean(_context.getString(key), defaultValue)
-
     fun getFloat(@StringRes key: Int, defaultValue: Float) =
         _pref.getFloat(_context.getString(key), defaultValue)
 
     fun getLong(@StringRes key: Int, defaultValue: Long) =
         _pref.getLong(_context.getString(key), defaultValue)
+
+    fun getString(@StringRes key: Int, defaultValue: String? = null) =
+        _pref.getString(_context.getString(key), defaultValue)
+
+    fun getBoolean(@StringRes keyRes: Int, @BoolRes defaultValueRes: Int) =
+        _pref.getBoolean(_context.getString(keyRes), _context.resources.getBoolean(defaultValueRes))
 
     companion object : SingletonHolder<PreferencesManager, Context>(::PreferencesManager)
 }

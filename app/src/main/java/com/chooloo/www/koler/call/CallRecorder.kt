@@ -8,7 +8,6 @@ import android.os.Build
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
 import java.io.IOException
 import java.text.SimpleDateFormat

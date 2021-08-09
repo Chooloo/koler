@@ -13,7 +13,6 @@ import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.permissions.PermissionsManager
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
 abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
