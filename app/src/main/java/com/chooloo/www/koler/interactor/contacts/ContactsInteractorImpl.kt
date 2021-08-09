@@ -8,7 +8,6 @@ import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.data.Contact
-import com.chooloo.www.koler.interactor.PermissionsInteractor
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor

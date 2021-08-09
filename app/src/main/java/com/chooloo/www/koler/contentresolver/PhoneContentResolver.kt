@@ -8,7 +8,7 @@ import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 
 class PhoneContentResolver(context: Context, contactId: Long? = null) :
-    BaseItemsContentResolver<Array<PhoneAccount>>(context) {
+    BaseItemsContentResolver<PhoneAccount>(context) {
 
     override val uri: Uri = URI
     override val sortOrder: String? = null
@@ -17,21 +17,14 @@ class PhoneContentResolver(context: Context, contactId: Long? = null) :
     override val projection: Array<String> = PROJECTION
     override val selection = SelectionBuilder().addSelection(Phone.CONTACT_ID, contactId).build()
 
-    override fun convertCursorToItem(cursor: Cursor): Array<PhoneAccount> {
-        val phoneAccounts: ArrayList<PhoneAccount> = ArrayList();
-        while (cursor.moveToNext()) {
-            phoneAccounts.add(
-                PhoneAccount(
-                    type = cursor.getInt(cursor.getColumnIndex(Phone.TYPE)),
-                    number = cursor.getString(cursor.getColumnIndex(Phone.NUMBER)),
-                    contactId = cursor.getLong(cursor.getColumnIndex(Phone.CONTACT_ID)),
-                    displayName = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
-                    normalizedNumber = cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER))
-                )
-            )
-        }
-        return phoneAccounts.toArray()
-    }
+    override fun convertCursorToItem(cursor: Cursor) =
+        PhoneAccount(
+            type = cursor.getInt(cursor.getColumnIndex(Phone.TYPE)),
+            number = cursor.getString(cursor.getColumnIndex(Phone.NUMBER)),
+            contactId = cursor.getLong(cursor.getColumnIndex(Phone.CONTACT_ID)),
+            displayName = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
+            normalizedNumber = cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER))
+        )
 
     companion object {
         val URI: Uri = Phone.CONTENT_URI

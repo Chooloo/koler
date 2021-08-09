@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import androidx.preference.PreferenceManager
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.util.SingletonHolder
 
 /*
  * A Singleton for managing your SharedPreferences.
@@ -14,11 +15,8 @@ import com.chooloo.www.koler.R
  * there is a possibility of data loss if a background thread has modified
  * preferences at the same time.
  */
-class PreferencesManager(
-    private var _context: Context
-) {
+class PreferencesManager private constructor(val _context: Context) {
     private val _pref by lazy { PreferenceManager.getDefaultSharedPreferences(_context) }
-
 
     init {
         PreferenceManager.setDefaultValues(_context, R.xml.main_preferences, false)
@@ -45,7 +43,7 @@ class PreferencesManager(
         _pref.edit().putLong(_context.getString(key), value).apply()
     }
 
-    
+
     fun getInt(@StringRes key: Int, defaultValue: Int) =
         _pref.getInt(_context.getString(key), defaultValue)
 
@@ -60,4 +58,6 @@ class PreferencesManager(
 
     fun getLong(@StringRes key: Int, defaultValue: Long) =
         _pref.getLong(_context.getString(key), defaultValue)
+
+    companion object : SingletonHolder<PreferencesManager, Context>(::PreferencesManager)
 }

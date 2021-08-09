@@ -14,5 +14,5 @@ class PhoneAccountsInteractorImpl(
         PhoneLookupContentResolver(context, number).content.getOrNull(0)
 
     override fun getContactAccounts(contactId: Long): Array<PhoneAccount> =
-        PhoneContentResolver(context, contactId).content
+        PhoneContentResolver(context, contactId).content.toTypedArray()
 }

@@ -8,11 +8,10 @@ import com.chooloo.www.koler.R
 class KolerPreferences(private val context: Context) {
     private val _pref by lazy { PreferencesManager(context) }
 
-
     var sim: Sim
         get() = Sim.fromKey(_pref.getString(R.string.pref_key_sim_select))
         set(value) {
-            _pref.putString(R.string.pref_key_sim_select, value.key)
+            _prjef.putString(R.string.pref_key_sim_select, value.key)
         }
 
     var accentTheme: AccentTheme
