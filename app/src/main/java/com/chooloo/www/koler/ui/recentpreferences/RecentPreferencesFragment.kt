@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.recentpreferences
 
-import ContactsManager
+import ContactsUtils
 import android.os.Bundle
 import androidx.preference.Preference
 import com.chooloo.www.koler.R
@@ -9,7 +9,7 @@ import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesContract.View {
     private val _number by lazy { argsSafely.getString(ARG_NUMBER) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsUtils(baseActivity) }
     private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _presenter by lazy { RecentPreferencesPresenter<RecentPreferencesContract.View>(this) }
 

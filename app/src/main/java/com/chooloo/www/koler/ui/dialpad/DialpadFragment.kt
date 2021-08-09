@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import ContactsManager
+import ContactsUtils
 import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -23,7 +23,7 @@ import com.chooloo.www.koler.call.CallManager
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
     private val _audioManager by lazy { AudioManager(baseActivity) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsUtils(baseActivity) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private val _animationManager by lazy { AnimationManager(baseActivity) }

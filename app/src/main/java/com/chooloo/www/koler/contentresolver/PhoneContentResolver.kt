@@ -8,7 +8,7 @@ import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 
 class PhoneContentResolver(context: Context, contactId: Long? = null) :
-    BaseItemsContentResolver<PhoneAccount>(context) {
+    BaseItemsContentResolver<Array<PhoneAccount>>(context) {
 
     override val uri: Uri = URI
     override val sortOrder: String? = null
@@ -17,15 +17,20 @@ class PhoneContentResolver(context: Context, contactId: Long? = null) :
     override val projection: Array<String> = PROJECTION
     override val selection = SelectionBuilder().addSelection(Phone.CONTACT_ID, contactId).build()
 
-    override fun convertCursorToItem(cursor: Cursor): PhoneAccount {
-        return PhoneAccount(
-            type = cursor.getInt(cursor.getColumnIndex(Phone.TYPE)),
-            number = cursor.getString(cursor.getColumnIndex(Phone.NUMBER)),
-            contactId = cursor.getLong(cursor.getColumnIndex(Phone.CONTACT_ID)),
-            displayName = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
-            normalizedNumber = cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER))
-                ?: cursor.getString(cursor.getColumnIndex(Phone.NUMBER))
-        )
+    override fun convertCursorToItem(cursor: Cursor): Array<PhoneAccount> {
+        val phoneAccounts: ArrayList<PhoneAccount> = ArrayList();
+        while (cursor.moveToNext()) {
+            phoneAccounts.add(
+                PhoneAccount(
+                    type = cursor.getInt(cursor.getColumnIndex(Phone.TYPE)),
+                    number = cursor.getString(cursor.getColumnIndex(Phone.NUMBER)),
+                    contactId = cursor.getLong(cursor.getColumnIndex(Phone.CONTACT_ID)),
+                    displayName = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
+                    normalizedNumber = cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER))
+                )
+            )
+        }
+        return phoneAccounts.toArray()
     }
 
     companion object {
@@ -40,5 +45,4 @@ class PhoneContentResolver(context: Context, contactId: Long? = null) :
             Phone.DISPLAY_NAME_PRIMARY
         )
     }
-
 }

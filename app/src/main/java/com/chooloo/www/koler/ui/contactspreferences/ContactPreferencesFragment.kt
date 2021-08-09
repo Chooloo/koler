@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.contactspreferences
 
-import ContactsManager
+import ContactsUtils
 import android.os.Bundle
 import androidx.preference.Preference
 import com.chooloo.www.koler.R
@@ -9,7 +9,7 @@ import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsUtils(baseActivity) }
     private val _contact by lazy { _contactsManager.queryContact(_contactId) }
     private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _presenter by lazy {

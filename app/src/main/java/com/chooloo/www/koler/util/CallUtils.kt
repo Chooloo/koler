@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.util.call
 
-import ContactsManager
+import ContactsUtils
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
@@ -24,7 +24,7 @@ fun Call.getNormalizedNumber(context: Context): String =
     PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
 
 fun Call.lookupContact(context: Context) =
-    ContactsManager(context).lookupAccountByNumber(getNumber())
+    ContactsUtils(context).lookupAccountByNumber(getNumber())
 //endregion
 
 

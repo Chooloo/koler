@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.recent
 
-import ContactsManager
+import ContactsUtils
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -22,7 +22,7 @@ import java.util.*
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private val _recentsManager by lazy { RecentsManager(baseActivity) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsUtils(baseActivity) }
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
     private val _contact by lazy { _contactsManager.lookupAccountByNumber(_recent.number) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }

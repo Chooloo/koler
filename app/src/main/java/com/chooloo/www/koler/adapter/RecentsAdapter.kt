@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.adapter
 
-import ContactsManager
+import ContactsUtils
 import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
@@ -12,7 +12,7 @@ import com.chooloo.www.koler.util.preferences.KolerPreferences
 
 class RecentsAdapter(private val _context: Context) : ListAdapter<Recent>() {
     private val _prefIsCompact by lazy { _kolerPreferences.compact }
-    private val _contactsManager by lazy { ContactsManager(_context) }
+    private val _contactsManager by lazy { ContactsUtils(_context) }
     private val _kolerPreferences by lazy { KolerPreferences(_context) }
 
     override fun onBindListItem(listItem: ListItem, item: Recent) {

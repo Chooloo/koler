@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.contact
 
-import ContactsManager
+import ContactsUtils
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
+    private val _contactsManager by lazy { ContactsUtils(baseActivity) }
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _contact by lazy { _contactsManager.queryContact(_contactId) }
     private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
