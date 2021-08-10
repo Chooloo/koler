@@ -3,7 +3,6 @@ package com.chooloo.www.koler.interactor.contacts
 import android.Manifest.permission.WRITE_CONTACTS
 import android.content.ContentValues
 import android.content.Context
-import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
@@ -18,7 +17,6 @@ class ContactsInteractorImpl(
     val numbersInteractor: NumbersInteractor,
     val permissionsManager: PermissionsManager,
     val preferencesInteractor: PreferencesInteractor,
-    val permissionsInteractor: PermissionsInteractor,
     val phoneAccountsInteractor: PhoneAccountsInteractor,
 ) : ContactsInteractor {
     override fun getContact(contactId: Long): Contact? =
@@ -31,8 +29,7 @@ class ContactsInteractorImpl(
 
     @RequiresPermission(WRITE_CONTACTS)
     override fun deleteContact(contactId: Long) {
-        val uri = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
-        context.contentResolver.delete(uri, null, null)
+        ContactsContentResolver(context, contactId).delete()
     }
 
 

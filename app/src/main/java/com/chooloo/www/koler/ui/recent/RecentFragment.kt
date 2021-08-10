@@ -15,7 +15,6 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
-import com.chooloo.www.koler.util.RecentsManager
 import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.util.getElapsedTimeString
 import java.util.*

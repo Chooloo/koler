@@ -9,7 +9,6 @@ import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
-import com.chooloo.www.koler.util.RecentsManager
 import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.View {

@@ -7,7 +7,7 @@ import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import com.chooloo.www.koler.data.Contact
 
-open class ContactsContentResolver(context: Context, contactId: Long? = null) :
+open class ContactsContentResolver(context: Context, private val contactId: Long? = null) :
     BaseItemsContentResolver<Contact>(context) {
 
     override val uri: Uri = URI
@@ -30,6 +30,11 @@ open class ContactsContentResolver(context: Context, contactId: Long? = null) :
             name = cursor.getString(cursor.getColumnIndex(Contacts.DISPLAY_NAME_PRIMARY)),
             photoUri = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI))
         )
+    }
+
+    fun delete() {
+        val uri = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
+        delete(uri, null, null)
     }
 
     companion object {
