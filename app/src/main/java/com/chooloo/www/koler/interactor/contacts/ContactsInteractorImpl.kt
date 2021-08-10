@@ -7,18 +7,19 @@ import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactsInteractorImpl(
-    val context: Context,
-    val numbersInteractor: NumbersInteractor,
-    val permissionsManager: PermissionsManager,
-    val preferencesInteractor: PreferencesInteractor,
-    val phoneAccountsInteractor: PhoneAccountsInteractor,
-) : ContactsInteractor {
+    private val context: Context,
+    private val numbersInteractor: NumbersInteractor,
+    private val permissionsManager: PermissionsManager,
+    private val preferencesInteractor: PreferencesInteractor,
+    private val phoneAccountsInteractor: PhoneAccountsInteractor,
+) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
     override fun getContact(contactId: Long): Contact? =
         ContactsContentResolver(context, contactId).content.getOrNull(0)
 

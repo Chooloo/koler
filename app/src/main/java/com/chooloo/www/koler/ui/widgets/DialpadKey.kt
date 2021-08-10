@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.ViewManager
 
 
 @SuppressLint("Recycle", "CustomViewStyleable")

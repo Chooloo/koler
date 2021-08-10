@@ -21,7 +21,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.ViewManager
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL

@@ -1,15 +1,18 @@
 package com.chooloo.www.koler.interactor.preferences
 
-import androidx.databinding.BaseObservable
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.util.PreferencesManager
 
-class PreferencesInteractorImpl(val preferencesManager: PreferencesManager) : BaseObservable(),
+class PreferencesInteractorImpl(
+    private val preferencesManager: PreferencesManager
+) : BaseInteractorImpl<PreferencesInteractor.Listener>(),
     PreferencesInteractor {
+
     override var isRecords: Boolean
         get() = preferencesManager.getBoolean(
             R.string.pref_key_records_enabled,

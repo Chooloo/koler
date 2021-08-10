@@ -2,8 +2,11 @@ package com.chooloo.www.koler.interactor.preferences
 
 import android.media.MediaRecorder
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.interactor.base.BaseInteractor
 
-open interface PreferencesInteractor {
+open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener> {
+    interface Listener
+
     var isRecords: Boolean
     var isCompact: Boolean
     var isAnimations: Boolean
@@ -14,7 +17,7 @@ open interface PreferencesInteractor {
     var accentTheme: AccentTheme
     var recordFormat: RecordFormat
 
-    
+
     companion object {
         enum class AccentTheme(val key: String, val theme: Int) {
             RED("red", R.style.Accent_Red),

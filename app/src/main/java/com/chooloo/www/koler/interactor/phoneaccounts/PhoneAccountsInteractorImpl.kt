@@ -2,14 +2,14 @@ package com.chooloo.www.koler.interactor.phoneaccounts
 
 import PhoneAccount
 import android.content.Context
-import androidx.databinding.BaseObservable
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.koler.data.PhoneLookupAccount
+import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 
 class PhoneAccountsInteractorImpl(
-    val context: Context
-) : BaseObservable(), PhoneAccountsInteractor {
+    private val context: Context
+) : BaseInteractorImpl<PhoneAccountsInteractor.Listener>(), PhoneAccountsInteractor {
     override fun lookupAccount(number: String): PhoneLookupAccount? =
         PhoneLookupContentResolver(context, number).content.getOrNull(0)
 

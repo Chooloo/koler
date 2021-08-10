@@ -4,12 +4,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.provider.BlockedNumberContract
 import android.provider.BlockedNumberContract.BlockedNumbers
-import androidx.databinding.BaseObservable
+import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.util.annotation.RequiresDefaultDialer
 
 class NumbersInteractorImpl(
-    val context: Context
-) : BaseObservable(), NumbersInteractor {
+    private val context: Context
+) : BaseInteractorImpl<NumbersInteractor.Listener>(), NumbersInteractor {
     @RequiresDefaultDialer
     override fun isNumberBlocked(number: String) =
         BlockedNumberContract.isBlocked(context, number)

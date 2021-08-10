@@ -19,7 +19,6 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
 import com.chooloo.www.koler.ui.call.CallActivity
-import com.chooloo.www.koler.util.ViewManager
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification(private val context: Context) {

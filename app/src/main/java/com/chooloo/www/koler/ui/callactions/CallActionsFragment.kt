@@ -7,7 +7,6 @@ import com.chooloo.www.koler.databinding.CallActionsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.util.AudioManager
 import com.chooloo.www.koler.util.AudioManager.AudioMode.IN_CALL
 import com.chooloo.www.koler.call.CallRecorder
 

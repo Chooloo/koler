@@ -12,7 +12,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.ui.base.BaseActivity
 
-class ScreenManager(private val _activity: BaseActivity) {
+class
+ScreenManager(private val _activity: BaseActivity) {
     fun setShowWhenLocked() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             _activity.apply {

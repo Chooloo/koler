@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.ViewManager
 import java.util.*
 
 class Tab : AppCompatTextView {
