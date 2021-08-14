@@ -3,9 +3,11 @@ package com.chooloo.www.koler.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.data.ListBundle
+import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
-import com.chooloo.www.koler.util.AnimationManager
+import com.chooloo.www.koler.util.PreferencesManager
 
 abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
     private var _isCompact = false
@@ -78,7 +80,9 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
                 }
                 true
             }
-            AnimationManager(context).bounceIn(this)
+            AnimationInteractorImpl(PreferencesInteractorImpl(PreferencesManager.getInstance(context))).animateIn(
+                this
+            )
             onBindListItem(this, _data.items[position])
         }
     }

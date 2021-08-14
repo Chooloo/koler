@@ -9,11 +9,12 @@ import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
+import com.chooloo.www.koler.KolerApp
 
 abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract.View {
     protected val argsSafely get() = arguments ?: Bundle()
     protected val baseActivity by lazy { context as BaseActivity }
-    protected val kolerPreferences by lazy { context?.let { KolerPreferences(it) } }
+    protected val componentRoot by lazy { (baseActivity.applicationContext as KolerApp).componentRoot }
 
     abstract val preferenceResource: Int
 
@@ -59,17 +60,14 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
         baseActivity.showError(getString(stringResId))
     }
 
-    override fun getColor(color: Int): Int {
-        return baseActivity.getColor(color)
-    }
+    override fun getColor(color: Int) =
+        baseActivity.getColor(color)
 
-    override fun hasPermission(permission: String): Boolean {
-        return baseActivity.hasPermission(permission)
-    }
+    override fun hasPermission(permission: String) =
+        baseActivity.hasPermission(permission)
 
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.any { p -> baseActivity.hasPermission(p) }
-    }
+    override fun hasPermissions(permissions: Array<String>) =
+        permissions.any { p -> baseActivity.hasPermission(p) }
 
     //endregion
 

@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.util.call
 
-import ContactsUtils
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,8 +8,8 @@ import android.telecom.PhoneAccountHandle
 import android.telephony.PhoneNumberUtils
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 
 //region call functions
@@ -24,7 +23,7 @@ fun Call.getNormalizedNumber(context: Context): String =
     PhoneNumberUtils.normalizeNumber(getValidE164Number(context))
 
 fun Call.lookupContact(context: Context) =
-    ContactsUtils(context).lookupAccountByNumber(getNumber())
+    Contact.UNKNOWN
 //endregion
 
 

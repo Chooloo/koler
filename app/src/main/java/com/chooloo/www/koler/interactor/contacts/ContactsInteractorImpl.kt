@@ -11,7 +11,6 @@ import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactsInteractorImpl(
     private val context: Context,

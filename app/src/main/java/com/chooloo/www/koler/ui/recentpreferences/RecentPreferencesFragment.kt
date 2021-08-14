@@ -1,11 +1,9 @@
 package com.chooloo.www.koler.ui.recentpreferences
 
-import ContactsUtils
 import android.os.Bundle
 import androidx.preference.Preference
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesContract.View {
     private val _number by lazy { argsSafely.getString(ARG_NUMBER) }

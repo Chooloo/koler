@@ -5,23 +5,20 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.call.CallRecorder
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.ProximitySensor
 import com.chooloo.www.koler.util.ScreenManager
-import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.util.call.getNumber
-import com.chooloo.www.koler.call.CallRecorder
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
     private val _screenManager by lazy { ScreenManager(this) }
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
     private val _proximitySensor by lazy { ProximitySensor(this) }
-    private val _animationManager by lazy { AnimationManager(this) }
     private val _presenter by lazy { CallPresenter<CallContract.View>(this) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
@@ -75,8 +72,6 @@ class CallActivity : BaseActivity(), CallContract.View {
         _screenManager.disableKeyboard()
         _screenManager.setShowWhenLocked()
         CallManager.registerListener(_callListener)
-
-        CallManager.sCall?.getNumber()?.let { _callRecorder.initRecording(it) }
     }
 
     override fun onDestroy() {
@@ -106,13 +101,13 @@ class CallActivity : BaseActivity(), CallContract.View {
                 .beginTransaction()
                 .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
                 .commitNow()
-            _animationManager.bounceIn(_binding.callActionsContainer)
+            componentRoot.animationInteractor.animateIn(_binding.callActionsContainer)
             _binding.root.transitionToEnd()
         }
     }
 
     override fun animateStateTextAttention() {
-        _animationManager.tada(_binding.callStateText)
+        componentRoot.animationInteractor.animateFocus(_binding.callStateText)
     }
 
     //endregion

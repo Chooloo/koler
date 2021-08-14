@@ -3,12 +3,13 @@ package com.chooloo.www.koler.ui.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PermissionChecker
-import androidx.core.content.PermissionChecker.checkSelfPermission
+import com.chooloo.www.koler.KolerApp
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
+    protected val componentRoot by lazy { (applicationContext as KolerApp).componentRoot }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(KolerPreferences(this).accentTheme.theme)
+        setTheme(componentRoot.preferencesInteractor.accentTheme.theme)
         super.onCreate(savedInstanceState)
     }
 
@@ -40,13 +41,11 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
         showError(getString(stringResId))
     }
 
-    override fun hasPermission(permission: String): Boolean {
-        return checkSelfPermission(this, permission) == PermissionChecker.PERMISSION_GRANTED
-    }
+    override fun hasPermission(permission: String) =
+        componentRoot.permissionInteractor.hasSelfPermission(permission)
 
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.any(this::hasPermission)
-    }
+    override fun hasPermissions(permissions: Array<String>) =
+        componentRoot.permissionInteractor.hasSelfPermissions(permissions)
 
     //endregion
 }

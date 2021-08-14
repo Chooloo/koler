@@ -6,7 +6,7 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
 import android.telephony.PhoneNumberUtils
 
-class ContactsUtils {
+object ContactsUtils {
     fun openSmsView(context: Context, number: String?) {
         val intent = Intent(
             Intent.ACTION_SENDTO,
