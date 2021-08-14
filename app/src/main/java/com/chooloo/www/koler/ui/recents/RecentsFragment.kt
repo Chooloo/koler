@@ -14,11 +14,13 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
     private val _recentsLiveData by lazy { RecentsProviderLiveData(baseActivity) }
     private val _presenter by lazy { RecentsPresenter<RecentsContract.View>(this) }
 
-    override val adapter by lazy { RecentsAdapter(baseActivity) }
     override val searchHint by lazy { getString(R.string.hint_search_recents) }
     override val requiredPermissions = RecentsContentResolver.REQUIRED_PERMISSIONS
     override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
+    override val adapter by lazy {
+        RecentsAdapter(componentRoot.preferencesInteractor, componentRoot.phoneAccountsInteractor)
+    }
 
 
     //region list fragment

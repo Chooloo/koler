@@ -2,10 +2,7 @@ package com.chooloo.www.koler.ui.dialpad
 
 import ContactsUtils
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
-import android.media.AudioManager
 import android.os.Bundle
-import android.os.Vibrator
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
@@ -18,14 +15,10 @@ import android.view.ViewGroup
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.databinding.DialpadBinding
-import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractor.Companion.SHORT_VIBRATE_LENGTH
-import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
-import com.chooloo.www.koler.util.PreferencesManager
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }

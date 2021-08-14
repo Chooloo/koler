@@ -6,19 +6,20 @@ import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString
 
 class RecentsAdapter(
-    private val context: Context
+    private val preferencesInteractor: PreferencesInteractor,
+    private val phoneAccountsInteractor: PhoneAccountsInteractor
 ) : ListAdapter<Recent>() {
-    private val _componentRoot by lazy { (context as KolerApp).componentRoot }
-
     override fun onBindListItem(listItem: ListItem, item: Recent) {
-        val contact = _componentRoot.phoneAccountsInteractor.lookupAccount(item.number)
+        val contact = phoneAccountsInteractor.lookupAccount(item.number)
 
         listItem.apply {
-            isCompact = _componentRoot.preferencesInteractor.isCompact
+            isCompact = preferencesInteractor.isCompact
             titleText = contact?.name ?: item.number
             captionText = if (item.date != null) context.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))

@@ -65,7 +65,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        ScreenManager(this).ignoreEditTextFocus(event)
+        boundComponentRoot.screenInteractor.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 
