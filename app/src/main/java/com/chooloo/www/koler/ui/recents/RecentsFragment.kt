@@ -9,20 +9,18 @@ import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
-import com.chooloo.www.koler.util.RecentsManager
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.View {
-    private val _recentsManager by lazy { RecentsManager(baseActivity) }
-    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _recentsLiveData by lazy { RecentsProviderLiveData(baseActivity) }
     private val _presenter by lazy { RecentsPresenter<RecentsContract.View>(this) }
 
-    override val adapter by lazy { RecentsAdapter(baseActivity) }
     override val searchHint by lazy { getString(R.string.hint_search_recents) }
     override val requiredPermissions = RecentsContentResolver.REQUIRED_PERMISSIONS
     override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
+    override val adapter by lazy {
+        RecentsAdapter(componentRoot.preferencesInteractor, componentRoot.phoneAccountsInteractor)
+    }
 
 
     //region list fragment
@@ -41,8 +39,8 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
     }
 
     override fun onDeleteItems(items: ArrayList<Recent>) {
-        _permissionsManager.runWithPrompt(R.string.warning_delete_recents) {
-            items.forEach { _recentsManager.deleteRecent(it.id) }
+        componentRoot.permissionInteractor.runWithPrompt(R.string.warning_delete_recents) {
+            items.forEach { componentRoot.recentsInteractor.deleteRecent(it.id) }
         }
     }
 

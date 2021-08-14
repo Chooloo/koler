@@ -7,10 +7,12 @@ import android.view.KeyEvent.*
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.chooloo.www.koler.KolerApp
 
 abstract class BaseFragment : Fragment(), BaseContract.View {
     protected val baseActivity by lazy { context as BaseActivity }
-
+    protected val componentRoot by lazy { (baseActivity.applicationContext as KolerApp).componentRoot }
+    
     val argsSafely: Bundle
         get() = arguments ?: Bundle()
 

@@ -1,17 +1,15 @@
 package com.chooloo.www.koler.ui.contactspreferences
 
-import ContactsManager
+import android.Manifest.permission.WRITE_CONTACTS
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.preference.Preference
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
-    private val _contact by lazy { _contactsManager.queryContact(_contactId) }
-    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
+    private val _contact by lazy { componentRoot.contactsInteractor.getContact(_contactId) }
     private val _presenter by lazy {
         ContactPreferencesPresenter<ContactPreferencesContract.View>(this)
     }
@@ -23,12 +21,12 @@ class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesC
     override fun onSetup() {
         super.onSetup()
 
-        getPreference<Preference>(R.string.pref_key_unset_favorite)?.isVisible = _contact.starred
-        getPreference<Preference>(R.string.pref_key_set_favorite)?.isVisible = !_contact.starred
+        getPreference<Preference>(R.string.pref_key_unset_favorite)?.isVisible = _contact!!.starred
+        getPreference<Preference>(R.string.pref_key_set_favorite)?.isVisible = !_contact!!.starred
         getPreference<Preference>(R.string.pref_key_block_contact)?.isVisible =
-            !_contactsManager.queryIsContactBlocked(_contact)
+            !componentRoot.contactsInteractor.isContactBlocked(_contactId)
         getPreference<Preference>(R.string.pref_key_unblock_contact)?.isVisible =
-            _contactsManager.queryIsContactBlocked(_contact)
+            componentRoot.contactsInteractor.isContactBlocked(_contactId)
     }
 
     override fun onPreferenceClickListener(preference: Preference) {
@@ -45,21 +43,24 @@ class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesC
     //region contact preferences view
 
     override fun toggleContactBlocked(isBlock: Boolean) {
-        _permissionsManager.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+        componentRoot.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             if (isBlock) {
-                _permissionsManager.runWithPrompt(R.string.warning_block_contact) {
-                    _contactsManager.blockContact(_contactId)
+                componentRoot.permissionInteractor.runWithPrompt(R.string.warning_block_contact) {
+                    componentRoot.contactsInteractor.blockContact(_contactId)
                     showMessage(R.string.contact_blocked)
                 }
             } else {
-                _contactsManager.unblockContact(_contactId)
+                componentRoot.contactsInteractor.unblockContact(_contactId)
                 showMessage(R.string.contact_unblocked)
             }
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun toggleContactFavorite(isFavorite: Boolean) {
-        _contactsManager.toggleContactFavorite(_contactId, isFavorite)
+        componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
+            componentRoot.contactsInteractor.toggleContactFavorite(_contactId, isFavorite)
+        }, null, null, null)
     }
 
     //endregion

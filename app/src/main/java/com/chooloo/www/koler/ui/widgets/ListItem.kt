@@ -19,8 +19,8 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.ViewManager
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
@@ -31,7 +31,6 @@ open class ListItem : LinearLayout {
     private var _isCompact: Boolean = false
 
     private val _viewManager by lazy { ViewManager(context) }
-    private val _animationManager by lazy { AnimationManager(context) }
 
     private var _onLeftButtonClickListener: () -> Unit = {}
     private var _onRightButtonClickListener: () -> Unit = {}
@@ -195,7 +194,7 @@ open class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            setPadding(0, _viewManager.sizeInDp(2), 0, 0)
+            setPadding(0, _viewManager.getSizeInDp(2), 0, 0)
         }
 
         _image = AvatarImageView(context, attrs).apply {
@@ -241,7 +240,7 @@ open class ListItem : LinearLayout {
         _personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
             id = View.generateViewId()
-            background = _viewManager.getSelectableItemBackgroundDrawable()
+            background = _viewManager.selectableItemBackgroundDrawable
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
             addView(_image)
@@ -317,7 +316,7 @@ open class ListItem : LinearLayout {
         if (selected) {
             _personLayout.setBackgroundColor(_viewManager.getAttrColor(R.attr.colorSecondary))
         } else {
-            _personLayout.background = _viewManager.getSelectableItemBackgroundDrawable()
+            _personLayout.background = _viewManager.selectableItemBackgroundDrawable
         }
     }
 
@@ -365,6 +364,9 @@ open class ListItem : LinearLayout {
     }
 
     fun blinkCaption() {
-        _animationManager.blink(_caption, 2500)
+        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateBlink(
+            _caption,
+            2500
+        )
     }
 }

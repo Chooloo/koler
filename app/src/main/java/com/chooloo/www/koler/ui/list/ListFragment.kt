@@ -10,20 +10,17 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.databinding.ItemsBinding
+import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.util.AnimationManager
-import com.chooloo.www.koler.util.permissions.PermissionsManager
-import com.chooloo.www.koler.util.preferences.KolerPreferences
+import com.chooloo.www.koler.util.PreferencesManager
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
 abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     BaseFragment(),
     ListContract.View<ItemType> {
 
-    private val _preferences by lazy { KolerPreferences(baseActivity) }
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
-    private val _animationManager by lazy { AnimationManager(baseActivity) }
-    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>(this) }
 
@@ -86,12 +83,12 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
             }
         }
 
-        if (_preferences.scrollIndicator) {
+        if(componentRoot.preferencesInteractor.isScrollIndicator){
             setupScrollIndicator()
         }
 
         requiredPermissions?.let {
-            _permissionsManager.runWithPermissions(
+            componentRoot.permissionInteractor.runWithPermissions(
                 permissions = it,
                 grantedCallback = _presenter::onPermissionsGranted,
                 blockedCallback = _presenter::onPermissionsBlocked
@@ -107,7 +104,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun animateListView() {
-        AnimationManager(baseActivity).runLayoutAnimation(_binding.itemsRecyclerView)
+        componentRoot.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -124,9 +121,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                _animationManager.bounceIn(this)
+                componentRoot.animationInteractor.animateIn(this)
             } else {
-                _animationManager.showView(this, false)
+                componentRoot.animationInteractor.showView(this, false)
             }
         }
     }

@@ -7,8 +7,8 @@ import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
+import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.AnimationManager
 import com.chooloo.www.koler.util.ViewManager
 import java.util.*
 
@@ -37,13 +37,13 @@ class Tab : AppCompatTextView {
         super.setActivated(activated)
         setColor(if (activated) enabledColor else disabledColor)
         if (activated) {
-            animateAttension()
+            animateAttention()
         }
     }
 
 
-    private fun animateAttension() {
-        AnimationManager(context).bounceIn(this)
+    private fun animateAttention() {
+        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateIn(this)
     }
 
     private fun setColor(@ColorInt color: Int) {

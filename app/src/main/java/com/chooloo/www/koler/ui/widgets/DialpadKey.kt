@@ -44,7 +44,7 @@ class DialpadKey : LinearLayout {
             typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
-            setPadding(0, _viewManager.sizeInDp(5), 0, 0)
+            setPadding(0, _viewManager.getSizeInDp(5), 0, 0)
             setTextAppearance(R.style.Koler_Text_Caption)
         }.also {
             addView(it)
@@ -52,11 +52,11 @@ class DialpadKey : LinearLayout {
 
         orientation = VERTICAL
         layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
-        background = _viewManager.getSelectableItemBackgroundBorderlessDrawable()
+        background = _viewManager.selectableItemBackgroundBorderlessDrawable
         digit = context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey)
             .getString(R.styleable.Koler_DialpadKey_digit)
 
-        setPadding(_viewManager.sizeInDp(7))
+        setPadding(_viewManager.getSizeInDp(7))
     }
 
     var digit: String?

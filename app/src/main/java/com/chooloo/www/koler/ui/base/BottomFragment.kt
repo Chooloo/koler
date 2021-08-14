@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -18,7 +19,7 @@ open class BottomFragment<FragmentType : Fragment>(
 
     protected val argsSafely get() = arguments ?: Bundle()
     protected val baseActivity by lazy { context as BaseActivity }
-
+    protected val componentRoot by lazy { (baseActivity.applicationContext as KolerApp).componentRoot }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -68,17 +69,14 @@ open class BottomFragment<FragmentType : Fragment>(
         baseActivity.showError(getString(stringResId))
     }
 
-    override fun getColor(color: Int): Int {
-        return baseActivity.getColor(color)
-    }
+    override fun getColor(color: Int) =
+        baseActivity.getColor(color)
 
-    override fun hasPermission(permission: String): Boolean {
-        return baseActivity.hasPermission(permission)
-    }
+    override fun hasPermission(permission: String) =
+        baseActivity.hasPermission(permission)
 
-    override fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.any { p -> baseActivity.hasPermission(p) }
-    }
+    override fun hasPermissions(permissions: Array<String>) =
+        permissions.any { p -> baseActivity.hasPermission(p) }
 
     //endregion
 }

@@ -1,16 +1,18 @@
 package com.chooloo.www.koler.adapter
 
-import ContactsManager
 import PhoneAccount
 import android.content.Context
 import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.interactor.numbers.NumbersInteractorImpl
 import com.chooloo.www.koler.ui.widgets.ListItem
 
-class PhonesAdapter(private val _context: Context) : ListAdapter<PhoneAccount>() {
-    private val _contactsManager by lazy { ContactsManager(_context) }
+class PhonesAdapter(
+    private val context: Context
+) : ListAdapter<PhoneAccount>() {
+    private val _numbersInteractor by lazy { NumbersInteractorImpl(context) }
     private val _blockedDrawable by lazy {
-        ContextCompat.getDrawable(_context, R.drawable.round_block_black_24)
+        ContextCompat.getDrawable(context, R.drawable.round_block_black_24)
     }
 
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
@@ -18,7 +20,7 @@ class PhonesAdapter(private val _context: Context) : ListAdapter<PhoneAccount>()
             titleText = item.number
             imageVisibility = false
 
-            if (_contactsManager.queryIsNumberBlocked(item.number)) {
+            if (_numbersInteractor.isNumberBlocked(item.number)) {
                 imageDrawable = _blockedDrawable
             }
         }

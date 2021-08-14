@@ -6,9 +6,9 @@ import android.net.Uri
 import android.telecom.Call
 import android.telecom.VideoProfile
 import android.widget.Toast
+import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 
 object CallManager {
@@ -52,7 +52,9 @@ object CallManager {
     }
 
     fun call(context: Context, number: String) {
-        PermissionsManager(context).runWithDefaultDialer(R.string.error_not_default_dialer_call) {
+        (context.applicationContext as KolerApp).componentRoot.permissionInteractor.runWithDefaultDialer(
+            R.string.error_not_default_dialer_call
+        ) {
             val callIntent = Intent(Intent.ACTION_CALL)
             callIntent.data = Uri.parse("tel:${Uri.encode(number)}")
             context.startActivity(callIntent)

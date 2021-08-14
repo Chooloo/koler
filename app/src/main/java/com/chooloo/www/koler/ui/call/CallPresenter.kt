@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
 import android.os.Handler
-import com.chooloo.www.koler.App
+import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
@@ -32,7 +32,7 @@ class CallPresenter<V : CallContract.View>(mvpView: V) :
         mvpView.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
         phoneAccount.photoUri?.let { mvpView.callerImageURI = Uri.parse(it) }
 
-        mvpView.stateText = App.resources?.getString(
+        mvpView.stateText = KolerApp.resources?.getString(
             when (callState) {
                 ACTIVE -> R.string.call_status_active
                 DISCONNECTED -> R.string.call_status_disconnected

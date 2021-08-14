@@ -7,12 +7,12 @@ import android.net.Uri
 import android.telecom.TelecomManager
 import androidx.preference.Preference
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 import com.chooloo.www.koler.ui.main.MainActivity
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Sim
 import dev.sasikanth.colorsheet.ColorSheet
 
 class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
@@ -54,36 +54,36 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
     //region settings view
 
     override fun setPrefSim(sim: Sim) {
-        kolerPreferences?.sim = sim
+        componentRoot.preferencesInteractor.sim = sim
     }
 
     override fun setPrefDefaultPage(page: Page) {
-        kolerPreferences?.defaultPage = page
+        componentRoot.preferencesInteractor.defaultPage = page
     }
 
     override fun setPrefCompact(isCompact: Boolean) {
-        kolerPreferences?.compact = isCompact
+        componentRoot.preferencesInteractor.isCompact = isCompact
     }
 
     override fun setPrefAnimations(isAnimations: Boolean) {
-        kolerPreferences?.animations = isAnimations
+        componentRoot.preferencesInteractor.isAnimations = isAnimations
     }
 
     override fun setPrefRecordsEnabled(isEnabled: Boolean) {
-        kolerPreferences?.recordsEnabled = isEnabled
+        componentRoot.preferencesInteractor.isRecords = isEnabled
     }
 
     override fun setPrefScrollIndicator(isEnabled: Boolean) {
-        kolerPreferences?.scrollIndicator = isEnabled
+        componentRoot.preferencesInteractor.isScrollIndicator = isEnabled
     }
 
 
     override fun setPrefAccentTheme(accentTheme: AccentTheme) {
-        kolerPreferences?.accentTheme = accentTheme
+        componentRoot.preferencesInteractor.accentTheme = accentTheme
     }
 
     override fun setPrefRecordFormat(recordFormat: RecordFormat) {
-        kolerPreferences?.recordFormat = recordFormat
+        componentRoot.preferencesInteractor.recordFormat = recordFormat
     }
 
     override fun donate() {

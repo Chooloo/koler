@@ -1,25 +1,25 @@
 package com.chooloo.www.koler.adapter
 
-import ContactsManager
 import android.content.Context
 import android.graphics.Color
 import androidx.core.content.ContextCompat
+import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString
-import com.chooloo.www.koler.util.preferences.KolerPreferences
 
-class RecentsAdapter(private val _context: Context) : ListAdapter<Recent>() {
-    private val _prefIsCompact by lazy { _kolerPreferences.compact }
-    private val _contactsManager by lazy { ContactsManager(_context) }
-    private val _kolerPreferences by lazy { KolerPreferences(_context) }
-
+class RecentsAdapter(
+    private val preferencesInteractor: PreferencesInteractor,
+    private val phoneAccountsInteractor: PhoneAccountsInteractor
+) : ListAdapter<Recent>() {
     override fun onBindListItem(listItem: ListItem, item: Recent) {
-        val contact = _contactsManager.lookupAccountByNumber(item.number)
+        val contact = phoneAccountsInteractor.lookupAccount(item.number)
 
         listItem.apply {
-            isCompact = _prefIsCompact
+            isCompact = preferencesInteractor.isCompact
             titleText = contact?.name ?: item.number
             captionText = if (item.date != null) context.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))

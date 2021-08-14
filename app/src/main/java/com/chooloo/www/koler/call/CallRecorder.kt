@@ -8,8 +8,8 @@ import android.os.Build
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.chooloo.www.koler.util.preferences.KolerPreferences
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.RecordFormat
+import com.chooloo.www.koler.KolerApp
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
 import java.io.IOException
 import java.text.SimpleDateFormat
 
@@ -17,8 +17,8 @@ import java.text.SimpleDateFormat
 class CallRecorder(val context: Context) {
     private var _recorder: MediaRecorder? = null
     private var _currentRecording: CallRecording? = null
-    private val _preferences by lazy { KolerPreferences(context) }
-    private val formatChoice: RecordFormat get() = _preferences.recordFormat
+    private val formatChoice: RecordFormat
+        get() = (context.applicationContext as KolerApp).componentRoot.preferencesInteractor.recordFormat
 
     private fun resetRecorder() {
         _recorder?.apply {

@@ -1,6 +1,8 @@
 package com.chooloo.www.koler.ui.contact
 
-import ContactsManager
+import ContactsUtils
+import android.Manifest.permission.WRITE_CONTACTS
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,24 +10,22 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
-import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.util.permissions.PermissionsManager
 
 class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _contact by lazy { _contactsManager.queryContact(_contactId) }
-    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
+    private val _contact by lazy { componentRoot.contactsInteractor.getContact(_contactId) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
-    private val _firstPhone by lazy { _contactsManager.queryContactAccounts(_contactId).getOrNull(0) }
-
+    private val _firstPhone by lazy {
+        componentRoot.phoneAccountsInteractor.getContactAccounts(_contactId).getOrNull(0)
+    }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -56,7 +56,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _presenter.onLoadContact(_contact)
+        _contact?.let { _presenter.onLoadContact(it) }
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
@@ -76,37 +76,45 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     //region contact view
 
     override fun showMenu() {
-        BottomFragment(ContactPreferencesFragment.newInstance(_contact.id)).show(
-            childFragmentManager,
-            null
-        )
+        _contact?.id?.let {
+            BottomFragment(ContactPreferencesFragment.newInstance(it)).show(
+                childFragmentManager,
+                null
+            )
+        }
     }
 
     override fun smsContact() {
-        _firstPhone?.let { _contactsManager.openSmsView(it.number) }
+        _firstPhone?.number?.let { ContactsUtils.openSmsView(baseActivity, it) }
     }
 
     override fun callContact() {
-        _firstPhone?.let { CallManager.call(baseActivity, it.number) }
+        _firstPhone?.number?.let { CallManager.call(baseActivity, it) }
     }
 
     override fun editContact() {
-        _contactsManager.openEditContactView(_contactId)
+        ContactsUtils.openEditContactView(baseActivity, _contactId)
     }
 
     override fun openContact() {
-        _contactsManager.openContactView(_contactId)
+        ContactsUtils.openContactView(baseActivity, _contactId)
     }
 
+    @SuppressLint("MissingPermission")
     override fun deleteContact() {
-        _permissionsManager.runWithPrompt(R.string.warning_delete_contact) {
-            _contactsManager.deleteContact(_contactId)
+        componentRoot.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
+            componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
+                componentRoot.contactsInteractor.deleteContact(_contactId)
+            }, null, null, null)
             parentFragmentManager.popBackStack()
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun setFavorite(isFavorite: Boolean) {
-        _contactsManager.toggleContactFavorite(_contactId, isFavorite)
+        componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
+            componentRoot.contactsInteractor.toggleContactFavorite(_contactId, isFavorite)
+        }, null, null, null)
     }
 
     //endregion

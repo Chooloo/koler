@@ -10,7 +10,6 @@ import android.provider.Settings
 import com.chooloo.www.koler.ui.base.BaseActivity
 
 class PermissionsActivity : BaseActivity() {
-    private val _permissionsManager by lazy { PermissionsManager(this) }
     private val _rationaleMessage by lazy { intent.getStringExtra(EXTRA_RATIONAL_MESSAGE) }
     private val _allPermissions by lazy { intent.getStringArrayExtra(EXTRA_PERMISSIONS) }
 
@@ -21,7 +20,7 @@ class PermissionsActivity : BaseActivity() {
         window.statusBarColor = 0
 
         val deniedPermissions =
-            _allPermissions.filter { !_permissionsManager.hasSelfPermission(it) }.toTypedArray()
+            _allPermissions.filter { !hasPermission(it) }.toTypedArray()
         if (deniedPermissions.isEmpty()) {
             onGranted()
         } else {
@@ -34,7 +33,7 @@ class PermissionsActivity : BaseActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (_permissionsManager.hasSelfPermissions(permissions as Array<String>)) {
+        if (hasPermissions(permissions as Array<String>)) {
             onGranted()
         }
 
@@ -53,7 +52,7 @@ class PermissionsActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SETTINGS) {
-            _permissionsManager.checkPermissions(
+            componentRoot.permissionInteractor.checkPermissions(
                 _allPermissions,
                 sGrantedCallback,
                 sDeniedCallback,

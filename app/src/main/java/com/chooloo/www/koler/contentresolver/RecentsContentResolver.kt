@@ -37,6 +37,10 @@ class RecentsContentResolver(context: Context, private val recentId: Long? = nul
         )
     }
 
+    fun delete() {
+        delete(CallLog.Calls.CONTENT_URI, "${CallLog.Calls._ID} = $recentId", null)
+    }
+
     companion object {
         val URI: Uri = CallLog.Calls.CONTENT_URI
         val SORT_ORDER = "${CallLog.Calls.DATE} DESC"

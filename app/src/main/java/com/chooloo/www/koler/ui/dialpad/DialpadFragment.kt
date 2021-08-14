@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import ContactsManager
+import ContactsUtils
 import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -13,22 +13,18 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.databinding.DialpadBinding
+import com.chooloo.www.koler.interactor.audio.AudioInteractor.Companion.SHORT_VIBRATE_LENGTH
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
-import com.chooloo.www.koler.util.*
-import com.chooloo.www.koler.util.AudioManager.Companion.SHORT_VIBRATE_LENGTH
-import com.chooloo.www.koler.call.CallManager
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
-    private val _audioManager by lazy { AudioManager(baseActivity) }
-    private val _contactsManager by lazy { ContactsManager(baseActivity) }
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
-    private val _animationManager by lazy { AnimationManager(baseActivity) }
-    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>(this) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
+    private val _presenter by lazy { DialpadPresenter<DialpadContract.View>(this) }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
 
     override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
@@ -46,7 +42,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                _animationManager.bounceIn(_binding.dialpadSuggestionsScrollView)
+                componentRoot.animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView)
             } else if (!value && isSuggestionsVisible) {
                 _binding.dialpadSuggestionsScrollView.visibility = GONE
             }
@@ -56,9 +52,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                _animationManager.bounceIn(_binding.dialpadButtonAddContact)
+                componentRoot.animationInteractor.animateIn(_binding.dialpadButtonAddContact)
             } else if (!value && isAddContactButtonVisible) {
-                _animationManager.showView(_binding.dialpadButtonAddContact, false)
+                componentRoot.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
             }
         }
 
@@ -66,9 +62,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                _animationManager.bounceIn(_binding.dialpadButtonDelete)
+                componentRoot.animationInteractor.animateIn(_binding.dialpadButtonDelete)
             } else if (!value && isDeleteButtonVisible) {
-                _animationManager.showView(_binding.dialpadButtonDelete, false)
+                componentRoot.animationInteractor.showView(_binding.dialpadButtonDelete, false)
             }
         }
 
@@ -171,7 +167,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun vibrate() {
-        _audioManager.vibrate(SHORT_VIBRATE_LENGTH)
+        componentRoot.audioInteractor.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun backspace() {
@@ -179,7 +175,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun addContact() {
-        _contactsManager.openAddContactView(_binding.dialpadEditText.text.toString())
+        ContactsUtils.openAddContactView(baseActivity, _binding.dialpadEditText.text.toString())
     }
 
     override fun callVoicemail() {
@@ -187,7 +183,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun playTone(keyCode: Int) {
-        _audioManager.playToneByKey(keyCode)
+        componentRoot.audioInteractor.playToneByKey(keyCode)
     }
 
     override fun invokeKey(keyCode: Int) {

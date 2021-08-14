@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.util
 
-import android.content.Context
 import android.os.Handler
 import android.view.View
 import android.view.View.GONE
@@ -10,13 +9,15 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.preferences.KolerPreferences
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 
-class AnimationManager(private val context: Context) {
-    private val _isEnabled by lazy { KolerPreferences(context).animations }
-
+class AnimationManager(
+    private val preferencesInteractor: PreferencesInteractor
+) {
+    private val _isEnabled: Boolean
+        get() = preferencesInteractor.isAnimations
 
     fun showView(view: View, isShow: Boolean) {
         if (_isEnabled) {
