@@ -5,6 +5,7 @@ import android.content.Context
 import android.media.MediaRecorder
 import android.os.Environment
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.util.PreferencesManager
 import java.io.File
 import java.io.IOException
@@ -39,7 +40,11 @@ open class CallRecordReceiver : PhoneCallReceiver() {
 
     private fun startRecord(context: Context) {
         try {
-            if (!PreferencesManager(context).getBoolean(R.string.pref_key_records_enabled, false)) {
+            if (!PreferencesManager.getInstance(context).getBoolean(
+                    R.string.pref_key_records_enabled,
+                    R.bool.pref_default_value_records_enabled
+                )
+            ) {
                 return
             }
 
@@ -94,7 +99,7 @@ open class CallRecordReceiver : PhoneCallReceiver() {
             if (!sampleDir.exists()) {
                 sampleDir.mkdirs()
             }
-            val format = KolerPreferences(context).recordFormat
+            val format = PreferencesInteractorImpl(PreferencesManager.getInstance(context)).recordFormat
             val fileName = generateFileName()
             audioFile = File.createTempFile(fileName, format.encoding, sampleDir)
             recorder = MediaRecorder().apply {

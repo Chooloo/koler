@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.util.ViewManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @SuppressLint("Recycle", "CustomViewStyleable", "WrongConstant")

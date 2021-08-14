@@ -30,15 +30,9 @@ import com.chooloo.www.koler.util.PreferencesManager
 class DialpadFragment : BaseFragment(), DialpadContract.View {
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
-    private val _audioInteractor by lazy { AudioInteractorImpl(_vibrator, _audioManager) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>(this) }
-    private val _preferencesManager by lazy { PreferencesManager.getInstance(baseActivity) }
-    private val _animationInteractor by lazy { AnimationInteractorImpl(_preferencesInteractor) }
-    private val _preferencesInteractor by lazy { PreferencesInteractorImpl(_preferencesManager) }
-    private val _vibrator by lazy { baseActivity.getSystemService(VIBRATOR_SERVICE) as Vibrator }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
-    private val _audioManager by lazy { baseActivity.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
 
     override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
 
@@ -55,7 +49,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                _animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView)
+                componentRoot.animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView)
             } else if (!value && isSuggestionsVisible) {
                 _binding.dialpadSuggestionsScrollView.visibility = GONE
             }
@@ -65,9 +59,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                _animationInteractor.animateIn(_binding.dialpadButtonAddContact)
+                componentRoot.animationInteractor.animateIn(_binding.dialpadButtonAddContact)
             } else if (!value && isAddContactButtonVisible) {
-                _animationInteractor.showView(_binding.dialpadButtonAddContact, false)
+                componentRoot.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
             }
         }
 
@@ -75,9 +69,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                _animationInteractor.animateIn(_binding.dialpadButtonDelete)
+                componentRoot.animationInteractor.animateIn(_binding.dialpadButtonDelete)
             } else if (!value && isDeleteButtonVisible) {
-                _animationInteractor.showView(_binding.dialpadButtonDelete, false)
+                componentRoot.animationInteractor.showView(_binding.dialpadButtonDelete, false)
             }
         }
 
@@ -180,7 +174,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun vibrate() {
-        _audioInteractor.vibrate(SHORT_VIBRATE_LENGTH)
+        componentRoot.audioInteractor.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun backspace() {
@@ -196,7 +190,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun playTone(keyCode: Int) {
-        _audioInteractor.playToneByKey(keyCode)
+        componentRoot.audioInteractor.playToneByKey(keyCode)
     }
 
     override fun invokeKey(keyCode: Int) {

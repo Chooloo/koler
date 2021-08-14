@@ -1,6 +1,8 @@
 package com.chooloo.www.koler.ui.recent
 
 import ContactsUtils
+import android.Manifest.permission.WRITE_CALL_LOG
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
@@ -8,6 +10,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.RecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
@@ -15,18 +18,16 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
-import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.util.getElapsedTimeString
 import java.util.*
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    private val _recentsManager by lazy { RecentsManager(baseActivity) }
-    private val _contactsManager by lazy { ContactsUtils(baseActivity) }
+    private val _recentId by lazy { argsSafely.getLong(ARG_RECENT_ID) }
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
-    private val _contact by lazy { _contactsManager.lookupAccountByNumber(_recent.number) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }
-    private val _isBlocked by lazy { _contactsManager.queryIsNumberBlocked(_recent.number) }
-    private val _recent by lazy { _recentsManager.getRecentById(argsSafely.getLong(ARG_RECENT_ID)) }
+    private val _recent by lazy { componentRoot.recentsInteractor.getRecent(_recentId)!! }
+    private val _isBlocked by lazy { componentRoot.numbersInteractor.isNumberBlocked(_recent.number) }
+    private val _contact by lazy { componentRoot.phoneAccountsInteractor.lookupAccount(_recent.number) }
 
 
     override fun onCreateView(
@@ -78,11 +79,11 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun smsRecent() {
-        _contactsManager.openSmsView(_recent.number)
+        ContactsUtils.openSmsView(baseActivity, _recent.number)
     }
 
     override fun addContact() {
-        _contactsManager.openAddContactView(_recent.number)
+        ContactsUtils.openAddContactView(baseActivity, _recent.number)
     }
 
     override fun callRecent() {
@@ -104,8 +105,11 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         ).show(baseActivity.supportFragmentManager, ContactFragment.TAG)
     }
 
+    @SuppressLint("MissingPermission")
     override fun deleteRecent() {
-        _recentsManager.deleteRecent(_recent.id)
+        componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CALL_LOG), {
+            componentRoot.recentsInteractor.deleteRecent(_recent.id)
+        }, null, null, null)
     }
 
     //endregion

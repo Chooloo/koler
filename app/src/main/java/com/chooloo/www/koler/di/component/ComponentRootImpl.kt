@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.di.component
 
 import android.app.Application
+import android.content.ClipboardManager
 import android.content.Context
 import android.media.AudioManager
 import android.os.Vibrator
@@ -12,6 +13,7 @@ import com.chooloo.www.koler.interactor.numbers.NumbersInteractorImpl
 import com.chooloo.www.koler.interactor.permission.PermissionInteractorImpl
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
+import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.koler.util.PreferencesManager
 
 class ComponentRootImpl(
@@ -29,6 +31,10 @@ class ComponentRootImpl(
         application.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
     }
 
+    override val clipboardManager by lazy {
+        application.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+
     override val preferencesManager by lazy {
         PreferencesManager.getInstance(application)
     }
@@ -42,14 +48,12 @@ class ComponentRootImpl(
         NumbersInteractorImpl(application)
     }
 
+    override val recentsInteractor by lazy {
+        RecentsInteractorImpl(application)
+    }
+
     override val contactsInteractor by lazy {
-        ContactsInteractorImpl(
-            application,
-            numbersInteractor,
-            permissionInteractor,
-            preferencesInteractor,
-            phoneAccountsInteractor
-        )
+        ContactsInteractorImpl(application, numbersInteractor, phoneAccountsInteractor)
     }
 
     override val animationInteractor by lazy {

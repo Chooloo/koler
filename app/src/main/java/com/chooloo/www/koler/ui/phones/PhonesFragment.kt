@@ -18,7 +18,6 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _presenter by lazy { PhonesPresenter<PhonesContract.View>(this) }
     private val _phonesLiveData by lazy { PhoneProviderLiveData(baseActivity, _contactId) }
-    private val _clipboardManager by lazy { baseActivity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager }
 
     override val adapter by lazy { PhonesAdapter(baseActivity) }
     override val requiredPermissions = PhoneContentResolver.REQUIRED_PERMISSIONS
@@ -49,7 +48,7 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
     }
 
     override fun clipboardText(text: String) {
-        _clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
+        componentRoot.clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
     }
 
     override fun convertBundleToList(phones: ArrayList<PhoneAccount>): ListBundle<PhoneAccount> {

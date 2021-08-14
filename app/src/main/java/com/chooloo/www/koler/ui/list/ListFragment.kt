@@ -21,11 +21,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     ListContract.View<ItemType> {
 
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
-    private val _permissionsManager by lazy { PermissionsManager(baseActivity) }
     private val _isSearchable by lazy { argsSafely.getBoolean(ARG_IS_SEARCHABLE) }
-    private val _preferencesManager by lazy { PreferencesManager.getInstance(baseActivity) }
-    private val _animationInteractor by lazy { AnimationInteractorImpl(_preferencesInteractor) }
-    private val _preferencesInteractor by lazy { PreferencesInteractorImpl(_preferencesManager) }
     private val _presenter by lazy { ListPresenter<ItemType, ListContract.View<ItemType>>(this) }
 
     override val itemCount get() = adapter.itemCount
@@ -87,12 +83,12 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
             }
         }
 
-        if (_preferencesInteractor.isScrollIndicator) {
+        if(componentRoot.preferencesInteractor.isScrollIndicator){
             setupScrollIndicator()
         }
 
         requiredPermissions?.let {
-            _permissionsManager.runWithPermissions(
+            componentRoot.permissionInteractor.runWithPermissions(
                 permissions = it,
                 grantedCallback = _presenter::onPermissionsGranted,
                 blockedCallback = _presenter::onPermissionsBlocked
@@ -108,7 +104,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun animateListView() {
-        _animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
+        componentRoot.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -125,9 +121,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                _animationInteractor.animateIn(this)
+                componentRoot.animationInteractor.animateIn(this)
             } else {
-                _animationInteractor.showView(this, false)
+                componentRoot.animationInteractor.showView(this, false)
             }
         }
     }

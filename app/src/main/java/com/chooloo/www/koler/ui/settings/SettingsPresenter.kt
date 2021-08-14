@@ -2,8 +2,8 @@ package com.chooloo.www.koler.ui.settings
 
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.AccentTheme.*
-import com.chooloo.www.koler.util.preferences.KolerPreferences.Companion.Page
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
 
 class SettingsPresenter<V : SettingsContract.View>(mvpView: V) :
     BasePresenter<V>(mvpView),

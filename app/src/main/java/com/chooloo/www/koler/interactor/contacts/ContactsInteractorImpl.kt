@@ -15,8 +15,6 @@ import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 class ContactsInteractorImpl(
     private val context: Context,
     private val numbersInteractor: NumbersInteractor,
-    private val permissionsManager: PermissionsManager,
-    private val preferencesInteractor: PreferencesInteractor,
     private val phoneAccountsInteractor: PhoneAccountsInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
     override fun getContact(contactId: Long): Contact? =
