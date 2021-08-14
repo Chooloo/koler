@@ -31,7 +31,7 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
         contentResolver.detach()
     }
 
-    
+
     private fun updateData() {
         Handler(context.mainLooper).post {
             value = contentResolver.content

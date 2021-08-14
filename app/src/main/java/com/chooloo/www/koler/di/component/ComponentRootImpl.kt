@@ -1,11 +1,14 @@
 package com.chooloo.www.koler.di.component
 
 import android.app.Application
+import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.media.AudioManager
+import android.os.PowerManager
 import android.os.Vibrator
 import android.telecom.TelecomManager
+import android.view.inputmethod.InputMethodManager
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
@@ -23,6 +26,10 @@ class ComponentRootImpl(
         application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
+    override val powerManager by lazy {
+        application.getSystemService(Context.POWER_SERVICE) as PowerManager
+    }
+
     override val audioManager by lazy {
         application.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     }
@@ -31,8 +38,16 @@ class ComponentRootImpl(
         application.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
     }
 
+    override val keyguardManager by lazy {
+        application.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+    }
+
     override val clipboardManager by lazy {
         application.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    }
+
+    override val inputMethodManager by lazy {
+        application.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
     override val preferencesManager by lazy {

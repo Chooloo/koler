@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.KolerApp
+import com.chooloo.www.koler.di.boundcomponent.BoundComponentRootImpl
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     protected val componentRoot by lazy { (applicationContext as KolerApp).componentRoot }
+    protected val boundComponentRoot by lazy { BoundComponentRootImpl(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(componentRoot.preferencesInteractor.accentTheme.theme)

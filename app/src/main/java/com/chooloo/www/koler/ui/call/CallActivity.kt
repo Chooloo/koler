@@ -11,14 +11,10 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment
-import com.chooloo.www.koler.util.ProximitySensor
-import com.chooloo.www.koler.util.ScreenManager
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private val _screenManager by lazy { ScreenManager(this) }
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
-    private val _proximitySensor by lazy { ProximitySensor(this) }
     private val _presenter by lazy { CallPresenter<CallContract.View>(this) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
@@ -27,9 +23,6 @@ class CallActivity : BaseActivity(), CallContract.View {
             }
         }
     }
-
-    private val _callRecorder by lazy { CallRecorder(this) }
-
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
@@ -62,23 +55,23 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun onSetup() {
-        _proximitySensor.acquire()
+        boundComponentRoot.proximityInteractor.acquire()
 
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
         }
 
-        _screenManager.disableKeyboard()
-        _screenManager.setShowWhenLocked()
+        boundComponentRoot.screenInteractor.disableKeyboard()
+        boundComponentRoot.screenInteractor.setShowWhenLocked()
+
         CallManager.registerListener(_callListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         CallManager.unregisterCallback(_callListener)
-        _proximitySensor.release()
-        _callRecorder.stopRecording()
+        boundComponentRoot.proximityInteractor.release()
     }
 
 
