@@ -42,7 +42,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                componentRoot.animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView)
+                boundComponent.animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView)
             } else if (!value && isSuggestionsVisible) {
                 _binding.dialpadSuggestionsScrollView.visibility = GONE
             }
@@ -52,9 +52,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                componentRoot.animationInteractor.animateIn(_binding.dialpadButtonAddContact)
+                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonAddContact)
             } else if (!value && isAddContactButtonVisible) {
-                componentRoot.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
+                boundComponent.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
             }
         }
 
@@ -62,9 +62,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                componentRoot.animationInteractor.animateIn(_binding.dialpadButtonDelete)
+                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonDelete)
             } else if (!value && isDeleteButtonVisible) {
-                componentRoot.animationInteractor.showView(_binding.dialpadButtonDelete, false)
+                boundComponent.animationInteractor.showView(_binding.dialpadButtonDelete, false)
             }
         }
 
@@ -167,7 +167,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun vibrate() {
-        componentRoot.audioInteractor.vibrate(SHORT_VIBRATE_LENGTH)
+        boundComponent.audioInteractor.vibrate(SHORT_VIBRATE_LENGTH)
     }
 
     override fun backspace() {
@@ -183,7 +183,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun playTone(keyCode: Int) {
-        componentRoot.audioInteractor.playToneByKey(keyCode)
+        boundComponent.audioInteractor.playToneByKey(keyCode)
     }
 
     override fun invokeKey(keyCode: Int) {

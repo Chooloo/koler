@@ -21,10 +21,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
-    private val _contact by lazy { componentRoot.contactsInteractor.getContact(_contactId) }
+    private val _contact by lazy { boundComponent.contactsInteractor.getContact(_contactId) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
     private val _firstPhone by lazy {
-        componentRoot.phoneAccountsInteractor.getContactAccounts(_contactId).getOrNull(0)
+        boundComponent.phoneAccountsInteractor.getContactAccounts(_contactId).getOrNull(0)
     }
 
     override var contactName: String?
@@ -102,9 +102,9 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     @SuppressLint("MissingPermission")
     override fun deleteContact() {
-        componentRoot.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
-            componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
-                componentRoot.contactsInteractor.deleteContact(_contactId)
+        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
+            boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
+                boundComponent.contactsInteractor.deleteContact(_contactId)
             }, null, null, null)
             parentFragmentManager.popBackStack()
         }
@@ -112,8 +112,8 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     @SuppressLint("MissingPermission")
     override fun setFavorite(isFavorite: Boolean) {
-        componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
-            componentRoot.contactsInteractor.toggleContactFavorite(_contactId, isFavorite)
+        boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
+            boundComponent.contactsInteractor.toggleContactFavorite(_contactId, isFavorite)
         }, null, null, null)
     }
 

@@ -8,15 +8,14 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 
 class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesContract.View {
+    override val preferenceResource = R.xml.contact_preferences
+
     private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
     private val _contact by lazy { componentRoot.contactsInteractor.getContact(_contactId) }
+
     private val _presenter by lazy {
         ContactPreferencesPresenter<ContactPreferencesContract.View>(this)
     }
-
-
-    override val preferenceResource = R.xml.contact_preferences
-
 
     override fun onSetup() {
         super.onSetup()

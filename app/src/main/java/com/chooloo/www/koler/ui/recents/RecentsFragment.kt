@@ -19,7 +19,7 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
     override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
     override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
     override val adapter by lazy {
-        RecentsAdapter(componentRoot.preferencesInteractor, componentRoot.phoneAccountsInteractor)
+        RecentsAdapter(boundComponent.preferencesInteractor, boundComponent.phoneAccountsInteractor)
     }
 
 
@@ -39,8 +39,8 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.
     }
 
     override fun onDeleteItems(items: ArrayList<Recent>) {
-        componentRoot.permissionInteractor.runWithPrompt(R.string.warning_delete_recents) {
-            items.forEach { componentRoot.recentsInteractor.deleteRecent(it.id) }
+        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_recents) {
+            items.forEach { boundComponent.recentsInteractor.deleteRecent(it.id) }
         }
     }
 

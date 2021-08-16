@@ -2,12 +2,11 @@ package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
 import android.os.Handler
-import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.ui.base.BasePresenter
-import com.chooloo.www.koler.call.CallManager
 
 class CallPresenter<V : CallContract.View>(mvpView: V) :
     BasePresenter<V>(mvpView),
@@ -32,7 +31,7 @@ class CallPresenter<V : CallContract.View>(mvpView: V) :
         mvpView.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
         phoneAccount.photoUri?.let { mvpView.callerImageURI = Uri.parse(it) }
 
-        mvpView.stateText = KolerApp.resources?.getString(
+        mvpView.stateText = boundComponent.stringInteractor.getString(
             when (callState) {
                 ACTIVE -> R.string.call_status_active
                 DISCONNECTED -> R.string.call_status_disconnected
@@ -47,17 +46,20 @@ class CallPresenter<V : CallContract.View>(mvpView: V) :
         when (callState) {
             CONNECTING, DIALING -> mvpView.transitionToActiveUI()
             HOLDING -> mvpView.apply {
-                getColor(R.color.red_foreground).let { mvpView.stateTextColor = it }
+                boundComponent.colorInteractor.getColor(R.color.red_foreground)
+                    .let { mvpView.stateTextColor = it }
                 animateStateTextAttention()
             }
             ACTIVE -> mvpView.apply {
-                getColor(R.color.green_foreground).let { mvpView.stateTextColor = it }
+                boundComponent.colorInteractor.getColor(R.color.green_foreground)
+                    .let { mvpView.stateTextColor = it }
                 animateStateTextAttention()
                 startStopwatch()
                 transitionToActiveUI()
             }
             DISCONNECTED -> mvpView.apply {
-                getColor(R.color.red_foreground).let { stateTextColor = it }
+                boundComponent.colorInteractor.getColor(R.color.red_foreground)
+                    .let { stateTextColor = it }
                 animateStateTextAttention()
                 stopStopwatch()
                 Handler().postDelayed({ finish() }, 2000)

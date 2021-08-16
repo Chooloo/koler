@@ -22,7 +22,7 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        componentRoot.audioInteractor.audioMode = IN_CALL
+        boundComponent.audioInteractor.audioMode = IN_CALL
 
         _binding.apply {
             callActionHold.setOnClickListener { _presenter.onHoldClick() }
@@ -60,14 +60,6 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
 
     override fun startRecording() {
         showError("Feature in development")
-    }
-
-    override fun toggleMute(isMute: Boolean) {
-        componentRoot.audioInteractor.isMuted = isMute
-    }
-
-    override fun toggleSpeaker(isSpeaker: Boolean) {
-        componentRoot.audioInteractor.isSpeakerOn = isSpeaker
     }
 
     //endregion

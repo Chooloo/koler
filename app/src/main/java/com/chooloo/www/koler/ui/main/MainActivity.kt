@@ -57,15 +57,15 @@ class MainActivity : BaseActivity(), MainContract.View {
             appbarMain.mainTabs.headers =
                 arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
             appbarMain.mainTabs.viewPager = mainViewPager
-            mainViewPager.currentItem = componentRoot.preferencesInteractor.defaultPage.index
+            mainViewPager.currentItem = boundComponent.preferencesInteractor.defaultPage.index
         }
 
-        componentRoot.permissionInteractor.checkDefaultDialer()
+        boundComponent.permissionInteractor.checkDefaultDialer()
         checkIntent()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        boundComponentRoot.screenInteractor.ignoreEditTextFocus(event)
+        boundComponent.screenInteractor.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 

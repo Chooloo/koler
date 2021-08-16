@@ -83,12 +83,12 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
             }
         }
 
-        if(componentRoot.preferencesInteractor.isScrollIndicator){
+        if(boundComponent.preferencesInteractor.isScrollIndicator){
             setupScrollIndicator()
         }
 
         requiredPermissions?.let {
-            componentRoot.permissionInteractor.runWithPermissions(
+            boundComponent.permissionInteractor.runWithPermissions(
                 permissions = it,
                 grantedCallback = _presenter::onPermissionsGranted,
                 blockedCallback = _presenter::onPermissionsBlocked
@@ -104,7 +104,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun animateListView() {
-        componentRoot.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
+        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -121,9 +121,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                componentRoot.animationInteractor.animateIn(this)
+                boundComponent.animationInteractor.animateIn(this)
             } else {
-                componentRoot.animationInteractor.showView(this, false)
+                boundComponent.animationInteractor.showView(this, false)
             }
         }
     }

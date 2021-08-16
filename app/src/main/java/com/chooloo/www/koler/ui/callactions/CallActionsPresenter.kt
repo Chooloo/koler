@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.callactions
 
 import android.view.KeyEvent
-import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.ui.base.BasePresenter
 
 class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
     BasePresenter<V>(mvpView),
@@ -20,7 +20,7 @@ class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
 
     override fun onMuteClick() {
         _isMuted = !_isMuted
-        mvpView.toggleMute(_isMuted)
+        boundComponent.audioInteractor.isMuted = _isMuted
     }
 
     override fun onRecordClick() {
@@ -48,7 +48,7 @@ class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
 
     override fun onSpeakerClick() {
         _isSpeaker = !_isSpeaker
-        mvpView.toggleSpeaker(_isSpeaker)
+        boundComponent.audioInteractor.isSpeakerOn = _isSpeaker
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {

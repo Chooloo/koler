@@ -25,9 +25,9 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     private val _recentId by lazy { argsSafely.getLong(ARG_RECENT_ID) }
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }
-    private val _recent by lazy { componentRoot.recentsInteractor.getRecent(_recentId)!! }
-    private val _isBlocked by lazy { componentRoot.numbersInteractor.isNumberBlocked(_recent.number) }
-    private val _contact by lazy { componentRoot.phoneAccountsInteractor.lookupAccount(_recent.number) }
+    private val _recent by lazy { boundComponent.recentsInteractor.getRecent(_recentId)!! }
+    private val _isBlocked by lazy { boundComponent.numbersInteractor.isNumberBlocked(_recent.number) }
+    private val _contact by lazy { boundComponent.phoneAccountsInteractor.lookupAccount(_recent.number) }
 
 
     override fun onCreateView(
@@ -107,8 +107,8 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
     @SuppressLint("MissingPermission")
     override fun deleteRecent() {
-        componentRoot.permissionInteractor.runWithPermissions(arrayOf(WRITE_CALL_LOG), {
-            componentRoot.recentsInteractor.deleteRecent(_recent.id)
+        boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CALL_LOG), {
+            boundComponent.recentsInteractor.deleteRecent(_recent.id)
         }, null, null, null)
     }
 

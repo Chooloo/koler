@@ -48,7 +48,7 @@ class PhonesFragment : ListFragment<PhoneAccount, PhonesAdapter>(), PhonesContra
     }
 
     override fun clipboardText(text: String) {
-        componentRoot.clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
+        boundComponent.clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", text))
     }
 
     override fun convertBundleToList(phones: ArrayList<PhoneAccount>): ListBundle<PhoneAccount> {

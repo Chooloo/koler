@@ -9,8 +9,6 @@ interface CallActionsContract : BaseContract {
         fun openDialpad()
         fun stopRecording()
         fun startRecording()
-        fun toggleMute(isMute: Boolean)
-        fun toggleSpeaker(isSpeaker: Boolean)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

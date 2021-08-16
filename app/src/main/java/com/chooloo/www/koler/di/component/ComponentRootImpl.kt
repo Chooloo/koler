@@ -11,15 +11,17 @@ import android.telecom.TelecomManager
 import android.view.inputmethod.InputMethodManager
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
+import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractorImpl
 import com.chooloo.www.koler.interactor.permission.PermissionInteractorImpl
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
+import com.chooloo.www.koler.interactor.string.StringInteractorImpl
 import com.chooloo.www.koler.util.PreferencesManager
 
-class ComponentRootImpl(
+open class ComponentRootImpl(
     internal val application: Application
 ) : ComponentRoot {
     override val vibrator by lazy {
@@ -55,8 +57,16 @@ class ComponentRootImpl(
     }
 
 
+    override val colorInteractor by lazy {
+        ColorInteractorImpl(application)
+    }
+
     override val audioInteractor by lazy {
         AudioInteractorImpl(vibrator, audioManager)
+    }
+
+    override val stringInteractor by lazy {
+        StringInteractorImpl(application)
     }
 
     override val numbersInteractor by lazy {

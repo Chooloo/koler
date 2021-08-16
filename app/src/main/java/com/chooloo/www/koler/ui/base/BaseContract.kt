@@ -2,9 +2,12 @@ package com.chooloo.www.koler.ui.base
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 
 interface BaseContract {
     interface View {
+        val boundComponent: BoundComponentRoot
+
         fun onSetup()
         fun finish() {}
         fun showMessage(message: String)
