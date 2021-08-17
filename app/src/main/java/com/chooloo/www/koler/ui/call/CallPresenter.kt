@@ -28,10 +28,10 @@ class CallPresenter<V : CallContract.View>(mvpView: V) :
         val phoneAccount = callDetails.phoneAccount
         val callState = callDetails.callState
 
-        mvpView.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
-        phoneAccount.photoUri?.let { mvpView.callerImageURI = Uri.parse(it) }
+        view.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
+        phoneAccount.photoUri?.let { view.callerImageURI = Uri.parse(it) }
 
-        mvpView.stateText = boundComponent.stringInteractor.getString(
+        view.stateText = boundComponent.stringInteractor.getString(
             when (callState) {
                 ACTIVE -> R.string.call_status_active
                 DISCONNECTED -> R.string.call_status_disconnected
@@ -44,20 +44,20 @@ class CallPresenter<V : CallContract.View>(mvpView: V) :
         )
 
         when (callState) {
-            CONNECTING, DIALING -> mvpView.transitionToActiveUI()
-            HOLDING -> mvpView.apply {
+            CONNECTING, DIALING -> view.transitionToActiveUI()
+            HOLDING -> view.apply {
                 boundComponent.colorInteractor.getColor(R.color.red_foreground)
-                    .let { mvpView.stateTextColor = it }
+                    .let { view.stateTextColor = it }
                 animateStateTextAttention()
             }
-            ACTIVE -> mvpView.apply {
+            ACTIVE -> view.apply {
                 boundComponent.colorInteractor.getColor(R.color.green_foreground)
-                    .let { mvpView.stateTextColor = it }
+                    .let { view.stateTextColor = it }
                 animateStateTextAttention()
                 startStopwatch()
                 transitionToActiveUI()
             }
-            DISCONNECTED -> mvpView.apply {
+            DISCONNECTED -> view.apply {
                 boundComponent.colorInteractor.getColor(R.color.red_foreground)
                     .let { stateTextColor = it }
                 animateStateTextAttention()

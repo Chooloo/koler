@@ -9,7 +9,7 @@ class DialpadPresenter<V : DialpadContract.View>(mvpView: V) :
     DialpadContract.Presenter<V> {
 
     override fun onKeyClick(keyCode: Int) {
-        mvpView.apply {
+        view.apply {
             vibrate()
             playTone(keyCode)
             invokeKey(keyCode)
@@ -23,32 +23,32 @@ class DialpadPresenter<V : DialpadContract.View>(mvpView: V) :
                 true
             }
             KEYCODE_1 -> {
-                if (mvpView.isDialer) mvpView.callVoicemail()
-                mvpView.isDialer
+                if (view.isDialer) view.callVoicemail()
+                view.isDialer
             }
             else -> true
         }
     }
 
     override fun onCallClick() {
-        mvpView.call()
+        view.call()
     }
 
     override fun onDeleteClick() {
-        mvpView.backspace()
+        view.backspace()
     }
 
     override fun onAddContactClick() {
-        mvpView.addContact()
+        view.addContact()
     }
 
     override fun onLongDeleteClick(): Boolean {
-        mvpView.number = ""
+        view.number = ""
         return true
     }
 
     override fun onTextChanged(text: String?) {
-        mvpView.apply {
+        view.apply {
             if (isDialer) {
                 isDeleteButtonVisible = text?.isNotEmpty() == true
                 isAddContactButtonVisible = text?.isNotEmpty() == true
@@ -58,7 +58,7 @@ class DialpadPresenter<V : DialpadContract.View>(mvpView: V) :
     }
 
     override fun onSuggestionsChanged(contacts: ArrayList<Contact>) {
-        mvpView.apply {
+        view.apply {
             isSuggestionsVisible = contacts.isNotEmpty() && number.isNotEmpty() == true
         }
     }

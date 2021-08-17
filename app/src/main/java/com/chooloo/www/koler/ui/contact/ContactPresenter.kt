@@ -15,7 +15,7 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
     }
 
     override fun onLoadContact() {
-        mvpView.apply {
+        view.apply {
             contactName = contact?.name
             isStarIconVisible = contact?.starred == true
             contact?.photoUri?.let { contactImage = Uri.parse(it) }
@@ -23,7 +23,7 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
     }
 
     override fun onActionCall() {
-        mvpView.callContact()
+        view.callContact()
     }
 
     override fun onActionSms() {
@@ -31,11 +31,11 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
     }
 
     override fun onActionEdit() {
-        boundComponent.contactsInteractor.openEditContactView(mvpView.contactId)
+        boundComponent.contactsInteractor.openEditContactView(view.contactId)
     }
 
     override fun onActionInfo() {
-        boundComponent.contactsInteractor.openContactView(mvpView.contactId)
+        boundComponent.contactsInteractor.openContactView(view.contactId)
     }
 
     override fun onActionDelete() {
@@ -43,7 +43,7 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
             boundComponent.permissionInteractor.runWithPermissions(
                 arrayOf(Manifest.permission.WRITE_CONTACTS),
                 {
-                    boundComponent.contactsInteractor.deleteContact(mvpView.contactId)
+                    boundComponent.contactsInteractor.deleteContact(view.contactId)
                 },
                 null,
                 null,
@@ -53,7 +53,7 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
     }
 
     override fun onActionMenu() {
-        mvpView.showMenu()
+        view.showMenu()
     }
 
     override fun onActionFav() {
@@ -61,7 +61,7 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
             arrayOf(Manifest.permission.WRITE_CONTACTS),
             {
                 boundComponent.contactsInteractor.toggleContactFavorite(
-                    mvpView.contactId,
+                    view.contactId,
                     contact?.starred == true
                 )
             },
@@ -69,6 +69,6 @@ class ContactPresenter<V : ContactContract.View>(mvpView: V) :
             null,
             null
         )
-        mvpView.isStarIconVisible = contact?.starred == true
+        view.isStarIconVisible = contact?.starred == true
     }
 }

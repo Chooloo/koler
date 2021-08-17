@@ -7,30 +7,30 @@ class RecentPresenter<V : RecentContract.View>(mvpView: V) :
     RecentContract.Presenter<V> {
     
     override fun onActionMenu() {
-        mvpView.showMenu()
+        view.showMenu()
     }
 
     override fun onActionSms() {
-        mvpView.smsRecent()
+        view.smsRecent()
     }
 
     override fun onActionCall() {
-        mvpView.callRecent()
+        view.callRecent()
     }
 
     override fun onActionDelete() {
-        mvpView.deleteRecent()
+        view.deleteRecent()
     }
 
     override fun onActionAddContact() {
-        mvpView.addContact()
+        view.addContact()
     }
 
     override fun onActionOpenContact() {
-        mvpView.openContact()
+        view.openContact()
     }
 
     override fun onActionShowHistory() {
-        mvpView.openHistory()
+        view.openHistory()
     }
 }

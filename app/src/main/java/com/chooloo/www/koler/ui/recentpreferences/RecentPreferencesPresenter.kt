@@ -7,10 +7,10 @@ class RecentPreferencesPresenter<V : RecentPreferencesContract.View>(mvpView: V)
     RecentPreferencesContract.Presenter<V> {
 
     override fun onBlockNumberClick() {
-        mvpView.toggleNumberBlocked(true)
+        view.toggleNumberBlocked(true)
     }
 
     override fun onUnblockNumberClick() {
-        mvpView.toggleNumberBlocked(false)
+        view.toggleNumberBlocked(false)
     }
 }

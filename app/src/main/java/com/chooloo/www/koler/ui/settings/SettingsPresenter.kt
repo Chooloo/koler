@@ -10,74 +10,74 @@ class SettingsPresenter<V : SettingsContract.View>(mvpView: V) :
     SettingsContract.Presenter<V> {
     
     override fun refresh() {
-        mvpView.goToMainActivity()
+        view.goToMainActivity()
     }
 
     override fun onClickedRate() {
-        mvpView.rateApp()
+        view.rateApp()
     }
 
     override fun onClickedEmail() {
-        mvpView.sendEmail()
+        view.sendEmail()
     }
 
     override fun onClickedColor() {
-        mvpView.openColorPicker()
+        view.openColorPicker()
     }
 
     override fun onClickedDonate() {
-        mvpView.donate()
+        view.donate()
     }
 
     override fun onClickedReport() {
-        mvpView.reportBug()
+        view.reportBug()
     }
 
     override fun onClickedManageBlocked() {
-        mvpView.manageBlockedNumbers()
+        view.manageBlockedNumbers()
     }
 
     override fun onSelectedColor(color: Int) {
-        mvpView.setPrefAccentTheme(
+        view.setPrefAccentTheme(
             when (color) {
-                mvpView.getColor(R.color.blue_background) -> BLUE
-                mvpView.getColor(R.color.red_background) -> RED
-                mvpView.getColor(R.color.orange_background) -> ORANGE
-                mvpView.getColor(R.color.green_background) -> GREEN
-                mvpView.getColor(R.color.purple_background) -> PURPLE
+                view.getColor(R.color.blue_background) -> BLUE
+                view.getColor(R.color.red_background) -> RED
+                view.getColor(R.color.orange_background) -> ORANGE
+                view.getColor(R.color.green_background) -> GREEN
+                view.getColor(R.color.purple_background) -> PURPLE
                 else -> BLUE
             }
         )
-        mvpView.goToMainActivity()
+        view.goToMainActivity()
     }
 
     override fun onSelectedSim(newValue: Any?) {
     }
 
     override fun onToggledRecords(isToggle: Boolean) {
-        mvpView.setPrefRecordsEnabled(isToggle)
+        view.setPrefRecordsEnabled(isToggle)
     }
 
     override fun onSelectedRecordFormat(newValue: Any?) {
     }
 
     override fun onToggledAnimation(isToggle: Boolean) {
-        mvpView.setPrefAnimations(isToggle)
+        view.setPrefAnimations(isToggle)
         refresh()
     }
 
     override fun onToggledCompactMode(isToggle: Boolean) {
-        mvpView.setPrefCompact(isToggle)
+        view.setPrefCompact(isToggle)
         refresh()
     }
 
     override fun onSelectedDefaultPage(pageKey: String) {
-        mvpView.setPrefDefaultPage(Page.fromKey(pageKey))
+        view.setPrefDefaultPage(Page.fromKey(pageKey))
         refresh()
     }
 
     override fun onToggledScrollIndicator(isToggle: Boolean) {
-        mvpView.setPrefScrollIndicator(isToggle)
+        view.setPrefScrollIndicator(isToggle)
         refresh()
     }
 }

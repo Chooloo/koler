@@ -9,15 +9,15 @@ class PhonesPresenter<V : PhonesContract.View>(mvpView: V) :
     PhonesContract.Presenter<V> {
 
     override fun onPhonesChanged(phones: ArrayList<PhoneAccount>) {
-        mvpView.convertBundleToList(phones).let { mvpView.updateData(it) }
+        view.convertBundleToList(phones).let { view.updateData(it) }
     }
 
     override fun onPhoneItemClick(phoneAccount: PhoneAccount) {
-        mvpView.callNumber(phoneAccount.number)
+        view.callNumber(phoneAccount.number)
     }
 
     override fun onPhoneLongItemClick(phoneAccount: PhoneAccount) {
-        mvpView.apply {
+        view.apply {
             clipboardText(phoneAccount.number)
             showMessage(getString(R.string.number_copied_to_clipboard))
         }

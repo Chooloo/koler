@@ -9,11 +9,11 @@ class RecentsPresenter<V : RecentsContract.View>(mvpView: V) :
     RecentsContract.Presenter<V> {
     
     override fun onRecentsChanged(recents: ArrayList<Recent>) {
-        mvpView.updateData(ListBundle.fromRecents(recents))
+        view.updateData(ListBundle.fromRecents(recents))
     }
 
     override fun onRecentItemClick(recent: Recent) {
-        mvpView.openRecent(recent)
+        view.openRecent(recent)
     }
 
     override fun onRecentItemLongClick(recent: Recent) {}

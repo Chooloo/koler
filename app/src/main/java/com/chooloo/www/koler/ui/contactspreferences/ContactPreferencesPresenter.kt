@@ -7,18 +7,18 @@ class ContactPreferencesPresenter<V : ContactPreferencesContract.View>(mvpView: 
     ContactPreferencesContract.Presenter<V> {
 
     override fun onBlockClick() {
-        mvpView.toggleContactBlocked(true)
+        view.toggleContactBlocked(true)
     }
 
     override fun onUnblockClick() {
-        mvpView.toggleContactBlocked(false)
+        view.toggleContactBlocked(false)
     }
 
     override fun onFavoriteClick() {
-        mvpView.toggleContactFavorite(true)
+        view.toggleContactFavorite(true)
     }
 
     override fun onUnFavoriteClick() {
-        mvpView.toggleContactFavorite(false)
+        view.toggleContactFavorite(false)
     }
 }

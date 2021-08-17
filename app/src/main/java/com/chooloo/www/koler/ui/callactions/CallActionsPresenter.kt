@@ -25,25 +25,25 @@ class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
 
     override fun onRecordClick() {
         if (_isRecording) {
-            mvpView.stopRecording()
+            view.stopRecording()
             _isRecording = false
         } else {
             if (CallManager.sCall != null) {
-                mvpView.startRecording()
-                mvpView.showMessage("Recording...")
+                view.startRecording()
+                view.showMessage("Recording...")
                 _isRecording = true
             } else {
-                mvpView.showError("No active calls to record")
+                view.showError("No active calls to record")
             }
         }
     }
 
     override fun onKeypadClick() {
-        mvpView.openDialpad()
+        view.openDialpad()
     }
 
     override fun onAddCallClick() {
-        mvpView.addCall()
+        view.addCall()
     }
 
     override fun onSpeakerClick() {

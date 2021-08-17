@@ -7,18 +7,18 @@ open class ListPresenter<ItemType, V : ListContract.View<ItemType>>(mvpView: V) 
     ListContract.Presenter<ItemType, V> {
 
     override fun onResults() {
-        mvpView.showEmptyPage(false)
+        view.showEmptyPage(false)
     }
 
     override fun onNoResults() {
-        mvpView.apply {
-            emptyStateText = mvpView.noResultsMessage
+        view.apply {
+            emptyStateText = view.noResultsMessage
             showEmptyPage(true)
         }
     }
 
     override fun onDataChanged() {
-        mvpView.apply {
+        view.apply {
             if (itemCount == 0) {
                 onNoResults()
             } else {
@@ -28,28 +28,28 @@ open class ListPresenter<ItemType, V : ListContract.View<ItemType>>(mvpView: V) 
     }
 
     override fun onSwipeRefresh() {
-        mvpView.apply {
+        view.apply {
             requestSearchFocus()
             toggleRefreshing(false)
         }
     }
 
     override fun onPermissionsGranted() {
-        mvpView.apply {
-            emptyStateText = mvpView.noResultsMessage
+        view.apply {
+            emptyStateText = view.noResultsMessage
             attachData()
         }
     }
 
     override fun onSearchTextChanged(text: String) {
-        mvpView.applyFilter(text)
+        view.applyFilter(text)
     }
 
     override fun onSelectingChanged(isSelecting: Boolean) {
-        mvpView.showSelecting(isSelecting)
+        view.showSelecting(isSelecting)
     }
 
     override fun onPermissionsBlocked(permissions: Array<String>) {
-        mvpView.emptyStateText = mvpView.noPermissionsMessage
+        view.emptyStateText = view.noPermissionsMessage
     }
 }

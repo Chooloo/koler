@@ -9,11 +9,11 @@ class ContactsPresenter<V : ContactsContract.View>(mvpView: V) :
     ContactsContract.Presenter<V> {
     
     override fun onContactsChanged(contacts: ArrayList<Contact>) {
-        mvpView.updateData(ListBundle.fromContacts(contacts, withFavs = true))
+        view.updateData(ListBundle.fromContacts(contacts, withFavs = true))
     }
 
     override fun onContactItemClick(contact: Contact) {
-        mvpView.openContact(contact)
+        view.openContact(contact)
     }
 
     override fun onContactItemLongClick(contact: Contact) = true
