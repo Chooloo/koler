@@ -1,16 +1,20 @@
 package com.chooloo.www.koler.interactor.contacts
 
 import android.Manifest.permission.WRITE_CONTACTS
+import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
+import android.telephony.PhoneNumberUtils
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 
 class ContactsInteractorImpl(
     private val context: Context,
@@ -47,5 +51,36 @@ class ContactsInteractorImpl(
         contentValues.put(Contacts.STARRED, if (isFavorite) 1 else 0)
         val filter = "${Contacts._ID}=$contactId"
         context.contentResolver.update(Contacts.CONTENT_URI, contentValues, filter, null);
+    }
+
+
+    override fun openSmsView(number: String?) {
+        val intent = Intent(
+            Intent.ACTION_SENDTO,
+            Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
+        )
+        context.startActivity(intent)
+    }
+
+    override fun openContactView(contactId: Long) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
+        }
+        context.startActivity(intent)
+    }
+
+    override fun openAddContactView(number: String) {
+        val intent = Intent(Intent.ACTION_INSERT).apply {
+            type = Contacts.CONTENT_TYPE
+            putExtra(ContactsContract.Intents.Insert.PHONE, number)
+        }
+        context.startActivity(intent)
+    }
+
+    override fun openEditContactView(contactId: Long) {
+        val intent = Intent(Intent.ACTION_EDIT, Contacts.CONTENT_URI).apply {
+            data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
+        }
+        context.startActivity(intent)
     }
 }

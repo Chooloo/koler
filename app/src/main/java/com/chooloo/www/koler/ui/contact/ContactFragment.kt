@@ -1,16 +1,11 @@
 package com.chooloo.www.koler.ui.contact
 
-import ContactsUtils
-import android.Manifest.permission.WRITE_CONTACTS
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import com.chooloo.www.koler.R
-import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
@@ -18,14 +13,11 @@ import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 
 class ContactFragment : BaseFragment(), ContactContract.View {
-    private val _contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
+    override val contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
+
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
-    private val _contact by lazy { boundComponent.contactsInteractor.getContact(_contactId) }
-    private val _phonesFragment by lazy { PhonesFragment.newInstance(_contactId, false) }
-    private val _firstPhone by lazy {
-        boundComponent.phoneAccountsInteractor.getContactAccounts(_contactId).getOrNull(0)
-    }
+    private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId, false) }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -56,7 +48,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _contact?.let { _presenter.onLoadContact(it) }
+        _presenter.onLoadContact()
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
@@ -76,48 +68,16 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     //region contact view
 
     override fun showMenu() {
-        _contact?.id?.let {
-            BottomFragment(ContactPreferencesFragment.newInstance(it)).show(
-                childFragmentManager,
-                null
-            )
-        }
-    }
-
-    override fun smsContact() {
-        _firstPhone?.number?.let { ContactsUtils.openSmsView(baseActivity, it) }
+        BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(
+            childFragmentManager,
+            null
+        )
     }
 
     override fun callContact() {
-        _firstPhone?.number?.let { CallManager.call(baseActivity, it) }
+        //TODO remove this to presenter
+//        _firstPhone?.number?.let { CallManager.call(baseActivity, it) }
     }
-
-    override fun editContact() {
-        ContactsUtils.openEditContactView(baseActivity, _contactId)
-    }
-
-    override fun openContact() {
-        ContactsUtils.openContactView(baseActivity, _contactId)
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun deleteContact() {
-        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
-            boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
-                boundComponent.contactsInteractor.deleteContact(_contactId)
-            }, null, null, null)
-            parentFragmentManager.popBackStack()
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    override fun setFavorite(isFavorite: Boolean) {
-        boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
-            boundComponent.contactsInteractor.toggleContactFavorite(_contactId, isFavorite)
-        }, null, null, null)
-    }
-
-    //endregion
 
 
     companion object {

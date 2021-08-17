@@ -13,4 +13,9 @@ open interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> 
     fun blockContact(contactId: Long)
     fun unblockContact(contactId: Long)
     fun toggleContactFavorite(contactId: Long, isFavorite: Boolean)
+
+    fun openSmsView(number: String?)
+    fun openContactView(contactId: Long)
+    fun openAddContactView(number: String)
+    fun openEditContactView(contactId: Long)
 }
