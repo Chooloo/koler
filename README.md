@@ -34,7 +34,6 @@ If you enjoy the app, wish to contribute or simply wish to be with like-minded p
   </a>
 </p>
 
-
 ## 👍 Support Availablity
 We are aware the app needs more support and updates, due to feature requests and minor bugs
 We are currently not fully available for supporting the app due to a lack of support (The app is free to use)
