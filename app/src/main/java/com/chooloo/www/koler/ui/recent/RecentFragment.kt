@@ -22,11 +22,10 @@ import com.chooloo.www.koler.util.getElapsedTimeString
 import java.util.*
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    private val _recentId by lazy { argsSafely.getLong(ARG_RECENT_ID) }
+    private val _recentId by lazy { args.getLong(ARG_RECENT_ID) }
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
     private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }
     private val _recent by lazy { boundComponent.recentsInteractor.getRecent(_recentId)!! }
-    private val _isBlocked by lazy { boundComponent.numbersInteractor.isNumberBlocked(_recent.number) }
     private val _contact by lazy { boundComponent.phoneAccountsInteractor.lookupAccount(_recent.number) }
 
 
@@ -44,8 +43,11 @@ class RecentFragment : BaseFragment(), RecentContract.View {
                 if (_recent.duration > 0) {
                     text = "$text, ${getElapsedTimeString(_recent.duration)}"
                 }
-                if (_isBlocked) {
-                    text = "$text, ${getString(R.string.error_blocked).toUpperCase(Locale.ROOT)})"
+                boundComponent.permissionInteractor.runWithDefaultDialer {
+                    if (boundComponent.numbersInteractor.isNumberBlocked(_recent.number)) {
+                        text =
+                            "$text, ${getString(R.string.error_blocked).toUpperCase(Locale.ROOT)})"
+                    }
                 }
             }
 
@@ -68,8 +70,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         }
     }
 
-
-    //region recents view
 
     override fun showMenu() {
         BottomFragment(RecentPreferencesFragment.newInstance(_recent.number)).show(
@@ -101,7 +101,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
     override fun openHistory() {
         BottomFragment(
-            RecentsFragment.newInstance(isSearchable = false, filter = _recent.number)
+            RecentsFragment.newInstance(filter = _recent.number, isSearchable = false)
         ).show(baseActivity.supportFragmentManager, ContactFragment.TAG)
     }
 

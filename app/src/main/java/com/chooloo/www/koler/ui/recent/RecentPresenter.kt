@@ -1,9 +1,10 @@
 package com.chooloo.www.koler.ui.recent
 
+import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class RecentPresenter<V : RecentContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class RecentPresenter<V : RecentContract.View>(view: V) :
+    BasePresenter<V>(view),
     RecentContract.Presenter<V> {
     
     override fun onActionMenu() {

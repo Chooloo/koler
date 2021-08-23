@@ -4,8 +4,8 @@ import android.view.KeyEvent
 import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class CallActionsPresenter<V : CallActionsContract.View>(view: V) :
+    BasePresenter<V>(view),
     CallActionsContract.Presenter<V> {
 
     private var _isMuted = false

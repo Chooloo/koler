@@ -57,6 +57,7 @@
         app:layout_constraintTop_toBottomOf="@id/call_state_text"
         tools:text="John Baba" />
 
+    <!-- call actions container -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/call_actions_container"
         android:layout_width="match_parent"

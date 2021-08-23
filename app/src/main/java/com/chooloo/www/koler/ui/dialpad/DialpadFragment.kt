@@ -27,7 +27,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private val _presenter by lazy { DialpadPresenter<DialpadContract.View>(this) }
     private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
 
-    override val isDialer by lazy { argsSafely.getBoolean(ARG_IS_DIALER) }
+    override val isDialer by lazy { args.getBoolean(ARG_IS_DIALER) }
 
     override val suggestionsCount: Int
         get() = _suggestionsFragment.itemCount
@@ -97,7 +97,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 if (isDialer) {
                     addTextChangedListener(PhoneNumberFormattingTextWatcher())
                 }
-                setText(argsSafely.getString(ARG_NUMBER))
+                setText(args.getString(ARG_NUMBER))
                 addOnTextChangedListener {
                     _presenter.onTextChanged(it)
                     _onTextChangedListener.invoke(it)
@@ -191,7 +191,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     }
 
     override fun setSuggestionsFilter(filter: String) {
-        _suggestionsFragment.applyFilter(filter)
+        _suggestionsFragment.presenter.applyFilter(filter)
     }
 
     //endregion

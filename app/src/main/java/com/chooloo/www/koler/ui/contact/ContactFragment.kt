@@ -13,11 +13,11 @@ import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 
 class ContactFragment : BaseFragment(), ContactContract.View {
-    override val contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
+    override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId, false) }
+    private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()

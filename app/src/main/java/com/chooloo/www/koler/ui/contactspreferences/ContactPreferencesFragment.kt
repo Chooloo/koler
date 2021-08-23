@@ -22,10 +22,13 @@ class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesC
 
         getPreference<Preference>(R.string.pref_key_unset_favorite)?.isVisible = _contact!!.starred
         getPreference<Preference>(R.string.pref_key_set_favorite)?.isVisible = !_contact!!.starred
-        getPreference<Preference>(R.string.pref_key_block_contact)?.isVisible =
-            !componentRoot.contactsInteractor.isContactBlocked(_contactId)
-        getPreference<Preference>(R.string.pref_key_unblock_contact)?.isVisible =
-            componentRoot.contactsInteractor.isContactBlocked(_contactId)
+
+        boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+            getPreference<Preference>(R.string.pref_key_block_contact)?.isVisible =
+                !componentRoot.contactsInteractor.isContactBlocked(_contactId)
+            getPreference<Preference>(R.string.pref_key_unblock_contact)?.isVisible =
+                componentRoot.contactsInteractor.isContactBlocked(_contactId)
+        }
     }
 
     override fun onPreferenceClickListener(preference: Preference) {

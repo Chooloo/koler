@@ -19,6 +19,9 @@ import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImp
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.koler.interactor.string.StringInteractorImpl
+import com.chooloo.www.koler.livedata.ContactsProviderLiveData
+import com.chooloo.www.koler.livedata.PhoneProviderLiveData
+import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.util.PreferencesManager
 
 open class ComponentRootImpl(
@@ -54,6 +57,19 @@ open class ComponentRootImpl(
 
     override val preferencesManager by lazy {
         PreferencesManager.getInstance(application)
+    }
+
+
+    override val phonesProviderLiveData by lazy {
+        PhoneProviderLiveData(application, 1L)
+    }
+
+    override val recentsProviderLiveData by lazy {
+        RecentsProviderLiveData(application)
+    }
+
+    override val contactsProviderLiveData by lazy {
+        ContactsProviderLiveData(application)
     }
 
 

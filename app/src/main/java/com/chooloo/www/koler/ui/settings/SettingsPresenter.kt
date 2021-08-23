@@ -1,14 +1,15 @@
 package com.chooloo.www.koler.ui.settings
 
+import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.koler.ui.base.BasePresenter
 
-class SettingsPresenter<V : SettingsContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class SettingsPresenter<V : SettingsContract.View>(view: V) :
+    BasePresenter<V>(view),
     SettingsContract.Presenter<V> {
-    
+
     override fun refresh() {
         view.goToMainActivity()
     }

@@ -2,54 +2,63 @@ package com.chooloo.www.koler.ui.list
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-open class ListPresenter<ItemType, V : ListContract.View<ItemType>>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V) :
+    BasePresenter<V>(view),
     ListContract.Presenter<ItemType, V> {
+
+    override fun onStart() {
+        boundComponent.permissionInteractor.runWithPermissions(
+            permissions = this.requiredPermissions,
+            grantedCallback = ::onPermissionsGranted,
+            blockedCallback = ::onPermissionsBlocked,
+            rationaleMessage = null,
+            deniedCallback = null
+        )
+        if (boundComponent.preferencesInteractor.isScrollIndicator) {
+            view.setupScrollIndicator()
+        }
+    }
 
     override fun onResults() {
         view.showEmptyPage(false)
     }
 
     override fun onNoResults() {
-        view.apply {
-            emptyStateText = view.noResultsMessage
-            showEmptyPage(true)
-        }
-    }
-
-    override fun onDataChanged() {
-        view.apply {
-            if (itemCount == 0) {
-                onNoResults()
-            } else {
-                onResults()
-            }
-        }
+        view.emptyStateText = noResultsMessage
+        view.showEmptyPage(true)
     }
 
     override fun onSwipeRefresh() {
-        view.apply {
-            requestSearchFocus()
-            toggleRefreshing(false)
-        }
+        view.requestSearchFocus()
+        view.toggleRefreshing(false)
     }
 
     override fun onPermissionsGranted() {
-        view.apply {
-            emptyStateText = view.noResultsMessage
-            attachData()
-        }
+        view.emptyStateText = noResultsMessage
+        observeData()
     }
 
     override fun onSearchTextChanged(text: String) {
-        view.applyFilter(text)
+        applyFilter(text)
     }
 
-    override fun onSelectingChanged(isSelecting: Boolean) {
+    override fun onDataChanged(items: ArrayList<ItemType>) {
+        view.updateData(items)
+        if (view.itemCount == 0) {
+            onNoResults()
+        } else {
+            onResults()
+        }
+    }
+
+    override fun onIsSelectingChanged(isSelecting: Boolean) {
         view.showSelecting(isSelecting)
     }
 
     override fun onPermissionsBlocked(permissions: Array<String>) {
-        view.emptyStateText = view.noPermissionsMessage
+        view.emptyStateText = noPermissionsMessage
     }
+
+    abstract fun observeData()
+    abstract fun applyFilter(filter: String)
 }

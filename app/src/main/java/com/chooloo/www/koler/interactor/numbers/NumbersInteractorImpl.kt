@@ -14,6 +14,7 @@ class NumbersInteractorImpl(
     override fun isNumberBlocked(number: String) =
         BlockedNumberContract.isBlocked(context, number)
 
+    @RequiresDefaultDialer
     override fun blockNumber(number: String) {
         if (isNumberBlocked(number)) return
         val contentValues = ContentValues()
@@ -21,6 +22,7 @@ class NumbersInteractorImpl(
         context.contentResolver.insert(BlockedNumbers.CONTENT_URI, contentValues)
     }
 
+    @RequiresDefaultDialer
     override fun unblockNumber(number: String) {
         if (!isNumberBlocked(number)) return
         val contentValues = ContentValues()

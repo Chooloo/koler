@@ -13,7 +13,9 @@ import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     private val _callRecorder by lazy { CallRecorder(baseActivity) }
     private val _binding by lazy { CallActionsBinding.inflate(layoutInflater) }
-    private val _presenter by lazy { CallActionsPresenter<CallActionsContract.View>(this) }
+    private val _presenter by lazy {
+        CallActionsPresenter<CallActionsContract.View>(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

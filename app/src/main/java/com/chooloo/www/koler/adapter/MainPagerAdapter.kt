@@ -17,7 +17,7 @@ class MainPagerAdapter(private val activity: BaseActivity) : FragmentStateAdapte
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            1 -> RecentsFragment.newInstance(_isCompactPref, true)
+            1 -> RecentsFragment.newInstance(isCompact = _isCompactPref, isSearchable = true)
             else -> ContactsFragment.newInstance(_isCompactPref, true)
         }
     }

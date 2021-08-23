@@ -15,10 +15,12 @@ class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesCon
     override fun onSetup() {
         super.onSetup()
 
-        getPreference<Preference>(R.string.pref_key_block_number)?.isVisible =
-            _number?.let { !componentRoot.numbersInteractor.isNumberBlocked(it) } ?: false
-        getPreference<Preference>(R.string.pref_key_unblock_number)?.isVisible =
-            _number?.let { componentRoot.numbersInteractor.isNumberBlocked(it) } ?: false
+        boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+            getPreference<Preference>(R.string.pref_key_block_number)?.isVisible =
+                _number?.let { !componentRoot.numbersInteractor.isNumberBlocked(it) } ?: false
+            getPreference<Preference>(R.string.pref_key_unblock_number)?.isVisible =
+                _number?.let { componentRoot.numbersInteractor.isNumberBlocked(it) } ?: false
+        }
     }
 
     override fun onPreferenceClickListener(preference: Preference) {

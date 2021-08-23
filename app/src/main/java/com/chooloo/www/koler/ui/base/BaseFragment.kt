@@ -15,7 +15,7 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
     override val boundComponent: BoundComponentRoot
         get() = baseActivity.boundComponent
 
-    val argsSafely: Bundle
+    val args: Bundle
         get() = arguments ?: Bundle()
 
 

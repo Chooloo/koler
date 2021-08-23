@@ -1,14 +1,15 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
+import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.ui.base.BasePresenter
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
-class MainPresenter<V : MainContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class MainPresenter<V : MainContract.View>(view: V) :
+    BasePresenter<V>(view),
     MainContract.Presenter<V> {
-    
+
     override fun onMenuClick() {
         view.openSettings()
     }

@@ -1,11 +1,12 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.view.KeyEvent.*
+import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class DialpadPresenter<V : DialpadContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class DialpadPresenter<V : DialpadContract.View>(view: V) :
+    BasePresenter<V>(view),
     DialpadContract.Presenter<V> {
 
     override fun onKeyClick(keyCode: Int) {

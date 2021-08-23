@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--region generic sizes-->
-
     <!--region text size-->
     <dimen name="caption_1">13sp</dimen>
     <dimen name="headline_1">46sp</dimen>

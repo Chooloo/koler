@@ -8,8 +8,8 @@ import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class CallPresenter<V : CallContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class CallPresenter<V : CallContract.View>(view: V) :
+    BasePresenter<V>(view),
     CallContract.Presenter<V> {
 
     override fun onAnswerClick() {

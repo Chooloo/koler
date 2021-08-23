@@ -94,6 +94,4 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun updateSearchViewModelNumber(text: String?) {
         _searchViewModel.number.value = text
     }
-
-    //endregion
 }

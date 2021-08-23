@@ -2,7 +2,6 @@ package com.chooloo.www.koler.ui.base
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 
 interface BaseContract {
@@ -23,6 +22,5 @@ interface BaseContract {
 
     interface Presenter<V : View> {
         val view: V
-        val viewLifecycle: Lifecycle
     }
 }

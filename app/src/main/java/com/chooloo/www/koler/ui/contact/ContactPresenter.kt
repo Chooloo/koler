@@ -2,16 +2,17 @@ package com.chooloo.www.koler.ui.contact
 
 import android.Manifest
 import android.net.Uri
+import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class ContactPresenter<V : ContactContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class ContactPresenter<V : ContactContract.View>(view: V) :
+    BasePresenter<V>(view),
     ContactContract.Presenter<V> {
 
-    private val contact by lazy { boundComponent.contactsInteractor.getContact(mvpView.contactId) }
+    private val contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
     private val firstPhone by lazy {
-        boundComponent.phoneAccountsInteractor.getContactAccounts(mvpView.contactId).getOrNull(0)
+        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId).getOrNull(0)
     }
 
     override fun onLoadContact() {

@@ -15,6 +15,7 @@ import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
+import com.chooloo.www.koler.util.annotation.RequiresDefaultDialer
 
 class ContactsInteractorImpl(
     private val context: Context,
@@ -24,6 +25,7 @@ class ContactsInteractorImpl(
     override fun getContact(contactId: Long): Contact? =
         ContactsContentResolver(context, contactId).content.getOrNull(0)
 
+    @RequiresDefaultDialer
     override fun isContactBlocked(contactId: Long): Boolean =
         phoneAccountsInteractor.getContactAccounts(contactId)
             .all { numbersInteractor.isNumberBlocked(it.number) }

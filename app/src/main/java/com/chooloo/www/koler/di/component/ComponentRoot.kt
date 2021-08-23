@@ -17,6 +17,9 @@ import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
+import com.chooloo.www.koler.livedata.ContactsProviderLiveData
+import com.chooloo.www.koler.livedata.PhoneProviderLiveData
+import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.util.PreferencesManager
 
 interface ComponentRoot {
@@ -28,6 +31,10 @@ interface ComponentRoot {
     val clipboardManager: ClipboardManager
     val inputMethodManager: InputMethodManager
     val preferencesManager: PreferencesManager
+
+    val phonesProviderLiveData: PhoneProviderLiveData
+    val recentsProviderLiveData: RecentsProviderLiveData
+    val contactsProviderLiveData: ContactsProviderLiveData
 
     val colorInteractor: ColorInteractor
     val audioInteractor: AudioInteractor

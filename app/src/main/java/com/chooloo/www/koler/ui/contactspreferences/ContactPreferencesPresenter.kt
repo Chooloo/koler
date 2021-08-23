@@ -2,8 +2,8 @@ package com.chooloo.www.koler.ui.contactspreferences
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class ContactPreferencesPresenter<V : ContactPreferencesContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class ContactPreferencesPresenter<V : ContactPreferencesContract.View>(view: V) :
+    BasePresenter<V>(view),
     ContactPreferencesContract.Presenter<V> {
 
     override fun onBlockClick() {

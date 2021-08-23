@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.interactor.permission
 
+import android.app.Activity
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
@@ -26,7 +27,11 @@ class PermissionInteractorImpl(
     override fun requestDefaultDialer() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val roleManager = context.getSystemService(Context.ROLE_SERVICE) as RoleManager
-            context.startActivity(roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER))
+            val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
+            if (context !is Activity) {
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(intent)
         } else {
             val intent = Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER)
             intent.putExtra(

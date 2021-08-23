@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <Preference
         android:icon="@drawable/ic_star_black_24dp"
         android:key="@string/pref_key_set_favorite"

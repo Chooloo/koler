@@ -48,7 +48,6 @@
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
             android:screenOrientation="portrait">
 
-
             <!--region intent-filters-->
 
             <intent-filter>
@@ -70,8 +69,6 @@
             </intent-filter>
 
             <!--endregion-->
-
-
         </activity>
 
         <activity

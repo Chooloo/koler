@@ -24,5 +24,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bottom_dialog_fragment_swipe_indicator" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
