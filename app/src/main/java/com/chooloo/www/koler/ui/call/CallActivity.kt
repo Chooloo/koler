@@ -13,8 +13,8 @@ import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
+    private val _presenter by lazy { CallPresenter(this) }
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
-    private val _presenter by lazy { CallPresenter<CallContract.View>(this) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
             override fun onCallDetailsChanged(callDetails: CallDetails) {

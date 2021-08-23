@@ -2,6 +2,8 @@ package com.chooloo.www.koler.ui.callactions
 
 import android.view.KeyEvent
 import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode.*
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class CallActionsPresenter<V : CallActionsContract.View>(view: V) :
@@ -12,6 +14,10 @@ class CallActionsPresenter<V : CallActionsContract.View>(view: V) :
     private var _isSpeaker = false
     private var _isRecording = false
     private var _isHolding = false
+
+    override fun onStart() {
+        boundComponent.audioInteractor.audioMode = IN_CALL
+    }
 
     override fun onHoldClick() {
         _isHolding = !_isHolding
