@@ -29,7 +29,7 @@ Support it by joining [Stargazers](https://github.com/VishnuSanal/Quotes/stargaz
 If you enjoy the app, wish to contribute or simply wish to be with like-minded people, come join us!!! It'll be fun :)
 
 <p align="center">
-  <a href="https://t.me/joinchat/_S5OJUMTur40N2U0">
+  <a href="https://t.me/kolerOfficial">
 	<img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Join us on Telegram" height="60px">
   </a>
 </p>
