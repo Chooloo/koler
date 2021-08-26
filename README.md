@@ -23,7 +23,7 @@ If you like the app and want us to fix and improve it, please consider giving us
 [![Donate with PayPal](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://paypal.me/theroeiedri?locale.x=en_US)
 
 ## ⭐ Find this repository useful?
-Support it by joining [Stargazers](https://github.com/VishnuSanal/Quotes/stargazers8) for this repository.
+Support it by joining [Stargazers](https://github.com/Chooloo/koler/stargazers) for this repository.
 
 ## 🏠 Join Telegram Group
 If you enjoy the app, wish to contribute or simply wish to be with like-minded people, come join us!!! It'll be fun :)
