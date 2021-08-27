@@ -9,12 +9,17 @@ import android.telecom.TelecomManager
 import android.view.inputmethod.InputMethodManager
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
+import com.chooloo.www.koler.interactor.drawable.DrawableInteractor
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
-import com.chooloo.www.koler.interactor.permission.PermissionInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
+import com.chooloo.www.koler.interactor.string.StringInteractor
+import com.chooloo.www.koler.livedata.ContactsProviderLiveData
+import com.chooloo.www.koler.livedata.PhoneProviderLiveData
+import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.util.PreferencesManager
 
 interface ComponentRoot {
@@ -27,12 +32,18 @@ interface ComponentRoot {
     val inputMethodManager: InputMethodManager
     val preferencesManager: PreferencesManager
 
+    val phonesProviderLiveData: PhoneProviderLiveData
+    val recentsProviderLiveData: RecentsProviderLiveData
+    val contactsProviderLiveData: ContactsProviderLiveData
+
+    val colorInteractor: ColorInteractor
     val audioInteractor: AudioInteractor
+    val stringInteractor: StringInteractor
     val numbersInteractor: NumbersInteractor
     val recentsInteractor: RecentsInteractor
+    val drawableInteractor: DrawableInteractor
     val contactsInteractor: ContactsInteractor
     val animationInteractor: AnimationInteractor
-    val permissionInteractor: PermissionInteractor
     val preferencesInteractor: PreferencesInteractor
     val phoneAccountsInteractor: PhoneAccountsInteractor
 }

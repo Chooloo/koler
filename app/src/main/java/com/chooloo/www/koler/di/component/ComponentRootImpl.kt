@@ -11,15 +11,20 @@ import android.telecom.TelecomManager
 import android.view.inputmethod.InputMethodManager
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
+import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
+import com.chooloo.www.koler.interactor.drawable.DrawableInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractorImpl
-import com.chooloo.www.koler.interactor.permission.PermissionInteractorImpl
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
+import com.chooloo.www.koler.interactor.string.StringInteractorImpl
+import com.chooloo.www.koler.livedata.ContactsProviderLiveData
+import com.chooloo.www.koler.livedata.PhoneProviderLiveData
+import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.util.PreferencesManager
 
-class ComponentRootImpl(
+open class ComponentRootImpl(
     internal val application: Application
 ) : ComponentRoot {
     override val vibrator by lazy {
@@ -55,8 +60,29 @@ class ComponentRootImpl(
     }
 
 
+    override val phonesProviderLiveData by lazy {
+        PhoneProviderLiveData(application, 1L)
+    }
+
+    override val recentsProviderLiveData by lazy {
+        RecentsProviderLiveData(application)
+    }
+
+    override val contactsProviderLiveData by lazy {
+        ContactsProviderLiveData(application)
+    }
+
+
+    override val colorInteractor by lazy {
+        ColorInteractorImpl(application)
+    }
+
     override val audioInteractor by lazy {
         AudioInteractorImpl(vibrator, audioManager)
+    }
+
+    override val stringInteractor by lazy {
+        StringInteractorImpl(application)
     }
 
     override val numbersInteractor by lazy {
@@ -66,6 +92,10 @@ class ComponentRootImpl(
     override val recentsInteractor by lazy {
         RecentsInteractorImpl(application)
     }
+    
+    override val drawableInteractor by lazy {
+        DrawableInteractorImpl(application)
+    }
 
     override val contactsInteractor by lazy {
         ContactsInteractorImpl(application, numbersInteractor, phoneAccountsInteractor)
@@ -73,9 +103,6 @@ class ComponentRootImpl(
 
     override val animationInteractor by lazy {
         AnimationInteractorImpl(preferencesInteractor)
-    }
-    override val permissionInteractor by lazy {
-        PermissionInteractorImpl(application, telecomManager)
     }
 
     override val preferencesInteractor by lazy {

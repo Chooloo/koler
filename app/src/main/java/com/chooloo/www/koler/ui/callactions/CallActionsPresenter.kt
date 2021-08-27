@@ -1,17 +1,23 @@
 package com.chooloo.www.koler.ui.callactions
 
 import android.view.KeyEvent
-import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode.*
+import com.chooloo.www.koler.ui.base.BasePresenter
 
-class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class CallActionsPresenter<V : CallActionsContract.View>(view: V) :
+    BasePresenter<V>(view),
     CallActionsContract.Presenter<V> {
 
     private var _isMuted = false
     private var _isSpeaker = false
     private var _isRecording = false
     private var _isHolding = false
+
+    override fun onStart() {
+        boundComponent.audioInteractor.audioMode = IN_CALL
+    }
 
     override fun onHoldClick() {
         _isHolding = !_isHolding
@@ -20,35 +26,32 @@ class CallActionsPresenter<V : CallActionsContract.View>(mvpView: V) :
 
     override fun onMuteClick() {
         _isMuted = !_isMuted
-        mvpView.toggleMute(_isMuted)
+        boundComponent.audioInteractor.isMuted = _isMuted
     }
 
     override fun onRecordClick() {
         if (_isRecording) {
-            mvpView.stopRecording()
             _isRecording = false
         } else {
             if (CallManager.sCall != null) {
-                mvpView.startRecording()
-                mvpView.showMessage("Recording...")
+                view.showMessage("Recording...")
                 _isRecording = true
             } else {
-                mvpView.showError("No active calls to record")
+                view.showError("No active calls to record")
             }
         }
     }
 
     override fun onKeypadClick() {
-        mvpView.openDialpad()
+        view.openDialpad()
     }
 
     override fun onAddCallClick() {
-        mvpView.addCall()
     }
 
     override fun onSpeakerClick() {
         _isSpeaker = !_isSpeaker
-        mvpView.toggleSpeaker(_isSpeaker)
+        boundComponent.audioInteractor.isSpeakerOn = _isSpeaker
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {

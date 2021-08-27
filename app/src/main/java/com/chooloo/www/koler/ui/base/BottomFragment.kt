@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.chooloo.www.koler.KolerApp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import com.chooloo.www.koler.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -15,11 +16,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 open class BottomFragment<FragmentType : Fragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
+    override val boundComponent
+        get() = baseActivity.boundComponent
+
     private val _binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
 
     protected val argsSafely get() = arguments ?: Bundle()
     protected val baseActivity by lazy { context as BaseActivity }
-    protected val componentRoot by lazy { (baseActivity.applicationContext as KolerApp).componentRoot }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

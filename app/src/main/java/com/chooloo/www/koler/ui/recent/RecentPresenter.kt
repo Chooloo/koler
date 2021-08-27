@@ -1,36 +1,86 @@
 package com.chooloo.www.koler.ui.recent
 
+import android.Manifest
+import com.chooloo.www.koler.R
+import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.util.getElapsedTimeString
+import java.util.*
 
-class RecentPresenter<V : RecentContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class RecentPresenter<V : RecentContract.View>(view: V) :
+    BasePresenter<V>(view),
     RecentContract.Presenter<V> {
-    
+
+    private val _recent by lazy {
+        boundComponent.recentsInteractor.getRecent(view.recentId)
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        if (_recent == null) {
+            return
+        }
+        view.recentCaption = if (_recent!!.duration <= 0) {
+            _recent!!.relativeTime
+        } else {
+            "${view.recentCaption}, ${getElapsedTimeString(_recent!!.duration)}"
+        }
+        boundComponent.permissionInteractor.runWithDefaultDialer {
+            if (boundComponent.numbersInteractor.isNumberBlocked(_recent!!.number)) {
+                view.recentCaption = "${view.recentCaption}, ${
+                    boundComponent.stringInteractor.getString(R.string.error_blocked)
+                        .toUpperCase(Locale.ROOT)
+                })"
+            }
+        }
+        view.recentImage = boundComponent.drawableInteractor.getDrawable(
+            RecentsContentResolver.getCallTypeImage(_recent!!.type)
+        )
+        view.recentName = _recent!!.cachedName ?: _recent!!.number
+
+        boundComponent.phoneAccountsInteractor.lookupAccount(_recent!!.number).also {
+            view.isContactVisible = it != null
+            view.isAddContactVisible = it == null
+        }
+    }
+
     override fun onActionMenu() {
-        mvpView.showMenu()
+        _recent?.let { view.showRecentMenu(it.number) }
     }
 
     override fun onActionSms() {
-        mvpView.smsRecent()
+        _recent?.let { boundComponent.contactsInteractor.openSmsView(it.number) }
     }
 
     override fun onActionCall() {
-        mvpView.callRecent()
+        // TODO call recent number
+//        recent?.let { CallManager.call(baseActivity, it.number) }
     }
 
     override fun onActionDelete() {
-        mvpView.deleteRecent()
+        _recent?.let {
+            boundComponent.permissionInteractor.runWithPermissions(
+                arrayOf(Manifest.permission.WRITE_CALL_LOG),
+                { boundComponent.recentsInteractor.deleteRecent(it.id) },
+                null, null, null
+            )
+        }
     }
 
     override fun onActionAddContact() {
-        mvpView.addContact()
+        _recent?.let { boundComponent.contactsInteractor.openAddContactView(it.number) }
     }
 
     override fun onActionOpenContact() {
-        mvpView.openContact()
+        _recent?.let {
+            boundComponent.phoneAccountsInteractor.lookupAccount(it.number)?.contactId?.let {
+                view.openContactView(it)
+            }
+        }
     }
 
     override fun onActionShowHistory() {
-        mvpView.openHistory()
+        _recent?.let { view.openHistoryView(it.number) }
     }
 }

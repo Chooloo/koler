@@ -3,73 +3,44 @@ package com.chooloo.www.koler.ui.recents
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
-import com.chooloo.www.koler.contentresolver.RecentsContentResolver
+import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.data.Recent
-import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
 
-class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), RecentsContract.View {
-    private val _recentsLiveData by lazy { RecentsProviderLiveData(baseActivity) }
-    private val _presenter by lazy { RecentsPresenter<RecentsContract.View>(this) }
-
+class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), ListContract.View<Recent> {
     override val searchHint by lazy { getString(R.string.hint_search_recents) }
-    override val requiredPermissions = RecentsContentResolver.REQUIRED_PERMISSIONS
-    override val noResultsMessage by lazy { getString(R.string.error_no_results_recents) }
-    override val noPermissionsMessage by lazy { getString(R.string.error_no_permissions_recents) }
+    override lateinit var presenter: RecentsPresenter<RecentsFragment>
     override val adapter by lazy {
-        RecentsAdapter(componentRoot.preferencesInteractor, componentRoot.phoneAccountsInteractor)
+        RecentsAdapter(boundComponent.preferencesInteractor, boundComponent.phoneAccountsInteractor)
     }
 
 
-    //region list fragment
-
-    override fun onAttachData() {
-        _recentsLiveData.observe(viewLifecycleOwner, _presenter::onRecentsChanged)
-        argsSafely.getString(ARG_FILTER)?.let { applyFilter(it) }
+    override fun onSetup() {
+        presenter = RecentsPresenter(this)
+        super.onSetup()
     }
 
-    override fun onItemClick(item: Recent) {
-        _presenter.onRecentItemClick(item)
+    override fun updateData(dataList: ArrayList<Recent>) {
+        adapter.data = ListBundle.fromRecents(dataList)
     }
 
-    override fun onItemLongClick(item: Recent) {
-        _presenter.onRecentItemLongClick(item)
-    }
-
-    override fun onDeleteItems(items: ArrayList<Recent>) {
-        componentRoot.permissionInteractor.runWithPrompt(R.string.warning_delete_recents) {
-            items.forEach { componentRoot.recentsInteractor.deleteRecent(it.id) }
-        }
-    }
-
-    override fun applyFilter(filter: String) {
-        _recentsLiveData.filter = filter
-    }
-
-    //endregion
-
-    //region recents view
-
-    override fun openRecent(recent: Recent) {
-        BottomFragment(RecentFragment.newInstance(recent.id)).show(
+    override fun showItem(item: Recent) {
+        BottomFragment(RecentFragment.newInstance(item.id)).show(
             baseActivity.supportFragmentManager,
             RecentFragment.TAG
         )
     }
 
-    //endregion
-
 
     companion object {
-        const val ARG_FILTER = "filter"
-
         fun newInstance(
+            filter: String? = null,
             isCompact: Boolean = false,
             isSearchable: Boolean = true,
-            isHideNoResults: Boolean = false,
-            filter: String? = null
+            isHideNoResults: Boolean = false
         ) =
             RecentsFragment().apply {
                 arguments = Bundle().apply {

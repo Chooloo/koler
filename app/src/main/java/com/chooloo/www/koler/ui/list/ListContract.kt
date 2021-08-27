@@ -1,36 +1,42 @@
 package com.chooloo.www.koler.ui.list
 
-import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
         val itemCount: Int
         val searchHint: String?
-        val hideNoResults: Boolean
         var emptyStateText: String?
-        val noResultsMessage: String
-        val noPermissionsMessage: String
-        val requiredPermissions: Array<String>?
 
-        fun attachData()
+
         fun animateListView()
         fun requestSearchFocus()
-        fun applyFilter(filter: String) {}
+        fun setupScrollIndicator()
+        fun showItem(item: ItemType)
         fun showEmptyPage(isShow: Boolean)
         fun showSelecting(isSelecting: Boolean)
-        fun updateData(data: ListBundle<ItemType>)
         fun toggleRefreshing(isRefreshing: Boolean)
+        fun updateData(dataList: ArrayList<ItemType>)
     }
 
     interface Presenter<ItemType, V : View<ItemType>> : BaseContract.Presenter<V> {
+        val noResultsMessage: String
+        val noPermissionsMessage: String
+        val requiredPermissions: Array<String>
+
         fun onResults()
         fun onNoResults()
-        fun onDataChanged()
         fun onSwipeRefresh()
+
+        fun onItemClick(item: ItemType) {}
+        fun onItemLongClick(item: ItemType) {}
+
+        fun onSearchTextChanged(text: String) {}
+        fun onDataChanged(items: ArrayList<ItemType>)
+        fun onDeleteItems(items: ArrayList<ItemType>) {}
+        fun onIsSelectingChanged(isSelecting: Boolean) {}
+
         fun onPermissionsGranted()
-        fun onSearchTextChanged(text: String)
-        fun onSelectingChanged(isSelecting: Boolean)
         fun onPermissionsBlocked(permissions: Array<String>)
     }
 }

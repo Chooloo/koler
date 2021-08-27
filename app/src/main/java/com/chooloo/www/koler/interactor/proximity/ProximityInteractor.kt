@@ -4,4 +4,7 @@ import com.chooloo.www.koler.interactor.base.BaseInteractor
 
 interface ProximityInteractor : BaseInteractor<ProximityInteractor.Listener> {
     interface Listener
+
+    fun acquire()
+    fun release()
 }

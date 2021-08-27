@@ -5,12 +5,7 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface CallActionsContract : BaseContract {
     interface View : BaseContract.View {
-        fun addCall()
         fun openDialpad()
-        fun stopRecording()
-        fun startRecording()
-        fun toggleMute(isMute: Boolean)
-        fun toggleSpeaker(isSpeaker: Boolean)
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

@@ -2,54 +2,63 @@ package com.chooloo.www.koler.ui.list
 
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-open class ListPresenter<ItemType, V : ListContract.View<ItemType>>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V) :
+    BasePresenter<V>(view),
     ListContract.Presenter<ItemType, V> {
 
+    override fun onStart() {
+        boundComponent.permissionInteractor.runWithPermissions(
+            permissions = this.requiredPermissions,
+            grantedCallback = ::onPermissionsGranted,
+            blockedCallback = ::onPermissionsBlocked,
+            rationaleMessage = null,
+            deniedCallback = null
+        )
+        if (boundComponent.preferencesInteractor.isScrollIndicator) {
+            view.setupScrollIndicator()
+        }
+    }
+
     override fun onResults() {
-        mvpView.showEmptyPage(false)
+        view.showEmptyPage(false)
     }
 
     override fun onNoResults() {
-        mvpView.apply {
-            emptyStateText = mvpView.noResultsMessage
-            showEmptyPage(true)
-        }
-    }
-
-    override fun onDataChanged() {
-        mvpView.apply {
-            if (itemCount == 0) {
-                onNoResults()
-            } else {
-                onResults()
-            }
-        }
+        view.emptyStateText = noResultsMessage
+        view.showEmptyPage(true)
     }
 
     override fun onSwipeRefresh() {
-        mvpView.apply {
-            requestSearchFocus()
-            toggleRefreshing(false)
-        }
+        view.requestSearchFocus()
+        view.toggleRefreshing(false)
     }
 
     override fun onPermissionsGranted() {
-        mvpView.apply {
-            emptyStateText = mvpView.noResultsMessage
-            attachData()
-        }
+        view.emptyStateText = noResultsMessage
+        observeData()
     }
 
     override fun onSearchTextChanged(text: String) {
-        mvpView.applyFilter(text)
+        applyFilter(text)
     }
 
-    override fun onSelectingChanged(isSelecting: Boolean) {
-        mvpView.showSelecting(isSelecting)
+    override fun onDataChanged(items: ArrayList<ItemType>) {
+        view.updateData(items)
+        if (view.itemCount == 0) {
+            onNoResults()
+        } else {
+            onResults()
+        }
+    }
+
+    override fun onIsSelectingChanged(isSelecting: Boolean) {
+        view.showSelecting(isSelecting)
     }
 
     override fun onPermissionsBlocked(permissions: Array<String>) {
-        mvpView.emptyStateText = mvpView.noPermissionsMessage
+        view.emptyStateText = noPermissionsMessage
     }
+
+    abstract fun observeData()
+    abstract fun applyFilter(filter: String)
 }

@@ -1,53 +1,78 @@
 package com.chooloo.www.koler.ui.contact
 
+import android.Manifest
 import android.net.Uri
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
-class ContactPresenter<V : ContactContract.View>(mvpView: V) :
-    BasePresenter<V>(mvpView),
+class ContactPresenter<V : ContactContract.View>(view: V) :
+    BasePresenter<V>(view),
     ContactContract.Presenter<V> {
 
-    private lateinit var _contact: Contact
+    private var contact: Contact? = null
 
+    //    private val contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
+    private val firstPhone by lazy {
+        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId).getOrNull(0)
+    }
 
-    override fun onLoadContact(contact: Contact) {
-        _contact = contact
-        mvpView.apply {
-            contactName = contact.name
-            isStarIconVisible = contact.starred
-            contact.photoUri?.let { contactImage = Uri.parse(it) }
+    override fun onStart() {
+        contact = boundComponent.contactsInteractor.getContact(view.contactId)
+        view.apply {
+            contactName = contact?.name
+            isStarIconVisible = contact?.starred == true
+            contact?.photoUri?.let { contactImage = Uri.parse(it) }
         }
     }
 
     override fun onActionCall() {
-        mvpView.callContact()
+        view.callContact()
     }
 
     override fun onActionSms() {
-        mvpView.smsContact()
+        firstPhone?.number?.let { boundComponent.contactsInteractor.openSmsView(it) }
     }
 
     override fun onActionEdit() {
-        mvpView.editContact()
+        boundComponent.contactsInteractor.openEditContactView(view.contactId)
     }
 
     override fun onActionInfo() {
-        mvpView.openContact()
+        boundComponent.contactsInteractor.openContactView(view.contactId)
     }
 
     override fun onActionDelete() {
-        mvpView.deleteContact()
+        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
+            boundComponent.permissionInteractor.runWithPermissions(
+                arrayOf(Manifest.permission.WRITE_CONTACTS),
+                {
+                    boundComponent.contactsInteractor.deleteContact(view.contactId)
+                },
+                null,
+                null,
+                null
+            )
+        }
     }
 
     override fun onActionMenu() {
-        mvpView.showMenu()
+        view.showMenu()
     }
 
     override fun onActionFav() {
-        mvpView.apply {
-            setFavorite(!_contact.starred)
-            isStarIconVisible = _contact.starred
-        }
+        boundComponent.permissionInteractor.runWithPermissions(
+            arrayOf(Manifest.permission.WRITE_CONTACTS),
+            {
+                boundComponent.contactsInteractor.toggleContactFavorite(
+                    view.contactId,
+                    contact?.starred == true
+                )
+            },
+            null,
+            null,
+            null
+        )
+        view.isStarIconVisible = contact?.starred == true
     }
 }

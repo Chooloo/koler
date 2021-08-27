@@ -4,11 +4,13 @@ import android.app.Application
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import com.chooloo.www.koler.di.boundcomponent.BoundComponentRootImpl
 import com.chooloo.www.koler.di.component.ComponentRootImpl
+import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.notification.CallNotification
 
 open class KolerApp : Application() {
-    
+
     val componentRoot by lazy {
         ComponentRootImpl(this)
     }

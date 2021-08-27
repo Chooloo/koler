@@ -25,13 +25,6 @@
         android:title="@string/pref_title_animations" />
 
     <SwitchPreference
-        android:defaultValue="@bool/pref_default_value_records_enabled"
-        android:icon="@drawable/ic_radio_button_checked_black_24dp"
-        android:key="@string/pref_key_records_enabled"
-        android:title="@string/pref_title_records_enabled"
-        app:isPreferenceVisible="false" />
-
-    <SwitchPreference
         android:defaultValue="@bool/pref_default_value_scroll_indicator"
         android:icon="@drawable/round_sort_by_alpha_24"
         android:key="@string/pref_key_scroll_indicator"
@@ -44,13 +37,6 @@
         android:icon="@drawable/round_view_carousel_24"
         android:key="@string/pref_key_default_page"
         app:title="@string/pref_title_default_page" />
-
-    <ListPreference
-        android:defaultValue="@string/pref_default_value_sim_select"
-        android:enabled="false"
-        android:icon="@drawable/ic_sim_card_black_24dp"
-        android:key="@string/pref_key_sim_select"
-        android:title="@string/pref_title_sim_select" />
 
     <Preference
         android:icon="@drawable/ic_bug_report_black_24dp"
