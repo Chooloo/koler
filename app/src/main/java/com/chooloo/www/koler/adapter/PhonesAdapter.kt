@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.adapter
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem

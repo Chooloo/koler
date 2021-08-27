@@ -7,7 +7,6 @@ import android.telecom.Call
 import android.telecom.VideoProfile
 import android.widget.Toast
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.ui.base.BaseActivity
 
 

@@ -3,7 +3,7 @@ package com.chooloo.www.koler.adapter
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString

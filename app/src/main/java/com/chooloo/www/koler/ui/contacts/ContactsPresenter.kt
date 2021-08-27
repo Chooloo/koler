@@ -2,7 +2,7 @@ package com.chooloo.www.koler.ui.contacts
 
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListPresenter
 

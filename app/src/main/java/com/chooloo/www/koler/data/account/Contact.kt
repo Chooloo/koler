@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.data
+package com.chooloo.www.koler.data.account
 
 data class Contact(
     val id: Long = 0,

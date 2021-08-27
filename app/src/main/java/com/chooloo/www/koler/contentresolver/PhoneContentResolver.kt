@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.contentresolver
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor

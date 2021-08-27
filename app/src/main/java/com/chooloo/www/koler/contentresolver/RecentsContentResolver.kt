@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
 import java.util.*
 
 class RecentsContentResolver(context: Context, private val recentId: Long? = null) :

@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Handler
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.ui.base.BasePresenter
 

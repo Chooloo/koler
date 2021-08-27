@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment

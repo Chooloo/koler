@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.SystemClock
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.callactions.CallActionsFragment

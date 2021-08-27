@@ -1,10 +1,10 @@
 package com.chooloo.www.koler.interactor.phoneaccounts
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import android.content.Context
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.contentresolver.PhoneLookupContentResolver
-import com.chooloo.www.koler.data.PhoneLookupAccount
+import com.chooloo.www.koler.data.account.PhoneLookupAccount
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 
 class PhoneAccountsInteractorImpl(

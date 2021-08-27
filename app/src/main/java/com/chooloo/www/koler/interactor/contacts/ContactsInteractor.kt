@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.interactor.contacts
 
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.interactor.base.BaseInteractor
 
 open interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> {

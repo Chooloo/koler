@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.phones
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import android.os.Bundle
 import com.chooloo.www.koler.adapter.PhonesAdapter
 import com.chooloo.www.koler.data.ListBundle

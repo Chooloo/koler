@@ -3,7 +3,7 @@ package com.chooloo.www.koler.ui.contact
 import android.Manifest
 import android.net.Uri
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class ContactPresenter<V : ContactContract.View>(view: V) :

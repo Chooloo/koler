@@ -5,7 +5,7 @@ import android.content.Context
 import android.provider.CallLog
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 
 class RecentsInteractorImpl(

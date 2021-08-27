@@ -7,7 +7,6 @@ import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.DisconnectCause
 import android.telecom.InCallService
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.ui.notification.CallNotification
 import com.chooloo.www.koler.call.CallManager

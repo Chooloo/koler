@@ -2,8 +2,7 @@ package com.chooloo.www.koler.ui.dialpad
 
 import android.view.KeyEvent.*
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.ui.base.BasePresenter
 

@@ -13,10 +13,8 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
 import android.telecom.DisconnectCause
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.ViewUtils
 import androidx.core.app.NotificationCompat
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.data.CallDetails.CallState.*
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
 import com.chooloo.www.koler.ui.call.CallActivity

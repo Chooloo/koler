@@ -1,8 +1,10 @@
 package com.chooloo.www.koler.data
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Phone
+import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.util.getRelativeDateString
 import java.util.stream.Collectors
 

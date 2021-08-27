@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.phones
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import android.content.ClipData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver

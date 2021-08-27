@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.livedata
 
-import PhoneAccount
+import com.chooloo.www.koler.data.account.PhoneAccount
 import android.content.Context
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 

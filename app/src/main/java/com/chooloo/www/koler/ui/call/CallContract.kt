@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface CallContract : BaseContract {
