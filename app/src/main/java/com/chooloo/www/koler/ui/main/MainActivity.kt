@@ -15,8 +15,8 @@ import com.chooloo.www.koler.viewmodel.SearchViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
+    private lateinit var _presenter: MainPresenter<MainActivity>
     private val _binding by lazy { MainBinding.inflate(layoutInflater) }
-    private val _presenter by lazy { MainPresenter<MainContract.View>(this) }
     private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
 
     override var selectedPage: Int
@@ -50,6 +50,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun onSetup() {
+        _presenter = MainPresenter(this)
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)

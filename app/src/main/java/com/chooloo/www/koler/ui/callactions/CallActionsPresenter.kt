@@ -31,11 +31,9 @@ class CallActionsPresenter<V : CallActionsContract.View>(view: V) :
 
     override fun onRecordClick() {
         if (_isRecording) {
-            view.stopRecording()
             _isRecording = false
         } else {
             if (CallManager.sCall != null) {
-                view.startRecording()
                 view.showMessage("Recording...")
                 _isRecording = true
             } else {
@@ -49,7 +47,6 @@ class CallActionsPresenter<V : CallActionsContract.View>(view: V) :
     }
 
     override fun onAddCallClick() {
-        view.addCall()
     }
 
     override fun onSpeakerClick() {

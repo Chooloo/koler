@@ -12,6 +12,17 @@ class CallPresenter<V : CallContract.View>(view: V) :
     BasePresenter<V>(view),
     CallContract.Presenter<V> {
 
+    override fun onStart() {
+        boundComponent.proximityInteractor.acquire()
+        boundComponent.screenInteractor.disableKeyboard()
+        boundComponent.screenInteractor.setShowWhenLocked()
+    }
+
+    override fun onStop() {
+        boundComponent.proximityInteractor.release()
+    }
+
+
     override fun onAnswerClick() {
         CallManager.answer()
     }

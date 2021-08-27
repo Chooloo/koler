@@ -12,12 +12,6 @@ interface DialpadContract : BaseContract {
         var isDeleteButtonVisible: Boolean
         var isAddContactButtonVisible: Boolean
 
-        fun call()
-        fun vibrate()
-        fun backspace()
-        fun addContact()
-        fun callVoicemail()
-        fun playTone(keyCode: Int)
         fun invokeKey(keyCode: Int)
         fun setSuggestionsFilter(filter: String)
     }

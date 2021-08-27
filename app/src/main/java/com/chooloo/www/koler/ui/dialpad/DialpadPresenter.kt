@@ -1,8 +1,10 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.view.KeyEvent.*
-import androidx.lifecycle.Lifecycle
+import com.chooloo.www.koler.R
+import com.chooloo.www.koler.call.CallManager
 import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class DialpadPresenter<V : DialpadContract.View>(view: V) :
@@ -10,11 +12,9 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
     DialpadContract.Presenter<V> {
 
     override fun onKeyClick(keyCode: Int) {
-        view.apply {
-            vibrate()
-            playTone(keyCode)
-            invokeKey(keyCode)
-        }
+        boundComponent.audioInteractor.vibrate(AudioInteractor.SHORT_VIBRATE_LENGTH)
+        boundComponent.audioInteractor.playToneByKey(keyCode)
+        view.invokeKey(keyCode)
     }
 
     override fun onLongKeyClick(keyCode: Int): Boolean {
@@ -24,7 +24,10 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
                 true
             }
             KEYCODE_1 -> {
-                if (view.isDialer) view.callVoicemail()
+                if (view.isDialer) {
+                    // TODO call voicemail
+//                    CallManager.callVoicemail(baseActivity)
+                }
                 view.isDialer
             }
             else -> true
@@ -32,15 +35,20 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
     }
 
     override fun onCallClick() {
-        view.call()
+        if (view.number.isEmpty()) {
+            view.showMessage(R.string.error_enter_number)
+        } else {
+            // TODO call
+//            CallManager.call(baseActivity, _binding.dialpadEditText.text.toString())
+        }
     }
 
     override fun onDeleteClick() {
-        view.backspace()
+        view.invokeKey(KEYCODE_DEL)
     }
 
     override fun onAddContactClick() {
-        view.addContact()
+        boundComponent.contactsInteractor.openAddContactView(view.number)
     }
 
     override fun onLongDeleteClick(): Boolean {

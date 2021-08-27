@@ -12,8 +12,14 @@ class PhonesFragment :
     ListFragment<PhoneAccount, PhonesAdapter>(),
     ListContract.View<PhoneAccount> {
 
-    override val adapter by lazy { PhonesAdapter(baseActivity) }
-    override val presenter: PhonesPresenter<PhonesFragment> by lazy { PhonesPresenter(this) }
+    override val adapter by lazy { PhonesAdapter(boundComponent) }
+    override lateinit var presenter: PhonesPresenter<PhonesFragment>
+
+
+    override fun onSetup() {
+        presenter = PhonesPresenter(this)
+        super.onSetup()
+    }
 
     override fun showItem(item: PhoneAccount) {
         return

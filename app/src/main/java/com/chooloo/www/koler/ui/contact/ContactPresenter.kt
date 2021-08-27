@@ -2,20 +2,23 @@ package com.chooloo.www.koler.ui.contact
 
 import android.Manifest
 import android.net.Uri
-import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.data.Contact
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class ContactPresenter<V : ContactContract.View>(view: V) :
     BasePresenter<V>(view),
     ContactContract.Presenter<V> {
 
-    private val contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
+    private var contact: Contact? = null
+
+    //    private val contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
     private val firstPhone by lazy {
         boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId).getOrNull(0)
     }
 
-    override fun onLoadContact() {
+    override fun onStart() {
+        contact = boundComponent.contactsInteractor.getContact(view.contactId)
         view.apply {
             contactName = contact?.name
             isStarIconVisible = contact?.starred == true

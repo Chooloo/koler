@@ -3,15 +3,13 @@ package com.chooloo.www.koler.ui.callactions
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.chooloo.www.koler.call.CallRecorder
 import com.chooloo.www.koler.databinding.CallActionsBinding
-import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode.IN_CALL
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
 class CallActionsFragment : BaseFragment(), CallActionsContract.View {
-    private val _presenter by lazy { CallActionsPresenter(this) }
+    private lateinit var _presenter: CallActionsPresenter<CallActionsFragment>
     private val _binding by lazy { CallActionsBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
@@ -21,6 +19,7 @@ class CallActionsFragment : BaseFragment(), CallActionsContract.View {
     ) = _binding.root
 
     override fun onSetup() {
+        _presenter = CallActionsPresenter(this)
         _binding.apply {
             callActionHold.setOnClickListener { _presenter.onHoldClick() }
             callActionAddCall.setOnClickListener { _presenter.onAddCallClick() }

@@ -6,21 +6,27 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 
 class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesContract.View {
-    private val _number by lazy { argsSafely.getString(ARG_NUMBER) }
-    private val _presenter by lazy { RecentPreferencesPresenter<RecentPreferencesContract.View>(this) }
+    private lateinit var _presenter: RecentPreferencesPresenter<RecentPreferencesFragment>
 
+    override val number by lazy { argsSafely.getString(ARG_NUMBER) }
     override val preferenceResource = R.xml.recent_preferences
+
+    override var isBlockNumberVisible: Boolean
+        get() = getPreference<Preference>(R.string.pref_key_block_number)?.isVisible == true
+        set(value) {
+            getPreference<Preference>(R.string.pref_key_block_number)?.isVisible = value
+        }
+
+    override var isUnblockNumberVisible: Boolean
+        get() = getPreference<Preference>(R.string.pref_key_unblock_number)?.isVisible == true
+        set(value) {
+            getPreference<Preference>(R.string.pref_key_unblock_number)?.isVisible = value
+        }
 
 
     override fun onSetup() {
         super.onSetup()
-
-        boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
-            getPreference<Preference>(R.string.pref_key_block_number)?.isVisible =
-                _number?.let { !componentRoot.numbersInteractor.isNumberBlocked(it) } ?: false
-            getPreference<Preference>(R.string.pref_key_unblock_number)?.isVisible =
-                _number?.let { componentRoot.numbersInteractor.isNumberBlocked(it) } ?: false
-        }
+        _presenter = RecentPreferencesPresenter(this)
     }
 
     override fun onPreferenceClickListener(preference: Preference) {
@@ -29,26 +35,6 @@ class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesCon
             getString(R.string.pref_key_unblock_number) -> _presenter.onUnblockNumberClick()
         }
     }
-
-    //region recent preferences view
-
-    override fun toggleNumberBlocked(isBlocked: Boolean) {
-        if (isBlocked) {
-            _number?.let {
-                componentRoot.permissionInteractor.runWithPrompt(R.string.warning_block_number) {
-                    componentRoot.numbersInteractor.blockNumber(it)
-                    showMessage(R.string.number_blocked)
-                }
-            }
-        } else {
-            _number?.let {
-                componentRoot.numbersInteractor.unblockNumber(it)
-                showMessage(R.string.number_unblocked)
-            }
-        }
-    }
-
-    //endregion
 
 
     companion object {

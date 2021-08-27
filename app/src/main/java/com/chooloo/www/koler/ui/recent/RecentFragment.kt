@@ -1,32 +1,55 @@
 package com.chooloo.www.koler.ui.recent
 
-import ContactsUtils
-import android.Manifest.permission.WRITE_CALL_LOG
-import android.annotation.SuppressLint
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getDrawable
-import com.chooloo.www.koler.R
-import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.databinding.RecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
-import com.chooloo.www.koler.util.getElapsedTimeString
-import java.util.*
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    private val _recentId by lazy { args.getLong(ARG_RECENT_ID) }
+    private lateinit var _presenter: RecentPresenter<RecentFragment>
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
-    private val _presenter by lazy { RecentPresenter<RecentContract.View>(this) }
-    private val _recent by lazy { boundComponent.recentsInteractor.getRecent(_recentId)!! }
-    private val _contact by lazy { boundComponent.phoneAccountsInteractor.lookupAccount(_recent.number) }
+
+    override val recentId by lazy {
+        args.getLong(ARG_RECENT_ID)
+    }
+
+    override var recentName: String?
+        get() = _binding.recentTextName.text.toString()
+        set(value) {
+            _binding.recentTextName.text = value
+        }
+
+    override var recentCaption: String?
+        get() = _binding.recentTextCaption.text.toString()
+        set(value) {
+            _binding.recentTextCaption.text = value
+        }
+
+    override var recentImage: Drawable?
+        get() = _binding.recentTypeImage.drawable
+        set(value) {
+            _binding.recentTypeImage.setImageDrawable(value)
+        }
+
+    override var isContactVisible: Boolean
+        get() = _binding.recentButtonContact.visibility == VISIBLE
+        set(value) {
+            _binding.recentButtonContact.visibility = if (value) VISIBLE else GONE
+        }
+
+    override var isAddContactVisible: Boolean
+        get() = _binding.recentButtonAddContact.visibility == VISIBLE
+        set(value) {
+            _binding.recentButtonAddContact.visibility = if (value) VISIBLE else GONE
+        }
 
 
     override fun onCreateView(
@@ -36,30 +59,8 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     ) = _binding.root
 
     override fun onSetup() {
+        _presenter = RecentPresenter(this)
         _binding.apply {
-            recentTextCaption.apply {
-                visibility = VISIBLE
-                text = _recent.relativeTime
-                if (_recent.duration > 0) {
-                    text = "$text, ${getElapsedTimeString(_recent.duration)}"
-                }
-                boundComponent.permissionInteractor.runWithDefaultDialer {
-                    if (boundComponent.numbersInteractor.isNumberBlocked(_recent.number)) {
-                        text =
-                            "$text, ${getString(R.string.error_blocked).toUpperCase(Locale.ROOT)})"
-                    }
-                }
-            }
-
-            recentTypeImage.apply {
-                visibility = VISIBLE
-                setImageDrawable(getDrawable(baseActivity, getCallTypeImage(_recent.type)))
-            }
-            recentTextName.text = _recent.cachedName ?: _recent.number
-
-            recentButtonContact.visibility = if (_contact != null) VISIBLE else GONE
-            recentButtonAddContact.visibility = if (_contact != null) GONE else VISIBLE
-
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonMenu.setOnClickListener { _presenter.onActionMenu() }
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
@@ -71,46 +72,26 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
 
-    override fun showMenu() {
-        BottomFragment(RecentPreferencesFragment.newInstance(_recent.number)).show(
+    override fun showRecentMenu(number: String) {
+        BottomFragment(RecentPreferencesFragment.newInstance(number)).show(
             childFragmentManager,
             null
         )
     }
 
-    override fun smsRecent() {
-        ContactsUtils.openSmsView(baseActivity, _recent.number)
-    }
-
-    override fun addContact() {
-        ContactsUtils.openAddContactView(baseActivity, _recent.number)
-    }
-
-    override fun callRecent() {
-        _recent.number.let { CallManager.call(baseActivity, it) }
-    }
-
-    override fun openContact() {
-        _contact?.contactId?.let {
-            BottomFragment(ContactFragment.newInstance(it)).show(
-                baseActivity.supportFragmentManager,
-                ContactFragment.TAG
-            )
-        }
-    }
-
-    override fun openHistory() {
+    override fun openHistoryView(number: String) {
         BottomFragment(
-            RecentsFragment.newInstance(filter = _recent.number, isSearchable = false)
+            RecentsFragment.newInstance(filter = number, isSearchable = false)
         ).show(baseActivity.supportFragmentManager, ContactFragment.TAG)
     }
 
-    @SuppressLint("MissingPermission")
-    override fun deleteRecent() {
-        boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CALL_LOG), {
-            boundComponent.recentsInteractor.deleteRecent(_recent.id)
-        }, null, null, null)
+    override fun openContactView(contactId: Long) {
+        BottomFragment(ContactFragment.newInstance(contactId)).show(
+            baseActivity.supportFragmentManager,
+            ContactFragment.TAG
+        )
     }
+
 
     //endregion
 

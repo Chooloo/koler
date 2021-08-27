@@ -18,13 +18,13 @@ class ProximityInteractorImpl(
         )
     }
 
-    fun acquire() {
+    override fun acquire() {
         if (!_wakeLock.isHeld) {
             _wakeLock.acquire(10 * 60 * 1000L /*10 minutes*/)
         }
     }
 
-    fun release() {
+    override fun release() {
         if (_wakeLock.isHeld) {
             _wakeLock.release()
         }

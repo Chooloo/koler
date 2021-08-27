@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.base
 
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 
 interface BaseContract {
@@ -10,6 +11,7 @@ interface BaseContract {
 
         fun onSetup()
         fun finish() {}
+        fun getLifecycle(): Lifecycle
         fun showMessage(message: String)
         fun showMessage(@StringRes stringResId: Int)
         fun showError(message: String)

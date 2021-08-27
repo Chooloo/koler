@@ -13,7 +13,7 @@ import com.chooloo.www.koler.ui.callactions.CallActionsFragment
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private val _presenter by lazy { CallPresenter(this) }
+    private lateinit var _presenter: CallPresenter<CallActivity>
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
     private val _callListener by lazy {
         object : CallManager.CallListener(this) {
@@ -54,23 +54,17 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun onSetup() {
-        boundComponent.proximityInteractor.acquire()
-
+        _presenter = CallPresenter(this)
         _binding.apply {
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
         }
-
-        boundComponent.screenInteractor.disableKeyboard()
-        boundComponent.screenInteractor.setShowWhenLocked()
-
         CallManager.registerListener(_callListener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         CallManager.unregisterCallback(_callListener)
-        boundComponent.proximityInteractor.release()
     }
 
 

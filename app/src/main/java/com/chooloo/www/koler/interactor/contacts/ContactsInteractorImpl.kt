@@ -1,10 +1,12 @@
 package com.chooloo.www.koler.interactor.contacts
 
 import android.Manifest.permission.WRITE_CONTACTS
+import android.app.Activity
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
@@ -33,7 +35,12 @@ class ContactsInteractorImpl(
 
     @RequiresPermission(WRITE_CONTACTS)
     override fun deleteContact(contactId: Long) {
-        ContactsContentResolver(context, contactId).delete()
+        context.contentResolver.delete(
+            Uri.withAppendedPath(
+                Contacts.CONTENT_URI,
+                contactId.toString()
+            ), null, null
+        )
     }
 
 
@@ -61,12 +68,16 @@ class ContactsInteractorImpl(
             Intent.ACTION_SENDTO,
             Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
         )
+        if (context !is Activity) {
+            intent.flags = FLAG_ACTIVITY_NEW_TASK
+        }
         context.startActivity(intent)
     }
 
     override fun openContactView(contactId: Long) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
+            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
         }
         context.startActivity(intent)
     }
@@ -75,6 +86,7 @@ class ContactsInteractorImpl(
         val intent = Intent(Intent.ACTION_INSERT).apply {
             type = Contacts.CONTENT_TYPE
             putExtra(ContactsContract.Intents.Insert.PHONE, number)
+            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
         }
         context.startActivity(intent)
     }
@@ -82,6 +94,7 @@ class ContactsInteractorImpl(
     override fun openEditContactView(contactId: Long) {
         val intent = Intent(Intent.ACTION_EDIT, Contacts.CONTENT_URI).apply {
             data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
+            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
         }
         context.startActivity(intent)
     }

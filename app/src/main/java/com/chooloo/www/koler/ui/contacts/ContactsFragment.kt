@@ -13,10 +13,15 @@ import com.chooloo.www.koler.ui.list.ListFragment
 class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.View<Contact> {
     override val adapter by lazy { ContactsAdapter() }
     override val searchHint by lazy { getString(R.string.hint_search_contacts) }
-    override val presenter: ContactsPresenter<ContactsFragment> by lazy { ContactsPresenter(this) }
+    override lateinit var presenter: ContactsPresenter<ContactsFragment>
 
     private var _onContactsChangedListener: (ArrayList<Contact>) -> Unit? = {}
 
+
+    override fun onSetup() {
+        presenter = ContactsPresenter(this)
+        super.onSetup()
+    }
 
     override fun updateData(dataList: ArrayList<Contact>) {
         adapter.data = ListBundle.fromContacts(dataList)
@@ -28,6 +33,12 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.
             baseActivity.supportFragmentManager,
             ContactFragment.TAG
         )
+    }
+
+    fun applyFilter(filter: String) {
+        if (this::presenter.isInitialized) {
+            presenter.applyFilter(filter)
+        }
     }
 
     fun setOnContactsChangedListener(onContactsChangedListener: (ArrayList<Contact>) -> Unit? = {}) {

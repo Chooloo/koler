@@ -9,15 +9,17 @@ import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.contacts.ContactsFragment
+import com.chooloo.www.koler.ui.contacts.ContactsPresenter
 import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 
 class ContactFragment : BaseFragment(), ContactContract.View {
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
+    private lateinit var _presenter: ContactPresenter<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId, false) }
-    private val _presenter by lazy { ContactPresenter<ContactContract.View>(this) }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -48,7 +50,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _presenter.onLoadContact()
+        _presenter = ContactPresenter(this)
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
@@ -64,8 +66,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .commitNow()
     }
 
-
-    //region contact view
 
     override fun showMenu() {
         BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(

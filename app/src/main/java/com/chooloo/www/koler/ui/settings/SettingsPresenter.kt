@@ -1,9 +1,10 @@
 package com.chooloo.www.koler.ui.settings
 
-import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class SettingsPresenter<V : SettingsContract.View>(view: V) :
@@ -11,15 +12,16 @@ class SettingsPresenter<V : SettingsContract.View>(view: V) :
     SettingsContract.Presenter<V> {
 
     override fun refresh() {
-        view.goToMainActivity()
+        boundComponent.navigationInteractor.goToMainActivity()
     }
 
+
     override fun onClickedRate() {
-        view.rateApp()
+        boundComponent.navigationInteractor.goToRateApp()
     }
 
     override fun onClickedEmail() {
-        view.sendEmail()
+        boundComponent.navigationInteractor.goToSendEmail()
     }
 
     override fun onClickedColor() {
@@ -27,58 +29,52 @@ class SettingsPresenter<V : SettingsContract.View>(view: V) :
     }
 
     override fun onClickedDonate() {
-        view.donate()
+        boundComponent.navigationInteractor.goToDonatePage()
     }
 
     override fun onClickedReport() {
-        view.reportBug()
+        boundComponent.navigationInteractor.goToReportBugPage()
     }
 
     override fun onClickedManageBlocked() {
-        view.manageBlockedNumbers()
+        boundComponent.navigationInteractor.goToManageBlockedNumbers()
     }
+
 
     override fun onSelectedColor(color: Int) {
-        view.setPrefAccentTheme(
-            when (color) {
-                view.getColor(R.color.blue_background) -> BLUE
-                view.getColor(R.color.red_background) -> RED
-                view.getColor(R.color.orange_background) -> ORANGE
-                view.getColor(R.color.green_background) -> GREEN
-                view.getColor(R.color.purple_background) -> PURPLE
-                else -> BLUE
-            }
-        )
-        view.goToMainActivity()
-    }
-
-    override fun onSelectedSim(newValue: Any?) {
-    }
-
-    override fun onToggledRecords(isToggle: Boolean) {
-        view.setPrefRecordsEnabled(isToggle)
-    }
-
-    override fun onSelectedRecordFormat(newValue: Any?) {
-    }
-
-    override fun onToggledAnimation(isToggle: Boolean) {
-        view.setPrefAnimations(isToggle)
-        refresh()
-    }
-
-    override fun onToggledCompactMode(isToggle: Boolean) {
-        view.setPrefCompact(isToggle)
+        boundComponent.preferencesInteractor.accentTheme = when (color) {
+            boundComponent.colorInteractor.getColor(R.color.red_background) -> RED
+            boundComponent.colorInteractor.getColor(R.color.blue_background) -> BLUE
+            boundComponent.colorInteractor.getColor(R.color.green_background) -> GREEN
+            boundComponent.colorInteractor.getColor(R.color.orange_background) -> ORANGE
+            boundComponent.colorInteractor.getColor(R.color.purple_background) -> PURPLE
+            else -> DEFAULT
+        }
         refresh()
     }
 
     override fun onSelectedDefaultPage(pageKey: String) {
-        view.setPrefDefaultPage(Page.fromKey(pageKey))
+        boundComponent.preferencesInteractor.defaultPage = Page.fromKey(pageKey)
+        refresh()
+    }
+
+
+    override fun onToggledRecords(isToggle: Boolean) {
+        boundComponent.preferencesInteractor.isRecords = isToggle
+    }
+
+    override fun onToggledAnimation(isToggle: Boolean) {
+        boundComponent.preferencesInteractor.isAnimations = isToggle
+        refresh()
+    }
+
+    override fun onToggledCompactMode(isToggle: Boolean) {
+        boundComponent.preferencesInteractor.isCompact = isToggle
         refresh()
     }
 
     override fun onToggledScrollIndicator(isToggle: Boolean) {
-        view.setPrefScrollIndicator(isToggle)
+        boundComponent.preferencesInteractor.isScrollIndicator = isToggle
         refresh()
     }
 }

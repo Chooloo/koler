@@ -15,8 +15,6 @@ interface ContactContract : BaseContract {
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {
-        fun onLoadContact()
-
         fun onActionSms()
         fun onActionFav()
         fun onActionCall()

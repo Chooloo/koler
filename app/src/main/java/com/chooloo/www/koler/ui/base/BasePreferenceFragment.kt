@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
-import com.chooloo.www.koler.KolerApp
 
 abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract.View {
     override val boundComponent
@@ -17,7 +16,6 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
 
     protected val argsSafely get() = arguments ?: Bundle()
     protected val baseActivity by lazy { context as BaseActivity }
-    protected val componentRoot by lazy { (baseActivity.applicationContext as KolerApp).componentRoot }
 
     abstract val preferenceResource: Int
 

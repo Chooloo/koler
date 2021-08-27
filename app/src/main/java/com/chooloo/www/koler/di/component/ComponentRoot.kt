@@ -11,8 +11,8 @@ import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
+import com.chooloo.www.koler.interactor.drawable.DrawableInteractor
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
-import com.chooloo.www.koler.interactor.permission.PermissionInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
@@ -41,9 +41,9 @@ interface ComponentRoot {
     val stringInteractor: StringInteractor
     val numbersInteractor: NumbersInteractor
     val recentsInteractor: RecentsInteractor
+    val drawableInteractor: DrawableInteractor
     val contactsInteractor: ContactsInteractor
     val animationInteractor: AnimationInteractor
-    val permissionInteractor: PermissionInteractor
     val preferencesInteractor: PreferencesInteractor
     val phoneAccountsInteractor: PhoneAccountsInteractor
 }

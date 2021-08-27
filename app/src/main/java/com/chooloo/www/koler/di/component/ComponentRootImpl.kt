@@ -13,8 +13,8 @@ import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
 import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
+import com.chooloo.www.koler.interactor.drawable.DrawableInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractorImpl
-import com.chooloo.www.koler.interactor.permission.PermissionInteractorImpl
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
@@ -92,6 +92,10 @@ open class ComponentRootImpl(
     override val recentsInteractor by lazy {
         RecentsInteractorImpl(application)
     }
+    
+    override val drawableInteractor by lazy {
+        DrawableInteractorImpl(application)
+    }
 
     override val contactsInteractor by lazy {
         ContactsInteractorImpl(application, numbersInteractor, phoneAccountsInteractor)
@@ -99,9 +103,6 @@ open class ComponentRootImpl(
 
     override val animationInteractor by lazy {
         AnimationInteractorImpl(preferencesInteractor)
-    }
-    override val permissionInteractor by lazy {
-        PermissionInteractorImpl(application, telecomManager)
     }
 
     override val preferencesInteractor by lazy {

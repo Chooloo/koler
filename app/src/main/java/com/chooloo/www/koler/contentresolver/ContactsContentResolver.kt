@@ -32,11 +32,6 @@ open class ContactsContentResolver(context: Context, private val contactId: Long
         )
     }
 
-    fun delete() {
-        val uri = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
-        delete(uri, null, null)
-    }
-
     companion object {
         val URI: Uri = Contacts.CONTENT_URI
         val FILTER_URI: Uri = Contacts.CONTENT_FILTER_URI
