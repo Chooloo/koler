@@ -3,13 +3,13 @@ package com.chooloo.www.koler.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
+import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
-import com.chooloo.www.koler.util.PreferencesManager
 
-abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
+abstract class ListAdapter<DataType>(
+    protected val boundComponent: BoundComponentRoot
+) : RecyclerView.Adapter<ListItemHolder>() {
     private var _isCompact = false
     private var _isSelecting = false
     private var _isSelectable = true
@@ -80,16 +80,12 @@ abstract class ListAdapter<DataType> : RecyclerView.Adapter<ListItemHolder>() {
                 }
                 true
             }
-            AnimationInteractorImpl(PreferencesInteractorImpl(PreferencesManager.getInstance(context))).animateIn(
-                this
-            )
+            boundComponent.animationInteractor.animateIn(this)
             onBindListItem(this, _data.items[position])
         }
     }
 
-    override fun getItemCount(): Int {
-        return _data.items.size
-    }
+    override fun getItemCount() = _data.items.size
 
 
     fun getHeader(position: Int): String? {

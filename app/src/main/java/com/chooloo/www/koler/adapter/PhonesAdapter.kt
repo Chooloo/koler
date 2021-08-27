@@ -5,9 +5,9 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 
-class PhonesAdapter(
-    private val boundComponent: BoundComponentRoot
-) : ListAdapter<PhoneAccount>() {
+class PhonesAdapter(boundComponent: BoundComponentRoot) :
+    ListAdapter<PhoneAccount>(boundComponent) {
+
     private val _blockedDrawable by lazy {
         boundComponent.drawableInteractor.getDrawable(R.drawable.round_block_black_24)
     }
