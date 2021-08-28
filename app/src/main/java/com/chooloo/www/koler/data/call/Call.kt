@@ -213,8 +213,8 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     }
 
 
-    override fun equals(o: Any?): Boolean {
-        return o is Call && telecomCall == o.telecomCall
+    override fun equals(other: Any?): Boolean {
+        return other is Call && telecomCall == other.telecomCall
     }
 
 

@@ -11,8 +11,6 @@ data class Contact(
 
     companion object {
         val UNKNOWN = Contact(name = "Unknown")
-        val VOICEMAIL = Contact(name = "Voicemail")
-        val PRIVATE = Contact(name = "Private Number")
     }
 }
 

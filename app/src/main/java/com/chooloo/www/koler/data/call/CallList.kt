@@ -29,14 +29,14 @@ class CallList {
 
 
     operator fun get(callId: String) =
-        Optional.ofNullable(_callsById.get(callId))
+        _callsById.get(callId)
 
     operator fun contains(call: Call) =
         _callsById.containsKey(call.id)
 
-    
-    fun getIndex(index: Int): Call =
-        ArrayList(_callsById.values)[index]
+
+    fun getIndex(index: Int): Call? =
+        ArrayList(_callsById.values).get(index)
 
     fun hasState(state: Call.State) =
         calls.any { call -> call.state == state }
@@ -45,7 +45,7 @@ class CallList {
         calls.filter { call -> call.state == state }
 
     fun getFirstState(state: Call.State) =
-        Optional.ofNullable(calls.firstOrNull { call -> call.state == state })
+        calls.firstOrNull { call -> call.state == state }
 
     fun hasStates(states: Array<Call.State>) =
         states.all(this::hasState)
@@ -54,7 +54,7 @@ class CallList {
         calls.filter { call -> states.none { state -> state == call.state } }
 
     fun getByTelecomCall(telecomCall: android.telecom.Call) =
-        Optional.ofNullable(calls.firstOrNull { call -> call.telecomCall == telecomCall })
+        calls.firstOrNull { call -> call.telecomCall == telecomCall }
 
 
     @Synchronized
