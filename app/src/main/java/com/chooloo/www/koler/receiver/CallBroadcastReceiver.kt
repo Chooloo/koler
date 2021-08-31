@@ -3,13 +3,14 @@ package com.chooloo.www.koler.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.chooloo.www.koler.call.CallManager
+import com.chooloo.www.koler.KolerApp
 
 class CallBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        val callsInteractor = (context.applicationContext as KolerApp).componentRoot.callsInteractor
         when (intent.action) {
-            ACTION_ANSWER -> CallManager.answer()
-            ACTION_HANGUP -> CallManager.reject()
+            ACTION_ANSWER -> callsInteractor.mainCall?.answer()
+            ACTION_HANGUP -> callsInteractor.mainCall?.reject()
         }
     }
 

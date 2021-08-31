@@ -9,7 +9,7 @@ import android.telecom.DisconnectCause
 import android.telecom.PhoneAccountHandle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.call.Call.State.*
-import com.chooloo.www.koler.util.BaseObservable
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -147,6 +147,8 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
             } else {
                 _call.reject(false, "")
             }
+        } else {
+            _call.disconnect()
         }
     }
 

@@ -19,7 +19,7 @@ class PreferencesManager private constructor(val _context: Context) {
     private val _pref by lazy { PreferenceManager.getDefaultSharedPreferences(_context) }
 
     init {
-        PreferenceManager.setDefaultValues(_context, R.xml.main_preferences, false)
+        PreferenceManager.setDefaultValues(_context, R.xml.preferences_main, false)
     }
 
 

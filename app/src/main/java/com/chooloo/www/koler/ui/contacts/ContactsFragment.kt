@@ -11,8 +11,8 @@ import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 
 class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.View<Contact> {
-    override val adapter by lazy { ContactsAdapter() }
     override val searchHint by lazy { getString(R.string.hint_search_contacts) }
+    override val adapter by lazy { ContactsAdapter(boundComponent) }
     override lateinit var presenter: ContactsPresenter<ContactsFragment>
 
     private var _onContactsChangedListener: (ArrayList<Contact>) -> Unit? = {}

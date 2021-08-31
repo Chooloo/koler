@@ -32,7 +32,13 @@ interface PermissionInteractor : BaseInteractor<PermissionInteractor.Listener> {
 
     fun runWithDefaultDialer(
         @StringRes errorMessageRes: Int? = null,
-        callback: () -> Unit
+        callback: () -> Unit,
+    )
+
+    fun runWithDefaultDialer(
+        @StringRes errorMessageRes: Int? = null,
+        grantedCallback: () -> Unit,
+        notGrantedCallback: (() -> Unit)? = null
     )
 
     fun runWithPrompt(titleRes: Int, callback: () -> Unit)

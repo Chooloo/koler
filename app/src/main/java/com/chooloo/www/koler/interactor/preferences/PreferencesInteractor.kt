@@ -12,7 +12,6 @@ open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.List
     var isAnimations: Boolean
     var isScrollIndicator: Boolean
 
-    var sim: Sim
     var defaultPage: Page
     var accentTheme: AccentTheme
     var recordFormat: RecordFormat
@@ -56,16 +55,6 @@ open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.List
             companion object {
                 fun fromKey(key: String?) =
                     values().associateBy(RecordFormat::key).getOrDefault(key ?: "", DEFAULT)
-            }
-        }
-
-        enum class Sim(val key: String, val number: Int) {
-            TRY("Asdas", 1),
-            DEFAULT(TRY.key, TRY.number);
-
-            companion object {
-                fun fromKey(key: String?) =
-                    values().associateBy(Sim::key).getOrDefault(key ?: "", DEFAULT)
             }
         }
 

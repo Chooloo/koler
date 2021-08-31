@@ -43,7 +43,10 @@ class Tab : AppCompatTextView {
 
 
     private fun animateAttention() {
-        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateIn(this)
+        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateIn(
+            this,
+            true
+        )
     }
 
     private fun setColor(@ColorInt color: Int) {

@@ -28,7 +28,6 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         get() = _binding.itemsEmptyText.text.toString()
         set(value) {
             _binding.itemsEmptyText.text = value
-
         }
 
     abstract val adapter: Adapter
@@ -90,7 +89,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                boundComponent.animationInteractor.animateIn(this)
+                boundComponent.animationInteractor.animateIn(this, true)
             } else {
                 boundComponent.animationInteractor.showView(this, false)
             }

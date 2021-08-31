@@ -5,16 +5,27 @@
     style="@style/Koler.Call.Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/incoming_to_active_scene"
+    app:layoutDescription="@xml/call_scene"
     tools:context=".ui.call.CallActivity">
 
+    <!-- banner -->
+    <com.chooloo.www.koler.ui.widgets.BannerTextView
+        android:id="@+id/call_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- call timer -->
-    <Chronometer
-        android:id="@+id/call_chronometer"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/call_time_text"
         style="@style/Koler.Call.Text.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +53,7 @@
         android:layout_marginTop="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_chronometer"
+        app:layout_constraintTop_toBottomOf="@id/call_time_text"
         tools:text="@string/call_status_incoming" />
 
     <!-- caller name -->
@@ -53,24 +64,23 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_big"
         android:layout_marginTop="@dimen/default_spacing_big"
+        app:layout_constraintEnd_toStartOf="@id/call_image"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_state_text"
         tools:text="John Baba" />
 
-    <!-- call actions container -->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/call_actions_container"
+    <!-- call actions -->
+    <com.chooloo.www.koler.ui.widgets.CallActions
+        android:id="@+id/call_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginEnd="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing_big"
-        app:flow_verticalBias="1"
         app:layout_constraintBottom_toTopOf="@id/call_reject_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_name_text"
-        tools:layout="@layout/call_actions" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- answer button -->
     <com.chooloo.www.koler.ui.widgets.IconButton

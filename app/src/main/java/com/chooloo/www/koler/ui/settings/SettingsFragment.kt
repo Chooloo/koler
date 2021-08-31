@@ -1,24 +1,14 @@
 package com.chooloo.www.koler.ui.settings
 
-import android.content.Context.TELECOM_SERVICE
-import android.content.Intent
-import android.content.Intent.*
-import android.net.Uri
-import android.telecom.TelecomManager
 import androidx.preference.Preference
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
-import com.chooloo.www.koler.ui.main.MainActivity
 import dev.sasikanth.colorsheet.ColorSheet
 
 class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
     private lateinit var _presenter: SettingsPresenter<SettingsFragment>
 
-    override val preferenceResource = R.xml.main_preferences
+    override val preferenceResource = R.xml.preferences_main
 
 
     override fun onSetup() {

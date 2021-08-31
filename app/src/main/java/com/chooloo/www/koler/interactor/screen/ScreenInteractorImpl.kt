@@ -8,7 +8,7 @@ import android.view.WindowManager.LayoutParams.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.BaseObservable
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 class ScreenInteractorImpl(
     private val activity: BaseActivity,

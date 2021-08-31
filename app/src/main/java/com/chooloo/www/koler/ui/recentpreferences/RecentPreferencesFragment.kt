@@ -9,7 +9,7 @@ class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesCon
     private lateinit var _presenter: RecentPreferencesPresenter<RecentPreferencesFragment>
 
     override val number by lazy { argsSafely.getString(ARG_NUMBER) }
-    override val preferenceResource = R.xml.recent_preferences
+    override val preferenceResource = R.xml.preferences_recent
 
     override var isBlockNumberVisible: Boolean
         get() = getPreference<Preference>(R.string.pref_key_block_number)?.isVisible == true

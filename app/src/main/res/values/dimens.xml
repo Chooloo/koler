@@ -19,7 +19,7 @@
     <!--region image size-->
     <dimen name="image_size_big">90dp</dimen>
     <dimen name="image_size_small">35dp</dimen>
-    <dimen name="corner_radius">10dp</dimen>
+    <dimen name="corner_radius">15dp</dimen>
     <!--endregion-->
 
     <!--region list item -->
@@ -30,8 +30,8 @@
 
     <!--region bottom sheet dialog -->
     <dimen name="swipe_indicator_height">5dp</dimen>
-    <dimen name="swipe_indicator_width">30dp</dimen>
-    <dimen name="swipe_indicator_margin">10dp</dimen>
+    <dimen name="swipe_indicator_width">35dp</dimen>
+    <dimen name="swipe_indicator_margin">13dp</dimen>
     <!--endregion-->
 
     <!--region toolbar-->

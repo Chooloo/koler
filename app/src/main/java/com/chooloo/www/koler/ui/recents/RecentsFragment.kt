@@ -12,10 +12,8 @@ import com.chooloo.www.koler.ui.recent.RecentFragment
 
 class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), ListContract.View<Recent> {
     override val searchHint by lazy { getString(R.string.hint_search_recents) }
+    override val adapter by lazy { RecentsAdapter(boundComponent) }
     override lateinit var presenter: RecentsPresenter<RecentsFragment>
-    override val adapter by lazy {
-        RecentsAdapter(boundComponent.preferencesInteractor, boundComponent.phoneAccountsInteractor)
-    }
 
 
     override fun onSetup() {

@@ -24,8 +24,7 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
             }
             KEYCODE_1 -> {
                 if (view.isDialer) {
-                    // TODO call voicemail
-//                    CallManager.callVoicemail(baseActivity)
+                    boundComponent.navigationInteractor.callVoicemail()
                 }
                 view.isDialer
             }
@@ -37,8 +36,7 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
         if (view.number.isEmpty()) {
             view.showMessage(R.string.error_enter_number)
         } else {
-            // TODO call
-//            CallManager.call(baseActivity, _binding.dialpadEditText.text.toString())
+            boundComponent.navigationInteractor.call(view.number)
         }
     }
 

@@ -1,9 +1,9 @@
 package com.chooloo.www.koler.ui.phones
 
-import com.chooloo.www.koler.data.account.PhoneAccount
 import android.content.ClipData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListPresenter
 
@@ -29,7 +29,7 @@ class PhonesPresenter<V : ListContract.View<PhoneAccount>>(view: V) :
     }
 
     override fun onItemClick(item: PhoneAccount) {
-        // TODO call item.number
+        boundComponent.navigationInteractor.call(item.number)
     }
 
     override fun onItemLongClick(item: PhoneAccount) {

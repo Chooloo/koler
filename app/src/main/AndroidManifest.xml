@@ -74,7 +74,7 @@
         <activity
             android:name="com.chooloo.www.koler.ui.call.CallActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".util.permissions.PermissionsActivity" />
+        <activity android:name=".ui.permissions.PermissionsActivity" />
 
         <!--endregion-->
 
@@ -91,15 +91,6 @@
                 android:value="true" />
             <intent-filter>
                 <action android:name="android.telecom.InCallService" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name=".service.Accessibility"
-            android:label="@string/accessibility_service_label"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
         </service>
 

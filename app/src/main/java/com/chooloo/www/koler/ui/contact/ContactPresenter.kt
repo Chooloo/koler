@@ -27,7 +27,6 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionCall() {
-        view.callContact()
     }
 
     override fun onActionSms() {
@@ -44,15 +43,10 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
 
     override fun onActionDelete() {
         boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
-            boundComponent.permissionInteractor.runWithPermissions(
-                arrayOf(Manifest.permission.WRITE_CONTACTS),
+            boundComponent.permissionInteractor.runWithPermissions(arrayOf(Manifest.permission.WRITE_CONTACTS),
                 {
                     boundComponent.contactsInteractor.deleteContact(view.contactId)
-                },
-                null,
-                null,
-                null
-            )
+                })
         }
     }
 
@@ -61,17 +55,9 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionFav() {
-        boundComponent.permissionInteractor.runWithPermissions(
-            arrayOf(Manifest.permission.WRITE_CONTACTS),
-            {
-                boundComponent.contactsInteractor.toggleContactFavorite(
-                    view.contactId,
-                    contact?.starred == true
-                )
-            },
-            null,
-            null,
-            null
+        boundComponent.contactsInteractor.toggleContactFavorite(
+            view.contactId,
+            contact?.starred == true
         )
         view.isStarIconVisible = contact?.starred == true
     }

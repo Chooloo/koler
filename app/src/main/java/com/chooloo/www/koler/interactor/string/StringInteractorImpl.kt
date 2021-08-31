@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.interactor.string
 
 import android.content.Context
-import com.chooloo.www.koler.util.BaseObservable
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 class StringInteractorImpl(
     internal val context: Context

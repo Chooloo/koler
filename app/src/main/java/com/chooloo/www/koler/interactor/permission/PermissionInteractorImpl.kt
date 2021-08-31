@@ -11,8 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.BaseObservable
-import com.chooloo.www.koler.util.permissions.PermissionsActivity
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
+import com.chooloo.www.koler.ui.permissions.PermissionsActivity
 
 
 class PermissionInteractorImpl(
@@ -102,6 +102,19 @@ class PermissionInteractorImpl(
             checkDefaultDialer(errorMessageRes)
         } else {
             callback.invoke()
+        }
+    }
+
+    override fun runWithDefaultDialer(
+        errorMessageRes: Int?,
+        grantedCallback: () -> Unit,
+        notGrantedCallback: (() -> Unit)?
+    ) {
+        if (!isDefaultDialer) {
+            checkDefaultDialer(errorMessageRes)
+            notGrantedCallback?.invoke()
+        } else {
+            grantedCallback.invoke()
         }
     }
 

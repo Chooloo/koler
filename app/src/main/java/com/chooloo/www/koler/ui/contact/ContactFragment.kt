@@ -74,12 +74,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         )
     }
 
-    override fun callContact() {
-        //TODO remove this to presenter
-//        _firstPhone?.number?.let { CallManager.call(baseActivity, it) }
-    }
-
-
     companion object {
         const val TAG = "contact_fragment"
         const val ARG_CONTACT_ID = "contact_id"

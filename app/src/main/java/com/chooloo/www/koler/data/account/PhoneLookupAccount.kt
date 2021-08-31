@@ -4,7 +4,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 
 data class PhoneLookupAccount(
     val name: String?,
-    val number: String?,
+    val number: String? = null,
     val contactId: Long? = null,
     val photoUri: String? = null,
     val starred: Boolean? = false,
@@ -12,4 +12,8 @@ data class PhoneLookupAccount(
 ) {
     val displayString: String
         get() = name ?: (number ?: "Unknown")
+
+    companion object {
+        val UNKNOWN = PhoneLookupAccount("unknown")
+    }
 }

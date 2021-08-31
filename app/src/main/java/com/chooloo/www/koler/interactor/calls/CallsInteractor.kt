@@ -22,8 +22,8 @@ interface CallsInteractor : BaseInteractor<CallsInteractor.Listener>, Call.Liste
     fun entryRemoveCall(call: Call)
 
     fun swapCall(callId: String)
-    fun mergeCall(callId: String)
     fun holdCall(callId: String)
+    fun mergeCall(callId: String)
     fun unHoldCall(callId: String)
     fun toggleHold(callId: String)
     fun answerCall(callId: String)

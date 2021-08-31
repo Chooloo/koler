@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.util.permissions
+package com.chooloo.www.koler.ui.permissions
 
 import android.R
 import android.app.AlertDialog
@@ -20,11 +20,11 @@ class PermissionsActivity : BaseActivity() {
         window.statusBarColor = 0
 
         val deniedPermissions =
-            _allPermissions.filter { !hasPermission(it) }.toTypedArray()
-        if (deniedPermissions.isEmpty()) {
+            _allPermissions?.filter { !hasPermission(it) }?.toTypedArray()
+        if (deniedPermissions?.isEmpty() == true) {
             onGranted()
         } else {
-            requestPermissions(deniedPermissions, RC_PERMISSION)
+            deniedPermissions?.let { requestPermissions(it, RC_PERMISSION) }
         }
     }
 
@@ -52,13 +52,15 @@ class PermissionsActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SETTINGS) {
-            boundComponent.permissionInteractor.checkPermissions(
-                _allPermissions,
-                sGrantedCallback,
-                sDeniedCallback,
-                sBlockedCallback,
-                _rationaleMessage
-            )
+            _allPermissions?.let {
+                boundComponent.permissionInteractor.checkPermissions(
+                    it,
+                    sGrantedCallback,
+                    sDeniedCallback,
+                    sBlockedCallback,
+                    _rationaleMessage
+                )
+            }
         }
         super.finish()
         super.onActivityResult(requestCode, resultCode, data)

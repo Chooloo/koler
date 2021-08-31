@@ -3,7 +3,7 @@ package com.chooloo.www.koler.interactor.calls
 import com.chooloo.www.koler.data.call.Call
 import com.chooloo.www.koler.data.call.Call.State.*
 import com.chooloo.www.koler.data.call.CallList
-import com.chooloo.www.koler.util.BaseObservable
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInteractor {
     private val _callList: CallList = CallList()
@@ -18,11 +18,7 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
                     ?: _callList.getFirstState(ACTIVE)
                     ?: _callList.getFirstState(HOLDING)
             }
-            return if (mainCall?.isInConference == true) {
-                mainCall.parentCall
-            } else {
-                mainCall
-            }
+            return mainCall?.parentCall ?: mainCall
         }
 
     override val callsCount: Int
@@ -52,7 +48,7 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
         _callList.remove(call)
         call.unregisterListener(this)
         if (_callList.size == 0) {
-            invokeListeners(CallsInteractor.Listener::onNoCalls)
+            invokeListeners { l -> l.onNoCalls() }
         }
     }
 
@@ -76,9 +72,9 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
     override fun toggleHold(callId: String) {
         _callList.get(callId)?.let {
             if (it.isHolding) {
-                it.hold()
-            } else {
                 it.unHold()
+            } else {
+                it.hold()
             }
         }
     }
@@ -95,14 +91,18 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
         _callList.get(callId)?.invokeKey(c)
     }
 
-
+    @Synchronized
     override fun onCallChanged(call: Call) {
         invokeListeners { l -> l.onCallChanged(call) }
 
-        mainCall.also {
-            if (it == null || it == call) {
-                invokeListeners { l -> l.onMainCallChanged(call) }
-            }
+        val mainCall = mainCall
+        if (mainCall == null || mainCall == call) {
+            invokeListeners { l -> l.onMainCallChanged(call) }
         }
+    }
+
+
+    companion object {
+        val instance by lazy { CallsInteractorImpl() }
     }
 }

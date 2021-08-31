@@ -80,7 +80,7 @@ abstract class ListAdapter<DataType>(
                 }
                 true
             }
-            boundComponent.animationInteractor.animateIn(this)
+            boundComponent.animationInteractor.animateIn(this, false)
             onBindListItem(this, _data.items[position])
         }
     }

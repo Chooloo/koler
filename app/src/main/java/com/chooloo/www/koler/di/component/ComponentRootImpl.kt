@@ -4,13 +4,17 @@ import android.app.Application
 import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.TELEPHONY_SUBSCRIPTION_SERVICE
 import android.media.AudioManager
 import android.os.PowerManager
 import android.os.Vibrator
 import android.telecom.TelecomManager
+import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
+import com.chooloo.www.koler.interactor.calls.CallsInteractorImpl
 import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.koler.interactor.drawable.DrawableInteractorImpl
@@ -59,6 +63,14 @@ open class ComponentRootImpl(
         PreferencesManager.getInstance(application)
     }
 
+    override val subscriptionManager by lazy {
+        application.getSystemService(TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
+    }
+
+    override val notificationManager by lazy {
+        NotificationManagerCompat.from(application)
+    }
+
 
     override val phonesProviderLiveData by lazy {
         PhoneProviderLiveData(application, 1L)
@@ -81,18 +93,22 @@ open class ComponentRootImpl(
         AudioInteractorImpl(vibrator, audioManager)
     }
 
+    override val callsInteractor by lazy {
+        CallsInteractorImpl()
+    }
+
     override val stringInteractor by lazy {
         StringInteractorImpl(application)
     }
 
     override val numbersInteractor by lazy {
-        NumbersInteractorImpl(application)
+        NumbersInteractorImpl(application, telecomManager)
     }
 
     override val recentsInteractor by lazy {
         RecentsInteractorImpl(application)
     }
-    
+
     override val drawableInteractor by lazy {
         DrawableInteractorImpl(application)
     }

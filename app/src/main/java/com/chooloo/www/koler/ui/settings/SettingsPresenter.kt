@@ -3,8 +3,6 @@ package com.chooloo.www.koler.ui.settings
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class SettingsPresenter<V : SettingsContract.View>(view: V) :

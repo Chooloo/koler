@@ -6,9 +6,12 @@ import android.media.AudioManager
 import android.os.PowerManager
 import android.os.Vibrator
 import android.telecom.TelecomManager
+import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
 import com.chooloo.www.koler.interactor.drawable.DrawableInteractor
@@ -31,6 +34,8 @@ interface ComponentRoot {
     val clipboardManager: ClipboardManager
     val inputMethodManager: InputMethodManager
     val preferencesManager: PreferencesManager
+    val subscriptionManager: SubscriptionManager
+    val notificationManager: NotificationManagerCompat
 
     val phonesProviderLiveData: PhoneProviderLiveData
     val recentsProviderLiveData: RecentsProviderLiveData
@@ -38,6 +43,7 @@ interface ComponentRoot {
 
     val colorInteractor: ColorInteractor
     val audioInteractor: AudioInteractor
+    val callsInteractor: CallsInteractor
     val stringInteractor: StringInteractor
     val numbersInteractor: NumbersInteractor
     val recentsInteractor: RecentsInteractor

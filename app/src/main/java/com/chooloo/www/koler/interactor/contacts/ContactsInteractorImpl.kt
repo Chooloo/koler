@@ -27,12 +27,6 @@ class ContactsInteractorImpl(
     override fun getContact(contactId: Long): Contact? =
         ContactsContentResolver(context, contactId).content.getOrNull(0)
 
-    @RequiresDefaultDialer
-    override fun isContactBlocked(contactId: Long): Boolean =
-        phoneAccountsInteractor.getContactAccounts(contactId)
-            .all { numbersInteractor.isNumberBlocked(it.number) }
-
-
     @RequiresPermission(WRITE_CONTACTS)
     override fun deleteContact(contactId: Long) {
         context.contentResolver.delete(
@@ -43,15 +37,17 @@ class ContactsInteractorImpl(
         )
     }
 
-
-    override fun blockContact(contactId: Long) {
+    @RequiresDefaultDialer
+    override fun blockContact(contactId: Long, onSuccess: (() -> Unit)?) {
         phoneAccountsInteractor.getContactAccounts(contactId)
             .forEach { numbersInteractor.blockNumber(it.number) }
+        onSuccess?.invoke()
     }
 
-    override fun unblockContact(contactId: Long) {
+    override fun unblockContact(contactId: Long, onSuccess: (() -> Unit)?) {
         phoneAccountsInteractor.getContactAccounts(contactId)
             .forEach { numbersInteractor.unblockNumber(it.number) }
+        onSuccess?.invoke()
     }
 
     @RequiresPermission(WRITE_CONTACTS)
@@ -60,6 +56,11 @@ class ContactsInteractorImpl(
         contentValues.put(Contacts.STARRED, if (isFavorite) 1 else 0)
         val filter = "${Contacts._ID}=$contactId"
         context.contentResolver.update(Contacts.CONTENT_URI, contentValues, filter, null);
+    }
+
+    override fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit) {
+        callback.invoke(phoneAccountsInteractor.getContactAccounts(contactId)
+            .all { numbersInteractor.isNumberBlocked(it.number) })
     }
 
 
