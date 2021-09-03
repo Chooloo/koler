@@ -61,19 +61,19 @@
         tools:text="4 hours ago, 12 minutes"
         tools:visibility="visible" />
 
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/recent_button_show_history"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/bubble_background"
         android:layout_margin="@dimen/default_spacing"
-        android:fontFamily="@font/google_sans_bold"
-        android:textAllCaps="false"
-        android:elevation="0dp"
+        android:background="@drawable/bubble_background"
         android:backgroundTint="?colorSecondary"
+        android:elevation="0dp"
+        android:fontFamily="@font/google_sans_bold"
         android:text="@string/action_show_history"
         android:textAlignment="center"
+        android:textAllCaps="false"
+        android:stateListAnimator="@null"
         android:textColor="?colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
