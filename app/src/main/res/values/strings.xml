@@ -26,6 +26,7 @@
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_show_history">Show History</string>
     <!--endregion-->
 
     <!--region Koler-->

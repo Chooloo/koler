@@ -12,6 +12,8 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private lateinit var _presenter: RecentPresenter<RecentFragment>
@@ -29,6 +31,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         get() = _binding.recentTextCaption.text.toString()
         set(value) {
             _binding.recentTextCaption.text = value
+            _binding.recentTextCaption.visibility = if (value != null) VISIBLE else GONE
         }
 
     override var recentImage: Drawable?
