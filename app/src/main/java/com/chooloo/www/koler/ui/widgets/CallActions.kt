@@ -3,7 +3,6 @@ package com.chooloo.www.koler.ui.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.CallActionsBinding
@@ -33,8 +32,8 @@ class CallActions : MotionLayout {
 
 
     private fun transitionLayoutTo(constraintRes: Int) {
-        if (_binding.root.currentState == constraintRes) {
-            _binding.root.setTransition(_binding.getRoot().getCurrentState(), constraintRes)
+        if (_binding.root.currentState != constraintRes) {
+            _binding.root.setTransition(_binding.root.currentState, constraintRes)
             _binding.root.transitionToEnd()
         }
     }
@@ -90,14 +89,10 @@ class CallActions : MotionLayout {
 
 
     fun showSingleCallUI() {
-        _binding.callActionSwap.visibility = View.GONE
-        _binding.callActionMerge.visibility = View.GONE
         transitionLayoutTo(R.id.constraint_set_single_call)
     }
 
     fun showMultiCallUI() {
-        _binding.callActionSwap.visibility = View.VISIBLE
-        _binding.callActionMerge.visibility = View.VISIBLE
         transitionLayoutTo(R.id.constraint_set_multi_call)
     }
 

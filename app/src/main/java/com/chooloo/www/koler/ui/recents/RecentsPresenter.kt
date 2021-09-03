@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.recents
 
+import android.Manifest.permission.WRITE_CALL_LOG
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.data.account.Recent
@@ -9,6 +10,11 @@ import com.chooloo.www.koler.ui.list.ListPresenter
 class RecentsPresenter<V : ListContract.View<Recent>>(view: V) :
     ListPresenter<Recent, V>(view),
     ListContract.Presenter<Recent, V> {
+
+    private val recentsLiveData by lazy {
+        boundComponent.liveDataFactory.allocRecentsProviderLiveData()
+    }
+
 
     override val requiredPermissions
         get() = RecentsContentResolver.REQUIRED_PERMISSIONS
@@ -21,10 +27,7 @@ class RecentsPresenter<V : ListContract.View<Recent>>(view: V) :
 
 
     override fun observeData() {
-        boundComponent.recentsProviderLiveData.observe(
-            boundComponent.lifecycleOwner,
-            this::onDataChanged
-        )
+        recentsLiveData.observe(boundComponent.lifecycleOwner, this::onDataChanged)
     }
 
     override fun onItemClick(item: Recent) {
@@ -32,12 +35,14 @@ class RecentsPresenter<V : ListContract.View<Recent>>(view: V) :
     }
 
     override fun applyFilter(filter: String) {
-        boundComponent.recentsProviderLiveData.filter = filter
+        recentsLiveData.filter = filter
     }
 
     override fun onDeleteItems(items: ArrayList<Recent>) {
-        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_recents) {
-            items.forEach { boundComponent.recentsInteractor.deleteRecent(it.id) }
-        }
+        boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CALL_LOG), {
+            boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_recents) {
+                items.forEach { boundComponent.recentsInteractor.deleteRecent(it.id) }
+            }
+        })
     }
 }

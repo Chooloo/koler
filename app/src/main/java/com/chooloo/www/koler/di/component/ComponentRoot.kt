@@ -9,6 +9,7 @@ import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
+import com.chooloo.www.koler.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
@@ -20,12 +21,11 @@ import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
-import com.chooloo.www.koler.livedata.ContactsProviderLiveData
-import com.chooloo.www.koler.livedata.PhoneProviderLiveData
-import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.util.PreferencesManager
 
 interface ComponentRoot {
+    val liveDataFactory: LiveDataFactory
+
     val vibrator: Vibrator
     val powerManager: PowerManager
     val audioManager: AudioManager
@@ -36,10 +36,6 @@ interface ComponentRoot {
     val preferencesManager: PreferencesManager
     val subscriptionManager: SubscriptionManager
     val notificationManager: NotificationManagerCompat
-
-    val phonesProviderLiveData: PhoneProviderLiveData
-    val recentsProviderLiveData: RecentsProviderLiveData
-    val contactsProviderLiveData: ContactsProviderLiveData
 
     val colorInteractor: ColorInteractor
     val audioInteractor: AudioInteractor

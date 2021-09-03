@@ -42,11 +42,12 @@
 
     <!--region warning-->
     <string name="warning_is_on_hold">%s is on hold</string>
+    <string name="warning_block_number">Are you sure you want to block this number?</string>
     <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
     <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
-    <string name="warning_delete_recents">Are you sure you want to delete those recents?</string>
+    <string name="warning_delete_recents">Are you sure you want to delete all these recents?</string>
+    <string name="warning_delete_contacts">Are you sure you want to delete all these contacts?</string>
     <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
-    <string name="warning_block_number">Are you sure you want to block this number?</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -160,6 +161,7 @@
 
     <string name="error_enter_number">Please enter a number first</string>
 
+    <string name="error_no_number_to_call">No number was found :(</string>
     <string name="error_no_phone_account_handle">No phone account handle was found</string>
 
     <string name="error_cant_hold_call">Can\'t hold call</string>

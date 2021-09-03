@@ -13,17 +13,16 @@ class RecentsContentResolver(context: Context, private val recentId: Long? = nul
     BaseItemsContentResolver<Recent>(context) {
 
     override val uri: Uri = URI
-    override val selection: String? = null
     override val filterUri: Uri = FILTER_URI
     override val sortOrder: String = SORT_ORDER
     override val selectionArgs: Array<String>? = null
     override val projection: Array<String> = PROJECTION
-//    override val selection: String
-//        get() {
-//            val selection = SelectionBuilder().addSelection(CallLog.Calls._ID, recentId)
-//            filter?.let { selection.addString("(${CallLog.Calls.CACHED_NAME} LIKE '%$filter%' OR ${CallLog.Calls.NUMBER} LIKE '%$filter%')") }
-//            return selection.build()
-//        }
+    override val selection: String
+        get() {
+            val selection = SelectionBuilder().addSelection(CallLog.Calls._ID, recentId)
+            filter?.let { selection.addString("(${CallLog.Calls.CACHED_NAME} LIKE '%$filter%' OR ${CallLog.Calls.NUMBER} LIKE '%$filter%')") }
+            return selection.build()
+        }
 
 
     override fun convertCursorToItem(cursor: Cursor): Recent {

@@ -17,9 +17,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     private lateinit var _presenter: RecentPresenter<RecentFragment>
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
 
-    override val recentId by lazy {
-        args.getLong(ARG_RECENT_ID)
-    }
+    override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
 
     override var recentName: String?
         get() = _binding.recentTextName.text.toString()

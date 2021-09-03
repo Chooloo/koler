@@ -4,12 +4,16 @@ import android.content.ClipData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.PhoneContentResolver
 import com.chooloo.www.koler.data.account.PhoneAccount
-import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListPresenter
 
-class PhonesPresenter<V : ListContract.View<PhoneAccount>>(view: V) :
+class PhonesPresenter<V : PhonesContract.View>(view: V) :
     ListPresenter<PhoneAccount, V>(view),
-    ListContract.Presenter<PhoneAccount, V> {
+    PhonesContract.Presenter<V> {
+
+    private val phonesLiveData by lazy {
+        val contactId = if (view.contactId == 0L) null else view.contactId
+        boundComponent.liveDataFactory.allocPhonesProviderLiveData(contactId)
+    }
 
     override val requiredPermissions
         get() = PhoneContentResolver.REQUIRED_PERMISSIONS
@@ -22,10 +26,7 @@ class PhonesPresenter<V : ListContract.View<PhoneAccount>>(view: V) :
 
 
     override fun observeData() {
-        boundComponent.phonesProviderLiveData.observe(
-            boundComponent.lifecycleOwner,
-            this::onDataChanged
-        )
+        phonesLiveData.observe(boundComponent.lifecycleOwner, this::onDataChanged)
     }
 
     override fun onItemClick(item: PhoneAccount) {
@@ -40,6 +41,6 @@ class PhonesPresenter<V : ListContract.View<PhoneAccount>>(view: V) :
     }
 
     override fun applyFilter(filter: String) {
-        boundComponent.phonesProviderLiveData.filter = filter
+        phonesLiveData.filter = filter
     }
 }

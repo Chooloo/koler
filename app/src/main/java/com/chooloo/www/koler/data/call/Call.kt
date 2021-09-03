@@ -106,11 +106,11 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         get() = details.accountHandle
 
 
-    val isStarred: Boolean
-        get() = state in arrayOf(DIALING, INCOMING, CONNECTING, NEW, SELECT_PHONE_ACCOUNT)
-
     val isActive: Boolean
         get() = state == ACTIVE
+
+    val isStarted: Boolean
+        get() = state in arrayOf(DIALING, INCOMING, CONNECTING, NEW, SELECT_PHONE_ACCOUNT)
 
     val isHolding: Boolean
         get() = state == HOLDING

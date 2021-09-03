@@ -61,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:visibilityMode="ignore"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
         <Constraint
@@ -69,7 +68,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:visibilityMode="ignore"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
@@ -109,7 +107,6 @@
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             android:visibility="visible"
-            app:visibilityMode="ignore"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/call_action_merge"
             app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +117,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
-            app:visibilityMode="ignore"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/call_action_keypad"

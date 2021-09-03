@@ -1,11 +1,11 @@
 package com.chooloo.www.koler.contentresolver
 
-import com.chooloo.www.koler.data.account.PhoneAccount
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
+import com.chooloo.www.koler.data.account.PhoneAccount
 
 class PhoneContentResolver(context: Context, contactId: Long? = null) :
     BaseItemsContentResolver<PhoneAccount>(context) {

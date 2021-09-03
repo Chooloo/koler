@@ -1,5 +1,7 @@
 package com.chooloo.www.koler.interactor.audio
 
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.AudioManager.RINGER_MODE_SILENT
 import android.media.AudioManager.RINGER_MODE_VIBRATE
@@ -9,6 +11,7 @@ import android.os.VibrationEffect
 import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import android.os.Vibrator
 import android.view.KeyEvent
+import androidx.annotation.RequiresApi
 import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.service.CallService
@@ -23,6 +26,7 @@ class AudioInteractorImpl(
         get() = audioManager.isMicrophoneMute
         set(value) {
             audioManager.isMicrophoneMute = value
+            invokeListeners { l -> l.onMuteChanged(value) }
         }
 
     override var isSpeakerOn: Boolean
@@ -99,5 +103,19 @@ class AudioInteractorImpl(
                 put(KeyEvent.KEYCODE_STAR, ToneGenerator.TONE_DTMF_S)
             }
         }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun requestCallFocus() {
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build()
+        val focusRequest =
+            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                .setAudioAttributes(attributes)
+                .setWillPauseWhenDucked(false)
+                .build()
+        audioManager.requestAudioFocus(focusRequest)
     }
 }

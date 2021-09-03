@@ -123,9 +123,10 @@ class CallPresenter<V : CallContract.View>(view: V) :
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
             val account = boundComponent.phoneAccountsInteractor.lookupAccount(call.number)
             view.showHoldingBanner(
-                """${account.displayString}${
-                    boundComponent.stringInteractor.getString(R.string.warning_is_on_hold)
-                }"""
+                String.format(
+                    boundComponent.stringInteractor.getString(R.string.warning_is_on_hold),
+                    account.displayString
+                )
             )
         } else if (boundComponent.callsInteractor.getStateCount(HOLDING) == 0) {
             view.hideHoldingBanner()
@@ -139,7 +140,9 @@ class CallPresenter<V : CallContract.View>(view: V) :
 
 
     private fun displayCallTime() {
-        view.setElapsedTime(boundComponent.callsInteractor.mainCall?.durationTimeMilis)
+        boundComponent.callsInteractor.mainCall?.let {
+            view.setElapsedTime(if (it.isStarted) it.durationTimeMilis else null)
+        }
     }
 
     private fun displayCall(call: Call) {
@@ -148,18 +151,14 @@ class CallPresenter<V : CallContract.View>(view: V) :
         }
 
         if (call.isConference) {
-            try {
-                Thread.sleep(100)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+            view.nameText = boundComponent.stringInteractor.getString(R.string.conference)
+        } else {
+            val account = boundComponent.phoneAccountsInteractor.lookupAccount(call.number)
+            account.photoUri?.let { view.imageURI = Uri.parse(it) }
+            view.nameText = account.displayString
         }
 
-        val account = boundComponent.phoneAccountsInteractor.lookupAccount(call.number)
-        account.photoUri?.let { view.imageURI = Uri.parse(it) }
-
         view.isHoldActivated = call.isHolding
-        view.nameText = account.displayString
         view.isHoldEnabled = call.isCapable(CAPABILITY_HOLD)
         view.isMuteEnabled = call.isCapable(CAPABILITY_MUTE)
         view.isSwapEnabled = call.isCapable(CAPABILITY_SWAP_CONFERENCE)

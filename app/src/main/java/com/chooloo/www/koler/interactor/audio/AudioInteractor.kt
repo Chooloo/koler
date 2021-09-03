@@ -1,12 +1,13 @@
 package com.chooloo.www.koler.interactor.audio
 
-import android.media.ToneGenerator
-import android.view.KeyEvent
 import com.chooloo.www.koler.interactor.base.BaseInteractor
-import java.util.*
 
 interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
-    interface Listener
+    interface Listener {
+        fun onMuteChanged(isMuted: Boolean)
+        fun onSpeakerChanged(isSpeaker: Boolean)
+        fun onAudioModeChanged(audioMode: AudioMode)
+    }
 
     val isPhoneSilent: Boolean
 

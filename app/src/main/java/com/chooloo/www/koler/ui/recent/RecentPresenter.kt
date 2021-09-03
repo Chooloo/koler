@@ -11,9 +11,7 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
     BasePresenter<V>(view),
     RecentContract.Presenter<V> {
 
-    private val _recent by lazy {
-        boundComponent.recentsInteractor.getRecent(view.recentId)
-    }
+    private val _recent by lazy { boundComponent.recentsInteractor.getRecent(view.recentId) }
 
 
     override fun onStart() {
@@ -40,8 +38,8 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
         view.recentName = _recent!!.cachedName ?: _recent!!.number
 
         boundComponent.phoneAccountsInteractor.lookupAccount(_recent!!.number).also {
-            view.isContactVisible = it != null
-            view.isAddContactVisible = it == null
+            view.isContactVisible = it.name != null
+            view.isAddContactVisible = it.name == null
         }
     }
 
@@ -54,8 +52,7 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionCall() {
-        // TODO call recent number
-//        recent?.let { CallManager.call(baseActivity, it.number) }
+        _recent?.let { boundComponent.navigationInteractor.call(it.number) }
     }
 
     override fun onActionDelete() {
@@ -74,7 +71,7 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
 
     override fun onActionOpenContact() {
         _recent?.let {
-            boundComponent.phoneAccountsInteractor.lookupAccount(it.number)?.contactId?.let {
+            boundComponent.phoneAccountsInteractor.lookupAccount(it.number).contactId?.let {
                 view.openContactView(it)
             }
         }

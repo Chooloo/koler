@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.di.component.ComponentRoot
+import com.chooloo.www.koler.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
@@ -28,9 +29,6 @@ import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.screen.ScreenInteractorImpl
 import com.chooloo.www.koler.interactor.sim.SimInteractorImpl
 import com.chooloo.www.koler.interactor.string.StringInteractor
-import com.chooloo.www.koler.livedata.ContactsProviderLiveData
-import com.chooloo.www.koler.livedata.PhoneProviderLiveData
-import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.util.PreferencesManager
 
@@ -86,6 +84,12 @@ class BoundComponentRootImpl(
             permissionInteractor
         )
     }
+
+
+    override val liveDataFactory: LiveDataFactory
+        get() = componentRoot.liveDataFactory
+
+
     override val vibrator: Vibrator
         get() = componentRoot.vibrator
 
@@ -116,14 +120,6 @@ class BoundComponentRootImpl(
     override val notificationManager: NotificationManagerCompat
         get() = componentRoot.notificationManager
 
-    override val phonesProviderLiveData: PhoneProviderLiveData
-        get() = componentRoot.phonesProviderLiveData
-
-    override val recentsProviderLiveData: RecentsProviderLiveData
-        get() = componentRoot.recentsProviderLiveData
-
-    override val contactsProviderLiveData: ContactsProviderLiveData
-        get() = componentRoot.contactsProviderLiveData
 
     override val colorInteractor: ColorInteractor
         get() = componentRoot.colorInteractor

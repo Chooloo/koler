@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.contacts
 
+import android.Manifest.permission.WRITE_CONTACTS
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.data.account.Contact
@@ -9,6 +10,11 @@ import com.chooloo.www.koler.ui.list.ListPresenter
 class ContactsPresenter<V : ListContract.View<Contact>>(view: V) :
     ListPresenter<Contact, V>(view),
     ListContract.Presenter<Contact, V> {
+
+    private val contactsLiveData by lazy {
+        boundComponent.liveDataFactory.allocContactsProviderLiveData()
+    }
+
 
     override val requiredPermissions
         get() = ContactsContentResolver.REQUIRED_PERMISSIONS
@@ -21,14 +27,19 @@ class ContactsPresenter<V : ListContract.View<Contact>>(view: V) :
 
 
     override fun observeData() {
-        boundComponent.contactsProviderLiveData.observe(
-            boundComponent.lifecycleOwner,
-            this::onDataChanged
-        )
+        contactsLiveData.observe(boundComponent.lifecycleOwner, this::onDataChanged)
     }
 
     override fun applyFilter(filter: String) {
-        boundComponent.contactsProviderLiveData.filter = filter
+        contactsLiveData.filter = filter
+    }
+
+    override fun onDeleteItems(items: ArrayList<Contact>) {
+        boundComponent.permissionInteractor.runWithPermissions(arrayOf(WRITE_CONTACTS), {
+            boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contacts) {
+                items.forEach { boundComponent.contactsInteractor.deleteContact(it.id) }
+            }
+        })
     }
 
     override fun onItemClick(item: Contact) {

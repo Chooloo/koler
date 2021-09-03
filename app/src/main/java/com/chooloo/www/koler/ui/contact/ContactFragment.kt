@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
-import com.chooloo.www.koler.ui.contacts.ContactsFragment
-import com.chooloo.www.koler.ui.contacts.ContactsPresenter
 import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 

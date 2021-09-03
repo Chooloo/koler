@@ -11,8 +11,6 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     ContactContract.Presenter<V> {
 
     private var contact: Contact? = null
-
-    //    private val contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
     private val firstPhone by lazy {
         boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId).getOrNull(0)
     }
@@ -27,6 +25,9 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionCall() {
+        firstPhone?.number?.let { boundComponent.navigationInteractor.call(it) }?:run{
+            view.showError(R.string.error_no_number_to_call)
+        }
     }
 
     override fun onActionSms() {

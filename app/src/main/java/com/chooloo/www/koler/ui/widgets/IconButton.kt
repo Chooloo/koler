@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.ViewManager
@@ -13,8 +12,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @SuppressLint("Recycle", "CustomViewStyleable", "WrongConstant")
 class IconButton : FloatingActionButton {
-    @DrawableRes private var _iconDefault: Int? = null
-    @DrawableRes private var _iconOnClick: Int? = null
+    @DrawableRes
+    private var _iconDefault: Int? = null
+
+    @DrawableRes
+    private var _iconOnClick: Int? = null
 
     private val _viewManager by lazy { ViewManager(context) }
 
@@ -34,16 +36,13 @@ class IconButton : FloatingActionButton {
 
         elevation = 0f
         compatElevation = 0f
-
-        imageTintList = if (isEnabled) {
-            imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
-        } else {
-            ColorStateList.valueOf(getColor(context, android.R.color.darker_gray))
-        }
+        imageTintList = imageTintList
+            ?: ColorStateList.valueOf(_viewManager.getAttrColor(R.attr.colorOnSecondary))
 
         if (_iconDefault != NO_ID) {
             _iconDefault?.let { setImageDrawable(getDrawable(context, it)) }
         }
+
         setOnClickListener {}
     }
 
@@ -59,5 +58,14 @@ class IconButton : FloatingActionButton {
         if (_iconOnClick != NO_ID) {
             (if (isActivated) _iconOnClick else _iconDefault)?.let { setImageResource(it) }
         }
+    }
+
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        refreshBackground()
+    }
+
+    private fun refreshBackground() {
+        imageAlpha = if (isEnabled) 255 else 40
     }
 }
