@@ -36,6 +36,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
             proximityInteractor.acquire()
             screenInteractor.disableKeyboard()
             screenInteractor.setShowWhenLocked()
+            audioInteractor.registerListener(this@CallPresenter)
             callsInteractor.registerListener(this@CallPresenter)
             callsInteractor.mainCall?.let {
                 onCallChanged(it)
@@ -76,10 +77,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
     }
 
     override fun onMuteClick() {
-        !view.isMuteActivated.also {
-            boundComponent.audioInteractor.isMuted = it
-            view.isMuteActivated = it
-        }
+        boundComponent.audioInteractor.isMuted = !view.isMuteActivated
     }
 
     override fun onMergeClick() {
@@ -100,10 +98,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
     }
 
     override fun onSpeakerClick() {
-        !view.isSpeakerActivated.also {
-            boundComponent.audioInteractor.isSpeakerOn = it
-            view.isSpeakerActivated = it
-        }
+        boundComponent.audioInteractor.isSpeakerOn = !view.isSpeakerActivated
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {
@@ -136,6 +131,15 @@ class CallPresenter<V : CallContract.View>(view: V) :
     override fun onMainCallChanged(call: Call) {
         _currentCallId = call.id
         displayCall(call)
+    }
+
+
+    override fun onMuteChanged(isMuted: Boolean) {
+        view.isMuteActivated = isMuted
+    }
+
+    override fun onSpeakerChanged(isSpeaker: Boolean) {
+        view.isSpeakerActivated = isSpeaker
     }
 
 

@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
 import android.view.KeyEvent
+import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.ui.base.BaseContract
 import com.chooloo.www.koler.ui.widgets.CallActions
@@ -35,7 +36,7 @@ interface CallContract : BaseContract {
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V>, CallsInteractor.Listener,
-        CallActions.CallActionsListener {
+        CallActions.CallActionsListener, AudioInteractor.Listener {
         fun onAnswerClick()
         fun onRejectClick()
 

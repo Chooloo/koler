@@ -6,7 +6,6 @@ interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
     interface Listener {
         fun onMuteChanged(isMuted: Boolean)
         fun onSpeakerChanged(isSpeaker: Boolean)
-        fun onAudioModeChanged(audioMode: AudioMode)
     }
 
     val isPhoneSilent: Boolean

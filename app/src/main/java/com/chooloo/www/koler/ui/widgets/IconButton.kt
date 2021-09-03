@@ -18,8 +18,10 @@ class IconButton : FloatingActionButton {
     @DrawableRes
     private var _iconOnClick: Int? = null
 
-    private val _viewManager by lazy { ViewManager(context) }
+    private var _imageTintList: ColorStateList?
+    private var _backgroundTintList: ColorStateList?
 
+    private val _viewManager by lazy { ViewManager(context) }
     private val colorOnSecondary by lazy { _viewManager.getAttrColor(R.attr.colorOnSecondary) }
 
     constructor(context: Context) : this(context, null)
@@ -36,20 +38,13 @@ class IconButton : FloatingActionButton {
 
         elevation = 0f
         compatElevation = 0f
-        rippleColor = colorOnSecondary
+        _backgroundTintList = backgroundTintList
         imageTintList = imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
+        _imageTintList = imageTintList
+        _imageTintList?.defaultColor?.let { rippleColor = it }
 
         if (_iconDefault != NO_ID) {
             _iconDefault?.let { setImageDrawable(getDrawable(context, it)) }
-        }
-
-        setOnClickListener {}
-    }
-
-    override fun setOnClickListener(l: OnClickListener?) {
-        super.setOnClickListener {
-            isActivated = !isActivated
-            l?.onClick(it)
         }
     }
 
@@ -58,6 +53,8 @@ class IconButton : FloatingActionButton {
         if (_iconOnClick != NO_ID) {
             (if (isActivated) _iconOnClick else _iconDefault)?.let { setImageResource(it) }
         }
+        imageTintList = if (isActivated) _backgroundTintList else _imageTintList
+        backgroundTintList = if (isActivated) _imageTintList else _backgroundTintList
     }
 
     override fun setEnabled(enabled: Boolean) {

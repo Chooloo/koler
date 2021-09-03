@@ -38,6 +38,7 @@ class AudioInteractorImpl(
                 audioMode = AudioMode.IN_CALL
                 audioManager.isSpeakerphoneOn = value
             }
+            invokeListeners { l -> l.onSpeakerChanged(value) }
         }
 
     override val isPhoneSilent: Boolean
