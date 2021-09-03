@@ -36,6 +36,7 @@ class IconButton : FloatingActionButton {
 
         elevation = 0f
         compatElevation = 0f
+        rippleColor = colorOnSecondary
         imageTintList = imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
 
         if (_iconDefault != NO_ID) {
