@@ -8,11 +8,11 @@
     <!-- mute -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_mute"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
         app:activatedIcon="@drawable/ic_mic_off_black_24dp"
-        app:borderWidth="0dp"
         app:icon="@drawable/ic_mic_black_24dp"
         app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,11 +21,11 @@
     <!-- speaker -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_speaker"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
         app:activatedIcon="@drawable/ic_volume_up_black_24dp"
-        app:borderWidth="0dp"
         app:icon="@drawable/ic_volume_down_black_24dp"
         app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
         app:layout_constraintStart_toEndOf="@id/call_action_mute"
@@ -34,11 +34,11 @@
     <!-- hold -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_hold"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
         app:activatedIcon="@drawable/ic_play_arrow_black_24dp"
-        app:borderWidth="0dp"
         app:icon="@drawable/ic_pause_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/call_action_speaker"
@@ -47,11 +47,11 @@
     <!-- add call -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_add_call"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginBottom="@dimen/default_spacing"
-        app:borderWidth="0dp"
         app:icon="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
@@ -61,11 +61,11 @@
     <!-- keypad -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_keypad"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginBottom="@dimen/default_spacing"
-        app:borderWidth="0dp"
         app:icon="@drawable/ic_dialpad_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/call_action_hold"
@@ -75,9 +75,9 @@
     <!-- swap -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_swap"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:borderWidth="0dp"
         app:icon="@drawable/round_swap_calls_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -85,9 +85,9 @@
     <!-- merge -->
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/call_action_merge"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:borderWidth="0dp"
         app:icon="@drawable/ic_call_merge_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

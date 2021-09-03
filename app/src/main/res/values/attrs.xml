@@ -23,6 +23,10 @@
     <declare-styleable name="Koler.IconButton">
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
+        <attr name="size" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="big" value="1" />
+        </attr>
     </declare-styleable>
     <!--endregion-->
 </resources>

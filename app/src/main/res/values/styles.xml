@@ -70,6 +70,16 @@
     </style>
     <!--endregion-->
 
+    <!--region icon button-->
+    <style name="Koler.IconButton" parent="Widget.Design.FloatingActionButton">
+        <item name="borderWidth">0dp</item>
+    </style>
+
+    <style name="Koler.IconButton.Big" parent="Koler.IconButton">
+        <item name="fabCustomSize">70dp</item>
+        <item name="maxImageSize">36dp</item>
+    </style>
+
     <!--region image view -->
     <style name="Koler.Image" />
 
