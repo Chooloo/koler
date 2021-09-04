@@ -4,6 +4,7 @@ import android.Manifest
 import android.net.Uri
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class ContactPresenter<V : ContactContract.View>(view: V) :
@@ -11,27 +12,31 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     ContactContract.Presenter<V> {
 
     private var contact: Contact? = null
-    private val firstPhone by lazy {
-        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId).getOrNull(0)
-    }
+    private var _contact: Contact? = null
+    private var _firstPhone: PhoneAccount? = null
 
     override fun onStart() {
-        contact = boundComponent.contactsInteractor.getContact(view.contactId)
-        view.apply {
-            contactName = contact?.name
-            isStarIconVisible = contact?.starred == true
-            contact?.photoUri?.let { contactImage = Uri.parse(it) }
+        boundComponent.contactsInteractor.getContact(view.contactId) { contact ->
+            _contact = contact
+            view.apply {
+                contactName = contact?.name
+                isStarIconVisible = contact?.starred == true
+                contact?.photoUri?.let { contactImage = Uri.parse(it) }
+            }
+        }
+        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId) {
+            _firstPhone = it?.getOrNull(0)
         }
     }
 
     override fun onActionCall() {
-        firstPhone?.number?.let { boundComponent.navigationInteractor.call(it) }?:run{
+        _firstPhone?.number?.let { boundComponent.navigationInteractor.call(it) } ?: run {
             view.showError(R.string.error_no_number_to_call)
         }
     }
 
     override fun onActionSms() {
-        firstPhone?.number?.let { boundComponent.contactsInteractor.openSmsView(it) }
+        _firstPhone?.number?.let { boundComponent.contactsInteractor.openSmsView(it) }
     }
 
     override fun onActionEdit() {

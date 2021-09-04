@@ -5,15 +5,13 @@ import android.content.Context
 import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
+import com.chooloo.www.koler.util.AsyncCursorHandler
 
 abstract class BaseContentResolver<T>(private val context: Context) : ContentResolver(context) {
     private var _filter: String? = null
     private var _observer: ContentObserver? = null
     private var _onContentChangedListener: ((T?) -> Unit?)? = null
 
-
-    val content: T
-        get() = convertCursorToContent(queryContent())
 
     var filter: String?
         get() = _filter
@@ -30,21 +28,24 @@ abstract class BaseContentResolver<T>(private val context: Context) : ContentRes
         }
     }
 
-    private fun queryContent(): Cursor? {
-        return context.contentResolver.query(
-            chooseUri(),
-            projection,
-            selection,
-            selectionArgs,
-            sortOrder
-        )
+    private fun queryCursor(callback: (Cursor?) -> Unit) {
+        AsyncCursorHandler(context.contentResolver, object : AsyncCursorHandler.AsyncQueryListener {
+            override fun onQueryComplete(token: Int, cookie: Any?, cursor: Cursor?) {
+                callback.invoke(cursor)
+            }
+        }).also {
+            it.startQuery(0, 0, chooseUri(), projection, selection, selectionArgs, sortOrder)
+        }
     }
 
+    fun queryContent(callback: (T?) -> Unit) {
+        queryCursor { callback.invoke(convertCursorToContent(it)) }
+    }
 
     fun observe() {
         _observer = object : ContentObserver(null) {
             override fun onChange(selfChange: Boolean) {
-                _onContentChangedListener?.invoke(content)
+                queryContent { _onContentChangedListener?.invoke(it) }
             }
         }
         _observer?.let { registerContentObserver(uri, true, it) }
@@ -72,7 +73,7 @@ abstract class BaseContentResolver<T>(private val context: Context) : ContentRes
 
     //endregion
 
-    
+
     open inner class SelectionBuilder {
         private val selections = arrayListOf<String>()
 

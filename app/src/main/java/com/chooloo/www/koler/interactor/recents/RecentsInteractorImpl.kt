@@ -12,8 +12,11 @@ class RecentsInteractorImpl(
     private val context: Context
 ) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
 
-    override fun getRecent(recentId: Long): Recent? =
-        RecentsContentResolver(context, recentId).content.getOrNull(0)
+    override fun getRecent(recentId: Long, callback: (Recent?) -> Unit) {
+        RecentsContentResolver(context, recentId).queryContent {
+            callback.invoke(it?.getOrNull(0))
+        }
+    }
 
     @RequiresPermission(WRITE_CALL_LOG)
     override fun deleteRecent(recentId: Long) {

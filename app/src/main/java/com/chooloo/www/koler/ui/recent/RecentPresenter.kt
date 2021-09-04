@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.recent
 import android.Manifest
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.ui.base.BasePresenter
 import com.chooloo.www.koler.util.getElapsedTimeString
 import java.util.*
@@ -11,35 +12,35 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
     BasePresenter<V>(view),
     RecentContract.Presenter<V> {
 
-    private val _recent by lazy { boundComponent.recentsInteractor.getRecent(view.recentId) }
-
+    private var _recent: Recent? = null
 
     override fun onStart() {
         super.onStart()
-        if (_recent == null) {
-            return
-        }
-        val recentCaptions = arrayListOf(_recent!!.relativeTime)
-        if (_recent!!.duration > 0) {
-            recentCaptions.add(getElapsedTimeString(_recent!!.duration))
-        }
-        boundComponent.permissionInteractor.runWithDefaultDialer {
-            if (boundComponent.numbersInteractor.isNumberBlocked(_recent!!.number)) {
-                recentCaptions.add(
-                    boundComponent.stringInteractor.getString(R.string.error_blocked)
-                        .toUpperCase(Locale.ROOT)
-                )
+        boundComponent.recentsInteractor.getRecent(view.recentId) { recent ->
+            if (recent == null) return@getRecent
+            _recent = recent
+            val recentCaptions = arrayListOf(recent.relativeTime)
+            if (recent.duration > 0) {
+                recentCaptions.add(getElapsedTimeString(recent.duration))
             }
-        }
-        view.recentCaption = recentCaptions.joinToString(", ")
-        view.recentImage = boundComponent.drawableInteractor.getDrawable(
-            RecentsContentResolver.getCallTypeImage(_recent!!.type)
-        )
-        view.recentName = _recent!!.cachedName ?: _recent!!.number
+            boundComponent.permissionInteractor.runWithDefaultDialer {
+                if (boundComponent.numbersInteractor.isNumberBlocked(recent.number)) {
+                    recentCaptions.add(
+                        boundComponent.stringInteractor.getString(R.string.error_blocked)
+                            .toUpperCase(Locale.ROOT)
+                    )
+                }
+            }
+            view.recentCaption = recentCaptions.joinToString(", ")
+            view.recentImage = boundComponent.drawableInteractor.getDrawable(
+                RecentsContentResolver.getCallTypeImage(recent.type)
+            )
+            view.recentName = recent.cachedName ?: recent.number
 
-        boundComponent.phoneAccountsInteractor.lookupAccount(_recent!!.number).also {
-            view.isContactVisible = it.name != null
-            view.isAddContactVisible = it.name == null
+            boundComponent.phoneAccountsInteractor.lookupAccount(recent.number) {
+                view.isContactVisible = it.name != null
+                view.isAddContactVisible = it.name == null
+            }
         }
     }
 
@@ -71,8 +72,8 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
 
     override fun onActionOpenContact() {
         _recent?.let {
-            boundComponent.phoneAccountsInteractor.lookupAccount(it.number).contactId?.let {
-                view.openContactView(it)
+            boundComponent.phoneAccountsInteractor.lookupAccount(it.number) {
+                it.contactId?.let { view.openContactView(it) }
             }
         }
     }

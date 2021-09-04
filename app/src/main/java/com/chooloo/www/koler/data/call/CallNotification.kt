@@ -150,35 +150,38 @@ class CallNotification(
         PendingIntent.getBroadcast(context, rc, _getCallIntent(callAction), FLAG_CANCEL_CURRENT)
 
 
-    private fun buildNotification(call: Call): Notification {
-        val account = componentRoot.phoneAccountsInteractor.lookupAccount(call.number)
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setWhen(0)
-            .setOngoing(true)
-            .setColorized(true)
-            .setPriority(PRIORITY)
-            .setOnlyAlertOnce(true)
-            .setContentTitle(account.displayString)
-            .setSmallIcon(R.drawable.icon_full_144)
-            .setContentIntent(_contentPendingIntent)
-            .setColor(componentRoot.colorInteractor.getAttrColor(R.attr.colorSecondary))
-            .setContentText(componentRoot.stringInteractor.getString(call.state.stringRes))
-        if (call.isIncoming) {
-            builder.addAction(_answerAction)
+    private fun buildNotification(call: Call, callback: (Notification) -> Unit) {
+        componentRoot.phoneAccountsInteractor.lookupAccount(call.number) {
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+                .setWhen(0)
+                .setOngoing(true)
+                .setColorized(true)
+                .setPriority(PRIORITY)
+                .setOnlyAlertOnce(true)
+                .setContentTitle(it.displayString)
+                .setSmallIcon(R.drawable.icon_full_144)
+                .setContentIntent(_contentPendingIntent)
+                .setColor(componentRoot.colorInteractor.getAttrColor(R.attr.colorSecondary))
+                .setContentText(componentRoot.stringInteractor.getString(call.state.stringRes))
+            if (call.isIncoming) {
+                builder.addAction(_answerAction)
+            }
+            if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
+                builder.addAction(_hangupAction)
+            }
+            if (call.isCapable(CAPABILITY_MUTE)) {
+                builder.addAction(if (componentRoot.audioInteractor.isMuted) _unmuteAction else _muteAction)
+            }
+            builder.addAction(if (componentRoot.audioInteractor.isSpeakerOn) _unspeakerAction else _speakerAction)
+            callback.invoke(builder.build())
         }
-        if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-            builder.addAction(_hangupAction)
-        }
-        if (call.isCapable(CAPABILITY_MUTE)) {
-            builder.addAction(if (componentRoot.audioInteractor.isMuted) _unmuteAction else _muteAction)
-        }
-        builder.addAction(if (componentRoot.audioInteractor.isSpeakerOn) _unspeakerAction else _speakerAction)
-        return builder.build()
     }
 
 
     fun show(call: Call) {
-        componentRoot.notificationManager.notify(ID, buildNotification(call))
+        buildNotification(call) {
+            componentRoot.notificationManager.notify(ID, it)
+        }
     }
 
     fun cancel() {

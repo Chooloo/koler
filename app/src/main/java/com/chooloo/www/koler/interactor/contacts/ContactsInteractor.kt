@@ -7,7 +7,7 @@ open interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> 
     interface Listener
 
     fun deleteContact(contactId: Long)
-    fun getContact(contactId: Long): Contact?
+    fun getContact(contactId: Long, callback: (Contact?) -> Unit)
     fun toggleContactFavorite(contactId: Long, isFavorite: Boolean)
     fun blockContact(contactId: Long, onSuccess: (() -> Unit)? = null)
     fun unblockContact(contactId: Long, onSuccess: (() -> Unit)? = null)

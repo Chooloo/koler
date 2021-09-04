@@ -9,14 +9,14 @@ class ContactPreferencesPresenter<V : ContactPreferencesContract.View>(view: V) 
     BasePresenter<V>(view),
     ContactPreferencesContract.Presenter<V> {
 
-    private val _contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
-
     override fun onStart() {
         view.apply {
             isBlockContactVisible = false
             isUnblockContactVisible = false
-            isFavoriteContactVisible = _contact?.starred == false
-            isUnfavoriteContactVisible = _contact?.starred == true
+            boundComponent.contactsInteractor.getContact(view.contactId) { contact ->
+                isFavoriteContactVisible = contact?.starred == false
+                isUnfavoriteContactVisible = contact?.starred == true
+            }
         }
 
         boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {

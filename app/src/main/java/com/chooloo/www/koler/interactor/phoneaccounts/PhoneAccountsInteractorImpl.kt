@@ -10,12 +10,15 @@ import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 class PhoneAccountsInteractorImpl(
     private val context: Context
 ) : BaseInteractorImpl<PhoneAccountsInteractor.Listener>(), PhoneAccountsInteractor {
-    override fun lookupAccount(number: String?): PhoneLookupAccount =
-        PhoneLookupContentResolver(context, number).content.getOrNull(0) ?: PhoneLookupAccount(
-            null,
-            number
-        )
+    override fun lookupAccount(number: String?, callback: (PhoneLookupAccount) -> Unit) {
+        PhoneLookupContentResolver(context, number).queryContent { phones ->
+            callback.invoke(phones?.getOrNull(0) ?: PhoneLookupAccount(null, number))
+        }
+    }
 
-    override fun getContactAccounts(contactId: Long): Array<PhoneAccount> =
-        PhoneContentResolver(context, contactId).content.toTypedArray()
+    override fun getContactAccounts(contactId: Long, callback: (Array<PhoneAccount>?) -> Unit) {
+        PhoneContentResolver(context, contactId).queryContent {
+            callback.invoke(it?.toTypedArray())
+        }
+    }
 }

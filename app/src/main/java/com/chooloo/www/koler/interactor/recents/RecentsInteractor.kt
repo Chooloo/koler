@@ -6,6 +6,6 @@ import com.chooloo.www.koler.interactor.base.BaseInteractor
 interface RecentsInteractor : BaseInteractor<RecentsInteractor.Listener> {
     interface Listener
 
-    fun getRecent(recentId: Long): Recent?
+    fun getRecent(recentId: Long, callback: (Recent?) -> Unit)
     fun deleteRecent(recentId: Long)
 }

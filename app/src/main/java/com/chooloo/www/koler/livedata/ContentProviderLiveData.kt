@@ -1,9 +1,9 @@
 package com.chooloo.www.koler.livedata
 
 import android.content.Context
-import android.os.Handler
 import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
+import java.util.concurrent.Executors
 
 abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
     protected val context: Context,
@@ -33,8 +33,6 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
 
 
     private fun updateData() {
-        Handler(context.mainLooper).post {
-            value = contentResolver.content
-        }
+        contentResolver.queryContent { postValue(it) }
     }
 }

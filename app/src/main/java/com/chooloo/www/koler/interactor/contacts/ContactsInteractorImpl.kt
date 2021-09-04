@@ -24,8 +24,12 @@ class ContactsInteractorImpl(
     private val numbersInteractor: NumbersInteractor,
     private val phoneAccountsInteractor: PhoneAccountsInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
-    override fun getContact(contactId: Long): Contact? =
-        ContactsContentResolver(context, contactId).content.getOrNull(0)
+    override fun getContact(contactId: Long, callback: (Contact?) -> Unit) {
+        ContactsContentResolver(context, contactId).queryContent { contacts ->
+            contacts?.let { callback.invoke(contacts.getOrNull(0)) } ?: callback.invoke(null)
+        }
+    }
+
 
     @RequiresPermission(WRITE_CONTACTS)
     override fun deleteContact(contactId: Long) {
@@ -39,15 +43,17 @@ class ContactsInteractorImpl(
 
     @RequiresDefaultDialer
     override fun blockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phoneAccountsInteractor.getContactAccounts(contactId)
-            .forEach { numbersInteractor.blockNumber(it.number) }
-        onSuccess?.invoke()
+        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { numbersInteractor.blockNumber(it.number) }
+            onSuccess?.invoke()
+        }
     }
 
     override fun unblockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phoneAccountsInteractor.getContactAccounts(contactId)
-            .forEach { numbersInteractor.unblockNumber(it.number) }
-        onSuccess?.invoke()
+        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { numbersInteractor.unblockNumber(it.number) }
+            onSuccess?.invoke()
+        }
     }
 
     @RequiresPermission(WRITE_CONTACTS)
@@ -59,8 +65,9 @@ class ContactsInteractorImpl(
     }
 
     override fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit) {
-        callback.invoke(phoneAccountsInteractor.getContactAccounts(contactId)
-            .all { numbersInteractor.isNumberBlocked(it.number) })
+        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
+            callback.invoke(accounts?.all { numbersInteractor.isNumberBlocked(it.number) } ?: false)
+        }
     }
 
 

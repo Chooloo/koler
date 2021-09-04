@@ -116,13 +116,14 @@ class CallPresenter<V : CallContract.View>(view: V) :
         if (boundComponent.callsInteractor.getFirstState(HOLDING)?.id == _currentCallId) {
             view.hideHoldingBanner()
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
-            val account = boundComponent.phoneAccountsInteractor.lookupAccount(call.number)
-            view.showHoldingBanner(
-                String.format(
-                    boundComponent.stringInteractor.getString(R.string.warning_is_on_hold),
-                    account.displayString
+            boundComponent.phoneAccountsInteractor.lookupAccount(call.number) {
+                view.showHoldingBanner(
+                    String.format(
+                        boundComponent.stringInteractor.getString(R.string.warning_is_on_hold),
+                        it.displayString
+                    )
                 )
-            )
+            }
         } else if (boundComponent.callsInteractor.getStateCount(HOLDING) == 0) {
             view.hideHoldingBanner()
         }
@@ -161,9 +162,10 @@ class CallPresenter<V : CallContract.View>(view: V) :
         if (call.isConference) {
             view.nameText = boundComponent.stringInteractor.getString(R.string.conference)
         } else {
-            val account = boundComponent.phoneAccountsInteractor.lookupAccount(call.number)
-            account.photoUri?.let { view.imageURI = Uri.parse(it) }
-            view.nameText = account.displayString
+            boundComponent.phoneAccountsInteractor.lookupAccount(call.number) { account ->
+                account.photoUri?.let { view.imageURI = Uri.parse(it) }
+                view.nameText = account.displayString
+            }
         }
 
         view.isHoldActivated = call.isHolding
