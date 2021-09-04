@@ -19,19 +19,19 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
         if (_recent == null) {
             return
         }
-        view.recentCaption = if (_recent!!.duration <= 0) {
-            _recent!!.relativeTime
-        } else {
-            "${view.recentCaption}, ${getElapsedTimeString(_recent!!.duration)}"
+        val recentCaptions = arrayListOf(_recent!!.relativeTime)
+        if (_recent!!.duration > 0) {
+            recentCaptions.add(getElapsedTimeString(_recent!!.duration))
         }
         boundComponent.permissionInteractor.runWithDefaultDialer {
             if (boundComponent.numbersInteractor.isNumberBlocked(_recent!!.number)) {
-                view.recentCaption = "${view.recentCaption}, ${
+                recentCaptions.add(
                     boundComponent.stringInteractor.getString(R.string.error_blocked)
                         .toUpperCase(Locale.ROOT)
-                })"
+                )
             }
         }
+        view.recentCaption = recentCaptions.joinToString(", ")
         view.recentImage = boundComponent.drawableInteractor.getDrawable(
             RecentsContentResolver.getCallTypeImage(_recent!!.type)
         )
