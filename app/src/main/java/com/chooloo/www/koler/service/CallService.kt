@@ -20,12 +20,12 @@ class CallService : InCallService() {
         super.onCreate()
         sInstance = this
         _callNotification = CallNotification(applicationContext)
-        componentRoot.callsInteractor.registerListener(_callNotification)
+        _callNotification.attach()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        componentRoot.callsInteractor.unregisterListener(_callNotification)
+        _callNotification.detach()
     }
 
     override fun onCallAdded(telecomCall: android.telecom.Call) {

@@ -21,6 +21,7 @@ class AudioInteractorImpl(
     private val vibrator: Vibrator,
     private val audioManager: AudioManager
 ) : BaseInteractorImpl<AudioInteractor.Listener>(), AudioInteractor {
+    private var _isSpeakerOn = false
 
     override var isMuted: Boolean
         get() = audioManager.isMicrophoneMute
@@ -30,7 +31,7 @@ class AudioInteractorImpl(
         }
 
     override var isSpeakerOn: Boolean
-        get() = audioManager.isSpeakerphoneOn
+        get() = _isSpeakerOn
         set(value) {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
                 CallService.toggleSpeakerRoute(value)
@@ -38,6 +39,7 @@ class AudioInteractorImpl(
                 audioMode = AudioMode.IN_CALL
                 audioManager.isSpeakerphoneOn = value
             }
+            _isSpeakerOn = value
             invokeListeners { l -> l.onSpeakerChanged(value) }
         }
 

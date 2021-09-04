@@ -8,67 +8,63 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.Intent.*
 import android.os.Build
+import android.telecom.Call.Details.CAPABILITY_MUTE
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.call.Call.State.DISCONNECTED
 import com.chooloo.www.koler.data.call.Call.State.DISCONNECTING
+import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
+import com.chooloo.www.koler.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
+import com.chooloo.www.koler.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE
+import com.chooloo.www.koler.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER
+import com.chooloo.www.koler.receiver.CallBroadcastReceiver.Companion.ACTION_UNMUTE
+import com.chooloo.www.koler.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
 import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.util.SingletonHolder
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification(
     private val context: Context
-) : CallsInteractor.Listener {
+) : CallsInteractor.Listener, AudioInteractor.Listener {
+    private var _call: Call? = null
     private val componentRoot by lazy { (context.applicationContext as KolerApp).componentRoot }
 
     override fun onNoCalls() {
+        detach()
         cancel()
     }
 
     override fun onCallChanged(call: Call) {
-        show(call)
     }
 
     override fun onMainCallChanged(call: Call) {
+        show(call)
+        _call = call
     }
 
-    private val _answerIntent by lazy {
-        Intent(context, CallBroadcastReceiver::class.java).apply {
-            action = CallBroadcastReceiver.ACTION_ANSWER
-            putExtra(EXTRA_NOTIFICATION_ID, ID)
-        }
+    override fun onMuteChanged(isMuted: Boolean) {
+        _call?.let { show(it) }
     }
 
-    private val _hangupIntent by lazy {
-        Intent(context, CallBroadcastReceiver::class.java).apply {
-            action = CallBroadcastReceiver.ACTION_HANGUP
-            putExtra(EXTRA_NOTIFICATION_ID, ID)
-        }
+    override fun onSpeakerChanged(isSpeaker: Boolean) {
+        _call?.let { show(it) }
     }
 
-    private val _answerPendingIntent by lazy {
-        PendingIntent.getBroadcast(
-            context,
-            0,
-            _answerIntent,
-            FLAG_CANCEL_CURRENT
-        )
+
+    fun attach() {
+        componentRoot.callsInteractor.registerListener(this)
+        componentRoot.audioInteractor.registerListener(this)
     }
 
-    private val _hangupPendingIntent by lazy {
-        PendingIntent.getBroadcast(
-            context,
-            1,
-            _hangupIntent,
-            FLAG_CANCEL_CURRENT
-        )
+    fun detach() {
+        componentRoot.callsInteractor.unregisterListener(this)
+        componentRoot.audioInteractor.unregisterListener(this)
     }
 
     private val _contentPendingIntent by lazy {
@@ -79,6 +75,54 @@ class CallNotification(
                 flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             },
             0
+        )
+    }
+
+    private val _answerAction by lazy {
+        NotificationCompat.Action(
+            R.drawable.ic_call_black_24dp,
+            componentRoot.stringInteractor.getString(R.string.action_answer),
+            _getCallPendingIntent(ACTION_ANSWER, 0)
+        )
+    }
+
+    private val _hangupAction by lazy {
+        NotificationCompat.Action(
+            R.drawable.ic_call_end_black_24dp,
+            componentRoot.stringInteractor.getString(R.string.action_hangup),
+            _getCallPendingIntent(ACTION_HANGUP, 1)
+        )
+    }
+
+    private val _muteAction by lazy {
+        NotificationCompat.Action(
+            R.drawable.ic_mic_black_24dp,
+            componentRoot.stringInteractor.getString(R.string.call_action_mute),
+            _getCallPendingIntent(ACTION_MUTE, 2)
+        )
+    }
+
+    private val _unmuteAction by lazy {
+        NotificationCompat.Action(
+            R.drawable.ic_mic_off_black_24dp,
+            componentRoot.stringInteractor.getString(R.string.call_action_unmute),
+            _getCallPendingIntent(ACTION_UNMUTE, 3)
+        )
+    }
+
+    private val _speakerAction by lazy {
+        NotificationCompat.Action(
+            R.drawable.ic_volume_down_black_24dp,
+            componentRoot.stringInteractor.getString(R.string.call_action_speaker),
+            _getCallPendingIntent(ACTION_SPEAKER, 4)
+        )
+    }
+
+    private val _unspeakerAction by lazy {
+        NotificationCompat.Action(
+            R.drawable.ic_volume_up_black_24dp,
+            componentRoot.stringInteractor.getString(R.string.call_action_speaker_off),
+            _getCallPendingIntent(ACTION_UNSPEAKER, 5)
         )
     }
 
@@ -96,6 +140,16 @@ class CallNotification(
     }
 
 
+    private fun _getCallIntent(callAction: String) =
+        Intent(context, CallBroadcastReceiver::class.java).apply {
+            action = callAction
+            putExtra(EXTRA_NOTIFICATION_ID, ID)
+        }
+
+    private fun _getCallPendingIntent(callAction: String, rc: Int) =
+        PendingIntent.getBroadcast(context, rc, _getCallIntent(callAction), FLAG_CANCEL_CURRENT)
+
+
     private fun buildNotification(call: Call): Notification {
         val account = componentRoot.phoneAccountsInteractor.lookupAccount(call.number)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -110,19 +164,15 @@ class CallNotification(
             .setColor(componentRoot.colorInteractor.getAttrColor(R.attr.colorSecondary))
             .setContentText(componentRoot.stringInteractor.getString(call.state.stringRes))
         if (call.isIncoming) {
-            builder.addAction(
-                R.drawable.ic_call_black_24dp,
-                componentRoot.stringInteractor.getString(R.string.action_answer),
-                _answerPendingIntent
-            )
+            builder.addAction(_answerAction)
         }
         if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-            builder.addAction(
-                R.drawable.ic_call_end_black_24dp,
-                componentRoot.stringInteractor.getString(R.string.action_hangup),
-                _hangupPendingIntent
-            )
+            builder.addAction(_hangupAction)
         }
+        if (call.isCapable(CAPABILITY_MUTE)) {
+            builder.addAction(if (componentRoot.audioInteractor.isMuted) _unmuteAction else _muteAction)
+        }
+        builder.addAction(if (componentRoot.audioInteractor.isSpeakerOn) _unspeakerAction else _speakerAction)
         return builder.build()
     }
 
