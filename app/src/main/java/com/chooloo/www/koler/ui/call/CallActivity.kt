@@ -139,7 +139,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             boundComponent.animationInteractor.animateIn(_binding.callTimeText, true)
             _binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
-            boundComponent.animationInteractor.animateOut(_binding.callTimeText, true, true)
+            boundComponent.animationInteractor.animateOut(_binding.callTimeText, true, false)
         }
     }
 

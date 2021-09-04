@@ -145,7 +145,11 @@ class CallPresenter<V : CallContract.View>(view: V) :
 
     private fun displayCallTime() {
         boundComponent.callsInteractor.mainCall?.let {
-            view.setElapsedTime(if (it.isStarted) it.durationTimeMilis else null)
+            if (it.isStarted) {
+                view.setElapsedTime(it.durationTimeMilis)
+            } else {
+                view.setElapsedTime(null)
+            }
         }
     }
 
