@@ -3,8 +3,8 @@ package com.chooloo.www.koler.ui.contacts
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
-import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.data.ListBundle
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.list.ListContract

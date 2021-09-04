@@ -1,15 +1,17 @@
 package com.chooloo.www.koler.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 
 abstract class ListAdapter<DataType>(
-    protected val boundComponent: BoundComponentRoot
-) : RecyclerView.Adapter<ListItemHolder>() {
+    protected val boundComponent: BoundComponentRoot,
+    diffCallback: DiffUtil.ItemCallback<DataType>
+) : ListAdapter<DataType, ListItemHolder>(diffCallback) {
     private var _isCompact = false
     private var _isSelecting = false
     private var _isSelectable = true
@@ -22,17 +24,17 @@ abstract class ListAdapter<DataType>(
     private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
 
 
-    var isCompact
-        get() = _isCompact
-        set(value) {
-            _isCompact = value
-        }
-
     var data: ListBundle<DataType>
         get() = _data
         set(value) {
             _data = value
-            notifyDataSetChanged()
+            submitList(_data.items.toList())
+        }
+
+    var isCompact
+        get() = _isCompact
+        set(value) {
+            _isCompact = value
         }
 
     val isSelecting: Boolean
@@ -47,7 +49,7 @@ abstract class ListAdapter<DataType>(
     }
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
-        val dataItem = _data.items[position]
+        val dataItem = getItem(position)
         holder.listItem.apply {
             headerText = getHeader(position)
             isCompact = this@ListAdapter.isCompact
@@ -65,7 +67,7 @@ abstract class ListAdapter<DataType>(
                     _selectedItems.add(dataItem)
                     _onItemsSelectedListener.invoke(_selectedItems)
                 } else {
-                    _onItemClickListener.invoke(_data.items[position])
+                    _onItemClickListener.invoke(getItem(position))
                 }
             }
             setOnLongClickListener {
@@ -81,12 +83,9 @@ abstract class ListAdapter<DataType>(
                 true
             }
             boundComponent.animationInteractor.animateIn(this, false)
-            onBindListItem(this, _data.items[position])
+            onBindListItem(this, getItem(position))
         }
     }
-
-    override fun getItemCount() = _data.items.size
-
 
     fun getHeader(position: Int): String? {
         var total = 0

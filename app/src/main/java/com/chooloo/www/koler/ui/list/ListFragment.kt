@@ -86,6 +86,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             _binding.itemsRecyclerView.veil()
+            showEmptyPage(false)
         } else {
             _binding.itemsRecyclerView.unVeil()
         }
