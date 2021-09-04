@@ -6,6 +6,8 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     BasePresenter<V>(view),
     ListContract.Presenter<ItemType, V> {
 
+    private var _permissionsGranted = false
+
     override fun onStart() {
         boundComponent.permissionInteractor.runWithPermissions(
             permissions = this.requiredPermissions,
@@ -34,12 +36,15 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     }
 
     override fun onPermissionsGranted() {
+        _permissionsGranted = true
         view.emptyStateText = noResultsMessage
         observeData()
     }
 
     override fun onSearchTextChanged(text: String) {
-        applyFilter(text)
+        if (_permissionsGranted) {
+            applyFilter(text)
+        }
     }
 
     override fun onDataChanged(items: ArrayList<ItemType>) {
