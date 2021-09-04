@@ -24,7 +24,7 @@ class SimInteractorImpl(
         permissionInteractor.runWithPermissions(arrayOf(READ_PHONE_STATE), {
             getSimAccounts { simAccounts ->
                 dialogInteractor.askForChoice(
-                    simAccounts.map(SimAccount::label) as Array<String>,
+                    simAccounts.map(SimAccount::label).toTypedArray(),
                     R.drawable.ic_sim_card_black_24dp,
                     R.string.select_sim_account, { _, position ->
                         callback.invoke(simAccounts[position])
