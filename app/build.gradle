@@ -83,6 +83,7 @@ dependencies {
             'androidx.arch.core:core-common:2.1.0',
             'androidx.annotation:annotation:1.1.0',
             'androidx.fragment:fragment-ktx:1.2.5',
+            'com.github.skydoves:androidveil:1.1.1',
             'androidx.arch.core:core-runtime:2.1.0',
             'com.reddit:indicator-fast-scroll:1.4.0',
             'androidx.legacy:legacy-support-v4:1.0.0',

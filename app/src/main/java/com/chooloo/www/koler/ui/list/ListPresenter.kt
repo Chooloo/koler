@@ -19,6 +19,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
         if (boundComponent.preferencesInteractor.isScrollIndicator) {
             view.setupScrollIndicator()
         }
+        view.showLoading(true)
     }
 
     override fun onResults() {
@@ -32,7 +33,6 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
 
     override fun onSwipeRefresh() {
         view.requestSearchFocus()
-        view.toggleRefreshing(false)
     }
 
     override fun onPermissionsGranted() {
@@ -49,6 +49,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
 
     override fun onDataChanged(items: ArrayList<ItemType>) {
         view.updateData(items)
+        view.showLoading(false)
         if (view.itemCount == 0) {
             onNoResults()
         } else {

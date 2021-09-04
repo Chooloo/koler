@@ -14,8 +14,8 @@ interface ListContract : BaseContract {
         fun setupScrollIndicator()
         fun showItem(item: ItemType)
         fun showEmptyPage(isShow: Boolean)
+        fun showLoading(isLoading: Boolean)
         fun showSelecting(isSelecting: Boolean)
-        fun toggleRefreshing(isRefreshing: Boolean)
         fun updateData(dataList: ArrayList<ItemType>)
     }
 

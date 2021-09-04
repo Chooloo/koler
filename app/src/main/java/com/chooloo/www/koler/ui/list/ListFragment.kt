@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
@@ -51,20 +52,16 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
                 visibility = if (_isSearchable) VISIBLE else GONE
                 setOnTextChangedListener(presenter::onSearchTextChanged)
             }
-            itemsSwipeRefreshLayout.apply {
-                setOnRefreshListener(presenter::onSwipeRefresh)
-                if (!_isSearchable) {
-                    setDistanceToTriggerSync(9999999)
-                }
-            }
             itemsRecyclerView.apply {
-                adapter = this@ListFragment.adapter.apply {
+                addVeiledItems(10)
+                setAdapter(this@ListFragment.adapter.apply {
                     isCompact = args.getBoolean(ARG_IS_COMPACT)
                     setOnSelectingChangeListener { presenter.onIsSelectingChanged(it) }
-                }
+                })
+                veil()
             }
             itemsDeleteButton.setOnClickListener {
-                presenter.onDeleteItems((itemsRecyclerView.adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
+                presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
             }
         }
         args.getString(ARG_FILTER)?.let { presenter.applyFilter(it) }
@@ -72,7 +69,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
 
     override fun animateListView() {
-        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
+        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView.getRecyclerView())
     }
 
     override fun requestSearchFocus() {
@@ -86,6 +83,14 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         }
     }
 
+    override fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+//            _binding.itemsRecyclerView.veil()
+        } else {
+//            _binding.itemsRecyclerView.unVeil()
+        }
+    }
+
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
@@ -96,16 +101,13 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         }
     }
 
-    override fun toggleRefreshing(isRefreshing: Boolean) {
-        _binding.itemsSwipeRefreshLayout.isRefreshing = isRefreshing
-    }
-
-
     override fun setupScrollIndicator() {
         _binding.apply {
-            itemsFastScroller.setupWithRecyclerView(itemsRecyclerView, { position ->
-                adapter.getHeader(position)?.let { FastScrollItemIndicator.Text(it) }
-            })
+            itemsFastScroller.setupWithRecyclerView(
+                itemsRecyclerView.getRecyclerView(),
+                { position ->
+                    adapter.getHeader(position)?.let { FastScrollItemIndicator.Text(it) }
+                })
             itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
         }
     }
