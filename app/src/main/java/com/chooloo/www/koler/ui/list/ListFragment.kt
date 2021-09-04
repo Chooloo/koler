@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
@@ -53,12 +53,12 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
                 setOnTextChangedListener(presenter::onSearchTextChanged)
             }
             itemsRecyclerView.apply {
-                addVeiledItems(10)
+                setLayoutManager(LinearLayoutManager(context))
                 setAdapter(this@ListFragment.adapter.apply {
                     isCompact = args.getBoolean(ARG_IS_COMPACT)
                     setOnSelectingChangeListener { presenter.onIsSelectingChanged(it) }
                 })
-                veil()
+                addVeiledItems(7)
             }
             itemsDeleteButton.setOnClickListener {
                 presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
@@ -85,9 +85,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     override fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-//            _binding.itemsRecyclerView.veil()
+            _binding.itemsRecyclerView.veil()
         } else {
-//            _binding.itemsRecyclerView.unVeil()
+            _binding.itemsRecyclerView.unVeil()
         }
     }
 

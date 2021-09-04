@@ -142,10 +142,10 @@
 
     <!--region errors-->
     <string name="error_blocked">Blocked</string>
-    <string name="error_no_results">No results :/</string>
-    <string name="error_no_results_calls">No calls :/</string>
-    <string name="error_no_results_recents">No recents :/</string>
-    <string name="error_no_results_contacts">No contacts :/</string>
+    <string name="error_no_results">No Results :/</string>
+    <string name="error_no_results_calls">No Calls :/</string>
+    <string name="error_no_results_recents">No Recents :/</string>
+    <string name="error_no_results_contacts">No Contacts :/</string>
     <string name="error_no_results_phones">No phone numbers :/</string>
     <string name="error_not_default_dialer">Please set as default dialer</string>
     <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
