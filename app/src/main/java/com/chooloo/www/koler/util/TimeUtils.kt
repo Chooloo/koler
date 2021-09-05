@@ -15,11 +15,11 @@ private const val DAY_MILLIS = 24 * HOUR_MILLIS
 val currentDate: Date
     get() = Calendar.getInstance().time
 
-fun getElapsedTimeString(seconds: Long): String {
-    val seconds = seconds % 60
-    val minutes = (seconds % 3600) / 60
-    val hours = seconds / 3600
-    return "${if (hours != 0L) "$hours hrs " else ""}$minutes mins $seconds sec"
+fun getElapsedTimeString(total_seconds: Long): String {
+    val seconds = total_seconds % 60
+    val minutes = (total_seconds / 60).toInt()
+    val hours = (total_seconds / 3600).toInt()
+    return "${if (hours != 0) "$hours hrs " else ""}$minutes mins $seconds sec"
 }
 
 fun Context.getHoursString(date: Date) =
