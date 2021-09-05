@@ -24,7 +24,7 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.
     }
 
     override fun updateData(dataList: ArrayList<Contact>) {
-        adapter.data = ListBundle.fromContacts(dataList)
+        adapter.data = ListBundle.fromContacts(dataList, true)
         _onContactsChangedListener.invoke(dataList)
     }
 
