@@ -2,7 +2,6 @@ package com.chooloo.www.koler.ui.phones
 
 import android.os.Bundle
 import com.chooloo.www.koler.adapter.PhonesAdapter
-import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.koler.ui.list.ListFragment
@@ -11,7 +10,6 @@ class PhonesFragment :
     ListFragment<PhoneAccount, PhonesAdapter>(),
     PhonesContract.View {
 
-    override val adapter by lazy { PhonesAdapter(boundComponent) }
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
     override lateinit var presenter: PhonesPresenter<PhonesFragment>
 
@@ -23,10 +21,6 @@ class PhonesFragment :
 
     override fun showItem(item: PhoneAccount) {
         return
-    }
-
-    override fun updateData(dataList: ArrayList<PhoneAccount>) {
-        adapter.data = ListBundle.fromPhones(baseActivity, dataList, true)
     }
 
 

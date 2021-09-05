@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
-import android.view.KeyEvent.KEYCODE_DEL
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -26,7 +25,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     override val isDialer by lazy { args.getBoolean(ARG_IS_DIALER) }
 
     override val suggestionsCount: Int
-        get() = _suggestionsFragment.itemCount
+        get() = _suggestionsFragment.presenter.adapter.itemCount
 
     override var number: String
         get() = _binding.dialpadEditText.text.toString()
@@ -38,7 +37,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                boundComponent.animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView, true)
+                boundComponent.animationInteractor.animateIn(
+                    _binding.dialpadSuggestionsScrollView,
+                    true
+                )
             } else if (!value && isSuggestionsVisible) {
                 _binding.dialpadSuggestionsScrollView.visibility = GONE
             }

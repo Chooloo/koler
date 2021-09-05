@@ -23,7 +23,6 @@ abstract class ListAdapter<DataType>(
     private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
     private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
 
-
     var data: ListBundle<DataType>
         get() = _data
         set(value) {

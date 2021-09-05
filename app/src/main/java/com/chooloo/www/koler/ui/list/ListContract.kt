@@ -1,13 +1,13 @@
 package com.chooloo.www.koler.ui.list
 
+import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
-        val itemCount: Int
+        val isCompact: Boolean
         val searchHint: String?
         var emptyStateText: String?
-
 
         fun animateListView()
         fun requestSearchFocus()
@@ -16,7 +16,7 @@ interface ListContract : BaseContract {
         fun showEmptyPage(isShow: Boolean)
         fun showLoading(isLoading: Boolean)
         fun showSelecting(isSelecting: Boolean)
-        fun updateData(dataList: ArrayList<ItemType>)
+        fun setAdapter(adapter: ListAdapter<ItemType>)
     }
 
     interface Presenter<ItemType, V : View<ItemType>> : BaseContract.Presenter<V> {

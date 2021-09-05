@@ -22,17 +22,14 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     private val _isSearchable by lazy { args.getBoolean(ARG_IS_SEARCHABLE) }
     private val _isHideNoResults by lazy { args.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
 
-    override val itemCount get() = adapter.itemCount
     override val searchHint by lazy { getString(R.string.hint_search_items) }
+    override val isCompact by lazy { args.getBoolean(ARG_IS_COMPACT) }
 
     override var emptyStateText: String?
         get() = _binding.itemsEmptyText.text.toString()
         set(value) {
             _binding.itemsEmptyText.text = value
         }
-
-    abstract val adapter: Adapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,11 +38,6 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     ) = _binding.root
 
     override fun onSetup() {
-        adapter.apply {
-            setOnItemClickListener(presenter::onItemClick)
-            setOnItemLongClickListener(presenter::onItemLongClick)
-        }
-
         _binding.apply {
             itemsSearchBar.apply {
                 hint = searchHint
@@ -54,14 +46,10 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
             }
             itemsRecyclerView.apply {
                 setLayoutManager(LinearLayoutManager(context))
-                setAdapter(this@ListFragment.adapter.apply {
-                    isCompact = args.getBoolean(ARG_IS_COMPACT)
-                    setOnSelectingChangeListener { presenter.onIsSelectingChanged(it) }
-                })
                 addVeiledItems(7)
             }
             itemsDeleteButton.setOnClickListener {
-                presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
+//                presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
             }
         }
         args.getString(ARG_FILTER)?.let { presenter.applyFilter(it) }
@@ -107,12 +95,18 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
             itemsFastScroller.setupWithRecyclerView(
                 itemsRecyclerView.getRecyclerView(),
                 { position ->
-                    adapter.getHeader(position)?.let { FastScrollItemIndicator.Text(it) }
+                    (itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).getHeader(
+                        position
+                    )
+                        ?.let { FastScrollItemIndicator.Text(it) }
                 })
             itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
         }
     }
 
+    override fun setAdapter(adapter: ListAdapter<ItemType>) {
+        _binding.itemsRecyclerView.setAdapter(adapter)
+    }
 
     companion object {
         const val ARG_FILTER = "filter"

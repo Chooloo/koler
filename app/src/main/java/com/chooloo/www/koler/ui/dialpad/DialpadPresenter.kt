@@ -64,8 +64,6 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
     }
 
     override fun onSuggestionsChanged(contacts: ArrayList<Contact>) {
-        view.apply {
-            isSuggestionsVisible = contacts.isNotEmpty() && number.isNotEmpty() == true
-        }
+        view.isSuggestionsVisible = contacts.isNotEmpty() && view.number.isNotEmpty() == true
     }
 }

@@ -1,5 +1,7 @@
 package com.chooloo.www.koler.ui.list
 
+import com.chooloo.www.koler.adapter.ListAdapter
+import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V) :
@@ -7,6 +9,9 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     ListContract.Presenter<ItemType, V> {
 
     private var _permissionsGranted = false
+
+    abstract val adapter: ListAdapter<ItemType>
+
 
     override fun onStart() {
         boundComponent.permissionInteractor.runWithPermissions(
@@ -20,6 +25,13 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
             view.setupScrollIndicator()
         }
         view.showLoading(true)
+        adapter.apply {
+            isCompact = view.isCompact
+            setOnItemClickListener(this@ListPresenter::onItemClick)
+            setOnItemLongClickListener(this@ListPresenter::onItemLongClick)
+            setOnSelectingChangeListener(this@ListPresenter::onIsSelectingChanged)
+        }
+        view.setAdapter(adapter)
     }
 
     override fun onResults() {
@@ -48,9 +60,9 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     }
 
     override fun onDataChanged(items: ArrayList<ItemType>) {
-        view.updateData(items)
+        adapter.data = convertDataToListBundle(items)
         view.showLoading(false)
-        if (view.itemCount == 0) {
+        if (adapter.itemCount == 0) {
             onNoResults()
         } else {
             onResults()
@@ -67,4 +79,5 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
 
     abstract fun observeData()
     abstract fun applyFilter(filter: String)
+    abstract fun convertDataToListBundle(data: ArrayList<ItemType>): ListBundle<ItemType>
 }

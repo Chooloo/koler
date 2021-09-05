@@ -2,7 +2,9 @@ package com.chooloo.www.koler.ui.recents
 
 import android.Manifest.permission.WRITE_CALL_LOG
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver
+import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListPresenter
@@ -10,6 +12,8 @@ import com.chooloo.www.koler.ui.list.ListPresenter
 class RecentsPresenter<V : ListContract.View<Recent>>(view: V) :
     ListPresenter<Recent, V>(view),
     ListContract.Presenter<Recent, V> {
+
+    override val adapter by lazy { RecentsAdapter(boundComponent) }
 
     private val recentsLiveData by lazy {
         boundComponent.liveDataFactory.allocRecentsProviderLiveData()
@@ -45,4 +49,6 @@ class RecentsPresenter<V : ListContract.View<Recent>>(view: V) :
             }
         })
     }
+
+    override fun convertDataToListBundle(data: ArrayList<Recent>) = ListBundle.fromRecents(data)
 }
