@@ -28,6 +28,14 @@ abstract class BaseContentResolver<T>(private val context: Context) : ContentRes
         }
     }
 
+    private fun queryCursor() = context.contentResolver.query(
+        chooseUri(),
+        projection,
+        selection,
+        selectionArgs,
+        sortOrder
+    )
+
     private fun queryCursor(callback: (Cursor?) -> Unit) {
         AsyncCursorHandler(context.contentResolver, object : AsyncCursorHandler.AsyncQueryListener {
             override fun onQueryComplete(token: Int, cookie: Any?, cursor: Cursor?) {
@@ -37,6 +45,9 @@ abstract class BaseContentResolver<T>(private val context: Context) : ContentRes
             it.startQuery(0, 0, chooseUri(), projection, selection, selectionArgs, sortOrder)
         }
     }
+
+    fun queryContent() =
+        convertCursorToContent(queryCursor())
 
     fun queryContent(callback: (T?) -> Unit) {
         queryCursor { callback.invoke(convertCursorToContent(it)) }

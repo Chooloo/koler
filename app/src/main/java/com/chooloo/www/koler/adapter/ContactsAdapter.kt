@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.DiffUtil
 import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
-import com.chooloo.www.koler.ui.widgets.ListItemHolder
 import com.chooloo.www.koler.util.initials
 
 class ContactsAdapter(boundComponent: BoundComponentRoot) :

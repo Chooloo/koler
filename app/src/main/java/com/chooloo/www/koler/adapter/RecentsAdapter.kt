@@ -14,10 +14,9 @@ class RecentsAdapter(boundComponent: BoundComponentRoot) :
 
     override fun onBindListItem(listItem: ListItem, item: Recent) {
         listItem.apply {
-            boundComponent.phoneAccountsInteractor.lookupAccount(item.number) { contact ->
-                titleText = contact.name ?: item.number
-            }
+            val account = boundComponent.phoneAccountsInteractor.lookupAccount(item.number)
 
+            titleText = account.name ?: item.number
             isCompact = boundComponent.preferencesInteractor.isCompact
             captionText = if (item.date != null) context.getHoursString(item.date) else null
             imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))

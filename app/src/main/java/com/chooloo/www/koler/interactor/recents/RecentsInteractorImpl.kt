@@ -11,8 +11,10 @@ import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 class RecentsInteractorImpl(
     private val context: Context
 ) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
+    override fun queryRecent(recentId: Long) =
+        RecentsContentResolver(context, recentId).queryContent().getOrNull(0)
 
-    override fun getRecent(recentId: Long, callback: (Recent?) -> Unit) {
+    override fun queryRecent(recentId: Long, callback: (Recent?) -> Unit) {
         RecentsContentResolver(context, recentId).queryContent {
             callback.invoke(it?.getOrNull(0))
         }
