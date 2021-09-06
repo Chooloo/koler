@@ -48,12 +48,13 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionDelete() {
-        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
-            boundComponent.permissionInteractor.runWithPermissions(arrayOf(Manifest.permission.WRITE_CONTACTS),
-                {
+        boundComponent.permissionInteractor.runWithPermissions(
+            arrayOf(Manifest.permission.WRITE_CONTACTS),
+            {
+                boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
                     boundComponent.contactsInteractor.deleteContact(view.contactId)
-                })
-        }
+                }
+            })
     }
 
     override fun onActionMenu() {

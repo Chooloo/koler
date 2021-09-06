@@ -9,6 +9,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     ListContract.Presenter<ItemType, V> {
 
     private var _permissionsGranted = false
+    private var _onItemsChangedListener: (ArrayList<ItemType>) -> Unit? = {}
 
     abstract val adapter: ListAdapter<ItemType>
 
@@ -67,6 +68,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
         } else {
             onResults()
         }
+        _onItemsChangedListener.invoke(items)
     }
 
     override fun onIsSelectingChanged(isSelecting: Boolean) {
@@ -75,6 +77,10 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
 
     override fun onPermissionsBlocked(permissions: Array<String>) {
         view.emptyStateText = noPermissionsMessage
+    }
+
+    override fun setOnItemsChangedListener(onItemsChangedListener: (ArrayList<ItemType>) -> Unit?) {
+        _onItemsChangedListener = onItemsChangedListener
     }
 
     abstract fun observeData()

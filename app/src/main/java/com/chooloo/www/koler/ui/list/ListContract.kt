@@ -38,5 +38,7 @@ interface ListContract : BaseContract {
 
         fun onPermissionsGranted()
         fun onPermissionsBlocked(permissions: Array<String>)
+
+        fun setOnItemsChangedListener(onItemsChangedListener: (ArrayList<ItemType>) -> Unit? = {})
     }
 }

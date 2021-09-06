@@ -14,16 +14,9 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.
     override val searchHint by lazy { getString(R.string.hint_search_contacts) }
     override lateinit var presenter: ContactsPresenter<ContactsFragment>
 
-    private var _onContactsChangedListener: (ArrayList<Contact>) -> Unit? = {}
-
 
     override fun onSetup() {
         presenter = ContactsPresenter(this)
-        presenter.adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                _onContactsChangedListener.invoke(presenter.adapter.data.items)
-            }
-        })
         super.onSetup()
     }
 
@@ -39,11 +32,6 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.
             presenter.applyFilter(filter)
         }
     }
-
-    fun setOnContactsChangedListener(onContactsChangedListener: (ArrayList<Contact>) -> Unit? = {}) {
-        _onContactsChangedListener = onContactsChangedListener
-    }
-
 
     companion object {
         fun newInstance(

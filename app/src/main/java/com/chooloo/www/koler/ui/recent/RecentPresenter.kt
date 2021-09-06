@@ -55,8 +55,11 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
     override fun onActionDelete() {
         _recent?.let {
             boundComponent.permissionInteractor.runWithPermissions(
-                arrayOf(Manifest.permission.WRITE_CALL_LOG),
-                { boundComponent.recentsInteractor.deleteRecent(it.id) },
+                arrayOf(Manifest.permission.WRITE_CALL_LOG), {
+                    boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_recent) {
+                        boundComponent.recentsInteractor.deleteRecent(it.id)
+                    }
+                },
                 null, null, null
             )
         }

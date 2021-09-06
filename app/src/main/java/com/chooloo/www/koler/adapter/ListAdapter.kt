@@ -9,9 +9,11 @@ import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.ui.widgets.ListItemHolder
 
 abstract class ListAdapter<DataType>(
-    protected val boundComponent: BoundComponentRoot,
-    diffCallback: DiffUtil.ItemCallback<DataType>
-) : ListAdapter<DataType, ListItemHolder>(diffCallback) {
+    protected val boundComponent: BoundComponentRoot
+) : ListAdapter<DataType, ListItemHolder>(object : DiffUtil.ItemCallback<DataType>() {
+    override fun areItemsTheSame(oldItem: DataType, newItem: DataType) = oldItem == newItem
+    override fun areContentsTheSame(oldItem: DataType, newItem: DataType) = oldItem == newItem
+}) {
     private var _isCompact = false
     private var _isSelecting = false
     private var _isSelectable = true

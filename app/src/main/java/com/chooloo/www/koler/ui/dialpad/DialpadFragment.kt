@@ -20,7 +20,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
+    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false, true) }
 
     override val isDialer by lazy { args.getBoolean(ARG_IS_DIALER) }
 
@@ -75,8 +75,6 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     override fun onSetup() {
         _presenter = DialpadPresenter(this)
-        _suggestionsFragment.setOnContactsChangedListener(_presenter::onSuggestionsChanged)
-
         _binding.apply {
             dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
             dialpadButtonCall.apply {
@@ -154,6 +152,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
             .commitNow()
     }
 
+    override fun onResume() {
+        super.onResume()
+        _suggestionsFragment.presenter.setOnItemsChangedListener(_presenter::onSuggestionsChanged)
+    }
 
     override fun invokeKey(keyCode: Int) {
         _binding.dialpadEditText.onKeyDown(keyCode, KeyEvent(ACTION_DOWN, keyCode))
