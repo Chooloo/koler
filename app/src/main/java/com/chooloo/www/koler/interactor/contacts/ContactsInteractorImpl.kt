@@ -69,41 +69,4 @@ class ContactsInteractorImpl(
             callback.invoke(accounts?.all { numbersInteractor.isNumberBlocked(it.number) } ?: false)
         }
     }
-
-
-    override fun openSmsView(number: String?) {
-        val intent = Intent(
-            Intent.ACTION_SENDTO,
-            Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
-        )
-        if (context !is Activity) {
-            intent.flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
-    }
-
-    override fun openContactView(contactId: Long) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
-            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
-    }
-
-    override fun openAddContactView(number: String) {
-        val intent = Intent(Intent.ACTION_INSERT).apply {
-            type = Contacts.CONTENT_TYPE
-            putExtra(ContactsContract.Intents.Insert.PHONE, number)
-            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
-    }
-
-    override fun openEditContactView(contactId: Long) {
-        val intent = Intent(Intent.ACTION_EDIT, Contacts.CONTENT_URI).apply {
-            data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
-            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
-    }
 }

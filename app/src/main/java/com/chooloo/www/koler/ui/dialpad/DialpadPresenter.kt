@@ -45,7 +45,7 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
     }
 
     override fun onAddContactClick() {
-        boundComponent.contactsInteractor.openAddContactView(view.number)
+        boundComponent.navigationInteractor.goToAddContact(view.number)
     }
 
     override fun onLongDeleteClick(): Boolean {

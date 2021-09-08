@@ -36,15 +36,15 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionSms() {
-        _firstPhone?.number?.let { boundComponent.contactsInteractor.openSmsView(it) }
+        _firstPhone?.number?.let { boundComponent.navigationInteractor.goToSendSMS(it) }
     }
 
     override fun onActionEdit() {
-        boundComponent.contactsInteractor.openEditContactView(view.contactId)
+        boundComponent.navigationInteractor.goToEditContact(view.contactId)
     }
 
     override fun onActionInfo() {
-        boundComponent.contactsInteractor.openContactView(view.contactId)
+        boundComponent.navigationInteractor.goToViewContact(view.contactId)
     }
 
     override fun onActionDelete() {

@@ -12,9 +12,4 @@ open interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> 
     fun blockContact(contactId: Long, onSuccess: (() -> Unit)? = null)
     fun unblockContact(contactId: Long, onSuccess: (() -> Unit)? = null)
     fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit)
-
-    fun openSmsView(number: String?)
-    fun openContactView(contactId: Long)
-    fun openAddContactView(number: String)
-    fun openEditContactView(contactId: Long)
 }

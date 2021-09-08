@@ -2,12 +2,15 @@ package com.chooloo.www.koler.interactor.navigation
 
 import android.Manifest.permission.CALL_PHONE
 import android.annotation.SuppressLint
+import android.content.ContentUris
 import android.content.Intent
 import android.content.Intent.*
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.provider.VoicemailContract.EXTRA_PHONE_ACCOUNT_HANDLE
 import android.telecom.TelecomManager
+import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.SimAccount
 import com.chooloo.www.koler.interactor.permission.PermissionInteractor
@@ -75,6 +78,36 @@ class NavigationInteractorImpl(
 
     override fun goToManageBlockedNumbers() {
         activity.startActivity(telecomManager.createManageBlockedNumbersIntent(), null)
+    }
+
+
+    override fun goToSendSMS(number: String?) {
+        val intent =
+            Intent(ACTION_SENDTO, Uri.parse("smsto:${PhoneNumberUtils.normalizeNumber(number)}"))
+        activity.startActivity(intent)
+    }
+
+    override fun goToAddContact(number: String) {
+        val intent = Intent(ACTION_INSERT).apply {
+            type = ContactsContract.Contacts.CONTENT_TYPE
+            putExtra(ContactsContract.Intents.Insert.PHONE, number)
+        }
+        activity.startActivity(intent)
+    }
+
+
+    override fun goToViewContact(contactId: Long) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactId.toString())
+        }
+        activity.startActivity(intent)
+    }
+
+    override fun goToEditContact(contactId: Long) {
+        val intent = Intent(ACTION_EDIT, ContactsContract.Contacts.CONTENT_URI).apply {
+            data = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId)
+        }
+        activity.startActivity(intent)
     }
 
 

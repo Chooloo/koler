@@ -14,6 +14,12 @@ interface NavigationInteractor : BaseInteractor<NavigationInteractor.Listener> {
     fun goToReportBugPage()
     fun goToManageBlockedNumbers()
 
+    fun goToSendSMS(number: String?)
+    fun goToAddContact(number: String)
+
+    fun goToViewContact(contactId: Long)
+    fun goToEditContact(contactId: Long)
+
     fun callVoicemail()
     fun call(number: String)
     fun call(simAccount: SimAccount?, number: String)

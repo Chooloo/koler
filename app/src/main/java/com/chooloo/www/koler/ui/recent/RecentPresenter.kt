@@ -45,7 +45,7 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionSms() {
-        _recent?.let { boundComponent.contactsInteractor.openSmsView(it.number) }
+        _recent?.let { boundComponent.navigationInteractor.goToSendSMS(it.number) }
     }
 
     override fun onActionCall() {
@@ -66,7 +66,7 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionAddContact() {
-        _recent?.let { boundComponent.contactsInteractor.openAddContactView(it.number) }
+        _recent?.let { boundComponent.navigationInteractor.goToAddContact(it.number) }
     }
 
     override fun onActionOpenContact() {
