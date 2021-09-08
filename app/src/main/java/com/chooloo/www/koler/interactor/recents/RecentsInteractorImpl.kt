@@ -16,7 +16,7 @@ class RecentsInteractorImpl(
 
     override fun queryRecent(recentId: Long, callback: (Recent?) -> Unit) {
         RecentsContentResolver(context, recentId).queryContent {
-            callback.invoke(it?.getOrNull(0))
+            callback.invoke(it.getOrNull(0))
         }
     }
 

@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.koler.data.account.PhoneAccount
+import com.chooloo.www.koler.util.SelectionBuilder
 
 class PhoneContentResolver(context: Context, contactId: Long? = null) :
     BaseItemsContentResolver<PhoneAccount>(context) {

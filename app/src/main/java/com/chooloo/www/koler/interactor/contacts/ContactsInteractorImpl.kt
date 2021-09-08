@@ -26,7 +26,7 @@ class ContactsInteractorImpl(
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
     override fun getContact(contactId: Long, callback: (Contact?) -> Unit) {
         ContactsContentResolver(context, contactId).queryContent { contacts ->
-            contacts?.let { callback.invoke(contacts.getOrNull(0)) } ?: callback.invoke(null)
+            contacts.let { callback.invoke(contacts.getOrNull(0)) }
         }
     }
 

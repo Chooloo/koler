@@ -3,36 +3,31 @@ package com.chooloo.www.koler.livedata
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
-import java.util.concurrent.Executors
+import io.reactivex.disposables.Disposable
 
 abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
     protected val context: Context,
 ) : LiveData<T>() {
-
     abstract val contentResolver: ContentResolver
+
+    private var _disposable: Disposable? = null
 
     var filter: String?
         get() = contentResolver.filter
         set(value) {
             contentResolver.filter = value
-            updateData()
+            contentResolver.queryContent {
+                onInactive()
+                onActive()
+            }
         }
 
 
     override fun onActive() {
-        contentResolver.apply {
-            observe()
-            setOnContentChangedListener { updateData() }
-            updateData()
-        }
+        _disposable = contentResolver.observeContent { postValue(it) }
     }
 
     override fun onInactive() {
-        contentResolver.detach()
-    }
-
-
-    private fun updateData() {
-        contentResolver.queryContent { postValue(it) }
+        _disposable?.dispose()
     }
 }

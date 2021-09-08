@@ -48,7 +48,7 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
         _callList.remove(call)
         call.unregisterListener(this)
         if (_callList.size == 0) {
-            invokeListeners { l -> l.onNoCalls() }
+            listeners.forEach { l -> l.onNoCalls() }
         }
     }
 

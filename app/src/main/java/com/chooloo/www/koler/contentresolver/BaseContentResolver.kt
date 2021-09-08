@@ -1,17 +1,38 @@
 package com.chooloo.www.koler.contentresolver
 
-import android.content.ContentResolver
+import android.annotation.SuppressLint
 import android.content.Context
-import android.database.ContentObserver
 import android.database.Cursor
 import android.net.Uri
-import com.chooloo.www.koler.util.AsyncCursorHandler
+import com.pushtorefresh.storio3.contentresolver.impl.DefaultStorIOContentResolver
+import com.pushtorefresh.storio3.contentresolver.queries.Query
+import io.reactivex.BackpressureStrategy
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
-abstract class BaseContentResolver<T>(private val context: Context) : ContentResolver(context) {
+abstract class BaseContentResolver<T>(private val context: Context) {
     private var _filter: String? = null
-    private var _observer: ContentObserver? = null
-    private var _onContentChangedListener: ((T?) -> Unit?)? = null
 
+    private val _ioContentResolver by lazy {
+        DefaultStorIOContentResolver.builder().contentResolver(context.contentResolver).build()
+    }
+
+    private val finalUri: Uri
+        get() = if (filterUri != null && _filter?.isNotEmpty() == true) {
+            Uri.withAppendedPath(filterUri, _filter)
+        } else {
+            uri
+        }
+
+    private val query: Query
+        get() = Query.builder()
+            .uri(finalUri)
+            .columns(*projection)
+            .whereArgs(*(selectionArgs ?: arrayOf()))
+            .where(if (selection == "") null else selection)
+            .sortOrder(if (sortOrder == "") null else sortOrder)
+            .build()
 
     var filter: String?
         get() = _filter
@@ -20,86 +41,60 @@ abstract class BaseContentResolver<T>(private val context: Context) : ContentRes
         }
 
 
-    private fun chooseUri(): Uri {
-        return if (filterUri != null && _filter?.isNotEmpty() == true) {
-            Uri.withAppendedPath(filterUri, _filter)
-        } else {
-            uri
-        }
-    }
+    fun queryCursor() =
+        _ioContentResolver
+            .get()
+            .cursor()
+            .withQuery(query)
+            .prepare()
+            .executeAsBlocking()
 
-    private fun queryCursor() = context.contentResolver.query(
-        chooseUri(),
-        projection,
-        selection,
-        selectionArgs,
-        sortOrder
-    )
-
-    private fun queryCursor(callback: (Cursor?) -> Unit) {
-        AsyncCursorHandler(context.contentResolver, object : AsyncCursorHandler.AsyncQueryListener {
-            override fun onQueryComplete(token: Int, cookie: Any?, cursor: Cursor?) {
-                callback.invoke(cursor)
-            }
-        }).also {
-            it.startQuery(0, 0, chooseUri(), projection, selection, selectionArgs, sortOrder)
-        }
-    }
+    @SuppressLint("CheckResult")
+    fun queryCursor(callback: (Cursor?) -> Unit) =
+        _ioContentResolver
+            .get()
+            .cursor()
+            .withQuery(query)
+            .prepare()
+            .asRxSingle()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(callback::invoke)
 
     fun queryContent() =
         convertCursorToContent(queryCursor())
 
-    fun queryContent(callback: (T?) -> Unit) {
+    fun queryContent(callback: (T) -> Unit) {
         queryCursor { callback.invoke(convertCursorToContent(it)) }
     }
 
-    fun observe() {
-        _observer = object : ContentObserver(null) {
-            override fun onChange(selfChange: Boolean) {
-                queryContent { _onContentChangedListener?.invoke(it) }
-            }
+
+    @SuppressLint("CheckResult")
+    fun observeUri(observer: () -> Unit): Disposable = _ioContentResolver
+        .observeChangesOfUri(uri, BackpressureStrategy.LATEST)
+        .subscribe {
+            observer.invoke()
         }
-        _observer?.let { registerContentObserver(uri, true, it) }
-    }
 
-    fun detach() {
-        _observer?.let { unregisterContentObserver(it) }
-        _observer = null
-    }
+    private fun observeCursor(observer: (Cursor?) -> Unit): Disposable = _ioContentResolver
+        .get()
+        .cursor()
+        .withQuery(query)
+        .prepare()
+        .asRxFlowable(BackpressureStrategy.LATEST)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(observer::invoke)
 
-    fun setOnContentChangedListener(onContentChangedListener: (T?) -> Unit? = { _ -> }) {
-        _onContentChangedListener = onContentChangedListener
-    }
+    fun observeContent(observer: (T) -> Unit) =
+        observeCursor { observer.invoke(convertCursorToContent(it)) }
 
-
-    //region base resolver data abstract getters
 
     abstract val uri: Uri
     abstract val filterUri: Uri?
     abstract val selection: String?
     abstract val sortOrder: String?
-    abstract val projection: Array<String>?
+    abstract val projection: Array<String>
     abstract val selectionArgs: Array<String>?
     abstract fun convertCursorToContent(cursor: Cursor?): T
-
-    //endregion
-
-
-    open inner class SelectionBuilder {
-        private val selections = arrayListOf<String>()
-
-        fun addSelection(key: String, value: Any?) = this.also {
-            value?.let { selections.add("$key = $value") }
-        }
-
-        fun addNotNull(key: String) = this.also {
-            selections.add("$key IS NOT NULL")
-        }
-
-        fun addString(string: String) = this.also {
-            selections.add(string)
-        }
-
-        fun build() = selections.joinToString(" AND ")
-    }
 }

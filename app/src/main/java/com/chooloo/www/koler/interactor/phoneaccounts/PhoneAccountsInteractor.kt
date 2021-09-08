@@ -7,7 +7,6 @@ import com.chooloo.www.koler.interactor.base.BaseInteractor
 interface PhoneAccountsInteractor : BaseInteractor<PhoneAccountsInteractor.Listener> {
     interface Listener
 
-    fun lookupAccount(number: String?): PhoneLookupAccount
     fun lookupAccount(number: String?, callback: (PhoneLookupAccount) -> Unit)
     fun getContactAccounts(contactId: Long, callback: (Array<PhoneAccount>?) -> Unit)
 }

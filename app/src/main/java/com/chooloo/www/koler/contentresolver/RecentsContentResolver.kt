@@ -7,6 +7,7 @@ import android.net.Uri
 import android.provider.CallLog
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.Recent
+import com.chooloo.www.koler.util.SelectionBuilder
 import java.util.*
 
 class RecentsContentResolver(context: Context, private val recentId: Long? = null) :
@@ -17,12 +18,8 @@ class RecentsContentResolver(context: Context, private val recentId: Long? = nul
     override val sortOrder: String = SORT_ORDER
     override val selectionArgs: Array<String>? = null
     override val projection: Array<String> = PROJECTION
-    override val selection: String
-        get() {
-            val selection = SelectionBuilder().addSelection(CallLog.Calls._ID, recentId)
-            filter?.let { selection.addString("(${CallLog.Calls.CACHED_NAME} LIKE '%$filter%' OR ${CallLog.Calls.NUMBER} LIKE '%$filter%')") }
-            return selection.build()
-        }
+    override val selection
+        get() = SelectionBuilder().addSelection(CallLog.Calls._ID, recentId).build()
 
 
     override fun convertCursorToItem(cursor: Cursor): Recent {

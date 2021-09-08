@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.util.SelectionBuilder
 
 open class ContactsContentResolver(context: Context, private val contactId: Long? = null) :
     BaseItemsContentResolver<Contact>(context) {
