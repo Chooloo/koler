@@ -39,7 +39,7 @@ class SearchBar : TextInputLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
-            compoundDrawablePadding = 8
+            compoundDrawablePadding = 10
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
@@ -52,10 +52,10 @@ class SearchBar : TextInputLayout {
             setTextAppearance(R.style.Koler_Text_Subtitle1)
             setHintTextColor(ColorStateList.valueOf(colorOnSecondary))
             setPadding(
+                spacingSmall + 10,
+                _viewManager.getSizeInDp(5),
                 spacingSmall,
-                _viewManager.getSizeInDp(2),
-                spacingSmall,
-                _viewManager.getSizeInDp(2)
+                _viewManager.getSizeInDp(5)
             )
 
             addTextChangedListener(
