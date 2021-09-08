@@ -3,7 +3,7 @@ package com.chooloo.www.koler.ui.phones
 import android.content.ClipData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.PhonesAdapter
-import com.chooloo.www.koler.contentresolver.PhoneContentResolver
+import com.chooloo.www.koler.contentresolver.PhonesContentResolver
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.list.ListPresenter
@@ -21,7 +21,7 @@ class PhonesPresenter<V : PhonesContract.View>(view: V) :
 
 
     override val requiredPermissions
-        get() = PhoneContentResolver.REQUIRED_PERMISSIONS
+        get() = PhonesContentResolver.REQUIRED_PERMISSIONS
 
     override val noResultsMessage
         get() = boundComponent.stringInteractor.getString(R.string.error_no_results_phones)

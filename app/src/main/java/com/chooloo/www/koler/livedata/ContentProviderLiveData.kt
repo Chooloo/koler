@@ -10,24 +10,30 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
 ) : LiveData<T>() {
     abstract val contentResolver: ContentResolver
 
-    private var _disposable: Disposable? = null
+    private var _observer: Disposable? = null
 
     var filter: String?
         get() = contentResolver.filter
         set(value) {
             contentResolver.filter = value
-            contentResolver.queryContent {
-                onInactive()
-                onActive()
-            }
+            attachObserver()
         }
 
 
     override fun onActive() {
-        _disposable = contentResolver.observeContent { postValue(it) }
+        attachObserver()
     }
 
     override fun onInactive() {
-        _disposable?.dispose()
+        _observer?.dispose()
+    }
+
+    private fun attachObserver() {
+        _observer?.dispose()
+        _observer = contentResolver.observeUri {
+            contentResolver.observeContent { content ->
+                postValue(content)
+            }
+        }
     }
 }

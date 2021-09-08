@@ -8,9 +8,11 @@ import com.chooloo.www.koler.interactor.permission.PermissionInteractor
 import com.chooloo.www.koler.interactor.proximity.ProximityInteractor
 import com.chooloo.www.koler.interactor.screen.ScreenInteractor
 import com.chooloo.www.koler.interactor.sim.SimInteractor
+import io.reactivex.disposables.CompositeDisposable
 
 interface BoundComponentRoot : ComponentRoot {
     val lifecycleOwner: LifecycleOwner
+    val disposables: CompositeDisposable
 
     val simInteractor: SimInteractor
     val dialogInteractor: DialogInteractor

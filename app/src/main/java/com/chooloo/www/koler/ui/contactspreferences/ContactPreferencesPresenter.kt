@@ -13,7 +13,7 @@ class ContactPreferencesPresenter<V : ContactPreferencesContract.View>(view: V) 
         view.apply {
             isBlockContactVisible = false
             isUnblockContactVisible = false
-            boundComponent.contactsInteractor.getContact(view.contactId) { contact ->
+            boundComponent.contactsInteractor.queryContact(view.contactId) { contact ->
                 isFavoriteContactVisible = contact?.starred == false
                 isUnfavoriteContactVisible = contact?.starred == true
             }

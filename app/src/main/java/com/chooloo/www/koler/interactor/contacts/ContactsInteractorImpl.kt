@@ -1,16 +1,10 @@
 package com.chooloo.www.koler.interactor.contacts
 
 import android.Manifest.permission.WRITE_CONTACTS
-import android.app.Activity
-import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
-import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
-import android.telephony.PhoneNumberUtils
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
 import com.chooloo.www.koler.data.account.Contact
@@ -24,7 +18,7 @@ class ContactsInteractorImpl(
     private val numbersInteractor: NumbersInteractor,
     private val phoneAccountsInteractor: PhoneAccountsInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
-    override fun getContact(contactId: Long, callback: (Contact?) -> Unit) {
+    override fun queryContact(contactId: Long, callback: (Contact?) -> Unit) {
         ContactsContentResolver(context, contactId).queryContent { contacts ->
             contacts.let { callback.invoke(contacts.getOrNull(0)) }
         }

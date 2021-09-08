@@ -8,9 +8,9 @@ import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 
-class RecentsInteractorImpl(
-    private val context: Context
-) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
+class RecentsInteractorImpl(private val context: Context) :
+    BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
+
     override fun queryRecent(recentId: Long) =
         RecentsContentResolver(context, recentId).queryContent().getOrNull(0)
 

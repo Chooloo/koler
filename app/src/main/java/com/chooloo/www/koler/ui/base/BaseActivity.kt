@@ -3,7 +3,6 @@ package com.chooloo.www.koler.ui.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRootImpl
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
@@ -19,6 +18,15 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
         onSetup()
     }
 
+    override fun onStop() {
+        super.onStop()
+        boundComponent.disposables.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        boundComponent.disposables.dispose()
+    }
 
     //region base view
 

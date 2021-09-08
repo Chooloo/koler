@@ -22,6 +22,7 @@ import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.util.PreferencesManager
+import io.reactivex.disposables.CompositeDisposable
 
 interface ComponentRoot {
     val liveDataFactory: LiveDataFactory

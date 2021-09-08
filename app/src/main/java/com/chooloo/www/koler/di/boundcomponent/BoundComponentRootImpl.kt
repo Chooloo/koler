@@ -31,6 +31,7 @@ import com.chooloo.www.koler.interactor.sim.SimInteractorImpl
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.util.PreferencesManager
+import io.reactivex.disposables.CompositeDisposable
 
 class BoundComponentRootImpl(
     private val activity: BaseActivity
@@ -40,6 +41,11 @@ class BoundComponentRootImpl(
     override val lifecycleOwner by lazy {
         activity
     }
+    
+    override val disposables by lazy {
+        CompositeDisposable()
+    }
+
 
     override val simInteractor by lazy {
         SimInteractorImpl(
@@ -88,7 +94,6 @@ class BoundComponentRootImpl(
 
     override val liveDataFactory: LiveDataFactory
         get() = componentRoot.liveDataFactory
-
 
     override val vibrator: Vibrator
         get() = componentRoot.vibrator

@@ -18,21 +18,22 @@ abstract class BaseContentResolver<T>(private val context: Context) {
         DefaultStorIOContentResolver.builder().contentResolver(context.contentResolver).build()
     }
 
-    private val finalUri: Uri
+    private val _finalUri: Uri
         get() = if (filterUri != null && _filter?.isNotEmpty() == true) {
             Uri.withAppendedPath(filterUri, _filter)
         } else {
             uri
         }
 
-    private val query: Query
+    private val _query: Query
         get() = Query.builder()
-            .uri(finalUri)
+            .uri(_finalUri)
             .columns(*projection)
             .whereArgs(*(selectionArgs ?: arrayOf()))
             .where(if (selection == "") null else selection)
             .sortOrder(if (sortOrder == "") null else sortOrder)
             .build()
+
 
     var filter: String?
         get() = _filter
@@ -41,50 +42,50 @@ abstract class BaseContentResolver<T>(private val context: Context) {
         }
 
 
-    fun queryCursor() =
+    private fun queryCursor() =
         _ioContentResolver
             .get()
             .cursor()
-            .withQuery(query)
+            .withQuery(_query)
             .prepare()
             .executeAsBlocking()
 
     @SuppressLint("CheckResult")
-    fun queryCursor(callback: (Cursor?) -> Unit) =
+    fun queryCursor(callback: (Cursor?) -> Unit): Disposable =
         _ioContentResolver
             .get()
             .cursor()
-            .withQuery(query)
+            .withQuery(_query)
             .prepare()
             .asRxSingle()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(callback::invoke)
 
-    fun queryContent() =
-        convertCursorToContent(queryCursor())
+    fun queryContent() = convertCursorToContent(queryCursor())
 
-    fun queryContent(callback: (T) -> Unit) {
+    fun queryContent(callback: (T) -> Unit): Disposable =
         queryCursor { callback.invoke(convertCursorToContent(it)) }
-    }
 
 
     @SuppressLint("CheckResult")
-    fun observeUri(observer: () -> Unit): Disposable = _ioContentResolver
-        .observeChangesOfUri(uri, BackpressureStrategy.LATEST)
-        .subscribe {
-            observer.invoke()
-        }
+    fun observeUri(observer: () -> Unit): Disposable =
+        _ioContentResolver
+            .observeChangesOfUri(uri, BackpressureStrategy.LATEST)
+            .publish(1)
+            .subscribe { observer.invoke() }
+            .also { observer.invoke() }
 
-    private fun observeCursor(observer: (Cursor?) -> Unit): Disposable = _ioContentResolver
-        .get()
-        .cursor()
-        .withQuery(query)
-        .prepare()
-        .asRxFlowable(BackpressureStrategy.LATEST)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(observer::invoke)
+    private fun observeCursor(observer: (Cursor?) -> Unit): Disposable =
+        _ioContentResolver
+            .get()
+            .cursor()
+            .withQuery(_query)
+            .prepare()
+            .asRxFlowable(BackpressureStrategy.LATEST)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer::invoke)
 
     fun observeContent(observer: (T) -> Unit) =
         observeCursor { observer.invoke(convertCursorToContent(it)) }

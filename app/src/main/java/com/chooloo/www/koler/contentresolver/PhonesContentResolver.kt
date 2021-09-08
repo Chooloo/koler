@@ -8,7 +8,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.util.SelectionBuilder
 
-class PhoneContentResolver(context: Context, contactId: Long? = null) :
+class PhonesContentResolver(context: Context, contactId: Long? = null) :
     BaseItemsContentResolver<PhoneAccount>(context) {
 
     override val uri: Uri = URI

@@ -16,7 +16,7 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     private var _firstPhone: PhoneAccount? = null
 
     override fun onStart() {
-        boundComponent.contactsInteractor.getContact(view.contactId) { contact ->
+        boundComponent.contactsInteractor.queryContact(view.contactId) { contact ->
             _contact = contact
             view.apply {
                 contactName = contact?.name
