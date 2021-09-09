@@ -65,6 +65,7 @@ class CallNotification(
     fun detach() {
         componentRoot.callsInteractor.unregisterListener(this)
         componentRoot.audioInteractor.unregisterListener(this)
+        cancel()
     }
 
     private val _contentPendingIntent by lazy {

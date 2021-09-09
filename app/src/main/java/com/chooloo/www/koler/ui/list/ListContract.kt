@@ -1,5 +1,7 @@
 package com.chooloo.www.koler.ui.list
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.ui.base.BaseContract
 
@@ -7,7 +9,6 @@ interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
         val isCompact: Boolean
         val searchHint: String?
-        var emptyStateText: String?
 
         fun animateListView()
         fun requestSearchFocus()
@@ -16,12 +17,12 @@ interface ListContract : BaseContract {
         fun showEmptyPage(isShow: Boolean)
         fun showLoading(isLoading: Boolean)
         fun showSelecting(isSelecting: Boolean)
+        fun setEmptyTextRes(@StringRes res: Int?)
+        fun setEmptyIconRes(@DrawableRes res: Int?)
         fun setAdapter(adapter: ListAdapter<ItemType>)
     }
 
     interface Presenter<ItemType, V : View<ItemType>> : BaseContract.Presenter<V> {
-        val noResultsMessage: String
-        val noPermissionsMessage: String
         val requiredPermissions: Array<String>
 
         fun onResults()

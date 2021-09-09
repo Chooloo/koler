@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.list
 
-import androidx.lifecycle.LiveData
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.base.BasePresenter
@@ -11,9 +11,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
 
     private var _permissionsGranted = false
     private var _onItemsChangedListener: (ArrayList<ItemType>) -> Unit? = {}
-
-    abstract val adapter: ListAdapter<ItemType>
-
+    private val noPermissionsIconRes = R.drawable.round_block_24
 
     override fun onStart() {
         boundComponent.permissionInteractor.runWithPermissions(
@@ -23,25 +21,31 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
             rationaleMessage = null,
             deniedCallback = null
         )
-        if (boundComponent.preferencesInteractor.isScrollIndicator) {
-            view.setupScrollIndicator()
-        }
-        view.showLoading(true)
+
         adapter.apply {
             isCompact = view.isCompact
             setOnItemClickListener(this@ListPresenter::onItemClick)
             setOnItemLongClickListener(this@ListPresenter::onItemLongClick)
             setOnSelectingChangeListener(this@ListPresenter::onIsSelectingChanged)
         }
-        view.setAdapter(adapter)
+
+        view.apply {
+            showLoading(true)
+            setAdapter(adapter)
+            if (boundComponent.preferencesInteractor.isScrollIndicator) {
+                setupScrollIndicator()
+            }
+        }
     }
 
     override fun onResults() {
         view.showEmptyPage(false)
     }
 
+
     override fun onNoResults() {
-        view.emptyStateText = noResultsMessage
+        view.setEmptyIconRes(noResultsIconRes)
+        view.setEmptyTextRes(noResultsTextRes)
         view.showEmptyPage(true)
     }
 
@@ -51,7 +55,6 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
 
     override fun onPermissionsGranted() {
         _permissionsGranted = true
-        view.emptyStateText = noResultsMessage
         observeData()
     }
 
@@ -77,12 +80,19 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     }
 
     override fun onPermissionsBlocked(permissions: Array<String>) {
-        view.emptyStateText = noPermissionsMessage
+        view.setEmptyIconRes(noPermissionsIconRes)
+        view.setEmptyTextRes(noPermissionsTextRes)
     }
 
     override fun setOnItemsChangedListener(onItemsChangedListener: (ArrayList<ItemType>) -> Unit?) {
         _onItemsChangedListener = onItemsChangedListener
     }
+
+
+    abstract val noResultsIconRes: Int?
+    abstract val noResultsTextRes: Int?
+    abstract val noPermissionsTextRes: Int?
+    abstract val adapter: ListAdapter<ItemType>
 
     abstract fun observeData()
     abstract fun applyFilter(filter: String)

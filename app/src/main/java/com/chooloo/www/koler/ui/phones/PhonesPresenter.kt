@@ -20,14 +20,10 @@ class PhonesPresenter<V : PhonesContract.View>(view: V) :
     }
 
 
-    override val requiredPermissions
-        get() = PhonesContentResolver.REQUIRED_PERMISSIONS
-
-    override val noResultsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_results_phones)
-
-    override val noPermissionsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_permissions_phones)
+    override val noResultsIconRes = R.drawable.ic_call_black_24dp
+    override val noResultsTextRes = R.string.error_no_results_phones
+    override val noPermissionsTextRes = R.string.error_no_permissions_phones
+    override val requiredPermissions = PhonesContentResolver.REQUIRED_PERMISSIONS
 
 
     override fun observeData() {

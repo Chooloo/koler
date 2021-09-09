@@ -72,7 +72,6 @@ abstract class BaseContentResolver<T>(private val context: Context) {
     fun observeUri(observer: () -> Unit): Disposable =
         _ioContentResolver
             .observeChangesOfUri(_finalUri, BackpressureStrategy.LATEST)
-            .publish(1)
             .subscribe { observer.invoke() }
             .also { observer.invoke() }
 

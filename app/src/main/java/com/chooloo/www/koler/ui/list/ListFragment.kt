@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
@@ -24,11 +25,6 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override val searchHint by lazy { getString(R.string.hint_search_items) }
     override val isCompact by lazy { args.getBoolean(ARG_IS_COMPACT) }
 
-    override var emptyStateText: String?
-        get() = _binding.itemsEmptyText.text.toString()
-        set(value) {
-            _binding.itemsEmptyText.text = value
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +57,8 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     override fun showEmptyPage(isShow: Boolean) {
         _binding.apply {
-            itemsEmptyText.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
+            empty.emptyIcon.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
+            empty.emptyText.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
             itemsRecyclerView.visibility = if (isShow && !_isHideNoResults) GONE else VISIBLE
         }
     }
@@ -92,6 +89,14 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
                 })
             itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
         }
+    }
+
+    override fun setEmptyTextRes(@StringRes res: Int?) {
+        res?.let { _binding.empty.emptyText.setText(it) }
+    }
+
+    override fun setEmptyIconRes(res: Int?) {
+        res?.let { _binding.empty.emptyIcon.setImageResource(it) }
     }
 
     override fun setAdapter(adapter: ListAdapter<ItemType>) {

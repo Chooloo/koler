@@ -15,19 +15,15 @@ class RecentsPresenter<V : ListContract.View<Recent>>(view: V) :
 
     override val adapter by lazy { RecentsAdapter(boundComponent) }
 
+    override val noResultsIconRes = R.drawable.round_history_24
+    override val noResultsTextRes = R.string.error_no_results_recents
+    override val noPermissionsTextRes = R.string.error_no_permissions_recents
+    override val requiredPermissions = RecentsContentResolver.REQUIRED_PERMISSIONS
+
+
     private val recentsLiveData by lazy {
         boundComponent.liveDataFactory.allocRecentsProviderLiveData()
     }
-
-
-    override val requiredPermissions
-        get() = RecentsContentResolver.REQUIRED_PERMISSIONS
-
-    override val noResultsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_results_recents)
-
-    override val noPermissionsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_permissions_recents)
 
 
     override fun observeData() {

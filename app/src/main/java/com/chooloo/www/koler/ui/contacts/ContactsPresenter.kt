@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.contacts
 
 import android.Manifest.permission.WRITE_CONTACTS
-import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
@@ -16,18 +15,15 @@ class ContactsPresenter<V : ListContract.View<Contact>>(view: V) :
 
     override val adapter by lazy { ContactsAdapter(boundComponent) }
 
+    override val noResultsIconRes = R.drawable.round_people_24
+    override val noResultsTextRes = R.string.error_no_results_contacts
+    override val noPermissionsTextRes = R.string.error_no_permissions_contacts
+    override val requiredPermissions = ContactsContentResolver.REQUIRED_PERMISSIONS
+
+
     private val contactsLiveData by lazy {
         boundComponent.liveDataFactory.allocContactsProviderLiveData()
     }
-
-    override val requiredPermissions
-        get() = ContactsContentResolver.REQUIRED_PERMISSIONS
-
-    override val noResultsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_results_contacts)
-
-    override val noPermissionsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_permissions_contacts)
 
 
     override fun observeData() {
