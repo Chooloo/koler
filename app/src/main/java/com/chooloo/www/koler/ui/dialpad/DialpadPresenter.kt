@@ -20,7 +20,7 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
         super.onStart()
         if (view.isDialer) {
             _searchViewModel.number.observe(boundComponent.lifecycleOwner) {
-                view.number = it.toString()
+                it?.let { view.number = it }
             }
         }
     }
