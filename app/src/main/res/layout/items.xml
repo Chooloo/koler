@@ -67,15 +67,14 @@
         android:id="@+id/items_empty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_margin="@dimen/default_spacing_big"
         android:fontFamily="@font/google_sans_bold"
         android:padding="@dimen/default_spacing_big"
         android:text="@string/error_no_results"
         android:textAppearance="@style/Koler.Text.Headline3"
         android:textColor="?android:textColorHint"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/items_search_bar"
         app:layout_constraintVertical_bias="0.3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

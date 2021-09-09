@@ -35,7 +35,7 @@ abstract class BaseContentResolver<T>(private val context: Context) {
             .build()
 
 
-    var filter: String?
+    open var filter: String?
         get() = _filter
         set(value) {
             _filter = if (value == "") null else value
@@ -71,7 +71,7 @@ abstract class BaseContentResolver<T>(private val context: Context) {
     @SuppressLint("CheckResult")
     fun observeUri(observer: () -> Unit): Disposable =
         _ioContentResolver
-            .observeChangesOfUri(uri, BackpressureStrategy.LATEST)
+            .observeChangesOfUri(_finalUri, BackpressureStrategy.LATEST)
             .publish(1)
             .subscribe { observer.invoke() }
             .also { observer.invoke() }

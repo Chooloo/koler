@@ -7,10 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/dialpad_suggestions_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,7 +20,7 @@
             android:id="@+id/dialpad_suggestions_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.chooloo.www.koler.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
