@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.widgets
 import android.content.Context
 import android.graphics.Color
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -21,6 +22,8 @@ class DialpadEditText : AppCompatEditText {
         showSoftInputOnFocus = false
         textAlignment = TEXT_ALIGNMENT_CENTER
         inputType = InputType.TYPE_CLASS_PHONE
+        filters =
+            arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter(Char::isLetterOrDigit) })
 
         setBackgroundColor(Color.TRANSPARENT)
         canScrollHorizontally(LAYOUT_DIRECTION_RTL or LAYOUT_DIRECTION_LTR)
