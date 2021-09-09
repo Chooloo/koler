@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.di.boundcomponent
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelStoreOwner
 import com.chooloo.www.koler.di.component.ComponentRoot
 import com.chooloo.www.koler.interactor.dialog.DialogInteractor
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractor
@@ -11,8 +12,10 @@ import com.chooloo.www.koler.interactor.sim.SimInteractor
 import io.reactivex.disposables.CompositeDisposable
 
 interface BoundComponentRoot : ComponentRoot {
-    val lifecycleOwner: LifecycleOwner
     val disposables: CompositeDisposable
+    
+    val lifecycleOwner: LifecycleOwner
+    val viewModelStoreOwner: ViewModelStoreOwner
 
     val simInteractor: SimInteractor
     val dialogInteractor: DialogInteractor

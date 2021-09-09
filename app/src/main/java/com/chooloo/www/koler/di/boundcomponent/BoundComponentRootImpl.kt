@@ -38,12 +38,17 @@ class BoundComponentRootImpl(
 ) : BoundComponentRoot, ComponentRoot {
     private val componentRoot get() = (activity.applicationContext as KolerApp).componentRoot
 
+    override val disposables by lazy {
+        CompositeDisposable()
+    }
+
+
     override val lifecycleOwner by lazy {
         activity
     }
-    
-    override val disposables by lazy {
-        CompositeDisposable()
+
+    override val viewModelStoreOwner by lazy {
+        activity
     }
 
 

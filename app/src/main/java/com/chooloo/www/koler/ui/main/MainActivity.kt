@@ -11,13 +11,16 @@ import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
-import com.chooloo.www.koler.viewmodel.SearchViewModel
+import com.chooloo.www.koler.viewmodel.DialpadViewModel
 
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
+    private var _dialpadFragment: DialpadFragment? = null
     private lateinit var _presenter: MainPresenter<MainActivity>
     private val _binding by lazy { MainBinding.inflate(layoutInflater) }
-    private val _searchViewModel by lazy { ViewModelProvider(this).get(SearchViewModel::class.java) }
+    private val _dialpadViewModel by lazy {
+        ViewModelProvider(boundComponent.viewModelStoreOwner).get(DialpadViewModel::class.java)
+    }
 
     override var selectedPage: Int
         get() = _binding.mainViewPager.currentItem
@@ -25,22 +28,10 @@ class MainActivity : BaseActivity(), MainContract.View {
             _binding.mainViewPager.currentItem = value
         }
 
-    override var dialpadNumber: String
-        get() = _searchViewModel.number.value.toString()
+    override var dialpadNumber: String?
+        get() = _dialpadViewModel.number.value.toString()
         set(value) {
-            _searchViewModel.number.value = value
-        }
-
-    override var liveContactsText: String?
-        get() = _searchViewModel.contactsText.value
-        set(value) {
-            _searchViewModel.contactsText.value = value
-        }
-
-    override var liveRecentsText: String?
-        get() = _searchViewModel.recentsText.value
-        set(value) {
-            _searchViewModel.recentsText.value = value
+            _dialpadViewModel.number.value = value
         }
 
 
@@ -74,9 +65,8 @@ class MainActivity : BaseActivity(), MainContract.View {
     //region main view
 
     override fun openDialpad() {
-        BottomFragment(DialpadFragment.newInstance(true).apply {
-            setOnTextChangedListener(_presenter::onDialpadTextChanged)
-        }).show(supportFragmentManager, DialpadFragment.TAG)
+        _dialpadFragment = DialpadFragment.newInstance(true)
+        BottomFragment(_dialpadFragment!!).show(supportFragmentManager, DialpadFragment.TAG)
     }
 
     override fun openSettings() {
@@ -90,9 +80,5 @@ class MainActivity : BaseActivity(), MainContract.View {
         if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
             _presenter.onViewIntent(intent)
         }
-    }
-
-    override fun updateSearchViewModelNumber(text: String?) {
-        _searchViewModel.number.value = text
     }
 }

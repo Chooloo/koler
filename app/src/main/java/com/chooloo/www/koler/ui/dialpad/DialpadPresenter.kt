@@ -1,14 +1,29 @@
 package com.chooloo.www.koler.ui.dialpad
 
 import android.view.KeyEvent.*
+import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.viewmodel.DialpadViewModel
 
 class DialpadPresenter<V : DialpadContract.View>(view: V) :
     BasePresenter<V>(view),
     DialpadContract.Presenter<V> {
+
+    private val _searchViewModel by lazy {
+        ViewModelProvider(boundComponent.viewModelStoreOwner).get(DialpadViewModel::class.java)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (view.isDialer) {
+            _searchViewModel.number.observe(boundComponent.lifecycleOwner) {
+                view.number = it.toString()
+            }
+        }
+    }
 
     override fun onKeyClick(keyCode: Int) {
         boundComponent.audioInteractor.vibrate(AudioInteractor.SHORT_VIBRATE_LENGTH)
