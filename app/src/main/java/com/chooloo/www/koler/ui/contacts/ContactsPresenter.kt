@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.contacts
 
 import android.Manifest.permission.WRITE_CONTACTS
+import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
@@ -18,7 +19,6 @@ class ContactsPresenter<V : ListContract.View<Contact>>(view: V) :
     private val contactsLiveData by lazy {
         boundComponent.liveDataFactory.allocContactsProviderLiveData()
     }
-
 
     override val requiredPermissions
         get() = ContactsContentResolver.REQUIRED_PERMISSIONS

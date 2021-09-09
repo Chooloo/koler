@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.list
 
+import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.base.BasePresenter

@@ -72,15 +72,15 @@ abstract class ListAdapter<DataType>(
                 }
             }
             setOnLongClickListener {
-                if (_isSelectable) {
-                    isSelected = true
-                    _isSelecting = true
-                    _selectedItems.add(dataItem)
-                    _onItemsSelectedListener.invoke(_selectedItems)
-                    _onSelectingChangeListener.invoke(true)
-                } else {
-                    _onItemLongClickListener.invoke(dataItem)
-                }
+//                if (_isSelectable) {
+//                    isSelected = true
+//                    _isSelecting = true
+//                    _selectedItems.add(dataItem)
+//                    _onItemsSelectedListener.invoke(_selectedItems)
+//                    _onSelectingChangeListener.invoke(true)
+//                } else {
+//                    _onItemLongClickListener.invoke(dataItem)
+//                }
                 true
             }
             boundComponent.animationInteractor.animateIn(this, false)

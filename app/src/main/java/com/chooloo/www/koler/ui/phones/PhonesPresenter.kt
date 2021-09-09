@@ -34,6 +34,10 @@ class PhonesPresenter<V : PhonesContract.View>(view: V) :
         phonesLiveData.observe(boundComponent.lifecycleOwner, this::onDataChanged)
     }
 
+    override fun applyFilter(filter: String) {
+        phonesLiveData.filter = filter
+    }
+
     override fun onItemClick(item: PhoneAccount) {
         boundComponent.navigationInteractor.call(item.number)
     }
@@ -43,10 +47,6 @@ class PhonesPresenter<V : PhonesContract.View>(view: V) :
             ClipData.newPlainText("Copied number", item.number)
         )
         view.showMessage(R.string.number_copied_to_clipboard)
-    }
-
-    override fun applyFilter(filter: String) {
-        phonesLiveData.filter = filter
     }
 
     override fun convertDataToListBundle(data: ArrayList<PhoneAccount>) =

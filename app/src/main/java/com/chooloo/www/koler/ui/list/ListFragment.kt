@@ -44,9 +44,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
                 visibility = if (_isSearchable) VISIBLE else GONE
                 setOnTextChangedListener(presenter::onSearchTextChanged)
             }
-            itemsRecyclerView.apply {
-                setLayoutManager(LinearLayoutManager(context))
-                addVeiledItems(7)
+//            itemsRecyclerView.apply {
+//                setLayoutManager(LinearLayoutManager(context))
+//                addVeiledItems(7)
             }
             itemsDeleteButton.setOnClickListener {
 //                presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
@@ -57,7 +57,8 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
 
     override fun animateListView() {
-        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView.getRecyclerView())
+//        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView.getRecyclerView())
+        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -73,10 +74,10 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     override fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-            _binding.itemsRecyclerView.veil()
+//            _binding.itemsRecyclerView.veil()
             showEmptyPage(false)
         } else {
-            _binding.itemsRecyclerView.unVeil()
+//            _binding.itemsRecyclerView.unVeil()
         }
     }
 
@@ -93,9 +94,11 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun setupScrollIndicator() {
         _binding.apply {
             itemsFastScroller.setupWithRecyclerView(
-                itemsRecyclerView.getRecyclerView(),
+                itemsRecyclerView,
+//                itemsRecyclerView.getRecyclerView(),
                 { position ->
-                    (itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).getHeader(
+                    (itemsRecyclerView.adapter as ListAdapter<*>).getHeader(
+//                    (itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).getHeader(
                         position
                     )
                         ?.let { FastScrollItemIndicator.Text(it) }

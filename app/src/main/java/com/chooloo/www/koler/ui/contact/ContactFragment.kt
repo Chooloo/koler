@@ -17,7 +17,13 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     private lateinit var _presenter: ContactPresenter<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId, false) }
+    private val _phonesFragment by lazy {
+        PhonesFragment.newInstance(
+            contactId = contactId,
+            isSearchable = false,
+            isHideNoResults = true
+        )
+    }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -63,7 +69,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .add(_binding.contactPhonesFragmentContainer.id, _phonesFragment)
             .commitNow()
     }
-
 
     override fun showMenu() {
         BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(
