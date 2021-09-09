@@ -45,10 +45,10 @@ class MainActivity : BaseActivity(), MainContract.View {
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
-            appbarMain.mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-            appbarMain.mainTabs.headers =
+            mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
+            mainTabs.headers =
                 arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
-            appbarMain.mainTabs.viewPager = mainViewPager
+            mainTabs.viewPager = mainViewPager
             mainViewPager.currentItem = boundComponent.preferencesInteractor.defaultPage.index
         }
 

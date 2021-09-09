@@ -28,5 +28,9 @@
             <enum name="big" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="Koler.Tabs">
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
     <!--endregion-->
 </resources>

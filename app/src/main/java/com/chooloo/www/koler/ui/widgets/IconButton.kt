@@ -10,7 +10,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.ViewManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-@SuppressLint("Recycle", "CustomViewStyleable", "WrongConstant")
+@SuppressLint("CustomViewStyleable", "WrongConstant")
 class IconButton : FloatingActionButton {
     @DrawableRes
     private var _iconDefault: Int? = null
@@ -34,7 +34,7 @@ class IconButton : FloatingActionButton {
         context.obtainStyledAttributes(attrs, R.styleable.Koler_IconButton, defStyleRes, 0).also {
             _iconDefault = it.getResourceId(R.styleable.Koler_IconButton_icon, NO_ID)
             _iconOnClick = it.getResourceId(R.styleable.Koler_IconButton_activatedIcon, NO_ID)
-        }
+        }.recycle()
 
         elevation = 0f
         compatElevation = 0f

@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.widgets
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import androidx.annotation.ColorInt
@@ -17,9 +18,10 @@ class Tab : AppCompatTextView {
     private val enabledColor by lazy { _viewManager.getAttrColor(R.attr.colorOnSurface) }
     private val disabledColor by lazy { _viewManager.getAttrColor(R.attr.colorTextHint) }
 
-
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+
+    @SuppressLint("CustomViewStyleable", "Recycle")
     constructor(
         context: Context,
         attrs: AttributeSet? = null,
