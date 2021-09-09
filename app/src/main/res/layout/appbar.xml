@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/appbar_main"
+    style="@style/Koler.Appbar.Layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_scrollFlags="scroll">
 
-    <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/appbar_main"
-        style="@style/Koler.Appbar.Layout"
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/default_spacing_big"
+        android:paddingBottom="@dimen/default_spacing_small"
+        app:contentInsetEnd="@dimen/default_spacing"
+        app:contentInsetStart="@dimen/default_spacing"
         app:layout_scrollFlags="scroll">
 
-        <androidx.appcompat.widget.Toolbar
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/default_spacing_big"
-            android:paddingBottom="@dimen/default_spacing_small"
-            app:contentInsetEnd="@dimen/default_spacing"
-            app:contentInsetStart="@dimen/default_spacing"
-            app:layout_scrollFlags="scroll">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <com.chooloo.www.koler.ui.widgets.Tabs
+                android:id="@+id/main_tabs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.chooloo.www.koler.ui.widgets.Tabs
-                    android:id="@+id/main_tabs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="70dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.chooloo.www.koler.ui.widgets.IconButton
-                    android:id="@+id/main_menu_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/content_description_menu_button"
-                    app:backgroundTint="?colorPrimarySurface"
-                    app:borderWidth="0dp"
-                    app:fabSize="mini"
-                    app:icon="@drawable/ic_more_vert_black_24dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-</layout>
+            <com.chooloo.www.koler.ui.widgets.IconButton
+                android:id="@+id/main_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/content_description_menu_button"
+                app:backgroundTint="?colorPrimarySurface"
+                app:borderWidth="0dp"
+                app:fabSize="mini"
+                app:icon="@drawable/ic_more_vert_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+</com.google.android.material.appbar.AppBarLayout>
