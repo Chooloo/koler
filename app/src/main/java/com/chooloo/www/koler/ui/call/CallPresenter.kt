@@ -1,8 +1,6 @@
 package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.telecom.Call.Details.*
 import android.view.KeyEvent
 import com.chooloo.www.koler.R
@@ -13,22 +11,24 @@ import com.chooloo.www.koler.data.call.CantMergeCallException
 import com.chooloo.www.koler.data.call.CantSwapCallException
 import com.chooloo.www.koler.service.CallService
 import com.chooloo.www.koler.ui.base.BasePresenter
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class CallPresenter<V : CallContract.View>(view: V) :
     BasePresenter<V>(view),
     CallContract.Presenter<V> {
 
     private var _currentCallId: String? = null
-    private lateinit var _callTimeHandler: Handler
-    private lateinit var _callTimeRunnable: Runnable
+    private var _timerDisposable: Disposable? = null
 
     override fun onStart() {
-        _callTimeRunnable = Runnable {
-            _callTimeHandler.postDelayed(_callTimeRunnable, 1000)
-            displayCallTime()
-        }
-        _callTimeHandler = Handler(Looper.getMainLooper())
-        _callTimeHandler.postDelayed(_callTimeRunnable, 1000)
+        _timerDisposable = Observable.interval(1, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { displayCallTime() }
 
         CallService.sIsActivityActive = true
 
@@ -47,6 +47,8 @@ class CallPresenter<V : CallContract.View>(view: V) :
 
     override fun onStop() {
         boundComponent.proximityInteractor.release()
+        _timerDisposable?.dispose()
+        CallService.sIsActivityActive = false
     }
 
 
@@ -107,8 +109,6 @@ class CallPresenter<V : CallContract.View>(view: V) :
 
 
     override fun onNoCalls() {
-        CallService.sIsActivityActive = false
-        _callTimeHandler.removeCallbacksAndMessages(null)
         view.finish()
     }
 

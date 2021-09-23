@@ -9,8 +9,8 @@ android {
         applicationId "com.chooloo.www.koler"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 59
-        versionName "v1.0.9"
+        versionCode 60
+        versionName "v1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -89,7 +89,6 @@ dependencies {
             'androidx.arch.core:core-runtime:2.1.0',
             'com.reddit:indicator-fast-scroll:1.4.0',
             'androidx.legacy:legacy-support-v4:1.0.0',
-            'com.stedi.randomimagegenerator:rig:1.1.0',
             'androidx.preference:preference-ktx:1.1.1',
             'org.jetbrains.kotlin:kotlin-stdlib:1.4.21',
             'androidx.biometric:biometric:1.2.0-alpha02',
@@ -103,7 +102,6 @@ dependencies {
             'com.pushtorefresh.storio3:content-resolver:3.0.0',
             'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
             'androidx.navigation:navigation-fragment-ktx:2.3.3',
-            'com.googlecode.libphonenumber:libphonenumber:8.12.18',
-            'io.github.informramiz:nameinitialscircleimageview:1.6',
+            'com.googlecode.libphonenumber:libphonenumber:8.12.18'
     )
 }

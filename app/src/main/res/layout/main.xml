@@ -13,25 +13,17 @@
             android:id="@+id/main_menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_spacing"
             android:contentDescription="@string/content_description_menu_button"
             app:backgroundTint="?colorPrimarySurface"
             app:borderWidth="0dp"
             app:fabSize="mini"
-            app:icon="@drawable/ic_more_vert_black_24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:icon="@drawable/ic_more_vert_black_24dp" />
 
         <!-- tabs -->
         <com.chooloo.www.koler.ui.widgets.Tabs
             android:id="@+id/main_tabs"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_spacing"
-            android:layout_marginTop="70dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content" />
 
         <!-- view pager -->
         <androidx.viewpager2.widget.ViewPager2
@@ -46,11 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_margin="20dp"
             app:borderWidth="0dp"
-            app:icon="@drawable/ic_dialpad_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:icon="@drawable/ic_dialpad_black_24dp" />
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
