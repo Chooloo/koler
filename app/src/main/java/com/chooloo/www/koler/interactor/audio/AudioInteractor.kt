@@ -3,11 +3,7 @@ package com.chooloo.www.koler.interactor.audio
 import com.chooloo.www.koler.interactor.base.BaseInteractor
 
 interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
-    interface Listener {
-        fun onMuteChanged(isMuted: Boolean)
-        fun onSpeakerChanged(isSpeaker: Boolean)
-    }
-
+    interface Listener
 
     var isMuted: Boolean
     var isSilent: Boolean

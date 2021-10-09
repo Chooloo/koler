@@ -17,7 +17,7 @@ import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.call.Call.State.DISCONNECTED
 import com.chooloo.www.koler.data.call.Call.State.DISCONNECTING
-import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
@@ -31,11 +31,11 @@ import com.chooloo.www.koler.util.SingletonHolder
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification(
     private val context: Context
-) : CallsInteractor.Listener, AudioInteractor.Listener {
+) : CallsInteractor.Listener, CallAudioInteractor.Listener {
     private var _call: Call? = null
     private val componentRoot by lazy { (context.applicationContext as KolerApp).componentRoot }
 
-    
+
     override fun onNoCalls() {
         detach()
         cancel()
@@ -49,11 +49,12 @@ class CallNotification(
         _call = call
     }
 
+
     override fun onMuteChanged(isMuted: Boolean) {
         _call?.let { show(it) }
     }
 
-    override fun onSpeakerChanged(isSpeaker: Boolean) {
+    override fun onAudioRouteChanged(audioRoute: CallAudioInteractor.AudioRoute) {
         _call?.let { show(it) }
     }
 
@@ -61,12 +62,12 @@ class CallNotification(
     fun attach() {
         createNotificationChannel()
         componentRoot.callsInteractor.registerListener(this)
-        componentRoot.audioInteractor.registerListener(this)
+        componentRoot.callAudioInteractor.registerListener(this)
     }
 
     fun detach() {
         componentRoot.callsInteractor.unregisterListener(this)
-        componentRoot.audioInteractor.unregisterListener(this)
+        componentRoot.callAudioInteractor.unregisterListener(this)
         cancel()
     }
 
@@ -167,10 +168,14 @@ class CallNotification(
             if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
                 builder.addAction(_hangupAction)
             }
-            if (call.isCapable(CAPABILITY_MUTE)) {
-                builder.addAction(if (componentRoot.audioInteractor.isMuted) _unmuteAction else _muteAction)
+            componentRoot.callAudioInteractor.isMuted?.let { isMuted ->
+                if (call.isCapable(CAPABILITY_MUTE)) {
+                    builder.addAction(if (isMuted) _unmuteAction else _muteAction)
+                }
             }
-            builder.addAction(if (componentRoot.audioInteractor.isSpeakerOn) _unspeakerAction else _speakerAction)
+            componentRoot.callAudioInteractor.isSpeakerOn?.let { isSpeakerOn ->
+                builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
+            }
             callback.invoke(builder.build())
         }
     }

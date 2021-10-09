@@ -3,8 +3,7 @@ package com.chooloo.www.koler.interactor.audio
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.media.AudioManager.RINGER_MODE_SILENT
-import android.media.AudioManager.RINGER_MODE_VIBRATE
+import android.media.AudioManager.*
 import android.media.ToneGenerator
 import android.os.Build
 import android.os.VibrationEffect
@@ -14,40 +13,28 @@ import android.view.KeyEvent
 import androidx.annotation.RequiresApi
 import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
-import com.chooloo.www.koler.service.CallService
 import java.util.*
 
 class AudioInteractorImpl(
     private val vibrator: Vibrator,
     private val audioManager: AudioManager
 ) : BaseInteractorImpl<AudioInteractor.Listener>(), AudioInteractor {
-    private var _isSpeakerOn = false
-
-
     override var isMuted: Boolean
         get() = audioManager.isMicrophoneMute
         set(value) {
             audioManager.isMicrophoneMute = value
-            invokeListeners { l -> l.onMuteChanged(value) }
         }
 
     override var isSilent: Boolean
         get() = audioManager.ringerMode in arrayOf(RINGER_MODE_SILENT, RINGER_MODE_VIBRATE)
         set(value) {
-            audioManager.ringerMode = RINGER_MODE_SILENT
+            audioManager.ringerMode = if (value) RINGER_MODE_SILENT else RINGER_MODE_NORMAL
         }
 
     override var isSpeakerOn: Boolean
-        get() = _isSpeakerOn
+        get() = audioManager.isSpeakerphoneOn
         set(value) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                CallService.toggleSpeakerRoute(value)
-            } else {
-                audioMode = AudioMode.IN_CALL
-                audioManager.isSpeakerphoneOn = value
-            }
-            _isSpeakerOn = value
-            invokeListeners { l -> l.onSpeakerChanged(value) }
+            audioManager.isSpeakerphoneOn = value
         }
 
     override var audioMode: AudioMode
