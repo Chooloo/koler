@@ -11,8 +11,9 @@ import com.chooloo.www.koler.ui.call.CallActivity
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {
-    private val componentRoot get() = (applicationContext as KolerApp).componentRoot
     private val _callNotification by lazy { CallNotification.getInstance(this) }
+    private val componentRoot get() = (applicationContext as KolerApp).componentRoot
+
 
     override fun onCreate() {
         super.onCreate()
@@ -40,9 +41,8 @@ class CallService : InCallService() {
         // a base call was removed from service,
         // this is the first place the code knows a call was removed
         // remove it from the call interactor (call manager)
-        componentRoot.callsInteractor.getCallByTelecomCall(telecomCall)?.let {
-            componentRoot.callsInteractor.entryRemoveCall(it)
-        }
+        componentRoot.callsInteractor.getCallByTelecomCall(telecomCall)
+            ?.let(componentRoot.callsInteractor::entryRemoveCall)
     }
 
 
@@ -54,8 +54,7 @@ class CallService : InCallService() {
 
 
     companion object {
-        var sInstance: CallService? = null
-
         var sIsActivityActive = false
+        var sInstance: CallService? = null
     }
 }

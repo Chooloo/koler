@@ -35,6 +35,7 @@ class CallNotification(
     private var _call: Call? = null
     private val componentRoot by lazy { (context.applicationContext as KolerApp).componentRoot }
 
+    
     override fun onNoCalls() {
         detach()
         cancel()
@@ -193,6 +194,6 @@ class CallNotification(
     companion object : SingletonHolder<CallNotification, Context>(::CallNotification) {
         const val ID = 420
         const val CHANNEL_ID = "call_notification_channel"
-        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
+        const val PRIORITY = NotificationCompat.PRIORITY_LOW
     }
 }
