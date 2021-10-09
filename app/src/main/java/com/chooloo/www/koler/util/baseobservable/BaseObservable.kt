@@ -7,7 +7,7 @@ open class BaseObservable<Listener> : IBaseObservable<Listener> {
     private val _listeners by lazy { HashSet<Listener>() }
 
     val listeners: Set<Listener>
-        get() = Collections.unmodifiableSet(_listeners)
+        get() = Collections.unmodifiableSet(HashSet(_listeners))
 
     @Synchronized
     override fun registerListener(listener: Listener) {

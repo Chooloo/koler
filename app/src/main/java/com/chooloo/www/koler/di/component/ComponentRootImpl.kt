@@ -15,6 +15,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.koler.di.factory.livedata.LiveDataFactoryImpl
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorImpl
 import com.chooloo.www.koler.interactor.calls.CallsInteractorImpl
 import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
@@ -104,6 +105,10 @@ open class ComponentRootImpl(
 
     override val contactsInteractor by lazy {
         ContactsInteractorImpl(application, numbersInteractor, phoneAccountsInteractor)
+    }
+
+    override val callAudioInteractor by lazy {
+        CallAudioInteractorImpl()
     }
 
     override val animationInteractor by lazy {

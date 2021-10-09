@@ -3,8 +3,6 @@ package com.chooloo.www.koler.service
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.telecom.CallAudioState.ROUTE_SPEAKER
-import android.telecom.CallAudioState.ROUTE_WIRED_OR_EARPIECE
 import android.telecom.InCallService
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.data.call.Call
@@ -57,12 +55,8 @@ class CallService : InCallService() {
 
 
     companion object {
-        private lateinit var sInstance: CallService
+        var sInstance: CallService? = null
 
         var sIsActivityActive = false
-
-        fun toggleSpeakerRoute(isSpeakerOn: Boolean) {
-            sInstance.setAudioRoute(if (isSpeakerOn) ROUTE_SPEAKER else ROUTE_WIRED_OR_EARPIECE)
-        }
     }
 }

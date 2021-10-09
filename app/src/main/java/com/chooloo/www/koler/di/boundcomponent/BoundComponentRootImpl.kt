@@ -14,6 +14,7 @@ import com.chooloo.www.koler.di.component.ComponentRoot
 import com.chooloo.www.koler.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
@@ -154,6 +155,9 @@ class BoundComponentRootImpl(
 
     override val contactsInteractor: ContactsInteractor
         get() = componentRoot.contactsInteractor
+    
+    override val callAudioInteractor: CallAudioInteractor
+        get() = componentRoot.callAudioInteractor
 
     override val animationInteractor: AnimationInteractor
         get() = componentRoot.animationInteractor

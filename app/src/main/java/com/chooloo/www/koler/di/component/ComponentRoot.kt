@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.koler.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
@@ -46,6 +47,7 @@ interface ComponentRoot {
     val recentsInteractor: RecentsInteractor
     val drawableInteractor: DrawableInteractor
     val contactsInteractor: ContactsInteractor
+    val callAudioInteractor: CallAudioInteractor
     val animationInteractor: AnimationInteractor
     val preferencesInteractor: PreferencesInteractor
     val phoneAccountsInteractor: PhoneAccountsInteractor

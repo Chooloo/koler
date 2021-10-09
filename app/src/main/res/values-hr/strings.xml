@@ -172,4 +172,11 @@
     <string name="phone_type_assistant">Asistent</string>
     <string name="phone_type_mms">MMS</string>
     <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Speaker</string>
+    <string name="audio_route_earpiece">Earpiece</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Wired Headset</string>
+    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
 </resources>

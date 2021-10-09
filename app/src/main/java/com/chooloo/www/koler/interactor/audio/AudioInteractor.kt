@@ -8,9 +8,9 @@ interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
         fun onSpeakerChanged(isSpeaker: Boolean)
     }
 
-    val isPhoneSilent: Boolean
 
     var isMuted: Boolean
+    var isSilent: Boolean
     var isSpeakerOn: Boolean
     var audioMode: AudioMode
 

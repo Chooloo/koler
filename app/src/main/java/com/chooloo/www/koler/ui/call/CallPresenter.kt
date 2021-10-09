@@ -9,6 +9,7 @@ import com.chooloo.www.koler.data.call.Call.State.*
 import com.chooloo.www.koler.data.call.CantHoldCallException
 import com.chooloo.www.koler.data.call.CantMergeCallException
 import com.chooloo.www.koler.data.call.CantSwapCallException
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.koler.service.CallService
 import com.chooloo.www.koler.ui.base.BasePresenter
 import io.reactivex.Observable
@@ -36,7 +37,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
             proximityInteractor.acquire()
             screenInteractor.disableKeyboard()
             screenInteractor.setShowWhenLocked()
-            audioInteractor.registerListener(this@CallPresenter)
+            callAudioInteractor.registerListener(this@CallPresenter)
             callsInteractor.registerListener(this@CallPresenter)
             callsInteractor.mainCall?.let {
                 onCallChanged(it)
@@ -79,7 +80,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
     }
 
     override fun onMuteClick() {
-        boundComponent.audioInteractor.isMuted = !view.isMuteActivated
+        boundComponent.callAudioInteractor.isMuted = !view.isMuteActivated
     }
 
     override fun onMergeClick() {
@@ -100,7 +101,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
     }
 
     override fun onSpeakerClick() {
-        boundComponent.audioInteractor.isSpeakerOn = !view.isSpeakerActivated
+        boundComponent.callAudioInteractor.isSpeakerOn = !view.isSpeakerActivated
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {
@@ -139,10 +140,9 @@ class CallPresenter<V : CallContract.View>(view: V) :
         view.isMuteActivated = isMuted
     }
 
-    override fun onSpeakerChanged(isSpeaker: Boolean) {
-        view.isSpeakerActivated = isSpeaker
+    override fun onAudioRouteChanged(audioRoute: AudioRoute) {
+        view.isSpeakerActivated = audioRoute == AudioRoute.SPEAKER
     }
-
 
     private fun displayCallTime() {
         boundComponent.callsInteractor.mainCall?.let {

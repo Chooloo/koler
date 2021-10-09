@@ -2,8 +2,7 @@ package com.chooloo.www.koler.data.call
 
 import android.app.Notification
 import android.app.Notification.EXTRA_NOTIFICATION_ID
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
 import android.content.Context
@@ -12,6 +11,7 @@ import android.content.Intent.*
 import android.os.Build
 import android.telecom.Call.Details.CAPABILITY_MUTE
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
@@ -58,6 +58,7 @@ class CallNotification(
 
 
     fun attach() {
+        createNotificationChannel()
         componentRoot.callsInteractor.registerListener(this)
         componentRoot.audioInteractor.registerListener(this)
     }
@@ -128,16 +129,11 @@ class CallNotification(
     }
 
     private val _channel by lazy {
-        NotificationChannel(
-            CHANNEL_ID,
-            componentRoot.stringInteractor.getString(R.string.call_notification_channel_name),
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description =
-                componentRoot.stringInteractor.getString(R.string.call_notification_channel_description)
-            lightColor = componentRoot.colorInteractor.getAttrColor(R.attr.colorSecondary)
-            enableLights(true)
-        }
+        NotificationChannelCompat.Builder(CHANNEL_ID, IMPORTANCE_HIGH)
+            .setName(componentRoot.stringInteractor.getString(R.string.call_notification_channel_name))
+            .setDescription(componentRoot.stringInteractor.getString(R.string.call_notification_channel_description))
+            .setLightsEnabled(true)
+            .build()
     }
 
 

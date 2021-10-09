@@ -23,11 +23,18 @@ class AudioInteractorImpl(
 ) : BaseInteractorImpl<AudioInteractor.Listener>(), AudioInteractor {
     private var _isSpeakerOn = false
 
+
     override var isMuted: Boolean
         get() = audioManager.isMicrophoneMute
         set(value) {
             audioManager.isMicrophoneMute = value
             invokeListeners { l -> l.onMuteChanged(value) }
+        }
+
+    override var isSilent: Boolean
+        get() = audioManager.ringerMode in arrayOf(RINGER_MODE_SILENT, RINGER_MODE_VIBRATE)
+        set(value) {
+            audioManager.ringerMode = RINGER_MODE_SILENT
         }
 
     override var isSpeakerOn: Boolean
@@ -42,10 +49,6 @@ class AudioInteractorImpl(
             _isSpeakerOn = value
             invokeListeners { l -> l.onSpeakerChanged(value) }
         }
-
-    override val isPhoneSilent: Boolean
-        get() = audioManager.ringerMode in arrayOf(RINGER_MODE_SILENT, RINGER_MODE_VIBRATE)
-
 
     override var audioMode: AudioMode
         get() = AudioMode.values().associateBy(AudioMode::mode)
@@ -64,7 +67,7 @@ class AudioInteractorImpl(
     }
 
     override fun playTone(tone: Int, durationMs: Int) {
-        if (tone != -1 && isPhoneSilent) {
+        if (tone != -1 && isSilent) {
             synchronized(sToneGeneratorLock) {
                 ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME).startTone(
                     tone, durationMs
