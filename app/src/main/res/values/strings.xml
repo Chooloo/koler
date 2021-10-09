@@ -27,6 +27,7 @@
     <string name="action_hangup">Hangup</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_show_history">Show History</string>
+    <string name="action_choose_audio_route">Choose audio route</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -235,5 +236,13 @@
     <string name="phone_type_work_pager">Work Pager</string>
     <string name="phone_type_assistant">Assistant</string>
     <string name="phone_type_mms">MMS</string>
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Speaker</string>
+    <string name="audio_route_earpiece">Earpiece</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Wired Headset</string>
+    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
     <!--endregion-->
 </resources>

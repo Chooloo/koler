@@ -103,7 +103,13 @@ class CallPresenter<V : CallContract.View>(view: V) :
     }
 
     override fun onSpeakerClick() {
-        boundComponent.callAudioInteractor.isSpeakerOn = !view.isSpeakerActivated
+        boundComponent.callAudioInteractor.apply {
+            if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
+                askForRoute { audioRoute = it }
+            } else {
+                isSpeakerOn = !view.isSpeakerActivated
+            }
+        }
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {

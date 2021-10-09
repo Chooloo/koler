@@ -17,6 +17,10 @@ interface CallAudioInteractor : BaseInteractor<CallAudioInteractor.Listener> {
     var isSpeakerOn: Boolean?
     var audioRoute: AudioRoute?
 
+
+    fun askForRoute(callback: (AudioRoute) -> Unit)
+
+
     enum class AudioRoute(val route: Int, @StringRes val stringRes: Int) {
         SPEAKER(ROUTE_SPEAKER, R.string.audio_route_speaker),
         EARPIECE(ROUTE_EARPIECE, R.string.audio_route_earpiece),

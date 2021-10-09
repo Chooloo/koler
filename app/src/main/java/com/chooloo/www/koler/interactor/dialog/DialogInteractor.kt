@@ -12,6 +12,6 @@ interface DialogInteractor : BaseInteractor<DialogInteractor.Listener> {
         @DrawableRes iconRes: Int,
         @StringRes titleRes: Int,
         choiceCallback: (String?, Int) -> Unit,
-        cancelCallback: () -> Unit?
+        cancelCallback: (() -> Unit?)? = null
     )
 }
