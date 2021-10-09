@@ -155,7 +155,7 @@ class BoundComponentRootImpl(
 
     override val contactsInteractor: ContactsInteractor
         get() = componentRoot.contactsInteractor
-    
+
     override val callAudioInteractor: CallAudioInteractor
         get() = componentRoot.callAudioInteractor
 

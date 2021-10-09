@@ -11,13 +11,12 @@ import com.chooloo.www.koler.ui.call.CallActivity
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {
-    private lateinit var _callNotification: CallNotification
     private val componentRoot get() = (applicationContext as KolerApp).componentRoot
+    private val _callNotification by lazy { CallNotification.getInstance(this) }
 
     override fun onCreate() {
         super.onCreate()
         sInstance = this
-        _callNotification = CallNotification(applicationContext)
         _callNotification.attach()
     }
 

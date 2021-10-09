@@ -42,6 +42,8 @@ class CallPresenter<V : CallContract.View>(view: V) :
             callsInteractor.mainCall?.let {
                 onCallChanged(it)
                 onMainCallChanged(it)
+                callAudioInteractor.isMuted?.let(this@CallPresenter::onMuteChanged)
+                callAudioInteractor.audioRoute?.let(this@CallPresenter::onAudioRouteChanged)
             }
         }
     }
