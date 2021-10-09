@@ -105,7 +105,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
     override fun onSpeakerClick() {
         boundComponent.callAudioInteractor.apply {
             if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
-                askForRoute { audioRoute = it }
+                boundComponent.callAudioInteractorBound.askForRoute { audioRoute = it }
             } else {
                 isSpeakerOn = !view.isSpeakerActivated
             }
@@ -196,5 +196,9 @@ class CallPresenter<V : CallContract.View>(view: V) :
             HOLDING, DISCONNECTING, DISCONNECTED -> view.stateTextColor =
                 boundComponent.colorInteractor.getColor(R.color.red_foreground)
         }
+    }
+
+    override fun onAudioRouteSelected(audioRoute: AudioRoute) {
+
     }
 }

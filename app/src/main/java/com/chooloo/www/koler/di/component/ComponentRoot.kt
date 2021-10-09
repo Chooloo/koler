@@ -23,7 +23,6 @@ import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.util.PreferencesManager
-import io.reactivex.disposables.CompositeDisposable
 
 interface ComponentRoot {
     val liveDataFactory: LiveDataFactory
@@ -47,8 +46,8 @@ interface ComponentRoot {
     val recentsInteractor: RecentsInteractor
     val drawableInteractor: DrawableInteractor
     val contactsInteractor: ContactsInteractor
-    val callAudioInteractor: CallAudioInteractor
     val animationInteractor: AnimationInteractor
+    val callAudioInteractor: CallAudioInteractor
     val preferencesInteractor: PreferencesInteractor
     val phoneAccountsInteractor: PhoneAccountsInteractor
 }

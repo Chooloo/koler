@@ -1,17 +1,12 @@
 package com.chooloo.www.koler.interactor.callaudio
 
-import com.chooloo.www.koler.R
+import android.telecom.CallAudioState
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute.*
-import com.chooloo.www.koler.interactor.dialog.DialogInteractor
-import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.service.CallService
 import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
-class CallAudioInteractorImpl(
-    private val dialogInteractor: DialogInteractor,
-    private val stringInteractor: StringInteractor
-) :
+open class CallAudioInteractorImpl :
     BaseObservable<CallAudioInteractor.Listener>(),
     CallAudioInteractor {
 
@@ -47,14 +42,10 @@ class CallAudioInteractorImpl(
         }
 
 
-    override fun askForRoute(callback: (AudioRoute) -> Unit) {
-        val audioRoutes = supportedAudioRoutes
-        val strings = audioRoutes.map { stringInteractor.getString(it.stringRes) }.toTypedArray()
-        dialogInteractor.askForChoice(
-            strings,
-            R.drawable.ic_volume_up_black_24dp,
-            R.string.action_choose_audio_route,
-            { _, index -> callback.invoke(audioRoutes[index]) }
-        )
+    override fun entryCallAudioStateChanged(audioState: CallAudioState) {
+        invokeListeners { l ->
+            audioState.isMuted.let { l.onMuteChanged(it) }
+            AudioRoute.fromRoute(audioState.route)?.let { l.onAudioRouteChanged(it) }
+        }
     }
 }

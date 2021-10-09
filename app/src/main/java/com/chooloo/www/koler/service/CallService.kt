@@ -3,6 +3,7 @@ package com.chooloo.www.koler.service
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.telecom.CallAudioState
 import android.telecom.InCallService
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.data.call.Call
@@ -45,6 +46,10 @@ class CallService : InCallService() {
             ?.let(componentRoot.callsInteractor::entryRemoveCall)
     }
 
+    override fun onCallAudioStateChanged(audioState: CallAudioState) {
+        super.onCallAudioStateChanged(audioState)
+        componentRoot.callAudioInteractor.entryCallAudioStateChanged(callAudioState)
+    }
 
     private fun startCallActivity() {
         val intent = Intent(this, CallActivity::class.java)

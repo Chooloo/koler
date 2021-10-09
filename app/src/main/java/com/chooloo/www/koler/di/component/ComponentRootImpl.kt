@@ -107,12 +107,12 @@ open class ComponentRootImpl(
         ContactsInteractorImpl(application, numbersInteractor, phoneAccountsInteractor)
     }
 
-    override val callAudioInteractor by lazy {
-        CallAudioInteractorImpl()
-    }
-
     override val animationInteractor by lazy {
         AnimationInteractorImpl(preferencesInteractor)
+    }
+
+    override val callAudioInteractor by lazy {
+        CallAudioInteractorImpl()
     }
 
     override val preferencesInteractor by lazy {

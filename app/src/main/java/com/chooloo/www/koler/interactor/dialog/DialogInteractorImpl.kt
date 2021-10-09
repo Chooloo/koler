@@ -16,22 +16,23 @@ class DialogInteractorImpl(
         iconRes: Int,
         titleRes: Int,
         choiceCallback: (String?, Int) -> Unit,
-        cancelCallback: () -> Unit?
+        cancelCallback: (() -> Unit?)?
     ) {
         val choicesAdapter = ArrayAdapter(activity, R.layout.dialog_choice, choices)
-        val alertDialog: AlertDialog = AlertDialog.Builder(activity)
+        AlertDialog.Builder(activity)
             .setIcon(iconRes)
             .setTitle(titleRes)
             .setNegativeButton(R.string.action_cancel) { dialogInterface, i ->
-                cancelCallback.invoke()
+                cancelCallback?.invoke()
                 dialogInterface.dismiss()
             }
             .setAdapter(choicesAdapter) { dialog, index ->
                 choiceCallback.invoke(choicesAdapter.getItem(index), index)
                 dialog.dismiss()
+            }.create().apply {
+                getButton(DialogInterface.BUTTON_POSITIVE).visibility = View.GONE
+                getButton(DialogInterface.BUTTON_NEGATIVE).visibility = View.GONE
+                show()
             }
-            .show()
-        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).visibility = View.GONE
-        alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE).visibility = View.GONE
     }
 }

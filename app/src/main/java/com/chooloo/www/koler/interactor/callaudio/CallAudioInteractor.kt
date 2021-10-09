@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.interactor.callaudio
 
+import android.telecom.CallAudioState
 import android.telecom.CallAudioState.*
 import androidx.annotation.StringRes
 import com.chooloo.www.koler.R
@@ -18,7 +19,7 @@ interface CallAudioInteractor : BaseInteractor<CallAudioInteractor.Listener> {
     var audioRoute: AudioRoute?
 
 
-    fun askForRoute(callback: (AudioRoute) -> Unit)
+    fun entryCallAudioStateChanged(audioState:CallAudioState)
 
 
     enum class AudioRoute(val route: Int, @StringRes val stringRes: Int) {

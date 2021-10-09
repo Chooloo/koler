@@ -15,6 +15,7 @@ import com.chooloo.www.koler.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorBoundImpl
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
@@ -79,6 +80,9 @@ class BoundComponentRootImpl(
         ProximityInteractorImpl(activity, componentRoot.powerManager)
     }
 
+    override val callAudioInteractor: CallAudioInteractor
+        get() = componentRoot.callAudioInteractor
+
     override val permissionInteractor by lazy {
         PermissionInteractorImpl(
             activity,
@@ -97,6 +101,9 @@ class BoundComponentRootImpl(
         )
     }
 
+    override val callAudioInteractorBound by lazy {
+        CallAudioInteractorBoundImpl(dialogInteractor, stringInteractor, callAudioInteractor)
+    }
 
     override val liveDataFactory: LiveDataFactory
         get() = componentRoot.liveDataFactory
@@ -155,9 +162,6 @@ class BoundComponentRootImpl(
 
     override val contactsInteractor: ContactsInteractor
         get() = componentRoot.contactsInteractor
-
-    override val callAudioInteractor: CallAudioInteractor
-        get() = componentRoot.callAudioInteractor
 
     override val animationInteractor: AnimationInteractor
         get() = componentRoot.animationInteractor

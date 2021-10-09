@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.call
 import android.net.Uri
 import android.view.KeyEvent
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.ui.base.BaseContract
 import com.chooloo.www.koler.ui.widgets.CallActions
@@ -42,7 +43,7 @@ interface CallContract : BaseContract {
         CallActions.CallActionsListener {
         fun onAnswerClick()
         fun onRejectClick()
-
         fun onKeypadKey(keyCode: Int, event: KeyEvent)
+        fun onAudioRouteSelected(audioRoute: AudioRoute)
     }
 }
