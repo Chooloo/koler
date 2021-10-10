@@ -200,7 +200,7 @@
     <string name="phone_type_car">Araba</string>
     <string name="phone_type_company_main">Ana Kuruluş</string>
     <string name="phone_type_isdn">ISDN</string>
-    <string name="phone_type_main">Esas</string>
+    <string name="phone_type_main">Ana</string>
     <string name="phone_type_other_fax">Faks</string>
     <string name="phone_type_radio">Radyo</string>
     <string name="phone_type_telex">Teleks</string>
