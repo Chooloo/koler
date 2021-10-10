@@ -146,11 +146,11 @@
     <!--endregion-->
 
     <!--region pref color values-->
-    <string name="pref_color_value_red">red</string>
-    <string name="pref_color_value_blue">blue</string>
-    <string name="pref_color_value_green">green</string>
-    <string name="pref_color_value_orange">orange</string>
-    <string name="pref_color_value_purple">purple</string>
+    <string name="pref_color_value_red">kırmızı</string>
+    <string name="pref_color_value_blue">mavi</string>
+    <string name="pref_color_value_green">yeşil</string>
+    <string name="pref_color_value_orange">turuncu</string>
+    <string name="pref_color_value_purple">mor</string>
     <!--endregion-->
 
     <!--region pref values-->
