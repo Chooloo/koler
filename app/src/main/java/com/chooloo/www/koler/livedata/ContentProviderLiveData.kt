@@ -14,6 +14,7 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
 
     var filter: String?
         get() = contentResolver.filter
+        @Synchronized
         set(value) {
             contentResolver.filter = value
             attachObserver()
@@ -30,10 +31,6 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
 
     private fun attachObserver() {
         _observer?.dispose()
-        _observer = contentResolver.observeUri {
-            contentResolver.observeContent { content ->
-                postValue(content)
-            }
-        }
+        _observer = contentResolver.observeContent(this::postValue)
     }
 }

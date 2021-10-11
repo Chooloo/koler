@@ -27,6 +27,7 @@ abstract class ListAdapter<DataType>(
 
     var data: ListBundle<DataType>
         get() = _data
+        @Synchronized
         set(value) {
             _data = value
             submitList(_data.items.toList())
@@ -45,9 +46,8 @@ abstract class ListAdapter<DataType>(
         get() = _selectedItems
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
-        return ListItemHolder(parent.context)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ListItemHolder(parent.context)
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val dataItem = getItem(position)

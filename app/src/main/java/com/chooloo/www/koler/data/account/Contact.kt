@@ -12,5 +12,7 @@ data class Contact(
     companion object {
         val UNKNOWN = Contact(name = "Unknown")
     }
+
+    override fun equals(other: Any?) = other is Contact && id == other.id
 }
 

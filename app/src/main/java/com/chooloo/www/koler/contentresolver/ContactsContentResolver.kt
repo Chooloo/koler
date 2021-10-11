@@ -23,15 +23,14 @@ class ContactsContentResolver(context: Context, contactId: Long? = null) :
             .build()
     }
 
-    override fun convertCursorToItem(cursor: Cursor): Contact {
-        return Contact(
+    override fun convertCursorToItem(cursor: Cursor) =
+        Contact(
             id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID)),
             lookupKey = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY)),
             starred = "1" == cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.STARRED)),
             name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)),
             photoUri = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI))
         )
-    }
 
     companion object {
         val URI: Uri = ContactsContract.Contacts.CONTENT_URI

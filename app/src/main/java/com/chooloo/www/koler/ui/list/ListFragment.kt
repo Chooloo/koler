@@ -100,7 +100,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun setAdapter(adapter: ListAdapter<ItemType>) {
-        _binding.itemsRecyclerView.setAdapter(adapter)
+        _binding.itemsRecyclerView.adapter = adapter
     }
 
     companion object {

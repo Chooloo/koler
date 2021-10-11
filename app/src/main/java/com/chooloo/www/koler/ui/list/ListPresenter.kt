@@ -67,7 +67,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
     override fun onDataChanged(items: ArrayList<ItemType>) {
         adapter.data = convertDataToListBundle(items)
         view.showLoading(false)
-        if (adapter.itemCount == 0) {
+        if (items.size == 0) {
             onNoResults()
         } else {
             onResults()
