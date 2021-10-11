@@ -10,6 +10,7 @@ interface ListContract : BaseContract {
         val isCompact: Boolean
         val searchHint: String?
 
+        fun scrollToTop()
         fun animateListView()
         fun requestSearchFocus()
         fun setupScrollIndicator()

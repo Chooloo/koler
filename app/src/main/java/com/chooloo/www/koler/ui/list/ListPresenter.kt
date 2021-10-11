@@ -72,6 +72,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
         } else {
             onResults()
         }
+        view.scrollToTop()
         _onItemsChangedListener.invoke(items)
     }
 

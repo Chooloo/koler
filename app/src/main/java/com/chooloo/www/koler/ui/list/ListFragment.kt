@@ -47,6 +47,10 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
 
+    override fun scrollToTop() {
+        _binding.itemsRecyclerView.smoothScrollToPosition(0)
+    }
+    
     override fun animateListView() {
         boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
