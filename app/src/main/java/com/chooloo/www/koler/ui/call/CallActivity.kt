@@ -92,6 +92,12 @@ class CallActivity : BaseActivity(), CallContract.View {
             _binding.callActions.isSpeakerActivated = value
         }
 
+    override var isBluetoothActivated: Boolean
+        get() = _binding.callActions.isBluetoothActivated
+        set(value) {
+            _binding.callActions.isBluetoothActivated = value
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -150,6 +150,7 @@ class CallPresenter<V : CallContract.View>(view: V) :
 
     override fun onAudioRouteChanged(audioRoute: AudioRoute) {
         view.isSpeakerActivated = audioRoute == AudioRoute.SPEAKER
+        view.isBluetoothActivated = audioRoute == AudioRoute.BLUETOOTH
     }
 
     private fun displayCallTime() {

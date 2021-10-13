@@ -9,6 +9,7 @@ import com.chooloo.www.koler.databinding.CallActionsBinding
 
 class CallActions : MotionLayout {
     private val _binding: CallActionsBinding
+    private var _isBluetoothActivated: Boolean = false
     private var _callActionsListener: CallActionsListener? = null
 
     constructor(context: Context) : this(context, null)
@@ -57,6 +58,17 @@ class CallActions : MotionLayout {
             _binding.callActionSpeaker.isActivated = value
         }
 
+    var isBluetoothActivated: Boolean
+        get() = _isBluetoothActivated
+        set(value) {
+            _isBluetoothActivated = value
+            if (value) {
+                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
+            } else {
+                _binding.callActionSpeaker.iconDefault = R.drawable.ic_volume_down_black_24dp
+            }
+        }
+
 
     var isHoldEnabled: Boolean
         get() = _binding.callActionHold.isEnabled
@@ -69,6 +81,7 @@ class CallActions : MotionLayout {
         set(value) {
             _binding.callActionMute.isEnabled = value
         }
+
     var isSwapEnabled: Boolean
         get() = _binding.callActionSwap.isEnabled
         set(value) {

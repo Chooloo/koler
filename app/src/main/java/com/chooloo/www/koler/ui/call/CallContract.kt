@@ -24,6 +24,7 @@ interface CallContract : BaseContract {
         var isMuteActivated: Boolean
         var isHoldActivated: Boolean
         var isSpeakerActivated: Boolean
+        var isBluetoothActivated: Boolean
 
         fun showDialpad()
         fun showActiveCallUI()
