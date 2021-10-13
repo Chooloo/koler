@@ -1,7 +1,5 @@
 package com.chooloo.www.koler.interactor.dialog
 
-import android.content.DialogInterface
-import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import com.chooloo.www.koler.R
@@ -22,17 +20,9 @@ class DialogInteractorImpl(
         AlertDialog.Builder(activity)
             .setIcon(iconRes)
             .setTitle(titleRes)
-            .setNegativeButton(R.string.action_cancel) { dialogInterface, i ->
-                cancelCallback?.invoke()
-                dialogInterface.dismiss()
-            }
             .setAdapter(choicesAdapter) { dialog, index ->
                 choiceCallback.invoke(choicesAdapter.getItem(index), index)
                 dialog.dismiss()
-            }.create().apply {
-                getButton(DialogInterface.BUTTON_POSITIVE).visibility = View.GONE
-                getButton(DialogInterface.BUTTON_NEGATIVE).visibility = View.GONE
-                show()
-            }
+            }.create().show()
     }
 }
