@@ -1,8 +1,7 @@
 package com.chooloo.www.koler.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
@@ -10,10 +9,7 @@ import com.chooloo.www.koler.ui.widgets.ListItemHolder
 
 abstract class ListAdapter<DataType>(
     protected val boundComponent: BoundComponentRoot
-) : ListAdapter<DataType, ListItemHolder>(object : DiffUtil.ItemCallback<DataType>() {
-    override fun areItemsTheSame(oldItem: DataType, newItem: DataType) = oldItem == newItem
-    override fun areContentsTheSame(oldItem: DataType, newItem: DataType) = oldItem == newItem
-}) {
+) : RecyclerView.Adapter<ListItemHolder>() {
     private var _isCompact = false
     private var _isSelecting = false
     private var _isSelectable = true
@@ -30,7 +26,7 @@ abstract class ListAdapter<DataType>(
         @Synchronized
         set(value) {
             _data = value
-            submitList(_data.items.toList())
+            notifyDataSetChanged()
         }
 
     var isCompact
@@ -88,6 +84,8 @@ abstract class ListAdapter<DataType>(
         }
     }
 
+    override fun getItemCount() = _data.items.size
+
     fun getHeader(position: Int): String? {
         var total = 0
         _data.headersCounts.withIndex().forEach { (index, count) ->
@@ -98,6 +96,8 @@ abstract class ListAdapter<DataType>(
         }
         return null
     }
+
+    private fun getItem(position: Int) = _data.items[position]
 
 
     //region listeners setters
