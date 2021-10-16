@@ -3,7 +3,8 @@ package com.chooloo.www.koler.ui.contact
 import android.Manifest
 import android.net.Uri
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.base.BasePresenter
 
 class ContactPresenter<V : ContactContract.View>(view: V) :
@@ -11,49 +12,49 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     ContactContract.Presenter<V> {
 
     private var contact: Contact? = null
-
-    //    private val contact by lazy { boundComponent.contactsInteractor.getContact(view.contactId) }
-    private val firstPhone by lazy {
-        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId).getOrNull(0)
-    }
+    private var _contact: Contact? = null
+    private var _firstPhone: PhoneAccount? = null
 
     override fun onStart() {
-        contact = boundComponent.contactsInteractor.getContact(view.contactId)
-        view.apply {
-            contactName = contact?.name
-            isStarIconVisible = contact?.starred == true
-            contact?.photoUri?.let { contactImage = Uri.parse(it) }
+        boundComponent.contactsInteractor.queryContact(view.contactId) { contact ->
+            _contact = contact
+            view.apply {
+                contactName = contact?.name
+                isStarIconVisible = contact?.starred == true
+                contact?.photoUri?.let { contactImage = Uri.parse(it) }
+            }
+        }
+        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId) {
+            _firstPhone = it?.getOrNull(0)
         }
     }
 
     override fun onActionCall() {
-        view.callContact()
+        _firstPhone?.number?.let { boundComponent.navigationInteractor.call(it) } ?: run {
+            view.showError(R.string.error_no_number_to_call)
+        }
     }
 
     override fun onActionSms() {
-        firstPhone?.number?.let { boundComponent.contactsInteractor.openSmsView(it) }
+        _firstPhone?.number?.let { boundComponent.navigationInteractor.goToSendSMS(it) }
     }
 
     override fun onActionEdit() {
-        boundComponent.contactsInteractor.openEditContactView(view.contactId)
+        boundComponent.navigationInteractor.goToEditContact(view.contactId)
     }
 
     override fun onActionInfo() {
-        boundComponent.contactsInteractor.openContactView(view.contactId)
+        boundComponent.navigationInteractor.goToViewContact(view.contactId)
     }
 
     override fun onActionDelete() {
-        boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
-            boundComponent.permissionInteractor.runWithPermissions(
-                arrayOf(Manifest.permission.WRITE_CONTACTS),
-                {
+        boundComponent.permissionInteractor.runWithPermissions(
+            arrayOf(Manifest.permission.WRITE_CONTACTS),
+            {
+                boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
                     boundComponent.contactsInteractor.deleteContact(view.contactId)
-                },
-                null,
-                null,
-                null
-            )
-        }
+                }
+            })
     }
 
     override fun onActionMenu() {
@@ -61,17 +62,9 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionFav() {
-        boundComponent.permissionInteractor.runWithPermissions(
-            arrayOf(Manifest.permission.WRITE_CONTACTS),
-            {
-                boundComponent.contactsInteractor.toggleContactFavorite(
-                    view.contactId,
-                    contact?.starred == true
-                )
-            },
-            null,
-            null,
-            null
+        boundComponent.contactsInteractor.toggleContactFavorite(
+            view.contactId,
+            contact?.starred == true
         )
         view.isStarIconVisible = contact?.starred == true
     }

@@ -5,15 +5,20 @@ import android.content.Context
 import android.provider.CallLog
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 
-class RecentsInteractorImpl(
-    private val context: Context
-) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
+class RecentsInteractorImpl(private val context: Context) :
+    BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
 
-    override fun getRecent(recentId: Long): Recent? =
-        RecentsContentResolver(context, recentId).content.getOrNull(0)
+    override fun queryRecent(recentId: Long) =
+        RecentsContentResolver(context, recentId).queryContent().getOrNull(0)
+
+    override fun queryRecent(recentId: Long, callback: (Recent?) -> Unit) {
+        RecentsContentResolver(context, recentId).queryContent {
+            callback.invoke(it.getOrNull(0))
+        }
+    }
 
     @RequiresPermission(WRITE_CALL_LOG)
     override fun deleteRecent(recentId: Long) {

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/constraint_set_multi_call"
+        app:constraintSetStart="@id/constraint_set_single_call" />
+
+    <ConstraintSet android:id="@+id/constraint_set_single_call">
+        <Constraint
+            android:id="@+id/call_action_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@id/call_action_hold"
+            app:layout_constraintStart_toEndOf="@id/call_action_mute"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/call_action_speaker"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_add_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
+        <Constraint
+            android:id="@+id/call_action_keypad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_action_hold"
+            app:layout_constraintStart_toEndOf="@id/call_action_add_call"
+            app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
+        <Constraint
+            android:id="@+id/call_action_merge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_swap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/constraint_set_multi_call">
+        <Constraint
+            android:id="@+id/call_action_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
+            app:layout_constraintStart_toEndOf="@id/call_action_mute"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_keypad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/call_action_speaker"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_action_swap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_action_merge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
+        <Constraint
+            android:id="@+id/call_action_merge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
+            app:layout_constraintStart_toEndOf="@id/call_action_swap"
+            app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
+        <Constraint
+            android:id="@+id/call_action_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/call_action_merge"
+            app:layout_constraintTop_toBottomOf="@id/call_action_keypad" />
+        <Constraint
+            android:id="@+id/call_action_add_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </ConstraintSet>
+</MotionScene>

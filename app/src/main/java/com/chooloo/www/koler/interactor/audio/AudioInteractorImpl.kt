@@ -1,44 +1,41 @@
 package com.chooloo.www.koler.interactor.audio
 
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.media.AudioManager.RINGER_MODE_SILENT
-import android.media.AudioManager.RINGER_MODE_VIBRATE
+import android.media.AudioManager.*
 import android.media.ToneGenerator
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import android.os.Vibrator
 import android.view.KeyEvent
+import androidx.annotation.RequiresApi
 import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
-import com.chooloo.www.koler.service.CallService
 import java.util.*
 
 class AudioInteractorImpl(
     private val vibrator: Vibrator,
     private val audioManager: AudioManager
 ) : BaseInteractorImpl<AudioInteractor.Listener>(), AudioInteractor {
-
     override var isMuted: Boolean
         get() = audioManager.isMicrophoneMute
         set(value) {
             audioManager.isMicrophoneMute = value
         }
 
+    override var isSilent: Boolean
+        get() = audioManager.ringerMode in arrayOf(RINGER_MODE_SILENT, RINGER_MODE_VIBRATE)
+        set(value) {
+            audioManager.ringerMode = if (value) RINGER_MODE_SILENT else RINGER_MODE_NORMAL
+        }
+
     override var isSpeakerOn: Boolean
         get() = audioManager.isSpeakerphoneOn
         set(value) {
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                CallService.toggleSpeakerRoute(value)
-            } else {
-                audioMode = AudioMode.IN_CALL
-                audioManager.isSpeakerphoneOn = value
-            }
+            audioManager.isSpeakerphoneOn = value
         }
-
-    override val isPhoneSilent: Boolean
-        get() = audioManager.ringerMode in arrayOf(RINGER_MODE_SILENT, RINGER_MODE_VIBRATE)
-
 
     override var audioMode: AudioMode
         get() = AudioMode.values().associateBy(AudioMode::mode)
@@ -57,7 +54,7 @@ class AudioInteractorImpl(
     }
 
     override fun playTone(tone: Int, durationMs: Int) {
-        if (tone != -1 && isPhoneSilent) {
+        if (tone != -1 && isSilent) {
             synchronized(sToneGeneratorLock) {
                 ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME).startTone(
                     tone, durationMs
@@ -99,5 +96,19 @@ class AudioInteractorImpl(
                 put(KeyEvent.KEYCODE_STAR, ToneGenerator.TONE_DTMF_S)
             }
         }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun requestCallFocus() {
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build()
+        val focusRequest =
+            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                .setAudioAttributes(attributes)
+                .setWillPauseWhenDucked(false)
+                .build()
+        audioManager.requestAudioFocus(focusRequest)
     }
 }

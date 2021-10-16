@@ -1,21 +1,15 @@
 package com.chooloo.www.koler.interactor.contacts
 
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.interactor.base.BaseInteractor
 
 open interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> {
     interface Listener
 
-    fun getContact(contactId: Long): Contact?
-    fun isContactBlocked(contactId: Long): Boolean
-
     fun deleteContact(contactId: Long)
-    fun blockContact(contactId: Long)
-    fun unblockContact(contactId: Long)
+    fun queryContact(contactId: Long, callback: (Contact?) -> Unit)
     fun toggleContactFavorite(contactId: Long, isFavorite: Boolean)
-
-    fun openSmsView(number: String?)
-    fun openContactView(contactId: Long)
-    fun openAddContactView(number: String)
-    fun openEditContactView(contactId: Long)
+    fun blockContact(contactId: Long, onSuccess: (() -> Unit)? = null)
+    fun unblockContact(contactId: Long, onSuccess: (() -> Unit)? = null)
+    fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit)
 }

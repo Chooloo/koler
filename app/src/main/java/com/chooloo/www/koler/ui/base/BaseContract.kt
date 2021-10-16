@@ -4,6 +4,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
+import com.chooloo.www.koler.di.component.ComponentRoot
 
 interface BaseContract {
     interface View {

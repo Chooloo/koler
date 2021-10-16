@@ -31,18 +31,21 @@
         android:id="@+id/items_fast_scroller"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing_small"
         android:elevation="10dp"
         android:textAppearance="@style/Koler.Text.Caption"
         android:textColor="?colorOnSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
 
     <com.reddit.indicatorfastscroll.FastScrollerThumbView
         android:id="@+id/items_fast_scroller_thumb"
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/default_spacing_small"
+        android:layout_margin="@dimen/default_spacing"
         android:textColor="?colorOnSecondary"
         app:fastScrollerIconColor="?colorSecondary"
         app:fastScrollerThumbColor="?colorSecondary"
@@ -50,31 +53,23 @@
         app:layout_constraintEnd_toStartOf="@id/items_fast_scroller"
         app:layout_constraintTop_toTopOf="@id/items_fast_scroller" />
 
-    <com.chooloo.www.koler.ui.widgets.WrapContentableSwipeRefreshLayout
-        android:id="@+id/items_swipe_refresh_layout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/items_recycler_view"
+        style="@style/Koler.ListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/items_search_bar">
+        app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/items_recycler_view"
-            style="@style/Koler.ListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.chooloo.www.koler.ui.widgets.WrapContentableSwipeRefreshLayout>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/items_empty_text"
+    <include
+        android:id="@+id/empty"
+        layout="@layout/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
-        android:padding="@dimen/default_spacing_big"
-        android:text="@string/error_no_results"
-        android:textAppearance="@style/Koler.Text.Headline4"
-        android:textColor="?android:textColorHint"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35" />
 </androidx.constraintlayout.widget.ConstraintLayout>

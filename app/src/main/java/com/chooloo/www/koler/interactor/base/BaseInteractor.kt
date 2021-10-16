@@ -1,4 +1,6 @@
 package com.chooloo.www.koler.interactor.base
 
-interface BaseInteractor<Listener> {
+import com.chooloo.www.koler.util.baseobservable.IBaseObservable
+
+interface BaseInteractor<Listener> : IBaseObservable<Listener> {
 }

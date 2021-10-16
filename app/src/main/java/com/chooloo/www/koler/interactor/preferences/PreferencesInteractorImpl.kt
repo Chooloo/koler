@@ -5,7 +5,6 @@ import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.util.PreferencesManager
 
 class PreferencesInteractorImpl(
@@ -47,13 +46,6 @@ class PreferencesInteractorImpl(
         )
         set(value) {
             preferencesManager.putBoolean(R.string.pref_key_scroll_indicator, value)
-        }
-
-
-    override var sim: Sim
-        get() = Sim.fromKey(preferencesManager.getString(R.string.pref_key_sim_select))
-        set(value) {
-            preferencesManager.putString(R.string.pref_key_sim_select, value.key)
         }
 
     override var defaultPage: Page

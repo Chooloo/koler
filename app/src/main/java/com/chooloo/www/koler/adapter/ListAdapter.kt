@@ -21,18 +21,18 @@ abstract class ListAdapter<DataType>(
     private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
     private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
 
+    var data: ListBundle<DataType>
+        get() = _data
+        @Synchronized
+        set(value) {
+            _data = value
+            notifyDataSetChanged()
+        }
 
     var isCompact
         get() = _isCompact
         set(value) {
             _isCompact = value
-        }
-
-    var data: ListBundle<DataType>
-        get() = _data
-        set(value) {
-            _data = value
-            notifyDataSetChanged()
         }
 
     val isSelecting: Boolean
@@ -42,12 +42,11 @@ abstract class ListAdapter<DataType>(
         get() = _selectedItems
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemHolder {
-        return ListItemHolder(parent.context)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ListItemHolder(parent.context)
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
-        val dataItem = _data.items[position]
+        val dataItem = getItem(position)
         holder.listItem.apply {
             headerText = getHeader(position)
             isCompact = this@ListAdapter.isCompact
@@ -65,28 +64,27 @@ abstract class ListAdapter<DataType>(
                     _selectedItems.add(dataItem)
                     _onItemsSelectedListener.invoke(_selectedItems)
                 } else {
-                    _onItemClickListener.invoke(_data.items[position])
+                    _onItemClickListener.invoke(getItem(position))
                 }
             }
             setOnLongClickListener {
-                if (_isSelectable) {
-                    isSelected = true
-                    _isSelecting = true
-                    _selectedItems.add(dataItem)
-                    _onItemsSelectedListener.invoke(_selectedItems)
-                    _onSelectingChangeListener.invoke(true)
-                } else {
-                    _onItemLongClickListener.invoke(dataItem)
-                }
+//                if (_isSelectable) {
+//                    isSelected = true
+//                    _isSelecting = true
+//                    _selectedItems.add(dataItem)
+//                    _onItemsSelectedListener.invoke(_selectedItems)
+//                    _onSelectingChangeListener.invoke(true)
+//                } else {
+//                    _onItemLongClickListener.invoke(dataItem)
+//                }
                 true
             }
-            boundComponent.animationInteractor.animateIn(this)
-            onBindListItem(this, _data.items[position])
+            boundComponent.animationInteractor.animateIn(this, false)
+            onBindListItem(this, getItem(position))
         }
     }
 
     override fun getItemCount() = _data.items.size
-
 
     fun getHeader(position: Int): String? {
         var total = 0
@@ -98,6 +96,8 @@ abstract class ListAdapter<DataType>(
         }
         return null
     }
+
+    private fun getItem(position: Int) = _data.items[position]
 
 
     //region listeners setters

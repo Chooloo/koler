@@ -4,13 +4,19 @@ import android.app.Application
 import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.TELEPHONY_SUBSCRIPTION_SERVICE
 import android.media.AudioManager
 import android.os.PowerManager
 import android.os.Vibrator
 import android.telecom.TelecomManager
+import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.NotificationManagerCompat
+import com.chooloo.www.koler.di.factory.livedata.LiveDataFactoryImpl
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorImpl
+import com.chooloo.www.koler.interactor.calls.CallsInteractorImpl
 import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.koler.interactor.drawable.DrawableInteractorImpl
@@ -19,14 +25,15 @@ import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImp
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.koler.interactor.string.StringInteractorImpl
-import com.chooloo.www.koler.livedata.ContactsProviderLiveData
-import com.chooloo.www.koler.livedata.PhoneProviderLiveData
-import com.chooloo.www.koler.livedata.RecentsProviderLiveData
 import com.chooloo.www.koler.util.PreferencesManager
 
 open class ComponentRootImpl(
     internal val application: Application
 ) : ComponentRoot {
+    override val liveDataFactory by lazy {
+        LiveDataFactoryImpl(application)
+    }
+
     override val vibrator by lazy {
         application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
@@ -59,17 +66,12 @@ open class ComponentRootImpl(
         PreferencesManager.getInstance(application)
     }
 
-
-    override val phonesProviderLiveData by lazy {
-        PhoneProviderLiveData(application, 1L)
+    override val subscriptionManager by lazy {
+        application.getSystemService(TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
     }
 
-    override val recentsProviderLiveData by lazy {
-        RecentsProviderLiveData(application)
-    }
-
-    override val contactsProviderLiveData by lazy {
-        ContactsProviderLiveData(application)
+    override val notificationManager by lazy {
+        NotificationManagerCompat.from(application)
     }
 
 
@@ -81,18 +83,22 @@ open class ComponentRootImpl(
         AudioInteractorImpl(vibrator, audioManager)
     }
 
+    override val callsInteractor by lazy {
+        CallsInteractorImpl()
+    }
+
     override val stringInteractor by lazy {
         StringInteractorImpl(application)
     }
 
     override val numbersInteractor by lazy {
-        NumbersInteractorImpl(application)
+        NumbersInteractorImpl(application, telecomManager)
     }
 
     override val recentsInteractor by lazy {
         RecentsInteractorImpl(application)
     }
-    
+
     override val drawableInteractor by lazy {
         DrawableInteractorImpl(application)
     }
@@ -103,6 +109,10 @@ open class ComponentRootImpl(
 
     override val animationInteractor by lazy {
         AnimationInteractorImpl(preferencesInteractor)
+    }
+
+    override val callAudioInteractor by lazy {
+        CallAudioInteractorImpl()
     }
 
     override val preferencesInteractor by lazy {

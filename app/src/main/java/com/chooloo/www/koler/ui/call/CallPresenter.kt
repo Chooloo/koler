@@ -1,80 +1,205 @@
 package com.chooloo.www.koler.ui.call
 
 import android.net.Uri
-import android.os.Handler
+import android.telecom.Call.Details.*
+import android.view.KeyEvent
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.data.CallDetails
-import com.chooloo.www.koler.data.CallDetails.CallState.*
+import com.chooloo.www.koler.data.call.Call
+import com.chooloo.www.koler.data.call.Call.State.*
+import com.chooloo.www.koler.data.call.CantHoldCallException
+import com.chooloo.www.koler.data.call.CantMergeCallException
+import com.chooloo.www.koler.data.call.CantSwapCallException
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
+import com.chooloo.www.koler.service.CallService
 import com.chooloo.www.koler.ui.base.BasePresenter
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class CallPresenter<V : CallContract.View>(view: V) :
     BasePresenter<V>(view),
     CallContract.Presenter<V> {
 
+    private var _currentCallId: String? = null
+    private var _timerDisposable: Disposable? = null
+
     override fun onStart() {
-        boundComponent.proximityInteractor.acquire()
-        boundComponent.screenInteractor.disableKeyboard()
-        boundComponent.screenInteractor.setShowWhenLocked()
+        _timerDisposable = Observable.interval(1, TimeUnit.SECONDS)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { displayCallTime() }
+
+        CallService.sIsActivityActive = true
+
+        boundComponent.apply {
+            proximityInteractor.acquire()
+            screenInteractor.disableKeyboard()
+            screenInteractor.setShowWhenLocked()
+            callAudioInteractor.registerListener(this@CallPresenter)
+            callsInteractor.registerListener(this@CallPresenter)
+            callsInteractor.mainCall?.let {
+                onCallChanged(it)
+                onMainCallChanged(it)
+                callAudioInteractor.isMuted?.let(this@CallPresenter::onMuteChanged)
+                callAudioInteractor.audioRoute?.let(this@CallPresenter::onAudioRouteChanged)
+            }
+        }
     }
 
     override fun onStop() {
         boundComponent.proximityInteractor.release()
+        _timerDisposable?.dispose()
+        CallService.sIsActivityActive = false
     }
 
 
     override fun onAnswerClick() {
-        CallManager.answer()
+        _currentCallId?.let { boundComponent.callsInteractor.answerCall(it) }
     }
 
     override fun onRejectClick() {
-        CallManager.reject()
+        _currentCallId?.let { boundComponent.callsInteractor.rejectCall(it) }
     }
 
-    override fun onCallDetailsChanged(callDetails: CallDetails?) {
-        if (callDetails == null) {
-            return
+    override fun onSwapClick() {
+        try {
+            _currentCallId?.let { boundComponent.callsInteractor.swapCall(it) }
+        } catch (e: CantSwapCallException) {
+            view.showError(R.string.error_cant_swap_calls)
+            e.printStackTrace()
+        }
+    }
+
+    override fun onHoldClick() {
+        try {
+            _currentCallId?.let { boundComponent.callsInteractor.toggleHold(it) }
+        } catch (e: CantHoldCallException) {
+            view.showError(R.string.error_cant_hold_call)
+            e.printStackTrace()
+        }
+    }
+
+    override fun onMuteClick() {
+        boundComponent.callAudioInteractor.isMuted = !view.isMuteActivated
+    }
+
+    override fun onMergeClick() {
+        try {
+            _currentCallId?.let { boundComponent.callsInteractor.mergeCall(it) }
+        } catch (e: CantMergeCallException) {
+            view.showError(R.string.error_cant_merge_call)
+            e.printStackTrace()
+        }
+    }
+
+    override fun onKeypadClick() {
+        view.showDialpad()
+    }
+
+    override fun onAddCallClick() {
+        view.showAddCallDialog()
+    }
+
+    override fun onSpeakerClick() {
+        boundComponent.callAudioInteractor.apply {
+            if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
+                boundComponent.callAudioInteractorBound.askForRoute { audioRoute = it }
+            } else {
+                isSpeakerOn = !view.isSpeakerActivated
+            }
+        }
+    }
+
+    override fun onKeypadKey(keyCode: Int, event: KeyEvent) {
+        _currentCallId?.let { boundComponent.callsInteractor.invokeCallKey(it, event.number) }
+    }
+
+
+    override fun onNoCalls() {
+        view.finish()
+    }
+
+    override fun onCallChanged(call: Call) {
+        if (boundComponent.callsInteractor.getFirstState(HOLDING)?.id == _currentCallId) {
+            view.hideHoldingBanner()
+        } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
+            boundComponent.phoneAccountsInteractor.lookupAccount(call.number) {
+                view.showHoldingBanner(
+                    String.format(
+                        boundComponent.stringInteractor.getString(R.string.warning_is_on_hold),
+                        it.displayString
+                    )
+                )
+            }
+        } else if (boundComponent.callsInteractor.getStateCount(HOLDING) == 0) {
+            view.hideHoldingBanner()
+        }
+    }
+
+    override fun onMainCallChanged(call: Call) {
+        _currentCallId = call.id
+        displayCall(call)
+    }
+
+
+    override fun onMuteChanged(isMuted: Boolean) {
+        view.isMuteActivated = isMuted
+    }
+
+    override fun onAudioRouteChanged(audioRoute: AudioRoute) {
+        view.isSpeakerActivated = audioRoute == AudioRoute.SPEAKER
+        view.isBluetoothActivated = audioRoute == AudioRoute.BLUETOOTH
+    }
+
+    private fun displayCallTime() {
+        boundComponent.callsInteractor.mainCall?.let {
+            if (it.isStarted) {
+                view.setElapsedTime(it.durationTimeMilis)
+            } else {
+                view.setElapsedTime(null)
+            }
+        }
+    }
+
+    private fun displayCall(call: Call) {
+        if (call.isIncoming) {
+            view.showIncomingCallUI()
         }
 
-        val phoneAccount = callDetails.phoneAccount
-        val callState = callDetails.callState
-
-        view.callerNameText = phoneAccount.name ?: phoneAccount.number ?: "Unknown"
-        phoneAccount.photoUri?.let { view.callerImageURI = Uri.parse(it) }
-
-        view.stateText = boundComponent.stringInteractor.getString(
-            when (callState) {
-                ACTIVE -> R.string.call_status_active
-                DISCONNECTED -> R.string.call_status_disconnected
-                RINGING -> R.string.call_status_incoming
-                DIALING -> R.string.call_status_dialing
-                CONNECTING -> R.string.call_status_dialing
-                HOLDING -> R.string.call_status_holding
-                else -> R.string.call_status_active
+        if (call.isConference) {
+            view.nameText = boundComponent.stringInteractor.getString(R.string.conference)
+        } else {
+            boundComponent.phoneAccountsInteractor.lookupAccount(call.number) { account ->
+                account.photoUri?.let { view.imageURI = Uri.parse(it) }
+                view.nameText = account.displayString
             }
-        )
+        }
 
-        when (callState) {
-            CONNECTING, DIALING -> view.transitionToActiveUI()
-            HOLDING -> view.apply {
-                boundComponent.colorInteractor.getColor(R.color.red_foreground)
-                    .let { view.stateTextColor = it }
-                animateStateTextAttention()
-            }
-            ACTIVE -> view.apply {
+        view.isHoldActivated = call.isHolding
+        view.isHoldEnabled = call.isCapable(CAPABILITY_HOLD)
+        view.isMuteEnabled = call.isCapable(CAPABILITY_MUTE)
+        view.isSwapEnabled = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
+        view.stateText = boundComponent.stringInteractor.getString(call.state.stringRes)
+
+        if (call.isIncoming) {
+            view.showIncomingCallUI()
+        } else if (boundComponent.callsInteractor.isMultiCall) {
+            view.showMultiActiveCallUI()
+        } else {
+            view.showActiveCallUI()
+        }
+
+        when (call.state) {
+            INCOMING, ACTIVE -> view.stateTextColor =
                 boundComponent.colorInteractor.getColor(R.color.green_foreground)
-                    .let { view.stateTextColor = it }
-                animateStateTextAttention()
-                startStopwatch()
-                transitionToActiveUI()
-            }
-            DISCONNECTED -> view.apply {
+            HOLDING, DISCONNECTING, DISCONNECTED -> view.stateTextColor =
                 boundComponent.colorInteractor.getColor(R.color.red_foreground)
-                    .let { stateTextColor = it }
-                animateStateTextAttention()
-                stopStopwatch()
-                Handler().postDelayed({ finish() }, 2000)
-            }
         }
+    }
+
+    override fun onAudioRouteSelected(audioRoute: AudioRoute) {
+
     }
 }

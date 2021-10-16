@@ -11,7 +11,6 @@ interface ContactContract : BaseContract {
         var isStarIconVisible: Boolean
 
         fun showMenu()
-        fun callContact()
     }
 
     interface Presenter<V : View> : BaseContract.Presenter<V> {

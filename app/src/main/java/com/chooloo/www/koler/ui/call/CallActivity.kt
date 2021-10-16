@@ -3,30 +3,39 @@ package com.chooloo.www.koler.ui.call
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
+import android.text.format.DateUtils
+import android.view.View
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.call.CallManager
-import com.chooloo.www.koler.data.CallDetails
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.callactions.CallActionsFragment
+import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
     private lateinit var _presenter: CallPresenter<CallActivity>
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
-    private val _callListener by lazy {
-        object : CallManager.CallListener(this) {
-            override fun onCallDetailsChanged(callDetails: CallDetails) {
-                _presenter.onCallDetailsChanged(callDetails)
-            }
+
+    override var imageURI: Uri?
+        get() = null
+        set(value) {
+            _binding.callImage.setImageURI(value)
         }
-    }
+
+    override var nameText: String?
+        get() = _binding.callNameText.text.toString()
+        set(value) {
+            _binding.callNameText.text = value
+        }
 
     override var stateText: String?
         get() = _binding.callStateText.text.toString()
         set(value) {
+            val old = _binding.callStateText.text.toString()
             _binding.callStateText.text = value
+            if (old != value) {
+                boundComponent.animationInteractor.animateFocus(_binding.callStateText)
+            }
         }
 
     override var stateTextColor: Int
@@ -35,16 +44,58 @@ class CallActivity : BaseActivity(), CallContract.View {
             _binding.callStateText.setTextColor(value)
         }
 
-    override var callerNameText: String?
-        get() = _binding.callNameText.text.toString()
+    override var isHoldEnabled: Boolean
+        get() = _binding.callActions.isHoldEnabled
         set(value) {
-            _binding.callNameText.text = value
+            _binding.callActions.isHoldEnabled = value
         }
 
-    override var callerImageURI: Uri?
-        get() = null
+    override var isMuteEnabled: Boolean
+        get() = _binding.callActions.isMuteEnabled
         set(value) {
-            _binding.callImage.setImageURI(value)
+            _binding.callActions.isMuteEnabled = value
+        }
+
+    override var isSwapEnabled: Boolean
+        get() = _binding.callActions.isSwapEnabled
+        set(value) {
+            _binding.callActions.isSwapEnabled = value
+        }
+
+    override var isMergeEnabled: Boolean
+        get() = _binding.callActions.isMergeEnabled
+        set(value) {
+            _binding.callActions.isMergeEnabled = value
+        }
+
+    override var isSpeakerEnabled: Boolean
+        get() = _binding.callActions.isSpeakerEnabled
+        set(value) {
+            _binding.callActions.isSpeakerEnabled = value
+        }
+
+    override var isMuteActivated: Boolean
+        get() = _binding.callActions.isMuteActivated
+        set(value) {
+            _binding.callActions.isMuteActivated = value
+        }
+
+    override var isHoldActivated: Boolean
+        get() = _binding.callActions.isHoldActivated
+        set(value) {
+            _binding.callActions.isHoldActivated = value
+        }
+
+    override var isSpeakerActivated: Boolean
+        get() = _binding.callActions.isSpeakerActivated
+        set(value) {
+            _binding.callActions.isSpeakerActivated = value
+        }
+
+    override var isBluetoothActivated: Boolean
+        get() = _binding.callActions.isBluetoothActivated
+        set(value) {
+            _binding.callActions.isBluetoothActivated = value
         }
 
 
@@ -56,45 +107,73 @@ class CallActivity : BaseActivity(), CallContract.View {
     override fun onSetup() {
         _presenter = CallPresenter(this)
         _binding.apply {
+            callActions.setCallActionsListener(_presenter)
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
             callRejectButton.setOnClickListener { _presenter.onRejectClick() }
         }
-        CallManager.registerListener(_callListener)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        CallManager.unregisterCallback(_callListener)
+    override fun showDialpad() {
+        BottomFragment(DialpadFragment.newInstance(false).apply {
+            setOnKeyDownListener(_presenter::onKeypadKey)
+        }).show(supportFragmentManager, DialpadFragment.TAG)
     }
 
-
-    //region call view
-
-    override fun stopStopwatch() {
-        _binding.callChronometer.stop()
+    override fun showActiveCallUI() {
+        showActiveLayout()
+        _binding.callActions.showSingleCallUI()
     }
 
-    override fun startStopwatch() {
-        _binding.callChronometer.apply {
-            base = SystemClock.elapsedRealtime()
-            start()
+    override fun showAddCallDialog() {
+        BottomFragment(DialpadFragment.newInstance(true)).show(
+            supportFragmentManager,
+            DialpadFragment.TAG
+        )
+    }
+
+    override fun showIncomingCallUI() {
+        transitionLayoutTo(R.id.constraint_set_incoming_call)
+    }
+
+    override fun showMultiActiveCallUI() {
+        showActiveLayout()
+        _binding.callActions.showMultiCallUI()
+    }
+
+    override fun setElapsedTime(duration: Long?) {
+        duration?.let {
+            boundComponent.animationInteractor.animateIn(_binding.callTimeText, true)
+            _binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
+        } ?: run {
+            boundComponent.animationInteractor.animateOut(_binding.callTimeText, true, false)
         }
     }
 
-    override fun transitionToActiveUI() {
-        if (_binding.root.currentState == R.id.incoming_call) {
-            supportFragmentManager
-                .beginTransaction()
-                .add(_binding.callActionsContainer.id, CallActionsFragment.newInstance())
-                .commitNow()
-            boundComponent.animationInteractor.animateIn(_binding.callActionsContainer)
+    override fun showHoldingBanner(number: String) {
+        _binding.callBanner.text = number
+        if (_binding.callBanner.visibility != View.VISIBLE) {
+            _binding.callBanner.visibility = View.VISIBLE
+            boundComponent.animationInteractor.animateIn(_binding.callBanner, true)
+            boundComponent.animationInteractor.animateFocus(_binding.callBanner)
+        }
+    }
+
+    override fun hideHoldingBanner() {
+        boundComponent.animationInteractor.animateOut(_binding.callBanner, true, false)
+    }
+
+
+    private fun showActiveLayout() {
+        transitionLayoutTo(R.id.constraint_set_active_call)
+        if (_binding.callActions.visibility != View.VISIBLE) {
+            boundComponent.animationInteractor.animateIn(_binding.callActions, true)
+        }
+    }
+
+    private fun transitionLayoutTo(constraintRes: Int) {
+        if (_binding.root.currentState != constraintRes) {
+            _binding.root.setTransition(_binding.root.currentState, constraintRes)
             _binding.root.transitionToEnd()
         }
     }
-
-    override fun animateStateTextAttention() {
-        boundComponent.animationInteractor.animateFocus(_binding.callStateText)
-    }
-
-    //endregion
 }

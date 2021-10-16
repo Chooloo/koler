@@ -1,19 +1,13 @@
 package com.chooloo.www.koler.interactor.contacts
 
 import android.Manifest.permission.WRITE_CONTACTS
-import android.app.Activity
-import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
-import android.provider.ContactsContract
 import android.provider.ContactsContract.Contacts
-import android.telephony.PhoneNumberUtils
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
 import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
@@ -24,13 +18,11 @@ class ContactsInteractorImpl(
     private val numbersInteractor: NumbersInteractor,
     private val phoneAccountsInteractor: PhoneAccountsInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
-    override fun getContact(contactId: Long): Contact? =
-        ContactsContentResolver(context, contactId).content.getOrNull(0)
-
-    @RequiresDefaultDialer
-    override fun isContactBlocked(contactId: Long): Boolean =
-        phoneAccountsInteractor.getContactAccounts(contactId)
-            .all { numbersInteractor.isNumberBlocked(it.number) }
+    override fun queryContact(contactId: Long, callback: (Contact?) -> Unit) {
+        ContactsContentResolver(context, contactId).queryContent { contacts ->
+            contacts.let { callback.invoke(contacts.getOrNull(0)) }
+        }
+    }
 
 
     @RequiresPermission(WRITE_CONTACTS)
@@ -43,15 +35,19 @@ class ContactsInteractorImpl(
         )
     }
 
-
-    override fun blockContact(contactId: Long) {
-        phoneAccountsInteractor.getContactAccounts(contactId)
-            .forEach { numbersInteractor.blockNumber(it.number) }
+    @RequiresDefaultDialer
+    override fun blockContact(contactId: Long, onSuccess: (() -> Unit)?) {
+        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { numbersInteractor.blockNumber(it.number) }
+            onSuccess?.invoke()
+        }
     }
 
-    override fun unblockContact(contactId: Long) {
-        phoneAccountsInteractor.getContactAccounts(contactId)
-            .forEach { numbersInteractor.unblockNumber(it.number) }
+    override fun unblockContact(contactId: Long, onSuccess: (() -> Unit)?) {
+        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { numbersInteractor.unblockNumber(it.number) }
+            onSuccess?.invoke()
+        }
     }
 
     @RequiresPermission(WRITE_CONTACTS)
@@ -62,40 +58,9 @@ class ContactsInteractorImpl(
         context.contentResolver.update(Contacts.CONTENT_URI, contentValues, filter, null);
     }
 
-
-    override fun openSmsView(number: String?) {
-        val intent = Intent(
-            Intent.ACTION_SENDTO,
-            Uri.parse(String.format("smsto:%s", PhoneNumberUtils.normalizeNumber(number)))
-        )
-        if (context !is Activity) {
-            intent.flags = FLAG_ACTIVITY_NEW_TASK
+    override fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit) {
+        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
+            callback.invoke(accounts?.all { numbersInteractor.isNumberBlocked(it.number) } ?: false)
         }
-        context.startActivity(intent)
-    }
-
-    override fun openContactView(contactId: Long) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.withAppendedPath(Contacts.CONTENT_URI, contactId.toString())
-            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
-    }
-
-    override fun openAddContactView(number: String) {
-        val intent = Intent(Intent.ACTION_INSERT).apply {
-            type = Contacts.CONTENT_TYPE
-            putExtra(ContactsContract.Intents.Insert.PHONE, number)
-            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
-    }
-
-    override fun openEditContactView(contactId: Long) {
-        val intent = Intent(Intent.ACTION_EDIT, Contacts.CONTENT_URI).apply {
-            data = ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId)
-            if (context !is Activity) flags = FLAG_ACTIVITY_NEW_TASK
-        }
-        context.startActivity(intent)
     }
 }

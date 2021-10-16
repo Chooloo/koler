@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.adapter
 
-import PhoneAccount
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 
@@ -18,7 +18,7 @@ class PhonesAdapter(boundComponent: BoundComponentRoot) :
             titleText = item.number
             imageVisibility = false
 
-            boundComponent.permissionInteractor.runWithDefaultDialer {
+            boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
                 if (boundComponent.numbersInteractor.isNumberBlocked(item.number)) {
                     imageDrawable = _blockedDrawable
                 }

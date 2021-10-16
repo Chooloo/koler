@@ -1,9 +1,7 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.ui.base.BasePresenter
-import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
 class MainPresenter<V : MainContract.View>(view: V) :
@@ -20,23 +18,17 @@ class MainPresenter<V : MainContract.View>(view: V) :
 
     override fun onViewIntent(intent: Intent) {
         val intentText = try {
-            URLDecoder.decode(intent.dataString, "utf-8")
-        } catch (e: UnsupportedEncodingException) {
+            URLDecoder.decode(intent.dataString ?: "", "utf-8")
+        } catch (e: Exception) {
             view.showError("An error occurred when trying to get phone number :(")
             return
         }
 
         if (intentText.contains("tel:")) {
-            view.apply {
-                openDialpad()
-                dialpadNumber = intentText
-            }
+            view.openDialpad()
+            view.dialpadNumber = intentText.substringAfter("tel:")
         } else {
             view.showError("No phone number detected")
         }
-    }
-
-    override fun onDialpadTextChanged(text: String?) {
-        view.updateSearchViewModelNumber(text)
     }
 }

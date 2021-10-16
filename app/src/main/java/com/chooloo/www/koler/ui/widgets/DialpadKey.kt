@@ -10,6 +10,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.ViewManager
@@ -41,8 +42,8 @@ class DialpadKey : LinearLayout {
         }
 
         _lettersTextView = TextView(context, attrs, defStyleRes).apply {
-            typeface = Typeface.defaultFromStyle(Typeface.BOLD)
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
 
             setPadding(0, _viewManager.getSizeInDp(5), 0, 0)
             setTextAppearance(R.style.Koler_Text_Caption)

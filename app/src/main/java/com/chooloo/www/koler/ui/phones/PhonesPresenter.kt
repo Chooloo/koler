@@ -1,35 +1,41 @@
 package com.chooloo.www.koler.ui.phones
 
-import PhoneAccount
 import android.content.ClipData
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.contentresolver.PhoneContentResolver
-import com.chooloo.www.koler.ui.list.ListContract
+import com.chooloo.www.koler.adapter.PhonesAdapter
+import com.chooloo.www.koler.contentresolver.PhonesContentResolver
+import com.chooloo.www.koler.data.ListBundle
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.list.ListPresenter
 
-class PhonesPresenter<V : ListContract.View<PhoneAccount>>(view: V) :
+class PhonesPresenter<V : PhonesContract.View>(view: V) :
     ListPresenter<PhoneAccount, V>(view),
-    ListContract.Presenter<PhoneAccount, V> {
+    PhonesContract.Presenter<V> {
 
-    override val requiredPermissions
-        get() = PhoneContentResolver.REQUIRED_PERMISSIONS
+    override val adapter by lazy { PhonesAdapter(boundComponent) }
 
-    override val noResultsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_results_phones)
+    private val phonesLiveData by lazy {
+        val contactId = if (view.contactId == 0L) null else view.contactId
+        boundComponent.liveDataFactory.allocPhonesProviderLiveData(contactId)
+    }
 
-    override val noPermissionsMessage
-        get() = boundComponent.stringInteractor.getString(R.string.error_no_permissions_phones)
+
+    override val noResultsIconRes = R.drawable.ic_call_black_24dp
+    override val noResultsTextRes = R.string.error_no_results_phones
+    override val noPermissionsTextRes = R.string.error_no_permissions_phones
+    override val requiredPermissions = PhonesContentResolver.REQUIRED_PERMISSIONS
 
 
     override fun observeData() {
-        boundComponent.phonesProviderLiveData.observe(
-            boundComponent.lifecycleOwner,
-            this::onDataChanged
-        )
+        phonesLiveData.observe(boundComponent.lifecycleOwner, this::onDataChanged)
+    }
+
+    override fun applyFilter(filter: String) {
+        phonesLiveData.filter = filter
     }
 
     override fun onItemClick(item: PhoneAccount) {
-        // TODO call item.number
+        boundComponent.navigationInteractor.call(item.number)
     }
 
     override fun onItemLongClick(item: PhoneAccount) {
@@ -39,7 +45,6 @@ class PhonesPresenter<V : ListContract.View<PhoneAccount>>(view: V) :
         view.showMessage(R.string.number_copied_to_clipboard)
     }
 
-    override fun applyFilter(filter: String) {
-        boundComponent.phonesProviderLiveData.filter = filter
-    }
+    override fun convertDataToListBundle(data: ArrayList<PhoneAccount>) =
+        ListBundle.fromPhones(data, boundComponent.stringInteractor, true)
 }

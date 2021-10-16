@@ -1,9 +1,5 @@
 package com.chooloo.www.koler.ui.settings
 
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Sim
 import com.chooloo.www.koler.ui.base.BaseContract
 
 class SettingsContract : BaseContract {

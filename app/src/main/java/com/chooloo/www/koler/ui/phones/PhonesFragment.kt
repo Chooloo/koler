@@ -1,18 +1,16 @@
 package com.chooloo.www.koler.ui.phones
 
-import PhoneAccount
 import android.os.Bundle
 import com.chooloo.www.koler.adapter.PhonesAdapter
-import com.chooloo.www.koler.data.ListBundle
+import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
-import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 
 class PhonesFragment :
     ListFragment<PhoneAccount, PhonesAdapter>(),
-    ListContract.View<PhoneAccount> {
+    PhonesContract.View {
 
-    override val adapter by lazy { PhonesAdapter(boundComponent) }
+    override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
     override lateinit var presenter: PhonesPresenter<PhonesFragment>
 
 
@@ -25,17 +23,17 @@ class PhonesFragment :
         return
     }
 
-    override fun updateData(dataList: ArrayList<PhoneAccount>) {
-        adapter.data = ListBundle.fromPhones(baseActivity, dataList, true)
-    }
-
 
     companion object {
-        fun newInstance(contactId: Long, isSearchable: Boolean, isHideNoResults: Boolean = false) =
+        fun newInstance(
+            contactId: Long? = null,
+            isSearchable: Boolean,
+            isHideNoResults: Boolean = false
+        ) =
             PhonesFragment().apply {
                 arguments = Bundle().apply {
+                    contactId?.let { putLong(ARG_CONTACT_ID, it) }
                     putBoolean(ARG_IS_COMPACT, true)
-                    putLong(ARG_CONTACT_ID, contactId)
                     putBoolean(ARG_IS_SEARCHABLE, isSearchable)
                     putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
                 }

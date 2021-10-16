@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.widgets
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.Gravity
@@ -39,7 +40,7 @@ class SearchBar : TextInputLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
-            compoundDrawablePadding = 8
+            compoundDrawablePadding = 10
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
@@ -47,15 +48,17 @@ class SearchBar : TextInputLayout {
             layoutParams = LayoutParams(MATCH_PARENT, spacingBig)
             hintTextColor = ColorStateList.valueOf(colorOnSecondary)
             compoundDrawableTintList = ColorStateList.valueOf(colorOnSecondary)
+            filters =
+                arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter(Char::isLetterOrDigit) })
 
             setTextColor(colorOnSecondary)
             setTextAppearance(R.style.Koler_Text_Subtitle1)
             setHintTextColor(ColorStateList.valueOf(colorOnSecondary))
             setPadding(
+                spacingSmall + 10,
+                _viewManager.getSizeInDp(5),
                 spacingSmall,
-                _viewManager.getSizeInDp(2),
-                spacingSmall,
-                _viewManager.getSizeInDp(2)
+                _viewManager.getSizeInDp(5)
             )
 
             addTextChangedListener(

@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
-import com.chooloo.www.koler.ui.contacts.ContactsFragment
-import com.chooloo.www.koler.ui.contacts.ContactsPresenter
 import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 
@@ -19,7 +17,13 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     private lateinit var _presenter: ContactPresenter<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId, false) }
+    private val _phonesFragment by lazy {
+        PhonesFragment.newInstance(
+            contactId = contactId,
+            isSearchable = false,
+            isHideNoResults = true
+        )
+    }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -66,19 +70,12 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .commitNow()
     }
 
-
     override fun showMenu() {
         BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(
             childFragmentManager,
             null
         )
     }
-
-    override fun callContact() {
-        //TODO remove this to presenter
-//        _firstPhone?.number?.let { CallManager.call(baseActivity, it) }
-    }
-
 
     companion object {
         const val TAG = "contact_fragment"

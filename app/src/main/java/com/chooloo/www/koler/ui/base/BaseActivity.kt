@@ -1,3 +1,4 @@
+
 package com.chooloo.www.koler.ui.base
 
 import android.os.Bundle
@@ -6,9 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRootImpl
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
-    override val boundComponent by lazy {
-        BoundComponentRootImpl(this)
-    }
+    override val boundComponent by lazy { BoundComponentRootImpl(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(boundComponent.preferencesInteractor.accentTheme.theme)
@@ -20,6 +19,15 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
         onSetup()
     }
 
+    override fun onStop() {
+        super.onStop()
+        boundComponent.disposables.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        boundComponent.disposables.dispose()
+    }
 
     //region base view
 

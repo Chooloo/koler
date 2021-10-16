@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.BlockedNumberContract.BlockedNumbers
+import com.chooloo.www.koler.util.SelectionBuilder
 
 class BlockedNumbersContentResolver(context: Context, number: String? = null) :
     BaseItemsContentResolver<String>(context) {

@@ -2,79 +2,64 @@ package com.chooloo.www.koler.service
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
-import android.telecom.Call
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.telecom.CallAudioState
-import android.telecom.DisconnectCause
 import android.telecom.InCallService
-import com.chooloo.www.koler.data.CallDetails
+import com.chooloo.www.koler.KolerApp
+import com.chooloo.www.koler.data.call.Call
+import com.chooloo.www.koler.data.call.CallNotification
 import com.chooloo.www.koler.ui.call.CallActivity
-import com.chooloo.www.koler.ui.notification.CallNotification
-import com.chooloo.www.koler.call.CallManager
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {
-    private val _callNotification by lazy { CallNotification(this) }
-    private val _callNotificationCallback by lazy {
-        object : CallManager.CallListener(this) {
-            override fun onCallDetailsChanged(callDetails: CallDetails) {
-                CallNotification(context).show(callDetails)
-            }
-        }
-    }
+    private val _callNotification by lazy { CallNotification.getInstance(this) }
+    private val componentRoot get() = (applicationContext as KolerApp).componentRoot
 
 
     override fun onCreate() {
         super.onCreate()
         sInstance = this
+        _callNotification.attach()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        cancelCallNotification()
+        _callNotification.detach()
     }
 
-    override fun onCallAdded(call: Call) {
-        super.onCallAdded(call)
-        CallManager.sCall = call
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            _callNotification.show(CallDetails.fromCall(call, this))
-            CallManager.registerListener(_callNotificationCallback)
-        }
-
-        startActivity(Intent(this, CallActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        })
-    }
-
-    override fun onCallRemoved(call: Call) {
-        super.onCallRemoved(call)
-        CallManager.sCall = null
-        cancelCallNotification()
-        call.details?.let {
-            if (call.details.disconnectCause.code == DisconnectCause.MISSED) {
-                CallNotification(applicationContext).show(
-                    CallDetails.fromCall(call, applicationContext)
-                )
-            }
+    override fun onCallAdded(telecomCall: android.telecom.Call) {
+        super.onCallAdded(telecomCall)
+        // new base call is added, this is the first place the code knows about the call
+        // add it to the call interactor (call manager)
+        componentRoot.callsInteractor.entryAddCall(Call(telecomCall))
+        if (!sIsActivityActive) {
+            startCallActivity()
         }
     }
 
+    override fun onCallRemoved(telecomCall: android.telecom.Call) {
+        super.onCallRemoved(telecomCall)
+        // a base call was removed from service,
+        // this is the first place the code knows a call was removed
+        // remove it from the call interactor (call manager)
+        componentRoot.callsInteractor.getCallByTelecomCall(telecomCall)
+            ?.let(componentRoot.callsInteractor::entryRemoveCall)
+    }
 
-    private fun cancelCallNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            _callNotification.cancel()
-            CallManager.unregisterCallback(_callNotificationCallback)
-        }
+    override fun onCallAudioStateChanged(audioState: CallAudioState) {
+        super.onCallAudioStateChanged(audioState)
+        componentRoot.callAudioInteractor.entryCallAudioStateChanged(callAudioState)
+    }
+
+    private fun startCallActivity() {
+        val intent = Intent(this, CallActivity::class.java)
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
 
     companion object {
-        private lateinit var sInstance: CallService
-
-        fun toggleSpeakerRoute(isSpeakerOn: Boolean) {
-            sInstance.setAudioRoute(if (isSpeakerOn) CallAudioState.ROUTE_SPEAKER else CallAudioState.ROUTE_WIRED_OR_EARPIECE)
-        }
+        var sIsActivityActive = false
+        var sInstance: CallService? = null
     }
 }

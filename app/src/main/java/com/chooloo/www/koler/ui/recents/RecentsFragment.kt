@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
@@ -12,19 +12,13 @@ import com.chooloo.www.koler.ui.recent.RecentFragment
 
 class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), ListContract.View<Recent> {
     override val searchHint by lazy { getString(R.string.hint_search_recents) }
+
     override lateinit var presenter: RecentsPresenter<RecentsFragment>
-    override val adapter by lazy {
-        RecentsAdapter(boundComponent.preferencesInteractor, boundComponent.phoneAccountsInteractor)
-    }
 
 
     override fun onSetup() {
         presenter = RecentsPresenter(this)
         super.onSetup()
-    }
-
-    override fun updateData(dataList: ArrayList<Recent>) {
-        adapter.data = ListBundle.fromRecents(dataList)
     }
 
     override fun showItem(item: Recent) {
@@ -33,7 +27,6 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), ListContract.Vie
             RecentFragment.TAG
         )
     }
-
 
     companion object {
         fun newInstance(

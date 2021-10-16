@@ -1,8 +1,11 @@
 package com.chooloo.www.koler.data
 
-import PhoneAccount
 import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Phone
+import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.PhoneAccount
+import com.chooloo.www.koler.data.account.Recent
+import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.util.getRelativeDateString
 import java.util.stream.Collectors
 
@@ -69,8 +72,8 @@ data class ListBundle<DataType>(
         }
 
         fun fromPhones(
-            context: Context,
             phones: ArrayList<PhoneAccount>,
+            stringInteractor: StringInteractor,
             distinctNormalizedNumber: Boolean = false
         ): ListBundle<PhoneAccount> {
             val items = if (distinctNormalizedNumber) {
@@ -82,7 +85,7 @@ data class ListBundle<DataType>(
                 items = items,
                 headersCounts = items.groupingBy { it.type }.eachCount().values.toTypedArray(),
                 headers = items.groupBy { it.type }.keys.map {
-                    context.getString(Phone.getTypeLabelResource(it))
+                    stringInteractor.getString(Phone.getTypeLabelResource(it))
                 }.toTypedArray()
             )
         }

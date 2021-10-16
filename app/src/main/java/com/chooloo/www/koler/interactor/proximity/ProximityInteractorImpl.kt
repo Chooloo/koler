@@ -3,7 +3,7 @@ package com.chooloo.www.koler.interactor.proximity
 import android.os.PowerManager
 import android.os.PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.BaseObservable
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 class ProximityInteractorImpl(
     private val activity: BaseActivity,

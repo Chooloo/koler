@@ -4,6 +4,7 @@
     <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
+    <string name="conference">Conference</string>
     <!--endregion-->
 
     <!--region messages-->
@@ -14,6 +15,9 @@
     <string name="number_unblocked">Number Unblocked</string>
     <string name="contact_set_favorite">Contact Set As Favorite</string>
     <string name="contact_unset_favorite">Contact Unset As Favorite</string>
+    <string name="recent_deleted_successfully">Recent has been deleted successfully</string>
+    <string name="contact_deleted_successfully">Contact has been deleted successfully</string>
+    <string name="select_sim_account">Select Sim Account</string>
     <!--endregion-->
 
     <!--region actions-->
@@ -22,6 +26,8 @@
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_show_history">Show History</string>
+    <string name="action_choose_audio_route">Choose audio route</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -37,11 +43,13 @@
     <!--endregion-->
 
     <!--region warning-->
+    <string name="warning_is_on_hold">%s is on hold</string>
+    <string name="warning_block_number">Are you sure you want to block this number?</string>
     <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
     <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
-    <string name="warning_delete_recents">Are you sure you want to delete those recents?</string>
+    <string name="warning_delete_recents">Are you sure you want to delete all these recents?</string>
+    <string name="warning_delete_contacts">Are you sure you want to delete all these contacts?</string>
     <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
-    <string name="warning_block_number">Are you sure you want to block this number?</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -66,9 +74,11 @@
     <!--region call state-->
     <string name="call_status_new">New Call</string>
     <string name="call_status_dialing">Dialing…</string>
+    <string name="call_status_waiting">Waiting...</string>
     <string name="call_status_missed">Missed Call</string>
     <string name="call_status_holding">Call On Hold</string>
     <string name="call_status_connecting">Connecting…</string>
+    <string name="call_status_conferenced">Conferenced</string>
     <string name="call_status_incoming">Incoming Call</string>
     <string name="call_status_active">Call In Progress</string>
     <string name="call_status_disconnected">Call ended</string>
@@ -83,13 +93,13 @@
     <string name="pref_key_email">email</string>
     <string name="pref_key_donate">donate</string>
     <string name="pref_key_compact">compact</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
     <string name="pref_key_color">accent_color</string>
-    <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_animations">animations</string>
-    <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_set_favorite">set_favorite</string>
     <string name="pref_key_block_number">block_number</string>
     <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_record_format">record_format</string>
     <string name="pref_key_block_contact">block_contact</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
@@ -112,6 +122,7 @@
     <string name="pref_title_sim_select">Sim Selection</string>
     <string name="pref_title_default_page">Default Page</string>
     <string name="pref_title_block_number">Block Number</string>
+    <string name="pref_title_ask_sim">Should ask for sim</string>
     <string name="pref_title_block_contact">Block Contact</string>
     <string name="pref_title_set_favorite">Set as Favorite</string>
     <string name="pref_title_records_enabled">Record Calls</string>
@@ -122,27 +133,45 @@
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
     <!--endregion-->
 
+    <!--region pref summary -->
+    <string name="pref_summary_ask_sim_disabled">Sim selection not available</string>
+    <!--endregion-->
+
     <!--region pref default value-->
     <string name="pref_default_value_sim_select">0</string>
     <!--endregion-->
 
     <!--region errors-->
     <string name="error_blocked">Blocked</string>
-    <string name="error_no_results">No results :/</string>
-    <string name="error_no_results_calls">No calls :/</string>
-    <string name="error_no_results_recents">No recents :/</string>
-    <string name="error_no_results_contacts">No contacts :/</string>
-    <string name="error_no_results_phones">No phone numbers :/</string>
+    <string name="error_no_results">No Results</string>
+    <string name="error_no_results_calls">No Calls</string>
+    <string name="error_no_results_recents">No Recents</string>
+    <string name="error_no_results_contacts">No Contacts</string>
+    <string name="error_no_results_phones">No phone numbers</string>
     <string name="error_not_default_dialer">Please set as default dialer</string>
     <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
     <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
 
     <string name="error_no_permissions">I need permissions :/</string>
-    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_recents">I need permission to read call log :)</string>
+    <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
     <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_recents">I need permission to read call log :)</string>
+    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_ask_sim">No permissions to read sim accounts :(</string>
+    <string name="error_no_permissions_voicemail">No permissions to make a voicemail call :(</string>
+    <string name="error_no_permissions_call_with_sim">No permissions to call with sim, calling with first sim.</string>
 
     <string name="error_enter_number">Please enter a number first</string>
+
+    <string name="error_no_number_to_call">No number was found :(</string>
+    <string name="error_no_phone_account_handle">No phone account handle was found</string>
+
+    <string name="error_cant_hold_call">Can\'t hold call</string>
+    <string name="error_cant_swap_calls">Can\'t swap calls</string>
+    <string name="error_cant_merge_call">Can\'t merge call</string>
+    <string name="error_cant_hold_other_calls">Can\'t hold other calls</string>
+    <string name="error_calls_crowded_cant_answer">Can\'t answer, calls too crowded</string>
+    <string name="error_no_incoming_call_to_answer">No incoming call was found to answer</string>
     <!--endregion-->
 
     <!--region pref color values-->
@@ -186,9 +215,7 @@
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
     <!--endregion-->
 
-
     <!--region phone type-->
-
     <string name="phone_type_home">Home</string>
     <string name="phone_type_mobile">Mobile</string>
     <string name="phone_type_work">Work</string>
@@ -209,15 +236,13 @@
     <string name="phone_type_work_pager">Work Pager</string>
     <string name="phone_type_assistant">Assistant</string>
     <string name="phone_type_mms">MMS</string>
-
     <!--endregion-->
 
-
-    <!--region labels-->
-
-    <string name="accessibility_service_label">accessibility service</string>
-
+    <!--region audio route-->
+    <string name="audio_route_speaker">Speaker</string>
+    <string name="audio_route_earpiece">Earpiece</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Wired Headset</string>
+    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
     <!--endregion-->
-
-
 </resources>

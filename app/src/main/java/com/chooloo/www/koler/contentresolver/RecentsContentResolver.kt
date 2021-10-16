@@ -6,41 +6,41 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.Recent
+import com.chooloo.www.koler.data.account.Recent
+import com.chooloo.www.koler.util.SelectionBuilder
 import java.util.*
 
 class RecentsContentResolver(context: Context, private val recentId: Long? = null) :
     BaseItemsContentResolver<Recent>(context) {
 
     override val uri: Uri = URI
-    override val selection: String? = null
-    override val filterUri: Uri = FILTER_URI
+    override val filterUri: Uri? = null
     override val sortOrder: String = SORT_ORDER
     override val selectionArgs: Array<String>? = null
     override val projection: Array<String> = PROJECTION
-//    override val selection: String
-//        get() {
-//            val selection = SelectionBuilder().addSelection(CallLog.Calls._ID, recentId)
-//            filter?.let { selection.addString("(${CallLog.Calls.CACHED_NAME} LIKE '%$filter%' OR ${CallLog.Calls.NUMBER} LIKE '%$filter%')") }
-//            return selection.build()
-//        }
+    override val selection: String
+        get() {
+            val selection = SelectionBuilder().addSelection(CallLog.Calls._ID, recentId)
+            filter?.let { selection.addString("(${CallLog.Calls.CACHED_NAME} LIKE '%$filter%' OR ${CallLog.Calls.NUMBER} LIKE '%$filter%')") }
+            return selection.build()
+        }
 
 
     override fun convertCursorToItem(cursor: Cursor): Recent {
         return Recent(
             id = cursor.getLong(cursor.getColumnIndex(CallLog.Calls._ID)),
+            type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE)),
+            date = Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE))),
             number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)),
             duration = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DURATION)),
-            date = Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE))),
-            type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE)),
             cachedName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME))
         )
     }
 
     companion object {
         val URI: Uri = CallLog.Calls.CONTENT_URI
-        val SORT_ORDER = "${CallLog.Calls.DATE} DESC"
         val REQUIRED_PERMISSIONS = arrayOf(READ_CALL_LOG)
+        const val SORT_ORDER = "${CallLog.Calls.DATE} DESC"
         val FILTER_URI: Uri = CallLog.Calls.CONTENT_FILTER_URI
         val PROJECTION: Array<String> = arrayOf(
             CallLog.Calls._ID,

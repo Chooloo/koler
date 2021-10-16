@@ -12,6 +12,7 @@
 
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="colorControlHighlight">?colorTextHint</item>
         <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:navigationBarColor">?colorPrimarySurface</item>

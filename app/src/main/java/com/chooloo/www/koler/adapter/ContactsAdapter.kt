@@ -1,12 +1,14 @@
 package com.chooloo.www.koler.adapter
 
 import android.net.Uri
-import com.chooloo.www.koler.data.Contact
+import androidx.recyclerview.widget.DiffUtil
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.initials
 
-class ContactsAdapter(boundComponent: BoundComponentRoot) : ListAdapter<Contact>(boundComponent) {
+class ContactsAdapter(boundComponent: BoundComponentRoot) :
+    ListAdapter<Contact>(boundComponent) {
     override fun onBindListItem(listItem: ListItem, item: Contact) {
         listItem.apply {
             titleText = item.name

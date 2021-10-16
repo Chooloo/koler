@@ -1,27 +1,29 @@
 package com.chooloo.www.koler.ui.list
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
-        val itemCount: Int
+        val isCompact: Boolean
         val searchHint: String?
-        var emptyStateText: String?
 
-
+        fun scrollToTop()
         fun animateListView()
         fun requestSearchFocus()
         fun setupScrollIndicator()
         fun showItem(item: ItemType)
         fun showEmptyPage(isShow: Boolean)
+        fun showLoading(isLoading: Boolean)
         fun showSelecting(isSelecting: Boolean)
-        fun toggleRefreshing(isRefreshing: Boolean)
-        fun updateData(dataList: ArrayList<ItemType>)
+        fun setEmptyTextRes(@StringRes res: Int?)
+        fun setEmptyIconRes(@DrawableRes res: Int?)
+        fun setAdapter(adapter: ListAdapter<ItemType>)
     }
 
     interface Presenter<ItemType, V : View<ItemType>> : BaseContract.Presenter<V> {
-        val noResultsMessage: String
-        val noPermissionsMessage: String
         val requiredPermissions: Array<String>
 
         fun onResults()
@@ -38,5 +40,7 @@ interface ListContract : BaseContract {
 
         fun onPermissionsGranted()
         fun onPermissionsBlocked(permissions: Array<String>)
+
+        fun setOnItemsChangedListener(onItemsChangedListener: (ArrayList<ItemType>) -> Unit? = {})
     }
 }

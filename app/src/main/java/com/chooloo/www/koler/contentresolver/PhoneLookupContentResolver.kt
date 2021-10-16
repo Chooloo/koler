@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.PhoneLookup
-import com.chooloo.www.koler.data.PhoneLookupAccount
+import com.chooloo.www.koler.data.account.PhoneLookupAccount
 
 class PhoneLookupContentResolver(context: Context, number: String?) :
     BaseItemsContentResolver<PhoneLookupAccount>(context) {

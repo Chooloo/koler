@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import com.chooloo.www.koler.data.Contact
+import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface DialpadContract : BaseContract {

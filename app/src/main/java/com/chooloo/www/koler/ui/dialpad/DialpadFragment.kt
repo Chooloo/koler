@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
-import android.view.KeyEvent.KEYCODE_DEL
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -21,12 +20,12 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false) }
+    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false, true) }
 
     override val isDialer by lazy { args.getBoolean(ARG_IS_DIALER) }
 
     override val suggestionsCount: Int
-        get() = _suggestionsFragment.itemCount
+        get() = _suggestionsFragment.presenter.adapter.itemCount
 
     override var number: String
         get() = _binding.dialpadEditText.text.toString()
@@ -38,7 +37,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                boundComponent.animationInteractor.animateIn(_binding.dialpadSuggestionsScrollView)
+                boundComponent.animationInteractor.animateIn(
+                    _binding.dialpadSuggestionsScrollView,
+                    true
+                )
             } else if (!value && isSuggestionsVisible) {
                 _binding.dialpadSuggestionsScrollView.visibility = GONE
             }
@@ -48,7 +50,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonAddContact)
+                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonAddContact, true)
             } else if (!value && isAddContactButtonVisible) {
                 boundComponent.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
             }
@@ -58,7 +60,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonDelete)
+                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonDelete, true)
             } else if (!value && isDeleteButtonVisible) {
                 boundComponent.animationInteractor.showView(_binding.dialpadButtonDelete, false)
             }
@@ -73,8 +75,6 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     override fun onSetup() {
         _presenter = DialpadPresenter(this)
-        _suggestionsFragment.setOnContactsChangedListener(_presenter::onSuggestionsChanged)
-
         _binding.apply {
             dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
             dialpadButtonCall.apply {
@@ -152,6 +152,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
             .commitNow()
     }
 
+    override fun onResume() {
+        super.onResume()
+        _suggestionsFragment.presenter.setOnItemsChangedListener(_presenter::onSuggestionsChanged)
+    }
 
     override fun invokeKey(keyCode: Int) {
         _binding.dialpadEditText.onKeyDown(keyCode, KeyEvent(ACTION_DOWN, keyCode))

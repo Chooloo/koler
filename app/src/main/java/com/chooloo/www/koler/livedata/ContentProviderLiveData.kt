@@ -1,40 +1,36 @@
 package com.chooloo.www.koler.livedata
 
 import android.content.Context
-import android.os.Handler
 import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
+import io.reactivex.disposables.Disposable
 
 abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
     protected val context: Context,
 ) : LiveData<T>() {
-
     abstract val contentResolver: ContentResolver
+
+    private var _observer: Disposable? = null
 
     var filter: String?
         get() = contentResolver.filter
+        @Synchronized
         set(value) {
             contentResolver.filter = value
-            updateData()
+            attachObserver()
         }
 
 
     override fun onActive() {
-        contentResolver.apply {
-            observe()
-            setOnContentChangedListener { updateData() }
-            updateData()
-        }
+        attachObserver()
     }
 
     override fun onInactive() {
-        contentResolver.detach()
+        _observer?.dispose()
     }
 
-
-    private fun updateData() {
-        Handler(context.mainLooper).post {
-            value = contentResolver.content
-        }
+    private fun attachObserver() {
+        _observer?.dispose()
+        _observer = contentResolver.observeContent(this::postValue)
     }
 }

@@ -10,6 +10,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 
+
 abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract.View {
     override val boundComponent
         get() = baseActivity.boundComponent
@@ -42,9 +43,6 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
 
     override fun onSetup() {}
 
-
-    //region base view
-
     override fun showMessage(message: String) {
         baseActivity.showMessage(message)
     }
@@ -70,14 +68,7 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
     override fun hasPermissions(permissions: Array<String>) =
         permissions.any { p -> baseActivity.hasPermission(p) }
 
-    //endregion
 
-
-    //region preference helpers
-
-    /**
-     * Apply to all preferences click and change listeners recursively
-     */
     private fun initAllPreferences() {
         (0 until preferenceScreen.preferenceCount).forEach { x ->
             val preference = preferenceScreen.getPreference(x)
@@ -98,11 +89,9 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
         }
     }
 
-    /**
-     * Apply click and change listeners to a given preference
-     */
     private fun initPreference(preference: Preference) {
         preference.apply {
+            isIconSpaceReserved = false
             setOnPreferenceClickListener {
                 onPreferenceClickListener(preference)
                 true
@@ -118,13 +107,7 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
         return findPreference<T>(getString(keyString))
     }
 
-    //endregion
-
-
-    //region preference listeners
 
     open fun onPreferenceClickListener(preference: Preference) {}
     open fun onPreferenceChangeListener(preference: Preference, newValue: Any) {}
-
-    //endregion
 }

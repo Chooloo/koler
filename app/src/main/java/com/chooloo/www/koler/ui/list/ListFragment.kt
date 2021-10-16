@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
@@ -21,17 +22,8 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     private val _isSearchable by lazy { args.getBoolean(ARG_IS_SEARCHABLE) }
     private val _isHideNoResults by lazy { args.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
 
-    override val itemCount get() = adapter.itemCount
     override val searchHint by lazy { getString(R.string.hint_search_items) }
-
-    override var emptyStateText: String?
-        get() = _binding.itemsEmptyText.text.toString()
-        set(value) {
-            _binding.itemsEmptyText.text = value
-
-        }
-
-    abstract val adapter: Adapter
+    override val isCompact by lazy { args.getBoolean(ARG_IS_COMPACT) }
 
 
     override fun onCreateView(
@@ -41,37 +33,24 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     ) = _binding.root
 
     override fun onSetup() {
-        adapter.apply {
-            setOnItemClickListener(presenter::onItemClick)
-            setOnItemLongClickListener(presenter::onItemLongClick)
-        }
-
         _binding.apply {
             itemsSearchBar.apply {
                 hint = searchHint
                 visibility = if (_isSearchable) VISIBLE else GONE
                 setOnTextChangedListener(presenter::onSearchTextChanged)
             }
-            itemsSwipeRefreshLayout.apply {
-                setOnRefreshListener(presenter::onSwipeRefresh)
-                if (!_isSearchable) {
-                    setDistanceToTriggerSync(9999999)
-                }
-            }
-            itemsRecyclerView.apply {
-                adapter = this@ListFragment.adapter.apply {
-                    isCompact = args.getBoolean(ARG_IS_COMPACT)
-                    setOnSelectingChangeListener { presenter.onIsSelectingChanged(it) }
-                }
-            }
             itemsDeleteButton.setOnClickListener {
-                presenter.onDeleteItems((itemsRecyclerView.adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
+//                presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
             }
         }
         args.getString(ARG_FILTER)?.let { presenter.applyFilter(it) }
     }
 
 
+    override fun scrollToTop() {
+        _binding.itemsRecyclerView.smoothScrollToPosition(0)
+    }
+    
     override fun animateListView() {
         boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
@@ -82,35 +61,51 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     override fun showEmptyPage(isShow: Boolean) {
         _binding.apply {
-            itemsEmptyText.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
+            empty.emptyIcon.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
+            empty.emptyText.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
             itemsRecyclerView.visibility = if (isShow && !_isHideNoResults) GONE else VISIBLE
+        }
+    }
+
+    override fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            showEmptyPage(false)
         }
     }
 
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                boundComponent.animationInteractor.animateIn(this)
+                boundComponent.animationInteractor.animateIn(this, true)
             } else {
                 boundComponent.animationInteractor.showView(this, false)
             }
         }
     }
 
-    override fun toggleRefreshing(isRefreshing: Boolean) {
-        _binding.itemsSwipeRefreshLayout.isRefreshing = isRefreshing
-    }
-
-
     override fun setupScrollIndicator() {
         _binding.apply {
-            itemsFastScroller.setupWithRecyclerView(itemsRecyclerView, { position ->
-                adapter.getHeader(position)?.let { FastScrollItemIndicator.Text(it) }
-            })
+            itemsFastScroller.setupWithRecyclerView(
+                itemsRecyclerView,
+                { position ->
+                    (itemsRecyclerView.adapter as ListAdapter<*>).getHeader(position)
+                        ?.let { FastScrollItemIndicator.Text(it) }
+                })
             itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
         }
     }
 
+    override fun setEmptyTextRes(@StringRes res: Int?) {
+        res?.let { _binding.empty.emptyText.setText(it) }
+    }
+
+    override fun setEmptyIconRes(res: Int?) {
+        res?.let { _binding.empty.emptyIcon.setImageResource(it) }
+    }
+
+    override fun setAdapter(adapter: ListAdapter<ItemType>) {
+        _binding.itemsRecyclerView.adapter = adapter
+    }
 
     companion object {
         const val ARG_FILTER = "filter"

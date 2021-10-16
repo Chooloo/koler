@@ -31,8 +31,12 @@
     <!--endregion-->
 
     <!--region warning-->
-    <string name="warning_delete_contact">Jeste li sigurni da želite izbrisati taj kontakt?</string>
-    <string name="warning_delete_recent">Jeste li sigurni da želite izbrisati taj nedavni poziv?</string>
+    <string name="warning_is_on_hold">%s is on hold</string>
+    <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
+    <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
+    <string name="warning_delete_recents">Are you sure you want to delete those recents?</string>
+    <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
+    <string name="warning_block_number">Are you sure you want to block this number?</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -167,5 +171,13 @@
     <string name="phone_type_work_pager">Posao (pager)</string>
     <string name="phone_type_assistant">Asistent</string>
     <string name="phone_type_mms">MMS</string>
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Speaker</string>
+    <string name="audio_route_earpiece">Earpiece</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Wired Headset</string>
+    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
     <!--endregion-->
 </resources>
