@@ -22,7 +22,6 @@ open class BaseObservable<Listener> : IBaseObservable<Listener> {
 
     override fun invokeListeners(invoker: (Listener) -> Unit) {
         listeners.forEach(invoker::invoke)
-
     }
 
     protected open fun onActive() {}
