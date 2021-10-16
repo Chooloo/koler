@@ -94,6 +94,7 @@
 
     <style name="Koler.BottomDialog.BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="shapeAppearanceOverlay">@style/Koler.BottomDialog.ShapeAppearanceOverlay</item>
+        <item name="behavior_peekHeight">600dp</item>
     </style>
 
     <style name="Koler.BottomDialog.ShapeAppearanceOverlay">
