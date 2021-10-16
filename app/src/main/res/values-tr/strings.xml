@@ -1,0 +1,223 @@
+<resources>
+    <string name="dot">·</string>
+
+    <!--region titles-->
+    <string name="recents">Son Aramalar</string>
+    <string name="contacts">Kişiler</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Numara panoya kopyalandı</string>
+    <string name="contact_blocked">Kişi Engellendi</string>
+    <string name="contact_unblocked">Kişinin Engeli Kaldırıldı</string>
+    <string name="number_blocked">Numara Engellendi</string>
+    <string name="number_unblocked">Numaranın Engeli Kaldırıldı</string>
+    <string name="contact_set_favorite">Kişiyi Favorilere Ekle</string>
+    <string name="contact_unset_favorite">Kişiyi Favorilerden Çıkar</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">Evet</string>
+    <string name="action_no">Hayır</string>
+    <string name="action_answer">Yanıtla</string>
+    <string name="action_hangup">Kapat</string>
+    <string name="action_cancel">İptal</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Arama</string>
+    <string name="hint_search_items">Öğeleri Ara</string>
+    <string name="hint_search_contacts">Kişileri ara</string>
+    <string name="hint_search_recents">Aramaları Ara</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="warning_delete_contact">Bu kişiyi silmek istediğinizden emin misiniz?</string>
+    <string name="warning_delete_recent">Bu son aramayı silmek istediğinizden emin misiniz?</string>
+    <string name="warning_delete_recents">Bu son aramaları silmek istediğinizden emin misiniz?</string>
+    <string name="warning_block_contact">Tüm kişilerin numaralarını engellemek istediğinizden emin misiniz?</string>
+    <string name="warning_block_number">Bu numarayı engellemek istediğinizden emin misiniz?</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_hold">Beklet</string>
+    <string name="call_action_mute">Sustur</string>
+    <string name="call_action_keypad">Tuş takımı</string>
+    <string name="call_action_unhold">Sürdür</string>
+    <string name="call_action_unmute">Susturmayı kaldır</string>
+    <string name="call_action_record">Kaydet</string>
+    <string name="call_action_speaker">Hoparlör</string>
+    <string name="call_action_add_call">Arama ekle</string>
+    <string name="call_action_speaker_off">Hoparlörü kapat</string>
+    <string name="call_action_record_stop">Kaydı durdur</string>
+    <!--endregion-->
+
+    <!--region call state-->
+    <string name="call_status_new">Yeni Arama</string>
+    <string name="call_status_dialing">Aranıyor…</string>
+    <string name="call_status_missed">Cevapsız Arama</string>
+    <string name="call_status_holding">Arama beklemede</string>
+    <string name="call_status_connecting">Bağlanılıyor…</string>
+    <string name="call_status_incoming">Gelen Arama</string>
+    <string name="call_status_active">Devam eden arama</string>
+    <string name="call_status_disconnected">Arama bitti</string>
+    <string name="call_status_pulling_call">Arama çekiliyor…</string>
+    <string name="call_status_unknown">Bilinmeyen arama durumu</string>
+    <string name="call_status_disconnecting">Arama bağlantısı kesiliyor…</string>
+    <string name="call_status_phone_account">Telefon hesabı seçin</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_email">email</string>
+    <string name="pref_key_donate">donate</string>
+    <string name="pref_key_compact">compact</string>
+    <string name="pref_key_color">accent_color</string>
+    <string name="pref_key_sim_select">sim_select</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_set_favorite">set_favorite</string>
+    <string name="pref_key_block_number">block_number</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_record_format">record_format</string>
+    <string name="pref_key_block_contact">block_contact</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_unset_favorite">unset_favorite</string>
+    <string name="pref_key_unblock_number">unblock_number</string>
+    <string name="pref_key_records_enabled">record_enabled</string>
+    <string name="pref_key_unblock_contact">unblock_contact</string>
+    <string name="pref_key_scroll_indicator">scroll_indicator</string>
+    <string name="pref_key_default_dialer_blocked_notice">default_dialer_blocked</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Puanla</string>
+    <string name="pref_title_donate">Bağış yap</string>
+    <string name="pref_title_compact">Sıkışık Mod</string>
+    <string name="pref_title_animations">Animasyonlar</string>
+    <string name="pref_title_app_color">Vurgu Rengi</string>
+    <string name="pref_title_email">Bize bir email yaz</string>
+    <string name="pref_title_report_bugs">Hata Bildir</string>
+    <string name="pref_title_sim_select">Sim Seçimi</string>
+    <string name="pref_title_default_page">Ana Sayfa</string>
+    <string name="pref_title_block_number">Numara Engelle</string>
+    <string name="pref_title_block_contact">Kişi Engelle</string>
+    <string name="pref_title_set_favorite">Favorilere Ekle</string>
+    <string name="pref_title_records_enabled">Aramaları Kaydet</string>
+    <string name="pref_title_unblock_number">Numaranın Engelini Kaldır</string>
+    <string name="pref_title_unblock_contact">Kişinin Engelini Kaldır</string>
+    <string name="pref_title_unset_favorite">Favorilerden Kaldır</string>
+    <string name="pref_title_scroll_indicator">Kaydırma Göstergesi</string>
+    <string name="pref_title_manage_blocked">Engellenmiş Numaraları Yönet</string>
+    <!--endregion-->
+
+    <!--region pref default value-->
+    <string name="pref_default_value_sim_select">0</string>
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_blocked">Engellenmiş</string>
+    <string name="error_no_results">Sonuç bulunamadı :/</string>
+    <string name="error_no_results_calls">Arama bulunamadı :/</string>
+    <string name="error_no_results_recents">Son arama bulunamadı :/</string>
+    <string name="error_no_results_contacts">Kişi bulunamadı :/</string>
+    <string name="error_no_results_phones">Telefon numarası bulunamadı :/</string>
+    <string name="error_not_default_dialer">Lütfen varsayılan arayıcı olarak ayarlayın</string>
+    <string name="error_not_default_dialer_blocked">Engellenmiş numaraları görmek için Koler'i varsayılan arayıcı olarak ayarlayın</string>
+    <string name="error_not_default_dialer_call">Arama yapmak için Koler'i varsayılan arayıcı olarak ayarlayın.</string>
+
+    <string name="error_no_permissions">Benim izinlere ihtiyacım var :/</string>
+    <string name="error_no_permissions_contacts">Kişileri görmek için izine ihtiyacım var :)</string>
+    <string name="error_no_permissions_recents">Arama günlüğünü görmek için izine ihtiyacım var :)</string>
+    <string name="error_no_permissions_phones">Kişileri görmek için izine ihtiyacım var :)</string>
+
+    <string name="error_enter_number">Lütfen önce bir numara girin</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <string name="pref_color_value_red">kırmızı</string>
+    <string name="pref_color_value_blue">mavi</string>
+    <string name="pref_color_value_green">yeşil</string>
+    <string name="pref_color_value_orange">turuncu</string>
+    <string name="pref_color_value_purple">mor</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Sesli mesaj</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters"></string>
+    <string name="dialpad_pound_letters"></string>
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_menu_button">Menü Tuşu</string>
+    <string name="content_description_answer_button">Yanıtlama Tuşu</string>
+    <string name="content_description_reject_button">Reddetme Tuşu</string>
+    <string name="content_description_call_actions_button">Arama Eylemleri</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Arama Bildirimi</string>
+    <string name="call_notification_channel_description">Rahat kullanım için gösterilen aktif çağrı bildirimi</string>
+    <!--endregion-->
+
+
+    <!--region phone type-->
+
+    <string name="phone_type_home">Ev</string>
+    <string name="phone_type_mobile">Cep</string>
+    <string name="phone_type_work">İş</string>
+    <string name="phone_type_fax_work">İş Faks</string>
+    <string name="phone_type_fax_home">Ev Faks</string>
+    <string name="phone_type_pager">Mesaj cihazı</string>
+    <string name="phone_type_other">Diğer</string>
+    <string name="phone_type_callback">Geri ara</string>
+    <string name="phone_type_car">Araba</string>
+    <string name="phone_type_company_main">Ana Kuruluş</string>
+    <string name="phone_type_isdn">ISDN</string>
+    <string name="phone_type_main">Ana</string>
+    <string name="phone_type_other_fax">Faks</string>
+    <string name="phone_type_radio">Radyo</string>
+    <string name="phone_type_telex">Teleks</string>
+    <string name="phone_type_tty_ttd">TTY TDD</string>
+    <string name="phone_type_work_mobile">İş Cep</string>
+    <string name="phone_type_work_pager">İş Mesaj Cihazı</string>
+    <string name="phone_type_assistant">Asistan</string>
+    <string name="phone_type_mms">MMS</string>
+
+    <!--endregion-->
+
+
+    <!--region labels-->
+
+    <string name="accessibility_service_label">erişilebilirlik servisi</string>
+
+    <!--endregion-->
+
+
+</resources>
