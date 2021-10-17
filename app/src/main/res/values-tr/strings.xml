@@ -84,7 +84,6 @@
     <string name="pref_key_donate">donate</string>
     <string name="pref_key_compact">compact</string>
     <string name="pref_key_color">accent_color</string>
-    <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_animations">animations</string>
     <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_set_favorite">set_favorite</string>
@@ -134,8 +133,8 @@
     <string name="error_no_results_contacts">Kişi bulunamadı :/</string>
     <string name="error_no_results_phones">Telefon numarası bulunamadı :/</string>
     <string name="error_not_default_dialer">Lütfen varsayılan arayıcı olarak ayarlayın</string>
-    <string name="error_not_default_dialer_blocked">Engellenmiş numaraları görmek için Koler'i varsayılan arayıcı olarak ayarlayın</string>
-    <string name="error_not_default_dialer_call">Arama yapmak için Koler'i varsayılan arayıcı olarak ayarlayın.</string>
+    <string name="error_not_default_dialer_blocked">Engellenmiş numaraları görmek için Koler\'i varsayılan arayıcı olarak ayarlayın</string>
+    <string name="error_not_default_dialer_call">Arama yapmak için Koler\'i varsayılan arayıcı olarak ayarlayın.</string>
 
     <string name="error_no_permissions">Benim izinlere ihtiyacım var :/</string>
     <string name="error_no_permissions_contacts">Kişileri görmek için izine ihtiyacım var :)</string>
@@ -211,13 +210,4 @@
     <string name="phone_type_mms">MMS</string>
 
     <!--endregion-->
-
-
-    <!--region labels-->
-
-    <string name="accessibility_service_label">erişilebilirlik servisi</string>
-
-    <!--endregion-->
-
-
 </resources>
