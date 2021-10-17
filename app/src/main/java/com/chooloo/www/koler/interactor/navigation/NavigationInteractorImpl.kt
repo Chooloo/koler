@@ -14,6 +14,7 @@ import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.SimAccount
 import com.chooloo.www.koler.interactor.permission.PermissionInteractor
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.sim.SimInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.ui.base.BaseActivity
@@ -25,7 +26,8 @@ class NavigationInteractorImpl(
     private val simInteractor: SimInteractor,
     private val telecomManager: TelecomManager,
     private val stringInteractor: StringInteractor,
-    private val permissionInteractor: PermissionInteractor
+    private val permissionInteractor: PermissionInteractor,
+    private val preferencesInteractor: PreferencesInteractor
 ) :
     BaseObservable<NavigationInteractor.Listener>(),
     NavigationInteractor {
@@ -122,7 +124,7 @@ class NavigationInteractorImpl(
     override fun call(number: String) {
         permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_call, {
             simInteractor.getIsMultiSim { isMultiSim ->
-                if (isMultiSim) {
+                if (preferencesInteractor.isAskSim && isMultiSim) {
                     simInteractor.askForSim { call(it, number) }
                 } else {
                     simInteractor.getSimAccounts { call(it[0], number) }

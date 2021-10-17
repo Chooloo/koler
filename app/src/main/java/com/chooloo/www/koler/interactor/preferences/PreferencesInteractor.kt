@@ -7,6 +7,7 @@ import com.chooloo.www.koler.interactor.base.BaseInteractor
 open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener> {
     interface Listener
 
+    var isAskSim: Boolean
     var isRecords: Boolean
     var isCompact: Boolean
     var isAnimations: Boolean
