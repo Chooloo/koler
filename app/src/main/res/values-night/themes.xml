@@ -3,10 +3,11 @@
 
     <style name="KolerTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorError">@color/color_error</item>
-        <item name="colorTextHint">@color/color_hint</item>
         <item name="colorPrimary">?android:colorBackground</item>
         <item name="colorTextDisabled">@color/color_disabled</item>
         <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="colorLightBackground">#A1686868</item>
+        <item name="colorLightForeground">#B1B1B1</item>
 
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>

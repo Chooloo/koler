@@ -97,7 +97,8 @@ class BoundComponentRootImpl(
             simInteractor,
             componentRoot.telecomManager,
             componentRoot.stringInteractor,
-            permissionInteractor
+            permissionInteractor,
+            preferencesInteractor
         )
     }
 

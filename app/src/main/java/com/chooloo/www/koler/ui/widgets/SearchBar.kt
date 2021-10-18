@@ -8,6 +8,7 @@ import android.text.InputType
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.chooloo.www.koler.R
@@ -21,9 +22,11 @@ class SearchBar : TextInputLayout {
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
     private val _viewManager by lazy { ViewManager(context) }
-    private val colorOnSecondary by lazy { _viewManager.getAttrColor(R.attr.colorOnSecondary) }
-    private val spacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
+
+    private val colorBackground by lazy { _viewManager.getAttrColor(R.attr.colorLightBackground) }
+    private val colorForeground by lazy { _viewManager.getAttrColor(R.attr.colorLightForeground) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
+
 
     var text: String?
         get() = _textInputEditText.text.toString()
@@ -40,26 +43,18 @@ class SearchBar : TextInputLayout {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         _textInputEditText = TextInputEditText(context, attrs, defStyleRes).apply {
-            compoundDrawablePadding = 10
             isFocusableInTouchMode = true
             gravity = Gravity.CENTER_VERTICAL
             inputType = InputType.TYPE_CLASS_TEXT
             hint = resources.getString(R.string.hint_search)
-            layoutParams = LayoutParams(MATCH_PARENT, spacingBig)
-            hintTextColor = ColorStateList.valueOf(colorOnSecondary)
-            compoundDrawableTintList = ColorStateList.valueOf(colorOnSecondary)
+            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            compoundDrawableTintList = ColorStateList.valueOf(colorForeground)
             filters =
                 arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { char -> char.isLetterOrDigit() || char == ' ' } })
 
-            setTextColor(colorOnSecondary)
-            setTextAppearance(R.style.Koler_Text_Subtitle1)
-            setHintTextColor(ColorStateList.valueOf(colorOnSecondary))
-            setPadding(
-                spacingSmall + 10,
-                _viewManager.getSizeInDp(5),
-                spacingSmall,
-                _viewManager.getSizeInDp(5)
-            )
+            setTextAppearance(R.style.Koler_Text_Subtitle2)
+            setHintTextColor(ColorStateList.valueOf(colorForeground))
+            setPadding(spacingSmall, 0, spacingSmall, 0)
 
             addTextChangedListener(
                 afterTextChanged = {},
@@ -72,12 +67,13 @@ class SearchBar : TextInputLayout {
 
         isHintEnabled = false
         endIconMode = END_ICON_CLEAR_TEXT
+        backgroundTintList = ColorStateList.valueOf(colorBackground)
         background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
         endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp)
-        _textInputEditText.setOnFocusChangeListener { _, isFocused -> showIcon(!isFocused) }
+        startIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_search_black_24dp)
 
-        showIcon(true)
-        setEndIconTintList(ColorStateList.valueOf(colorOnSecondary))
+        setEndIconTintList(ColorStateList.valueOf(colorForeground))
+        setStartIconTintList(ColorStateList.valueOf(colorForeground))
     }
 
     override fun setHint(hint: CharSequence?) {
@@ -85,17 +81,6 @@ class SearchBar : TextInputLayout {
     }
 
     override fun getHint() = _textInputEditText?.hint.toString() // do not remove the ?
-
-
-    private fun showIcon(isShow: Boolean) {
-        _textInputEditText.setCompoundDrawablesWithIntrinsicBounds(
-            if (isShow) {
-                ContextCompat.getDrawable(context, R.drawable.ic_search_black_24dp)
-            } else {
-                null
-            }, null, null, null
-        )
-    }
 
     fun setOnTextChangedListener(onTextChangedListener: ((text: String) -> Unit?)?) {
         _onTextChangedListener = onTextChangedListener
