@@ -22,8 +22,9 @@ class DialpadEditText : AppCompatEditText {
         showSoftInputOnFocus = false
         textAlignment = TEXT_ALIGNMENT_CENTER
         inputType = InputType.TYPE_CLASS_PHONE
-        filters =
-            arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter(Char::isLetterOrDigit) })
+        filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
+            source.filter { char -> char.isDigit() || char in arrayOf('*', '#') }
+        })
 
         setBackgroundColor(Color.TRANSPARENT)
         canScrollHorizontally(LAYOUT_DIRECTION_RTL or LAYOUT_DIRECTION_LTR)

@@ -49,7 +49,7 @@ class SearchBar : TextInputLayout {
             hintTextColor = ColorStateList.valueOf(colorOnSecondary)
             compoundDrawableTintList = ColorStateList.valueOf(colorOnSecondary)
             filters =
-                arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter(Char::isLetterOrDigit) })
+                arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { char -> char.isLetterOrDigit() || char == ' ' } })
 
             setTextColor(colorOnSecondary)
             setTextAppearance(R.style.Koler_Text_Subtitle1)
