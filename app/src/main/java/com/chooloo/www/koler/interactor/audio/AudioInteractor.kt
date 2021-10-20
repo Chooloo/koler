@@ -14,7 +14,7 @@ interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
     fun playToneByKey(keyCode: Int)
     fun playTone(tone: Int, durationMs: Int)
 
-    fun vibrate(millis: Long)
+    fun vibrate(millis: Long = 10)
 
     enum class AudioMode(val mode: Int) {
         NORMAL(android.media.AudioManager.MODE_NORMAL),
