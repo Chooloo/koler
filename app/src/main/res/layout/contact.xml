@@ -3,30 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/contact_button_fav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginBottom="@dimen/default_spacing"
-        android:backgroundTint="@color/orange_background"
-        android:tint="@color/orange_foreground"
-        android:visibility="gone"
-        app:activatedIcon="@drawable/ic_star_black_24dp"
-        app:borderWidth="0dp"
-        app:fabSize="mini"
-        app:icon="@drawable/ic_star_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_spacing_big">
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/contact_button_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_spacing"
+        android:tint="?colorOnSurface"
         app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
         app:fabSize="mini"
@@ -43,18 +27,17 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_button_fav"
+        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
-        style="@style/Koler.Text.Headline3"
+        style="@style/Koler.Text.Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
         android:layout_marginEnd="@dimen/default_spacing_small"
+        android:fontFamily="@font/google_sans_bold"
         android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -62,11 +45,22 @@
         app:layout_constraintTop_toBottomOf="@id/contact_image"
         tools:text="Jesus" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/contact_image_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing_small"
+        android:src="@drawable/ic_star_black_24dp"
+        android:tint="@color/orange_foreground"
+        app:layout_constraintBottom_toBottomOf="@id/contact_text_name"
+        app:layout_constraintStart_toEndOf="@id/contact_text_name"
+        app:layout_constraintTop_toTopOf="@id/contact_text_name" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/contact_phones_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_small"
+        android:layout_marginTop="@dimen/default_spacing_big"
         android:paddingBottom="@dimen/default_spacing_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,9 +70,7 @@
         android:id="@+id/contact_button_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_call_black_24dp"
@@ -91,7 +83,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_edit_black_24dp"
@@ -105,7 +96,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_delete_black_24dp"
@@ -119,8 +109,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
         app:icon="@drawable/ic_sms_black_24dp"

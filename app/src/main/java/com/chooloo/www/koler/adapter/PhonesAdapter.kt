@@ -16,11 +16,13 @@ class PhonesAdapter(boundComponent: BoundComponentRoot) :
 
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
         listItem.apply {
+            isPadded = false
+            imageVisibility = false
             titleText = item.number
             captionText = boundComponent.stringInteractor.getString(
                 ContactsContract.CommonDataKinds.Phone.getTypeLabelResource(item.type)
             )
-            imageVisibility = false
+            setTitleBold(true)
 
             boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
                 if (boundComponent.numbersInteractor.isNumberBlocked(item.number)) {

@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.marginTop
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
@@ -28,6 +29,7 @@ import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 open class ListItem : LinearLayout {
+    private var _isPadded: Boolean = true
     private var _isCompact: Boolean = false
 
     private val _viewManager by lazy { ViewManager(context) }
@@ -51,18 +53,7 @@ open class ListItem : LinearLayout {
     var isCompact: Boolean
         get() = _isCompact
         set(value) {
-            _personLayout.setPadding(
-                dimenSpacing,
-                if (value) 3 else dimenSpacing - 5,
-                dimenSpacing,
-                if (value) 3 else dimenSpacing - 5
-            )
-            _header.setPadding(
-                dimenSpacing,
-                dimenSpacing,
-                dimenSpacing,
-                if (value) dimenSpacingSmall - 10 else dimenSpacing
-            )
+            setPaddingMode(value, _isPadded)
         }
 
 
@@ -75,6 +66,12 @@ open class ListItem : LinearLayout {
             }
         }
 
+    var isPadded: Boolean
+        get() = _isPadded
+        set(value) {
+            setPaddingMode(_isCompact, value)
+            _isPadded = value
+        }
 
     var imageSize: Int
         get() = _image.height
@@ -335,6 +332,28 @@ open class ListItem : LinearLayout {
         _personLayout.setOnLongClickListener(onLongClickListener)
     }
 
+
+    private fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
+        _personLayout.setPadding(
+            if (isEnabled) dimenSpacing else 0,
+            if (isCompact) 3 else dimenSpacing - 5,
+            if (isEnabled) dimenSpacing else 0,
+            if (isCompact) 3 else dimenSpacing - 5
+        )
+        _header.setPadding(
+            if (isEnabled) dimenSpacing else 0,
+            dimenSpacing,
+            if (isEnabled) dimenSpacing else 0,
+            if (isCompact) dimenSpacingSmall - 10 else dimenSpacing
+        )
+    }
+
+    fun setTitleBold(isBold: Boolean) {
+        _title.typeface = ResourcesCompat.getFont(
+            context,
+            if (isBold) R.font.google_sans_bold else R.font.google_sans_regular
+        )
+    }
 
     fun setLeftButtonTintColor(@ColorRes colorRes: Int) {
         _buttonLeft.imageTintList =

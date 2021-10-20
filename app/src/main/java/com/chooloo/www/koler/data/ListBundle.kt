@@ -74,7 +74,13 @@ data class ListBundle<DataType>(
             phones: ArrayList<PhoneAccount>,
             stringInteractor: StringInteractor,
             distinctNormalizedNumber: Boolean = false
-        ) = ListBundle(items = phones)
+        ) = ListBundle(
+            items = if (distinctNormalizedNumber) {
+                ArrayList(phones.toList().distinctBy { it.normalizedNumber })
+            } else {
+                phones
+            }
+        )
 
         fun fromPhones1(
             phones: ArrayList<PhoneAccount>,

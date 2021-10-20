@@ -12,7 +12,7 @@
 
     <!--region default spacings-->
     <dimen name="default_spacing">18dp</dimen>
-    <dimen name="default_spacing_big">32dp</dimen>
+    <dimen name="default_spacing_big">28dp</dimen>
     <dimen name="default_spacing_small">6dp</dimen>
     <!--endregion-->
 
