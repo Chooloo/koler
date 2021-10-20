@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.adapter
 
+import android.provider.ContactsContract
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
@@ -16,6 +17,9 @@ class PhonesAdapter(boundComponent: BoundComponentRoot) :
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
         listItem.apply {
             titleText = item.number
+            captionText = boundComponent.stringInteractor.getString(
+                ContactsContract.CommonDataKinds.Phone.getTypeLabelResource(item.type)
+            )
             imageVisibility = false
 
             boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {

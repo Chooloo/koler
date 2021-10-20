@@ -33,7 +33,7 @@ class PhonesFragment :
             PhonesFragment().apply {
                 arguments = Bundle().apply {
                     contactId?.let { putLong(ARG_CONTACT_ID, it) }
-                    putBoolean(ARG_IS_COMPACT, true)
+//                    putBoolean(ARG_IS_COMPACT, true)
                     putBoolean(ARG_IS_SEARCHABLE, isSearchable)
                     putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
                 }

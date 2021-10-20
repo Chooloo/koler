@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.data
 
-import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.data.account.PhoneAccount
@@ -72,6 +71,12 @@ data class ListBundle<DataType>(
         }
 
         fun fromPhones(
+            phones: ArrayList<PhoneAccount>,
+            stringInteractor: StringInteractor,
+            distinctNormalizedNumber: Boolean = false
+        ) = ListBundle(items = phones)
+
+        fun fromPhones1(
             phones: ArrayList<PhoneAccount>,
             stringInteractor: StringInteractor,
             distinctNormalizedNumber: Boolean = false
