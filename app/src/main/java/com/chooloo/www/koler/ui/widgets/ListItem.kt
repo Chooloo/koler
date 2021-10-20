@@ -18,7 +18,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.ViewManager
@@ -53,15 +52,15 @@ open class ListItem : LinearLayout {
         set(value) {
             _personLayout.setPadding(
                 dimenSpacing,
-                if (value) 3 else dimenSpacingSmall,
+                if (value) 3 else dimenSpacing - 5,
                 dimenSpacing,
-                if (value) 3 else dimenSpacingSmall
+                if (value) 3 else dimenSpacing - 5
             )
             _header.setPadding(
                 dimenSpacing,
-                dimenSpacingSmall,
                 dimenSpacing,
-                if (value) dimenSpacingSmall - 10 else dimenSpacingSmall
+                dimenSpacing,
+                if (value) dimenSpacingSmall - 10 else dimenSpacing
             )
         }
 
@@ -174,15 +173,14 @@ open class ListItem : LinearLayout {
                 setMargins(dimenSpacingSmall, dimenSpacing, dimenSpacingBig, dimenSpacingSmall)
             }
 
-            setTextAppearance(R.style.Koler_Text_Caption)
-            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
+            setTextAppearance(R.style.Koler_Text_Subtitle2)
         }
 
         _title = AppCompatTextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(dimenSpacing - 10, 0, dimenSpacing, 0)
+                setMargins(dimenSpacing - 5, 0, dimenSpacing, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Headline4)

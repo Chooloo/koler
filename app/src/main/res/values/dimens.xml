@@ -18,8 +18,8 @@
 
     <!--region image size-->
     <dimen name="image_size_big">90dp</dimen>
-    <dimen name="image_size_small">35dp</dimen>
-    <dimen name="corner_radius">15dp</dimen>
+    <dimen name="image_size_small">45dp</dimen>
+    <dimen name="corner_radius">20dp</dimen>
     <!--endregion-->
 
     <!--region list item -->

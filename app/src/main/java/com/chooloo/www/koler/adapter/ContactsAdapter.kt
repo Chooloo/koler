@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.adapter
 
 import android.net.Uri
-import androidx.recyclerview.widget.DiffUtil
 import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
@@ -12,6 +11,9 @@ class ContactsAdapter(boundComponent: BoundComponentRoot) :
     override fun onBindListItem(listItem: ListItem, item: Contact) {
         listItem.apply {
             titleText = item.name
+            boundComponent.phoneAccountsInteractor.getContactAccounts(item.id) { account ->
+                captionText = account?.firstOrNull()?.number
+            }
 
             setImageInitials(item.name?.initials())
             setImageUri(if (item.photoUri != null) Uri.parse(item.photoUri) else null)
