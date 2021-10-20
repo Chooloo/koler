@@ -50,7 +50,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun scrollToTop() {
         _binding.itemsRecyclerView.smoothScrollToPosition(0)
     }
-    
+
     override fun animateListView() {
         boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
@@ -85,13 +85,16 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     override fun setupScrollIndicator() {
         _binding.apply {
-            itemsFastScroller.setupWithRecyclerView(
-                itemsRecyclerView,
-                { position ->
-                    (itemsRecyclerView.adapter as ListAdapter<*>).getHeader(position)
-                        ?.let { FastScrollItemIndicator.Text(it) }
-                })
-            itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
+            try {
+                itemsFastScroller.setupWithRecyclerView(
+                    itemsRecyclerView,
+                    { position ->
+                        (itemsRecyclerView.adapter as ListAdapter<*>).getHeader(position)
+                            ?.let { FastScrollItemIndicator.Text(it) }
+                    })
+                itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
+            } catch (e: IllegalStateException) {
+            }
         }
     }
 
