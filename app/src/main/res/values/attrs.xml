@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--region colors-->
-    <attr name="colorTextHint" format="color" />
     <attr name="colorTextDisabled" format="color" />
+    <attr name="colorLightBackground" format="color" />
+    <attr name="colorLightForeground" format="color" />
     <!--endregion-->
 
     <!--region styleables-->

@@ -46,9 +46,9 @@
 
         <activity
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="fullUser">
 
-            <!--region intent-filters-->ca
+            <!--region intent-filters-->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

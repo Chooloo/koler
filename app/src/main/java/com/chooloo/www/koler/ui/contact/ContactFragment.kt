@@ -41,9 +41,9 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         }
 
     override var isStarIconVisible: Boolean
-        get() = _binding.contactButtonFav.visibility == VISIBLE
+        get() = _binding.contactImageStar.visibility == VISIBLE
         set(value) {
-            _binding.contactButtonFav.visibility = if (value) VISIBLE else GONE
+            _binding.contactImageStar.visibility = if (value) VISIBLE else GONE
         }
 
 

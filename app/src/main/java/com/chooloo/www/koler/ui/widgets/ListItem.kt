@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.marginTop
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.ViewManager
@@ -28,6 +29,7 @@ import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 open class ListItem : LinearLayout {
+    private var _isPadded: Boolean = true
     private var _isCompact: Boolean = false
 
     private val _viewManager by lazy { ViewManager(context) }
@@ -51,18 +53,7 @@ open class ListItem : LinearLayout {
     var isCompact: Boolean
         get() = _isCompact
         set(value) {
-            _personLayout.setPadding(
-                dimenSpacing,
-                if (value) 3 else dimenSpacingSmall,
-                dimenSpacing,
-                if (value) 3 else dimenSpacingSmall
-            )
-            _header.setPadding(
-                dimenSpacing,
-                dimenSpacingSmall,
-                dimenSpacing,
-                if (value) dimenSpacingSmall - 10 else dimenSpacingSmall
-            )
+            setPaddingMode(value, _isPadded)
         }
 
 
@@ -75,6 +66,12 @@ open class ListItem : LinearLayout {
             }
         }
 
+    var isPadded: Boolean
+        get() = _isPadded
+        set(value) {
+            setPaddingMode(_isCompact, value)
+            _isPadded = value
+        }
 
     var imageSize: Int
         get() = _image.height
@@ -92,6 +89,12 @@ open class ListItem : LinearLayout {
         get() = _image.visibility == VISIBLE
         set(value) {
             _image.visibility = if (value) VISIBLE else GONE
+            if (!value) {
+                _title.layoutParams =
+                    ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+                        setMargins(0, 0, _title.marginTop, 0)
+                    }
+            }
         }
 
     var imageDrawable: Drawable?
@@ -174,15 +177,14 @@ open class ListItem : LinearLayout {
                 setMargins(dimenSpacingSmall, dimenSpacing, dimenSpacingBig, dimenSpacingSmall)
             }
 
-            setTextAppearance(R.style.Koler_Text_Caption)
-            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
+            setTextAppearance(R.style.Koler_Text_Subtitle2)
         }
 
         _title = AppCompatTextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(dimenSpacing - 10, 0, dimenSpacing, 0)
+                setMargins(dimenSpacing - 5, 0, dimenSpacing, 0)
             }
 
             setTextAppearance(R.style.Koler_Text_Headline4)
@@ -242,7 +244,17 @@ open class ListItem : LinearLayout {
             id = View.generateViewId()
             background = _viewManager.selectableItemBackgroundDrawable
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        }
 
+        context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
+            titleText = it.getString(R.styleable.Koler_ListItem_title)
+            headerText = it.getString(R.styleable.Koler_ListItem_header)
+            captionText = it.getString(R.styleable.Koler_ListItem_caption)
+            imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
+            isCompact = it.getBoolean(R.styleable.Koler_ListItem_compact, false)
+        }
+
+        _personLayout.apply {
             addView(_image)
             addView(_title)
             addView(_caption)
@@ -300,14 +312,6 @@ open class ListItem : LinearLayout {
 
         addView(_header)
         addView(_personLayout)
-
-        context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
-            titleText = it.getString(R.styleable.Koler_ListItem_title)
-            headerText = it.getString(R.styleable.Koler_ListItem_header)
-            captionText = it.getString(R.styleable.Koler_ListItem_caption)
-            imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
-            isCompact = it.getBoolean(R.styleable.Koler_ListItem_compact, false)
-        }
     }
 
 
@@ -328,6 +332,28 @@ open class ListItem : LinearLayout {
         _personLayout.setOnLongClickListener(onLongClickListener)
     }
 
+
+    private fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
+        _personLayout.setPadding(
+            if (isEnabled) dimenSpacing else 0,
+            if (isCompact) 3 else dimenSpacing - 5,
+            if (isEnabled) dimenSpacing else 0,
+            if (isCompact) 3 else dimenSpacing - 5
+        )
+        _header.setPadding(
+            if (isEnabled) dimenSpacing else 0,
+            dimenSpacing,
+            if (isEnabled) dimenSpacing else 0,
+            if (isCompact) dimenSpacingSmall - 10 else dimenSpacing
+        )
+    }
+
+    fun setTitleBold(isBold: Boolean) {
+        _title.typeface = ResourcesCompat.getFont(
+            context,
+            if (isBold) R.font.google_sans_bold else R.font.google_sans_regular
+        )
+    }
 
     fun setLeftButtonTintColor(@ColorRes colorRes: Int) {
         _buttonLeft.imageTintList =

@@ -75,4 +75,8 @@ class SettingsPresenter<V : SettingsContract.View>(view: V) :
         boundComponent.preferencesInteractor.isScrollIndicator = isToggle
         refresh()
     }
+
+    override fun onToggledAskSim(isToggle: Boolean) {
+        boundComponent.preferencesInteractor.isAskSim = isToggle
+    }
 }

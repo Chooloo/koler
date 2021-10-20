@@ -57,6 +57,7 @@ class DialpadPresenter<V : DialpadContract.View>(view: V) :
 
     override fun onDeleteClick() {
         view.invokeKey(KEYCODE_DEL)
+        boundComponent.audioInteractor.vibrate()
     }
 
     override fun onAddContactClick() {

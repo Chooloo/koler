@@ -55,7 +55,7 @@
     <!--region urls-->
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
-    <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md#support</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
     <!--endregion-->
 
     <!--region call actions -->

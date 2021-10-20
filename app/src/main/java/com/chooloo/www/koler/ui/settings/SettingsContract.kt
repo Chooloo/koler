@@ -20,6 +20,7 @@ class SettingsContract : BaseContract {
         fun onSelectedColor(color: Int)
         fun onSelectedDefaultPage(pageKey: String)
 
+        fun onToggledAskSim(isToggle: Boolean)
         fun onToggledRecords(isToggle: Boolean)
         fun onToggledAnimation(isToggle: Boolean)
         fun onToggledCompactMode(isToggle: Boolean)

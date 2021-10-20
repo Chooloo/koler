@@ -28,6 +28,7 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
 
     override fun onPreferenceChangeListener(preference: Preference, newValue: Any) {
         when (preference.key) {
+            getString(R.string.pref_key_ask_sim) -> _presenter.onToggledAskSim(newValue as Boolean)
             getString(R.string.pref_key_compact) -> _presenter.onToggledCompactMode(newValue as Boolean)
             getString(R.string.pref_key_animations) -> _presenter.onToggledAnimation(newValue as Boolean)
             getString(R.string.pref_key_default_page) -> _presenter.onSelectedDefaultPage(newValue as String)

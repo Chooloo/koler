@@ -107,6 +107,7 @@
 
     <com.chooloo.www.koler.ui.widgets.IconButton
         android:id="@+id/dialpad_button_call"
+        style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
