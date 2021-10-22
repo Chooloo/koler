@@ -6,6 +6,7 @@ import com.chooloo.www.koler.contentresolver.PhonesContentResolver
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.data.account.PhoneLookupAccount
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
+import io.reactivex.exceptions.OnErrorNotImplementedException
 
 class PhoneAccountsInteractorImpl(private val context: Context) :
     BaseInteractorImpl<PhoneAccountsInteractor.Listener>(), PhoneAccountsInteractor {
@@ -15,7 +16,7 @@ class PhoneAccountsInteractorImpl(private val context: Context) :
             PhoneLookupContentResolver(context, number).queryContent { phones ->
                 callback.invoke(phones.getOrNull(0) ?: PhoneLookupAccount(null, number))
             }
-        } catch (e: IllegalArgumentException) {
+        } catch (e: OnErrorNotImplementedException) {
             callback.invoke(PhoneLookupAccount(null, number))
         }
     }

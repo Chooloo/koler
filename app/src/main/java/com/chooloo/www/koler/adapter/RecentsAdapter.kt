@@ -7,12 +7,17 @@ import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
 import com.chooloo.www.koler.ui.widgets.ListItem
 import com.chooloo.www.koler.util.getHoursString
+import io.reactivex.exceptions.OnErrorNotImplementedException
 
 class RecentsAdapter(boundComponent: BoundComponentRoot) : ListAdapter<Recent>(boundComponent) {
     override fun onBindListItem(listItem: ListItem, item: Recent) {
         listItem.apply {
-            boundComponent.phoneAccountsInteractor.lookupAccount(item.number) {
-                titleText = it.name ?: item.number
+            try {
+                boundComponent.phoneAccountsInteractor.lookupAccount(item.number) {
+                    titleText = it.name ?: item.number
+                }
+            } catch (e: OnErrorNotImplementedException) {
+                titleText = item.number
             }
 
             isCompact = boundComponent.preferencesInteractor.isCompact
