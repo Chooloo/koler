@@ -11,8 +11,12 @@ class PhoneAccountsInteractorImpl(private val context: Context) :
     BaseInteractorImpl<PhoneAccountsInteractor.Listener>(), PhoneAccountsInteractor {
 
     override fun lookupAccount(number: String?, callback: (PhoneLookupAccount) -> Unit) {
-        PhoneLookupContentResolver(context, number).queryContent { phones ->
-            callback.invoke(phones.getOrNull(0) ?: PhoneLookupAccount(null, number))
+        try {
+            PhoneLookupContentResolver(context, number).queryContent { phones ->
+                callback.invoke(phones.getOrNull(0) ?: PhoneLookupAccount(null, number))
+            }
+        } catch (e: IllegalArgumentException) {
+            callback.invoke(PhoneLookupAccount(null, number))
         }
     }
 
