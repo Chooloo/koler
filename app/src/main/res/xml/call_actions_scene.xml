@@ -101,7 +101,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/call_action_merge"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
+            app:layout_constraintTop_toBottomOf="@id/call_action_mute"
+            app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_action_merge"
             android:layout_width="wrap_content"
@@ -111,7 +112,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
             app:layout_constraintStart_toEndOf="@id/call_action_swap"
-            app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
+            app:layout_constraintTop_toBottomOf="@id/call_action_speaker"
+            app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_action_hold"
             android:layout_width="wrap_content"

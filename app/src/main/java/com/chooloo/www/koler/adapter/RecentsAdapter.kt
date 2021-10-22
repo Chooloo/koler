@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
-import com.chooloo.www.koler.ui.widgets.ListItem
+import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.util.getHoursString
 import io.reactivex.exceptions.OnErrorNotImplementedException
 

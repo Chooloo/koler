@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
-import com.chooloo.www.koler.ui.widgets.ListItem
-import com.chooloo.www.koler.ui.widgets.ListItemHolder
+import com.chooloo.www.koler.ui.widgets.listitem.ListItem
+import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
 
 abstract class ListAdapter<DataType>(
     protected val boundComponent: BoundComponentRoot

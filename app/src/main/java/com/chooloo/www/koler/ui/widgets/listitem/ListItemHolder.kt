@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.widgets
+package com.chooloo.www.koler.ui.widgets.listitem
 
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView

@@ -1,10 +1,13 @@
 package com.chooloo.www.koler.adapter
 
 import android.provider.ContactsContract
+import android.view.ViewGroup
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
-import com.chooloo.www.koler.ui.widgets.ListItem
+import com.chooloo.www.koler.ui.widgets.listitem.ListItem
+import com.chooloo.www.koler.ui.widgets.listitem.ListItemButton
+import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
 
 class PhonesAdapter(boundComponent: BoundComponentRoot) :
     ListAdapter<PhoneAccount>(boundComponent) {
@@ -12,6 +15,9 @@ class PhonesAdapter(boundComponent: BoundComponentRoot) :
     private val _blockedDrawable by lazy {
         boundComponent.drawableInteractor.getDrawable(R.drawable.round_block_black_24)
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        ListItemHolder(ListItemButton(parent.context))
 
 
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {

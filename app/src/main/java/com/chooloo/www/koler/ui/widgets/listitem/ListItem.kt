@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.widgets
+package com.chooloo.www.koler.ui.widgets.listitem
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -22,6 +22,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.marginTop
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.ui.widgets.IconButton
 import com.chooloo.www.koler.util.ViewManager
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
@@ -37,18 +38,18 @@ open class ListItem : LinearLayout {
     private var _onLeftButtonClickListener: () -> Unit = {}
     private var _onRightButtonClickListener: () -> Unit = {}
 
-    private val _buttonLeft: IconButton
-    private val _buttonRight: IconButton
-    private val _image: AvatarImageView
-    private val _title: AppCompatTextView
-    private val _header: AppCompatTextView
-    private val _caption: AppCompatTextView
-    private val _personLayout: ConstraintLayout
+    protected val _buttonLeft: IconButton
+    protected val _buttonRight: IconButton
+    protected val _image: AvatarImageView
+    protected val _title: AppCompatTextView
+    protected val _header: AppCompatTextView
+    protected val _caption: AppCompatTextView
+    protected val _personLayout: ConstraintLayout
 
-    private val dimenSpacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
-    private val dimenImageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
-    private val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
-    private val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
+    protected val dimenSpacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
+    protected val dimenImageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
+    protected val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
+    protected val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
     var isCompact: Boolean
         get() = _isCompact
@@ -333,7 +334,7 @@ open class ListItem : LinearLayout {
     }
 
 
-    private fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
+    protected open fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
         _personLayout.setPadding(
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) 3 else dimenSpacing - 5,
@@ -346,6 +347,10 @@ open class ListItem : LinearLayout {
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) dimenSpacingSmall - 10 else dimenSpacing
         )
+    }
+
+    fun setTitleColor(@ColorInt color: Int) {
+        _title.setTextColor(color)
     }
 
     fun setTitleBold(isBold: Boolean) {
