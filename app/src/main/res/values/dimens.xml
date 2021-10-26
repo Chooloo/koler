@@ -36,6 +36,7 @@
 
     <!--region toolbar-->
     <dimen name="toolbar_padding">10dp</dimen>
+    <dimen name="list_avatar_size">40dp</dimen>
     <!--endregion-->
 
 </resources>

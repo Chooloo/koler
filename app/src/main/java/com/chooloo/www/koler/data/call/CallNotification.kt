@@ -17,6 +17,7 @@ import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.call.Call.State.DISCONNECTED
 import com.chooloo.www.koler.data.call.Call.State.DISCONNECTING
+import com.chooloo.www.koler.helper.ContactAvatarHelper
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.receiver.CallBroadcastReceiver
@@ -34,7 +35,7 @@ class CallNotification(
 ) : CallsInteractor.Listener, CallAudioInteractor.Listener {
     private var _call: Call? = null
     private val componentRoot by lazy { (context.applicationContext as KolerApp).componentRoot }
-
+    private val callContactAvatarHelper by lazy { ContactAvatarHelper(context) }
 
     override fun onNoCalls() {
         detach()
@@ -148,38 +149,49 @@ class CallNotification(
     private fun _getCallPendingIntent(callAction: String, rc: Int) =
         PendingIntent.getBroadcast(context, rc, _getCallIntent(callAction), FLAG_CANCEL_CURRENT)
 
-
     private fun buildNotification(call: Call, callback: (Notification) -> Unit) {
         componentRoot.phoneAccountsInteractor.lookupAccount(call.number) {
+
+            val displayName = if (call.isConference) "Conference Call" else it.displayString
+
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setWhen(0)
+                .setWhen(call.connectTimeMilis)
                 .setOngoing(true)
                 .setColorized(true)
+                .setUsesChronometer(call.isActive)
                 .setPriority(PRIORITY)
                 .setOnlyAlertOnce(true)
-                .setContentTitle(it.displayString)
+                .setContentTitle(displayName)
                 .setSmallIcon(R.drawable.icon_full_144)
                 .setContentIntent(_contentPendingIntent)
+                .setCategory(Notification.CATEGORY_CALL)
+                .setLargeIcon(callContactAvatarHelper.getCallContactAvatar(it.photoUri))
                 .setColor(componentRoot.colorInteractor.getAttrColor(R.attr.colorSecondary))
                 .setContentText(componentRoot.stringInteractor.getString(call.state.stringRes))
-            if (call.isIncoming) {
-                builder.addAction(_answerAction)
-            }
-            if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-                builder.addAction(_hangupAction)
-            }
-            componentRoot.callAudioInteractor.isMuted?.let { isMuted ->
-                if (call.isCapable(CAPABILITY_MUTE)) {
-                    builder.addAction(if (isMuted) _unmuteAction else _muteAction)
+
+            when {
+                call.isIncoming -> {
+                    builder.addAction(_answerAction)
+                    builder.addAction(_hangupAction)
                 }
+                call.state !in arrayOf(DISCONNECTING, DISCONNECTED) -> {
+                    builder.addAction(_hangupAction)
+                    componentRoot.callAudioInteractor.isMuted?.let { isMuted ->
+                        if (call.isCapable(CAPABILITY_MUTE)) {
+                            builder.addAction(if (isMuted) _unmuteAction else _muteAction)
+                        }
+                    }
+                    componentRoot.callAudioInteractor.isSpeakerOn?.let { isSpeakerOn ->
+                        builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
+                    }
+                }
+                else -> return@lookupAccount
             }
-            componentRoot.callAudioInteractor.isSpeakerOn?.let { isSpeakerOn ->
-                builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
-            }
+
             callback.invoke(builder.build())
+
         }
     }
-
 
     fun show(call: Call) {
         buildNotification(call) {
