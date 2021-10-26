@@ -19,7 +19,6 @@ class CallService : InCallService() {
     override fun onCreate() {
         super.onCreate()
         sInstance = this
-        _callNotification.attach()
     }
 
     override fun onDestroy() {
@@ -32,6 +31,11 @@ class CallService : InCallService() {
         // new base call is added, this is the first place the code knows about the call
         // add it to the call interactor (call manager)
         componentRoot.callsInteractor.entryAddCall(Call(telecomCall))
+
+        if(componentRoot.callsInteractor.callsCount==1){
+            _callNotification.attach()
+        }
+
         if (!sIsActivityActive) {
             startCallActivity()
         }
