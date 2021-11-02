@@ -86,6 +86,12 @@ open class ListItem : LinearLayout {
             _image.textSize = value
         }
 
+    var imageTintList: ColorStateList?
+        get() = _image.imageTintList
+        set(value) {
+            _image.imageTintList = value
+        }
+
     var imageVisibility: Boolean
         get() = _image.visibility == VISIBLE
         set(value) {
@@ -105,14 +111,18 @@ open class ListItem : LinearLayout {
             _image.state = SHOW_IMAGE
         }
 
+    fun setImageUri(imageUri: Uri?) {
+        _image.setImageURI(imageUri)
+        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+    }
+
     fun setImageInitials(text: String?) {
         _image.text = text
         text?.let { _image.state = SHOW_INITIAL }
     }
 
-    fun setImageUri(imageUri: Uri?) {
-        _image.setImageURI(imageUri)
-        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+    fun setImageResource(@DrawableRes res: Int) {
+        _image.setImageResource(res)
     }
 
     fun setImageBackgroundColor(@ColorInt color: Int) {
@@ -337,9 +347,9 @@ open class ListItem : LinearLayout {
     protected open fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
         _personLayout.setPadding(
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) 3 else dimenSpacing - 5,
+            if (isCompact) 3 else dimenSpacing - 7,
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) 3 else dimenSpacing - 5
+            if (isCompact) 3 else dimenSpacing - 7
         )
         _header.setPadding(
             if (isEnabled) dimenSpacing else 0,

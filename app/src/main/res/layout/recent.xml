@@ -26,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
+        android:tint="?colorOnSurface"
         app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
         app:fabSize="mini"

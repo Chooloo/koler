@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.adapter
 
 import android.graphics.Color
-import androidx.core.content.ContextCompat
 import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
 import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
@@ -22,9 +21,9 @@ class RecentsAdapter(boundComponent: BoundComponentRoot) : ListAdapter<Recent>(b
 
             isCompact = boundComponent.preferencesInteractor.isCompact
             captionText = if (item.date != null) context.getHoursString(item.date) else null
-            imageDrawable = ContextCompat.getDrawable(context, getCallTypeImage(item.type))
 
             setImageBackgroundColor(Color.TRANSPARENT)
+            setImageResource(getCallTypeImage(item.type))
         }
     }
 }

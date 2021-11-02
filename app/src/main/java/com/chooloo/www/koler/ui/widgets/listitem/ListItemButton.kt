@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.util.ViewManager
 
@@ -20,19 +21,20 @@ class ListItemButton : ListItem {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
+        _image.setPadding(15)
         stateListAnimator = null
-        background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
-        backgroundTintList = ColorStateList.valueOf(colorSecondary)
+        imageTintList = ColorStateList.valueOf(colorOnSecondary)
+        _personLayout.backgroundTintList = ColorStateList.valueOf(colorSecondary)
+        _personLayout.background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
 
         setTitleColor(colorOnSecondary)
-        setPadding(dimenSpacing, 0, dimenSpacing, 0)
     }
 
     override fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
         _personLayout.setPadding(
-            0,
+            dimenSpacingSmall,
             dimenSpacing - 28,
-            0,
+            dimenSpacingSmall,
             dimenSpacing - 28
         )
         _header.setPadding(

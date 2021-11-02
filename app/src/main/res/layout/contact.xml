@@ -50,7 +50,7 @@
         android:id="@+id/contact_image_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_margin="@dimen/default_spacing_small"
         android:src="@drawable/ic_star_black_24dp"
         android:tint="@color/orange_foreground"
         app:layout_constraintBottom_toBottomOf="@id/contact_text_name"

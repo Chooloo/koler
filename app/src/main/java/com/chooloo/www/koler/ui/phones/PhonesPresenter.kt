@@ -15,8 +15,7 @@ class PhonesPresenter<V : PhonesContract.View>(view: V) :
     override val adapter by lazy { PhonesAdapter(boundComponent) }
 
     private val phonesLiveData by lazy {
-        val contactId = if (view.contactId == 0L) null else view.contactId
-        boundComponent.liveDataFactory.allocPhonesProviderLiveData(contactId)
+        boundComponent.liveDataFactory.allocPhonesProviderLiveData(if (view.contactId == 0L) null else view.contactId)
     }
 
 
