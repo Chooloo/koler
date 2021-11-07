@@ -103,10 +103,14 @@ class CallActions : MotionLayout {
 
     fun showSingleCallUI() {
         transitionLayoutTo(R.id.constraint_set_single_call)
+        _binding.callActionSwap.visibility = GONE
+        _binding.callActionMerge.visibility = GONE
     }
 
     fun showMultiCallUI() {
         transitionLayoutTo(R.id.constraint_set_multi_call)
+        _binding.callActionSwap.visibility = VISIBLE
+        _binding.callActionMerge.visibility = VISIBLE
     }
 
     fun setCallActionsListener(callActionsListener: CallActionsListener?) {

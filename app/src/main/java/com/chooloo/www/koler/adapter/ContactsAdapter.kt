@@ -3,7 +3,7 @@ package com.chooloo.www.koler.adapter
 import android.net.Uri
 import com.chooloo.www.koler.data.account.Contact
 import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
-import com.chooloo.www.koler.ui.widgets.ListItem
+import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.util.initials
 
 class ContactsAdapter(boundComponent: BoundComponentRoot) :
