@@ -7,13 +7,13 @@ import android.view.KeyEvent.*
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 
 abstract class BaseFragment : Fragment(), BaseContract.View {
     protected val baseActivity by lazy { context as BaseActivity }
 
-    override val boundComponent: BoundComponentRoot
-        get() = baseActivity.boundComponent
+    override val activityComponent: ActivityComponent
+        get() = baseActivity.activityComponent
 
     val args: Bundle
         get() = arguments ?: Bundle()

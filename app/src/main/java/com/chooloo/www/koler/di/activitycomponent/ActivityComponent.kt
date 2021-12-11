@@ -1,9 +1,8 @@
-package com.chooloo.www.koler.di.boundcomponent
+package com.chooloo.www.koler.di.activitycomponent
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
-import com.chooloo.www.koler.di.component.ComponentRoot
-import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.koler.di.contextcomponent.ContextComponent
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorBound
 import com.chooloo.www.koler.interactor.dialog.DialogInteractor
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractor
@@ -13,7 +12,7 @@ import com.chooloo.www.koler.interactor.screen.ScreenInteractor
 import com.chooloo.www.koler.interactor.sim.SimInteractor
 import io.reactivex.disposables.CompositeDisposable
 
-interface BoundComponentRoot : ComponentRoot {
+interface ActivityComponent : ContextComponent {
     val disposables: CompositeDisposable
 
     val lifecycleOwner: LifecycleOwner

@@ -37,7 +37,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                boundComponent.animationInteractor.animateIn(
+                activityComponent.animationInteractor.animateIn(
                     _binding.dialpadSuggestionsScrollView,
                     true
                 )
@@ -50,9 +50,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonAddContact, true)
+                activityComponent.animationInteractor.animateIn(_binding.dialpadButtonAddContact, true)
             } else if (!value && isAddContactButtonVisible) {
-                boundComponent.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
+                activityComponent.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
             }
         }
 
@@ -60,9 +60,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                boundComponent.animationInteractor.animateIn(_binding.dialpadButtonDelete, true)
+                activityComponent.animationInteractor.animateIn(_binding.dialpadButtonDelete, true)
             } else if (!value && isDeleteButtonVisible) {
-                boundComponent.animationInteractor.showView(_binding.dialpadButtonDelete, false)
+                activityComponent.animationInteractor.showView(_binding.dialpadButtonDelete, false)
             }
         }
 

@@ -3,12 +3,12 @@ package com.chooloo.www.koler.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
 
 abstract class ListAdapter<DataType>(
-    protected val boundComponent: BoundComponentRoot
+    protected val activityComponent: ActivityComponent
 ) : RecyclerView.Adapter<ListItemHolder>() {
     private var _data: ListBundle<DataType> = ListBundle()
     private var _onItemClickListener: (item: DataType) -> Unit = {}
@@ -37,7 +37,7 @@ abstract class ListAdapter<DataType>(
                 _onItemLongClickListener.invoke(dataItem)
                 true
             }
-            boundComponent.animationInteractor.animateIn(this, false)
+            activityComponent.animationInteractor.animateIn(this, false)
             onBindListItem(this, dataItem)
         }
     }

@@ -4,13 +4,13 @@ package com.chooloo.www.koler.ui.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRootImpl
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponentImpl
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
-    override val boundComponent by lazy { BoundComponentRootImpl(this) }
+    override val activityComponent by lazy { ActivityComponentImpl(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(boundComponent.preferencesInteractor.accentTheme.theme)
+        setTheme(activityComponent.preferencesInteractor.accentTheme.theme)
         super.onCreate(savedInstanceState)
     }
 
@@ -21,12 +21,12 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     override fun onStop() {
         super.onStop()
-        boundComponent.disposables.clear()
+        activityComponent.disposables.clear()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        boundComponent.disposables.dispose()
+        activityComponent.disposables.dispose()
     }
 
     //region base view
@@ -52,10 +52,10 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     }
 
     override fun hasPermission(permission: String) =
-        boundComponent.permissionInteractor.hasSelfPermission(permission)
+        activityComponent.permissionInteractor.hasSelfPermission(permission)
 
     override fun hasPermissions(permissions: Array<String>) =
-        boundComponent.permissionInteractor.hasSelfPermissions(permissions)
+        activityComponent.permissionInteractor.hasSelfPermissions(permissions)
 
     //endregion
 }

@@ -11,7 +11,7 @@ open class BasePresenter<V : BaseContract.View>(final override var view: V) :
         view.getLifecycle().addObserver(this)
     }
 
-    protected val boundComponent get() = view.boundComponent
+    protected val boundComponent get() = view.activityComponent
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     protected open fun onStart() {

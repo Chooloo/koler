@@ -3,12 +3,11 @@ package com.chooloo.www.koler.ui.base
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.Lifecycle
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
-import com.chooloo.www.koler.di.component.ComponentRoot
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 
 interface BaseContract {
     interface View {
-        val boundComponent: BoundComponentRoot
+        val activityComponent: ActivityComponent
 
         fun onSetup()
         fun finish() {}

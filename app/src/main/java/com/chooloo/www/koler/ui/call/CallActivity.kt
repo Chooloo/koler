@@ -34,7 +34,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             val old = _binding.callStateText.text.toString()
             _binding.callStateText.text = value
             if (old != value) {
-                boundComponent.animationInteractor.animateFocus(_binding.callStateText)
+                activityComponent.animationInteractor.animateFocus(_binding.callStateText)
             }
         }
 
@@ -142,10 +142,10 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun setElapsedTime(duration: Long?) {
         duration?.let {
-            boundComponent.animationInteractor.animateIn(_binding.callTimeText, true)
+            activityComponent.animationInteractor.animateIn(_binding.callTimeText, true)
             _binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
-            boundComponent.animationInteractor.animateOut(_binding.callTimeText, true, false)
+            activityComponent.animationInteractor.animateOut(_binding.callTimeText, true, false)
         }
     }
 
@@ -153,20 +153,20 @@ class CallActivity : BaseActivity(), CallContract.View {
         _binding.callBanner.text = number
         if (_binding.callBanner.visibility != View.VISIBLE) {
             _binding.callBanner.visibility = View.VISIBLE
-            boundComponent.animationInteractor.animateIn(_binding.callBanner, true)
-            boundComponent.animationInteractor.animateFocus(_binding.callBanner)
+            activityComponent.animationInteractor.animateIn(_binding.callBanner, true)
+            activityComponent.animationInteractor.animateFocus(_binding.callBanner)
         }
     }
 
     override fun hideHoldingBanner() {
-        boundComponent.animationInteractor.animateOut(_binding.callBanner, true, false)
+        activityComponent.animationInteractor.animateOut(_binding.callBanner, true, false)
     }
 
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
         if (_binding.callActions.visibility != View.VISIBLE) {
-            boundComponent.animationInteractor.animateIn(_binding.callActions, true)
+            activityComponent.animationInteractor.animateIn(_binding.callActions, true)
         }
     }
 

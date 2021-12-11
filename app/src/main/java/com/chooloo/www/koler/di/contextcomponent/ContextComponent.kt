@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.di.component
+package com.chooloo.www.koler.di.contextcomponent
 
 import android.app.KeyguardManager
 import android.content.ClipboardManager
@@ -24,7 +24,7 @@ import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.util.PreferencesManager
 
-interface ComponentRoot {
+interface ContextComponent {
     val liveDataFactory: LiveDataFactory
 
     val vibrator: Vibrator

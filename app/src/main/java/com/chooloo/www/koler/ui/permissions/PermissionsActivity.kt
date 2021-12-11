@@ -53,7 +53,7 @@ class PermissionsActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SETTINGS) {
             _allPermissions?.let {
-                boundComponent.permissionInteractor.checkPermissions(
+                activityComponent.permissionInteractor.checkPermissions(
                     it,
                     sGrantedCallback,
                     sDeniedCallback,

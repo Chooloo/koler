@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.di.component
+package com.chooloo.www.koler.di.contextcomponent
 
 import android.app.Application
 import android.app.KeyguardManager
@@ -27,9 +27,9 @@ import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.koler.interactor.string.StringInteractorImpl
 import com.chooloo.www.koler.util.PreferencesManager
 
-open class ComponentRootImpl(
+open class ContextComponentImpl(
     internal val application: Application
-) : ComponentRoot {
+) : ContextComponent {
     override val liveDataFactory by lazy {
         LiveDataFactoryImpl(application)
     }

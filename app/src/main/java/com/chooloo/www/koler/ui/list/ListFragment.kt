@@ -52,7 +52,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun animateListView() {
-        boundComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
+        activityComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -76,9 +76,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                boundComponent.animationInteractor.animateIn(this, true)
+                activityComponent.animationInteractor.animateIn(this, true)
             } else {
-                boundComponent.animationInteractor.showView(this, false)
+                activityComponent.animationInteractor.showView(this, false)
             }
         }
     }

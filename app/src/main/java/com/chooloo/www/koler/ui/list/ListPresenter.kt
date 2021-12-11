@@ -32,7 +32,7 @@ abstract class ListPresenter<ItemType, V : ListContract.View<ItemType>>(view: V)
         view.apply {
             showLoading(true)
             setAdapter(adapter)
-            if (boundComponent.preferencesInteractor.isScrollIndicator) {
+            if (activityComponent.preferencesInteractor.isScrollIndicator) {
                 setupScrollIndicator()
             }
         }

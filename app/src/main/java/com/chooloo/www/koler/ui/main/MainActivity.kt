@@ -19,7 +19,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     private lateinit var _presenter: MainPresenter<MainActivity>
     private val _binding by lazy { MainBinding.inflate(layoutInflater) }
     private val _dialpadViewModel by lazy {
-        ViewModelProvider(boundComponent.viewModelStoreOwner).get(DialpadViewModel::class.java)
+        ViewModelProvider(activityComponent.viewModelStoreOwner).get(DialpadViewModel::class.java)
     }
 
     override var selectedPage: Int
@@ -49,15 +49,15 @@ class MainActivity : BaseActivity(), MainContract.View {
             mainTabs.headers =
                 arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
             mainTabs.viewPager = mainViewPager
-            mainViewPager.currentItem = boundComponent.preferencesInteractor.defaultPage.index
+            mainViewPager.currentItem = activityComponent.preferencesInteractor.defaultPage.index
         }
 
-        boundComponent.permissionInteractor.checkDefaultDialer()
+        activityComponent.permissionInteractor.checkDefaultDialer()
         checkIntent()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        boundComponent.screenInteractor.ignoreEditTextFocus(event)
+        activityComponent.screenInteractor.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 

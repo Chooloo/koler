@@ -14,8 +14,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 open class BottomFragment<FragmentType : Fragment>(
     val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
-    override val boundComponent
-        get() = baseActivity.boundComponent
+    override val activityComponent
+        get() = baseActivity.activityComponent
 
     private val _binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
 
