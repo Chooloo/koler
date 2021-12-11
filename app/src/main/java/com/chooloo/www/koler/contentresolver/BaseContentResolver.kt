@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class BaseContentResolver<T>(private val context: Context) {
+abstract class BaseContentResolver<T>   (private val context: Context) {
     private var _filter: String? = null
 
     private val _ioContentResolver by lazy {

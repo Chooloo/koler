@@ -94,6 +94,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
                 if (isDialer) {
                     addTextChangedListener(PhoneNumberFormattingTextWatcher())
                 }
+
                 setText(args.getString(ARG_NUMBER))
                 addOnTextChangedListener {
                     _presenter.onTextChanged(it)

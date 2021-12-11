@@ -10,16 +10,10 @@ import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
 abstract class ListAdapter<DataType>(
     protected val boundComponent: BoundComponentRoot
 ) : RecyclerView.Adapter<ListItemHolder>() {
-    private var _isCompact = false
-    private var _isSelecting = false
-    private var _isSelectable = true
     private var _data: ListBundle<DataType> = ListBundle()
-    private var _selectedItems: ArrayList<DataType> = arrayListOf()
-
     private var _onItemClickListener: (item: DataType) -> Unit = {}
     private var _onItemLongClickListener: (item: DataType) -> Unit = {}
-    private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
-    private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
+
 
     var data: ListBundle<DataType>
         get() = _data
@@ -29,18 +23,6 @@ abstract class ListAdapter<DataType>(
             notifyDataSetChanged()
         }
 
-    var isCompact
-        get() = _isCompact
-        set(value) {
-            _isCompact = value
-        }
-
-    val isSelecting: Boolean
-        get() = _isSelecting
-
-    val selectedItems: ArrayList<DataType>
-        get() = _selectedItems
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemHolder(parent.context)
@@ -49,42 +31,21 @@ abstract class ListAdapter<DataType>(
         val dataItem = getItem(position)
         holder.listItem.apply {
             headerText = getHeader(position)
-            isCompact = this@ListAdapter.isCompact
 
-            setOnClickListener {
-                if (isSelected && _isSelectable) {
-                    isSelected = false
-                    _selectedItems.remove(dataItem)
-                    if (_selectedItems.size == 0) {
-                        _isSelecting = false
-                        _onSelectingChangeListener.invoke(false)
-                    }
-                } else if (!isSelected && _isSelecting) {
-                    isSelected = true
-                    _selectedItems.add(dataItem)
-                    _onItemsSelectedListener.invoke(_selectedItems)
-                } else {
-                    _onItemClickListener.invoke(getItem(position))
-                }
-            }
+            setOnClickListener { _onItemClickListener.invoke(dataItem) }
             setOnLongClickListener {
-//                if (_isSelectable) {
-//                    isSelected = true
-//                    _isSelecting = true
-//                    _selectedItems.add(dataItem)
-//                    _onItemsSelectedListener.invoke(_selectedItems)
-//                    _onSelectingChangeListener.invoke(true)
-//                } else {
-//                    _onItemLongClickListener.invoke(dataItem)
-//                }
+                _onItemLongClickListener.invoke(dataItem)
                 true
             }
             boundComponent.animationInteractor.animateIn(this, false)
-            onBindListItem(this, getItem(position))
+            onBindListItem(this, dataItem)
         }
     }
 
     override fun getItemCount() = _data.items.size
+
+    private fun getItem(position: Int) = _data.items[position]
+
 
     fun getHeader(position: Int): String? {
         var total = 0
@@ -97,11 +58,6 @@ abstract class ListAdapter<DataType>(
         return null
     }
 
-    private fun getItem(position: Int) = _data.items[position]
-
-
-    //region listeners setters
-
     fun setOnItemClickListener(onItemClickListener: (item: DataType) -> Unit) {
         _onItemClickListener = onItemClickListener
     }
@@ -109,16 +65,6 @@ abstract class ListAdapter<DataType>(
     fun setOnItemLongClickListener(onItemLongClickListener: (item: DataType) -> Unit) {
         _onItemLongClickListener = onItemLongClickListener
     }
-
-    fun setOnSelectingChangeListener(onSelectingChangeListener: (isSelecting: Boolean) -> Unit) {
-        _onSelectingChangeListener = onSelectingChangeListener
-    }
-
-    fun setOnItemsSelectedListener(onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit) {
-        _onItemsSelectedListener = onItemsSelectedListener
-    }
-
-    //endregion
 
 
     abstract fun onBindListItem(listItem: ListItem, item: DataType)

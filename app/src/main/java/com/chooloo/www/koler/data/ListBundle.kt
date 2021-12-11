@@ -6,7 +6,6 @@ import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.data.account.Recent
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.util.getRelativeDateString
-import java.util.stream.Collectors
 
 data class ListBundle<DataType>(
     val items: ArrayList<DataType> = arrayListOf(),
@@ -18,29 +17,21 @@ data class ListBundle<DataType>(
             contacts: ArrayList<Contact>,
             withFavs: Boolean = false
         ): ListBundle<Contact> {
-            val headers =
-                contacts.stream().map { contact -> contact.name?.get(0).toString() }.distinct()
-                    .collect(Collectors.toList()).toTypedArray()
-            val headersCounts = arrayListOf<Int>()
-            headers.forEach { header ->
-                headersCounts.add(contacts.count { contact ->
-                    contact.name?.get(0).toString() == header
-                })
-            }
+            val headers = contacts.groupingBy { it.name?.get(0).toString() }.eachCount()
             if (withFavs) {
                 val favs = ArrayList(contacts.filter { it.starred })
                 if (favs.isNotEmpty()) {
                     return ListBundle(
                         items = ArrayList(favs + contacts),
-                        headers = arrayOf("★") + headers,
-                        headersCounts = arrayOf(favs.size) + headersCounts
+                        headers = arrayOf("★") + headers.keys,
+                        headersCounts = arrayOf(favs.size) + headers.values
                     )
                 }
             }
             return ListBundle(
                 items = contacts,
-                headers = headers,
-                headersCounts = headersCounts.toTypedArray()
+                headers = headers.keys.toTypedArray(),
+                headersCounts = headers.values.toTypedArray()
             )
         }
 
@@ -48,25 +39,11 @@ data class ListBundle<DataType>(
             if (recents.isEmpty()) {
                 return ListBundle()
             }
-            val headers: ArrayList<String> = arrayListOf()
-            val headersCounts: ArrayList<Int> = arrayListOf()
-            var currentCount = 0
-            var currentHeader = getRelativeDateString(recents[0].date)
-            recents.forEach {
-                val dateString = getRelativeDateString(it.date)
-                if (dateString != currentHeader) {
-                    headers.add(currentHeader)
-                    headersCounts.add(currentCount)
-                    currentHeader = dateString
-                    currentCount = 1
-                } else {
-                    currentCount = currentCount.plus(1)
-                }
-            }
+            val headers = recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
             return ListBundle(
                 items = recents,
-                headers = headers.toTypedArray(),
-                headersCounts = headersCounts.toTypedArray()
+                headers = headers.keys.toTypedArray(),
+                headersCounts = headers.values.toTypedArray()
             )
         }
 

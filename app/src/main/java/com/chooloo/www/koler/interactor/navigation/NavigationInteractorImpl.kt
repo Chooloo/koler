@@ -122,7 +122,7 @@ class NavigationInteractorImpl(
     }
 
     override fun call(number: String) {
-        permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_call, {
+        permissionInteractor.runWithDefaultDialer(null, {
             simInteractor.getIsMultiSim { isMultiSim ->
                 if (preferencesInteractor.isAskSim && isMultiSim) {
                     simInteractor.askForSim { call(it, number) }

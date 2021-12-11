@@ -4,7 +4,7 @@ import android.content.Intent
 import com.chooloo.www.koler.ui.base.BasePresenter
 import java.net.URLDecoder
 
-class MainPresenter<V : MainContract.View>(view: V) :
+class   MainPresenter<V : MainContract.View>(view: V) :
     BasePresenter<V>(view),
     MainContract.Presenter<V> {
 

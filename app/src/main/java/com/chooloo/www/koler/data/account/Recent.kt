@@ -16,14 +16,22 @@ data class Recent(
 ) : Serializable {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(TYPE_INCOMING, TYPE_OUTGOING, TYPE_MISSED, TYPE_VOICEMAIL, TYPE_REJECTED, TYPE_UNKNOWN)
+    @IntDef(
+        TYPE_INCOMING,
+        TYPE_OUTGOING,
+        TYPE_MISSED,
+        TYPE_BLOCKED,
+        TYPE_VOICEMAIL,
+        TYPE_REJECTED,
+        TYPE_UNKNOWN
+    )
     annotation class CallType
 
     val relativeTime: String?
         get() = date?.time?.let { getTimeAgo(it) }
 
     companion object {
-        const val TYPE_UNKNOWN = 6
+        const val TYPE_UNKNOWN = 7
         const val TYPE_MISSED = CallLog.Calls.MISSED_TYPE
         const val TYPE_BLOCKED = CallLog.Calls.BLOCKED_TYPE
         const val TYPE_INCOMING = CallLog.Calls.INCOMING_TYPE
