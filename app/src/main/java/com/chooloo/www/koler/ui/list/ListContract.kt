@@ -7,7 +7,6 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
-        val isCompact: Boolean
         val searchHint: String?
 
         fun scrollToTop()
@@ -23,7 +22,7 @@ interface ListContract : BaseContract {
         fun setAdapter(adapter: ListAdapter<ItemType>)
     }
 
-    interface Presenter<ItemType, V : View<ItemType>> : BaseContract.Presenter<V> {
+    interface Controller<ItemType, V : View<ItemType>> : BaseContract.Controller<V> {
         val requiredPermissions: Array<String>
 
         fun onResults()

@@ -11,7 +11,7 @@ class ContactPreferencesContract {
         var isUnfavoriteContactVisible: Boolean
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onBlockClick()
         fun onUnblockClick()
         fun onFavoriteClick()

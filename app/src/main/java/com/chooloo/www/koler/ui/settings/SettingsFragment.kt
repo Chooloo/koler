@@ -6,13 +6,13 @@ import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 import dev.sasikanth.colorsheet.ColorSheet
 
 class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
-    private lateinit var _presenter: SettingsPresenter<SettingsFragment>
+    private lateinit var _presenter: SettingsController<SettingsFragment>
 
     override val preferenceResource = R.xml.preferences_main
 
 
     override fun onSetup() {
-        _presenter = SettingsPresenter(this)
+        _presenter = SettingsController(this)
     }
 
     override fun onPreferenceClickListener(preference: Preference) {

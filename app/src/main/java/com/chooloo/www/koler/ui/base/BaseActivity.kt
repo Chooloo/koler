@@ -1,4 +1,3 @@
-
 package com.chooloo.www.koler.ui.base
 
 import android.os.Bundle
@@ -7,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.di.activitycomponent.ActivityComponentImpl
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
-    override val activityComponent by lazy { ActivityComponentImpl(this) }
+    override val component by lazy { ActivityComponentImpl(this) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(activityComponent.preferencesInteractor.accentTheme.theme)
+        setTheme(component.preferencesInteractor.accentTheme.theme)
         super.onCreate(savedInstanceState)
     }
 
@@ -21,41 +21,31 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     override fun onStop() {
         super.onStop()
-        activityComponent.disposables.clear()
+        component.disposables.clear()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        activityComponent.disposables.dispose()
+        component.disposables.dispose()
     }
-
-    //region base view
 
     override fun finish() {
         super<AppCompatActivity>.finish()
     }
 
-    override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    override fun showError(stringResId: Int) {
+        Toast.makeText(
+            applicationContext,
+            component.stringInteractor.getString(stringResId),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun showMessage(stringResId: Int) {
-        showMessage(getString(stringResId))
+        Toast.makeText(
+            this,
+            component.stringInteractor.getString(stringResId),
+            Toast.LENGTH_SHORT
+        ).show()
     }
-
-    override fun showError(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun showError(stringResId: Int) {
-        showError(getString(stringResId))
-    }
-
-    override fun hasPermission(permission: String) =
-        activityComponent.permissionInteractor.hasSelfPermission(permission)
-
-    override fun hasPermissions(permissions: Array<String>) =
-        activityComponent.permissionInteractor.hasSelfPermissions(permissions)
-
-    //endregion
 }

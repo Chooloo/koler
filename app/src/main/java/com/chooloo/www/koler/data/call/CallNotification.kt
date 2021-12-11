@@ -33,7 +33,7 @@ class CallNotification(
     private val context: Context
 ) : CallsInteractor.Listener, CallAudioInteractor.Listener {
     private var _call: Call? = null
-    private val componentRoot by lazy { (context.applicationContext as KolerApp).componentRoot }
+    private val componentRoot by lazy { (context.applicationContext as KolerApp).component }
 
 
     override fun onNoCalls() {

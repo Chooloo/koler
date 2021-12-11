@@ -17,7 +17,7 @@ interface RecentContract : BaseContract {
         fun openContactView(contactId: Long)
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onActionSms()
         fun onActionCall()
         fun onActionMenu()

@@ -11,11 +11,11 @@ class PhonesFragment :
     PhonesContract.View {
 
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
-    override lateinit var presenter: PhonesPresenter<PhonesFragment>
+    override lateinit var presenter: PhonesController<PhonesFragment>
 
 
     override fun onSetup() {
-        presenter = PhonesPresenter(this)
+        presenter = PhonesController(this)
         super.onSetup()
     }
 

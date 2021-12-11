@@ -11,9 +11,11 @@ class ContactsAdapter(activityComponent: ActivityComponent) :
     override fun onBindListItem(listItem: ListItem, item: Contact) {
         listItem.apply {
             titleText = item.name
-            activityComponent.phoneAccountsInteractor.getContactAccounts(item.id) { account ->
+            component.phoneAccountsInteractor.getContactAccounts(item.id) { account ->
                 captionText = account?.firstOrNull()?.number
             }
+
+            isCompact = component.preferencesInteractor.isCompact
 
             setImageInitials(item.name?.initials())
             setImageUri(if (item.photoUri != null) Uri.parse(item.photoUri) else null)

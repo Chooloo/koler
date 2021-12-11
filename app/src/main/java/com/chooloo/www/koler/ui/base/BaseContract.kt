@@ -1,28 +1,21 @@
 package com.chooloo.www.koler.ui.base
 
-import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.Lifecycle
 import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 
 interface BaseContract {
     interface View {
-        val activityComponent: ActivityComponent
+        val component: ActivityComponent
 
         fun onSetup()
         fun finish() {}
         fun getLifecycle(): Lifecycle
-        fun showMessage(message: String)
-        fun showMessage(@StringRes stringResId: Int)
-        fun showError(message: String)
         fun showError(@StringRes stringResId: Int)
-        fun getColor(@ColorRes color: Int): Int
-        fun getString(@StringRes resId: Int): String
-        fun hasPermission(permission: String): Boolean
-        fun hasPermissions(permissions: Array<String>): Boolean
+        fun showMessage(@StringRes stringResId: Int)
     }
 
-    interface Presenter<V : View> {
+    interface Controller<V : View> {
         val view: V
     }
 }

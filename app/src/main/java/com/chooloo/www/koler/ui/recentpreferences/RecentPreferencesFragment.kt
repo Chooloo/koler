@@ -6,7 +6,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 
 class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesContract.View {
-    private lateinit var _presenter: RecentPreferencesPresenter<RecentPreferencesFragment>
+    private lateinit var _presenter: RecentPreferencesController<RecentPreferencesFragment>
 
     override val number by lazy { argsSafely.getString(ARG_NUMBER) }
     override val preferenceResource = R.xml.preferences_recent
@@ -26,7 +26,7 @@ class RecentPreferencesFragment : BasePreferenceFragment(), RecentPreferencesCon
 
     override fun onSetup() {
         super.onSetup()
-        _presenter = RecentPreferencesPresenter(this)
+        _presenter = RecentPreferencesController(this)
     }
 
     override fun onPreferenceClickListener(preference: Preference) {

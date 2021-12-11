@@ -13,7 +13,7 @@ interface ContactContract : BaseContract {
         fun showMenu()
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onActionSms()
         fun onActionFav()
         fun onActionCall()

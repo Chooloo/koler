@@ -9,7 +9,7 @@ import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 
 class ExtendedIconButton : AppCompatButton {
-    private val componentRoot by lazy { (context.applicationContext as KolerApp).componentRoot }
+    private val componentRoot by lazy { (context.applicationContext as KolerApp).component }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

@@ -16,14 +16,13 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     BaseFragment(),
     ListContract.View<ItemType> {
 
-    abstract val presenter: ListPresenter<ItemType, out ListFragment<ItemType, Adapter>>
+    abstract val presenter: ListController<ItemType, out ListFragment<ItemType, Adapter>>
 
     private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
     private val _isSearchable by lazy { args.getBoolean(ARG_IS_SEARCHABLE) }
     private val _isHideNoResults by lazy { args.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
 
     override val searchHint by lazy { getString(R.string.hint_search_items) }
-    override val isCompact by lazy { args.getBoolean(ARG_IS_COMPACT) }
 
 
     override fun onCreateView(
@@ -52,7 +51,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun animateListView() {
-        activityComponent.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
+        component.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
     }
 
     override fun requestSearchFocus() {
@@ -76,9 +75,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override fun showSelecting(isSelecting: Boolean) {
         _binding.itemsDeleteButton.apply {
             if (isSelecting) {
-                activityComponent.animationInteractor.animateIn(this, true)
+                component.animationInteractor.animateIn(this, true)
             } else {
-                activityComponent.animationInteractor.showView(this, false)
+                component.animationInteractor.showView(this, false)
             }
         }
     }
@@ -112,7 +111,6 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     companion object {
         const val ARG_FILTER = "filter"
-        const val ARG_IS_COMPACT = "is_compact"
         const val ARG_IS_SEARCHABLE = "is_searchable"
         const val ARG_IS_HIDE_NO_RESULTS = "is_hide_no_results"
     }

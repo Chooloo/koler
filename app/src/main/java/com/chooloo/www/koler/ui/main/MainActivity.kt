@@ -16,10 +16,10 @@ import com.chooloo.www.koler.viewmodel.DialpadViewModel
 // TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
     private var _dialpadFragment: DialpadFragment? = null
-    private lateinit var _presenter: MainPresenter<MainActivity>
+    private lateinit var _presenter: MainController<MainActivity>
     private val _binding by lazy { MainBinding.inflate(layoutInflater) }
     private val _dialpadViewModel by lazy {
-        ViewModelProvider(activityComponent.viewModelStoreOwner).get(DialpadViewModel::class.java)
+        ViewModelProvider(component.viewModelStoreOwner).get(DialpadViewModel::class.java)
     }
 
     override var selectedPage: Int
@@ -41,7 +41,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun onSetup() {
-        _presenter = MainPresenter(this)
+        _presenter = MainController(this)
         _binding.apply {
             mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
             mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
@@ -49,15 +49,15 @@ class MainActivity : BaseActivity(), MainContract.View {
             mainTabs.headers =
                 arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
             mainTabs.viewPager = mainViewPager
-            mainViewPager.currentItem = activityComponent.preferencesInteractor.defaultPage.index
+            mainViewPager.currentItem = component.preferencesInteractor.defaultPage.index
         }
 
-        activityComponent.permissionInteractor.checkDefaultDialer()
+        component.permissionInteractor.checkDefaultDialer()
         checkIntent()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        activityComponent.screenInteractor.ignoreEditTextFocus(event)
+        component.screenInteractor.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 

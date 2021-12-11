@@ -3,11 +3,11 @@ package com.chooloo.www.koler.ui.settings
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.ui.base.BaseController
 
-class SettingsPresenter<V : SettingsContract.View>(view: V) :
-    BasePresenter<V>(view),
-    SettingsContract.Presenter<V> {
+class SettingsController<V : SettingsContract.View>(view: V) :
+    BaseController<V>(view),
+    SettingsContract.Controller<V> {
 
     override fun refresh() {
         boundComponent.navigationInteractor.goToMainActivity()

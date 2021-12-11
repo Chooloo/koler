@@ -22,7 +22,7 @@ class PhonesAdapter(activityComponent: ActivityComponent) :
             isPadded = false
             titleText = item.number
             captionText =
-                activityComponent.stringInteractor.getString(Phone.getTypeLabelResource(item.type))
+                component.stringInteractor.getString(Phone.getTypeLabelResource(item.type))
 
             setTitleBold(true)
             setImageBackgroundColor(Color.TRANSPARENT)

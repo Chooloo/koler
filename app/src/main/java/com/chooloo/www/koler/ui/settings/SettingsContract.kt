@@ -7,7 +7,7 @@ class SettingsContract : BaseContract {
         fun openColorPicker()
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun refresh()
 
         fun onClickedRate()

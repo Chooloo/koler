@@ -405,7 +405,7 @@ open class ListItem : LinearLayout {
     }
 
     fun blinkCaption() {
-        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateBlink(
+        (context.applicationContext as KolerApp).component.animationInteractor.animateBlink(
             _caption,
             2500
         )

@@ -16,7 +16,7 @@ import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
-    private lateinit var _presenter: DialpadPresenter<DialpadFragment>
+    private lateinit var _presenter: DialpadController<DialpadFragment>
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
@@ -37,7 +37,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                activityComponent.animationInteractor.animateIn(
+                component.animationInteractor.animateIn(
                     _binding.dialpadSuggestionsScrollView,
                     true
                 )
@@ -50,9 +50,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                activityComponent.animationInteractor.animateIn(_binding.dialpadButtonAddContact, true)
+                component.animationInteractor.animateIn(_binding.dialpadButtonAddContact, true)
             } else if (!value && isAddContactButtonVisible) {
-                activityComponent.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
+                component.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
             }
         }
 
@@ -60,9 +60,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                activityComponent.animationInteractor.animateIn(_binding.dialpadButtonDelete, true)
+                component.animationInteractor.animateIn(_binding.dialpadButtonDelete, true)
             } else if (!value && isDeleteButtonVisible) {
-                activityComponent.animationInteractor.showView(_binding.dialpadButtonDelete, false)
+                component.animationInteractor.showView(_binding.dialpadButtonDelete, false)
             }
         }
 
@@ -74,7 +74,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _presenter = DialpadPresenter(this)
+        _presenter = DialpadController(this)
         _binding.apply {
             dialpadButtonAddContact.setOnClickListener { _presenter.onAddContactClick() }
             dialpadButtonCall.apply {

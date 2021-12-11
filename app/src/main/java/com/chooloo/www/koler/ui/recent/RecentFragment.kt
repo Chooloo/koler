@@ -12,11 +12,9 @@ import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    private lateinit var _presenter: RecentPresenter<RecentFragment>
+    private lateinit var _presenter: RecentController<RecentFragment>
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
 
     override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
@@ -60,7 +58,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _presenter = RecentPresenter(this)
+        _presenter = RecentController(this)
         _binding.apply {
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
             recentButtonMenu.setOnClickListener { _presenter.onActionMenu() }

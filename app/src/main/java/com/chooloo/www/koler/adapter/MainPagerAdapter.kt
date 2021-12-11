@@ -7,7 +7,7 @@ import com.chooloo.www.koler.ui.contacts.ContactsFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 
 class MainPagerAdapter(private val activity: BaseActivity) : FragmentStateAdapter(activity) {
-    private val _isCompactPref by lazy { activity.activityComponent.preferencesInteractor.isCompact }
+    private val _isCompactPref by lazy { activity.component.preferencesInteractor.isCompact }
 
     override fun getItemCount() = 2
 

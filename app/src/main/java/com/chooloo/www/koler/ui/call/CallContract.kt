@@ -37,8 +37,8 @@ interface CallContract : BaseContract {
         fun hideHoldingBanner()
     }
 
-    interface Presenter<V : View> :
-        BaseContract.Presenter<V>,
+    interface Controller<V : View> :
+        BaseContract.Controller<V>,
         CallsInteractor.Listener,
         CallAudioInteractor.Listener,
         CallActions.CallActionsListener {

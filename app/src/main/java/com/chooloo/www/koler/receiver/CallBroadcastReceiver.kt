@@ -7,7 +7,7 @@ import com.chooloo.www.koler.KolerApp
 
 class CallBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val componentRoot = (context.applicationContext as KolerApp).componentRoot
+        val componentRoot = (context.applicationContext as KolerApp).component
         when (intent.action) {
             ACTION_MUTE -> componentRoot.audioInteractor.isMuted = true
             ACTION_UNMUTE -> componentRoot.audioInteractor.isMuted = false

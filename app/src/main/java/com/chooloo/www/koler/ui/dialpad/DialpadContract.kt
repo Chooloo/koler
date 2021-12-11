@@ -16,7 +16,7 @@ interface DialpadContract : BaseContract {
         fun setSuggestionsFilter(filter: String)
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onKeyClick(keyCode: Int)
         fun onLongKeyClick(keyCode: Int): Boolean
         fun onCallClick()

@@ -13,7 +13,7 @@ import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private lateinit var _presenter: CallPresenter<CallActivity>
+    private lateinit var _presenter: CallController<CallActivity>
     private val _binding by lazy { CallBinding.inflate(layoutInflater) }
 
     override var imageURI: Uri?
@@ -34,7 +34,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             val old = _binding.callStateText.text.toString()
             _binding.callStateText.text = value
             if (old != value) {
-                activityComponent.animationInteractor.animateFocus(_binding.callStateText)
+                component.animationInteractor.animateFocus(_binding.callStateText)
             }
         }
 
@@ -105,7 +105,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun onSetup() {
-        _presenter = CallPresenter(this)
+        _presenter = CallController(this)
         _binding.apply {
             callActions.setCallActionsListener(_presenter)
             callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
@@ -142,10 +142,10 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun setElapsedTime(duration: Long?) {
         duration?.let {
-            activityComponent.animationInteractor.animateIn(_binding.callTimeText, true)
+            component.animationInteractor.animateIn(_binding.callTimeText, true)
             _binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
-            activityComponent.animationInteractor.animateOut(_binding.callTimeText, true, false)
+            component.animationInteractor.animateOut(_binding.callTimeText, true, false)
         }
     }
 
@@ -153,20 +153,20 @@ class CallActivity : BaseActivity(), CallContract.View {
         _binding.callBanner.text = number
         if (_binding.callBanner.visibility != View.VISIBLE) {
             _binding.callBanner.visibility = View.VISIBLE
-            activityComponent.animationInteractor.animateIn(_binding.callBanner, true)
-            activityComponent.animationInteractor.animateFocus(_binding.callBanner)
+            component.animationInteractor.animateIn(_binding.callBanner, true)
+            component.animationInteractor.animateFocus(_binding.callBanner)
         }
     }
 
     override fun hideHoldingBanner() {
-        activityComponent.animationInteractor.animateOut(_binding.callBanner, true, false)
+        component.animationInteractor.animateOut(_binding.callBanner, true, false)
     }
 
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
         if (_binding.callActions.visibility != View.VISIBLE) {
-            activityComponent.animationInteractor.animateIn(_binding.callActions, true)
+            component.animationInteractor.animateIn(_binding.callActions, true)
         }
     }
 

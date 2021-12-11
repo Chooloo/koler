@@ -13,7 +13,7 @@ interface MainContract : BaseContract {
         fun openSettings()
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onMenuClick()
         fun onDialpadFabClick()
         fun onViewIntent(intent: Intent)

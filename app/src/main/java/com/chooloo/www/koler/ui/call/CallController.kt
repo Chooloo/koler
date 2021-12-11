@@ -11,16 +11,16 @@ import com.chooloo.www.koler.data.call.CantMergeCallException
 import com.chooloo.www.koler.data.call.CantSwapCallException
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.koler.service.CallService
-import com.chooloo.www.koler.ui.base.BasePresenter
+import com.chooloo.www.koler.ui.base.BaseController
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class CallPresenter<V : CallContract.View>(view: V) :
-    BasePresenter<V>(view),
-    CallContract.Presenter<V> {
+class CallController<V : CallContract.View>(view: V) :
+    BaseController<V>(view),
+    CallContract.Controller<V> {
 
     private var _currentCallId: String? = null
     private var _timerDisposable: Disposable? = null
@@ -37,13 +37,13 @@ class CallPresenter<V : CallContract.View>(view: V) :
             proximityInteractor.acquire()
             screenInteractor.disableKeyboard()
             screenInteractor.setShowWhenLocked()
-            callAudioInteractor.registerListener(this@CallPresenter)
-            callsInteractor.registerListener(this@CallPresenter)
+            callAudioInteractor.registerListener(this@CallController)
+            callsInteractor.registerListener(this@CallController)
             callsInteractor.mainCall?.let {
                 onCallChanged(it)
                 onMainCallChanged(it)
-                callAudioInteractor.isMuted?.let(this@CallPresenter::onMuteChanged)
-                callAudioInteractor.audioRoute?.let(this@CallPresenter::onAudioRouteChanged)
+                callAudioInteractor.isMuted?.let(this@CallController::onMuteChanged)
+                callAudioInteractor.audioRoute?.let(this@CallController::onAudioRouteChanged)
             }
         }
     }

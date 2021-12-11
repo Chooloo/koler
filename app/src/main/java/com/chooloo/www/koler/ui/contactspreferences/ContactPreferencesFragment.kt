@@ -8,7 +8,7 @@ import com.chooloo.www.koler.ui.base.BasePreferenceFragment
 class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesContract.View {
     override val preferenceResource = R.xml.preferences_contact
     override val contactId by lazy { argsSafely.getLong(ARG_CONTACT_ID) }
-    private lateinit var _presenter: ContactPreferencesPresenter<ContactPreferencesFragment>
+    private lateinit var _presenter: ContactPreferencesController<ContactPreferencesFragment>
 
     override var isBlockContactVisible: Boolean
         get() = getPreference<Preference>(R.string.pref_key_block_contact)?.isVisible == true
@@ -36,7 +36,7 @@ class ContactPreferencesFragment : BasePreferenceFragment(), ContactPreferencesC
 
 
     override fun onSetup() {
-        _presenter = ContactPreferencesPresenter(this)
+        _presenter = ContactPreferencesController(this)
         super.onSetup()
     }
 

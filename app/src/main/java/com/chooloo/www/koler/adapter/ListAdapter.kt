@@ -8,7 +8,7 @@ import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
 
 abstract class ListAdapter<DataType>(
-    protected val activityComponent: ActivityComponent
+    protected val component: ActivityComponent
 ) : RecyclerView.Adapter<ListItemHolder>() {
     private var _data: ListBundle<DataType> = ListBundle()
     private var _onItemClickListener: (item: DataType) -> Unit = {}
@@ -37,7 +37,7 @@ abstract class ListAdapter<DataType>(
                 _onItemLongClickListener.invoke(dataItem)
                 true
             }
-            activityComponent.animationInteractor.animateIn(this, false)
+            component.animationInteractor.animateIn(this, false)
 
             onBindListItem(this, dataItem)
         }

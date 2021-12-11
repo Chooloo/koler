@@ -15,7 +15,7 @@ import com.chooloo.www.koler.ui.phones.PhonesFragment
 class ContactFragment : BaseFragment(), ContactContract.View {
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
-    private lateinit var _presenter: ContactPresenter<ContactFragment>
+    private lateinit var _presenter: ContactController<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val _phonesFragment by lazy {
         PhonesFragment.newInstance(
@@ -54,7 +54,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     ) = _binding.root
 
     override fun onSetup() {
-        _presenter = ContactPresenter(this)
+        _presenter = ContactController(this)
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }

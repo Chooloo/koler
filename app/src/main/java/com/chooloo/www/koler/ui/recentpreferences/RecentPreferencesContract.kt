@@ -9,7 +9,7 @@ class RecentPreferencesContract : BaseContract {
         var isUnblockNumberVisible: Boolean
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onBlockNumberClick()
         fun onUnblockNumberClick()
     }
