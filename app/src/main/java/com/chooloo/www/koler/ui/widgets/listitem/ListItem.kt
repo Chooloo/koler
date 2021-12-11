@@ -23,7 +23,9 @@ import androidx.core.view.marginTop
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.widgets.IconButton
-import com.chooloo.www.koler.util.ViewManager
+import com.chooloo.www.koler.util.getAttrColor
+import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
+import com.chooloo.www.koler.util.getSizeInDp
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
@@ -32,8 +34,6 @@ import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 open class ListItem : LinearLayout {
     private var _isPadded: Boolean = true
     private var _isCompact: Boolean = false
-
-    private val _viewManager by lazy { ViewManager(context) }
 
     private var _onLeftButtonClickListener: () -> Unit = {}
     private var _onRightButtonClickListener: () -> Unit = {}
@@ -207,7 +207,7 @@ open class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            setPadding(0, _viewManager.getSizeInDp(2), 0, 0)
+            setPadding(0, context.getSizeInDp(2), 0, 0)
         }
 
         _image = AvatarImageView(context, attrs).apply {
@@ -253,7 +253,7 @@ open class ListItem : LinearLayout {
         _personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
             id = View.generateViewId()
-            background = _viewManager.selectableItemBackgroundDrawable
+            background = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         }
 
@@ -329,9 +329,9 @@ open class ListItem : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
-            _personLayout.setBackgroundColor(_viewManager.getAttrColor(R.attr.colorSecondary))
+            _personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
         } else {
-            _personLayout.background = _viewManager.selectableItemBackgroundDrawable
+            _personLayout.background = context.getSelectableItemBackgroundDrawable()
         }
     }
 

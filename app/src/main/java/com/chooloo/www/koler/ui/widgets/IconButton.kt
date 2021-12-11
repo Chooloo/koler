@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat.getDrawable
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.ViewManager
+import com.chooloo.www.koler.util.getAttrColor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 @SuppressLint("CustomViewStyleable", "WrongConstant")
@@ -21,8 +21,7 @@ class IconButton : FloatingActionButton {
     private var _imageTintList: ColorStateList?
     private var _backgroundTintList: ColorStateList?
 
-    private val _viewManager by lazy { ViewManager(context) }
-    private val colorOnSecondary by lazy { _viewManager.getAttrColor(R.attr.colorOnSecondary) }
+    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
 
     var iconDefault: Int?
         get() = _iconDefault

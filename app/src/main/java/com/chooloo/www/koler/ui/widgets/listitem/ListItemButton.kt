@@ -6,13 +6,11 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.ViewManager
+import com.chooloo.www.koler.util.getAttrColor
 
 class ListItemButton : ListItem {
-    private val _viewManager by lazy { ViewManager(context) }
-
-    private val colorSecondary by lazy { _viewManager.getAttrColor(R.attr.colorSecondary) }
-    private val colorOnSecondary by lazy { _viewManager.getAttrColor(R.attr.colorOnSecondary) }
+    private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
+    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

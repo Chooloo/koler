@@ -38,6 +38,7 @@ abstract class ListAdapter<DataType>(
                 true
             }
             activityComponent.animationInteractor.animateIn(this, false)
+
             onBindListItem(this, dataItem)
         }
     }

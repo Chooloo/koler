@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.collections.HashSet
 
 open class BaseObservable<Listener> : IBaseObservable<Listener> {
-    private val _listeners by lazy { HashSet<Listener>() }
+    private val _lisVteners by lazy { HashSet<Listener>() }
 
     val listeners: Set<Listener>
         get() = Collections.unmodifiableSet(HashSet(_listeners))
