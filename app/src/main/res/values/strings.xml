@@ -74,7 +74,7 @@
     <!--region call state-->
     <string name="call_status_new">New Call</string>
     <string name="call_status_dialing">Dialing…</string>
-    <string name="call_status_waiting">Waiting...</string>
+    <string name="call_status_waiting">Waiting…</string>
     <string name="call_status_missed">Missed Call</string>
     <string name="call_status_holding">Call On Hold</string>
     <string name="call_status_connecting">Connecting…</string>
@@ -172,6 +172,8 @@
     <string name="error_cant_hold_other_calls">Can\'t hold other calls</string>
     <string name="error_calls_crowded_cant_answer">Can\'t answer, calls too crowded</string>
     <string name="error_no_incoming_call_to_answer">No incoming call was found to answer</string>
+
+    <string name="error_couldnt_get_number_from_intent">Couldn\'t find number</string>
     <!--endregion-->
 
     <!--region pref color values-->
@@ -199,8 +201,8 @@
     <string name="dialpad_7_letters">PQRS</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters"></string>
-    <string name="dialpad_pound_letters"></string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
     <!--endregion-->
 
     <!--region content descriptions -->

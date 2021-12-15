@@ -34,6 +34,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 /**
  * Created by 'g-chul.song@navercorp.com' on 2018-02-27.
  */
@@ -105,7 +107,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
     // refresh was triggered.
     private boolean mReturningToStart;
     private final DecelerateInterpolator mDecelerateInterpolator;
-    private static final int[] LAYOUT_ATTRS = new int[] {
+    private static final int[] LAYOUT_ATTRS = new int[]{
             android.R.attr.enabled
     };
 
@@ -212,7 +214,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
      * @param scale Set to true if there is no view at a higher z-order than where the progress spinner is set to appear.
      *              Setting it to true will cause indicator to be scaled up rather than clipped.
      * @param start The offset in pixels from the top of this view at which the progress spinner should appear.
-     * @param end The offset in pixels from the top of this view at which the progress spinner should come to rest after a successful swipe gesture.
+     * @param end   The offset in pixels from the top of this view at which the progress spinner should come to rest after a successful swipe gesture.
      */
     public void setProgressViewOffset(boolean scale, int start, int end) {
         mScale = scale;
@@ -243,7 +245,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
      *
      * @param scale Set to true if there is no view at a higher z-order than where the progress spinner is set to appear.
      *              Setting it to true will cause indicator to be scaled up rather than clipped.
-     * @param end The offset in pixels from the top of this view at which the progress spinner should come to rest after a successful swipe gesture.
+     * @param end   The offset in pixels from the top of this view at which the progress spinner should come to rest after a successful swipe gesture.
      */
     public void setProgressViewEndTarget(boolean scale, int end) {
         mSpinnerOffsetEnd = end;
@@ -287,7 +289,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
      * Constructor that is called when inflating SwipeRefreshLayout from XML.
      *
      * @param context context
-     * @param attrs attrs
+     * @param attrs   attrs
      */
     public WrapContentableSwipeRefreshLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -400,6 +402,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
 
     /**
      * Pre API 11, this does an alpha animation.
+     *
      * @param progress
      */
     void setAnimationProgress(float progress) {
@@ -457,9 +460,8 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
     }
 
     /**
-     * @deprecated Use {@link #setProgressBackgroundColorSchemeResource(int)}
-     *
      * @param colorRes colorRes
+     * @deprecated Use {@link #setProgressBackgroundColorSchemeResource(int)}
      */
     @Deprecated
     public void setProgressBackgroundColor(int colorRes) {
@@ -485,9 +487,8 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
     }
 
     /**
-     * @deprecated Use {@link #setColorSchemeResources(int...)}
-     *
      * @param colors colors
+     * @deprecated Use {@link #setColorSchemeResources(int...)}
      */
     @Deprecated
     public void setColorScheme(@ColorRes int... colors) {
@@ -679,6 +680,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
     /**
      * Set a callback to override {@link SwipeRefreshLayout#canChildScrollUp()} method.
      * Non-null callback will return the value provided by the callback and ignore all internal logic.
+     *
      * @param callback Callback that should be called when canChildScrollUp() is called.
      */
     public void setOnChildScrollUpCallback(@Nullable WrapContentableSwipeRefreshLayout.OnChildScrollUpCallback callback) {
@@ -716,7 +718,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
 
             case MotionEvent.ACTION_MOVE:
                 if (mActivePointerId == INVALID_POINTER) {
-                    Log.e(LOG_TAG, "Got ACTION_MOVE event but don't have an active pointer id.");
+                    Timber.e("Got ACTION_MOVE event but don't have an active pointer id.");
                     return false;
                 }
 
@@ -998,7 +1000,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
             case MotionEvent.ACTION_MOVE: {
                 pointerIndex = ev.findPointerIndex(mActivePointerId);
                 if (pointerIndex < 0) {
-                    Log.e(LOG_TAG, "Got ACTION_MOVE event but have an invalid active pointer id.");
+                    Timber.d( "Got ACTION_MOVE event but have an invalid active pointer id.");
                     return false;
                 }
 
@@ -1018,7 +1020,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
             case MotionEvent.ACTION_POINTER_DOWN: {
                 pointerIndex = ev.getActionIndex();
                 if (pointerIndex < 0) {
-                    Log.e(LOG_TAG,
+                    Timber.d(
                             "Got ACTION_POINTER_DOWN event but have an invalid action index.");
                     return false;
                 }
@@ -1033,7 +1035,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
             case MotionEvent.ACTION_UP: {
                 pointerIndex = ev.findPointerIndex(mActivePointerId);
                 if (pointerIndex < 0) {
-                    Log.e(LOG_TAG, "Got ACTION_UP event but don't have an active pointer id.");
+                    Timber.d( "Got ACTION_UP event but don't have an active pointer id.");
                     return false;
                 }
 
@@ -1051,6 +1053,11 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
         }
 
         return true;
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     private void startDragging(float y) {
@@ -1117,7 +1124,8 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
 
     private final Animation mAnimateToStartPosition = new Animation() {
         @Override
-        public void applyTransformation(float interpolatedTime, Transformation t) {moveToStart(interpolatedTime);
+        public void applyTransformation(float interpolatedTime, Transformation t) {
+            moveToStart(interpolatedTime);
         }
     };
 
@@ -1127,7 +1135,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
         mScaleDownToStartAnimation = new Animation() {
             @Override
             public void applyTransformation(float interpolatedTime, Transformation t) {
-                float targetScale = (mStartingScale + (-mStartingScale  * interpolatedTime));
+                float targetScale = (mStartingScale + (-mStartingScale * interpolatedTime));
                 setAnimationProgress(targetScale);
                 moveToStart(interpolatedTime);
             }
@@ -1175,8 +1183,7 @@ public class WrapContentableSwipeRefreshLayout extends ViewGroup implements Nest
          * Callback that will be called when {@link SwipeRefreshLayout#canChildScrollUp()} method is called to allow the implementer to override its behavior.
          *
          * @param parent SwipeRefreshLayout that this callback is overriding.
-         * @param child The child view of SwipeRefreshLayout.
-         *
+         * @param child  The child view of SwipeRefreshLayout.
          * @return Whether it is possible for the child view of parent layout to scroll up.
          */
         boolean canChildScrollUp(@NonNull WrapContentableSwipeRefreshLayout parent, @Nullable View child);

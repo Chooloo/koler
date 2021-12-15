@@ -23,24 +23,8 @@ class AnimationInteractorImpl(
     private val _isEnabled: Boolean
         get() = preferencesInteractor.isAnimations
 
-    override fun showView(view: View, isShow: Boolean) {
-        if (_isEnabled) {
-            if (isShow && view.visibility != View.VISIBLE) {
-                YoYo.with(Techniques.FadeInUp)
-                    .duration(400)
-                    .playOn(view)
-            } else if (!isShow && view.visibility == View.VISIBLE) {
-                YoYo.with(Techniques.FadeOutDown)
-                    .duration(400)
-                    .onEnd { view.visibility = View.GONE }
-                    .playOn(view)
-            }
-        } else {
-            view.visibility = if (isShow) View.VISIBLE else View.GONE
-        }
-    }
 
-    override fun animateFocus(view: View) {
+    override fun focus(view: View) {
         if (_isEnabled) {
             YoYo.with(Techniques.Tada)
                 .duration(200)
@@ -48,11 +32,11 @@ class AnimationInteractorImpl(
         }
     }
 
-    override fun animateIn(view: View, ifGone: Boolean) {
+    override fun show(view: View, ifGone: Boolean) {
         if (view.visibility == VISIBLE && ifGone) {
             return
         }
-        view.visibility = View.VISIBLE
+        view.visibility = VISIBLE
         if (_isEnabled) {
             YoYo.with(Techniques.BounceInUp)
                 .duration(400)
@@ -60,7 +44,7 @@ class AnimationInteractorImpl(
         }
     }
 
-    override fun animateBlink(view: View, totalDuration: Long, duration: Long) {
+    override fun blink(view: View, totalDuration: Long, duration: Long) {
         if (_isEnabled) {
             view.startAnimation(AlphaAnimation(0.0f, 1.0f).apply {
                 setDuration(duration)
@@ -72,7 +56,7 @@ class AnimationInteractorImpl(
         }
     }
 
-    override fun animateOut(view: View, ifVisible: Boolean, goneOrInvisible: Boolean) {
+    override fun hide(view: View, ifVisible: Boolean, goneOrInvisible: Boolean) {
         if (view.visibility != VISIBLE && ifVisible) {
             return
         }

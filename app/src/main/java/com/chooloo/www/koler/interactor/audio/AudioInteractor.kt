@@ -16,6 +16,7 @@ interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
 
     fun vibrate(millis: Long = 10)
 
+    
     enum class AudioMode(val mode: Int) {
         NORMAL(android.media.AudioManager.MODE_NORMAL),
         IN_CALL(android.media.AudioManager.MODE_IN_CALL),
@@ -27,6 +28,5 @@ interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
 
     companion object {
         const val SHORT_VIBRATE_LENGTH: Long = 20
-        const val DEFAULT_VIBRATE_LENGTH: Long = 100
     }
 }

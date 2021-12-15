@@ -20,7 +20,12 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true, false, true) }
+    private val _suggestionsFragment by lazy {
+        ContactsFragment.newInstance(
+            isSearchable = true,
+            isHideNoResults = true
+        )
+    }
 
     override val isDialer by lazy { args.getBoolean(ARG_IS_DIALER) }
 
@@ -37,7 +42,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadSuggestionsScrollView.visibility == VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                component.animationInteractor.animateIn(
+                component.animations.show(
                     _binding.dialpadSuggestionsScrollView,
                     true
                 )
@@ -50,9 +55,13 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonAddContact.visibility == VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                component.animationInteractor.animateIn(_binding.dialpadButtonAddContact, true)
+                component.animations.show(_binding.dialpadButtonAddContact, true)
             } else if (!value && isAddContactButtonVisible) {
-                component.animationInteractor.showView(_binding.dialpadButtonAddContact, false)
+                component.animations.hide(
+                    _binding.dialpadButtonAddContact,
+                    ifVisible = true,
+                    goneOrInvisible = false
+                )
             }
         }
 
@@ -60,9 +69,13 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = _binding.dialpadButtonDelete.visibility == VISIBLE
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                component.animationInteractor.animateIn(_binding.dialpadButtonDelete, true)
+                component.animations.show(_binding.dialpadButtonDelete, true)
             } else if (!value && isDeleteButtonVisible) {
-                component.animationInteractor.showView(_binding.dialpadButtonDelete, false)
+                component.animations.hide(
+                    _binding.dialpadButtonDelete,
+                    ifVisible = true,
+                    goneOrInvisible = false
+                )
             }
         }
 
@@ -103,9 +116,9 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
             }
 
             View.OnClickListener {
-                (it as DialpadKey).keyCode.also {
-                    _presenter.onKeyClick(it)
-                    _onKeyDownListener.invoke(it, KeyEvent(ACTION_DOWN, it))
+                (it as DialpadKey).keyCode.also { keyCode ->
+                    _presenter.onKeyClick(keyCode)
+                    _onKeyDownListener.invoke(keyCode, KeyEvent(ACTION_DOWN, keyCode))
                 }
             }
                 .also {

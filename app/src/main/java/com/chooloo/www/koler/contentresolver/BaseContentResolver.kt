@@ -11,7 +11,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class BaseContentResolver<T>   (private val context: Context) {
+abstract class BaseContentResolver<ItemType>(private val context: Context) {
     private var _filter: String? = null
 
     private val _ioContentResolver by lazy {
@@ -62,10 +62,10 @@ abstract class BaseContentResolver<T>   (private val context: Context) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(callback::invoke)
 
-    fun queryContent() = convertCursorToContent(queryCursor())
+    fun queryItems() = convertCursorToItems(queryCursor())
 
-    fun queryContent(callback: (T) -> Unit): Disposable =
-        queryCursor { callback.invoke(convertCursorToContent(it)) }
+    fun queryItems(callback: (List<ItemType>) -> Unit): Disposable =
+        queryCursor { callback.invoke(convertCursorToItems(it)) }
 
 
     @SuppressLint("CheckResult")
@@ -86,9 +86,17 @@ abstract class BaseContentResolver<T>   (private val context: Context) {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer::invoke)
 
-    fun observeContent(observer: (T) -> Unit) =
-        observeCursor { observer.invoke(convertCursorToContent(it)) }
+    fun observeItems(observer: (List<ItemType>) -> Unit) =
+        observeCursor { observer.invoke(convertCursorToItems(it)) }
 
+    private fun convertCursorToItems(cursor: Cursor?): ArrayList<ItemType> {
+        val content = ArrayList<ItemType>()
+        while (cursor != null && cursor.moveToNext()) {
+            content.add(convertCursorToItem(cursor))
+        }
+        cursor?.close()
+        return content
+    }
 
     abstract val uri: Uri
     abstract val filterUri: Uri?
@@ -96,5 +104,5 @@ abstract class BaseContentResolver<T>   (private val context: Context) {
     abstract val sortOrder: String?
     abstract val projection: Array<String>
     abstract val selectionArgs: Array<String>?
-    abstract fun convertCursorToContent(cursor: Cursor?): T
+    abstract fun convertCursorToItem(cursor: Cursor): ItemType
 }

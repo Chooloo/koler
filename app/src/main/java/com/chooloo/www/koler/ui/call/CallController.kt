@@ -33,39 +33,39 @@ class CallController<V : CallContract.View>(view: V) :
 
         CallService.sIsActivityActive = true
 
-        boundComponent.apply {
-            proximityInteractor.acquire()
-            screenInteractor.disableKeyboard()
-            screenInteractor.setShowWhenLocked()
-            callAudioInteractor.registerListener(this@CallController)
-            callsInteractor.registerListener(this@CallController)
-            callsInteractor.mainCall?.let {
+        component.apply {
+            proximities.acquire()
+            screens.disableKeyboard()
+            screens.setShowWhenLocked()
+            callAudios.registerListener(this@CallController)
+            calls.registerListener(this@CallController)
+            calls.mainCall?.let {
                 onCallChanged(it)
                 onMainCallChanged(it)
-                callAudioInteractor.isMuted?.let(this@CallController::onMuteChanged)
-                callAudioInteractor.audioRoute?.let(this@CallController::onAudioRouteChanged)
+                callAudios.isMuted?.let(this@CallController::onMuteChanged)
+                callAudios.audioRoute?.let(this@CallController::onAudioRouteChanged)
             }
         }
     }
 
     override fun onStop() {
-        boundComponent.proximityInteractor.release()
+        component.proximities.release()
         _timerDisposable?.dispose()
         CallService.sIsActivityActive = false
     }
 
 
     override fun onAnswerClick() {
-        _currentCallId?.let { boundComponent.callsInteractor.answerCall(it) }
+        _currentCallId?.let { component.calls.answerCall(it) }
     }
 
     override fun onRejectClick() {
-        _currentCallId?.let { boundComponent.callsInteractor.rejectCall(it) }
+        _currentCallId?.let { component.calls.rejectCall(it) }
     }
 
     override fun onSwapClick() {
         try {
-            _currentCallId?.let { boundComponent.callsInteractor.swapCall(it) }
+            _currentCallId?.let { component.calls.swapCall(it) }
         } catch (e: CantSwapCallException) {
             view.showError(R.string.error_cant_swap_calls)
             e.printStackTrace()
@@ -74,7 +74,7 @@ class CallController<V : CallContract.View>(view: V) :
 
     override fun onHoldClick() {
         try {
-            _currentCallId?.let { boundComponent.callsInteractor.toggleHold(it) }
+            _currentCallId?.let { component.calls.toggleHold(it) }
         } catch (e: CantHoldCallException) {
             view.showError(R.string.error_cant_hold_call)
             e.printStackTrace()
@@ -82,12 +82,12 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     override fun onMuteClick() {
-        boundComponent.callAudioInteractor.isMuted = !view.isMuteActivated
+        component.callAudios.isMuted = !view.isMuteActivated
     }
 
     override fun onMergeClick() {
         try {
-            _currentCallId?.let { boundComponent.callsInteractor.mergeCall(it) }
+            _currentCallId?.let { component.calls.mergeCall(it) }
         } catch (e: CantMergeCallException) {
             view.showError(R.string.error_cant_merge_call)
             e.printStackTrace()
@@ -103,9 +103,9 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     override fun onSpeakerClick() {
-        boundComponent.callAudioInteractor.apply {
+        component.callAudios.apply {
             if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
-                boundComponent.callAudioInteractorBound.askForRoute { audioRoute = it }
+                component.callAudios.askForRoute { audioRoute = it }
             } else {
                 isSpeakerOn = !view.isSpeakerActivated
             }
@@ -113,7 +113,7 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     override fun onKeypadKey(keyCode: Int, event: KeyEvent) {
-        _currentCallId?.let { boundComponent.callsInteractor.invokeCallKey(it, event.number) }
+        _currentCallId?.let { component.calls.invokeCallKey(it, event.number) }
     }
 
 
@@ -122,18 +122,18 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     override fun onCallChanged(call: Call) {
-        if (boundComponent.callsInteractor.getFirstState(HOLDING)?.id == _currentCallId) {
+        if (component.calls.getFirstState(HOLDING)?.id == _currentCallId) {
             view.hideHoldingBanner()
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
-            boundComponent.phoneAccountsInteractor.lookupAccount(call.number) {
+            component.phones.lookupAccount(call.number) {
                 view.showHoldingBanner(
                     String.format(
-                        boundComponent.stringInteractor.getString(R.string.warning_is_on_hold),
-                        it.displayString
+                        component.strings.getString(R.string.warning_is_on_hold),
+                        it?.displayString ?: call.number
                     )
                 )
             }
-        } else if (boundComponent.callsInteractor.getStateCount(HOLDING) == 0) {
+        } else if (component.calls.getStateCount(HOLDING) == 0) {
             view.hideHoldingBanner()
         }
     }
@@ -154,7 +154,7 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     private fun displayCallTime() {
-        boundComponent.callsInteractor.mainCall?.let {
+        component.calls.mainCall?.let {
             if (it.isStarted) {
                 view.setElapsedTime(it.durationTimeMilis)
             } else {
@@ -169,11 +169,11 @@ class CallController<V : CallContract.View>(view: V) :
         }
 
         if (call.isConference) {
-            view.nameText = boundComponent.stringInteractor.getString(R.string.conference)
+            view.nameText = component.strings.getString(R.string.conference)
         } else {
-            boundComponent.phoneAccountsInteractor.lookupAccount(call.number) { account ->
-                account.photoUri?.let { view.imageURI = Uri.parse(it) }
-                view.nameText = account.displayString
+            component.phones.lookupAccount(call.number) { account ->
+                account?.photoUri?.let { view.imageURI = Uri.parse(it) }
+                view.nameText = account?.displayString ?: call.number
             }
         }
 
@@ -181,21 +181,19 @@ class CallController<V : CallContract.View>(view: V) :
         view.isHoldEnabled = call.isCapable(CAPABILITY_HOLD)
         view.isMuteEnabled = call.isCapable(CAPABILITY_MUTE)
         view.isSwapEnabled = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
-        view.stateText = boundComponent.stringInteractor.getString(call.state.stringRes)
+        view.stateText = component.strings.getString(call.state.stringRes)
 
-        if (call.isIncoming) {
-            view.showIncomingCallUI()
-        } else if (boundComponent.callsInteractor.isMultiCall) {
-            view.showMultiActiveCallUI()
-        } else {
-            view.showActiveCallUI()
+        when {
+            call.isIncoming -> view.showIncomingCallUI()
+            component.calls.isMultiCall -> view.showMultiActiveCallUI()
+            else -> view.showActiveCallUI()
         }
 
         when (call.state) {
             INCOMING, ACTIVE -> view.stateTextColor =
-                boundComponent.colorInteractor.getColor(R.color.green_foreground)
+                component.colors.getColor(R.color.green_foreground)
             HOLDING, DISCONNECTING, DISCONNECTED -> view.stateTextColor =
-                boundComponent.colorInteractor.getColor(R.color.red_foreground)
+                component.colors.getColor(R.color.red_foreground)
         }
     }
 

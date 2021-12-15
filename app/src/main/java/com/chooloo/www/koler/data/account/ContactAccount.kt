@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.data.account
 
-data class Contact(
+data class ContactAccount(
     val id: Long = 0,
     val name: String? = null,
     val photoUri: String? = null,
@@ -9,10 +9,6 @@ data class Contact(
 ) {
     override fun toString() = "Contact with id:$id name:$name"
 
-    companion object {
-        val UNKNOWN = Contact(name = "Unknown")
-    }
-
-    override fun equals(other: Any?) = other is Contact && id == other.id
+    override fun equals(other: Any?) = other is ContactAccount && id == other.id
 }
 

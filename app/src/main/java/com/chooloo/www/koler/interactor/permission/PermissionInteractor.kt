@@ -43,9 +43,10 @@ interface PermissionInteractor : BaseInteractor<PermissionInteractor.Listener> {
 
     fun runWithPrompt(titleRes: Int, callback: () -> Unit)
 
+    fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit)
+    fun runWithReadContactsPermissions(callback: (granted: Boolean) -> Unit)
+
     companion object {
-        const val RC_DEFAULT_DIALER = 120
-        const val RC_READ_CONTACTS = 1
         const val RC_DEFAULT = 2
     }
 }

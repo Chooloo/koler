@@ -6,7 +6,7 @@ import com.chooloo.www.koler.util.getTimeAgo
 import java.io.Serializable
 import java.util.*
 
-data class Recent(
+data class RecentAccount(
     val number: String,
     @CallType val type: Int,
     val id: Long = 0,
@@ -38,7 +38,5 @@ data class Recent(
         const val TYPE_OUTGOING = CallLog.Calls.OUTGOING_TYPE
         const val TYPE_REJECTED = CallLog.Calls.REJECTED_TYPE
         const val TYPE_VOICEMAIL = CallLog.Calls.VOICEMAIL_TYPE
-
-        val UNKNOWN = Recent(number = "Unknown", type = TYPE_UNKNOWN)
     }
 }

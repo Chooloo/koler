@@ -8,12 +8,15 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+
+import com.chooloo.www.koler.R;
 
 /**
  * Created by 'g-chul.song@navercorp.com' on 2018-02-27.
@@ -31,6 +34,18 @@ public class WrapContentableCircleImageView extends AppCompatImageView {
 
     private Animation.AnimationListener mListener;
     int mShadowRadius;
+
+    WrapContentableCircleImageView(Context context) {
+        this(context, ContextCompat.getColor(context, R.color.color_on_background));
+    }
+
+    WrapContentableCircleImageView(Context context, AttributeSet attrs) {
+        this(context);
+    }
+
+    WrapContentableCircleImageView(Context context, AttributeSet attrs, int defStyleInt) {
+        this(context);
+    }
 
     WrapContentableCircleImageView(Context context, int color) {
         super(context);
@@ -106,7 +121,6 @@ public class WrapContentableCircleImageView extends AppCompatImageView {
     }
 
     private class OvalShadow extends OvalShape {
-        private RadialGradient mRadialGradient;
         private Paint mShadowPaint;
 
         OvalShadow(int shadowRadius) {
@@ -131,7 +145,7 @@ public class WrapContentableCircleImageView extends AppCompatImageView {
         }
 
         private void updateRadialGradient(int diameter) {
-            mRadialGradient = new RadialGradient(diameter / 2, diameter / 2, mShadowRadius, new int[]{FILL_SHADOW_COLOR, Color.TRANSPARENT}, null, Shader.TileMode.CLAMP);
+            RadialGradient mRadialGradient = new RadialGradient(diameter / 2, diameter / 2, mShadowRadius, new int[]{FILL_SHADOW_COLOR, Color.TRANSPARENT}, null, Shader.TileMode.CLAMP);
             mShadowPaint.setShader(mRadialGradient);
         }
     }

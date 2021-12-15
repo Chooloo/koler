@@ -3,7 +3,7 @@ package com.chooloo.www.koler.ui.contact
 import android.Manifest
 import android.net.Uri
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.base.BaseController
 
@@ -11,12 +11,12 @@ class ContactController<V : ContactContract.View>(view: V) :
     BaseController<V>(view),
     ContactContract.Controller<V> {
 
-    private var contact: Contact? = null
-    private var _contact: Contact? = null
+    private var contact: ContactAccount? = null
+    private var _contact: ContactAccount? = null
     private var _firstPhone: PhoneAccount? = null
 
     override fun onStart() {
-        boundComponent.contactsInteractor.queryContact(view.contactId) { contact ->
+        component.contacts.queryContact(view.contactId) { contact ->
             _contact = contact
             view.apply {
                 contactName = contact?.name
@@ -24,35 +24,35 @@ class ContactController<V : ContactContract.View>(view: V) :
                 contact?.photoUri?.let { contactImage = Uri.parse(it) }
             }
         }
-        boundComponent.phoneAccountsInteractor.getContactAccounts(view.contactId) {
+        component.phones.getContactAccounts(view.contactId) {
             _firstPhone = it?.getOrNull(0)
         }
     }
 
     override fun onActionCall() {
-        _firstPhone?.number?.let { boundComponent.navigationInteractor.call(it) } ?: run {
+        _firstPhone?.number?.let { component.navigations.call(it) } ?: run {
             view.showError(R.string.error_no_number_to_call)
         }
     }
 
     override fun onActionSms() {
-        _firstPhone?.number?.let { boundComponent.navigationInteractor.goToSendSMS(it) }
+        _firstPhone?.number?.let { component.navigations.sendSMS(it) }
     }
 
     override fun onActionEdit() {
-        boundComponent.navigationInteractor.goToEditContact(view.contactId)
+        component.navigations.editContact(view.contactId)
     }
 
     override fun onActionInfo() {
-        boundComponent.navigationInteractor.goToViewContact(view.contactId)
+        component.navigations.viewContact(view.contactId)
     }
 
     override fun onActionDelete() {
-        boundComponent.permissionInteractor.runWithPermissions(
+        component.permissions.runWithPermissions(
             arrayOf(Manifest.permission.WRITE_CONTACTS),
             {
-                boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
-                    boundComponent.contactsInteractor.deleteContact(view.contactId)
+                component.permissions.runWithPrompt(R.string.warning_delete_contact) {
+                    component.contacts.deleteContact(view.contactId)
                 }
             })
     }
@@ -62,7 +62,7 @@ class ContactController<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionFav() {
-        boundComponent.contactsInteractor.toggleContactFavorite(
+        component.contacts.toggleContactFavorite(
             view.contactId,
             contact?.starred == true
         )

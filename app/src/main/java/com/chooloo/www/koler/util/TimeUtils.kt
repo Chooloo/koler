@@ -23,7 +23,8 @@ fun getElapsedTimeString(total_seconds: Long): String {
 }
 
 fun Context.getHoursString(date: Date) =
-    SimpleDateFormat(if (DateFormat.is24HourFormat(this)) "HH:mm" else "hh:mm aa").format(date)
+    SimpleDateFormat(if (DateFormat.is24HourFormat(this)) "HH:mm" else "hh:mm aa", Locale.US)
+        .format(date)
         .toString()
 
 fun getRelativeDateString(date: Date?): String {
@@ -38,10 +39,10 @@ fun getRelativeDateString(date: Date?): String {
 
 fun getTimeAgo(time: Long): String {
     val now = currentDate.time // get current time
-    val diff = now - time; // get the time difference between now and the given time
+    val diff = now - time // get the time difference between now and the given time
 
     if (diff < 0) {
-        return "In the future"; // if time is in the future
+        return "In the future" // if time is in the future
     }
 
     // return a string according to time difference from now

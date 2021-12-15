@@ -26,7 +26,6 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        baseActivity.onAttachFragment(this)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -43,30 +42,13 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
 
     override fun onSetup() {}
 
-    override fun showMessage(message: String) {
-        baseActivity.showMessage(message)
-    }
-
     override fun showMessage(@StringRes stringResId: Int) {
         baseActivity.showMessage(stringResId)
     }
 
-    override fun showError(message: String) {
-        baseActivity.showError(message)
-    }
-
     override fun showError(@StringRes stringResId: Int) {
-        baseActivity.showError(getString(stringResId))
+        baseActivity.showError(stringResId)
     }
-
-    override fun getColor(color: Int) =
-        baseActivity.getColor(color)
-
-    override fun hasPermission(permission: String) =
-        baseActivity.hasPermission(permission)
-
-    override fun hasPermissions(permissions: Array<String>) =
-        permissions.any { p -> baseActivity.hasPermission(p) }
 
 
     private fun initAllPreferences() {
@@ -104,7 +86,7 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
     }
 
     protected fun <T : Preference> getPreference(@StringRes keyString: Int): T? {
-        return findPreference<T>(getString(keyString))
+        return findPreference(getString(keyString))
     }
 
 

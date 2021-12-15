@@ -2,7 +2,6 @@ package com.chooloo.www.koler.ui.recent
 
 import android.Manifest
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.contentresolver.RecentsContentResolver
 import com.chooloo.www.koler.ui.base.BaseController
 import com.chooloo.www.koler.util.getElapsedTimeString
 import java.util.*
@@ -11,7 +10,7 @@ class RecentController<V : RecentContract.View>(view: V) :
     BaseController<V>(view),
     RecentContract.Controller<V> {
 
-    private val _recent by lazy { boundComponent.recentsInteractor.queryRecent(view.recentId) }
+    private val _recent by lazy { component.recents.queryRecent(view.recentId) }
 
     override fun onStart() {
         super.onStart()
@@ -20,23 +19,22 @@ class RecentController<V : RecentContract.View>(view: V) :
         if (_recent!!.duration > 0) {
             recentCaptions.add(getElapsedTimeString(_recent!!.duration))
         }
-        boundComponent.permissionInteractor.runWithDefaultDialer {
-            if (boundComponent.numbersInteractor.isNumberBlocked(_recent!!.number)) {
+        component.permissions.runWithDefaultDialer {
+            if (component.blocked.isNumberBlocked(_recent!!.number)) {
                 recentCaptions.add(
-                    boundComponent.stringInteractor.getString(R.string.error_blocked)
+                    component.strings.getString(R.string.error_blocked)
                         .toUpperCase(Locale.ROOT)
                 )
             }
         }
         view.recentCaption = recentCaptions.joinToString(", ")
-        view.recentImage = boundComponent.drawableInteractor.getDrawable(
-            RecentsContentResolver.getCallTypeImage(_recent!!.type)
-        )
+        view.recentImage =
+            component.drawables.getDrawable(component.recents.getCallTypeImage(_recent!!.type))
         view.recentName = _recent!!.cachedName ?: _recent!!.number
 
-        boundComponent.phoneAccountsInteractor.lookupAccount(_recent!!.number) {
-            view.isContactVisible = it.name != null
-            view.isAddContactVisible = it.name == null
+        component.phones.lookupAccount(_recent!!.number) {
+            view.isContactVisible = it?.name != null
+            view.isAddContactVisible = it?.name == null
         }
     }
 
@@ -45,19 +43,19 @@ class RecentController<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionSms() {
-        _recent?.let { boundComponent.navigationInteractor.goToSendSMS(it.number) }
+        _recent?.let { component.navigations.sendSMS(it.number) }
     }
 
     override fun onActionCall() {
-        _recent?.let { boundComponent.navigationInteractor.call(it.number) }
+        _recent?.let { component.navigations.call(it.number) }
     }
 
     override fun onActionDelete() {
         _recent?.let {
-            boundComponent.permissionInteractor.runWithPermissions(
+            component.permissions.runWithPermissions(
                 arrayOf(Manifest.permission.WRITE_CALL_LOG), {
-                    boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_recent) {
-                        boundComponent.recentsInteractor.deleteRecent(it.id)
+                    component.permissions.runWithPrompt(R.string.warning_delete_recent) {
+                        component.recents.deleteRecent(it.id)
                     }
                 },
                 null, null, null
@@ -66,13 +64,13 @@ class RecentController<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionAddContact() {
-        _recent?.let { boundComponent.navigationInteractor.goToAddContact(it.number) }
+        _recent?.let { component.navigations.addContact(it.number) }
     }
 
     override fun onActionOpenContact() {
         _recent?.let {
-            boundComponent.phoneAccountsInteractor.lookupAccount(it.number) {
-                it.contactId?.let { view.openContactView(it) }
+            component.phones.lookupAccount(it.number) { account ->
+                account?.contactId?.let(view::openContactView)
             }
         }
     }

@@ -24,7 +24,7 @@
     <string name="call_action_add_call">Anruf hinzufügen</string>
     <string name="call_action_speaker_off">Lautsprecher aus</string>
     <string name="call_action_record_stop">Aufnahme stoppen</string>
-    <string name="call_status_dialing">Wählt...</string>
+    <string name="call_status_dialing">Wählt…</string>
     <string name="call_status_holding">Anruf wird gehalten</string>
     <string name="call_status_incoming">Eingehender Anruf</string>
     <string name="call_status_disconnected">Anruf endete</string>

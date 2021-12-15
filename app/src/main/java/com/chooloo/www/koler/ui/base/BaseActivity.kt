@@ -10,7 +10,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(component.preferencesInteractor.accentTheme.theme)
+        setTheme(component.preferences.accentTheme.theme)
         super.onCreate(savedInstanceState)
     }
 
@@ -36,7 +36,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun showError(stringResId: Int) {
         Toast.makeText(
             applicationContext,
-            component.stringInteractor.getString(stringResId),
+            component.strings.getString(stringResId),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -44,7 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun showMessage(stringResId: Int) {
         Toast.makeText(
             this,
-            component.stringInteractor.getString(stringResId),
+            component.strings.getString(stringResId),
             Toast.LENGTH_SHORT
         ).show()
     }

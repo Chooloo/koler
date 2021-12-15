@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.di.factory.livedata
+package com.chooloo.www.koler.di.livedatafactory
 
 import android.content.Context
 import com.chooloo.www.koler.livedata.ContactsProviderLiveData

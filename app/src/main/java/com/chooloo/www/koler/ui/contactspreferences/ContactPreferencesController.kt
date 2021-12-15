@@ -13,14 +13,14 @@ class ContactPreferencesController<V : ContactPreferencesContract.View>(view: V)
         view.apply {
             isBlockContactVisible = false
             isUnblockContactVisible = false
-            component.contactsInteractor.queryContact(view.contactId) { contact ->
+            component.contacts.queryContact(view.contactId) { contact ->
                 isFavoriteContactVisible = contact?.starred == false
                 isUnfavoriteContactVisible = contact?.starred == true
             }
         }
 
-        boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
-            boundComponent.contactsInteractor.getIsContactBlocked(view.contactId) {
+        component.permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+            component.contacts.getIsContactBlocked(view.contactId) {
                 view.isBlockContactVisible = !it
                 view.isUnblockContactVisible = it
             }
@@ -44,15 +44,15 @@ class ContactPreferencesController<V : ContactPreferencesContract.View>(view: V)
     }
 
     private fun toggleContactBlocked(isBlock: Boolean) {
-        boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+        component.permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             if (isBlock) {
-                boundComponent.permissionInteractor.runWithPrompt(R.string.warning_block_contact) {
-                    boundComponent.contactsInteractor.blockContact(view.contactId) {
+                component.permissions.runWithPrompt(R.string.warning_block_contact) {
+                    component.contacts.blockContact(view.contactId) {
                         view.showMessage(R.string.contact_blocked)
                     }
                 }
             } else {
-                boundComponent.contactsInteractor.unblockContact(view.contactId) {
+                component.contacts.unblockContact(view.contactId) {
                     view.showMessage(
                         R.string.contact_unblocked
                     )
@@ -63,9 +63,9 @@ class ContactPreferencesController<V : ContactPreferencesContract.View>(view: V)
 
     @SuppressLint("MissingPermission")
     private fun toggleContactFavorite(isFavorite: Boolean) {
-        boundComponent.permissionInteractor.runWithPermissions(arrayOf(Manifest.permission.WRITE_CONTACTS),
+        component.permissions.runWithPermissions(arrayOf(Manifest.permission.WRITE_CONTACTS),
             {
-                boundComponent.contactsInteractor.toggleContactFavorite(view.contactId, isFavorite)
+                component.contacts.toggleContactFavorite(view.contactId, isFavorite)
             })
     }
 }

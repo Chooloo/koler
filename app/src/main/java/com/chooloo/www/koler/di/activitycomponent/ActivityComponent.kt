@@ -18,11 +18,11 @@ interface ActivityComponent : ContextComponent {
     val lifecycleOwner: LifecycleOwner
     val viewModelStoreOwner: ViewModelStoreOwner
 
-    val simInteractor: SimInteractor
-    val dialogInteractor: DialogInteractor
-    val screenInteractor: ScreenInteractor
-    val proximityInteractor: ProximityInteractor
-    val permissionInteractor: PermissionInteractor
-    val navigationInteractor: NavigationInteractor
-    val callAudioInteractorBound: CallAudioInteractorBound
+    val sims: SimInteractor
+    val dialogs: DialogInteractor
+    val screens: ScreenInteractor
+    val proximities: ProximityInteractor
+    val permissions: PermissionInteractor
+    val navigations: NavigationInteractor
+    override val callAudios: CallAudioInteractorBound
 }

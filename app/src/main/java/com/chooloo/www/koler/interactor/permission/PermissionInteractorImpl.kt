@@ -1,5 +1,7 @@
 package com.chooloo.www.koler.interactor.permission
 
+import android.Manifest.permission.READ_CALL_LOG
+import android.Manifest.permission.READ_CONTACTS
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
@@ -11,8 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.util.baseobservable.BaseObservable
 import com.chooloo.www.koler.ui.permissions.PermissionsActivity
+import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 
 class PermissionInteractorImpl(
@@ -126,5 +128,19 @@ class PermissionInteractorImpl(
             .setNegativeButton(stringInteractor.getString(R.string.action_no)) { _, _ -> }
             .create()
             .show()
+    }
+
+    override fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit) {
+        runWithPermissions(arrayOf(READ_CALL_LOG),
+            grantedCallback = { callback.invoke(true) },
+            deniedCallback = { callback.invoke(false) },
+            blockedCallback = { callback.invoke(false) })
+    }
+
+    override fun runWithReadContactsPermissions(callback: (granted: Boolean) -> Unit) {
+        runWithPermissions(arrayOf(READ_CONTACTS),
+            grantedCallback = { callback.invoke(true) },
+            deniedCallback = { callback.invoke(false) },
+            blockedCallback = { callback.invoke(false ) })
     }
 }

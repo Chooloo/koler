@@ -3,8 +3,6 @@ package com.chooloo.www.koler.ui.phones
 import android.content.ClipData
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.PhonesAdapter
-import com.chooloo.www.koler.contentresolver.PhonesContentResolver
-import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.ui.list.ListController
 
@@ -12,38 +10,42 @@ class PhonesController<V : PhonesContract.View>(view: V) :
     ListController<PhoneAccount, V>(view),
     PhonesContract.Controller<V> {
 
-    override val adapter by lazy { PhonesAdapter(boundComponent) }
+    override val adapter by lazy { PhonesAdapter(component) }
 
     private val phonesLiveData by lazy {
-        boundComponent.liveDataFactory.allocPhonesProviderLiveData(if (view.contactId == 0L) null else view.contactId)
+        component.liveDataFactory.allocPhonesProviderLiveData(if (view.contactId == 0L) null else view.contactId)
     }
 
 
     override val noResultsIconRes = R.drawable.ic_call_black_24dp
     override val noResultsTextRes = R.string.error_no_results_phones
     override val noPermissionsTextRes = R.string.error_no_permissions_phones
-    override val requiredPermissions = PhonesContentResolver.REQUIRED_PERMISSIONS
 
-
-    override fun observeData() {
-        phonesLiveData.observe(boundComponent.lifecycleOwner, this::onDataChanged)
-    }
 
     override fun applyFilter(filter: String) {
         phonesLiveData.filter = filter
     }
 
     override fun onItemClick(item: PhoneAccount) {
-        boundComponent.navigationInteractor.call(item.number)
+        component.navigations.call(item.number)
     }
 
     override fun onItemLongClick(item: PhoneAccount) {
-        boundComponent.clipboardManager.setPrimaryClip(
+        component.clipboardManager.setPrimaryClip(
             ClipData.newPlainText("Copied number", item.number)
         )
         view.showMessage(R.string.number_copied_to_clipboard)
     }
 
-    override fun convertDataToListBundle(data: ArrayList<PhoneAccount>) =
-        ListBundle.fromPhones(data, boundComponent.stringInteractor, true)
+    override fun fetchData(callback: (items: List<PhoneAccount>, hasPermissions: Boolean) -> Unit) {
+        component.permissions.runWithReadContactsPermissions {
+            if (it) {
+                phonesLiveData.observe(component.lifecycleOwner) { data ->
+                    callback.invoke(data, true)
+                }
+            } else {
+                callback.invoke(emptyList(), false)
+            }
+        }
+    }
 }

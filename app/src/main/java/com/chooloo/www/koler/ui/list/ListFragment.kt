@@ -32,15 +32,10 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     ) = _binding.root
 
     override fun onSetup() {
-        _binding.apply {
-            itemsSearchBar.apply {
-                hint = searchHint
-                visibility = if (_isSearchable) VISIBLE else GONE
-                setOnTextChangedListener(presenter::onSearchTextChanged)
-            }
-            itemsDeleteButton.setOnClickListener {
-//                presenter.onDeleteItems((itemsRecyclerView.getRecyclerView().adapter as ListAdapter<*>).selectedItems as ArrayList<ItemType>)
-            }
+        _binding.itemsSearchBar.apply {
+            hint = searchHint
+            visibility = if (_isSearchable) VISIBLE else GONE
+            setOnTextChangedListener(presenter::onSearchTextChanged)
         }
         args.getString(ARG_FILTER)?.let { presenter.applyFilter(it) }
     }
@@ -50,15 +45,11 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         _binding.itemsRecyclerView.smoothScrollToPosition(0)
     }
 
-    override fun animateListView() {
-        component.animationInteractor.animateRecyclerView(_binding.itemsRecyclerView)
-    }
-
     override fun requestSearchFocus() {
         _binding.itemsSearchBar.requestFocus()
     }
 
-    override fun showEmptyPage(isShow: Boolean) {
+    override fun showEmpty(isShow: Boolean) {
         _binding.apply {
             empty.emptyIcon.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
             empty.emptyText.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
@@ -68,17 +59,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     override fun showLoading(isLoading: Boolean) {
         if (isLoading) {
-            showEmptyPage(false)
-        }
-    }
-
-    override fun showSelecting(isSelecting: Boolean) {
-        _binding.itemsDeleteButton.apply {
-            if (isSelecting) {
-                component.animationInteractor.animateIn(this, true)
-            } else {
-                component.animationInteractor.showView(this, false)
-            }
+            showEmpty(false)
         }
     }
 
@@ -97,11 +78,11 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         }
     }
 
-    override fun setEmptyTextRes(@StringRes res: Int?) {
+    override fun setEmptyReason(@StringRes res: Int?) {
         res?.let { _binding.empty.emptyText.setText(it) }
     }
 
-    override fun setEmptyIconRes(res: Int?) {
+    override fun setEmptyIcon(res: Int?) {
         res?.let { _binding.empty.emptyIcon.setImageResource(it) }
     }
 

@@ -5,13 +5,14 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
 open class BaseController<V : BaseContract.View>(final override var view: V) :
-    BaseContract.Controller<V>, LifecycleObserver {
+    BaseContract.Controller<V>,
+    LifecycleObserver {
 
     init {
         view.getLifecycle().addObserver(this)
     }
 
-    protected val boundComponent get() = view.component
+    protected val component get() = view.component
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     protected open fun onStart() {

@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 
 abstract class BaseFragment : Fragment(), BaseContract.View {
-    protected val baseActivity by lazy { context as BaseActivity }
-
     override val component: ActivityComponent
         get() = baseActivity.component
+
+    protected val baseActivity by lazy { context as BaseActivity }
 
     val args: Bundle
         get() = arguments ?: Bundle()

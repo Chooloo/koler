@@ -1,10 +1,11 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BaseController
 import java.net.URLDecoder
 
-class   MainController<V : MainContract.View>(view: V) :
+class MainController<V : MainContract.View>(view: V) :
     BaseController<V>(view),
     MainContract.Controller<V> {
 
@@ -20,7 +21,7 @@ class   MainController<V : MainContract.View>(view: V) :
         val intentText = try {
             URLDecoder.decode(intent.dataString ?: "", "utf-8")
         } catch (e: Exception) {
-            view.showError("An error occurred when trying to get phone number :(")
+            view.showError(R.string.error_couldnt_get_number_from_intent)
             return
         }
 
@@ -28,7 +29,7 @@ class   MainController<V : MainContract.View>(view: V) :
             view.openDialpad()
             view.dialpadNumber = intentText.substringAfter("tel:")
         } else {
-            view.showError("No phone number detected")
+            view.showError(R.string.error_couldnt_get_number_from_intent)
         }
     }
 }

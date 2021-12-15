@@ -28,21 +28,21 @@ class ActivityComponentImpl(
     }
 
 
-    override val simInteractor by lazy {
+    override val sims by lazy {
         SimInteractorImpl(
             activity,
             telecomManager,
-            dialogInteractor,
+            dialogs,
             subscriptionManager,
-            permissionInteractor
+            permissions
         )
     }
 
-    override val dialogInteractor by lazy {
+    override val dialogs by lazy {
         DialogInteractorImpl(activity)
     }
 
-    override val screenInteractor by lazy {
+    override val screens by lazy {
         ScreenInteractorImpl(
             activity,
             keyguardManager,
@@ -50,30 +50,30 @@ class ActivityComponentImpl(
         )
     }
 
-    override val proximityInteractor by lazy {
+    override val proximities by lazy {
         ProximityInteractorImpl(activity, powerManager)
     }
 
-    override val permissionInteractor by lazy {
+    override val permissions by lazy {
         PermissionInteractorImpl(
             activity,
             telecomManager,
-            stringInteractor
+            strings
         )
     }
 
-    override val navigationInteractor by lazy {
+    override val navigations by lazy {
         NavigationInteractorImpl(
             activity,
-            simInteractor,
+            sims,
             telecomManager,
-            stringInteractor,
-            permissionInteractor,
-            preferencesInteractor
+            strings,
+            permissions,
+            preferences
         )
     }
 
-    override val callAudioInteractorBound by lazy {
-        CallAudioInteractorBoundImpl(dialogInteractor, stringInteractor, callAudioInteractor)
+    override val callAudios by lazy {
+        CallAudioInteractorBoundImpl(dialogs, strings)
     }
 }

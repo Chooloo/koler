@@ -1,8 +1,8 @@
-package com.chooloo.www.koler.interactor.numbers
+package com.chooloo.www.koler.interactor.blocked
 
 import com.chooloo.www.koler.interactor.base.BaseInteractor
 
-interface NumbersInteractor : BaseInteractor<NumbersInteractor.Listener> {
+interface BlockedInteractor : BaseInteractor<BlockedInteractor.Listener> {
     interface Listener
 
     fun blockNumber(number: String)

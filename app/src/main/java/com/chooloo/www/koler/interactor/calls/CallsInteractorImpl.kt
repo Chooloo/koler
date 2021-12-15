@@ -38,6 +38,55 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
         _callList.getByTelecomCall(telecomCall)
 
 
+    override fun swapCall(callId: String) {
+        _callList[callId]?.swapConference()
+    }
+
+    override fun mergeCall(callId: String) {
+        _callList[callId]?.merge()
+    }
+
+    override fun holdCall(callId: String) {
+        _callList[callId]?.hold()
+    }
+
+    override fun unHoldCall(callId: String) {
+        _callList[callId]?.unHold()
+    }
+
+    override fun toggleHold(callId: String) {
+        _callList[callId]?.let {
+            if (it.isHolding) {
+                it.unHold()
+            } else {
+                it.hold()
+            }
+        }
+    }
+
+    override fun answerCall(callId: String) {
+        _callList[callId]?.answer()
+    }
+
+    override fun rejectCall(callId: String) {
+        _callList[callId]?.reject()
+    }
+
+    override fun invokeCallKey(callId: String, c: Char) {
+        _callList[callId]?.invokeKey(c)
+    }
+
+    @Synchronized
+    override fun onCallChanged(call: Call) {
+        invokeListeners { l -> l.onCallChanged(call) }
+
+        val mainCall = mainCall
+        if (mainCall == null || mainCall == call) {
+            invokeListeners { l -> l.onMainCallChanged(call) }
+        }
+    }
+
+
     override fun entryAddCall(call: Call) {
         _callList.update(call)
         call.registerListener(this)
@@ -49,55 +98,6 @@ class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInt
         call.unregisterListener(this)
         if (_callList.size == 0) {
             listeners.forEach { l -> l.onNoCalls() }
-        }
-    }
-
-
-    override fun swapCall(callId: String) {
-        _callList.get(callId)?.swapConference()
-    }
-
-    override fun mergeCall(callId: String) {
-        _callList.get(callId)?.merge()
-    }
-
-    override fun holdCall(callId: String) {
-        _callList.get(callId)?.hold()
-    }
-
-    override fun unHoldCall(callId: String) {
-        _callList.get(callId)?.unHold()
-    }
-
-    override fun toggleHold(callId: String) {
-        _callList.get(callId)?.let {
-            if (it.isHolding) {
-                it.unHold()
-            } else {
-                it.hold()
-            }
-        }
-    }
-
-    override fun answerCall(callId: String) {
-        _callList.get(callId)?.answer()
-    }
-
-    override fun rejectCall(callId: String) {
-        _callList.get(callId)?.reject()
-    }
-
-    override fun invokeCallKey(callId: String, c: Char) {
-        _callList.get(callId)?.invokeKey(c)
-    }
-
-    @Synchronized
-    override fun onCallChanged(call: Call) {
-        invokeListeners { l -> l.onCallChanged(call) }
-
-        val mainCall = mainCall
-        if (mainCall == null || mainCall == call) {
-            invokeListeners { l -> l.onMainCallChanged(call) }
         }
     }
 

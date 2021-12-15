@@ -11,21 +11,9 @@
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="@dimen/default_spacing"
-        app:layout_constraintEnd_toStartOf="@id/items_delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/items_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:visibility="gone"
-        app:fabSize="mini"
-        app:icon="@drawable/ic_delete_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/items_search_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/items_search_bar" />
 
     <com.reddit.indicatorfastscroll.FastScrollerView
         android:id="@+id/items_fast_scroller"

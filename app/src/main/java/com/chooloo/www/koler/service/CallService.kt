@@ -29,9 +29,7 @@ class CallService : InCallService() {
 
     override fun onCallAdded(telecomCall: android.telecom.Call) {
         super.onCallAdded(telecomCall)
-        // new base call is added, this is the first place the code knows about the call
-        // add it to the call interactor (call manager)
-        componentRoot.callsInteractor.entryAddCall(Call(telecomCall))
+        componentRoot.calls.entryAddCall(Call(telecomCall))
         if (!sIsActivityActive) {
             startCallActivity()
         }
@@ -39,16 +37,13 @@ class CallService : InCallService() {
 
     override fun onCallRemoved(telecomCall: android.telecom.Call) {
         super.onCallRemoved(telecomCall)
-        // a base call was removed from service,
-        // this is the first place the code knows a call was removed
-        // remove it from the call interactor (call manager)
-        componentRoot.callsInteractor.getCallByTelecomCall(telecomCall)
-            ?.let(componentRoot.callsInteractor::entryRemoveCall)
+        componentRoot.calls.getCallByTelecomCall(telecomCall)
+            ?.let(componentRoot.calls::entryRemoveCall)
     }
 
     override fun onCallAudioStateChanged(audioState: CallAudioState) {
         super.onCallAudioStateChanged(audioState)
-        componentRoot.callAudioInteractor.entryCallAudioStateChanged(callAudioState)
+        componentRoot.callAudios.entryCallAudioStateChanged(callAudioState)
     }
 
     private fun startCallActivity() {

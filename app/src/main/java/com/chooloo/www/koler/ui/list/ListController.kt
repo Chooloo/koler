@@ -1,99 +1,70 @@
 package com.chooloo.www.koler.ui.list
 
-import com.chooloo.www.koler.R
+import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.adapter.ListAdapter
-import com.chooloo.www.koler.data.ListBundle
 import com.chooloo.www.koler.ui.base.BaseController
 
 abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V) :
     BaseController<V>(view),
     ListContract.Controller<ItemType, V> {
 
-    private var _permissionsGranted = false
-    private var _onItemsChangedListener: (ArrayList<ItemType>) -> Unit? = {}
-    private val noPermissionsIconRes = R.drawable.round_block_24
+    private var _onItemsChangedListener: (List<ItemType>) -> Unit? = {}
+    private val _adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
+        override fun onChanged() {
+            super.onChanged()
+            onDataChanged()
+        }
+    }
 
     override fun onStart() {
-        boundComponent.permissionInteractor.runWithPermissions(
-            permissions = this.requiredPermissions,
-            grantedCallback = ::onPermissionsGranted,
-            blockedCallback = ::onPermissionsBlocked,
-            rationaleMessage = null,
-            deniedCallback = null
-        )
-
         adapter.apply {
+            registerAdapterDataObserver(_adapterDataObserver)
             setOnItemClickListener(this@ListController::onItemClick)
             setOnItemLongClickListener(this@ListController::onItemLongClick)
         }
 
         view.apply {
-            showLoading(true)
             setAdapter(adapter)
-            if (component.preferencesInteractor.isScrollIndicator) {
-                setupScrollIndicator()
-            }
+            showLoading(true)
+            setEmptyIcon(noResultsIconRes)
+            setEmptyReason(noResultsTextRes)
         }
+
+        refreshData()
     }
 
-    override fun onResults() {
-        view.showEmptyPage(false)
-    }
-
-
-    override fun onNoResults() {
-        view.setEmptyIconRes(noResultsIconRes)
-        view.setEmptyTextRes(noResultsTextRes)
-        view.showEmptyPage(true)
-    }
-
-    override fun onSwipeRefresh() {
-        view.requestSearchFocus()
-    }
-
-    override fun onPermissionsGranted() {
-        _permissionsGranted = true
-        observeData()
+    override fun onStop() {
+        super.onStop()
+        adapter.unregisterAdapterDataObserver(_adapterDataObserver)
     }
 
     override fun onSearchTextChanged(text: String) {
-        if (_permissionsGranted) {
-            applyFilter(text)
-        }
+        applyFilter(text)
     }
 
-    override fun onDataChanged(items: ArrayList<ItemType>) {
-        adapter.data = convertDataToListBundle(items)
-        view.showLoading(false)
-        if (items.size == 0) {
-            onNoResults()
-        } else {
-            onResults()
-        }
-        view.scrollToTop()
-        _onItemsChangedListener.invoke(items)
-    }
-
-    override fun onIsSelectingChanged(isSelecting: Boolean) {
-        view.showSelecting(isSelecting)
-    }
-
-    override fun onPermissionsBlocked(permissions: Array<String>) {
-        view.setEmptyIconRes(noPermissionsIconRes)
-        view.setEmptyTextRes(noPermissionsTextRes)
-    }
-
-    override fun setOnItemsChangedListener(onItemsChangedListener: (ArrayList<ItemType>) -> Unit?) {
+    override fun setOnItemsChangedListener(onItemsChangedListener: (List<ItemType>) -> Unit?) {
         _onItemsChangedListener = onItemsChangedListener
     }
 
+    private fun refreshData() {
+        fetchData { items, hasPermissions ->
+            view.setEmptyReason(if (hasPermissions) noPermissionsTextRes else noResultsTextRes)
+            adapter.items = items
+        }
+    }
 
-    abstract val noResultsIconRes: Int?
-    abstract val noResultsTextRes: Int?
-    abstract val noPermissionsTextRes: Int?
+    private fun onDataChanged() {
+        view.showLoading(false)
+        view.showEmpty(adapter.items.isEmpty())
+        _onItemsChangedListener.invoke(adapter.items)
+    }
+
+
+    abstract val noResultsIconRes: Int
+    abstract val noResultsTextRes: Int
+    abstract val noPermissionsTextRes: Int
     abstract val adapter: ListAdapter<ItemType>
 
-    abstract fun observeData()
     abstract fun applyFilter(filter: String)
-    abstract fun convertDataToListBundle(data: ArrayList<ItemType>): ListBundle<ItemType>
+    abstract fun fetchData(callback: (items: List<ItemType>, hasPermissions: Boolean) -> Unit)
 }

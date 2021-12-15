@@ -3,13 +3,13 @@ package com.chooloo.www.koler.ui.contacts
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
-import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 
-class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.View<Contact> {
+class ContactsFragment : ListFragment<ContactAccount, ContactsAdapter>(), ListContract.View<ContactAccount> {
     override val searchHint by lazy { getString(R.string.hint_search_contacts) }
     override lateinit var presenter: ContactsController<ContactsFragment>
 
@@ -19,7 +19,7 @@ class ContactsFragment : ListFragment<Contact, ContactsAdapter>(), ListContract.
         super.onSetup()
     }
 
-    override fun showItem(item: Contact) {
+    override fun showItem(item: ContactAccount) {
         BottomFragment(ContactFragment.newInstance(item.id)).show(
             baseActivity.supportFragmentManager,
             ContactFragment.TAG

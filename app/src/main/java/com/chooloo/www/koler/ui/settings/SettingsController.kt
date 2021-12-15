@@ -10,16 +10,16 @@ class SettingsController<V : SettingsContract.View>(view: V) :
     SettingsContract.Controller<V> {
 
     override fun refresh() {
-        boundComponent.navigationInteractor.goToMainActivity()
+        component.navigations.goToMainActivity()
     }
 
 
     override fun onClickedRate() {
-        boundComponent.navigationInteractor.goToRateApp()
+        component.navigations.rateApp()
     }
 
     override fun onClickedEmail() {
-        boundComponent.navigationInteractor.goToSendEmail()
+        component.navigations.sendEmail()
     }
 
     override fun onClickedColor() {
@@ -27,56 +27,56 @@ class SettingsController<V : SettingsContract.View>(view: V) :
     }
 
     override fun onClickedDonate() {
-        boundComponent.navigationInteractor.goToDonatePage()
+        component.navigations.donate()
     }
 
     override fun onClickedReport() {
-        boundComponent.navigationInteractor.goToReportBugPage()
+        component.navigations.reportBug()
     }
 
     override fun onClickedManageBlocked() {
-        boundComponent.navigationInteractor.goToManageBlockedNumbers()
+        component.navigations.manageBlockedNumber()
     }
 
 
     override fun onSelectedColor(color: Int) {
-        boundComponent.preferencesInteractor.accentTheme = when (color) {
-            boundComponent.colorInteractor.getColor(R.color.red_background) -> RED
-            boundComponent.colorInteractor.getColor(R.color.blue_background) -> BLUE
-            boundComponent.colorInteractor.getColor(R.color.green_background) -> GREEN
-            boundComponent.colorInteractor.getColor(R.color.orange_background) -> ORANGE
-            boundComponent.colorInteractor.getColor(R.color.purple_background) -> PURPLE
+        component.preferences.accentTheme = when (color) {
+            component.colors.getColor(R.color.red_background) -> RED
+            component.colors.getColor(R.color.blue_background) -> BLUE
+            component.colors.getColor(R.color.green_background) -> GREEN
+            component.colors.getColor(R.color.orange_background) -> ORANGE
+            component.colors.getColor(R.color.purple_background) -> PURPLE
             else -> DEFAULT
         }
         refresh()
     }
 
     override fun onSelectedDefaultPage(pageKey: String) {
-        boundComponent.preferencesInteractor.defaultPage = Page.fromKey(pageKey)
+        component.preferences.defaultPage = Page.fromKey(pageKey)
         refresh()
     }
 
 
     override fun onToggledRecords(isToggle: Boolean) {
-        boundComponent.preferencesInteractor.isRecords = isToggle
+        component.preferences.isRecords = isToggle
     }
 
     override fun onToggledAnimation(isToggle: Boolean) {
-        boundComponent.preferencesInteractor.isAnimations = isToggle
+        component.preferences.isAnimations = isToggle
         refresh()
     }
 
     override fun onToggledCompactMode(isToggle: Boolean) {
-        boundComponent.preferencesInteractor.isCompact = isToggle
+        component.preferences.isCompact = isToggle
         refresh()
     }
 
     override fun onToggledScrollIndicator(isToggle: Boolean) {
-        boundComponent.preferencesInteractor.isScrollIndicator = isToggle
+        component.preferences.isScrollIndicator = isToggle
         refresh()
     }
 
     override fun onToggledAskSim(isToggle: Boolean) {
-        boundComponent.preferencesInteractor.isAskSim = isToggle
+        component.preferences.isAskSim = isToggle
     }
 }

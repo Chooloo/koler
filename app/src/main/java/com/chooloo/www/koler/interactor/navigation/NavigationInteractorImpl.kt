@@ -32,13 +32,13 @@ class NavigationInteractorImpl(
     BaseObservable<NavigationInteractor.Listener>(),
     NavigationInteractor {
 
-    override fun goToRateApp() {
+    override fun rateApp() {
         val intent = Intent(ACTION_VIEW)
         intent.data = Uri.parse("market://details?id=" + activity.application.packageName)
         activity.startActivity(intent)
     }
 
-    override fun goToSendEmail() {
+    override fun sendEmail() {
         activity.startActivity(Intent(ACTION_SEND).apply {
             type = "message/rfc822"
             putExtra(EXTRA_EMAIL, arrayOf(stringInteractor.getString(R.string.support_email)))
@@ -54,7 +54,7 @@ class NavigationInteractorImpl(
         )
     }
 
-    override fun goToReportBugPage() {
+    override fun reportBug() {
         activity.startActivity(
             Intent(
                 ACTION_VIEW,
@@ -63,7 +63,7 @@ class NavigationInteractorImpl(
         )
     }
 
-    override fun goToDonatePage() {
+    override fun donate() {
         activity.startActivity(
             Intent(
                 ACTION_VIEW,
@@ -78,18 +78,18 @@ class NavigationInteractorImpl(
         activity.startActivity(intent)
     }
 
-    override fun goToManageBlockedNumbers() {
+    override fun manageBlockedNumber() {
         activity.startActivity(telecomManager.createManageBlockedNumbersIntent(), null)
     }
 
 
-    override fun goToSendSMS(number: String?) {
+    override fun sendSMS(number: String?) {
         val intent =
             Intent(ACTION_SENDTO, Uri.parse("smsto:${PhoneNumberUtils.normalizeNumber(number)}"))
         activity.startActivity(intent)
     }
 
-    override fun goToAddContact(number: String) {
+    override fun addContact(number: String) {
         val intent = Intent(ACTION_INSERT).apply {
             type = ContactsContract.Contacts.CONTENT_TYPE
             putExtra(ContactsContract.Intents.Insert.PHONE, number)
@@ -98,14 +98,14 @@ class NavigationInteractorImpl(
     }
 
 
-    override fun goToViewContact(contactId: Long) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
+    override fun viewContact(contactId: Long) {
+        val intent = Intent(ACTION_VIEW).apply {
             data = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, contactId.toString())
         }
         activity.startActivity(intent)
     }
 
-    override fun goToEditContact(contactId: Long) {
+    override fun editContact(contactId: Long) {
         val intent = Intent(ACTION_EDIT, ContactsContract.Contacts.CONTENT_URI).apply {
             data = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId)
         }

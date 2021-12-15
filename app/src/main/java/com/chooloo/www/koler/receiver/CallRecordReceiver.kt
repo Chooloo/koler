@@ -139,7 +139,7 @@ open class CallRecordReceiver : PhoneCallReceiver() {
     private fun generateFileName() =
         "koler_record_" + SimpleDateFormat("dd-MM-yyyy hh-mm-ss").format(Date())
 
-    protected fun onRecordingStarted(context: Context, audioFile: File?) {}
+    private fun onRecordingStarted(context: Context, audioFile: File?) {}
     protected fun onRecordingFinished(context: Context, audioFile: File?) {}
 
 

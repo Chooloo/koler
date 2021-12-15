@@ -24,7 +24,6 @@ class BluetoothBroadcastReceiver : BroadcastReceiver() {
                     }
                     else -> {
                         audioManager.apply {
-                            mode = 0
                             isBluetoothScoOn = true
                             startBluetoothSco()
                             mode = MODE_IN_CALL

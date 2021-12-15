@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.ui.base.BaseContract
 
 interface DialpadContract : BaseContract {
@@ -24,6 +24,6 @@ interface DialpadContract : BaseContract {
         fun onAddContactClick()
         fun onLongDeleteClick(): Boolean
         fun onTextChanged(text: String?)
-        fun onSuggestionsChanged(contacts: ArrayList<Contact>)
+        fun onSuggestionsChanged(contacts: List<ContactAccount>)
     }
 }

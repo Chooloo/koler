@@ -12,8 +12,4 @@ data class PhoneLookupAccount(
 ) {
     val displayString: String
         get() = name ?: (number ?: "Unknown")
-
-    companion object {
-        val UNKNOWN = PhoneLookupAccount("unknown")
-    }
 }

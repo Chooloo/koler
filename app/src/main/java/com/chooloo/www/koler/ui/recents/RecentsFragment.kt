@@ -3,13 +3,13 @@ package com.chooloo.www.koler.ui.recents
 import android.os.Bundle
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
-import com.chooloo.www.koler.data.account.Recent
+import com.chooloo.www.koler.data.account.RecentAccount
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
 
-class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), ListContract.View<Recent> {
+class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(), ListContract.View<RecentAccount> {
     override val searchHint by lazy { getString(R.string.hint_search_recents) }
 
     override lateinit var presenter: RecentsController<RecentsFragment>
@@ -20,7 +20,7 @@ class RecentsFragment : ListFragment<Recent, RecentsAdapter>(), ListContract.Vie
         super.onSetup()
     }
 
-    override fun showItem(item: Recent) {
+    override fun showItem(item: RecentAccount) {
         BottomFragment(RecentFragment.newInstance(item.id)).show(
             baseActivity.supportFragmentManager,
             RecentFragment.TAG

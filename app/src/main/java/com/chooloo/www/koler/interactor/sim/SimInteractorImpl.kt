@@ -17,7 +17,7 @@ class SimInteractorImpl(
     internal val activity: BaseActivity,
     private val telecomManager: TelecomManager,
     private val dialogInteractor: DialogInteractor,
-    internal val subscriptionManager: SubscriptionManager,
+    private val subscriptionManager: SubscriptionManager,
     internal val permissionInteractor: PermissionInteractor
 ) : BaseObservable<SimInteractor.Listener>(), SimInteractor {
     override fun askForSim(callback: (simAccount: SimAccount?) -> Unit) {

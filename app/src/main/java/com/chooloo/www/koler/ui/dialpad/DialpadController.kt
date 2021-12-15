@@ -3,7 +3,7 @@ package com.chooloo.www.koler.ui.dialpad
 import android.view.KeyEvent.*
 import androidx.lifecycle.ViewModelProvider
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
 import com.chooloo.www.koler.ui.base.BaseController
 import com.chooloo.www.koler.viewmodel.DialpadViewModel
@@ -13,21 +13,21 @@ class DialpadController<V : DialpadContract.View>(view: V) :
     DialpadContract.Controller<V> {
 
     private val _searchViewModel by lazy {
-        ViewModelProvider(boundComponent.viewModelStoreOwner).get(DialpadViewModel::class.java)
+        ViewModelProvider(component.viewModelStoreOwner).get(DialpadViewModel::class.java)
     }
 
     override fun onStart() {
         super.onStart()
         if (view.isDialer) {
-            _searchViewModel.number.observe(boundComponent.lifecycleOwner) {
+            _searchViewModel.number.observe(component.lifecycleOwner) {
                 it?.let { view.number = it }
             }
         }
     }
 
     override fun onKeyClick(keyCode: Int) {
-        boundComponent.audioInteractor.vibrate(AudioInteractor.SHORT_VIBRATE_LENGTH)
-        boundComponent.audioInteractor.playToneByKey(keyCode)
+        component.audios.vibrate(AudioInteractor.SHORT_VIBRATE_LENGTH)
+        component.audios.playToneByKey(keyCode)
         view.invokeKey(keyCode)
     }
 
@@ -39,7 +39,7 @@ class DialpadController<V : DialpadContract.View>(view: V) :
             }
             KEYCODE_1 -> {
                 if (view.isDialer) {
-                    boundComponent.navigationInteractor.callVoicemail()
+                    component.navigations.callVoicemail()
                 }
                 view.isDialer
             }
@@ -51,17 +51,17 @@ class DialpadController<V : DialpadContract.View>(view: V) :
         if (view.number.isEmpty()) {
             view.showMessage(R.string.error_enter_number)
         } else {
-            boundComponent.navigationInteractor.call(view.number)
+            component.navigations.call(view.number)
         }
     }
 
     override fun onDeleteClick() {
         view.invokeKey(KEYCODE_DEL)
-        boundComponent.audioInteractor.vibrate()
+        component.audios.vibrate()
     }
 
     override fun onAddContactClick() {
-        boundComponent.navigationInteractor.goToAddContact(view.number)
+        component.navigations.addContact(view.number)
     }
 
     override fun onLongDeleteClick(): Boolean {
@@ -79,7 +79,7 @@ class DialpadController<V : DialpadContract.View>(view: V) :
         }
     }
 
-    override fun onSuggestionsChanged(contacts: ArrayList<Contact>) {
+    override fun onSuggestionsChanged(contacts: List<ContactAccount>) {
         view.isSuggestionsVisible = contacts.isNotEmpty() && view.number.isNotEmpty() == true
     }
 }

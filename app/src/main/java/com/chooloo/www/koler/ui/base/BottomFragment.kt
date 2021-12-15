@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
 open class BottomFragment<FragmentType : Fragment>(
-    val fragment: FragmentType
+    private val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
     override val component
         get() = baseActivity.component
@@ -27,7 +27,6 @@ open class BottomFragment<FragmentType : Fragment>(
         if (context !is BaseActivity) {
             throw TypeCastException("Fragment not a child of base activity")
         }
-        baseActivity.onAttachFragment(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,32 +51,11 @@ open class BottomFragment<FragmentType : Fragment>(
     }
 
 
-    //region base view
-
-    override fun showMessage(message: String) {
-        baseActivity.showMessage(message)
+    override fun showError(@StringRes stringResId: Int) {
+        baseActivity.showError(stringResId)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
         baseActivity.showMessage(stringResId)
     }
-
-    override fun showError(message: String) {
-        baseActivity.showError(message)
-    }
-
-    override fun showError(@StringRes stringResId: Int) {
-        baseActivity.showError(getString(stringResId))
-    }
-
-    override fun getColor(color: Int) =
-        baseActivity.getColor(color)
-
-    override fun hasPermission(permission: String) =
-        baseActivity.hasPermission(permission)
-
-    override fun hasPermissions(permissions: Array<String>) =
-        permissions.any { p -> baseActivity.hasPermission(p) }
-
-    //endregion
 }

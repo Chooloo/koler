@@ -13,7 +13,7 @@ abstract class PhoneCallReceiver : BroadcastReceiver() {
             savedNumber = intent.extras!!.getString(CallRecordReceiver.EXTRA_PHONE_NUMBER)
         } else {
             savedNumber = intent.extras!!.getString(TelephonyManager.EXTRA_INCOMING_NUMBER)
-            var state = when (intent.extras!!.getString(TelephonyManager.EXTRA_STATE)) {
+            val state = when (intent.extras!!.getString(TelephonyManager.EXTRA_STATE)) {
                 TelephonyManager.EXTRA_STATE_IDLE -> TelephonyManager.CALL_STATE_IDLE
                 TelephonyManager.EXTRA_STATE_OFFHOOK -> TelephonyManager.CALL_STATE_OFFHOOK
                 TelephonyManager.EXTRA_STATE_RINGING -> TelephonyManager.CALL_STATE_RINGING

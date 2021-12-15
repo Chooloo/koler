@@ -13,13 +13,13 @@ data class SimAccount(
     val phoneAccountHandle: PhoneAccountHandle get() = phoneAccount.accountHandle
 
     init {
-        var raw_label = phoneAccount.label.toString()
-        var raw_address = phoneAccount.address.toString()
-        if (raw_address.startsWith("tel:") && raw_address.substring(4).isNotEmpty()) {
-            raw_address = Uri.encode(raw_address.substring(4))
-            raw_label = "${phoneAccount.label}(${raw_address})"
+        var rawLabel = phoneAccount.label.toString()
+        var rawAddress = phoneAccount.address.toString()
+        if (rawAddress.startsWith("tel:") && rawAddress.substring(4).isNotEmpty()) {
+            rawAddress = Uri.encode(rawAddress.substring(4))
+            rawLabel = "${phoneAccount.label}(${rawAddress})"
         }
-        label = raw_label
-        address = raw_address
+        label = rawLabel
+        address = rawAddress
     }
 }

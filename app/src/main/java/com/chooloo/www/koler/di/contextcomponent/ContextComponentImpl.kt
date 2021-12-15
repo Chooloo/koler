@@ -12,7 +12,7 @@ import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import com.chooloo.www.koler.di.factory.livedata.LiveDataFactoryImpl
+import com.chooloo.www.koler.di.livedatafactory.LiveDataFactoryImpl
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorImpl
@@ -20,8 +20,8 @@ import com.chooloo.www.koler.interactor.calls.CallsInteractorImpl
 import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.koler.interactor.drawable.DrawableInteractorImpl
-import com.chooloo.www.koler.interactor.numbers.NumbersInteractorImpl
-import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractorImpl
+import com.chooloo.www.koler.interactor.blocked.BlockedInteractorImpl
+import com.chooloo.www.koler.interactor.phoneaccounts.PhonesInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.koler.interactor.string.StringInteractorImpl
@@ -75,51 +75,51 @@ open class ContextComponentImpl(
     }
 
 
-    override val colorInteractor by lazy {
+    override val colors by lazy {
         ColorInteractorImpl(application)
     }
 
-    override val audioInteractor by lazy {
+    override val audios by lazy {
         AudioInteractorImpl(vibrator, audioManager)
     }
 
-    override val callsInteractor by lazy {
+    override val calls by lazy {
         CallsInteractorImpl()
     }
 
-    override val stringInteractor by lazy {
+    override val strings by lazy {
         StringInteractorImpl(application)
     }
 
-    override val numbersInteractor by lazy {
-        NumbersInteractorImpl(application, telecomManager)
+    override val blocked by lazy {
+        BlockedInteractorImpl(application)
     }
 
-    override val recentsInteractor by lazy {
+    override val recents by lazy {
         RecentsInteractorImpl(application)
     }
 
-    override val drawableInteractor by lazy {
+    override val drawables by lazy {
         DrawableInteractorImpl(application)
     }
 
-    override val contactsInteractor by lazy {
-        ContactsInteractorImpl(application, numbersInteractor, phoneAccountsInteractor)
+    override val contacts by lazy {
+        ContactsInteractorImpl(application, blocked, phones)
     }
 
-    override val animationInteractor by lazy {
-        AnimationInteractorImpl(preferencesInteractor)
+    override val animations by lazy {
+        AnimationInteractorImpl(preferences)
     }
 
-    override val callAudioInteractor by lazy {
+    override val callAudios by lazy {
         CallAudioInteractorImpl()
     }
 
-    override val preferencesInteractor by lazy {
+    override val preferences by lazy {
         PreferencesInteractorImpl(preferencesManager)
     }
 
-    override val phoneAccountsInteractor by lazy {
-        PhoneAccountsInteractorImpl(application)
+    override val phones by lazy {
+        PhonesInteractorImpl(application)
     }
 }

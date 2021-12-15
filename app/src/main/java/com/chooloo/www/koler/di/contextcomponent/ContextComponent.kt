@@ -9,16 +9,16 @@ import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import com.chooloo.www.koler.di.factory.livedata.LiveDataFactory
+import com.chooloo.www.koler.di.livedatafactory.LiveDataFactory
 import com.chooloo.www.koler.interactor.animation.AnimationInteractor
 import com.chooloo.www.koler.interactor.audio.AudioInteractor
+import com.chooloo.www.koler.interactor.blocked.BlockedInteractor
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.koler.interactor.calls.CallsInteractor
 import com.chooloo.www.koler.interactor.color.ColorInteractor
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractor
 import com.chooloo.www.koler.interactor.drawable.DrawableInteractor
-import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
-import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
+import com.chooloo.www.koler.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.recents.RecentsInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
@@ -38,16 +38,16 @@ interface ContextComponent {
     val subscriptionManager: SubscriptionManager
     val notificationManager: NotificationManagerCompat
 
-    val colorInteractor: ColorInteractor
-    val audioInteractor: AudioInteractor
-    val callsInteractor: CallsInteractor
-    val stringInteractor: StringInteractor
-    val numbersInteractor: NumbersInteractor
-    val recentsInteractor: RecentsInteractor
-    val drawableInteractor: DrawableInteractor
-    val contactsInteractor: ContactsInteractor
-    val animationInteractor: AnimationInteractor
-    val callAudioInteractor: CallAudioInteractor
-    val preferencesInteractor: PreferencesInteractor
-    val phoneAccountsInteractor: PhoneAccountsInteractor
+    val calls: CallsInteractor
+    val colors: ColorInteractor
+    val audios: AudioInteractor
+    val phones: PhonesInteractor
+    val strings: StringInteractor
+    val blocked: BlockedInteractor
+    val recents: RecentsInteractor
+    val drawables: DrawableInteractor
+    val contacts: ContactsInteractor
+    val animations: AnimationInteractor
+    val callAudios: CallAudioInteractor
+    val preferences: PreferencesInteractor
 }

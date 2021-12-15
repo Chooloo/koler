@@ -1,17 +1,15 @@
-package com.chooloo.www.koler.interactor.numbers
+package com.chooloo.www.koler.interactor.blocked
 
 import android.content.ContentValues
 import android.content.Context
 import android.provider.BlockedNumberContract
 import android.provider.BlockedNumberContract.BlockedNumbers
-import android.telecom.TelecomManager
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import com.chooloo.www.koler.util.annotation.RequiresDefaultDialer
 
-class NumbersInteractorImpl(
-    private val context: Context,
-    private val telecomManager: TelecomManager
-) : BaseInteractorImpl<NumbersInteractor.Listener>(), NumbersInteractor {
+class BlockedInteractorImpl(
+    private val context: Context
+) : BaseInteractorImpl<BlockedInteractor.Listener>(), BlockedInteractor {
     @RequiresDefaultDialer
     override fun isNumberBlocked(number: String) =
         BlockedNumberContract.isBlocked(context, number)

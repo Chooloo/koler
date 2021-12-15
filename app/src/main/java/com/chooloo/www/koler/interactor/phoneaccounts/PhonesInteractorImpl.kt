@@ -8,21 +8,21 @@ import com.chooloo.www.koler.data.account.PhoneLookupAccount
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
 import io.reactivex.exceptions.OnErrorNotImplementedException
 
-class PhoneAccountsInteractorImpl(private val context: Context) :
-    BaseInteractorImpl<PhoneAccountsInteractor.Listener>(), PhoneAccountsInteractor {
+class PhonesInteractorImpl(private val context: Context) :
+    BaseInteractorImpl<PhonesInteractor.Listener>(), PhonesInteractor {
 
-    override fun lookupAccount(number: String?, callback: (PhoneLookupAccount) -> Unit) {
+    override fun lookupAccount(number: String?, callback: (PhoneLookupAccount?) -> Unit) {
         try {
-            PhoneLookupContentResolver(context, number).queryContent { phones ->
-                callback.invoke(phones.getOrNull(0) ?: PhoneLookupAccount(null, number))
+            PhoneLookupContentResolver(context, number).queryItems { phones ->
+                callback.invoke(phones.getOrNull(0))
             }
         } catch (e: OnErrorNotImplementedException) {
-            callback.invoke(PhoneLookupAccount(null, number))
+            callback.invoke(null)
         }
     }
 
     override fun getContactAccounts(contactId: Long, callback: (Array<PhoneAccount>?) -> Unit) {
-        PhonesContentResolver(context, contactId).queryContent {
+        PhonesContentResolver(context, contactId).queryItems {
             callback.invoke(it.toTypedArray())
         }
     }

@@ -34,7 +34,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             val old = _binding.callStateText.text.toString()
             _binding.callStateText.text = value
             if (old != value) {
-                component.animationInteractor.animateFocus(_binding.callStateText)
+                component.animations.focus(_binding.callStateText)
             }
         }
 
@@ -142,10 +142,13 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun setElapsedTime(duration: Long?) {
         duration?.let {
-            component.animationInteractor.animateIn(_binding.callTimeText, true)
+            component.animations.show(_binding.callTimeText, true)
             _binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
-            component.animationInteractor.animateOut(_binding.callTimeText, true, false)
+            component.animations.hide(
+                _binding.callTimeText,
+                ifVisible = true, goneOrInvisible = false
+            )
         }
     }
 
@@ -153,20 +156,20 @@ class CallActivity : BaseActivity(), CallContract.View {
         _binding.callBanner.text = number
         if (_binding.callBanner.visibility != View.VISIBLE) {
             _binding.callBanner.visibility = View.VISIBLE
-            component.animationInteractor.animateIn(_binding.callBanner, true)
-            component.animationInteractor.animateFocus(_binding.callBanner)
+            component.animations.show(_binding.callBanner, true)
+            component.animations.focus(_binding.callBanner)
         }
     }
 
     override fun hideHoldingBanner() {
-        component.animationInteractor.animateOut(_binding.callBanner, true, false)
+        component.animations.hide(_binding.callBanner, ifVisible = true, goneOrInvisible = false)
     }
 
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
         if (_binding.callActions.visibility != View.VISIBLE) {
-            component.animationInteractor.animateIn(_binding.callActions, true)
+            component.animations.show(_binding.callActions, true)
         }
     }
 

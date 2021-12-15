@@ -44,7 +44,7 @@ class Tab : AppCompatTextView {
 
 
     private fun animateAttention() {
-        (context.applicationContext as KolerApp).component.animationInteractor.animateIn(
+        (context.applicationContext as KolerApp).component.animations.show(
             this,
             true
         )

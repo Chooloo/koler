@@ -75,7 +75,7 @@ class AudioInteractorImpl(
 
     companion object {
         const val TONE_LENGTH_MS = 150 // The length of DTMF tones in milliseconds
-        const val DIAL_TONE_STREAM_TYPE = android.media.AudioManager.STREAM_DTMF
+        const val DIAL_TONE_STREAM_TYPE = STREAM_DTMF
         const val TONE_RELATIVE_VOLUME =
             80 // The DTMF tone volume relative to other sounds in the stream
 
@@ -96,19 +96,5 @@ class AudioInteractorImpl(
                 put(KeyEvent.KEYCODE_STAR, ToneGenerator.TONE_DTMF_S)
             }
         }
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun requestCallFocus() {
-        val attributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build()
-        val focusRequest =
-            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-                .setAudioAttributes(attributes)
-                .setWillPauseWhenDucked(false)
-                .build()
-        audioManager.requestAudioFocus(focusRequest)
     }
 }

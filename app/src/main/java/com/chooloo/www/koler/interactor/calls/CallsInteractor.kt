@@ -18,9 +18,6 @@ interface CallsInteractor : BaseInteractor<CallsInteractor.Listener>, Call.Liste
     fun getFirstState(state: Call.State): Call?
     fun getCallByTelecomCall(telecomCall: android.telecom.Call): Call?
 
-    fun entryAddCall(call: Call)
-    fun entryRemoveCall(call: Call)
-
     fun swapCall(callId: String)
     fun holdCall(callId: String)
     fun mergeCall(callId: String)
@@ -29,4 +26,8 @@ interface CallsInteractor : BaseInteractor<CallsInteractor.Listener>, Call.Liste
     fun answerCall(callId: String)
     fun rejectCall(callId: String)
     fun invokeCallKey(callId: String, c: Char)
+
+
+    fun entryAddCall(call: Call)
+    fun entryRemoveCall(call: Call)
 }

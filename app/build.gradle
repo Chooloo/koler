@@ -54,7 +54,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     annotationProcessor(
-            'androidx.room:room-compiler:2.3.0'
+            'androidx.room:room-compiler:2.4.0'
     )
 
     testImplementation(

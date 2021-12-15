@@ -9,18 +9,18 @@ class RecentPreferencesController<V : RecentPreferencesContract.View>(view: V) :
 
     override fun onStart() {
         super.onStart()
-        boundComponent.permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
+        component.permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             view.isBlockNumberVisible =
-                view.number?.let { !boundComponent.numbersInteractor.isNumberBlocked(it) } ?: false
+                view.number?.let { !component.blocked.isNumberBlocked(it) } ?: false
             view.isUnblockNumberVisible =
-                view.number?.let { boundComponent.numbersInteractor.isNumberBlocked(it) } ?: false
+                view.number?.let { component.blocked.isNumberBlocked(it) } ?: false
         }
     }
 
     override fun onBlockNumberClick() {
         view.number?.let {
-            boundComponent.permissionInteractor.runWithPrompt(R.string.warning_block_number) {
-                boundComponent.numbersInteractor.blockNumber(it)
+            component.permissions.runWithPrompt(R.string.warning_block_number) {
+                component.blocked.blockNumber(it)
                 view.showMessage(R.string.number_blocked)
             }
         }
@@ -28,7 +28,7 @@ class RecentPreferencesController<V : RecentPreferencesContract.View>(view: V) :
 
     override fun onUnblockNumberClick() {
         view.number?.let {
-            boundComponent.numbersInteractor.unblockNumber(it)
+            component.blocked.unblockNumber(it)
             view.showMessage(R.string.number_unblocked)
         }
     }

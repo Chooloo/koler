@@ -20,7 +20,6 @@ import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.marginTop
-import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.widgets.IconButton
 import com.chooloo.www.koler.util.getAttrColor
@@ -121,6 +120,10 @@ open class ListItem : LinearLayout {
         text?.let { _image.state = SHOW_INITIAL }
     }
 
+    fun setImageTint(@ColorInt color: Int) {
+        _image.imageTintList = ColorStateList.valueOf(color)
+    }
+
     fun setImageResource(@DrawableRes res: Int) {
         _image.setImageResource(res)
     }
@@ -148,24 +151,6 @@ open class ListItem : LinearLayout {
                 text = value ?: ""
                 visibility = if (value == null) GONE else VISIBLE
             }
-        }
-
-    fun setCaptionTextColor(@ColorInt color: Int) {
-        _caption.setTextColor(color)
-    }
-
-
-    var leftButtonVisibility: Boolean
-        get() = _buttonLeft.visibility == VISIBLE
-        set(value) {
-            _buttonLeft.visibility = if (value) VISIBLE else GONE
-        }
-
-
-    var rightButtonVisibility: Boolean
-        get() = _buttonRight.visibility == VISIBLE
-        set(value) {
-            _buttonRight.visibility = if (value) VISIBLE else GONE
         }
 
 
@@ -402,12 +387,5 @@ open class ListItem : LinearLayout {
 
     fun setOnRightButtonClickListener(onRightButtonClickListener: () -> Unit) {
         _onRightButtonClickListener = onRightButtonClickListener
-    }
-
-    fun blinkCaption() {
-        (context.applicationContext as KolerApp).component.animationInteractor.animateBlink(
-            _caption,
-            2500
-        )
     }
 }

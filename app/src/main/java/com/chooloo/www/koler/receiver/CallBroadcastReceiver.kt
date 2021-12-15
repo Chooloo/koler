@@ -9,12 +9,12 @@ class CallBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val componentRoot = (context.applicationContext as KolerApp).component
         when (intent.action) {
-            ACTION_MUTE -> componentRoot.audioInteractor.isMuted = true
-            ACTION_UNMUTE -> componentRoot.audioInteractor.isMuted = false
-            ACTION_ANSWER -> componentRoot.callsInteractor.mainCall?.answer()
-            ACTION_HANGUP -> componentRoot.callsInteractor.mainCall?.reject()
-            ACTION_SPEAKER -> componentRoot.audioInteractor.isSpeakerOn = true
-            ACTION_UNSPEAKER -> componentRoot.audioInteractor.isSpeakerOn = false
+            ACTION_MUTE -> componentRoot.audios.isMuted = true
+            ACTION_UNMUTE -> componentRoot.audios.isMuted = false
+            ACTION_ANSWER -> componentRoot.calls.mainCall?.answer()
+            ACTION_HANGUP -> componentRoot.calls.mainCall?.reject()
+            ACTION_SPEAKER -> componentRoot.audios.isSpeakerOn = true
+            ACTION_UNSPEAKER -> componentRoot.audios.isSpeakerOn = false
         }
     }
 
