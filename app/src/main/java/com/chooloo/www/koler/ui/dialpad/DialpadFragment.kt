@@ -17,20 +17,15 @@ import com.chooloo.www.koler.ui.widgets.DialpadKey
 
 class DialpadFragment : BaseFragment(), DialpadContract.View {
     private lateinit var _presenter: DialpadController<DialpadFragment>
-    private var _onTextChangedListener: (text: String?) -> Unit? = { _ -> }
+    private var _onTextChangedListener: (text: String) -> Unit = { _ -> }
     private val _binding by lazy { DialpadBinding.inflate(layoutInflater) }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    private val _suggestionsFragment by lazy {
-        ContactsFragment.newInstance(
-            isSearchable = true,
-            isHideNoResults = true
-        )
-    }
+    private val _suggestionsFragment by lazy { ContactsFragment.newInstance(true) }
 
     override val isDialer by lazy { args.getBoolean(ARG_IS_DIALER) }
 
     override val suggestionsCount: Int
-        get() = _suggestionsFragment.presenter.adapter.itemCount
+        get() = _suggestionsFragment.controller.adapter.itemCount
 
     override var number: String
         get() = _binding.dialpadEditText.text.toString()
@@ -168,7 +163,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     override fun onResume() {
         super.onResume()
-        _suggestionsFragment.presenter.setOnItemsChangedListener(_presenter::onSuggestionsChanged)
+        _suggestionsFragment.controller.setOnItemsChangedListener(_presenter::onSuggestionsChanged)
     }
 
     override fun invokeKey(keyCode: Int) {
@@ -182,7 +177,7 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
     //endregion
 
 
-    fun setOnTextChangedListener(onTextChangedListener: (text: String?) -> Unit?) {
+    fun setOnTextChangedListener(onTextChangedListener: (text: String) -> Unit) {
         _onTextChangedListener = onTextChangedListener
     }
 
@@ -196,10 +191,10 @@ class DialpadFragment : BaseFragment(), DialpadContract.View {
         const val ARG_IS_DIALER = "dialer"
         private const val ARG_NUMBER = "number"
 
-        fun newInstance(isDialer: Boolean, number: String? = null) = DialpadFragment().apply {
+        fun newInstance(isDialer: Boolean, text: String? = null) = DialpadFragment().apply {
             arguments = Bundle().apply {
                 putBoolean(ARG_IS_DIALER, isDialer)
-                putString(ARG_NUMBER, number)
+                putString(ARG_NUMBER, text)
             }
         }
     }

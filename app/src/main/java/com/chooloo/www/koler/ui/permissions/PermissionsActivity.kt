@@ -9,6 +9,7 @@ class PermissionsActivity : BaseActivity() {
     private val _rationaleMessage by lazy { intent.getStringExtra(EXTRA_RATIONAL_MESSAGE) }
     private val _allPermissions by lazy { intent.getStringArrayExtra(EXTRA_PERMISSIONS) }
 
+    override val contentView = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

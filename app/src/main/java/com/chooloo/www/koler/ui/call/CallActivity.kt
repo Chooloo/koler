@@ -2,7 +2,6 @@ package com.chooloo.www.koler.ui.call
 
 import android.annotation.SuppressLint
 import android.net.Uri
-import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import com.chooloo.www.koler.R
@@ -13,115 +12,113 @@ import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private lateinit var _presenter: CallController<CallActivity>
-    private val _binding by lazy { CallBinding.inflate(layoutInflater) }
+    private lateinit var _controller: CallController<CallActivity>
+    private val binding by lazy { CallBinding.inflate(layoutInflater) }
+
+    override val contentView by lazy { binding.root }
 
     override var imageURI: Uri?
         get() = null
         set(value) {
-            _binding.callImage.setImageURI(value)
+            binding.callImage.setImageURI(value)
         }
 
     override var nameText: String?
-        get() = _binding.callNameText.text.toString()
+        get() = binding.callNameText.text.toString()
         set(value) {
-            _binding.callNameText.text = value
+            binding.callNameText.text = value
         }
 
     override var stateText: String?
-        get() = _binding.callStateText.text.toString()
+        get() = binding.callStateText.text.toString()
         set(value) {
-            val old = _binding.callStateText.text.toString()
-            _binding.callStateText.text = value
+            val old = binding.callStateText.text.toString()
+            binding.callStateText.text = value
             if (old != value) {
-                component.animations.focus(_binding.callStateText)
+                component.animations.focus(binding.callStateText)
             }
         }
 
     override var stateTextColor: Int
-        get() = _binding.callStateText.currentTextColor
+        get() = binding.callStateText.currentTextColor
         set(value) {
-            _binding.callStateText.setTextColor(value)
+            binding.callStateText.setTextColor(value)
         }
 
     override var isHoldEnabled: Boolean
-        get() = _binding.callActions.isHoldEnabled
+        get() = binding.callActions.isHoldEnabled
         set(value) {
-            _binding.callActions.isHoldEnabled = value
+            binding.callActions.isHoldEnabled = value
         }
 
     override var isMuteEnabled: Boolean
-        get() = _binding.callActions.isMuteEnabled
+        get() = binding.callActions.isMuteEnabled
         set(value) {
-            _binding.callActions.isMuteEnabled = value
+            binding.callActions.isMuteEnabled = value
         }
 
     override var isSwapEnabled: Boolean
-        get() = _binding.callActions.isSwapEnabled
+        get() = binding.callActions.isSwapEnabled
         set(value) {
-            _binding.callActions.isSwapEnabled = value
+            binding.callActions.isSwapEnabled = value
         }
 
     override var isMergeEnabled: Boolean
-        get() = _binding.callActions.isMergeEnabled
+        get() = binding.callActions.isMergeEnabled
         set(value) {
-            _binding.callActions.isMergeEnabled = value
+            binding.callActions.isMergeEnabled = value
         }
 
     override var isSpeakerEnabled: Boolean
-        get() = _binding.callActions.isSpeakerEnabled
+        get() = binding.callActions.isSpeakerEnabled
         set(value) {
-            _binding.callActions.isSpeakerEnabled = value
+            binding.callActions.isSpeakerEnabled = value
         }
 
     override var isMuteActivated: Boolean
-        get() = _binding.callActions.isMuteActivated
+        get() = binding.callActions.isMuteActivated
         set(value) {
-            _binding.callActions.isMuteActivated = value
+            binding.callActions.isMuteActivated = value
         }
 
     override var isHoldActivated: Boolean
-        get() = _binding.callActions.isHoldActivated
+        get() = binding.callActions.isHoldActivated
         set(value) {
-            _binding.callActions.isHoldActivated = value
+            binding.callActions.isHoldActivated = value
         }
 
     override var isSpeakerActivated: Boolean
-        get() = _binding.callActions.isSpeakerActivated
+        get() = binding.callActions.isSpeakerActivated
         set(value) {
-            _binding.callActions.isSpeakerActivated = value
+            binding.callActions.isSpeakerActivated = value
         }
 
     override var isBluetoothActivated: Boolean
-        get() = _binding.callActions.isBluetoothActivated
+        get() = binding.callActions.isBluetoothActivated
         set(value) {
-            _binding.callActions.isBluetoothActivated = value
+            binding.callActions.isBluetoothActivated = value
         }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(_binding.root)
-    }
-
     override fun onSetup() {
-        _presenter = CallController(this)
-        _binding.apply {
-            callActions.setCallActionsListener(_presenter)
-            callAnswerButton.setOnClickListener { _presenter.onAnswerClick() }
-            callRejectButton.setOnClickListener { _presenter.onRejectClick() }
+        _controller = CallController(this)
+
+        binding.apply {
+            callActions.setCallActionsListener(_controller)
+            callAnswerButton.setOnClickListener { _controller.onAnswerClick() }
+            callRejectButton.setOnClickListener { _controller.onRejectClick() }
         }
     }
 
     override fun showDialpad() {
         BottomFragment(DialpadFragment.newInstance(false).apply {
-            setOnKeyDownListener(_presenter::onKeypadKey)
+            setOnKeyDownListener(_controller::onKeypadKey)
         }).show(supportFragmentManager, DialpadFragment.TAG)
     }
 
     override fun showActiveCallUI() {
         showActiveLayout()
-        _binding.callActions.showSingleCallUI()
+        binding.callActions.showSingleCallUI()
     }
 
     override fun showAddCallDialog() {
@@ -137,46 +134,46 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun showMultiActiveCallUI() {
         showActiveLayout()
-        _binding.callActions.showMultiCallUI()
+        binding.callActions.showMultiCallUI()
     }
 
     override fun setElapsedTime(duration: Long?) {
         duration?.let {
-            component.animations.show(_binding.callTimeText, true)
-            _binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
+            component.animations.show(binding.callTimeText, true)
+            binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
             component.animations.hide(
-                _binding.callTimeText,
+                binding.callTimeText,
                 ifVisible = true, goneOrInvisible = false
             )
         }
     }
 
     override fun showHoldingBanner(number: String) {
-        _binding.callBanner.text = number
-        if (_binding.callBanner.visibility != View.VISIBLE) {
-            _binding.callBanner.visibility = View.VISIBLE
-            component.animations.show(_binding.callBanner, true)
-            component.animations.focus(_binding.callBanner)
+        binding.callBanner.text = number
+        if (binding.callBanner.visibility != View.VISIBLE) {
+            binding.callBanner.visibility = View.VISIBLE
+            component.animations.show(binding.callBanner, true)
+            component.animations.focus(binding.callBanner)
         }
     }
 
     override fun hideHoldingBanner() {
-        component.animations.hide(_binding.callBanner, ifVisible = true, goneOrInvisible = false)
+        component.animations.hide(binding.callBanner, ifVisible = true, goneOrInvisible = false)
     }
 
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
-        if (_binding.callActions.visibility != View.VISIBLE) {
-            component.animations.show(_binding.callActions, true)
+        if (binding.callActions.visibility != View.VISIBLE) {
+            component.animations.show(binding.callActions, true)
         }
     }
 
     private fun transitionLayoutTo(constraintRes: Int) {
-        if (_binding.root.currentState != constraintRes) {
-            _binding.root.setTransition(_binding.root.currentState, constraintRes)
-            _binding.root.transitionToEnd()
+        if (binding.root.currentState != constraintRes) {
+            binding.root.setTransition(binding.root.currentState, constraintRes)
+            binding.root.transitionToEnd()
         }
     }
 }

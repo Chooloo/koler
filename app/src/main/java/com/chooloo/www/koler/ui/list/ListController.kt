@@ -38,10 +38,6 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
         adapter.unregisterAdapterDataObserver(_adapterDataObserver)
     }
 
-    override fun onSearchTextChanged(text: String) {
-        applyFilter(text)
-    }
-
     override fun setOnItemsChangedListener(onItemsChangedListener: (List<ItemType>) -> Unit?) {
         _onItemsChangedListener = onItemsChangedListener
     }

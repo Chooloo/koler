@@ -4,17 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.chooloo.www.koler.ui.widgets.SearchBar
-        android:id="@+id/items_search_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="@dimen/default_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.reddit.indicatorfastscroll.FastScrollerView
         android:id="@+id/items_fast_scroller"
         android:layout_width="wrap_content"
@@ -27,7 +16,7 @@
         android:textColor="?colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.reddit.indicatorfastscroll.FastScrollerThumbView
         android:id="@+id/items_fast_scroller_thumb"
@@ -48,7 +37,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/empty"

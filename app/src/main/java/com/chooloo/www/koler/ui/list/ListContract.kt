@@ -7,10 +7,7 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
-        val searchHint: String?
-
         fun scrollToTop()
-        fun requestSearchFocus()
         fun setupScrollIndicator()
         fun showItem(item: ItemType)
         fun showEmpty(isShow: Boolean)
@@ -23,7 +20,6 @@ interface ListContract : BaseContract {
     interface Controller<ItemType, V : View<ItemType>> : BaseContract.Controller<V> {
         fun onItemClick(item: ItemType) {}
         fun onItemLongClick(item: ItemType) {}
-        fun onSearchTextChanged(text: String) {}
         fun setOnItemsChangedListener(onItemsChangedListener: (List<ItemType>) -> Unit? = {})
     }
 }

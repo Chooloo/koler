@@ -1,58 +1,48 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.MotionEvent
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.adapter.MainPagerAdapter
 import com.chooloo.www.koler.databinding.MainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
+import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
-import com.chooloo.www.koler.viewmodel.DialpadViewModel
 
-// TODO implement FAB Coordination
 class MainActivity : BaseActivity(), MainContract.View {
-    private var _dialpadFragment: DialpadFragment? = null
-    private lateinit var _presenter: MainController<MainActivity>
-    private val _binding by lazy { MainBinding.inflate(layoutInflater) }
-    private val _dialpadViewModel by lazy {
-        ViewModelProvider(component.viewModelStoreOwner).get(DialpadViewModel::class.java)
-    }
+    private lateinit var _controller: MainController<MainActivity>
+    private val binding by lazy { MainBinding.inflate(layoutInflater) }
 
-    override var selectedPage: Int
-        get() = _binding.mainViewPager.currentItem
+    override val contentView by lazy { binding.root }
+
+    override var currentPageIndex: Int
+        get() = binding.mainViewPager.currentItem
         set(value) {
-            _binding.mainViewPager.currentItem = value
+            binding.mainViewPager.currentItem = value
         }
 
-    override var dialpadNumber: String?
-        get() = _dialpadViewModel.number.value.toString()
+    override var headers: Array<String>
+        get() = binding.mainTabs.headers
         set(value) {
-            _dialpadViewModel.number.value = value
+            binding.mainTabs.headers = value
         }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(_binding.root)
-    }
 
     override fun onSetup() {
-        _presenter = MainController(this)
-        _binding.apply {
-            mainDialpadButton.setOnClickListener { _presenter.onDialpadFabClick() }
-            mainViewPager.adapter = MainPagerAdapter(this@MainActivity)
-            mainMenuButton.setOnClickListener { _presenter.onMenuClick() }
-            mainTabs.headers =
-                arrayOf(getText(R.string.contacts).toString(), getText(R.string.recents).toString())
+        _controller = MainController(this)
+
+        binding.apply {
+            mainMenuButton.setOnClickListener { _controller.onMenuClick() }
+            mainDialpadButton.setOnClickListener { _controller.onDialpadFabClick() }
             mainTabs.viewPager = mainViewPager
-            mainViewPager.currentItem = component.preferences.defaultPage.index
+            mainSearchBar.setOnTextChangedListener(_controller::onSearchTextChange)
+            mainSearchBar.editText?.setOnFocusChangeListener { _, hasFocus ->
+                _controller.onSearchFocusChange(hasFocus)
+            }
         }
 
-        component.permissions.checkDefaultDialer()
         checkIntent()
     }
 
@@ -62,11 +52,18 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
 
-    //region main view
+    override fun openDialer(text: String?) {
+        BottomFragment(DialpadFragment.newInstance(true, text)).show(
+            supportFragmentManager,
+            DialpadFragment.TAG
+        )
+    }
 
-    override fun openDialpad() {
-        _dialpadFragment = DialpadFragment.newInstance(true)
-        BottomFragment(_dialpadFragment!!).show(supportFragmentManager, DialpadFragment.TAG)
+    override fun setFragmentsAdapter(count: Int, adapter: (position: Int) -> BaseFragment) {
+        binding.mainViewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount() = count
+            override fun createFragment(position: Int) = adapter.invoke(position)
+        }
     }
 
     override fun openSettings() {
@@ -76,9 +73,17 @@ class MainActivity : BaseActivity(), MainContract.View {
         )
     }
 
+    override fun showSearching() {
+        binding.root.transitionToState(R.id.constraint_set_main_collapsed)
+    }
+
+    override fun setSearchHint(hint: String) {
+        binding.mainSearchBar.hint = hint
+    }
+
     override fun checkIntent() {
         if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
-            _presenter.onViewIntent(intent)
+            _controller.onViewIntent(intent)
         }
     }
 }

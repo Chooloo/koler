@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.base
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.chooloo.www.koler.di.activitycomponent.ActivityComponentImpl
@@ -12,6 +13,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(component.preferences.accentTheme.theme)
         super.onCreate(savedInstanceState)
+        setContentView(contentView)
     }
 
     override fun onStart() {
@@ -48,4 +50,6 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
             Toast.LENGTH_SHORT
         ).show()
     }
+
+    abstract val contentView: View?
 }

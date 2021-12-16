@@ -5,8 +5,8 @@
 
 
     <Transition
-        app:constraintSetEnd="@id/main_constraint_collapsed"
-        app:constraintSetStart="@id/main_constraint_expanded">
+        app:constraintSetEnd="@id/constraint_set_main_collapsed"
+        app:constraintSetStart="@id/constraint_set_main_expanded">
 
         <OnSwipe
             app:dragDirection="dragUp"
@@ -14,7 +14,7 @@
             app:touchAnchorSide="top" />
     </Transition>
 
-    <ConstraintSet android:id="@+id/main_constraint_expanded">
+    <ConstraintSet android:id="@+id/constraint_set_main_expanded">
         <!-- menu button-->
         <Constraint
             android:id="@+id/main_menu_button"
@@ -36,6 +36,18 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_height="200dp" />
 
+        <!-- search bar -->
+        <Constraint
+            android:id="@+id/main_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            android:layout_marginEnd="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_tabs" />
+
         <!-- view pager -->
         <Constraint
             android:id="@+id/main_view_pager"
@@ -45,7 +57,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_tabs" />
+            app:layout_constraintTop_toBottomOf="@id/main_search_bar" />
 
         <!-- dialpad button -->
         <Constraint
@@ -58,7 +70,7 @@
             app:layout_constraintStart_toStartOf="parent" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/main_constraint_collapsed">
+    <ConstraintSet android:id="@+id/constraint_set_main_collapsed">
         <!-- menu button-->
         <Constraint
             android:id="@+id/main_menu_button"
@@ -82,6 +94,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/main_menu_button" />
 
+        <!-- search bar -->
+        <Constraint
+            android:id="@+id/main_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_tabs" />
+
         <!-- view pager -->
         <Constraint
             android:id="@+id/main_view_pager"
@@ -90,7 +114,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_tabs" />
+            app:layout_constraintTop_toBottomOf="@id/main_search_bar" />
 
         <!-- dialpad button -->
         <Constraint

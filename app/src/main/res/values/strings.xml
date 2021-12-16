@@ -37,9 +37,9 @@
 
     <!--region hints-->
     <string name="hint_search">Search</string>
-    <string name="hint_search_items">Search Items</string>
     <string name="hint_search_contacts">Search Contacts</string>
     <string name="hint_search_recents">Search Recents</string>
+    <string name="hint_search_items">Search contacts &amp; recents</string>
     <!--endregion-->
 
     <!--region warning-->

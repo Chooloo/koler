@@ -10,13 +10,11 @@ import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
 
 class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(), ListContract.View<RecentAccount> {
-    override val searchHint by lazy { getString(R.string.hint_search_recents) }
-
-    override lateinit var presenter: RecentsController<RecentsFragment>
+    override lateinit var controller: RecentsController<RecentsFragment>
 
 
     override fun onSetup() {
-        presenter = RecentsController(this)
+        controller = RecentsController(this)
         super.onSetup()
     }
 
@@ -30,13 +28,11 @@ class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(), ListContr
     companion object {
         fun newInstance(
             filter: String? = null,
-            isSearchable: Boolean = true,
             isHideNoResults: Boolean = false
         ) =
             RecentsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_FILTER, filter)
-                    putBoolean(ARG_IS_SEARCHABLE, isSearchable)
                     putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
                 }
             }
