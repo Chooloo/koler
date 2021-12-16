@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.recents
 
 import android.os.Bundle
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.account.RecentAccount
 import com.chooloo.www.koler.ui.base.BottomFragment
@@ -9,7 +8,8 @@ import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
 
-class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(), ListContract.View<RecentAccount> {
+class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(),
+    ListContract.View<RecentAccount> {
     override lateinit var controller: RecentsController<RecentsFragment>
 
 
@@ -26,15 +26,10 @@ class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(), ListContr
     }
 
     companion object {
-        fun newInstance(
-            filter: String? = null,
-            isHideNoResults: Boolean = false
-        ) =
-            RecentsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_FILTER, filter)
-                    putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
-                }
+        fun newInstance(filter: String? = null) = RecentsFragment().apply {
+            arguments = Bundle().apply {
+                putString(ARG_FILTER, filter)
             }
+        }
     }
 }

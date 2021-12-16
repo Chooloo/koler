@@ -338,7 +338,7 @@ open class ListItem : LinearLayout {
         )
         _header.setPadding(
             if (isEnabled) dimenSpacing else 0,
-            dimenSpacing,
+            if (isCompact) dimenSpacingSmall-10 else dimenSpacing,
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) dimenSpacingSmall - 10 else dimenSpacing
         )

@@ -21,4 +21,6 @@ open class BaseController<V : BaseContract.View>(final override var view: V) :
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     protected open fun onStop() {
     }
+
+    fun initialize(){}
 }

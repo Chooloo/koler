@@ -8,6 +8,7 @@ import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.dialer.DialerFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
 @SuppressLint("ClickableViewAccessibility")
@@ -111,7 +112,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun showDialpad() {
-        BottomFragment(DialpadFragment.newInstance(false).apply {
+        BottomFragment(DialpadFragment.newInstance().apply {
             setOnKeyDownListener(_controller::onKeypadKey)
         }).show(supportFragmentManager, DialpadFragment.TAG)
     }
@@ -122,7 +123,7 @@ class CallActivity : BaseActivity(), CallContract.View {
     }
 
     override fun showAddCallDialog() {
-        BottomFragment(DialpadFragment.newInstance(true)).show(
+        BottomFragment(DialerFragment.newInstance()).show(
             supportFragmentManager,
             DialpadFragment.TAG
         )

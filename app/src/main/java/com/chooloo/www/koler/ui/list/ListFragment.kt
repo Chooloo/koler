@@ -15,30 +15,28 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     BaseFragment(),
     ListContract.View<ItemType> {
 
-    abstract val controller: ListController<ItemType, out ListFragment<ItemType, Adapter>>
+    protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
-    private val _binding by lazy { ItemsBinding.inflate(layoutInflater) }
-    private val _isHideNoResults by lazy { args.getBoolean(ARG_IS_HIDE_NO_RESULTS, false) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = _binding.root
+    ) = binding.root
 
     override fun onSetup() {
         args.getString(ARG_FILTER)?.let { controller.applyFilter(it) }
     }
 
     override fun scrollToTop() {
-        _binding.itemsRecyclerView.smoothScrollToPosition(0)
+        binding.itemsRecyclerView.smoothScrollToPosition(0)
     }
 
     override fun showEmpty(isShow: Boolean) {
-        _binding.apply {
-            empty.emptyIcon.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
-            empty.emptyText.visibility = if (isShow && !_isHideNoResults) VISIBLE else GONE
-            itemsRecyclerView.visibility = if (isShow && !_isHideNoResults) GONE else VISIBLE
+        binding.apply {
+            empty.emptyIcon.visibility = if (isShow) VISIBLE else GONE
+            empty.emptyText.visibility = if (isShow) VISIBLE else GONE
+            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
         }
     }
 
@@ -49,7 +47,7 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun setupScrollIndicator() {
-        _binding.apply {
+        binding.apply {
             try {
                 itemsFastScroller.setupWithRecyclerView(
                     itemsRecyclerView,
@@ -64,19 +62,21 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun setEmptyReason(@StringRes res: Int?) {
-        res?.let { _binding.empty.emptyText.setText(it) }
+        res?.let { binding.empty.emptyText.setText(it) }
     }
 
     override fun setEmptyIcon(res: Int?) {
-        res?.let { _binding.empty.emptyIcon.setImageResource(it) }
+        res?.let { binding.empty.emptyIcon.setImageResource(it) }
     }
 
     override fun setAdapter(adapter: ListAdapter<ItemType>) {
-        _binding.itemsRecyclerView.adapter = adapter
+        binding.itemsRecyclerView.adapter = adapter
     }
 
     companion object {
         const val ARG_FILTER = "filter"
-        const val ARG_IS_HIDE_NO_RESULTS = "is_hide_no_results"
     }
+
+
+    abstract val controller: ListController<ItemType, out ListFragment<ItemType, Adapter>>
 }

@@ -17,9 +17,7 @@ class ContactFragment : BaseFragment(), ContactContract.View {
 
     private lateinit var _presenter: ContactController<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _phonesFragment by lazy {
-        PhonesFragment.newInstance(contactId, isHideNoResults = true)
-    }
+    private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId) }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()

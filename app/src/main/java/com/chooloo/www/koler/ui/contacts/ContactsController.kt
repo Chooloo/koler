@@ -6,7 +6,7 @@ import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListController
 
-class ContactsController<V : ListContract.View<ContactAccount>>(view: V) :
+open class ContactsController<V : ListContract.View<ContactAccount>>(view: V) :
     ListController<ContactAccount, V>(view),
     ListContract.Controller<ContactAccount, V> {
 

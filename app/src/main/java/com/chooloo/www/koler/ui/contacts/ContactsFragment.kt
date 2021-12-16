@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.ui.contacts
 
-import android.os.Bundle
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.ui.base.BottomFragment
@@ -8,13 +7,14 @@ import com.chooloo.www.koler.ui.contact.ContactFragment
 import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 
-class ContactsFragment : ListFragment<ContactAccount, ContactsAdapter>(),
+open class ContactsFragment : ListFragment<ContactAccount, ContactsAdapter>(),
     ListContract.View<ContactAccount> {
-    override lateinit var controller: ContactsController<ContactsFragment>
-
+    override val controller: ContactsController<out ContactsFragment> by lazy {
+        ContactsController(this)
+    }
 
     override fun onSetup() {
-        controller = ContactsController(this)
+        controller.initialize()
         super.onSetup()
     }
 
@@ -26,18 +26,10 @@ class ContactsFragment : ListFragment<ContactAccount, ContactsAdapter>(),
     }
 
     fun applyFilter(filter: String) {
-        if (this::controller.isInitialized) {
-            controller.applyFilter(filter)
-        }
+        controller.applyFilter(filter)
     }
 
     companion object {
-        fun newInstance(
-            isHideNoResults: Boolean = false
-        ) = ContactsFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_IS_HIDE_NO_RESULTS, isHideNoResults)
-            }
-        }
+        fun newInstance() = ContactsFragment()
     }
 }

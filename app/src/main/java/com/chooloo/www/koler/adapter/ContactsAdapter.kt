@@ -7,7 +7,7 @@ import com.chooloo.www.koler.ui.list.ListData
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.util.initials
 
-class ContactsAdapter(activityComponent: ActivityComponent) :
+open class ContactsAdapter(activityComponent: ActivityComponent) :
     ListAdapter<ContactAccount>(activityComponent) {
 
     override fun onBindListItem(listItem: ListItem, item: ContactAccount) {

@@ -8,7 +8,7 @@ import com.chooloo.www.koler.databinding.MainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
-import com.chooloo.www.koler.ui.dialpad.DialpadFragment
+import com.chooloo.www.koler.ui.dialer.DialerFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 
 class MainActivity : BaseActivity(), MainContract.View {
@@ -53,9 +53,9 @@ class MainActivity : BaseActivity(), MainContract.View {
 
 
     override fun openDialer(text: String?) {
-        BottomFragment(DialpadFragment.newInstance(true, text)).show(
+        BottomFragment(DialerFragment.newInstance(text)).show(
             supportFragmentManager,
-            DialpadFragment.TAG
+            DialerFragment.TAG
         )
     }
 
