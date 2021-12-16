@@ -32,6 +32,7 @@ data class ListData<DataType>(
             recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
         )
 
-        fun fromPhones(phones: List<PhoneAccount>) = ListData(phones)
+        fun fromPhones(phones: List<PhoneAccount>) =
+            ListData(phones.toList().distinctBy { it.normalizedNumber })
     }
 }
