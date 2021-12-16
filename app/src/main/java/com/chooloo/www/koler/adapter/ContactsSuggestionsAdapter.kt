@@ -2,6 +2,7 @@ package com.chooloo.www.koler.adapter
 
 import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
+import com.chooloo.www.koler.ui.list.ListData
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 
 class ContactsSuggestionsAdapter(activityComponent: ActivityComponent) :
@@ -11,4 +12,6 @@ class ContactsSuggestionsAdapter(activityComponent: ActivityComponent) :
         super.onBindListItem(listItem, item)
         listItem.isCompact = true
     }
+
+    override fun convertDataToListData(data: List<ContactAccount>) = ListData.fromContacts(data)
 }

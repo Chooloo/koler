@@ -16,7 +16,7 @@ data class ListData<DataType>(
         ): ListData<ContactAccount> {
             val headersToCounts = contacts.groupingBy { it.name?.get(0).toString() }.eachCount()
             if (withFavs) {
-                val favs = ArrayList(contacts.filter { it.starred })
+                val favs = contacts.filter { it.starred }
                 if (favs.isNotEmpty()) {
                     return ListData(
                         items = ArrayList(favs + contacts),

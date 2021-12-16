@@ -22,8 +22,7 @@ class RecentController<V : RecentContract.View>(view: V) :
         component.permissions.runWithDefaultDialer {
             if (component.blocked.isNumberBlocked(_recent!!.number)) {
                 recentCaptions.add(
-                    component.strings.getString(R.string.error_blocked)
-                        .toUpperCase(Locale.ROOT)
+                    component.strings.getString(R.string.error_blocked).toUpperCase(Locale.ROOT)
                 )
             }
         }

@@ -2,7 +2,6 @@ package com.chooloo.www.koler.adapter
 
 import android.graphics.Color
 import android.provider.ContactsContract.CommonDataKinds.Phone
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.RecentAccount
 import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 import com.chooloo.www.koler.ui.list.ListData
@@ -27,17 +26,6 @@ class RecentsAdapter(activityComponent: ActivityComponent) :
 
             setImageBackgroundColor(Color.TRANSPARENT)
             setImageResource(component.recents.getCallTypeImage(item.type))
-            setImageTint(
-                when (item.type) {
-                    RecentAccount.TYPE_INCOMING,
-                    RecentAccount.TYPE_OUTGOING -> component.colors.getColor(R.color.green_foreground)
-                    RecentAccount.TYPE_MISSED,
-                    RecentAccount.TYPE_REJECTED,
-                    RecentAccount.TYPE_BLOCKED -> component.colors.getColor(R.color.red_foreground)
-                    RecentAccount.TYPE_VOICEMAIL -> component.colors.getAttrColor(R.attr.colorOnSecondary)
-                    else -> component.colors.getColor(R.color.green_foreground)
-                }
-            )
         }
     }
 

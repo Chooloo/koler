@@ -50,12 +50,30 @@ open class ListItem : LinearLayout {
     protected val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     protected val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
+    var imageSize: Int
+        get() = _image.height
+        set(value) {
+            _image.layoutParams = LayoutParams(value, value)
+        }
+
+    var isPadded: Boolean
+        get() = _isPadded
+        set(value) {
+            setPaddingMode(_isCompact, value)
+            _isPadded = value
+        }
+
     var isCompact: Boolean
         get() = _isCompact
         set(value) {
             setPaddingMode(value, _isPadded)
         }
 
+    var titleText: String?
+        get() = _title.text.toString()
+        set(value) {
+            _title.text = value ?: ""
+        }
 
     var headerText: String?
         get() = _header.text.toString()
@@ -66,17 +84,13 @@ open class ListItem : LinearLayout {
             }
         }
 
-    var isPadded: Boolean
-        get() = _isPadded
+    var captionText: String?
+        get() = _caption.text.toString()
         set(value) {
-            setPaddingMode(_isCompact, value)
-            _isPadded = value
-        }
-
-    var imageSize: Int
-        get() = _image.height
-        set(value) {
-            _image.layoutParams = LayoutParams(value, value)
+            _caption.apply {
+                text = value ?: ""
+                visibility = if (value == null) GONE else VISIBLE
+            }
         }
 
     var imageTextSize: Float
@@ -108,49 +122,6 @@ open class ListItem : LinearLayout {
         set(value) {
             _image.setImageDrawable(value)
             _image.state = SHOW_IMAGE
-        }
-
-    fun setImageUri(imageUri: Uri?) {
-        _image.setImageURI(imageUri)
-        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
-    }
-
-    fun setImageInitials(text: String?) {
-        _image.text = text
-        text?.let { _image.state = SHOW_INITIAL }
-    }
-
-    fun setImageTint(@ColorInt color: Int) {
-        _image.imageTintList = ColorStateList.valueOf(color)
-    }
-
-    fun setImageResource(@DrawableRes res: Int) {
-        _image.setImageResource(res)
-    }
-
-    fun setImageBackgroundColor(@ColorInt color: Int) {
-        _image.setBackgroundColor(color)
-    }
-
-
-    var titleText: String?
-        get() = _title.text.toString()
-        set(value) {
-            _title.text = value ?: ""
-        }
-
-    fun setTitleTextColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
-    }
-
-
-    var captionText: String?
-        get() = _caption.text.toString()
-        set(value) {
-            _caption.apply {
-                text = value ?: ""
-                visibility = if (value == null) GONE else VISIBLE
-            }
         }
 
 
@@ -338,14 +309,21 @@ open class ListItem : LinearLayout {
         )
         _header.setPadding(
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) dimenSpacingSmall-10 else dimenSpacing,
+            if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall,
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) dimenSpacingSmall - 10 else dimenSpacing
+            if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall
         )
     }
 
-    fun setTitleColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
+
+    fun setImageUri(imageUri: Uri?) {
+        _image.setImageURI(imageUri)
+        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+    }
+
+    fun setImageInitials(text: String?) {
+        _image.text = text
+        text?.let { _image.state = SHOW_INITIAL }
     }
 
     fun setTitleBold(isBold: Boolean) {
@@ -355,17 +333,37 @@ open class ListItem : LinearLayout {
         )
     }
 
+    fun setImageTint(@ColorInt color: Int) {
+        _image.imageTintList = ColorStateList.valueOf(color)
+    }
+
+    fun setTitleColor(@ColorInt color: Int) {
+        _title.setTextColor(color)
+    }
+
+    fun setTitleTextColor(@ColorInt color: Int) {
+        _title.setTextColor(color)
+    }
+
+    fun setImageResource(@DrawableRes res: Int) {
+        _image.setImageResource(res)
+    }
+
+    fun setImageBackgroundColor(@ColorInt color: Int) {
+        _image.setBackgroundColor(color)
+    }
+
     fun setLeftButtonTintColor(@ColorRes colorRes: Int) {
         _buttonLeft.imageTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setLeftButtonBackgroundTintColor(@ColorInt color: Int) {
-        _buttonLeft.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
     fun setLeftButtonDrawable(@DrawableRes drawableRes: Int) {
         _buttonLeft.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
+    }
+
+    fun setLeftButtonBackgroundTintColor(@ColorInt color: Int) {
+        _buttonLeft.backgroundTintList = ColorStateList.valueOf(color)
     }
 
     fun setOnLeftButtonClickListener(onLeftButtonClickListener: () -> Unit) {

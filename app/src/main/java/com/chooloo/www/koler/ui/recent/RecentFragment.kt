@@ -93,9 +93,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
 
-    //endregion
-
-
     companion object {
         const val TAG = "recent_fragment"
         const val ARG_RECENT_ID = "recent_id"

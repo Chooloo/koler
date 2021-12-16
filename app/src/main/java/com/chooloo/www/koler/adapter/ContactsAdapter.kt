@@ -23,5 +23,6 @@ open class ContactsAdapter(activityComponent: ActivityComponent) :
         }
     }
 
-    override fun convertDataToListData(data: List<ContactAccount>) = ListData.fromContacts(data)
+    override fun convertDataToListData(data: List<ContactAccount>) =
+        ListData.fromContacts(data, true)
 }
