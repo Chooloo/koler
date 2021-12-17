@@ -10,7 +10,7 @@ class ContactsSuggestionsFragment : ContactsFragment() {
         binding.apply {
             empty.emptyIcon.visibility = View.GONE
             empty.emptyText.visibility = View.GONE
-            itemsRecyclerView.visibility = if (isShow) View.GONE else View.VISIBLE
+            itemsScrollView.visibility = if (isShow) View.GONE else View.VISIBLE
         }
     }
 

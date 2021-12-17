@@ -6,10 +6,11 @@ import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
 import com.chooloo.www.koler.ui.list.ListData
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
+import com.l4digital.fastscroll.FastScroller
 
 abstract class ListAdapter<ItemType>(
     protected val component: ActivityComponent
-) : RecyclerView.Adapter<ListItemHolder>() {
+) : RecyclerView.Adapter<ListItemHolder>(), FastScroller.SectionIndexer {
     private var _data: ListData<ItemType> = ListData()
     private var _onItemClickListener: (item: ItemType) -> Unit = {}
     private var _onItemLongClickListener: (item: ItemType) -> Unit = {}
@@ -42,6 +43,18 @@ abstract class ListAdapter<ItemType>(
     }
 
     override fun getItemCount() = _data.items.size
+
+    override fun getSectionText(position: Int): String? {
+        var total = 0
+        _data.headersToCounts.values.withIndex().forEach { (index, count) ->
+            if (position <= total) {
+                return _data.headersToCounts.keys.toList()[index]
+            } else {
+                total += count
+            }
+        }
+        return null
+    }
 
     private fun getItem(position: Int) = _data.items[position]
 

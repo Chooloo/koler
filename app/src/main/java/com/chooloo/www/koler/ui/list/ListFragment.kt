@@ -9,13 +9,18 @@ import androidx.annotation.StringRes
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 
 abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     BaseFragment(),
     ListContract.View<ItemType> {
 
     protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
+
+    override var isScrollerVisible: Boolean
+        get() = binding.itemsScrollView.fastScroller.visibility == VISIBLE
+        set(value) {
+            binding.itemsScrollView.fastScroller.visibility = if (value) VISIBLE else GONE
+        }
 
 
     override fun onCreateView(
@@ -25,39 +30,21 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     ) = binding.root
 
     override fun onSetup() {
+        binding.itemsScrollView.fastScroller.setPadding(0, 0, 30, 0)
         args.getString(ARG_FILTER)?.let { controller.applyFilter(it) }
-    }
-
-    override fun scrollToTop() {
-        binding.itemsRecyclerView.smoothScrollToPosition(0)
     }
 
     override fun showEmpty(isShow: Boolean) {
         binding.apply {
             empty.emptyIcon.visibility = if (isShow) VISIBLE else GONE
             empty.emptyText.visibility = if (isShow) VISIBLE else GONE
-            itemsRecyclerView.visibility = if (isShow) GONE else VISIBLE
+            itemsScrollView.visibility = if (isShow) GONE else VISIBLE
         }
     }
 
     override fun showLoading(isLoading: Boolean) {
         if (isLoading) {
             showEmpty(false)
-        }
-    }
-
-    override fun setupScrollIndicator() {
-        binding.apply {
-            try {
-                itemsFastScroller.setupWithRecyclerView(
-                    itemsRecyclerView,
-                    { position ->
-                        (itemsRecyclerView.adapter as ListAdapter<*>).getHeader(position)
-                            ?.let { FastScrollItemIndicator.Text(it) }
-                    })
-                itemsFastScrollerThumb.setupWithFastScroller(itemsFastScroller)
-            } catch (e: IllegalStateException) {
-            }
         }
     }
 
@@ -70,8 +57,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
     override fun setAdapter(adapter: ListAdapter<ItemType>) {
-        binding.itemsRecyclerView.adapter = adapter
+        binding.itemsScrollView.setAdapter(adapter)
     }
+
 
     companion object {
         const val ARG_FILTER = "filter"

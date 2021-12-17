@@ -7,8 +7,8 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
-        fun scrollToTop()
-        fun setupScrollIndicator()
+        var isScrollerVisible: Boolean
+
         fun showItem(item: ItemType)
         fun showEmpty(isShow: Boolean)
         fun showLoading(isLoading: Boolean)
