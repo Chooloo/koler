@@ -71,11 +71,6 @@ class SettingsController<V : SettingsContract.View>(view: V) :
         refresh()
     }
 
-    override fun onToggledScrollIndicator(isToggle: Boolean) {
-        component.preferences.isScrollIndicator = isToggle
-        refresh()
-    }
-
     override fun onToggledAskSim(isToggle: Boolean) {
         component.preferences.isAskSim = isToggle
     }

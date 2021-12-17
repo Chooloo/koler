@@ -33,9 +33,6 @@ class SettingsFragment : BasePreferenceFragment(), SettingsContract.View {
             getString(R.string.pref_key_animations) -> _presenter.onToggledAnimation(newValue as Boolean)
             getString(R.string.pref_key_default_page) -> _presenter.onSelectedDefaultPage(newValue as String)
             getString(R.string.pref_key_records_enabled) -> _presenter.onToggledRecords(newValue as Boolean)
-            getString(R.string.pref_key_scroll_indicator) -> _presenter.onToggledScrollIndicator(
-                newValue as Boolean
-            )
         }
     }
 

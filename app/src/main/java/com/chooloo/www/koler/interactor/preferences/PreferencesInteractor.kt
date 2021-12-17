@@ -11,7 +11,6 @@ open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.List
     var isRecords: Boolean
     var isCompact: Boolean
     var isAnimations: Boolean
-    var isScrollIndicator: Boolean
 
     var defaultPage: Page
     var accentTheme: AccentTheme

@@ -32,12 +32,6 @@
         app:isPreferenceVisible="false" />
 
     <SwitchPreference
-        android:defaultValue="@bool/pref_default_value_scroll_indicator"
-        android:icon="@drawable/round_sort_by_alpha_24"
-        android:key="@string/pref_key_scroll_indicator"
-        android:title="@string/pref_title_scroll_indicator" />
-
-    <SwitchPreference
         android:defaultValue="@bool/pref_default_value_should_ask_sim"
         android:icon="@drawable/ic_sim_card_black_24dp"
         android:key="@string/pref_key_ask_sim"

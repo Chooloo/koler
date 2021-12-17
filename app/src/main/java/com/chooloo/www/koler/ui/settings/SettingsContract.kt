@@ -24,6 +24,5 @@ class SettingsContract : BaseContract {
         fun onToggledRecords(isToggle: Boolean)
         fun onToggledAnimation(isToggle: Boolean)
         fun onToggledCompactMode(isToggle: Boolean)
-        fun onToggledScrollIndicator(isToggle: Boolean)
     }
 }
