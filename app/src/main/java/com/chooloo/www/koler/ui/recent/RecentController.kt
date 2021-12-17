@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.ui.recent
 
-import android.Manifest
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.base.BaseController
 import com.chooloo.www.koler.util.getElapsedTimeString
@@ -51,14 +50,16 @@ class RecentController<V : RecentContract.View>(view: V) :
 
     override fun onActionDelete() {
         _recent?.let { recent ->
-            component.permissions.runWithPermissions(
-                arrayOf(Manifest.permission.WRITE_CALL_LOG), {
-                    component.permissions.runWithPrompt(R.string.warning_delete_recent) {
-                        if (it) component.recents.deleteRecent(recent.id)
+            component.permissions.runWithWriteCallLogPermissions {
+                if (it) {
+                    component.permissions.runWithPrompt(R.string.warning_delete_recent) { result ->
+                        if (result) {
+                            component.recents.deleteRecent(recent.id)
+                            view.finish()
+                        }
                     }
-                },
-                null, null, null
-            )
+                }
+            }
         }
     }
 

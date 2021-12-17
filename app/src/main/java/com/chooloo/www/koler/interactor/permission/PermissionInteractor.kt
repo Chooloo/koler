@@ -45,6 +45,8 @@ interface PermissionInteractor : BaseInteractor<PermissionInteractor.Listener> {
 
     fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit)
     fun runWithReadContactsPermissions(callback: (granted: Boolean) -> Unit)
+    fun runWithWriteContactsPermissions(callback: (granted: Boolean) -> Unit)
+    fun runWithWriteCallLogPermissions(callback: (granted: Boolean) -> Unit)
 
     companion object {
         const val RC_DEFAULT = 2

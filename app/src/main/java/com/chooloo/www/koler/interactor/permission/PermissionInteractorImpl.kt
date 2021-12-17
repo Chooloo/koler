@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.interactor.permission
 
-import android.Manifest.permission.READ_CALL_LOG
-import android.Manifest.permission.READ_CONTACTS
+import android.Manifest.permission.*
 import android.app.role.RoleManager
 import android.content.Context
 import android.content.Intent
@@ -120,10 +119,10 @@ class PermissionInteractorImpl(
         }
     }
 
-    override fun runWithPrompt(subtitleRes: Int, callback: (result:Boolean) -> Unit) {
+    override fun runWithPrompt(subtitleRes: Int, callback: (result: Boolean) -> Unit) {
         BottomFragment(PromptFragment.newInstance(strings.getString(subtitleRes)).apply {
             controller.setOnClickListener(callback::invoke)
-        }).show(activity.supportFragmentManager,PromptFragment.TAG)
+        }).show(activity.supportFragmentManager, PromptFragment.TAG)
     }
 
     override fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit) {
@@ -137,6 +136,20 @@ class PermissionInteractorImpl(
         runWithPermissions(arrayOf(READ_CONTACTS),
             grantedCallback = { callback.invoke(true) },
             deniedCallback = { callback.invoke(false) },
-            blockedCallback = { callback.invoke(false ) })
+            blockedCallback = { callback.invoke(false) })
+    }
+
+    override fun runWithWriteContactsPermissions(callback: (granted: Boolean) -> Unit) {
+        runWithPermissions(arrayOf(WRITE_CONTACTS),
+            grantedCallback = { callback.invoke(true) },
+            deniedCallback = { callback.invoke(false) },
+            blockedCallback = { callback.invoke(false) })
+    }
+
+    override fun runWithWriteCallLogPermissions(callback: (granted: Boolean) -> Unit) {
+        runWithPermissions(arrayOf(WRITE_CALL_LOG),
+            grantedCallback = { callback.invoke(true) },
+            deniedCallback = { callback.invoke(false) },
+            blockedCallback = { callback.invoke(false) })
     }
 }

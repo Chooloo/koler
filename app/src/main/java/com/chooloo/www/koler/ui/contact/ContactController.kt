@@ -1,6 +1,5 @@
 package com.chooloo.www.koler.ui.contact
 
-import android.Manifest
 import android.net.Uri
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.ContactAccount
@@ -48,13 +47,16 @@ class ContactController<V : ContactContract.View>(view: V) :
     }
 
     override fun onActionDelete() {
-        component.permissions.runWithPermissions(
-            arrayOf(Manifest.permission.WRITE_CONTACTS),
-            {
+        component.permissions.runWithWriteContactsPermissions {
+            if (it) {
                 component.permissions.runWithPrompt(R.string.warning_delete_contact) {
-                    if (it) component.contacts.deleteContact(view.contactId)
+                    if (it) {
+                        component.contacts.deleteContact(view.contactId)
+                        view.finish()
+                    }
                 }
-            })
+            }
+        }
     }
 
     override fun onActionMenu() {
