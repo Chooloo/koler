@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.dialer
 
 import android.view.KeyEvent.KEYCODE_1
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.ui.dialpad.DialpadController
 
@@ -25,7 +24,7 @@ class DialerController<V : DialerContract.View>(view: V) :
 
     override fun onCallClick() {
         if (view.text.isEmpty()) {
-            view.showMessage(R.string.error_enter_number)
+            view.text = component.recents.getLastOutgoingCall()
         } else {
             component.navigations.call(view.text)
         }

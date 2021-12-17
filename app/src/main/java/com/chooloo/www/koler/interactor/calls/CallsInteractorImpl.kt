@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.interactor.calls
 
+import android.provider.CallLog
 import com.chooloo.www.koler.data.call.Call
 import com.chooloo.www.koler.data.call.Call.State.*
 import com.chooloo.www.koler.data.call.CallList

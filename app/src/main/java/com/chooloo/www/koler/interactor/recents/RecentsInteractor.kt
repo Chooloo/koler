@@ -10,4 +10,5 @@ interface RecentsInteractor : BaseInteractor<RecentsInteractor.Listener> {
     fun queryRecent(recentId: Long): RecentAccount?
     fun queryRecent(recentId: Long, callback: (RecentAccount?) -> Unit)
     fun getCallTypeImage(@RecentAccount.CallType callType: Int): Int
+    fun getLastOutgoingCall(): String
 }

@@ -39,4 +39,6 @@ class RecentsInteractorImpl(private val context: Context) :
         RecentAccount.TYPE_BLOCKED -> R.drawable.round_block_24
         else -> R.drawable.ic_call_made_black_24dp
     }
+
+    override fun getLastOutgoingCall() = CallLog.Calls.getLastOutgoingCall(context)
 }
