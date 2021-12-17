@@ -41,7 +41,7 @@ interface PermissionInteractor : BaseInteractor<PermissionInteractor.Listener> {
         notGrantedCallback: (() -> Unit)? = null
     )
 
-    fun runWithPrompt(titleRes: Int, callback: () -> Unit)
+    fun runWithPrompt(subtitleRes: Int, callback: (result: Boolean) -> Unit)
 
     fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit)
     fun runWithReadContactsPermissions(callback: (granted: Boolean) -> Unit)

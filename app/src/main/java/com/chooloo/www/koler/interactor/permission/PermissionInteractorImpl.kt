@@ -9,18 +9,18 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.telecom.TelecomManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.ui.base.BaseActivity
+import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.permissions.PermissionsActivity
+import com.chooloo.www.koler.ui.prompt.PromptFragment
 import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 
 class PermissionInteractorImpl(
     private val activity: BaseActivity,
-    private val telecomManager: TelecomManager,
-    private val stringInteractor: StringInteractor
+    private val strings: StringInteractor,
+    private val telecomManager: TelecomManager
 ) :
     BaseObservable<PermissionInteractor.Listener>(),
     PermissionInteractor {
@@ -47,7 +47,7 @@ class PermissionInteractorImpl(
             errorMessageRes?.let {
                 Toast.makeText(
                     activity,
-                    stringInteractor.getString(errorMessageRes),
+                    strings.getString(errorMessageRes),
                     Toast.LENGTH_SHORT
                 )
                     .show()
@@ -120,14 +120,10 @@ class PermissionInteractorImpl(
         }
     }
 
-    override fun runWithPrompt(titleRes: Int, callback: () -> Unit) {
-        AlertDialog.Builder(activity)
-            .setCancelable(true)
-            .setTitle(stringInteractor.getString(titleRes))
-            .setPositiveButton(stringInteractor.getString(R.string.action_yes)) { _, _ -> callback.invoke() }
-            .setNegativeButton(stringInteractor.getString(R.string.action_no)) { _, _ -> }
-            .create()
-            .show()
+    override fun runWithPrompt(subtitleRes: Int, callback: (result:Boolean) -> Unit) {
+        BottomFragment(PromptFragment.newInstance(strings.getString(subtitleRes)).apply {
+            controller.setOnClickListener(callback::invoke)
+        }).show(activity.supportFragmentManager,PromptFragment.TAG)
     }
 
     override fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit) {

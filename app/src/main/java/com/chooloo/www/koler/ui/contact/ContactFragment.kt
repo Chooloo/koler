@@ -13,6 +13,7 @@ import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 
 class ContactFragment : BaseFragment(), ContactContract.View {
+    override val contentView by lazy { _binding.root }
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
     private lateinit var _presenter: ContactController<ContactFragment>
@@ -41,12 +42,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = _binding.root
-
     override fun onSetup() {
         _presenter = ContactController(this)
 
@@ -65,10 +60,10 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     }
 
     override fun showMenu() {
-        BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(
-            childFragmentManager,
-            null
-        )
+//        BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(
+//            childFragmentManager,
+//            null
+//        )
     }
 
     companion object {

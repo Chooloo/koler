@@ -50,11 +50,11 @@ class RecentController<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionDelete() {
-        _recent?.let {
+        _recent?.let { recent ->
             component.permissions.runWithPermissions(
                 arrayOf(Manifest.permission.WRITE_CALL_LOG), {
                     component.permissions.runWithPrompt(R.string.warning_delete_recent) {
-                        component.recents.deleteRecent(it.id)
+                        if (it) component.recents.deleteRecent(recent.id)
                     }
                 },
                 null, null, null

@@ -1,10 +1,7 @@
 package com.chooloo.www.koler.ui.list
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import androidx.annotation.StringRes
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
@@ -16,18 +13,14 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
 
     protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
+    override val contentView by lazy { binding.root }
+
     override var isScrollerVisible: Boolean
         get() = binding.itemsScrollView.fastScroller.visibility == VISIBLE
         set(value) {
             binding.itemsScrollView.fastScroller.visibility = if (value) VISIBLE else GONE
         }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = binding.root
 
     override fun onSetup() {
         binding.itemsScrollView.fastScroller.setPadding(0, 0, 30, 0)

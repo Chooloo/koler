@@ -67,10 +67,10 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openSettings() {
-        BottomFragment(SettingsFragment.newInstance()).show(
-            supportFragmentManager,
-            SettingsFragment.TAG
-        )
+//        BottomFragment(SettingsFragment.newInstance()).show(
+//            supportFragmentManager,
+//            SettingsFragment.TAG
+//        )
     }
 
     override fun showSearching() {

@@ -52,7 +52,7 @@ class ContactController<V : ContactContract.View>(view: V) :
             arrayOf(Manifest.permission.WRITE_CONTACTS),
             {
                 component.permissions.runWithPrompt(R.string.warning_delete_contact) {
-                    component.contacts.deleteContact(view.contactId)
+                    if (it) component.contacts.deleteContact(view.contactId)
                 }
             })
     }

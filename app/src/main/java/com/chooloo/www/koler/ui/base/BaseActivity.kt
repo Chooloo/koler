@@ -13,7 +13,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(component.preferences.accentTheme.theme)
         super.onCreate(savedInstanceState)
-        setContentView(contentView)
+        contentView?.let { setContentView(it) }
     }
 
     override fun onStart() {

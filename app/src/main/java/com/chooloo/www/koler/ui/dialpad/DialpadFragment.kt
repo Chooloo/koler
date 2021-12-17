@@ -1,18 +1,16 @@
 package com.chooloo.www.koler.ui.dialpad
 
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.DialpadBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
 
 open class DialpadFragment : BaseFragment(), DialpadContract.View {
+    override val contentView by lazy { binding.root }
+    
     private var _onTextChangedListener: (text: String) -> Unit = { _ -> }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
@@ -40,12 +38,6 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
             }
         }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = binding.root
 
     override fun onSetup() {
         binding.apply {

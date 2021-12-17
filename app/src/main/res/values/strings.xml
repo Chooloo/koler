@@ -7,6 +7,10 @@
     <string name="conference">Conference</string>
     <!--endregion-->
 
+    <!--region prompt-->
+    <string name="prompt_are_you_sure">Are you sure?</string>
+    <!--endregion-->
+
     <!--region messages-->
     <string name="number_copied_to_clipboard">Number copied to clipboard</string>
     <string name="contact_blocked">Contact Blocked</string>

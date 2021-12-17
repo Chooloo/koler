@@ -6,20 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-open class BottomFragment<FragmentType : Fragment>(
+open class BottomFragment<FragmentType : BaseFragment>(
     private val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
-    override val component
-        get() = baseActivity.component
-
-    private val _binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
-
     protected val baseActivity by lazy { context as BaseActivity }
+    private val binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
+
+    override val component get() = baseActivity.component
 
 
     override fun onAttach(context: Context) {
@@ -38,7 +35,7 @@ open class BottomFragment<FragmentType : Fragment>(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = _binding.root
+    ) = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,10 +43,10 @@ open class BottomFragment<FragmentType : Fragment>(
     }
 
     override fun onSetup() {
+        fragment.setOnFinishListener { this@BottomFragment.dismiss() }
         childFragmentManager.beginTransaction()
-            .replace(_binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
+            .replace(binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
     }
-
 
     override fun showError(@StringRes stringResId: Int) {
         baseActivity.showError(stringResId)

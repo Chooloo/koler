@@ -47,8 +47,10 @@ class ContactPreferencesController<V : ContactPreferencesContract.View>(view: V)
         component.permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             if (isBlock) {
                 component.permissions.runWithPrompt(R.string.warning_block_contact) {
-                    component.contacts.blockContact(view.contactId) {
-                        view.showMessage(R.string.contact_blocked)
+                    if(it) {
+                        component.contacts.blockContact(view.contactId) {
+                            view.showMessage(R.string.contact_blocked)
+                        }
                     }
                 }
             } else {

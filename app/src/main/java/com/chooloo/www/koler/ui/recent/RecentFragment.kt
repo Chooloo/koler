@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.recent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     private lateinit var _presenter: RecentController<RecentFragment>
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
 
+    override val contentView by lazy { _binding.root }
     override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
 
     override var recentName: String?
@@ -51,12 +53,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = _binding.root
-
     override fun onSetup() {
         _presenter = RecentController(this)
         _binding.apply {
@@ -72,10 +68,10 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
 
     override fun showRecentMenu(number: String) {
-        BottomFragment(RecentPreferencesFragment.newInstance(number)).show(
-            childFragmentManager,
-            null
-        )
+//        BottomFragment(RecentPreferencesFragment.newInstance(number)).show(
+//            childFragmentManager,
+//            null
+//        )
     }
 
     override fun openHistoryView(number: String) {

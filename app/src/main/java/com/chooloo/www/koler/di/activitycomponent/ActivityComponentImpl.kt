@@ -57,8 +57,8 @@ class ActivityComponentImpl(
     override val permissions by lazy {
         PermissionInteractorImpl(
             activity,
-            telecomManager,
-            strings
+            strings,
+            telecomManager
         )
     }
 
