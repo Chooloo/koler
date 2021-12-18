@@ -28,7 +28,8 @@ class RecentController<V : RecentContract.View>(view: V) :
         view.recentCaption = recentCaptions.joinToString(", ")
         view.recentImage =
             component.drawables.getDrawable(component.recents.getCallTypeImage(_recent!!.type))
-        view.recentName = _recent!!.cachedName ?: _recent!!.number
+        view.recentName =
+            if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
 
         component.phones.lookupAccount(_recent!!.number) {
             view.isContactVisible = it?.name != null
