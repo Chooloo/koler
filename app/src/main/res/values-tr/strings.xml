@@ -37,11 +37,8 @@
     <!--endregion-->
 
     <!--region warning-->
-    <string name="warning_delete_contact">Bu kişiyi silmek istediğinizden emin misiniz?</string>
-    <string name="warning_delete_recent">Bu son aramayı silmek istediğinizden emin misiniz?</string>
-    <string name="warning_delete_recents">Bu son aramaları silmek istediğinizden emin misiniz?</string>
-    <string name="warning_block_contact">Tüm kişilerin numaralarını engellemek istediğinizden emin misiniz?</string>
-    <string name="warning_block_number">Bu numarayı engellemek istediğinizden emin misiniz?</string>
+    <string name="explain_block_contact">Tüm kişilerin numaralarını engellemek istediğinizden emin misiniz?</string>
+    <string name="explain_block_number">Bu numarayı engellemek istediğinizden emin misiniz?</string>
     <!--endregion-->
 
     <!--region urls-->

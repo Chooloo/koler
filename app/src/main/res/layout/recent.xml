@@ -38,7 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
-        android:fontFamily="@font/google_sans_bold"
         android:maxLines="2"
         app:layout_constraintBottom_toTopOf="@id/recent_text_caption"
         app:layout_constraintEnd_toEndOf="parent"

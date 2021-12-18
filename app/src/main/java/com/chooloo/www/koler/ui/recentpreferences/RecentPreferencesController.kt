@@ -19,7 +19,7 @@ class RecentPreferencesController<V : RecentPreferencesContract.View>(view: V) :
 
     override fun onBlockNumberClick() {
         view.number?.let { number ->
-            component.permissions.runWithPrompt(R.string.warning_block_number) {
+            component.permissions.runWithPrompt(R.string.explain_block_number) {
                 if(it) {
                     component.blocked.blockNumber(number)
                     view.showMessage(R.string.number_blocked)

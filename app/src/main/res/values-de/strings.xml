@@ -12,8 +12,6 @@
     <string name="hint_search">Suchen</string>
     <string name="hint_search_contacts">Suche nach Kontakten</string>
     <string name="hint_search_recents">Suche nach kürzlich kontaktierten Kontakten</string>
-    <string name="warning_delete_contact">Bist du dir sicher das du diesen Kontakt löschen möchtest?</string>
-    <string name="warning_delete_recent">Bist du dir sicher das du diesen Anruf löschen möchtest?</string>
     <string name="call_action_hold">Halten</string>
     <string name="call_action_mute">Stummschalten</string>
     <string name="call_action_keypad">Tastenfeld</string>

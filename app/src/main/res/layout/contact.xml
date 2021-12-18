@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
         android:layout_marginStart="@dimen/default_spacing"
-        android:fontFamily="@font/google_sans_bold"
         android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"

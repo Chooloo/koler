@@ -46,7 +46,7 @@ class ContactPreferencesController<V : ContactPreferencesContract.View>(view: V)
     private fun toggleContactBlocked(isBlock: Boolean) {
         component.permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             if (isBlock) {
-                component.permissions.runWithPrompt(R.string.warning_block_contact) {
+                component.permissions.runWithPrompt(R.string.explain_block_contact) {
                     if(it) {
                         component.contacts.blockContact(view.contactId) {
                             view.showMessage(R.string.contact_blocked)

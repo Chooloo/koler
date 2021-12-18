@@ -128,7 +128,7 @@ class CallController<V : CallContract.View>(view: V) :
             component.phones.lookupAccount(call.number) {
                 view.showHoldingBanner(
                     String.format(
-                        component.strings.getString(R.string.warning_is_on_hold),
+                        component.strings.getString(R.string.explain_is_on_hold),
                         it?.displayString ?: call.number
                     )
                 )

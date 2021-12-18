@@ -49,7 +49,7 @@ class ContactController<V : ContactContract.View>(view: V) :
     override fun onActionDelete() {
         component.permissions.runWithWriteContactsPermissions {
             if (it) {
-                component.permissions.runWithPrompt(R.string.warning_delete_contact) {
+                component.permissions.runWithPrompt(R.string.explain_delete_contact) {
                     if (it) {
                         component.contacts.deleteContact(view.contactId)
                         view.finish()

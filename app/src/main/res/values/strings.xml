@@ -47,13 +47,11 @@
     <!--endregion-->
 
     <!--region warning-->
-    <string name="warning_is_on_hold">%s is on hold</string>
-    <string name="warning_block_number">Are you sure you want to block this number?</string>
-    <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
-    <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
-    <string name="warning_delete_recents">Are you sure you want to delete all these recents?</string>
-    <string name="warning_delete_contacts">Are you sure you want to delete all these contacts?</string>
-    <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
+    <string name="explain_is_on_hold">%s is on hold</string>
+    <string name="explain_block_number">You won\'t receive any calls from this number</string>
+    <string name="explain_delete_contact">This contact will be deleted permanently</string>
+    <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_block_contact">You won\'t receive any calls from this contact</string>
     <!--endregion-->
 
     <!--region urls-->
