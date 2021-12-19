@@ -53,6 +53,7 @@ class ContactPresenter<V : ContactContract.View>(view: V) :
             {
                 boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_contact) {
                     boundComponent.contactsInteractor.deleteContact(view.contactId)
+                    view.hideItem()
                 }
             })
     }

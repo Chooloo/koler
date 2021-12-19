@@ -58,6 +58,7 @@ class RecentPresenter<V : RecentContract.View>(view: V) :
                 arrayOf(Manifest.permission.WRITE_CALL_LOG), {
                     boundComponent.permissionInteractor.runWithPrompt(R.string.warning_delete_recent) {
                         boundComponent.recentsInteractor.deleteRecent(it.id)
+                        view.hideItem()
                     }
                 },
                 null, null, null

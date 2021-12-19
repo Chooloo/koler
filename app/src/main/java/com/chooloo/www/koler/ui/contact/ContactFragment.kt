@@ -11,12 +11,16 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
+import com.chooloo.www.koler.ui.recent.RecentFragment
+import java.io.Serializable
 
 class ContactFragment : BaseFragment(), ContactContract.View {
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
     private lateinit var _presenter: ContactPresenter<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
+    override val hideItem by lazy { args.getSerializable(RecentFragment.ARG_HIDE_ITEM) as () -> Unit }
+
     private val _phonesFragment by lazy {
         PhonesFragment.newInstance(
             contactId = contactId,
@@ -80,10 +84,12 @@ class ContactFragment : BaseFragment(), ContactContract.View {
     companion object {
         const val TAG = "contact_fragment"
         const val ARG_CONTACT_ID = "contact_id"
+        const val ARG_HIDE_ITEM = "hide_item"
 
-        fun newInstance(contactId: Long) = ContactFragment().apply {
+        fun newInstance(contactId: Long, hideItem: () -> Unit) = ContactFragment().apply {
             arguments = Bundle().apply {
                 putLong(ARG_CONTACT_ID, contactId)
+                putSerializable(ARG_HIDE_ITEM, hideItem as Serializable)
             }
         }
     }

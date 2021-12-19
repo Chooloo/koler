@@ -6,6 +6,7 @@ import com.chooloo.www.koler.ui.base.BaseContract
 interface RecentContract : BaseContract {
     interface View : BaseContract.View {
         val recentId: Long
+        val hideItem: () -> Unit
         var recentName: String?
         var recentCaption: String?
         var recentImage: Drawable?

@@ -6,6 +6,7 @@ import com.chooloo.www.koler.ui.base.BaseContract
 interface ContactContract : BaseContract {
     interface View : BaseContract.View {
         val contactId: Long
+        val hideItem: () -> Unit
         var contactName: String?
         var contactImage: Uri?
         var isStarIconVisible: Boolean

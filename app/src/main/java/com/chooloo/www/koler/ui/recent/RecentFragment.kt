@@ -14,12 +14,14 @@ import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.io.Serializable
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private lateinit var _presenter: RecentPresenter<RecentFragment>
     private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
 
     override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
+    override val hideItem by lazy { args.getSerializable(ARG_HIDE_ITEM) as () -> Unit }
 
     override var recentName: String?
         get() = _binding.recentTextName.text.toString()
@@ -87,7 +89,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
     override fun openContactView(contactId: Long) {
-        BottomFragment(ContactFragment.newInstance(contactId)).show(
+        BottomFragment(ContactFragment.newInstance(contactId, hideItem)).show(
             baseActivity.supportFragmentManager,
             ContactFragment.TAG
         )
@@ -100,10 +102,12 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     companion object {
         const val TAG = "recent_fragment"
         const val ARG_RECENT_ID = "recent_id"
+        const val ARG_HIDE_ITEM = "hide_item"
 
-        fun newInstance(recentId: Long) = RecentFragment().apply {
+        fun newInstance(recentId: Long, hideItem: () -> Unit) = RecentFragment().apply {
             arguments = Bundle().apply {
                 putLong(ARG_RECENT_ID, recentId)
+                putSerializable(ARG_HIDE_ITEM, hideItem as Serializable)
             }
         }
     }

@@ -2,19 +2,23 @@ package com.chooloo.www.koler.ui.list
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.ui.base.BaseContract
+import com.chooloo.www.koler.ui.base.BottomFragment
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
         val isCompact: Boolean
         val searchHint: String?
+        val bottomFragment: BottomFragment<Fragment>
 
         fun scrollToTop()
         fun animateListView()
         fun requestSearchFocus()
         fun setupScrollIndicator()
         fun showItem(item: ItemType)
+        fun hideItem()
         fun showEmptyPage(isShow: Boolean)
         fun showLoading(isLoading: Boolean)
         fun showSelecting(isSelecting: Boolean)
