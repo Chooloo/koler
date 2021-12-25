@@ -56,11 +56,11 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
     }
 
 
-    abstract val noResultsIconRes: Int
-    abstract val noResultsTextRes: Int
-    abstract val noPermissionsTextRes: Int
+    protected open val noResultsIconRes: Int? = null
+    protected open val noResultsTextRes: Int? = null
+    protected open val noPermissionsTextRes: Int? = null
     abstract val adapter: ListAdapter<ItemType>
 
-    abstract fun applyFilter(filter: String)
+    open fun applyFilter(filter: String) {}
     abstract fun fetchData(callback: (items: List<ItemType>, hasPermissions: Boolean) -> Unit)
 }

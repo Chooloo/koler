@@ -3,12 +3,11 @@ package com.chooloo.www.koler.ui.recents
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.account.RecentAccount
-import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListController
 
-class RecentsController<V : ListContract.View<RecentAccount>>(view: V) :
+class RecentsController<V : RecentsContract.View>(view: V) :
     ListController<RecentAccount, V>(view),
-    ListContract.Controller<RecentAccount, V> {
+    RecentsContract.Controller<V> {
 
     override val adapter by lazy { RecentsAdapter(component) }
 
@@ -23,11 +22,14 @@ class RecentsController<V : ListContract.View<RecentAccount>>(view: V) :
 
 
     override fun onItemClick(item: RecentAccount) {
-        view.showItem(item)
+        view.openRecent(item)
     }
 
     override fun applyFilter(filter: String) {
-        recentsLiveData.filter = filter
+        try {
+            recentsLiveData.filter = filter
+        } catch (e: Exception) {
+        }
     }
 
     override fun fetchData(callback: (items: List<RecentAccount>, hasPermissions: Boolean) -> Unit) {

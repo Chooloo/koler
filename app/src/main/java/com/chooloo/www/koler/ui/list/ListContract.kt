@@ -9,7 +9,6 @@ interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
         var isScrollerVisible: Boolean
 
-        fun showItem(item: ItemType)
         fun showEmpty(isShow: Boolean)
         fun showLoading(isLoading: Boolean)
         fun setEmptyIcon(@DrawableRes res: Int?)

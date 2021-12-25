@@ -1,28 +1,13 @@
 package com.chooloo.www.koler.ui.settings
 
+import android.view.MenuItem
 import com.chooloo.www.koler.ui.base.BaseContract
 
-class SettingsContract : BaseContract {
+interface SettingsContract : BaseContract {
     interface View : BaseContract.View {
-        fun openColorPicker()
     }
 
     interface Controller<V : View> : BaseContract.Controller<V> {
-        fun refresh()
-
-        fun onClickedRate()
-        fun onClickedEmail()
-        fun onClickedColor()
-        fun onClickedDonate()
-        fun onClickedReport()
-        fun onClickedManageBlocked()
-
-        fun onSelectedColor(color: Int)
-        fun onSelectedDefaultPage(pageKey: String)
-
-        fun onToggledAskSim(isToggle: Boolean)
-        fun onToggledRecords(isToggle: Boolean)
-        fun onToggledAnimation(isToggle: Boolean)
-        fun onToggledCompactMode(isToggle: Boolean)
+        fun onMenuItemClick(menuItem: MenuItem)
     }
 }

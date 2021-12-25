@@ -4,11 +4,12 @@ import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
-import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 
-open class ContactsFragment : ListFragment<ContactAccount, ContactsAdapter>(),
-    ListContract.View<ContactAccount> {
+open class ContactsFragment :
+    ListFragment<ContactAccount, ContactsAdapter>(),
+    ContactsContract.View {
+
     override val controller: ContactsController<out ContactsFragment> by lazy {
         ContactsController(this)
     }
@@ -18,8 +19,8 @@ open class ContactsFragment : ListFragment<ContactAccount, ContactsAdapter>(),
         super.onSetup()
     }
 
-    override fun showItem(item: ContactAccount) {
-        BottomFragment(ContactFragment.newInstance(item.id)).show(
+    override fun openContact(contact: ContactAccount) {
+        BottomFragment(ContactFragment.newInstance(contact.id)).show(
             baseActivity.supportFragmentManager,
             ContactFragment.TAG
         )

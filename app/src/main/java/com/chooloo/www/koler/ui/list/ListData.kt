@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.list
 
+import android.view.MenuItem
 import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.data.account.PhoneAccount
 import com.chooloo.www.koler.data.account.RecentAccount
@@ -34,5 +35,7 @@ data class ListData<DataType>(
 
         fun fromPhones(phones: List<PhoneAccount>) =
             ListData(phones.toList().distinctBy { it.normalizedNumber })
+
+        fun fromMenuItems(menuItems: List<MenuItem>) = ListData(menuItems)
     }
 }

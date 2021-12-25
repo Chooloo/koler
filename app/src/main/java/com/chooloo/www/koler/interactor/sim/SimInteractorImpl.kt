@@ -25,7 +25,7 @@ class SimInteractorImpl(
             getSimAccounts { simAccounts ->
                 dialogInteractor.askForChoice(
                     simAccounts.map(SimAccount::label).toTypedArray(),
-                    R.drawable.ic_sim_card_black_24dp,
+                    R.drawable.round_sim_card_24,
                     R.string.select_sim_account, { _, position ->
                         callback.invoke(simAccounts[position])
                     }, {

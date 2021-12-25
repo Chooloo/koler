@@ -55,11 +55,18 @@ class MainController<V : MainContract.View>(view: V) :
 
     override fun onSearchTextChange(text: String) {
         _fragments.forEach { it.controller.applyFilter(text) }
+//        _fragments[view.currentPageIndex].controller.applyFilter(text)
     }
 
     override fun onSearchFocusChange(isFocus: Boolean) {
         if (isFocus) {
             view.showSearching()
         }
+    }
+
+    override fun onPageChange(position: Int) {
+//        view.searchText?.let {
+//            _fragments[view.currentPageIndex].controller.applyFilter(it)
+//        }
     }
 }

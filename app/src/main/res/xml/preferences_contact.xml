@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:icon="@drawable/ic_star_black_24dp"
+        android:icon="@drawable/round_star_24"
         android:key="@string/pref_key_set_favorite"
         android:title="@string/pref_title_set_favorite" />
 

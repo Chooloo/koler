@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.widgets.listitem
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
@@ -20,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.marginTop
+import androidx.core.widget.ImageViewCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.widgets.IconButton
 import com.chooloo.www.koler.util.getAttrColor
@@ -53,7 +55,7 @@ open class ListItem : LinearLayout {
     var imageSize: Int
         get() = _image.height
         set(value) {
-            _image.layoutParams = LayoutParams(value, value)
+            _image.layoutParams = ConstraintLayout.LayoutParams(value, value)
         }
 
     var isPadded: Boolean
@@ -102,7 +104,7 @@ open class ListItem : LinearLayout {
     var imageTintList: ColorStateList?
         get() = _image.imageTintList
         set(value) {
-            _image.imageTintList = value
+            ImageViewCompat.setImageTintList(_image, value)
         }
 
     var imageVisibility: Boolean
@@ -333,8 +335,9 @@ open class ListItem : LinearLayout {
         )
     }
 
+
     fun setImageTint(@ColorInt color: Int) {
-        _image.imageTintList = ColorStateList.valueOf(color)
+        imageTintList = ColorStateList.valueOf(color)
     }
 
     fun setTitleColor(@ColorInt color: Int) {

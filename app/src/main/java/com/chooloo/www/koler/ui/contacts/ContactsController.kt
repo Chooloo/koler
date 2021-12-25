@@ -3,12 +3,11 @@ package com.chooloo.www.koler.ui.contacts
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.adapter.ContactsAdapter
 import com.chooloo.www.koler.data.account.ContactAccount
-import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListController
 
-open class ContactsController<V : ListContract.View<ContactAccount>>(view: V) :
+open class ContactsController<V : ContactsContract.View>(view: V) :
     ListController<ContactAccount, V>(view),
-    ListContract.Controller<ContactAccount, V> {
+    ContactsContract.Controller<V> {
 
     override val adapter by lazy { ContactsAdapter(component) }
     override val noResultsIconRes = R.drawable.round_people_24
@@ -21,11 +20,14 @@ open class ContactsController<V : ListContract.View<ContactAccount>>(view: V) :
     }
 
     override fun applyFilter(filter: String) {
-        contactsLiveData.filter = filter
+        try {
+            contactsLiveData.filter = filter
+        } catch (e: Exception) {
+        }
     }
 
     override fun onItemClick(item: ContactAccount) {
-        view.showItem(item)
+        view.openContact(item)
     }
 
     override fun fetchData(callback: (List<ContactAccount>, hasPermissions: Boolean) -> Unit) {

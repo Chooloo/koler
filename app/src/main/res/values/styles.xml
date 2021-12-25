@@ -105,16 +105,19 @@
     <!--endregion-->
 
     <!--region list view -->
-    <style name="Koler.FastScrollView" parent="Widget.AppCompat.ListView">
+    <style name="Koler.ListView" parent="Widget.AppCompat.ListView">
         <item name="android:requiresFadingEdge">vertical</item>
         <item name="android:fadingMode">fade_in_out</item>
-        <item name="bubbleColor">?colorSecondary</item>
-        <item name="bubbleTextColor">?colorOnSecondary</item>
-        <item name="handleColor">?colorSecondary</item>
         <item name="android:fadingEdge">vertical</item>
         <item name="android:scrollbars">none</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
+    </style>
+
+    <style name="Koler.FastScrollView" parent="Koler.ListView">
+        <item name="bubbleColor">?colorSecondary</item>
+        <item name="bubbleTextColor">?colorOnSecondary</item>
+        <item name="handleColor">?colorSecondary</item>
     </style>
     <!--endregion-->
 

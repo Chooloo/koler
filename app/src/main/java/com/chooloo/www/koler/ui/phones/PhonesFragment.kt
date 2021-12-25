@@ -19,11 +19,6 @@ class PhonesFragment :
         super.onSetup()
     }
 
-    override fun showItem(item: PhoneAccount) {
-        return
-    }
-
-
     companion object {
         fun newInstance(contactId: Long? = null) = PhonesFragment().apply {
             arguments = Bundle().apply {

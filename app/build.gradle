@@ -3,12 +3,12 @@ apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.chooloo.www.koler"
         minSdkVersion 25
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 63
         versionName "v1.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

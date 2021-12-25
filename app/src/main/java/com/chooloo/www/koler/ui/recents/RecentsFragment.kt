@@ -4,22 +4,24 @@ import android.os.Bundle
 import com.chooloo.www.koler.adapter.RecentsAdapter
 import com.chooloo.www.koler.data.account.RecentAccount
 import com.chooloo.www.koler.ui.base.BottomFragment
-import com.chooloo.www.koler.ui.list.ListContract
 import com.chooloo.www.koler.ui.list.ListFragment
 import com.chooloo.www.koler.ui.recent.RecentFragment
 
-class RecentsFragment : ListFragment<RecentAccount, RecentsAdapter>(),
-    ListContract.View<RecentAccount> {
-    override lateinit var controller: RecentsController<RecentsFragment>
+class RecentsFragment :
+    ListFragment<RecentAccount, RecentsAdapter>(),
+    RecentsContract.View {
 
+    override val controller: RecentsController<out RecentsFragment> by lazy {
+        RecentsController(this)
+    }
 
     override fun onSetup() {
-        controller = RecentsController(this)
+        controller.initialize()
         super.onSetup()
     }
 
-    override fun showItem(item: RecentAccount) {
-        BottomFragment(RecentFragment.newInstance(item.id)).show(
+    override fun openRecent(recent: RecentAccount) {
+        BottomFragment(RecentFragment.newInstance(recent.id)).show(
             baseActivity.supportFragmentManager,
             RecentFragment.TAG
         )

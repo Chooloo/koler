@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.main
 import android.content.Intent
 import android.view.MotionEvent
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.MainBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
@@ -16,6 +17,13 @@ class MainActivity : BaseActivity(), MainContract.View {
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
 
     override val contentView by lazy { binding.root }
+
+
+    override var searchText: String?
+        get() = binding.mainSearchBar.text
+        set(value) {
+            binding.mainSearchBar.text = value
+        }
 
     override var currentPageIndex: Int
         get() = binding.mainViewPager.currentItem
@@ -41,6 +49,12 @@ class MainActivity : BaseActivity(), MainContract.View {
             mainSearchBar.editText?.setOnFocusChangeListener { _, hasFocus ->
                 _controller.onSearchFocusChange(hasFocus)
             }
+            mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    _controller.onPageChange(position)
+                }
+            })
         }
 
         checkIntent()
@@ -67,10 +81,10 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun openSettings() {
-//        BottomFragment(SettingsFragment.newInstance()).show(
-//            supportFragmentManager,
-//            SettingsFragment.TAG
-//        )
+        BottomFragment(SettingsFragment.newInstance()).show(
+            supportFragmentManager,
+            SettingsFragment.TAG
+        )
     }
 
     override fun showSearching() {

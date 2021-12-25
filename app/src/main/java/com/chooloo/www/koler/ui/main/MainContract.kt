@@ -6,6 +6,7 @@ import com.chooloo.www.koler.ui.base.BaseFragment
 
 interface MainContract : BaseContract {
     interface View : BaseContract.View {
+        var searchText: String?
         var currentPageIndex: Int
         var headers: Array<String>
 
@@ -20,6 +21,7 @@ interface MainContract : BaseContract {
     interface Controller<V : View> : BaseContract.Controller<V> {
         fun onMenuClick()
         fun onDialpadFabClick()
+        fun onPageChange(position: Int)
         fun onViewIntent(intent: Intent)
         fun onSearchTextChange(text: String)
         fun onSearchFocusChange(isFocus: Boolean)
