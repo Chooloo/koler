@@ -19,19 +19,6 @@
         app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
         tools:visibility="visible" />
 
-    <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/recent_button_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
-        android:tint="?colorOnSurface"
-        app:backgroundTint="?colorPrimarySurface"
-        app:borderWidth="0dp"
-        app:fabSize="mini"
-        app:icon="@drawable/ic_more_vert_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/recent_text_name"
         style="@style/Koler.Text.Headline3"

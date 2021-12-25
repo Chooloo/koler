@@ -2,16 +2,12 @@ package com.chooloo.www.koler.ui.recent
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.RecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.contact.ContactFragment
-import com.chooloo.www.koler.ui.recentpreferences.RecentPreferencesFragment
 import com.chooloo.www.koler.ui.recents.RecentsFragment
 
 class RecentFragment : BaseFragment(), RecentContract.View {
@@ -57,7 +53,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         _presenter = RecentController(this)
         _binding.apply {
             recentButtonSms.setOnClickListener { _presenter.onActionSms() }
-            recentButtonMenu.setOnClickListener { _presenter.onActionMenu() }
             recentButtonCall.setOnClickListener { _presenter.onActionCall() }
             recentButtonDelete.setOnClickListener { _presenter.onActionDelete() }
             recentButtonContact.setOnClickListener { _presenter.onActionOpenContact() }
@@ -66,13 +61,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         }
     }
 
-
-    override fun showRecentMenu(number: String) {
-//        BottomFragment(RecentPreferencesFragment.newInstance(number)).show(
-//            childFragmentManager,
-//            null
-//        )
-    }
 
     override fun openHistoryView(number: String) {
         BottomFragment(RecentsFragment.newInstance(number)).show(

@@ -10,7 +10,6 @@ class ContactController<V : ContactContract.View>(view: V) :
     BaseController<V>(view),
     ContactContract.Controller<V> {
 
-    private var contact: ContactAccount? = null
     private var _contact: ContactAccount? = null
     private var _firstPhone: PhoneAccount? = null
 
@@ -57,17 +56,5 @@ class ContactController<V : ContactContract.View>(view: V) :
                 }
             }
         }
-    }
-
-    override fun onActionMenu() {
-        view.showMenu()
-    }
-
-    override fun onActionFav() {
-        component.contacts.toggleContactFavorite(
-            view.contactId,
-            contact?.starred == true
-        )
-        view.isStarIconVisible = contact?.starred == true
     }
 }

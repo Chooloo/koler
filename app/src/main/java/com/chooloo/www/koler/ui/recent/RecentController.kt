@@ -37,10 +37,6 @@ class RecentController<V : RecentContract.View>(view: V) :
         }
     }
 
-    override fun onActionMenu() {
-        _recent?.let { view.showRecentMenu(it.number) }
-    }
-
     override fun onActionSms() {
         _recent?.let { component.navigations.sendSMS(it.number) }
     }
