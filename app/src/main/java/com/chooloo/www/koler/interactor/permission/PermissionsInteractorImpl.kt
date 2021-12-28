@@ -16,13 +16,13 @@ import com.chooloo.www.koler.ui.prompt.PromptFragment
 import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 
-class PermissionInteractorImpl(
+class PermissionsInteractorImpl(
     private val activity: BaseActivity,
     private val strings: StringInteractor,
     private val telecomManager: TelecomManager
 ) :
-    BaseObservable<PermissionInteractor.Listener>(),
-    PermissionInteractor {
+    BaseObservable<PermissionsInteractor.Listener>(),
+    PermissionsInteractor {
 
     override val isDefaultDialer: Boolean
         get() = activity.packageName == telecomManager.defaultDialerPackage
@@ -117,12 +117,6 @@ class PermissionInteractorImpl(
         } else {
             grantedCallback.invoke()
         }
-    }
-
-    override fun runWithPrompt(subtitleRes: Int, callback: (result: Boolean) -> Unit) {
-        BottomFragment(PromptFragment.newInstance(strings.getString(subtitleRes)).apply {
-            controller.setOnClickListener(callback::invoke)
-        }).show(activity.supportFragmentManager, PromptFragment.TAG)
     }
 
     override fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit) {

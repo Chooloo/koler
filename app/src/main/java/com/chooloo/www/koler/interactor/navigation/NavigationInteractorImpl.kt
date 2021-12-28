@@ -13,7 +13,7 @@ import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.SimAccount
-import com.chooloo.www.koler.interactor.permission.PermissionInteractor
+import com.chooloo.www.koler.interactor.permission.PermissionsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.sim.SimInteractor
 import com.chooloo.www.koler.interactor.string.StringInteractor
@@ -26,7 +26,7 @@ class NavigationInteractorImpl(
     private val simInteractor: SimInteractor,
     private val telecomManager: TelecomManager,
     private val stringInteractor: StringInteractor,
-    private val permissionInteractor: PermissionInteractor,
+    private val permissionsInteractor: PermissionsInteractor,
     private val preferencesInteractor: PreferencesInteractor
 ) :
     BaseObservable<NavigationInteractor.Listener>(),
@@ -114,7 +114,7 @@ class NavigationInteractorImpl(
 
 
     override fun callVoicemail() {
-        permissionInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_call) {
+        permissionsInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_call) {
             val intent = Intent(ACTION_CALL)
             intent.data = Uri.fromParts("voicemail", "", null)
             activity.startActivity(intent)
@@ -122,7 +122,7 @@ class NavigationInteractorImpl(
     }
 
     override fun call(number: String) {
-        permissionInteractor.runWithDefaultDialer(null, {
+        permissionsInteractor.runWithDefaultDialer(null, {
             simInteractor.getIsMultiSim { isMultiSim ->
                 if (preferencesInteractor.isAskSim && isMultiSim) {
                     simInteractor.askForSim { call(it, number) }
@@ -137,7 +137,7 @@ class NavigationInteractorImpl(
 
     @SuppressLint("MissingPermission")
     override fun call(simAccount: SimAccount?, number: String) {
-        permissionInteractor.runWithPermissions(arrayOf(CALL_PHONE), {
+        permissionsInteractor.runWithPermissions(arrayOf(CALL_PHONE), {
             val extras = Bundle()
             simAccount?.phoneAccountHandle?.let {
                 extras.putParcelable(EXTRA_PHONE_ACCOUNT_HANDLE, it)

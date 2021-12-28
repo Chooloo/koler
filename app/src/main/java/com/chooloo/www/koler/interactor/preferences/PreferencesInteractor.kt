@@ -58,10 +58,10 @@ open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.List
             }
         }
 
-        enum class Page(val key: String, val index: Int) {
-            CONTACTS("contacts", 0),
-            RECENTS("recents", 1),
-            DEFAULT(CONTACTS.key, CONTACTS.index);
+        enum class Page(val key: String, val index: Int, val titleRes: Int) {
+            CONTACTS("contacts", 0, R.string.contacts),
+            RECENTS("recents", 1, R.string.recents),
+            DEFAULT(CONTACTS.key, CONTACTS.index, R.string.default_page);
 
             companion object {
                 fun fromKey(key: String?) =

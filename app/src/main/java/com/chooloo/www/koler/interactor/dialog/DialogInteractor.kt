@@ -4,13 +4,18 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.base.BaseInteractor
+import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
+import kotlin.math.acos
 
 interface DialogInteractor : BaseInteractor<DialogInteractor.Listener> {
     interface Listener
 
+    fun askForBoolean(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
+
     fun askForChoice(
-        choices: Array<String>,
+        choices: List<String>,
         @DrawableRes iconRes: Int,
         @StringRes titleRes: Int,
         choiceCallback: (String?, Int) -> Unit,
@@ -23,4 +28,9 @@ interface DialogInteractor : BaseInteractor<DialogInteractor.Listener> {
         noColorOption: Boolean = false,
         @ColorInt selectedColor: Int? = null
     )
+
+    fun askForDefaultPage(callback: (Page) -> Unit)
+    fun askForCompact(callback: (isCompact: Boolean) -> Unit)
+    fun askForAnimations(callback: (isAnimations: Boolean) -> Unit)
+    fun askForShouldAskSim(callback: (shouldAskSim: Boolean) -> Unit)
 }

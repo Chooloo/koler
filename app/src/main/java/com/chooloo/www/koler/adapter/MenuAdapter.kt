@@ -11,13 +11,16 @@ import com.google.android.material.internal.ViewUtils
 class MenuAdapter(component: ActivityComponent) : ListAdapter<MenuItem>(component) {
     override fun onBindListItem(listItem: ListItem, item: MenuItem) {
         listItem.apply {
+            setBackgroundColor(Color.TRANSPARENT)
+            setTitleTextAppearance(R.style.Koler_Text_Subtitle1)
             setImageTint(component.colors.getColor(R.color.color_opposite))
+            setTitleColor(component.colors.getColor(R.color.color_opposite))
 
+            paddingTop = 28
+            paddingBottom = 28
             imageDrawable = item.icon
             titleText = item.title.toString()
             imageSize = ViewUtils.dpToPx(context, 30).toInt()
-
-            setBackgroundColor(Color.TRANSPARENT)
         }
     }
 

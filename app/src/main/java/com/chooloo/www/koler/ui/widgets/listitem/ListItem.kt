@@ -3,7 +3,6 @@ package com.chooloo.www.koler.ui.widgets.listitem
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.AttributeSet
@@ -14,6 +13,7 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -336,6 +336,24 @@ open class ListItem : LinearLayout {
     }
 
 
+    fun setPaddingTop(top: Int) {
+        _personLayout.setPadding(
+            _personLayout.paddingLeft,
+            top,
+            _personLayout.paddingRight,
+            _personLayout.paddingBottom
+        )
+    }
+
+    fun setPaddingBottom(bottom: Int) {
+        _personLayout.setPadding(
+            _personLayout.paddingLeft,
+            _personLayout.paddingTop,
+            _personLayout.paddingRight,
+            bottom
+        )
+    }
+
     fun setImageTint(@ColorInt color: Int) {
         imageTintList = ColorStateList.valueOf(color)
     }
@@ -350,6 +368,10 @@ open class ListItem : LinearLayout {
 
     fun setImageResource(@DrawableRes res: Int) {
         _image.setImageResource(res)
+    }
+
+    fun setTitleTextAppearance(@StyleRes resId: Int) {
+        _title.setTextAppearance(resId)
     }
 
     fun setImageBackgroundColor(@ColorInt color: Int) {

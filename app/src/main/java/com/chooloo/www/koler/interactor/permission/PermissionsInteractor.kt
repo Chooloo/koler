@@ -3,7 +3,7 @@ package com.chooloo.www.koler.interactor.permission
 import androidx.annotation.StringRes
 import com.chooloo.www.koler.interactor.base.BaseInteractor
 
-interface PermissionInteractor : BaseInteractor<PermissionInteractor.Listener> {
+interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener> {
     interface Listener
 
     val isDefaultDialer: Boolean
@@ -40,8 +40,6 @@ interface PermissionInteractor : BaseInteractor<PermissionInteractor.Listener> {
         grantedCallback: () -> Unit,
         notGrantedCallback: (() -> Unit)? = null
     )
-
-    fun runWithPrompt(subtitleRes: Int, callback: (result: Boolean) -> Unit)
 
     fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit)
     fun runWithReadContactsPermissions(callback: (granted: Boolean) -> Unit)

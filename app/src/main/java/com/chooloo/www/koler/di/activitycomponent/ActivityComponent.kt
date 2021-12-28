@@ -6,7 +6,7 @@ import com.chooloo.www.koler.di.contextcomponent.ContextComponent
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorBound
 import com.chooloo.www.koler.interactor.dialog.DialogInteractor
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractor
-import com.chooloo.www.koler.interactor.permission.PermissionInteractor
+import com.chooloo.www.koler.interactor.permission.PermissionsInteractor
 import com.chooloo.www.koler.interactor.proximity.ProximityInteractor
 import com.chooloo.www.koler.interactor.screen.ScreenInteractor
 import com.chooloo.www.koler.interactor.sim.SimInteractor
@@ -22,7 +22,7 @@ interface ActivityComponent : ContextComponent {
     val dialogs: DialogInteractor
     val screens: ScreenInteractor
     val proximities: ProximityInteractor
-    val permissions: PermissionInteractor
+    val permissions: PermissionsInteractor
     val navigations: NavigationInteractor
     override val callAudios: CallAudioInteractorBound
 }

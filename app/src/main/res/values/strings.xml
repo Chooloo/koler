@@ -5,6 +5,7 @@
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
     <string name="conference">Conference</string>
+    <string name="default_page">Default</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -44,6 +45,10 @@
     <string name="hint_search_contacts">Search Contacts</string>
     <string name="hint_search_recents">Search Recents</string>
     <string name="hint_search_items">Search contacts &amp; recents</string>
+    <string name="hint_default_page">Choose default startup page</string>
+    <string name="hint_compact_mode">Make list items compact</string>
+    <string name="hint_animations">Show animations</string>
+    <string name="hint_should_ask_sim">Ask for a sim before each call</string>
     <!--endregion-->
 
     <!--region warning-->

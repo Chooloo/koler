@@ -4,7 +4,7 @@ import com.chooloo.www.koler.di.contextcomponent.ContextComponentImpl
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorBoundImpl
 import com.chooloo.www.koler.interactor.dialog.DialogInteractorImpl
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractorImpl
-import com.chooloo.www.koler.interactor.permission.PermissionInteractorImpl
+import com.chooloo.www.koler.interactor.permission.PermissionsInteractorImpl
 import com.chooloo.www.koler.interactor.proximity.ProximityInteractorImpl
 import com.chooloo.www.koler.interactor.screen.ScreenInteractorImpl
 import com.chooloo.www.koler.interactor.sim.SimInteractorImpl
@@ -55,7 +55,7 @@ class ActivityComponentImpl(
     }
 
     override val permissions by lazy {
-        PermissionInteractorImpl(
+        PermissionsInteractorImpl(
             activity,
             strings,
             telecomManager

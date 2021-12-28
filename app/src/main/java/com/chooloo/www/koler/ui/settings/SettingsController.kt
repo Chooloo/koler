@@ -3,7 +3,6 @@ package com.chooloo.www.koler.ui.settings
 import android.view.MenuItem
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.koler.ui.base.BaseController
 
 class SettingsController<V : SettingsContract.View>(view: V) :
@@ -15,9 +14,11 @@ class SettingsController<V : SettingsContract.View>(view: V) :
             R.id.menu_main_rate -> component.navigations.rateApp()
             R.id.menu_main_email -> component.navigations.sendEmail()
             R.id.menu_main_donate -> component.navigations.donate()
-            R.id.menu_main_ask_sim -> {
+            R.id.menu_main_ask_sim -> component.dialogs.askForShouldAskSim {
+                component.preferences.isAskSim = it
             }
-            R.id.menu_main_animations -> {
+            R.id.menu_main_animations -> component.dialogs.askForAnimations {
+                component.preferences.isAnimations = it
             }
             R.id.menu_main_report_bugs -> component.navigations.reportBug()
             R.id.menu_main_accent_color -> component.dialogs.askForColor(R.array.accent_colors, {
@@ -31,9 +32,11 @@ class SettingsController<V : SettingsContract.View>(view: V) :
                 }
                 component.navigations.goToMainActivity()
             })
-            R.id.menu_main_compact_mode -> {
+            R.id.menu_main_compact_mode -> component.dialogs.askForCompact {
+                component.preferences.isCompact = it
             }
-            R.id.menu_main_default_page -> {
+            R.id.menu_main_default_page -> component.dialogs.askForDefaultPage {
+                component.preferences.defaultPage = it
             }
         }
     }
