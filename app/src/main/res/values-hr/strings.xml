@@ -31,12 +31,11 @@
     <!--endregion-->
 
     <!--region warning-->
-    <string name="warning_is_on_hold">%s is on hold</string>
-    <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
-    <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
-    <string name="warning_delete_recents">Are you sure you want to delete those recents?</string>
-    <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
-    <string name="warning_block_number">Are you sure you want to block this number?</string>
+    <string name="explain_is_on_hold">%s is on hold</string>
+    <string name="explain_delete_contact">Are you sure you want to delete that contact?</string>
+    <string name="explain_delete_recent">Are you sure you want to delete that recent call?</string>
+    <string name="explain_block_contact">Are you sure you want to block all contact\'s numbers?</string>
+    <string name="explain_block_number">Are you sure you want to block this number?</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -134,8 +133,8 @@
     <string name="dialpad_7_letters">PQRS</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters"></string>
-    <string name="dialpad_pound_letters"></string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
     <!--endregion-->
 
     <!--region content descriptions -->

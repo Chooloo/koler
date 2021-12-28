@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.data.call
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.telecom.Call.*
@@ -13,12 +14,9 @@ import com.chooloo.www.koler.util.baseobservable.BaseObservable
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
-class NoCallFoundException : Exception()
 class CantHoldCallException : Exception()
-class CallsCrowdedException : Exception()
 class CantSwapCallException : Exception()
 class CantMergeCallException : Exception()
-class NoIncomingCallException : Exception()
 class CantLeaveConferenceException : Exception()
 
 class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() {
@@ -26,7 +24,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         fun onCallChanged(call: Call)
     }
 
-    private val _id: String = Call::class.java.simpleName + _sIdCounter++
+    private val _id: String = Call::class.java.simpleName + sIdCounter++
     private val _call: android.telecom.Call = telecomCall
 
     init {
@@ -51,7 +49,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     val id: String
         get() = _id
 
-    val handle
+    val handle: Uri?
         get() = details.handle
 
     val state: State
@@ -61,7 +59,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         get() = if (details.gatewayInfo != null) {
             details.gatewayInfo.originalAddress.schemeSpecificPart
         } else {
-            if (handle == null) null else handle.schemeSpecificPart
+            handle?.schemeSpecificPart
         }
 
     val extras: Bundle
@@ -87,7 +85,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         get() = fromTelecomCalls(_call.conferenceableCalls)
 
     val disconnectCause: DisconnectCause
-        get() = if (state == State.DISCONNECTED) {
+        get() = if (state == DISCONNECTED) {
             details.disconnectCause
         } else {
             DisconnectCause(DisconnectCause.UNKNOWN)
@@ -99,7 +97,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     val telecomCall: android.telecom.Call
         get() = _call
 
-    val details: android.telecom.Call.Details
+    val details: Details
         get() = _call.details
 
     val phoneAccountHandle: PhoneAccountHandle
@@ -181,12 +179,10 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
      */
     fun merge() {
         val conferenceableCalls = _call.conferenceableCalls
-        if (conferenceableCalls.isNotEmpty()) {
-            conferenceableCalls[0].conference(_call)
-        } else if (isCapable(Connection.CAPABILITY_MERGE_CONFERENCE)) {
-            _call.mergeConference()
-        } else {
-            throw CantMergeCallException()
+        when {
+            conferenceableCalls.isNotEmpty() -> conferenceableCalls[0].conference(_call)
+            isCapable(Connection.CAPABILITY_MERGE_CONFERENCE) -> _call.mergeConference()
+            else -> throw CantMergeCallException()
         }
     }
 
@@ -241,7 +237,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     }
 
     companion object {
-        private var _sIdCounter = 0
+        private var sIdCounter = 0
 
         fun fromTelecomCalls(telecomCalls: List<android.telecom.Call>): List<Call> =
             telecomCalls.stream().map(::Call).collect(Collectors.toList())

@@ -5,6 +5,12 @@
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
     <string name="conference">Conference</string>
+    <string name="default_page">Default</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Yes or No?</string>
+    <string name="prompt_are_you_sure">Are you sure?</string>
     <!--endregion-->
 
     <!--region messages-->
@@ -37,19 +43,21 @@
 
     <!--region hints-->
     <string name="hint_search">Search</string>
-    <string name="hint_search_items">Search Items</string>
     <string name="hint_search_contacts">Search Contacts</string>
     <string name="hint_search_recents">Search Recents</string>
+    <string name="hint_search_items">Search contacts &amp; recents</string>
+    <string name="hint_default_page">Choose default startup page</string>
+    <string name="hint_compact_mode">Make list items compact</string>
+    <string name="hint_animations">Show animations</string>
+    <string name="hint_should_ask_sim">Ask for a sim before each call</string>
     <!--endregion-->
 
     <!--region warning-->
-    <string name="warning_is_on_hold">%s is on hold</string>
-    <string name="warning_block_number">Are you sure you want to block this number?</string>
-    <string name="warning_delete_contact">Are you sure you want to delete that contact?</string>
-    <string name="warning_delete_recent">Are you sure you want to delete that recent call?</string>
-    <string name="warning_delete_recents">Are you sure you want to delete all these recents?</string>
-    <string name="warning_delete_contacts">Are you sure you want to delete all these contacts?</string>
-    <string name="warning_block_contact">Are you sure you want to block all contact\'s numbers?</string>
+    <string name="explain_is_on_hold">%s is on hold</string>
+    <string name="explain_block_number">You won\'t receive any calls from this number</string>
+    <string name="explain_delete_contact">This contact will be deleted permanently</string>
+    <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_block_contact">You won\'t receive any calls from this contact</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -74,7 +82,7 @@
     <!--region call state-->
     <string name="call_status_new">New Call</string>
     <string name="call_status_dialing">Dialing…</string>
-    <string name="call_status_waiting">Waiting...</string>
+    <string name="call_status_waiting">Waiting…</string>
     <string name="call_status_missed">Missed Call</string>
     <string name="call_status_holding">Call On Hold</string>
     <string name="call_status_connecting">Connecting…</string>
@@ -117,7 +125,7 @@
     <string name="pref_title_compact">Compact Mode</string>
     <string name="pref_title_animations">Animations</string>
     <string name="pref_title_app_color">Accent Color</string>
-    <string name="pref_title_email">Write us an Email</string>
+    <string name="pref_title_email">Email Us</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_sim_select">Sim Selection</string>
     <string name="pref_title_default_page">Default Page</string>
@@ -172,6 +180,8 @@
     <string name="error_cant_hold_other_calls">Can\'t hold other calls</string>
     <string name="error_calls_crowded_cant_answer">Can\'t answer, calls too crowded</string>
     <string name="error_no_incoming_call_to_answer">No incoming call was found to answer</string>
+
+    <string name="error_couldnt_get_number_from_intent">Couldn\'t find number</string>
     <!--endregion-->
 
     <!--region pref color values-->
@@ -199,8 +209,8 @@
     <string name="dialpad_7_letters">PQRS</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters"></string>
-    <string name="dialpad_pound_letters"></string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
     <!--endregion-->
 
     <!--region content descriptions -->

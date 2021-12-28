@@ -5,13 +5,14 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.view.ViewGroup
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.PhoneAccount
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
+import com.chooloo.www.koler.ui.list.ListData
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.ui.widgets.listitem.ListItemButton
 import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
 
-class PhonesAdapter(boundComponent: BoundComponentRoot) :
-    ListAdapter<PhoneAccount>(boundComponent) {
+class PhonesAdapter(activityComponent: ActivityComponent) :
+    ListAdapter<PhoneAccount>(activityComponent) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemHolder(ListItemButton(parent.context))
@@ -22,11 +23,13 @@ class PhonesAdapter(boundComponent: BoundComponentRoot) :
             isPadded = false
             titleText = item.number
             captionText =
-                boundComponent.stringInteractor.getString(Phone.getTypeLabelResource(item.type))
+                component.strings.getString(Phone.getTypeLabelResource(item.type))
 
             setTitleBold(true)
             setImageBackgroundColor(Color.TRANSPARENT)
             setImageResource(R.drawable.ic_call_black_24dp)
         }
     }
+
+    override fun convertDataToListData(data: List<PhoneAccount>) = ListData.fromPhones(data)
 }

@@ -10,7 +10,6 @@
         <item name="colorLightForeground">#B1B1B1</item>
 
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowLightNavigationBar">false</item>
         <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
         <item name="android:navigationBarColor">?colorPrimarySurface</item>

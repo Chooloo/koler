@@ -10,13 +10,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import com.chooloo.www.koler.KolerApp
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.ViewManager
+import com.chooloo.www.koler.util.getAttrColor
 import java.util.*
 
 class Tab : AppCompatTextView {
-    private val _viewManager by lazy { ViewManager(context) }
-    private val enabledColor by lazy { _viewManager.getAttrColor(R.attr.colorOnSurface) }
-    private val disabledColor by lazy { _viewManager.getAttrColor(R.attr.colorLightBackground) }
+    private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
+    private val disabledColor by lazy { context.getAttrColor(R.attr.colorLightBackground) }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -45,7 +44,7 @@ class Tab : AppCompatTextView {
 
 
     private fun animateAttention() {
-        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateIn(
+        (context.applicationContext as KolerApp).component.animations.show(
             this,
             true
         )

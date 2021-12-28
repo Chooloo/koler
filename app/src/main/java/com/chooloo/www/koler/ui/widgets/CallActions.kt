@@ -21,7 +21,7 @@ class CallActions : MotionLayout {
     ) {
         _callActionsListener = getEmptyListener()
 
-        _binding = CallActionsBinding.inflate(LayoutInflater.from(getContext()), this, true)
+        _binding = CallActionsBinding.inflate(LayoutInflater.from(context), this, true)
         _binding.callActionSwap.setOnClickListener { _callActionsListener?.onSwapClick() }
         _binding.callActionHold.setOnClickListener { _callActionsListener?.onHoldClick() }
         _binding.callActionMute.setOnClickListener { _callActionsListener?.onMuteClick() }

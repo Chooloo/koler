@@ -5,9 +5,10 @@ import androidx.lifecycle.LiveData
 import com.chooloo.www.koler.contentresolver.BaseContentResolver
 import io.reactivex.disposables.Disposable
 
-abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
+abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<ItemType>, ItemType : Any>(
     protected val context: Context,
-) : LiveData<T>() {
+) : LiveData<List<ItemType>>() {
+
     abstract val contentResolver: ContentResolver
 
     private var _observer: Disposable? = null
@@ -31,6 +32,6 @@ abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>,
 
     private fun attachObserver() {
         _observer?.dispose()
-        _observer = contentResolver.observeContent(this::postValue)
+        _observer = contentResolver.observeItems(this::postValue)
     }
 }

@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -20,10 +21,12 @@ import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.marginTop
-import com.chooloo.www.koler.KolerApp
+import androidx.core.widget.ImageViewCompat
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.widgets.IconButton
-import com.chooloo.www.koler.util.ViewManager
+import com.chooloo.www.koler.util.getAttrColor
+import com.chooloo.www.koler.util.getSelectableItemBackgroundDrawable
+import com.chooloo.www.koler.util.getSizeInDp
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
@@ -32,8 +35,6 @@ import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 open class ListItem : LinearLayout {
     private var _isPadded: Boolean = true
     private var _isCompact: Boolean = false
-
-    private val _viewManager by lazy { ViewManager(context) }
 
     private var _onLeftButtonClickListener: () -> Unit = {}
     private var _onRightButtonClickListener: () -> Unit = {}
@@ -51,12 +52,30 @@ open class ListItem : LinearLayout {
     protected val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     protected val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
+    var imageSize: Int
+        get() = _image.height
+        set(value) {
+            _image.layoutParams = ConstraintLayout.LayoutParams(value, value)
+        }
+
+    var isPadded: Boolean
+        get() = _isPadded
+        set(value) {
+            setPaddingMode(_isCompact, value)
+            _isPadded = value
+        }
+
     var isCompact: Boolean
         get() = _isCompact
         set(value) {
             setPaddingMode(value, _isPadded)
         }
 
+    var titleText: String?
+        get() = _title.text.toString()
+        set(value) {
+            _title.text = value ?: ""
+        }
 
     var headerText: String?
         get() = _header.text.toString()
@@ -67,17 +86,13 @@ open class ListItem : LinearLayout {
             }
         }
 
-    var isPadded: Boolean
-        get() = _isPadded
+    var captionText: String?
+        get() = _caption.text.toString()
         set(value) {
-            setPaddingMode(_isCompact, value)
-            _isPadded = value
-        }
-
-    var imageSize: Int
-        get() = _image.height
-        set(value) {
-            _image.layoutParams = LayoutParams(value, value)
+            _caption.apply {
+                text = value ?: ""
+                visibility = if (value == null) GONE else VISIBLE
+            }
         }
 
     var imageTextSize: Float
@@ -89,7 +104,7 @@ open class ListItem : LinearLayout {
     var imageTintList: ColorStateList?
         get() = _image.imageTintList
         set(value) {
-            _image.imageTintList = value
+            ImageViewCompat.setImageTintList(_image, value)
         }
 
     var imageVisibility: Boolean
@@ -109,63 +124,6 @@ open class ListItem : LinearLayout {
         set(value) {
             _image.setImageDrawable(value)
             _image.state = SHOW_IMAGE
-        }
-
-    fun setImageUri(imageUri: Uri?) {
-        _image.setImageURI(imageUri)
-        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
-    }
-
-    fun setImageInitials(text: String?) {
-        _image.text = text
-        text?.let { _image.state = SHOW_INITIAL }
-    }
-
-    fun setImageResource(@DrawableRes res: Int) {
-        _image.setImageResource(res)
-    }
-
-    fun setImageBackgroundColor(@ColorInt color: Int) {
-        _image.setBackgroundColor(color)
-    }
-
-
-    var titleText: String?
-        get() = _title.text.toString()
-        set(value) {
-            _title.text = value ?: ""
-        }
-
-    fun setTitleTextColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
-    }
-
-
-    var captionText: String?
-        get() = _caption.text.toString()
-        set(value) {
-            _caption.apply {
-                text = value ?: ""
-                visibility = if (value == null) GONE else VISIBLE
-            }
-        }
-
-    fun setCaptionTextColor(@ColorInt color: Int) {
-        _caption.setTextColor(color)
-    }
-
-
-    var leftButtonVisibility: Boolean
-        get() = _buttonLeft.visibility == VISIBLE
-        set(value) {
-            _buttonLeft.visibility = if (value) VISIBLE else GONE
-        }
-
-
-    var rightButtonVisibility: Boolean
-        get() = _buttonRight.visibility == VISIBLE
-        set(value) {
-            _buttonRight.visibility = if (value) VISIBLE else GONE
         }
 
 
@@ -207,7 +165,7 @@ open class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Koler_Text_Caption)
-            setPadding(0, _viewManager.getSizeInDp(2), 0, 0)
+            setPadding(0, context.getSizeInDp(2), 0, 0)
         }
 
         _image = AvatarImageView(context, attrs).apply {
@@ -253,7 +211,7 @@ open class ListItem : LinearLayout {
         _personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
             id = View.generateViewId()
-            background = _viewManager.selectableItemBackgroundDrawable
+            background = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         }
 
@@ -329,9 +287,9 @@ open class ListItem : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
-            _personLayout.setBackgroundColor(_viewManager.getAttrColor(R.attr.colorSecondary))
+            _personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
         } else {
-            _personLayout.background = _viewManager.selectableItemBackgroundDrawable
+            _personLayout.background = context.getSelectableItemBackgroundDrawable()
         }
     }
 
@@ -353,14 +311,21 @@ open class ListItem : LinearLayout {
         )
         _header.setPadding(
             if (isEnabled) dimenSpacing else 0,
-            dimenSpacing,
+            if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall,
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) dimenSpacingSmall - 10 else dimenSpacing
+            if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall
         )
     }
 
-    fun setTitleColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
+
+    fun setImageUri(imageUri: Uri?) {
+        _image.setImageURI(imageUri)
+        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+    }
+
+    fun setImageInitials(text: String?) {
+        _image.text = text
+        text?.let { _image.state = SHOW_INITIAL }
     }
 
     fun setTitleBold(isBold: Boolean) {
@@ -370,17 +335,60 @@ open class ListItem : LinearLayout {
         )
     }
 
+
+    fun setPaddingTop(top: Int) {
+        _personLayout.setPadding(
+            _personLayout.paddingLeft,
+            top,
+            _personLayout.paddingRight,
+            _personLayout.paddingBottom
+        )
+    }
+
+    fun setPaddingBottom(bottom: Int) {
+        _personLayout.setPadding(
+            _personLayout.paddingLeft,
+            _personLayout.paddingTop,
+            _personLayout.paddingRight,
+            bottom
+        )
+    }
+
+    fun setImageTint(@ColorInt color: Int) {
+        imageTintList = ColorStateList.valueOf(color)
+    }
+
+    fun setTitleColor(@ColorInt color: Int) {
+        _title.setTextColor(color)
+    }
+
+    fun setTitleTextColor(@ColorInt color: Int) {
+        _title.setTextColor(color)
+    }
+
+    fun setImageResource(@DrawableRes res: Int) {
+        _image.setImageResource(res)
+    }
+
+    fun setTitleTextAppearance(@StyleRes resId: Int) {
+        _title.setTextAppearance(resId)
+    }
+
+    fun setImageBackgroundColor(@ColorInt color: Int) {
+        _image.setBackgroundColor(color)
+    }
+
     fun setLeftButtonTintColor(@ColorRes colorRes: Int) {
         _buttonLeft.imageTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setLeftButtonBackgroundTintColor(@ColorInt color: Int) {
-        _buttonLeft.backgroundTintList = ColorStateList.valueOf(color)
-    }
-
     fun setLeftButtonDrawable(@DrawableRes drawableRes: Int) {
         _buttonLeft.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
+    }
+
+    fun setLeftButtonBackgroundTintColor(@ColorInt color: Int) {
+        _buttonLeft.backgroundTintList = ColorStateList.valueOf(color)
     }
 
     fun setOnLeftButtonClickListener(onLeftButtonClickListener: () -> Unit) {
@@ -402,12 +410,5 @@ open class ListItem : LinearLayout {
 
     fun setOnRightButtonClickListener(onRightButtonClickListener: () -> Unit) {
         _onRightButtonClickListener = onRightButtonClickListener
-    }
-
-    fun blinkCaption() {
-        (context.applicationContext as KolerApp).componentRoot.animationInteractor.animateBlink(
-            _caption,
-            2500
-        )
     }
 }

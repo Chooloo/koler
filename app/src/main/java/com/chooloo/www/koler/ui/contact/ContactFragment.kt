@@ -2,28 +2,19 @@ package com.chooloo.www.koler.ui.contact
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.ui.base.BottomFragment
-import com.chooloo.www.koler.ui.contactspreferences.ContactPreferencesFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
 
 class ContactFragment : BaseFragment(), ContactContract.View {
+    override val contentView by lazy { _binding.root }
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
-    private lateinit var _presenter: ContactPresenter<ContactFragment>
+    private lateinit var _presenter: ContactController<ContactFragment>
     private val _binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val _phonesFragment by lazy {
-        PhonesFragment.newInstance(
-            contactId = contactId,
-            isSearchable = false,
-            isHideNoResults = true
-        )
-    }
+    private val _phonesFragment by lazy { PhonesFragment.newInstance(contactId) }
 
     override var contactName: String?
         get() = _binding.contactTextName.text.toString()
@@ -47,20 +38,13 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = _binding.root
-
     override fun onSetup() {
-        _presenter = ContactPresenter(this)
+        _presenter = ContactController(this)
 
         _binding.apply {
             contactButtonSms.setOnClickListener { _presenter.onActionSms() }
             contactButtonCall.setOnClickListener { _presenter.onActionCall() }
             contactButtonEdit.setOnClickListener { _presenter.onActionEdit() }
-            contactButtonMenu.setOnClickListener { _presenter.onActionMenu() }
             contactButtonDelete.setOnClickListener { _presenter.onActionDelete() }
         }
 
@@ -70,12 +54,6 @@ class ContactFragment : BaseFragment(), ContactContract.View {
             .commitNow()
     }
 
-    override fun showMenu() {
-        BottomFragment(ContactPreferencesFragment.newInstance(contactId)).show(
-            childFragmentManager,
-            null
-        )
-    }
 
     companion object {
         const val TAG = "contact_fragment"

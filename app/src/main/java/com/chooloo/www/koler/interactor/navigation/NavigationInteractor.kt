@@ -6,19 +6,17 @@ import com.chooloo.www.koler.interactor.base.BaseInteractor
 interface NavigationInteractor : BaseInteractor<NavigationInteractor.Listener> {
     interface Listener
 
-    fun goToRateApp()
-    fun goToSendEmail()
+    fun donate()
+    fun rateApp()
+    fun sendEmail()
+    fun reportBug()
     fun goToAppGithub()
-    fun goToDonatePage()
     fun goToMainActivity()
-    fun goToReportBugPage()
-    fun goToManageBlockedNumbers()
-
-    fun goToSendSMS(number: String?)
-    fun goToAddContact(number: String)
-
-    fun goToViewContact(contactId: Long)
-    fun goToEditContact(contactId: Long)
+    fun manageBlockedNumber()
+    fun sendSMS(number: String?)
+    fun addContact(number: String)
+    fun viewContact(contactId: Long)
+    fun editContact(contactId: Long)
 
     fun callVoicemail()
     fun call(number: String)

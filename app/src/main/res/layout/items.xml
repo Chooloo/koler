@@ -4,63 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.chooloo.www.koler.ui.widgets.SearchBar
-        android:id="@+id/items_search_bar"
-        android:layout_width="match_parent"
+    <com.l4digital.fastscroll.FastScrollView
+        android:id="@+id/items_scroll_view"
+        style="@style/Koler.FastScrollView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="@dimen/default_spacing"
-        app:layout_constraintEnd_toStartOf="@id/items_delete_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.chooloo.www.koler.ui.widgets.IconButton
-        android:id="@+id/items_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:visibility="gone"
-        app:fabSize="mini"
-        app:icon="@drawable/ic_delete_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@id/items_search_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/items_search_bar" />
-
-    <com.reddit.indicatorfastscroll.FastScrollerView
-        android:id="@+id/items_fast_scroller"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/default_spacing_small"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:layout_marginBottom="@dimen/default_spacing_small"
-        android:elevation="10dp"
-        android:textAppearance="@style/Koler.Text.Caption"
-        android:textColor="?colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
-
-    <com.reddit.indicatorfastscroll.FastScrollerThumbView
-        android:id="@+id/items_fast_scroller_thumb"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/default_spacing"
-        android:textColor="?colorOnSecondary"
-        app:fastScrollerIconColor="?colorSecondary"
-        app:fastScrollerThumbColor="?colorSecondary"
-        app:layout_constraintBottom_toBottomOf="@id/items_fast_scroller"
-        app:layout_constraintEnd_toStartOf="@id/items_fast_scroller"
-        app:layout_constraintTop_toTopOf="@id/items_fast_scroller" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/items_recycler_view"
-        style="@style/Koler.ListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/items_search_bar" />
 
     <include
         android:id="@+id/empty"

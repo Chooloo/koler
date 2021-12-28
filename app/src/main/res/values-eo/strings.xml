@@ -30,11 +30,6 @@
     <string name="hint_search_recents">Serĉi en lastatempajn</string>
     <!--endregion-->
 
-    <!--region warning-->
-    <string name="warning_delete_contact">Ĉu vi certe volas forigi tiun kontakton?</string>
-    <string name="warning_delete_recent">Ĉu vi certe volas forigi tiun lastatempan telefonalvokon?</string>
-    <!--endregion-->
-
     <!--region urls-->
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
@@ -130,8 +125,8 @@
     <string name="dialpad_7_letters">PQRS</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters"></string>
-    <string name="dialpad_pound_letters"></string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
     <!--endregion-->
 
     <!--region content descriptions -->

@@ -113,6 +113,12 @@
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
     </style>
+
+    <style name="Koler.FastScrollView" parent="Koler.ListView">
+        <item name="bubbleColor">?colorSecondary</item>
+        <item name="bubbleTextColor">?colorOnSecondary</item>
+        <item name="handleColor">?colorSecondary</item>
+    </style>
     <!--endregion-->
 
     <!--region dialpad -->

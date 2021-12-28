@@ -1,29 +1,33 @@
 package com.chooloo.www.koler.adapter
 
 import android.graphics.Color
-import com.chooloo.www.koler.contentresolver.RecentsContentResolver.Companion.getCallTypeImage
-import com.chooloo.www.koler.data.account.Recent
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
+import android.provider.ContactsContract.CommonDataKinds.Phone
+import com.chooloo.www.koler.data.account.RecentAccount
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
+import com.chooloo.www.koler.ui.list.ListData
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.util.getHoursString
-import io.reactivex.exceptions.OnErrorNotImplementedException
 
-class RecentsAdapter(boundComponent: BoundComponentRoot) : ListAdapter<Recent>(boundComponent) {
-    override fun onBindListItem(listItem: ListItem, item: Recent) {
+class RecentsAdapter(activityComponent: ActivityComponent) :
+    ListAdapter<RecentAccount>(activityComponent) {
+
+    override fun onBindListItem(listItem: ListItem, item: RecentAccount) {
         listItem.apply {
-            try {
-                boundComponent.phoneAccountsInteractor.lookupAccount(item.number) {
-                    titleText = it.name ?: item.number
+            isCompact = component.preferences.isCompact
+            captionText = if (item.date != null) context.getHoursString(item.date) else null
+            component.phones.lookupAccount(item.number) {
+                titleText = it?.name ?: item.number
+                it?.let {
+                    captionText = "$captionText · ${
+                        component.strings.getString(Phone.getTypeLabelResource(it.type))
+                    }"
                 }
-            } catch (e: OnErrorNotImplementedException) {
-                titleText = item.number
             }
 
-            isCompact = boundComponent.preferencesInteractor.isCompact
-            captionText = if (item.date != null) context.getHoursString(item.date) else null
-
             setImageBackgroundColor(Color.TRANSPARENT)
-            setImageResource(getCallTypeImage(item.type))
+            setImageResource(component.recents.getCallTypeImage(item.type))
         }
     }
+
+    override fun convertDataToListData(data: List<RecentAccount>) = ListData.fromRecents(data)
 }

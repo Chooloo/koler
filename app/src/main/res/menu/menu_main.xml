@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_main_accent_color"
+        android:icon="@drawable/round_invert_colors_20"
+        android:title="@string/pref_title_app_color" />
+
+    <item
+        android:id="@+id/menu_main_compact_mode"
+        android:icon="@drawable/round_view_compact_20"
+        android:title="@string/pref_title_compact" />
+
+    <item
+        android:id="@+id/menu_main_animations"
+        android:icon="@drawable/round_animation_20"
+        android:title="@string/pref_title_animations" />
+
+    <item
+        android:id="@+id/menu_main_ask_sim"
+        android:icon="@drawable/round_sim_card_20"
+        android:title="@string/pref_title_ask_sim" />
+
+    <item
+        android:id="@+id/menu_main_default_page"
+        android:icon="@drawable/round_view_carousel_20"
+        android:title="@string/pref_title_default_page" />
+
+    <item
+        android:id="@+id/menu_main_report_bugs"
+        android:icon="@drawable/round_report_problem_20"
+        android:title="@string/pref_title_report_bugs" />
+
+    <item
+        android:id="@+id/menu_main_rate"
+        android:icon="@drawable/round_star_half_20"
+        android:title="@string/pref_title_rate" />
+
+    <item
+        android:id="@+id/menu_main_donate"
+        android:icon="@drawable/round_paid_20"
+        android:title="@string/pref_title_donate" />
+
+    <item
+        android:id="@+id/menu_main_email"
+        android:icon="@drawable/round_email_20"
+        android:title="@string/pref_title_email" />
+</menu>

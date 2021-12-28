@@ -12,15 +12,13 @@ interface RecentContract : BaseContract {
         var isContactVisible: Boolean
         var isAddContactVisible: Boolean
 
-        fun showRecentMenu(number: String)
         fun openHistoryView(number: String)
         fun openContactView(contactId: Long)
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onActionSms()
         fun onActionCall()
-        fun onActionMenu()
         fun onActionDelete()
         fun onActionAddContact()
         fun onActionOpenContact()

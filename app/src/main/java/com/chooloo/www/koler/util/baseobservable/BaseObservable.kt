@@ -13,17 +13,23 @@ open class BaseObservable<Listener> : IBaseObservable<Listener> {
     override fun registerListener(listener: Listener) {
         _listeners.remove(listener)
         _listeners.add(listener)
+        if (_listeners.size == 1) {
+            onStartedObserved()
+        }
     }
 
     @Synchronized
     override fun unregisterListener(listener: Listener) {
         _listeners.remove(listener)
+        if (_listeners.size == 0) {
+            onFinishedObserved()
+        }
     }
 
     override fun invokeListeners(invoker: (Listener) -> Unit) {
         listeners.forEach(invoker::invoke)
     }
 
-    protected open fun onActive() {}
-    protected open fun onInActive() {}
+    protected open fun onStartedObserved() {}
+    protected open fun onFinishedObserved() {}
 }

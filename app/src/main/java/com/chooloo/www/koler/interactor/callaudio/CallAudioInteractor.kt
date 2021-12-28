@@ -12,14 +12,12 @@ interface CallAudioInteractor : BaseInteractor<CallAudioInteractor.Listener> {
         fun onAudioRouteChanged(audioRoute: AudioRoute)
     }
 
-    val supportedAudioRoutes: Array<AudioRoute>
-
     var isMuted: Boolean?
     var isSpeakerOn: Boolean?
     var audioRoute: AudioRoute?
+    val supportedAudioRoutes: Array<AudioRoute>
 
-
-    fun entryCallAudioStateChanged(audioState:CallAudioState)
+    fun entryCallAudioStateChanged(audioState: CallAudioState)
 
 
     enum class AudioRoute(val route: Int, @StringRes val stringRes: Int) {

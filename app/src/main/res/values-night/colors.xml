@@ -2,6 +2,7 @@
 <resources>
     <color name="color_hint">#B6B6B6</color>
     <color name="color_disabled">#BEBEBE</color>
+    <color name="color_opposite">#ffffff</color>
     <color name="color_image_placeholder_background">#A1686868</color>
     <color name="color_image_placeholder_foreground">#B1B1B1</color>
 

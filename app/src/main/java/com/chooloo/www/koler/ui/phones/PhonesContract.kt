@@ -8,5 +8,5 @@ interface PhonesContract : ListContract {
         val contactId: Long?
     }
 
-    interface Presenter<V : View> : ListContract.Presenter<PhoneAccount, V>
+    interface Controller<V : View> : ListContract.Controller<PhoneAccount, V>
 }

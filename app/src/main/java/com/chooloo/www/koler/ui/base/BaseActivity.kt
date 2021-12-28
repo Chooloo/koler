@@ -1,17 +1,19 @@
-
 package com.chooloo.www.koler.ui.base
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRootImpl
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponentImpl
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
-    override val boundComponent by lazy { BoundComponentRootImpl(this) }
+    override val component by lazy { ActivityComponentImpl(this) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(boundComponent.preferencesInteractor.accentTheme.theme)
+        setTheme(component.preferences.accentTheme.theme)
         super.onCreate(savedInstanceState)
+        contentView?.let { setContentView(it) }
     }
 
     override fun onStart() {
@@ -21,41 +23,33 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
 
     override fun onStop() {
         super.onStop()
-        boundComponent.disposables.clear()
+        component.disposables.clear()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        boundComponent.disposables.dispose()
+        component.disposables.dispose()
     }
-
-    //region base view
 
     override fun finish() {
         super<AppCompatActivity>.finish()
     }
 
-    override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    override fun showError(stringResId: Int) {
+        Toast.makeText(
+            applicationContext,
+            component.strings.getString(stringResId),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun showMessage(stringResId: Int) {
-        showMessage(getString(stringResId))
+        Toast.makeText(
+            this,
+            component.strings.getString(stringResId),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun showError(stringResId: Int) {
-        showError(getString(stringResId))
-    }
-
-    override fun hasPermission(permission: String) =
-        boundComponent.permissionInteractor.hasSelfPermission(permission)
-
-    override fun hasPermissions(permissions: Array<String>) =
-        boundComponent.permissionInteractor.hasSelfPermissions(permissions)
-
-    //endregion
+    abstract val contentView: View?
 }

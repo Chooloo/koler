@@ -29,14 +29,14 @@ class CallList {
 
 
     operator fun get(callId: String) =
-        _callsById.get(callId)
+        _callsById[callId]
 
     operator fun contains(call: Call) =
         _callsById.containsKey(call.id)
 
 
     fun getIndex(index: Int): Call? =
-        ArrayList(_callsById.values).get(index)
+        ArrayList(_callsById.values)[index]
 
     fun hasState(state: Call.State) =
         calls.any { call -> call.state == state }

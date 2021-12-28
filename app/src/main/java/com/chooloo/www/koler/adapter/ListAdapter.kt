@@ -2,44 +2,25 @@ package com.chooloo.www.koler.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chooloo.www.koler.data.ListBundle
-import com.chooloo.www.koler.di.boundcomponent.BoundComponentRoot
+import com.chooloo.www.koler.di.activitycomponent.ActivityComponent
+import com.chooloo.www.koler.ui.list.ListData
 import com.chooloo.www.koler.ui.widgets.listitem.ListItem
 import com.chooloo.www.koler.ui.widgets.listitem.ListItemHolder
+import com.l4digital.fastscroll.FastScroller
 
-abstract class ListAdapter<DataType>(
-    protected val boundComponent: BoundComponentRoot
-) : RecyclerView.Adapter<ListItemHolder>() {
-    private var _isCompact = false
-    private var _isSelecting = false
-    private var _isSelectable = true
-    private var _data: ListBundle<DataType> = ListBundle()
-    private var _selectedItems: ArrayList<DataType> = arrayListOf()
+abstract class ListAdapter<ItemType>(
+    protected val component: ActivityComponent
+) : RecyclerView.Adapter<ListItemHolder>(), FastScroller.SectionIndexer {
+    private var _data: ListData<ItemType> = ListData()
+    private var _onItemClickListener: (item: ItemType) -> Unit = {}
+    private var _onItemLongClickListener: (item: ItemType) -> Unit = {}
 
-    private var _onItemClickListener: (item: DataType) -> Unit = {}
-    private var _onItemLongClickListener: (item: DataType) -> Unit = {}
-    private var _onSelectingChangeListener: (isSelecting: Boolean) -> Unit = {}
-    private var _onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit = {}
-
-    var data: ListBundle<DataType>
-        get() = _data
-        @Synchronized
+    var items: List<ItemType>
+        get() = _data.items
         set(value) {
-            _data = value
+            _data = convertDataToListData(value)
             notifyDataSetChanged()
         }
-
-    var isCompact
-        get() = _isCompact
-        set(value) {
-            _isCompact = value
-        }
-
-    val isSelecting: Boolean
-        get() = _isSelecting
-
-    val selectedItems: ArrayList<DataType>
-        get() = _selectedItems
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -49,49 +30,27 @@ abstract class ListAdapter<DataType>(
         val dataItem = getItem(position)
         holder.listItem.apply {
             headerText = getHeader(position)
-            isCompact = this@ListAdapter.isCompact
 
-            setOnClickListener {
-                if (isSelected && _isSelectable) {
-                    isSelected = false
-                    _selectedItems.remove(dataItem)
-                    if (_selectedItems.size == 0) {
-                        _isSelecting = false
-                        _onSelectingChangeListener.invoke(false)
-                    }
-                } else if (!isSelected && _isSelecting) {
-                    isSelected = true
-                    _selectedItems.add(dataItem)
-                    _onItemsSelectedListener.invoke(_selectedItems)
-                } else {
-                    _onItemClickListener.invoke(getItem(position))
-                }
-            }
+            setOnClickListener { _onItemClickListener.invoke(dataItem) }
             setOnLongClickListener {
-//                if (_isSelectable) {
-//                    isSelected = true
-//                    _isSelecting = true
-//                    _selectedItems.add(dataItem)
-//                    _onItemsSelectedListener.invoke(_selectedItems)
-//                    _onSelectingChangeListener.invoke(true)
-//                } else {
-//                    _onItemLongClickListener.invoke(dataItem)
-//                }
+                _onItemLongClickListener.invoke(dataItem)
                 true
             }
-            boundComponent.animationInteractor.animateIn(this, false)
-            onBindListItem(this, getItem(position))
+            component.animations.show(this, false)
+
+            onBindListItem(this, dataItem)
         }
     }
 
     override fun getItemCount() = _data.items.size
 
-    fun getHeader(position: Int): String? {
+    override fun getSectionText(position: Int): String? {
         var total = 0
-        _data.headersCounts.withIndex().forEach { (index, count) ->
-            when (position) {
-                total -> return _data.headers[index]
-                else -> total += count
+        _data.headersToCounts.values.withIndex().forEach { (index, count) ->
+            if (position <= total) {
+                return _data.headersToCounts.keys.toList()[index]
+            } else {
+                total += count
             }
         }
         return null
@@ -99,27 +58,26 @@ abstract class ListAdapter<DataType>(
 
     private fun getItem(position: Int) = _data.items[position]
 
+    fun getHeader(position: Int): String? {
+        var total = 0
+        _data.headersToCounts.values.withIndex().forEach { (index, count) ->
+            when (position) {
+                total -> return _data.headersToCounts.keys.toList()[index]
+                else -> total += count
+            }
+        }
+        return null
+    }
 
-    //region listeners setters
-
-    fun setOnItemClickListener(onItemClickListener: (item: DataType) -> Unit) {
+    fun setOnItemClickListener(onItemClickListener: (item: ItemType) -> Unit) {
         _onItemClickListener = onItemClickListener
     }
 
-    fun setOnItemLongClickListener(onItemLongClickListener: (item: DataType) -> Unit) {
+    fun setOnItemLongClickListener(onItemLongClickListener: (item: ItemType) -> Unit) {
         _onItemLongClickListener = onItemLongClickListener
     }
 
-    fun setOnSelectingChangeListener(onSelectingChangeListener: (isSelecting: Boolean) -> Unit) {
-        _onSelectingChangeListener = onSelectingChangeListener
-    }
 
-    fun setOnItemsSelectedListener(onItemsSelectedListener: (items: ArrayList<DataType>) -> Unit) {
-        _onItemsSelectedListener = onItemsSelectedListener
-    }
-
-    //endregion
-
-
-    abstract fun onBindListItem(listItem: ListItem, item: DataType)
+    abstract fun onBindListItem(listItem: ListItem, item: ItemType)
+    abstract fun convertDataToListData(data: List<ItemType>): ListData<ItemType>
 }

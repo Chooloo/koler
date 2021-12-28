@@ -7,19 +7,19 @@ import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.koler.contentresolver.ContactsContentResolver
-import com.chooloo.www.koler.data.account.Contact
+import com.chooloo.www.koler.data.account.ContactAccount
 import com.chooloo.www.koler.interactor.base.BaseInteractorImpl
-import com.chooloo.www.koler.interactor.numbers.NumbersInteractor
-import com.chooloo.www.koler.interactor.phoneaccounts.PhoneAccountsInteractor
+import com.chooloo.www.koler.interactor.blocked.BlockedInteractor
+import com.chooloo.www.koler.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.koler.util.annotation.RequiresDefaultDialer
 
 class ContactsInteractorImpl(
     private val context: Context,
-    private val numbersInteractor: NumbersInteractor,
-    private val phoneAccountsInteractor: PhoneAccountsInteractor,
+    private val blockedInteractor: BlockedInteractor,
+    private val phonesInteractor: PhonesInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
-    override fun queryContact(contactId: Long, callback: (Contact?) -> Unit) {
-        ContactsContentResolver(context, contactId).queryContent { contacts ->
+    override fun queryContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
+        ContactsContentResolver(context, contactId).queryItems { contacts ->
             contacts.let { callback.invoke(contacts.getOrNull(0)) }
         }
     }
@@ -37,15 +37,15 @@ class ContactsInteractorImpl(
 
     @RequiresDefaultDialer
     override fun blockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
-            accounts?.forEach { numbersInteractor.blockNumber(it.number) }
+        phonesInteractor.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { blockedInteractor.blockNumber(it.number) }
             onSuccess?.invoke()
         }
     }
 
     override fun unblockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
-            accounts?.forEach { numbersInteractor.unblockNumber(it.number) }
+        phonesInteractor.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { blockedInteractor.unblockNumber(it.number) }
             onSuccess?.invoke()
         }
     }
@@ -55,12 +55,12 @@ class ContactsInteractorImpl(
         val contentValues = ContentValues()
         contentValues.put(Contacts.STARRED, if (isFavorite) 1 else 0)
         val filter = "${Contacts._ID}=$contactId"
-        context.contentResolver.update(Contacts.CONTENT_URI, contentValues, filter, null);
+        context.contentResolver.update(Contacts.CONTENT_URI, contentValues, filter, null)
     }
 
     override fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit) {
-        phoneAccountsInteractor.getContactAccounts(contactId) { accounts ->
-            callback.invoke(accounts?.all { numbersInteractor.isNumberBlocked(it.number) } ?: false)
+        phonesInteractor.getContactAccounts(contactId) { accounts ->
+            callback.invoke(accounts?.all { blockedInteractor.isNumberBlocked(it.number) } ?: false)
         }
     }
 }

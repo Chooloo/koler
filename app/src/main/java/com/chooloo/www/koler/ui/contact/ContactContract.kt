@@ -9,17 +9,13 @@ interface ContactContract : BaseContract {
         var contactName: String?
         var contactImage: Uri?
         var isStarIconVisible: Boolean
-
-        fun showMenu()
     }
 
-    interface Presenter<V : View> : BaseContract.Presenter<V> {
+    interface Controller<V : View> : BaseContract.Controller<V> {
         fun onActionSms()
-        fun onActionFav()
         fun onActionCall()
         fun onActionEdit()
         fun onActionInfo()
-        fun onActionMenu()
         fun onActionDelete()
     }
 }

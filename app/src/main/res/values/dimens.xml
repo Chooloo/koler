@@ -13,6 +13,7 @@
     <!--region default spacings-->
     <dimen name="default_spacing">18dp</dimen>
     <dimen name="default_spacing_big">28dp</dimen>
+    <dimen name="default_spacing_half">9dp</dimen>
     <dimen name="default_spacing_small">6dp</dimen>
     <!--endregion-->
 
@@ -29,7 +30,7 @@
     <!--endregion-->
 
     <!--region bottom sheet dialog -->
-    <dimen name="swipe_indicator_height">5dp</dimen>
+    <dimen name="swipe_indicator_height">4dp</dimen>
     <dimen name="swipe_indicator_width">35dp</dimen>
     <dimen name="swipe_indicator_margin">13dp</dimen>
     <!--endregion-->

@@ -7,40 +7,18 @@ import com.chooloo.www.koler.ui.base.BaseContract
 
 interface ListContract : BaseContract {
     interface View<ItemType> : BaseContract.View {
-        val isCompact: Boolean
-        val searchHint: String?
+        var isScrollerVisible: Boolean
 
-        fun scrollToTop()
-        fun animateListView()
-        fun requestSearchFocus()
-        fun setupScrollIndicator()
-        fun showItem(item: ItemType)
-        fun showEmptyPage(isShow: Boolean)
+        fun showEmpty(isShow: Boolean)
         fun showLoading(isLoading: Boolean)
-        fun showSelecting(isSelecting: Boolean)
-        fun setEmptyTextRes(@StringRes res: Int?)
-        fun setEmptyIconRes(@DrawableRes res: Int?)
+        fun setEmptyIcon(@DrawableRes res: Int?)
+        fun setEmptyReason(@StringRes res: Int?)
         fun setAdapter(adapter: ListAdapter<ItemType>)
     }
 
-    interface Presenter<ItemType, V : View<ItemType>> : BaseContract.Presenter<V> {
-        val requiredPermissions: Array<String>
-
-        fun onResults()
-        fun onNoResults()
-        fun onSwipeRefresh()
-
+    interface Controller<ItemType, V : View<ItemType>> : BaseContract.Controller<V> {
         fun onItemClick(item: ItemType) {}
         fun onItemLongClick(item: ItemType) {}
-
-        fun onSearchTextChanged(text: String) {}
-        fun onDataChanged(items: ArrayList<ItemType>)
-        fun onDeleteItems(items: ArrayList<ItemType>) {}
-        fun onIsSelectingChanged(isSelecting: Boolean) {}
-
-        fun onPermissionsGranted()
-        fun onPermissionsBlocked(permissions: Array<String>)
-
-        fun setOnItemsChangedListener(onItemsChangedListener: (ArrayList<ItemType>) -> Unit? = {})
+        fun setOnItemsChangedListener(onItemsChangedListener: (List<ItemType>) -> Unit? = {})
     }
 }

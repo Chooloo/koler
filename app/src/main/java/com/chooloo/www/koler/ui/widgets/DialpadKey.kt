@@ -2,7 +2,6 @@ package com.chooloo.www.koler.ui.widgets
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.KeyEvent
@@ -13,13 +12,12 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.util.ViewManager
+import com.chooloo.www.koler.util.getSelectableItemBackgroundBorderlessDrawable
+import com.chooloo.www.koler.util.getSizeInDp
 
 
 @SuppressLint("Recycle", "CustomViewStyleable")
 class DialpadKey : LinearLayout {
-    private val _viewManager by lazy { ViewManager(context) }
-
     var keyCode = 0
     private var _digitTextView: TextView
     private var _lettersTextView: TextView
@@ -45,7 +43,7 @@ class DialpadKey : LinearLayout {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
 
-            setPadding(0, _viewManager.getSizeInDp(5), 0, 0)
+            setPadding(0, context.getSizeInDp(5), 0, 0)
             setTextAppearance(R.style.Koler_Text_Caption)
         }.also {
             addView(it)
@@ -53,11 +51,11 @@ class DialpadKey : LinearLayout {
 
         orientation = VERTICAL
         layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
-        background = _viewManager.selectableItemBackgroundBorderlessDrawable
+        background = context.getSelectableItemBackgroundBorderlessDrawable()
         digit = context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey)
             .getString(R.styleable.Koler_DialpadKey_digit)
 
-        setPadding(_viewManager.getSizeInDp(7))
+        setPadding(context.getSizeInDp(7))
     }
 
     var digit: String?

@@ -13,18 +13,12 @@ open class CallAudioInteractorImpl :
     private val callAudioState get() = CallService.sInstance?.callAudioState
 
 
-    override val supportedAudioRoutes: Array<AudioRoute>
-        get() = AudioRoute.values().filter {
-            callAudioState?.supportedRouteMask?.let(it.route::and) == it.route
-        }.toTypedArray()
-
-
     override var isMuted: Boolean?
         get() = callAudioState?.isMuted
         set(value) {
             value?.let { CallService.sInstance?.setMuted(it) }
         }
-
+    
     override var isSpeakerOn: Boolean?
         get() = audioRoute == SPEAKER
         set(value) {
@@ -40,6 +34,11 @@ open class CallAudioInteractorImpl :
         set(value) {
             value?.route?.let { CallService.sInstance?.setAudioRoute(it) }
         }
+
+    override val supportedAudioRoutes: Array<AudioRoute>
+        get() = AudioRoute.values().filter {
+            callAudioState?.supportedRouteMask?.let(it.route::and) == it.route
+        }.toTypedArray()
 
 
     override fun entryCallAudioStateChanged(audioState: CallAudioState) {
