@@ -10,8 +10,6 @@
          uniquely stylized phone app with customizable features
 </p>
 
-**An update, I'm currently working on a massive code redesign from scratch, will probably take some time, but will be better**
-
 Koler is a uniquely stylized phone app for Android, designed with the user in mind.
 Believe us we want to make it good, as we use it ourselves.
 
