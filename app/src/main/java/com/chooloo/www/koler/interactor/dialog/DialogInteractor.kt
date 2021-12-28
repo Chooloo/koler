@@ -4,16 +4,16 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.base.BaseInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
-import kotlin.math.acos
 
 interface DialogInteractor : BaseInteractor<DialogInteractor.Listener> {
     interface Listener
 
     fun askForBoolean(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
 
+    fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
+    
     fun askForChoice(
         choices: List<String>,
         @DrawableRes iconRes: Int,

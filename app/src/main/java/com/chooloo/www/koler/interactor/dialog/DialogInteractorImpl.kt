@@ -1,13 +1,8 @@
 package com.chooloo.www.koler.interactor.dialog
 
-import android.view.Menu
 import android.widget.ArrayAdapter
-import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.view.menu.MenuBuilder
-import androidx.appcompat.view.menu.MenuPresenter
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.databinding.MenuBinding
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
@@ -19,9 +14,23 @@ class DialogInteractorImpl(
     private val activity: BaseActivity
 ) : BaseObservable<DialogInteractor.Listener>(), DialogInteractor {
     override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
-        BottomFragment(PromptFragment.newInstance(activity.getString(titleRes)).apply {
-            controller.setOnClickListener(callback::invoke)
-        }).show(activity.supportFragmentManager, PromptFragment.TAG)
+        BottomFragment(
+            PromptFragment.newInstance(
+                activity.getString(R.string.prompt_yes_or_no),
+                activity.getString(titleRes)
+            ).apply {
+                controller.setOnClickListener(callback::invoke)
+            }).show(activity.supportFragmentManager, PromptFragment.TAG)
+    }
+
+    override fun askForValidation(titleRes: Int, callback: (result: Boolean) -> Unit) {
+        BottomFragment(
+            PromptFragment.newInstance(
+                activity.getString(R.string.prompt_are_you_sure),
+                activity.getString(titleRes)
+            ).apply {
+                controller.setOnClickListener(callback::invoke)
+            }).show(activity.supportFragmentManager, PromptFragment.TAG)
     }
 
 

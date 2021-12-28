@@ -49,7 +49,7 @@ class RecentController<V : RecentContract.View>(view: V) :
         _recent?.let { recent ->
             component.permissions.runWithWriteCallLogPermissions {
                 if (it) {
-                    component.dialogs.askForBoolean(R.string.explain_delete_recent) { result ->
+                    component.dialogs.askForValidation(R.string.explain_delete_recent) { result ->
                         if (result) {
                             component.recents.deleteRecent(recent.id)
                             view.finish()

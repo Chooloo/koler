@@ -9,6 +9,7 @@
     <!--endregion-->
 
     <!--region prompt-->
+    <string name="prompt_yes_or_no">Yes or No?</string>
     <string name="prompt_are_you_sure">Are you sure?</string>
     <!--endregion-->
 

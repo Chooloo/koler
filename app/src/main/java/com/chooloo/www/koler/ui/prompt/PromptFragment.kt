@@ -25,6 +25,7 @@ class PromptFragment : BaseFragment(), PromptContract.View {
 
     override fun onSetup() {
         binding.apply {
+            promptTitle.text = args.getString(ARG_TITLE)
             promptSubtitle.text = args.getString(ARG_SUBTITLE)
             promptButtonNo.setOnClickListener { controller.onNoClick() }
             promptButtonYes.setOnClickListener { controller.onYesClick() }
@@ -33,11 +34,13 @@ class PromptFragment : BaseFragment(), PromptContract.View {
 
 
     companion object {
+        const val ARG_TITLE = "title"
         const val TAG = "prompt_fragment"
         const val ARG_SUBTITLE = "subtitle"
 
-        fun newInstance(subtitle: String) = PromptFragment().apply {
+        fun newInstance(title: String, subtitle: String) = PromptFragment().apply {
             arguments = Bundle().apply {
+                putString(ARG_TITLE, title)
                 putString(ARG_SUBTITLE, subtitle)
             }
         }

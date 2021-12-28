@@ -48,7 +48,7 @@ class ContactController<V : ContactContract.View>(view: V) :
     override fun onActionDelete() {
         component.permissions.runWithWriteContactsPermissions {
             if (it) {
-                component.dialogs.askForBoolean(R.string.explain_delete_contact) {
+                component.dialogs.askForValidation(R.string.explain_delete_contact) {
                     if (it) {
                         component.contacts.deleteContact(view.contactId)
                         view.finish()
