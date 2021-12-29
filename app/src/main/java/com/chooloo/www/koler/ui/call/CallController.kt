@@ -37,8 +37,8 @@ class CallController<V : CallContract.View>(view: V) :
             proximities.acquire()
             screens.disableKeyboard()
             screens.setShowWhenLocked()
-            callAudios.registerListener(this@CallController)
             calls.registerListener(this@CallController)
+            callAudios.registerListener(this@CallController)
             calls.mainCall?.let {
                 onCallChanged(it)
                 onMainCallChanged(it)
