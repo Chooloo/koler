@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.di.activitycomponent
 
 import com.chooloo.www.koler.KolerApp
-import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorBoundImpl
 import com.chooloo.www.koler.interactor.dialog.DialogInteractorImpl
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractorImpl
 import com.chooloo.www.koler.interactor.permission.PermissionsInteractorImpl
@@ -75,10 +74,6 @@ class ActivityComponentImpl(
         )
     }
 
-    override val callAudios by lazy {
-        CallAudioInteractorBoundImpl(dialogs, strings)
-    }
-
 
     override val liveDataFactory get() = contextComponent.liveDataFactory
 
@@ -102,6 +97,7 @@ class ActivityComponentImpl(
     override val recents get() = contextComponent.recents
     override val drawables get() = contextComponent.drawables
     override val contacts get() = contextComponent.contacts
+    override val callAudios get() = contextComponent.callAudios
     override val animations get() = contextComponent.animations
     override val preferences get() = contextComponent.preferences
 }

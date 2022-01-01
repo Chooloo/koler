@@ -105,7 +105,7 @@ class CallController<V : CallContract.View>(view: V) :
     override fun onSpeakerClick() {
         component.callAudios.apply {
             if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
-                component.callAudios.askForRoute { audioRoute = it }
+                component.dialogs.askForRoute { audioRoute = it }
             } else {
                 isSpeakerOn = !view.isSpeakerActivated
             }
