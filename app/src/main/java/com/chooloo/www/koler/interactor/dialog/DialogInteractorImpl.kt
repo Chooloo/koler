@@ -3,6 +3,7 @@ package com.chooloo.www.koler.interactor.dialog
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
@@ -64,6 +65,16 @@ class DialogInteractorImpl(
             noColorOption = true,
             selectedColor = selectedColor
         ).show(activity.supportFragmentManager)
+    }
+
+    override fun askForRoute(callback: (CallAudioInteractor.AudioRoute) -> Unit) {
+        val audioRoutes = activity.component.callAudios.supportedAudioRoutes
+        askForChoice(
+            audioRoutes.map { activity.getString(it.stringRes) },
+            R.drawable.ic_volume_up_black_24dp,
+            R.string.action_choose_audio_route,
+            { _, index -> callback.invoke(audioRoutes[index]) }
+        )
     }
 
     override fun askForDefaultPage(callback: (Page) -> Unit) {

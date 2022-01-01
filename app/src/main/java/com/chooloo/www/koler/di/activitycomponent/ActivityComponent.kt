@@ -3,7 +3,6 @@ package com.chooloo.www.koler.di.activitycomponent
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import com.chooloo.www.koler.di.contextcomponent.ContextComponent
-import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorBound
 import com.chooloo.www.koler.interactor.dialog.DialogInteractor
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractor
 import com.chooloo.www.koler.interactor.permission.PermissionsInteractor
@@ -24,5 +23,4 @@ interface ActivityComponent : ContextComponent {
     val proximities: ProximityInteractor
     val permissions: PermissionsInteractor
     val navigations: NavigationInteractor
-    override val callAudios: CallAudioInteractorBound
 }
