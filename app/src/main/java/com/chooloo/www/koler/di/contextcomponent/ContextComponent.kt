@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.di.contextcomponent
 
 import android.app.KeyguardManager
+import android.app.role.RoleManager
 import android.content.ClipboardManager
 import android.media.AudioManager
 import android.os.PowerManager

@@ -4,8 +4,6 @@
     package="com.chooloo.www.koler">
 
 
-    <!--region permissions-->
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -28,8 +26,6 @@
         android:name="android.permission.CAPTURE_AUDIO_OUTPUT"
         tools:ignore="ProtectedPermissions" />
 
-    <!--endregion-->
-
 
     <application
         android:name="com.chooloo.www.koler.KolerApp"
@@ -41,13 +37,10 @@
         android:theme="@style/KolerTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <!--region activities-->
-
         <activity
             android:name="com.chooloo.www.koler.ui.main.MainActivity"
+            android:exported="true"
             android:screenOrientation="fullUser">
-
-            <!--region intent-filters-->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,8 +59,6 @@
 
                 <data android:scheme="tel" />
             </intent-filter>
-
-            <!--endregion-->
         </activity>
 
         <activity
@@ -75,15 +66,12 @@
             android:screenOrientation="fullSensor" />
         <activity android:name=".ui.permissions.PermissionsActivity" />
 
-        <!--endregion-->
-
-
-        <!--region services-->
 
         <service android:name="com.chooloo.www.koler.service.RecordService" />
 
         <service
             android:name="com.chooloo.www.koler.service.CallService"
+            android:exported="false"
             android:permission="android.permission.BIND_INCALL_SERVICE">
             <meta-data
                 android:name="android.telecom.IN_CALL_SERVICE_UI"
@@ -93,36 +81,28 @@
             </intent-filter>
         </service>
 
-        <!--endregion-->
-
-
-        <!--region metadatas-->
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <!--endregion-->
 
-
-        <!--region receivers-->
-
-        <receiver android:name=".receiver.CallBroadcastReceiver">
+        <receiver
+            android:name=".receiver.CallBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="action_answer" />
                 <action android:name="action_hangup" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.CallRecordReceiver">
+        <receiver
+            android:name=".receiver.CallRecordReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
             </intent-filter>
         </receiver>
-
-        <!--endregion-->
-
-
     </application>
 </manifest>

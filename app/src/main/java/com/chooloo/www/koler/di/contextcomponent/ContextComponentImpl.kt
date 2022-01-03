@@ -2,6 +2,7 @@ package com.chooloo.www.koler.di.contextcomponent
 
 import android.app.Application
 import android.app.KeyguardManager
+import android.app.role.RoleManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.TELEPHONY_SUBSCRIPTION_SERVICE
@@ -15,12 +16,12 @@ import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.koler.di.livedatafactory.LiveDataFactoryImpl
 import com.chooloo.www.koler.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.koler.interactor.audio.AudioInteractorImpl
+import com.chooloo.www.koler.interactor.blocked.BlockedInteractorImpl
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractorImpl
 import com.chooloo.www.koler.interactor.calls.CallsInteractorImpl
 import com.chooloo.www.koler.interactor.color.ColorInteractorImpl
 import com.chooloo.www.koler.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.koler.interactor.drawable.DrawableInteractorImpl
-import com.chooloo.www.koler.interactor.blocked.BlockedInteractorImpl
 import com.chooloo.www.koler.interactor.phoneaccounts.PhonesInteractorImpl
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.koler.interactor.recents.RecentsInteractorImpl

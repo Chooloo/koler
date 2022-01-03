@@ -10,9 +10,7 @@ import android.telecom.TelecomManager
 import android.widget.Toast
 import com.chooloo.www.koler.interactor.string.StringInteractor
 import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.permissions.PermissionsActivity
-import com.chooloo.www.koler.ui.prompt.PromptFragment
 import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 
@@ -29,15 +27,16 @@ class PermissionsInteractorImpl(
 
     override fun requestDefaultDialer() {
         val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val roleManager = activity.getSystemService(Context.ROLE_SERVICE) as RoleManager
-            roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
+            (activity.getSystemService(Context.ROLE_SERVICE) as RoleManager).createRequestRoleIntent(
+                RoleManager.ROLE_DIALER
+            )
         } else {
             Intent(TelecomManager.ACTION_CHANGE_DEFAULT_DIALER).putExtra(
                 TelecomManager.EXTRA_CHANGE_DEFAULT_DIALER_PACKAGE_NAME,
                 activity.packageName
             )
         }
-        activity.startActivity(intent)
+        activity.startActivityForResult(intent, 0)
     }
 
     override fun checkDefaultDialer(errorMessageRes: Int?) {
