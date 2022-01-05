@@ -6,6 +6,7 @@ import com.chooloo.www.koler.ui.base.BaseMenuFragment
 
 class SettingsFragment : BaseMenuFragment(), SettingsContract.View {
     private val controller by lazy { SettingsController(this) }
+    override val title by lazy { getString(R.string.settings) }
 
     override fun onSetup() {
         super.onSetup()
