@@ -26,6 +26,7 @@ class RecentsController<V : RecentsContract.View>(view: V) :
     }
 
     override fun applyFilter(filter: String) {
+        super.applyFilter(filter)
         try {
             recentsLiveData.filter = filter
         } catch (e: Exception) {

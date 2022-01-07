@@ -11,9 +11,16 @@ import com.l4digital.fastscroll.FastScroller
 abstract class ListAdapter<ItemType>(
     protected val component: ActivityComponent
 ) : RecyclerView.Adapter<ListItemHolder>(), FastScroller.SectionIndexer {
+    private var _titleFilter: String? = null
     private var _data: ListData<ItemType> = ListData()
     private var _onItemClickListener: (item: ItemType) -> Unit = {}
     private var _onItemLongClickListener: (item: ItemType) -> Unit = {}
+
+    var titleFilter: String?
+        get() = _titleFilter
+        set(value) {
+            _titleFilter = value
+        }
 
     var items: List<ItemType>
         get() = _data.items
@@ -41,6 +48,7 @@ abstract class ListAdapter<ItemType>(
             component.animations.show(this, false)
 
             onBindListItem(this, dataItem)
+            _titleFilter?.let { highlightTitleText(it) }
         }
     }
 

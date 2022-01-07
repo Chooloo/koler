@@ -5,11 +5,15 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -354,6 +358,21 @@ open class ListItem : LinearLayout {
         )
     }
 
+    fun highlightTitleText(text: String) {
+        titleText?.indexOf(text, ignoreCase = true)?.let {
+            if (it != -1) {
+                val spannable = SpannableString(titleText)
+                spannable.setSpan(
+                    ForegroundColorSpan(context.getAttrColor(R.attr.colorOnSecondary)),
+                    it,
+                    it + text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                _title.setText(spannable, TextView.BufferType.SPANNABLE)
+            }
+        }
+    }
+
     fun setImageTint(@ColorInt color: Int) {
         imageTintList = ColorStateList.valueOf(color)
     }
@@ -411,4 +430,5 @@ open class ListItem : LinearLayout {
     fun setOnRightButtonClickListener(onRightButtonClickListener: () -> Unit) {
         _onRightButtonClickListener = onRightButtonClickListener
     }
+
 }

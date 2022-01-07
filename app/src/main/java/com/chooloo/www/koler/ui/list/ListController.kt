@@ -44,7 +44,7 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
 
     private fun refreshData() {
         fetchData { items, hasPermissions ->
-            view.setEmptyReason(if (hasPermissions) noPermissionsTextRes else noResultsTextRes)
+            view.setEmptyReason(if (hasPermissions) noResultsTextRes else noPermissionsTextRes)
             adapter.items = items
         }
     }
@@ -61,6 +61,12 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
     protected open val noPermissionsTextRes: Int? = null
     abstract val adapter: ListAdapter<ItemType>
 
-    open fun applyFilter(filter: String) {}
+    open fun applyFilter(filter: String) {
+        try {
+            adapter.titleFilter = filter
+        } catch (e: NullPointerException) {
+        }
+    }
+
     abstract fun fetchData(callback: (items: List<ItemType>, hasPermissions: Boolean) -> Unit)
 }

@@ -20,6 +20,7 @@ open class ContactsController<V : ContactsContract.View>(view: V) :
     }
 
     override fun applyFilter(filter: String) {
+        super.applyFilter(filter)
         try {
             contactsLiveData.filter = filter
         } catch (e: Exception) {
