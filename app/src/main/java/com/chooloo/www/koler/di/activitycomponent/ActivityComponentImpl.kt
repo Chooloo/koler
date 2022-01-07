@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.di.activitycomponent
 
 import com.chooloo.www.koler.KolerApp
-import com.chooloo.www.koler.interactor.dialog.DialogInteractorImpl
+import com.chooloo.www.koler.interactor.dialog.DialogsInteractorImpl
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractorImpl
 import com.chooloo.www.koler.interactor.permission.PermissionsInteractorImpl
 import com.chooloo.www.koler.interactor.proximity.ProximityInteractorImpl
@@ -33,14 +33,13 @@ class ActivityComponentImpl(
         SimInteractorImpl(
             activity,
             telecomManager,
-            dialogs,
             subscriptionManager,
             permissions
         )
     }
 
     override val dialogs by lazy {
-        DialogInteractorImpl(activity)
+        DialogsInteractorImpl(activity)
     }
 
     override val screens by lazy {
@@ -65,10 +64,11 @@ class ActivityComponentImpl(
 
     override val navigations by lazy {
         NavigationInteractorImpl(
-            activity,
             sims,
-            telecomManager,
+            activity,
+            dialogs,
             strings,
+            telecomManager,
             permissions,
             preferences
         )

@@ -8,8 +8,6 @@ import com.chooloo.www.koler.interactor.base.BaseInteractor
 interface SimInteractor : BaseInteractor<SimInteractor.Listener> {
     interface Listener
 
-    fun askForSim(callback: (SimAccount?) -> Unit)
-
     fun getIsMultiSim(callback: (Boolean) -> Unit)
     fun getSimAccounts(callback: (List<SimAccount>) -> Unit)
     fun getPhoneAccounts(callback: (List<PhoneAccount>) -> Unit)

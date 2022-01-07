@@ -31,7 +31,9 @@ abstract class ListAdapter<ItemType>(
         holder.listItem.apply {
             headerText = getHeader(position)
 
-            setOnClickListener { _onItemClickListener.invoke(dataItem) }
+            setOnClickListener {
+                _onItemClickListener.invoke(dataItem)
+            }
             setOnLongClickListener {
                 _onItemLongClickListener.invoke(dataItem)
                 true

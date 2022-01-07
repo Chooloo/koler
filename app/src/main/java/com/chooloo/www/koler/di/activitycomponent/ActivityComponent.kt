@@ -3,7 +3,7 @@ package com.chooloo.www.koler.di.activitycomponent
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner
 import com.chooloo.www.koler.di.contextcomponent.ContextComponent
-import com.chooloo.www.koler.interactor.dialog.DialogInteractor
+import com.chooloo.www.koler.interactor.dialog.DialogsInteractor
 import com.chooloo.www.koler.interactor.navigation.NavigationInteractor
 import com.chooloo.www.koler.interactor.permission.PermissionsInteractor
 import com.chooloo.www.koler.interactor.proximity.ProximityInteractor
@@ -18,7 +18,7 @@ interface ActivityComponent : ContextComponent {
     val viewModelStoreOwner: ViewModelStoreOwner
 
     val sims: SimInteractor
-    val dialogs: DialogInteractor
+    val dialogs: DialogsInteractor
     val screens: ScreenInteractor
     val proximities: ProximityInteractor
     val permissions: PermissionsInteractor
