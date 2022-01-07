@@ -9,6 +9,7 @@ import com.chooloo.www.koler.data.call.Call.State.*
 import com.chooloo.www.koler.data.call.CantHoldCallException
 import com.chooloo.www.koler.data.call.CantMergeCallException
 import com.chooloo.www.koler.data.call.CantSwapCallException
+import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode.*
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.koler.service.CallService
 import com.chooloo.www.koler.ui.base.BaseController
@@ -118,6 +119,7 @@ class CallController<V : CallContract.View>(view: V) :
 
 
     override fun onNoCalls() {
+        component.audios.audioMode = NORMAL
         view.finish()
     }
 
