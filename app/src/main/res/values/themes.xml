@@ -13,8 +13,8 @@
         <item name="colorLightForeground">#95ACACAC</item>
 
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:navigationBarColor">?colorPrimarySurface</item>
 
         <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
@@ -23,6 +23,7 @@
 
 
     <style name="KolerBottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="android:navigationBarColor">?colorPrimarySurface</item>
         <item name="bottomSheetStyle">@style/Koler.BottomDialog.BottomSheetStyle</item>
     </style>
 

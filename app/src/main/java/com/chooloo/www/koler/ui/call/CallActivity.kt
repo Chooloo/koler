@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.text.format.DateUtils
 import android.view.View
+import androidx.core.view.isVisible
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.data.call.Call
 import com.chooloo.www.koler.databinding.CallBinding
 import com.chooloo.www.koler.ui.base.BaseActivity
 import com.chooloo.www.koler.ui.base.BottomFragment
+import com.chooloo.www.koler.ui.callitems.CallItemsFragment
 import com.chooloo.www.koler.ui.dialer.DialerFragment
 import com.chooloo.www.koler.ui.dialpad.DialpadFragment
 
@@ -22,6 +25,7 @@ class CallActivity : BaseActivity(), CallContract.View {
         get() = null
         set(value) {
             binding.callImage.setImageURI(value)
+            binding.callImage.isVisible = value != null
         }
 
     override var nameText: String?
@@ -70,6 +74,12 @@ class CallActivity : BaseActivity(), CallContract.View {
             binding.callActions.isMergeEnabled = value
         }
 
+    override var isManageEnabled: Boolean
+        get() = binding.callManageButton.isVisible
+        set(value) {
+            binding.callManageButton.isVisible = value
+        }
+
     override var isSpeakerEnabled: Boolean
         get() = binding.callActions.isSpeakerEnabled
         set(value) {
@@ -105,9 +115,11 @@ class CallActivity : BaseActivity(), CallContract.View {
         _controller = CallController(this)
 
         binding.apply {
+            imageURI = null
             callActions.setCallActionsListener(_controller)
             callAnswerButton.setOnClickListener { _controller.onAnswerClick() }
             callRejectButton.setOnClickListener { _controller.onRejectClick() }
+            callManageButton.setOnClickListener { _controller.onManageClick() }
         }
     }
 
@@ -148,6 +160,12 @@ class CallActivity : BaseActivity(), CallContract.View {
                 ifVisible = true, goneOrInvisible = false
             )
         }
+    }
+
+    override fun showCallsManager(calls: List<Call>) {
+        BottomFragment(
+            CallItemsFragment.newInstance().apply { controller.calls = calls }
+        ).show(supportFragmentManager, CallItemsFragment.TAG)
     }
 
     override fun showHoldingBanner(number: String) {

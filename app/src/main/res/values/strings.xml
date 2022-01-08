@@ -6,6 +6,7 @@
     <string name="contacts">Contacts</string>
     <string name="conference">Conference</string>
     <string name="default_page">Default</string>
+    <string name="settings">Settings</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -43,12 +44,13 @@
 
     <!--region hints-->
     <string name="hint_search">Search</string>
-    <string name="hint_search_contacts">Search Contacts</string>
-    <string name="hint_search_recents">Search Recents</string>
-    <string name="hint_search_items">Search contacts &amp; recents</string>
-    <string name="hint_default_page">Choose default startup page</string>
-    <string name="hint_compact_mode">Make list items compact</string>
+    <string name="hint_sim_account">Sim Account</string>
+    <string name="hint_default_page">Default Page</string>
     <string name="hint_animations">Show animations</string>
+    <string name="hint_search_recents">Search Recents</string>
+    <string name="hint_search_contacts">Search Contacts</string>
+    <string name="hint_compact_mode">Make list items compact</string>
+    <string name="hint_search_items">Search contacts &amp; recents</string>
     <string name="hint_should_ask_sim">Ask for a sim before each call</string>
     <!--endregion-->
 
@@ -58,6 +60,9 @@
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
     <string name="explain_block_contact">You won\'t receive any calls from this contact</string>
+    <string name="explain_choose_sim_account">Call with a different sim</string>
+    <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <string name="explain_choose_audio_route">Route audio to a different source</string>
     <!--endregion-->
 
     <!--region urls-->

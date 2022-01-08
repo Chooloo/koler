@@ -9,6 +9,7 @@ import com.chooloo.www.koler.data.call.Call.State.*
 import com.chooloo.www.koler.data.call.CantHoldCallException
 import com.chooloo.www.koler.data.call.CantMergeCallException
 import com.chooloo.www.koler.data.call.CantSwapCallException
+import com.chooloo.www.koler.interactor.audio.AudioInteractor.AudioMode.*
 import com.chooloo.www.koler.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.koler.service.CallService
 import com.chooloo.www.koler.ui.base.BaseController
@@ -46,6 +47,8 @@ class CallController<V : CallContract.View>(view: V) :
                 callAudios.audioRoute?.let(this@CallController::onAudioRouteChanged)
             }
         }
+
+        view.isManageEnabled = false
     }
 
     override fun onStop() {
@@ -118,6 +121,7 @@ class CallController<V : CallContract.View>(view: V) :
 
 
     override fun onNoCalls() {
+        component.audios.audioMode = NORMAL
         view.finish()
     }
 
@@ -178,6 +182,7 @@ class CallController<V : CallContract.View>(view: V) :
         }
 
         view.isHoldActivated = call.isHolding
+        view.isManageEnabled = call.isConference
         view.isHoldEnabled = call.isCapable(CAPABILITY_HOLD)
         view.isMuteEnabled = call.isCapable(CAPABILITY_MUTE)
         view.isSwapEnabled = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
@@ -197,7 +202,7 @@ class CallController<V : CallContract.View>(view: V) :
         }
     }
 
-    override fun onAudioRouteSelected(audioRoute: AudioRoute) {
-
+    override fun onManageClick() {
+        component.calls.mainCall?.children?.let { view.showCallsManager(it) }
     }
 }

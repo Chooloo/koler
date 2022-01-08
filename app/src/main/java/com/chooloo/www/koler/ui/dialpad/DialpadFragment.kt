@@ -4,6 +4,7 @@ import android.view.KeyEvent
 import android.view.KeyEvent.ACTION_DOWN
 import android.view.View
 import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import com.chooloo.www.koler.databinding.DialpadBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.widgets.DialpadKey
@@ -25,7 +26,7 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
         }
 
     override var isDeleteButtonVisible: Boolean
-        get() = binding.dialpadButtonDelete.visibility == VISIBLE
+        get() = binding.dialpadButtonDelete.isVisible
         set(value) {
             if (value && !isDeleteButtonVisible) {
                 component.animations.show(binding.dialpadButtonDelete, true)

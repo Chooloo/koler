@@ -4,6 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import com.chooloo.www.koler.databinding.ContactBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.phones.PhonesFragment
@@ -32,9 +33,9 @@ class ContactFragment : BaseFragment(), ContactContract.View {
         }
 
     override var isStarIconVisible: Boolean
-        get() = _binding.contactImageStar.visibility == VISIBLE
+        get() = _binding.contactImageStar.isVisible
         set(value) {
-            _binding.contactImageStar.visibility = if (value) VISIBLE else GONE
+            _binding.contactImageStar.isVisible = value
         }
 
 

@@ -23,6 +23,7 @@ class PhonesController<V : PhonesContract.View>(view: V) :
 
 
     override fun applyFilter(filter: String) {
+        super.applyFilter(filter)
         phonesLiveData.filter = filter
     }
 

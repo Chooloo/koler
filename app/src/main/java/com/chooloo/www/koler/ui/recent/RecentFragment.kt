@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import com.chooloo.www.koler.databinding.RecentBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
 import com.chooloo.www.koler.ui.base.BottomFragment
@@ -37,15 +38,15 @@ class RecentFragment : BaseFragment(), RecentContract.View {
         }
 
     override var isContactVisible: Boolean
-        get() = _binding.recentButtonContact.visibility == VISIBLE
+        get() = _binding.recentButtonContact.isVisible
         set(value) {
-            _binding.recentButtonContact.visibility = if (value) VISIBLE else GONE
+            _binding.recentButtonContact.isVisible = value
         }
 
     override var isAddContactVisible: Boolean
-        get() = _binding.recentButtonAddContact.visibility == VISIBLE
+        get() = _binding.recentButtonAddContact.isVisible
         set(value) {
-            _binding.recentButtonAddContact.visibility = if (value) VISIBLE else GONE
+            _binding.recentButtonAddContact.isVisible = value
         }
 
 

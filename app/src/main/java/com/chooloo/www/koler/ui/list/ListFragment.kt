@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.list
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import com.chooloo.www.koler.adapter.ListAdapter
 import com.chooloo.www.koler.databinding.ItemsBinding
 import com.chooloo.www.koler.ui.base.BaseFragment
@@ -16,9 +17,9 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     override val contentView by lazy { binding.root }
 
     override var isScrollerVisible: Boolean
-        get() = binding.itemsScrollView.fastScroller.visibility == VISIBLE
+        get() = binding.itemsScrollView.fastScroller.isVisible
         set(value) {
-            binding.itemsScrollView.fastScroller.visibility = if (value) VISIBLE else GONE
+            binding.itemsScrollView.fastScroller.isVisible = value
         }
 
 

@@ -18,15 +18,18 @@ class MainController<V : MainContract.View>(view: V) :
 
     override fun onStart() {
         super.onStart()
+
         component.permissions.checkDefaultDialer()
+        
         view.apply {
-            currentPageIndex = component.preferences.defaultPage.index
+            setFragmentsAdapter(_fragments.size, _fragments::get)
+            setSearchHint(component.strings.getString(R.string.hint_search_items))
+
             headers = arrayOf(
                 component.strings.getString(R.string.contacts),
                 component.strings.getString(R.string.recents)
             )
-            setFragmentsAdapter(_fragments.size, _fragments::get)
-            setSearchHint(component.strings.getString(R.string.hint_search_items))
+            currentPageIndex = component.preferences.defaultPage.index
         }
     }
 

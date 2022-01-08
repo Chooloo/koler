@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.interactor.navigation
 
+import android.Manifest
 import android.Manifest.permission.CALL_PHONE
 import android.annotation.SuppressLint
 import android.content.ContentUris
@@ -13,6 +14,7 @@ import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.data.account.SimAccount
+import com.chooloo.www.koler.interactor.dialog.DialogsInteractor
 import com.chooloo.www.koler.interactor.permission.PermissionsInteractor
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.koler.interactor.sim.SimInteractor
@@ -22,12 +24,13 @@ import com.chooloo.www.koler.ui.main.MainActivity
 import com.chooloo.www.koler.util.baseobservable.BaseObservable
 
 class NavigationInteractorImpl(
+    private val sims: SimInteractor,
     private val activity: BaseActivity,
-    private val simInteractor: SimInteractor,
+    private val dialogs: DialogsInteractor,
+    private val strings: StringInteractor,
     private val telecomManager: TelecomManager,
-    private val stringInteractor: StringInteractor,
-    private val permissionsInteractor: PermissionsInteractor,
-    private val preferencesInteractor: PreferencesInteractor
+    private val permissions: PermissionsInteractor,
+    private val preferences: PreferencesInteractor
 ) :
     BaseObservable<NavigationInteractor.Listener>(),
     NavigationInteractor {
@@ -41,7 +44,7 @@ class NavigationInteractorImpl(
     override fun sendEmail() {
         activity.startActivity(Intent(ACTION_SEND).apply {
             type = "message/rfc822"
-            putExtra(EXTRA_EMAIL, arrayOf(stringInteractor.getString(R.string.support_email)))
+            putExtra(EXTRA_EMAIL, arrayOf(strings.getString(R.string.support_email)))
         })
     }
 
@@ -49,7 +52,7 @@ class NavigationInteractorImpl(
         activity.startActivity(
             Intent(
                 ACTION_VIEW,
-                Uri.parse(stringInteractor.getString(R.string.app_source_url))
+                Uri.parse(strings.getString(R.string.app_source_url))
             )
         )
     }
@@ -58,7 +61,7 @@ class NavigationInteractorImpl(
         activity.startActivity(
             Intent(
                 ACTION_VIEW,
-                Uri.parse(stringInteractor.getString(R.string.app_bug_reporting_url))
+                Uri.parse(strings.getString(R.string.app_bug_reporting_url))
             )
         )
     }
@@ -67,7 +70,7 @@ class NavigationInteractorImpl(
         activity.startActivity(
             Intent(
                 ACTION_VIEW,
-                Uri.parse(stringInteractor.getString(R.string.donation_link))
+                Uri.parse(strings.getString(R.string.donation_link))
             )
         )
     }
@@ -114,30 +117,40 @@ class NavigationInteractorImpl(
 
 
     override fun callVoicemail() {
-        permissionsInteractor.runWithDefaultDialer(R.string.error_not_default_dialer_call) {
+        permissions.runWithDefaultDialer(R.string.error_not_default_dialer_call) {
             val intent = Intent(ACTION_CALL)
             intent.data = Uri.fromParts("voicemail", "", null)
             activity.startActivity(intent)
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun call(number: String) {
-        permissionsInteractor.runWithDefaultDialer(null, {
-            simInteractor.getIsMultiSim { isMultiSim ->
-                if (preferencesInteractor.isAskSim && isMultiSim) {
-                    simInteractor.askForSim { call(it, number) }
-                } else {
-                    simInteractor.getSimAccounts { call(it[0], number) }
-                }
+        activity.component.permissions.runWithPermissions(
+            arrayOf(Manifest.permission.READ_PHONE_STATE),
+            {
+                permissions.runWithDefaultDialer(null, {
+                    sims.getIsMultiSim { isMultiSim ->
+                        if (preferences.isAskSim && isMultiSim) {
+                            dialogs.askForSim { call(it, number) }
+                        } else {
+                            sims.getSimAccounts { call(it[0], number) }
+                        }
+                    }
+                }, {
+                    call(null, number)
+                })
+            }, {
+                activity.showError(R.string.error_no_permissions_ask_sim)
+            }, {
+                activity.showError(R.string.error_no_permissions_ask_sim)
             }
-        }, {
-            call(null, number)
-        })
+        )
     }
 
     @SuppressLint("MissingPermission")
     override fun call(simAccount: SimAccount?, number: String) {
-        permissionsInteractor.runWithPermissions(arrayOf(CALL_PHONE), {
+        permissions.runWithPermissions(arrayOf(CALL_PHONE), {
             val extras = Bundle()
             simAccount?.phoneAccountHandle?.let {
                 extras.putParcelable(EXTRA_PHONE_ACCOUNT_HANDLE, it)

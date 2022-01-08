@@ -99,7 +99,7 @@
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_person_black_24dp"
+        app:icon="@drawable/round_person_24"
         app:layout_constraintBottom_toTopOf="@id/recent_button_show_history"
         app:layout_constraintEnd_toStartOf="@id/recent_button_add_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_delete"
