@@ -116,6 +116,9 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     val isIncoming: Boolean
         get() = state == INCOMING
 
+    val children: List<Call>
+        get() = _call.children.map(::Call).toList()
+
     val isConference: Boolean
         get() = details.hasProperty(Details.PROPERTY_CONFERENCE)
 

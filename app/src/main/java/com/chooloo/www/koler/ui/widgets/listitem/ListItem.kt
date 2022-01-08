@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.core.view.marginTop
 import androidx.core.widget.ImageViewCompat
 import com.chooloo.www.koler.R
@@ -34,6 +35,7 @@ import com.chooloo.www.koler.util.getSizeInDp
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
+import com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI
 
 @SuppressLint("CustomViewStyleable", "Recycle")
 open class ListItem : LinearLayout {
@@ -112,9 +114,9 @@ open class ListItem : LinearLayout {
         }
 
     var imageVisibility: Boolean
-        get() = _image.visibility == VISIBLE
+        get() = _image.isVisible
         set(value) {
-            _image.visibility = if (value) VISIBLE else GONE
+            _image.isVisible = value
             if (!value) {
                 _title.layoutParams =
                     ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
@@ -128,6 +130,18 @@ open class ListItem : LinearLayout {
         set(value) {
             _image.setImageDrawable(value)
             _image.state = SHOW_IMAGE
+        }
+
+    var isLeftButtonVisible: Boolean
+        get() = _buttonLeft.isVisible
+        set(value) {
+            _buttonLeft.isVisible = value
+        }
+
+    var isRightButtonVisible: Boolean
+        get() = _buttonRight.isVisible
+        set(value) {
+            _buttonRight.isVisible = value
         }
 
 
@@ -183,13 +197,14 @@ open class ListItem : LinearLayout {
         }
 
         _buttonLeft = IconButton(context, attrs, defStyleRes).apply {
+            size = SIZE_MINI
             visibility = GONE
             id = generateViewId()
-            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
+                it.setMargins(
                     dimenSpacingSmall,
                     dimenSpacingSmall,
-                    dimenSpacingSmall,
+                    dimenSpacing,
                     dimenSpacingSmall
                 )
             }
@@ -198,10 +213,11 @@ open class ListItem : LinearLayout {
         }
 
         _buttonRight = IconButton(context, attrs, defStyleRes).apply {
+            size = SIZE_MINI
             visibility = GONE
             id = generateViewId()
-            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                setMargins(
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
+                it.setMargins(
                     dimenSpacingSmall,
                     dimenSpacingSmall,
                     dimenSpacingSmall,
@@ -239,35 +255,37 @@ open class ListItem : LinearLayout {
             clone(_personLayout)
 
             _image.id.also {
-                connect(it, BOTTOM, PARENT_ID, BOTTOM)
-                connect(it, START, PARENT_ID, START)
                 connect(it, TOP, PARENT_ID, TOP)
+                connect(it, START, PARENT_ID, START)
+                connect(it, BOTTOM, PARENT_ID, BOTTOM)
             }
 
             _title.id.also {
-                connect(it, BOTTOM, _caption.id, TOP)
-                connect(it, START, _image.id, END)
-                connect(it, END, PARENT_ID, END)
-                connect(it, TOP, PARENT_ID, TOP)
                 setHorizontalBias(it, 0F)
+                connect(it, TOP, PARENT_ID, TOP)
+                connect(it, END, PARENT_ID, END)
+                connect(it, START, _image.id, END)
+                connect(it, BOTTOM, _caption.id, TOP)
             }
 
             _caption.id.also {
-                connect(it, BOTTOM, PARENT_ID, BOTTOM)
-                connect(it, START, _title.id, START)
                 connect(it, TOP, _title.id, BOTTOM)
+                connect(it, START, _title.id, START)
+                connect(it, BOTTOM, PARENT_ID, BOTTOM)
             }
 
             _buttonRight.id.also {
                 connect(it, END, PARENT_ID, END)
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
+                setMargin(it, END, dimenSpacingSmall)
             }
 
             _buttonLeft.id.also {
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
                 connect(it, END, _buttonRight.id, START)
+                setMargin(it, END, dimenSpacing)
             }
 
             createVerticalChain(
@@ -406,8 +424,9 @@ open class ListItem : LinearLayout {
         _buttonLeft.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
     }
 
-    fun setLeftButtonBackgroundTintColor(@ColorInt color: Int) {
-        _buttonLeft.backgroundTintList = ColorStateList.valueOf(color)
+    fun setLeftButtonBackgroundTintColor(@ColorRes colorRes: Int) {
+        _buttonLeft.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
     fun setOnLeftButtonClickListener(onLeftButtonClickListener: () -> Unit) {
@@ -419,8 +438,9 @@ open class ListItem : LinearLayout {
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
-    fun setRightButtonBackgroundTintColor(@ColorInt color: Int) {
-        _buttonRight.backgroundTintList = ColorStateList.valueOf(color)
+    fun setRightButtonBackgroundTintColor(@ColorRes colorRes: Int) {
+        _buttonRight.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
     fun setRightButtonDrawable(@DrawableRes drawableRes: Int) {

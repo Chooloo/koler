@@ -15,6 +15,9 @@ abstract class ListAdapter<ItemType>(
     private var _data: ListData<ItemType> = ListData()
     private var _onItemClickListener: (item: ItemType) -> Unit = {}
     private var _onItemLongClickListener: (item: ItemType) -> Unit = {}
+    private var _onItemLeftButtonClickListener: (item: ItemType) -> Unit = {}
+    private var _onItemRightButtonClickListener: (item: ItemType) -> Unit = {}
+
 
     var titleFilter: String?
         get() = _titleFilter
@@ -38,16 +41,18 @@ abstract class ListAdapter<ItemType>(
         holder.listItem.apply {
             headerText = getHeader(position)
 
-            setOnClickListener {
-                _onItemClickListener.invoke(dataItem)
-            }
+            setOnClickListener { _onItemClickListener.invoke(dataItem) }
+            setOnLeftButtonClickListener { _onItemLeftButtonClickListener.invoke(dataItem) }
+            setOnRightButtonClickListener { _onItemRightButtonClickListener.invoke(dataItem) }
             setOnLongClickListener {
                 _onItemLongClickListener.invoke(dataItem)
                 true
             }
+
             component.animations.show(this, false)
 
             onBindListItem(this, dataItem)
+
             _titleFilter?.let { highlightTitleText(it) }
         }
     }
@@ -87,7 +92,16 @@ abstract class ListAdapter<ItemType>(
         _onItemLongClickListener = onItemLongClickListener
     }
 
+    fun setOnItemLeftButtonClickListener(onItemLeftButtonClickListener: (item: ItemType) -> Unit) {
+        _onItemLeftButtonClickListener = onItemLeftButtonClickListener
+    }
+
+    fun setOnItemRightButtonClickListener(onItemRightButtonClickListener: (item: ItemType) -> Unit) {
+        _onItemRightButtonClickListener = onItemRightButtonClickListener
+    }
+
+
+    open fun convertDataToListData(data: List<ItemType>) = ListData(data)
 
     abstract fun onBindListItem(listItem: ListItem, item: ItemType)
-    abstract fun convertDataToListData(data: List<ItemType>): ListData<ItemType>
 }

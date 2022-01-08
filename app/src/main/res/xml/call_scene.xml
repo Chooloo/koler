@@ -25,6 +25,26 @@
             app:layout_constraintTop_toTopOf="parent"
             app:visibilityMode="ignore" />
         <Constraint
+            android:id="@+id/call_image"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_state_text"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_manage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toTopOf="@id/call_actions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_name_text"
+            app:layout_constraintVertical_bias="0.0"
+            app:visibilityMode="ignore" />
+        <Constraint
             android:id="@+id/call_answer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,6 +82,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:visibilityMode="ignore" />
         <Constraint
+            android:id="@+id/call_image"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_state_text"
+            app:visibilityMode="ignore" />
+        <Constraint
             android:id="@+id/call_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,6 +98,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_manage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toTopOf="@id/call_actions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_name_text"
+            app:layout_constraintVertical_bias="0.0"
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_reject_button"

@@ -90,7 +90,7 @@
     <!--endregion-->
 
     <!--region bottom dialog -->
-    <style name="Koler.BottomDialog" />
+    <style name="Koler.BottomDialog"/>
 
     <style name="Koler.BottomDialog.BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
         <item name="shapeAppearanceOverlay">@style/Koler.BottomDialog.ShapeAppearanceOverlay</item>
@@ -98,6 +98,7 @@
     </style>
 
     <style name="Koler.BottomDialog.ShapeAppearanceOverlay">
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="cornerSizeTopRight">@dimen/corner_radius</item>
         <item name="cornerSizeTopLeft">@dimen/corner_radius</item>
         <item name="cornerFamily">rounded</item>
@@ -212,7 +213,7 @@
     </style>
 
     <style name="Koler.Bottom.Image">
-        <item name="android:src">@drawable/ic_person_black_24dp</item>
+        <item name="android:src">@drawable/round_person_24</item>
     </style>
 
     <!--region shape appearance -->

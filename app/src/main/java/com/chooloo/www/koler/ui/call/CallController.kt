@@ -47,6 +47,8 @@ class CallController<V : CallContract.View>(view: V) :
                 callAudios.audioRoute?.let(this@CallController::onAudioRouteChanged)
             }
         }
+
+        view.isManageEnabled = false
     }
 
     override fun onStop() {
@@ -180,6 +182,7 @@ class CallController<V : CallContract.View>(view: V) :
         }
 
         view.isHoldActivated = call.isHolding
+        view.isManageEnabled = call.isConference
         view.isHoldEnabled = call.isCapable(CAPABILITY_HOLD)
         view.isMuteEnabled = call.isCapable(CAPABILITY_MUTE)
         view.isSwapEnabled = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
@@ -199,7 +202,7 @@ class CallController<V : CallContract.View>(view: V) :
         }
     }
 
-    override fun onAudioRouteSelected(audioRoute: AudioRoute) {
-
+    override fun onManageClick() {
+        component.calls.mainCall?.children?.let { view.showCallsManager(it) }
     }
 }

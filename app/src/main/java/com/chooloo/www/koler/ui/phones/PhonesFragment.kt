@@ -19,6 +19,7 @@ class PhonesFragment :
         super.onSetup()
     }
 
+
     companion object {
         fun newInstance(contactId: Long? = null) = PhonesFragment().apply {
             arguments = Bundle().apply {

@@ -42,7 +42,7 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
         _onItemsChangedListener = onItemsChangedListener
     }
 
-    private fun refreshData() {
+    protected fun refreshData() {
         fetchData { items, hasPermissions ->
             view.setEmptyReason(if (hasPermissions) noResultsTextRes else noPermissionsTextRes)
             adapter.items = items

@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor
@@ -33,7 +34,7 @@ class AnimationInteractorImpl(
     }
 
     override fun show(view: View, ifGone: Boolean) {
-        if (view.visibility == VISIBLE && ifGone) {
+        if (view.isVisible && ifGone) {
             return
         }
         view.visibility = VISIBLE

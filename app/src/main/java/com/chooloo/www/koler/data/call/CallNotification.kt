@@ -92,7 +92,7 @@ class CallNotification(
 
     private val _hangupAction by lazy {
         NotificationCompat.Action(
-            R.drawable.ic_call_end_black_24dp,
+            R.drawable.round_call_end_24,
             component.strings.getString(R.string.action_hangup),
             getCallPendingIntent(ACTION_HANGUP, 1)
         )
