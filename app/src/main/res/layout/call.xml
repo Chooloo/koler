@@ -8,6 +8,13 @@
     app:layoutDescription="@xml/call_scene"
     tools:context=".ui.call.CallActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/call_middle_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
     <!-- banner -->
     <com.chooloo.www.chooloolib.ui.widgets.BannerTextView
         android:id="@+id/call_banner"
@@ -57,10 +64,6 @@
         style="@style/Koler.Call.Text.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_image"
         tools:text="John Baba" />
 
     <!-- conference manage button -->
