@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.callitems
 
+import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.koler.adapter.CallItemsAdapter
-import com.chooloo.www.koler.data.call.Call
-import com.chooloo.www.koler.ui.list.ListController
+import com.chooloo.www.chooloolib.ui.list.ListController
 
 class CallItemsController<V : CallItemsContract.View>(view: V) :
     ListController<Call, V>(view),

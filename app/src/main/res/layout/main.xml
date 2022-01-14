@@ -7,7 +7,7 @@
     app:layoutDescription="@xml/main_scene">
 
     <!-- menu button -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_menu_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,13 +19,13 @@
         app:icon="@drawable/ic_more_vert_black_24dp" />
 
     <!-- tabs -->
-    <com.chooloo.www.koler.ui.widgets.Tabs
+    <com.chooloo.www.chooloolib.ui.widgets.Tabs
         android:id="@+id/main_tabs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <!-- search bar -->
-    <com.chooloo.www.koler.ui.widgets.SearchBar
+    <com.chooloo.www.chooloolib.ui.widgets.SearchBar
         android:id="@+id/main_search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!-- dialer button -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_dialpad_button"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"

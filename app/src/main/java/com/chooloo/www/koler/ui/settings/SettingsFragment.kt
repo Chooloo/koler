@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.settings
 
 import android.view.MenuItem
+import com.chooloo.www.chooloolib.ui.base.BaseMenuFragment
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.ui.base.BaseMenuFragment
 
 class SettingsFragment : BaseMenuFragment(), SettingsContract.View {
     private val controller by lazy { SettingsController(this) }

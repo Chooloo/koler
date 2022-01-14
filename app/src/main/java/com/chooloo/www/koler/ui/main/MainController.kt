@@ -1,10 +1,10 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
+import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.ui.base.BaseController
-import com.chooloo.www.koler.ui.contacts.ContactsFragment
-import com.chooloo.www.koler.ui.recents.RecentsFragment
+import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
+import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import java.net.URLDecoder
 
 class MainController<V : MainContract.View>(view: V) :

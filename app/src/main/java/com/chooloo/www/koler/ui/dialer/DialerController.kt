@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.dialer
 
 import android.view.KeyEvent.KEYCODE_1
-import com.chooloo.www.koler.data.account.ContactAccount
-import com.chooloo.www.koler.ui.dialpad.DialpadController
+import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.ui.dialpad.DialpadController
 
 class DialerController<V : DialerContract.View>(view: V) :
     DialpadController<V>(view),

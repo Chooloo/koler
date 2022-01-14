@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- The Dialpad View (the whole view, including the edit text) -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:id="@+id/dialpad_suggestions_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/dialpad_suggestions_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <com.chooloo.www.chooloolib.ui.widgets.DialpadEditText
+        android:id="@+id/dialpad_edit_text"
+        style="@style/Koler.Text.Headline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_spacing"
+        android:minWidth="200dp"
+        app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialpad_suggestions_scroll_view"
+        tools:text="01231293" />
+
+    <TableLayout
+        android:id="@+id/dialpad_keys_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_spacing"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toTopOf="@id/dialpad_button_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TableRow>
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_1"
+                app:digit="1" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_2"
+                app:digit="2" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_3"
+                app:digit="3" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_4"
+                app:digit="4" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_5"
+                app:digit="5" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_6"
+                app:digit="6" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_7"
+                app:digit="7" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_8"
+                app:digit="8" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_9"
+                app:digit="9" />
+        </TableRow>
+
+        <TableRow>
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_star"
+                app:digit="*" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_0"
+                app:digit="0" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+                android:id="@+id/key_hex"
+                app:digit="#" />
+        </TableRow>
+    </TableLayout>
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/dialpad_button_call"
+        style="@style/Koler.IconButton.Big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_spacing"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_call_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/dialpad_button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?colorSurface"
+        android:visibility="gone"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_arrow_back_ios_24px"
+        app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintStart_toEndOf="@id/dialpad_button_call"
+        app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
+        tools:visibility="visible" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/dialpad_button_add_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?colorSurface"
+        android:visibility="gone"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_person_add_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
+        app:layout_constraintEnd_toStartOf="@id/dialpad_button_call"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dialpad_button_call"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.ui.dialer
 
-import com.chooloo.www.koler.data.account.ContactAccount
-import com.chooloo.www.koler.ui.dialpad.DialpadContract
+import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.ui.dialpad.DialpadContract
 
 class DialerContract : DialpadContract {
     interface View : DialpadContract.View {

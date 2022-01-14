@@ -4,9 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
-import com.chooloo.www.koler.ui.contacts.ContactsFragment
-import com.chooloo.www.koler.ui.contactsuggestions.ContactsSuggestionsFragment
-import com.chooloo.www.koler.ui.dialpad.DialpadFragment
+import com.chooloo.www.chooloolib.ui.contactsuggestions.ContactsSuggestionsFragment
+import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 
 class DialerFragment : DialpadFragment(), DialerContract.View {
     private val _suggestionsFragment by lazy { ContactsSuggestionsFragment.newInstance() }

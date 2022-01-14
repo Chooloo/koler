@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.ui.callitems
 
-import com.chooloo.www.koler.data.call.Call
-import com.chooloo.www.koler.ui.list.ListContract
+import com.chooloo.www.chooloolib.data.call.Call
+import com.chooloo.www.chooloolib.ui.list.ListContract
 
 interface CallItemsContract : ListContract {
     interface View : ListContract.View<Call> {

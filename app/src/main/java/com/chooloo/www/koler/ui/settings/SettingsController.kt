@@ -1,9 +1,10 @@
 package com.chooloo.www.koler.ui.settings
 
 import android.view.MenuItem
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
+import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
-import com.chooloo.www.koler.ui.base.BaseController
+import com.chooloo.www.koler.ui.main.MainActivity
 
 class SettingsController<V : SettingsContract.View>(view: V) :
     BaseController<V>(view),
@@ -30,7 +31,7 @@ class SettingsController<V : SettingsContract.View>(view: V) :
                     component.colors.getColor(R.color.purple_background) -> PURPLE
                     else -> DEFAULT
                 }
-                component.navigations.goToMainActivity()
+                component.navigations.goToActivity(MainActivity::class.java)
             })
             R.id.menu_main_compact_mode -> component.dialogs.askForCompact {
                 component.preferences.isCompact = it

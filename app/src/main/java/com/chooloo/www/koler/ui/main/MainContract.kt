@@ -1,8 +1,8 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
-import com.chooloo.www.koler.ui.base.BaseContract
-import com.chooloo.www.koler.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.ui.base.BaseContract
+import com.chooloo.www.chooloolib.ui.base.BaseFragment
 
 interface MainContract : BaseContract {
     interface View : BaseContract.View {

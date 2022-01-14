@@ -6,7 +6,7 @@
     app:layoutDescription="@xml/call_actions_scene">
 
     <!-- mute -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_mute"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- speaker -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_speaker"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- hold -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_hold"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- add call -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_add_call"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
 
     <!-- keypad -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_keypad"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
 
     <!-- swap -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_swap"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- merge -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_merge"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"

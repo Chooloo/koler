@@ -4,11 +4,11 @@ import android.content.Intent
 import android.view.MotionEvent
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.chooloo.www.chooloolib.ui.base.BaseActivity
+import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.ui.base.BottomFragment
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.MainBinding
-import com.chooloo.www.koler.ui.base.BaseActivity
-import com.chooloo.www.koler.ui.base.BaseFragment
-import com.chooloo.www.koler.ui.base.BottomFragment
 import com.chooloo.www.koler.ui.dialer.DialerFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 

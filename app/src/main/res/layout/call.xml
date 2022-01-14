@@ -9,7 +9,7 @@
     tools:context=".ui.call.CallActivity">
 
     <!-- banner -->
-    <com.chooloo.www.koler.ui.widgets.BannerTextView
+    <com.chooloo.www.chooloolib.ui.widgets.BannerTextView
         android:id="@+id/call_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         tools:text="John Baba" />
 
     <!-- conference manage button -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_manage_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content" />
 
     <!-- answer button -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_answer_button"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
         app:icon="@drawable/ic_call_black_24dp" />
 
     <!-- hangup button -->
-    <com.chooloo.www.koler.ui.widgets.IconButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_reject_button"
         style="@style/Koler.IconButton.Big"
         android:layout_width="wrap_content"

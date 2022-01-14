@@ -1,9 +1,9 @@
 package com.chooloo.www.koler.ui.callitems
 
 import android.view.View
+import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.koler.adapter.CallItemsAdapter
-import com.chooloo.www.koler.data.call.Call
-import com.chooloo.www.koler.ui.list.ListFragment
+import com.chooloo.www.chooloolib.ui.list.ListFragment
 
 class CallItemsFragment : ListFragment<Call, CallItemsAdapter>(), CallItemsContract.View {
     override val controller by lazy { CallItemsController(this) }
