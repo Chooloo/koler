@@ -49,8 +49,8 @@ class Tabs : LinearLayout {
     ) : super(context, attrs, defStyleRes) {
         orientation = HORIZONTAL
 
-        context.obtainStyledAttributes(attrs, R.styleable.Koler_Tabs, defStyleRes, 0).also {
-            val obtainedSize = it.getDimensionPixelSize(R.styleable.Koler_Tabs_textSize, 0)
+        context.obtainStyledAttributes(attrs, R.styleable.Chooloo_Tabs, defStyleRes, 0).also {
+            val obtainedSize = it.getDimensionPixelSize(R.styleable.Chooloo_Tabs_textSize, 0)
             _customTextSize = if (obtainedSize == 0) null else obtainedSize
         }.recycle()
     }

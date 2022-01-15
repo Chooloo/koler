@@ -12,6 +12,8 @@ import com.chooloo.www.chooloolib.databinding.MenuBinding
 
 @SuppressLint("RestrictedApi")
 open class BaseMenuFragment : BaseFragment() {
+    override val contentView by lazy { binding.root }
+
     private var _onMenuItemClickListener: (MenuItem) -> Unit = {}
     private val adapter by lazy { MenuAdapter(component) }
     private val binding by lazy { MenuBinding.inflate(layoutInflater) }
@@ -26,14 +28,13 @@ open class BaseMenuFragment : BaseFragment() {
         }
     }
 
-    override val contentView by lazy { binding.root }
-
 
     override fun onSetup() {
         adapter.setOnItemClickListener {
             _onMenuItemClickListener.invoke(it)
             onMenuItemClick(it)
         }
+
         binding.apply {
             menuRecyclerView.adapter = adapter
             menuTitle.text = title
@@ -49,9 +50,9 @@ open class BaseMenuFragment : BaseFragment() {
         menu.visibleItems.toList().let { adapter.items = it }
     }
 
-    fun setMenuRes(menuRes: Int) {
+    fun setMenuResList(menuResList: List<Int>) {
         setMenu(MenuBuilder(baseActivity).apply {
-            MenuInflater(baseActivity).inflate(menuRes, this)
+            menuResList.forEach { MenuInflater(baseActivity).inflate(it, this) }
         })
     }
 

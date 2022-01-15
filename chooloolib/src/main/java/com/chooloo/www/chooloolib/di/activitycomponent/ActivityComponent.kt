@@ -1,5 +1,7 @@
 package com.chooloo.www.chooloolib.di.activitycomponent
 
+import android.content.pm.PackageManager
+import androidx.core.content.PackageManagerCompat
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelStoreOwner

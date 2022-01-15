@@ -3,6 +3,7 @@ package com.chooloo.www.kontacts.ui.main
 import com.chooloo.www.chooloolib.data.account.ContactAccount
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
+import com.chooloo.www.chooloolib.ui.settings.SettingsFragment
 import com.chooloo.www.kontacts.R
 
 class MainController<V : MainContract.View>(view: V) :
@@ -26,6 +27,7 @@ class MainController<V : MainContract.View>(view: V) :
     }
 
     override fun onSettingsClick() {
+        component.prompts.showFragment(SettingsFragment.newInstance())
     }
 
     override fun onAddContactClick() {

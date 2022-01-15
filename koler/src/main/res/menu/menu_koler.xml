@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_koler_ask_sim"
+        android:icon="@drawable/round_sim_card_20"
+        android:title="@string/pref_title_ask_sim" />
+
+    <item
+        android:id="@+id/menu_koler_default_page"
+        android:icon="@drawable/round_view_carousel_20"
+        android:title="@string/pref_title_default_page" />
+</menu>

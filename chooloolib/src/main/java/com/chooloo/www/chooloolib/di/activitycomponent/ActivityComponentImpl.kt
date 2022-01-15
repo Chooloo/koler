@@ -20,9 +20,11 @@ open class ActivityComponentImpl(
         CompositeDisposable()
     }
 
+
     override val fragmentManager by lazy {
         activity.supportFragmentManager
     }
+
 
     override val lifecycleOwner by lazy {
         activity

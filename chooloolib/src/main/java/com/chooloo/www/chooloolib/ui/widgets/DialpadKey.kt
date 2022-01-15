@@ -52,8 +52,8 @@ class DialpadKey : LinearLayout {
         orientation = VERTICAL
         layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         background = context.getSelectableItemBackgroundBorderlessDrawable()
-        digit = context.obtainStyledAttributes(attrs, R.styleable.Koler_DialpadKey)
-            .getString(R.styleable.Koler_DialpadKey_digit)
+        digit = context.obtainStyledAttributes(attrs, R.styleable.Chooloo_DialpadKey)
+            .getString(R.styleable.Chooloo_DialpadKey_digit)
 
         setPadding(context.getSizeInDp(7))
     }

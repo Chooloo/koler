@@ -235,12 +235,12 @@ open class ListItem : LinearLayout {
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         }
 
-        context.obtainStyledAttributes(attrs, R.styleable.Koler_ListItem, 0, 0).also {
-            titleText = it.getString(R.styleable.Koler_ListItem_title)
-            headerText = it.getString(R.styleable.Koler_ListItem_header)
-            captionText = it.getString(R.styleable.Koler_ListItem_caption)
-            imageDrawable = it.getDrawable(R.styleable.Koler_ListItem_src)
-            isCompact = it.getBoolean(R.styleable.Koler_ListItem_compact, false)
+        context.obtainStyledAttributes(attrs, R.styleable.Chooloo_ListItem, 0, 0).also {
+            titleText = it.getString(R.styleable.Chooloo_ListItem_title)
+            headerText = it.getString(R.styleable.Chooloo_ListItem_header)
+            captionText = it.getString(R.styleable.Chooloo_ListItem_caption)
+            imageDrawable = it.getDrawable(R.styleable.Chooloo_ListItem_src)
+            isCompact = it.getBoolean(R.styleable.Chooloo_ListItem_compact, false)
         }
 
         _personLayout.apply {

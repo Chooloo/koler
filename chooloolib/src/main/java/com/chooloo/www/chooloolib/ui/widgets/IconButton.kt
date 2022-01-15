@@ -37,9 +37,9 @@ class IconButton : FloatingActionButton {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        context.obtainStyledAttributes(attrs, R.styleable.Koler_IconButton, defStyleRes, 0).also {
-            _iconDefault = it.getResourceId(R.styleable.Koler_IconButton_icon, NO_ID)
-            _iconActivated = it.getResourceId(R.styleable.Koler_IconButton_activatedIcon, NO_ID)
+        context.obtainStyledAttributes(attrs, R.styleable.Chooloo_IconButton, defStyleRes, 0).also {
+            _iconDefault = it.getResourceId(R.styleable.Chooloo_IconButton_icon, NO_ID)
+            _iconActivated = it.getResourceId(R.styleable.Chooloo_IconButton_activatedIcon, NO_ID)
         }.recycle()
 
         elevation = 0f

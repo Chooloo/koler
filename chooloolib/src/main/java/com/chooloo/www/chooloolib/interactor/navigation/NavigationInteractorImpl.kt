@@ -29,7 +29,7 @@ class NavigationInteractorImpl(
     private val strings: StringInteractor,
     private val telecomManager: TelecomManager,
     private val permissions: PermissionsInteractor,
-    private val preferences: PreferencesInteractor
+    private val preferences: PreferencesInteractor,
 ) :
     BaseObservable<NavigationInteractor.Listener>(),
     NavigationInteractor {
@@ -76,6 +76,10 @@ class NavigationInteractorImpl(
 
     override fun manageBlockedNumber() {
         activity.startActivity(telecomManager.createManageBlockedNumbersIntent(), null)
+    }
+
+    override fun goToLauncherActivity() {
+        activity.startActivity(activity.packageManager.getLaunchIntentForPackage(activity.packageName))
     }
 
     override fun sendSMS(number: String?) {

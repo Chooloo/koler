@@ -133,9 +133,7 @@
     <string name="pref_title_email">Email Us</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_sim_select">Sim Selection</string>
-    <string name="pref_title_default_page">Default Page</string>
     <string name="pref_title_block_number">Block Number</string>
-    <string name="pref_title_ask_sim">Should ask for sim</string>
     <string name="pref_title_block_contact">Block Contact</string>
     <string name="pref_title_set_favorite">Set as Favorite</string>
     <string name="pref_title_records_enabled">Record Calls</string>

@@ -13,6 +13,7 @@ interface NavigationInteractor : BaseInteractor<NavigationInteractor.Listener> {
     fun reportBug()
     fun goToAppGithub()
     fun manageBlockedNumber()
+    fun goToLauncherActivity()
     fun sendSMS(number: String?)
     fun addContact(number: String)
     fun viewContact(contactId: Long)
