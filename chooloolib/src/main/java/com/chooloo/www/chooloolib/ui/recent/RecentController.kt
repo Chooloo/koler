@@ -70,15 +70,19 @@ class RecentController<V : RecentContract.View>(view: V) :
         _recent?.let {
             component.phones.lookupAccount(it.number) { account ->
                 account?.contactId?.let { id ->
-                    component.prompts.showFragment(
-                        ContactFragment.newInstance(id)
-                    )
+                    component.prompts.showFragment(ContactFragment.newInstance(id))
                 }
             }
         }
     }
 
     override fun onActionShowHistory() {
-        _recent?.let { component.prompts.showFragment(RecentsFragment.newInstance(it.number)) }
+        _recent?.let {
+            component.prompts.showFragment(RecentsFragment.newInstance(it.number).apply {
+                controller.setOnItemClickListener { recent ->
+                    component.prompts.showFragment(RecentFragment.newInstance(recent.id))
+                }
+            })
+        }
     }
 }

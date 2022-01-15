@@ -8,6 +8,8 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
     BaseController<V>(view),
     ListContract.Controller<ItemType, V> {
 
+    private var _onItemClickListener: (ItemType) -> Unit = {}
+    private var _onItemLongClickListener: (ItemType) -> Unit = {}
     private var _onItemsChangedListener: (List<ItemType>) -> Unit? = {}
     private val _adapterDataObserver = object : RecyclerView.AdapterDataObserver() {
         override fun onChanged() {
@@ -38,6 +40,24 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
         adapter.unregisterAdapterDataObserver(_adapterDataObserver)
     }
 
+    override fun onItemClick(item: ItemType) {
+        super.onItemClick(item)
+        _onItemClickListener.invoke(item)
+    }
+
+    override fun onItemLongClick(item: ItemType) {
+        super.onItemLongClick(item)
+        _onItemLongClickListener.invoke(item)
+    }
+
+    override fun setOnItemClickListener(onItemClickListener: (ItemType) -> Unit) {
+        _onItemClickListener = onItemClickListener
+    }
+
+    override fun setOnItemLongClickListener(onItemLongClickListener: (ItemType) -> Unit) {
+        _onItemLongClickListener = onItemLongClickListener
+    }
+
     override fun setOnItemsChangedListener(onItemsChangedListener: (List<ItemType>) -> Unit?) {
         _onItemsChangedListener = onItemsChangedListener
     }
@@ -54,7 +74,6 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
         view.showEmpty(adapter.items.isEmpty())
         _onItemsChangedListener.invoke(adapter.items)
     }
-
 
     protected open val noResultsIconRes: Int? = null
     protected open val noResultsTextRes: Int? = null

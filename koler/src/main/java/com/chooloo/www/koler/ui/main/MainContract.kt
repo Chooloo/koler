@@ -1,6 +1,8 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
+import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.ui.base.BaseContract
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 
@@ -23,5 +25,7 @@ interface MainContract : BaseContract {
         fun onViewIntent(intent: Intent)
         fun onSearchTextChange(text: String)
         fun onSearchFocusChange(isFocus: Boolean)
+        fun onRecentItemClick(recent: RecentAccount)
+        fun onContactItemClick(contact: ContactAccount)
     }
 }

@@ -21,11 +21,6 @@ class RecentsController<V : RecentsContract.View>(view: V) :
         component.liveDataFactory.allocRecentsProviderLiveData()
     }
 
-
-    override fun onItemClick(item: RecentAccount) {
-        component.prompts.showFragment(RecentFragment.newInstance(item.id))
-    }
-
     override fun applyFilter(filter: String) {
         super.applyFilter(filter)
         try {

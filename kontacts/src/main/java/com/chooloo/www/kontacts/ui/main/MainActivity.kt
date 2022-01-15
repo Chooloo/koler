@@ -20,9 +20,20 @@ class MainActivity : BaseActivity(), MainContract.View {
             binding.mainTabs.headers = value
         }
 
+    private val controller by lazy { MainController(this) }
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
 
     override fun onSetup() {
+        binding.apply {
+            mainMenuButton.setOnClickListener { controller.onSettingsClick() }
+            mainAddContactButton.setOnClickListener { controller.onAddContactClick() }
+            mainSearchBar.apply {
+                setOnTextChangedListener(controller::onSearchTextChange)
+                editText?.setOnFocusChangeListener { _, hasFocus ->
+                    controller.onSearchFocusChange(hasFocus)
+                }
+            }
+        }
     }
 
     override fun showSearching() {
@@ -36,6 +47,6 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun setContactsFragment(contactsFragment: ContactsFragment) {
         supportFragmentManager.beginTransaction()
-            .replace(binding.mainFragmentContainer.id, contactsFragment).commitNow()
+            .replace(binding.mainFragmentContainer.id, contactsFragment).commit()
     }
 }

@@ -28,10 +28,6 @@ open class ContactsController<V : ContactsContract.View>(view: V) :
         }
     }
 
-    override fun onItemClick(item: ContactAccount) {
-        component.prompts.showFragment(ContactFragment.newInstance(item.id))
-    }
-
     override fun fetchData(callback: (List<ContactAccount>, hasPermissions: Boolean) -> Unit) {
         component.permissions.runWithReadContactsPermissions {
             if (it) {

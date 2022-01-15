@@ -1,8 +1,12 @@
 package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
+import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.ui.base.BaseController
+import com.chooloo.www.chooloolib.ui.contact.ContactFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
+import com.chooloo.www.chooloolib.ui.recent.RecentFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.ui.dialer.DialerFragment
@@ -14,15 +18,23 @@ class MainController<V : MainContract.View>(view: V) :
     MainContract.Controller<V> {
 
     private val _fragments by lazy { listOf(_contactsFragment, _recentsFragment) }
-    private val _recentsFragment by lazy { RecentsFragment.newInstance() }
-    private val _contactsFragment by lazy { ContactsFragment.newInstance() }
+    private val _recentsFragment by lazy {
+        RecentsFragment.newInstance().apply {
+            controller.setOnItemClickListener(::onRecentItemClick)
+        }
+    }
+    private val _contactsFragment by lazy {
+        ContactsFragment.newInstance().apply {
+            controller.setOnItemClickListener(::onContactItemClick)
+        }
+    }
 
 
     override fun onStart() {
         super.onStart()
 
         component.permissions.checkDefaultDialer()
-        
+
         view.apply {
             setFragmentsAdapter(_fragments.size, _fragments::get)
             setSearchHint(component.strings.getString(R.string.hint_search_items))
@@ -69,5 +81,13 @@ class MainController<V : MainContract.View>(view: V) :
     }
 
     override fun onPageChange(position: Int) {
+    }
+
+    override fun onRecentItemClick(recent: RecentAccount) {
+        component.prompts.showFragment(RecentFragment.newInstance(recent.id))
+    }
+
+    override fun onContactItemClick(contact: ContactAccount) {
+        component.prompts.showFragment(ContactFragment.newInstance(contact.id))
     }
 }

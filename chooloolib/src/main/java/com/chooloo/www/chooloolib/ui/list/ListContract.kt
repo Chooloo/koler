@@ -19,6 +19,8 @@ interface ListContract : BaseContract {
     interface Controller<ItemType, V : View<ItemType>> : BaseContract.Controller<V> {
         fun onItemClick(item: ItemType) {}
         fun onItemLongClick(item: ItemType) {}
+        fun setOnItemClickListener(onItemClickListener: (ItemType) -> Unit)
+        fun setOnItemLongClickListener(onItemLongClickListener: (ItemType) -> Unit)
         fun setOnItemsChangedListener(onItemsChangedListener: (List<ItemType>) -> Unit? = {})
     }
 }
