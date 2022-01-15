@@ -6,11 +6,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.MainBinding
-import com.chooloo.www.koler.ui.dialer.DialerFragment
-import com.chooloo.www.koler.ui.settings.SettingsFragment
 
 class MainActivity : BaseActivity(), MainContract.View {
     private lateinit var _controller: MainController<MainActivity>
@@ -65,26 +62,11 @@ class MainActivity : BaseActivity(), MainContract.View {
         return super.dispatchTouchEvent(event)
     }
 
-
-    override fun openDialer(text: String?) {
-        BottomFragment(DialerFragment.newInstance(text)).show(
-            supportFragmentManager,
-            DialerFragment.TAG
-        )
-    }
-
     override fun setFragmentsAdapter(count: Int, adapter: (position: Int) -> BaseFragment) {
         binding.mainViewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = count
             override fun createFragment(position: Int) = adapter.invoke(position)
         }
-    }
-
-    override fun openSettings() {
-        BottomFragment(SettingsFragment.newInstance()).show(
-            supportFragmentManager,
-            SettingsFragment.TAG
-        )
     }
 
     override fun showSearching() {

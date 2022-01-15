@@ -2,7 +2,7 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Koler.Call.Layout"
+    style="@style/Chooloo.Call.Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/call_scene"
@@ -28,7 +28,7 @@
     <!-- call timer -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/call_time_text"
-        style="@style/Koler.Call.Text.Time"
+        style="@style/Chooloo.Call.Text.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
@@ -40,7 +40,7 @@
     <!-- call status -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/call_state_text"
-        style="@style/Koler.Call.Text.Status"
+        style="@style/Chooloo.Call.Text.Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
@@ -54,14 +54,14 @@
         android:id="@+id/call_image"
         android:layout_width="@dimen/image_size_big"
         android:layout_height="@dimen/image_size_big"
-        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
+        app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
         tools:src="@drawable/ic_account_circle_black_24dp"
         tools:visibility="visible" />
 
     <!-- caller name -->
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/call_name_text"
-        style="@style/Koler.Call.Text.Name"
+        style="@style/Chooloo.Call.Text.Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
@@ -90,7 +90,7 @@
     <!-- answer button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_answer_button"
-        style="@style/Koler.IconButton.Big"
+        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_background"
@@ -101,7 +101,7 @@
     <!-- hangup button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_reject_button"
-        style="@style/Koler.IconButton.Big"
+        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_big"

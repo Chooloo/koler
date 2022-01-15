@@ -11,10 +11,8 @@ interface MainContract : BaseContract {
         var headers: Array<String>
 
         fun checkIntent()
-        fun openSettings()
         fun showSearching()
         fun setSearchHint(hint: String)
-        fun openDialer(text: String? = null)
         fun setFragmentsAdapter(count: Int, adapter: (position: Int) -> BaseFragment)
     }
 

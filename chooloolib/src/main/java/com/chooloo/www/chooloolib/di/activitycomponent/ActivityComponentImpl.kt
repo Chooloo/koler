@@ -4,21 +4,25 @@ import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractorImpl
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractorImpl
+import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractorImpl
 import com.chooloo.www.chooloolib.interactor.proximity.ProximityInteractorImpl
 import com.chooloo.www.chooloolib.interactor.screen.ScreenInteractorImpl
 import com.chooloo.www.chooloolib.interactor.sim.SimInteractorImpl
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import io.reactivex.disposables.CompositeDisposable
 
-class ActivityComponentImpl(
+open class ActivityComponentImpl(
     private val activity: BaseActivity
 ) : ActivityComponent {
-    private val contextComponent get() = (activity.applicationContext as BaseApp).component
+    protected open val contextComponent get() = (activity.applicationContext as BaseApp).component
 
     override val disposables by lazy {
         CompositeDisposable()
     }
 
+    override val fragmentManager by lazy {
+        activity.supportFragmentManager
+    }
 
     override val lifecycleOwner by lazy {
         activity
@@ -39,7 +43,7 @@ class ActivityComponentImpl(
     }
 
     override val dialogs by lazy {
-        DialogsInteractorImpl(activity)
+        DialogsInteractorImpl(activity, prompts)
     }
 
     override val screens by lazy {
@@ -48,6 +52,10 @@ class ActivityComponentImpl(
             keyguardManager,
             inputMethodManager
         )
+    }
+
+    override val prompts by lazy {
+        PromptInteractorImpl(fragmentManager)
     }
 
     override val proximities by lazy {

@@ -23,7 +23,6 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract
     override fun onAttach(context: Context) {
         super.onAttach(context)
         assert(context is BaseActivity)
-        baseActivity.onAttachFragment(this)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

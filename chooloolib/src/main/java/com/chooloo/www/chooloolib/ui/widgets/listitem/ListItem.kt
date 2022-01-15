@@ -164,7 +164,7 @@ open class ListItem : LinearLayout {
                 setMargins(dimenSpacingSmall, dimenSpacing, dimenSpacingBig, dimenSpacingSmall)
             }
 
-            setTextAppearance(R.style.Koler_Text_Subtitle2)
+            setTextAppearance(R.style.Chooloo_Text_Subtitle2)
         }
 
         _title = AppCompatTextView(context, attrs, defStyleRes).apply {
@@ -174,7 +174,7 @@ open class ListItem : LinearLayout {
                 setMargins(dimenSpacing - 5, 0, dimenSpacing, 0)
             }
 
-            setTextAppearance(R.style.Koler_Text_Headline4)
+            setTextAppearance(R.style.Chooloo_Text_Headline4)
         }
 
         _caption = AppCompatTextView(context, attrs, defStyleRes).apply {
@@ -182,7 +182,7 @@ open class ListItem : LinearLayout {
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
-            setTextAppearance(R.style.Koler_Text_Caption)
+            setTextAppearance(R.style.Chooloo_Text_Caption)
             setPadding(0, context.getSizeInDp(2), 0, 0)
         }
 

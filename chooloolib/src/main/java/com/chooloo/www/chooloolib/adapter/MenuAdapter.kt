@@ -14,7 +14,7 @@ class MenuAdapter(component: ActivityComponent) : ListAdapter<MenuItem>(componen
     override fun onBindListItem(listItem: ListItem, item: MenuItem) {
         listItem.apply {
             setBackgroundColor(Color.TRANSPARENT)
-            setTitleTextAppearance(R.style.Koler_Text_Subtitle1)
+            setTitleTextAppearance(R.style.Chooloo_Text_Subtitle1)
             setImageTint(component.colors.getColor(R.color.color_opposite))
             setTitleColor(component.colors.getColor(R.color.color_opposite))
 

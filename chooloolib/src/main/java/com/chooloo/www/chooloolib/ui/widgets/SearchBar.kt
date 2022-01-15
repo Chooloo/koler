@@ -50,7 +50,7 @@ class SearchBar : TextInputLayout {
             filters =
                 arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { char -> char.isLetterOrDigit() || char == ' ' } })
 
-            setTextAppearance(R.style.Koler_Text_Subtitle2)
+            setTextAppearance(R.style.Chooloo_Text_Subtitle2)
             setPadding(spacingSmall, 0, spacingSmall, 0)
             setHintTextColor(ColorStateList.valueOf(colorForeground))
             setTextColor(context.getAttrColor(R.attr.colorOnSurface))

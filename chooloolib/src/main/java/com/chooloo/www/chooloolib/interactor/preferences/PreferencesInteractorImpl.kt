@@ -4,7 +4,6 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.RecordFormat
 import com.chooloo.www.chooloolib.util.PreferencesManager
 
 class PreferencesInteractorImpl(
@@ -18,15 +17,6 @@ class PreferencesInteractorImpl(
         )
         set(value) {
             preferencesManager.putBoolean(R.string.pref_key_ask_sim, value)
-        }
-
-    override var isRecords: Boolean
-        get() = preferencesManager.getBoolean(
-            R.string.pref_key_records_enabled,
-            R.bool.pref_default_value_records_enabled
-        )
-        set(value) {
-            preferencesManager.putBoolean(R.string.pref_key_records_enabled, value)
         }
 
     override var isCompact: Boolean
@@ -57,11 +47,5 @@ class PreferencesInteractorImpl(
         get() = AccentTheme.fromKey(preferencesManager.getString(R.string.pref_key_color))
         set(value) {
             preferencesManager.putString(R.string.pref_key_color, value.key)
-        }
-
-    override var recordFormat: RecordFormat
-        get() = RecordFormat.fromKey(preferencesManager.getString(R.string.pref_key_record_format))
-        set(value) {
-            preferencesManager.putString(R.string.pref_key_record_format, value.key)
         }
 }

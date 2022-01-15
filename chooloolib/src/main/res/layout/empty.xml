@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/default_spacing_small"
         android:text="@string/error_no_results"
-        android:textAppearance="@style/Koler.Text.Headline4"
+        android:textAppearance="@style/Chooloo.Text.Headline4"
         android:textColor="@color/color_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

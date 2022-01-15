@@ -2,6 +2,8 @@ package com.chooloo.www.chooloolib.ui.recent
 
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.base.BaseController
+import com.chooloo.www.chooloolib.ui.contact.ContactFragment
+import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.chooloolib.util.getElapsedTimeString
 import java.util.*
 
@@ -21,7 +23,7 @@ class RecentController<V : RecentContract.View>(view: V) :
         component.permissions.runWithDefaultDialer {
             if (component.blocked.isNumberBlocked(_recent!!.number)) {
                 recentCaptions.add(
-                    component.strings.getString(R.string.error_blocked).toUpperCase(Locale.ROOT)
+                    component.strings.getString(R.string.error_blocked).uppercase(Locale.ROOT)
                 )
             }
         }
@@ -67,12 +69,16 @@ class RecentController<V : RecentContract.View>(view: V) :
     override fun onActionOpenContact() {
         _recent?.let {
             component.phones.lookupAccount(it.number) { account ->
-                account?.contactId?.let(view::openContactView)
+                account?.contactId?.let { id ->
+                    component.prompts.showFragment(
+                        ContactFragment.newInstance(id)
+                    )
+                }
             }
         }
     }
 
     override fun onActionShowHistory() {
-        _recent?.let { view.openHistoryView(it.number) }
+        _recent?.let { component.prompts.showFragment(RecentsFragment.newInstance(it.number)) }
     }
 }

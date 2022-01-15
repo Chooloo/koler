@@ -20,12 +20,6 @@ class RecentsFragment :
         super.onSetup()
     }
 
-    override fun openRecent(recent: RecentAccount) {
-        BottomFragment(RecentFragment.newInstance(recent.id)).show(
-            baseActivity.supportFragmentManager,
-            RecentFragment.TAG
-        )
-    }
 
     companion object {
         fun newInstance(filter: String? = null) = RecentsFragment().apply {

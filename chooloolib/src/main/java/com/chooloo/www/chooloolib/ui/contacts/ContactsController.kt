@@ -3,6 +3,7 @@ package com.chooloo.www.chooloolib.ui.contacts
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.ContactsAdapter
 import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.ui.contact.ContactFragment
 import com.chooloo.www.chooloolib.ui.list.ListController
 
 open class ContactsController<V : ContactsContract.View>(view: V) :
@@ -28,7 +29,7 @@ open class ContactsController<V : ContactsContract.View>(view: V) :
     }
 
     override fun onItemClick(item: ContactAccount) {
-        view.openContact(item)
+        component.prompts.showFragment(ContactFragment.newInstance(item.id))
     }
 
     override fun fetchData(callback: (List<ContactAccount>, hasPermissions: Boolean) -> Unit) {

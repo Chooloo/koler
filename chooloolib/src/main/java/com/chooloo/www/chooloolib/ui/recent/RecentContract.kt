@@ -11,9 +11,6 @@ interface RecentContract : BaseContract {
         var recentImage: Drawable?
         var isContactVisible: Boolean
         var isAddContactVisible: Boolean
-
-        fun openHistoryView(number: String)
-        fun openContactView(contactId: Long)
     }
 
     interface Controller<V : View> : BaseContract.Controller<V> {

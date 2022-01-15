@@ -22,7 +22,7 @@ class BannerTextView : AppCompatTextView {
         background = ContextCompat.getDrawable(context, R.drawable.notification_banner_background)
         background.alpha = 50
 
-        setTextAppearance(R.style.Koler_Text_Headline4)
+        setTextAppearance(R.style.Chooloo_Text_Headline4)
         val padding = resources.getDimensionPixelSize(R.dimen.default_spacing_small) + 10
         setPadding(padding, padding + 20, padding, padding)
     }

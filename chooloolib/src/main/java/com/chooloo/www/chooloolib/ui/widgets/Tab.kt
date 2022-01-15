@@ -27,7 +27,7 @@ class Tab : AppCompatTextView {
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
         textSize = 28f
-        text = text.toString().capitalize(Locale.ROOT)
+        text = text.toString().replaceFirstChar { it.uppercase(Locale.ROOT) }
         typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
 
         setTextColor(enabledColor)

@@ -5,13 +5,18 @@ import android.app.KeyguardManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.TELEPHONY_SUBSCRIPTION_SERVICE
+import android.content.Context.VIBRATOR_MANAGER_SERVICE
 import android.media.AudioManager
+import android.os.Build
 import android.os.PowerManager
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationManagerCompat
+import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactoryImpl
 import com.chooloo.www.chooloolib.interactor.animation.AnimationInteractorImpl
 import com.chooloo.www.chooloolib.interactor.audio.AudioInteractorImpl
@@ -28,7 +33,7 @@ import com.chooloo.www.chooloolib.interactor.string.StringInteractorImpl
 import com.chooloo.www.chooloolib.util.PreferencesManager
 
 open class ContextComponentImpl(
-    internal val application: Application
+    internal val application: BaseApp
 ) : ContextComponent {
     override val liveDataFactory by lazy {
         LiveDataFactoryImpl(application)

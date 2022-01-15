@@ -6,7 +6,7 @@
 
     <com.l4digital.fastscroll.FastScrollView
         android:id="@+id/items_scroll_view"
-        style="@style/Koler.FastScrollView"
+        style="@style/Chooloo.FastScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

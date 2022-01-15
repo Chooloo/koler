@@ -63,21 +63,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
     }
 
 
-    override fun openHistoryView(number: String) {
-        BottomFragment(RecentsFragment.newInstance(number)).show(
-            baseActivity.supportFragmentManager,
-            ContactFragment.TAG
-        )
-    }
-
-    override fun openContactView(contactId: Long) {
-        BottomFragment(ContactFragment.newInstance(contactId)).show(
-            baseActivity.supportFragmentManager,
-            ContactFragment.TAG
-        )
-    }
-
-
     companion object {
         const val TAG = "recent_fragment"
         const val ARG_RECENT_ID = "recent_id"

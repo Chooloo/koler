@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.interactor.animation
 
 import android.animation.Animator
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.animation.AlphaAnimation
@@ -53,7 +54,7 @@ class AnimationInteractorImpl(
                 repeatMode = Animation.REVERSE
                 repeatCount = Animation.INFINITE
             })
-            Handler().postDelayed({ view.clearAnimation() }, totalDuration)
+            Handler(Looper.getMainLooper()).postDelayed({ view.clearAnimation() }, totalDuration)
         }
     }
 
@@ -64,7 +65,7 @@ class AnimationInteractorImpl(
         if (_isEnabled) {
             YoYo.with(Techniques.SlideOutUp)
                 .duration(250)
-                .onEnd { animator: Animator? ->
+                .onEnd {
                     view.visibility = if (goneOrInvisible) View.GONE else View.INVISIBLE
                 }
                 .playOn(view)

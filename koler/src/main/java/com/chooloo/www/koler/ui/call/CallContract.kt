@@ -28,13 +28,10 @@ interface CallContract : BaseContract {
         var isBluetoothActivated: Boolean
 
 
-        fun showDialpad()
         fun showActiveCallUI()
-        fun showAddCallDialog()
         fun showIncomingCallUI()
         fun showMultiActiveCallUI()
         fun setElapsedTime(duration: Long?)
-        fun showCallsManager(calls: List<Call>)
 
         fun showHoldingBanner(number: String)
         fun hideHoldingBanner()

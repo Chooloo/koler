@@ -12,7 +12,10 @@ import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor.AudioMode.*
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.ui.base.BaseController
+import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 import com.chooloo.www.koler.R
+import com.chooloo.www.koler.ui.callitems.CallItemsFragment
+import com.chooloo.www.koler.ui.dialer.DialerFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -98,11 +101,13 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     override fun onKeypadClick() {
-        view.showDialpad()
+        component.prompts.showFragment(DialpadFragment.newInstance().apply {
+            setOnKeyDownListener(::onKeypadKey)
+        })
     }
 
     override fun onAddCallClick() {
-        view.showAddCallDialog()
+        component.prompts.showFragment(DialerFragment.newInstance())
     }
 
     override fun onSpeakerClick() {
@@ -203,6 +208,10 @@ class CallController<V : CallContract.View>(view: V) :
     }
 
     override fun onManageClick() {
-        component.calls.mainCall?.children?.let { view.showCallsManager(it) }
+        component.calls.mainCall?.children?.let {
+            component.prompts.showFragment(
+                CallItemsFragment.newInstance().apply { controller.calls = it }
+            )
+        }
     }
 }

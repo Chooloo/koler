@@ -123,22 +123,9 @@ class CallActivity : BaseActivity(), CallContract.View {
         }
     }
 
-    override fun showDialpad() {
-        BottomFragment(DialpadFragment.newInstance().apply {
-            setOnKeyDownListener(_controller::onKeypadKey)
-        }).show(supportFragmentManager, DialpadFragment.TAG)
-    }
-
     override fun showActiveCallUI() {
         showActiveLayout()
         binding.callActions.showSingleCallUI()
-    }
-
-    override fun showAddCallDialog() {
-        BottomFragment(DialerFragment.newInstance()).show(
-            supportFragmentManager,
-            DialpadFragment.TAG
-        )
     }
 
     override fun showIncomingCallUI() {
@@ -160,12 +147,6 @@ class CallActivity : BaseActivity(), CallContract.View {
                 ifVisible = true, goneOrInvisible = false
             )
         }
-    }
-
-    override fun showCallsManager(calls: List<Call>) {
-        BottomFragment(
-            CallItemsFragment.newInstance().apply { controller.calls = calls }
-        ).show(supportFragmentManager, CallItemsFragment.TAG)
     }
 
     override fun showHoldingBanner(number: String) {

@@ -2,9 +2,11 @@ package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
 import com.chooloo.www.chooloolib.ui.base.BaseController
-import com.chooloo.www.koler.R
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
+import com.chooloo.www.koler.R
+import com.chooloo.www.koler.ui.dialer.DialerFragment
+import com.chooloo.www.koler.ui.settings.SettingsFragment
 import java.net.URLDecoder
 
 class MainController<V : MainContract.View>(view: V) :
@@ -34,11 +36,11 @@ class MainController<V : MainContract.View>(view: V) :
     }
 
     override fun onMenuClick() {
-        view.openSettings()
+        component.prompts.showFragment(SettingsFragment.newInstance())
     }
 
     override fun onDialpadFabClick() {
-        view.openDialer()
+        component.prompts.showFragment(DialerFragment.newInstance())
     }
 
     override fun onViewIntent(intent: Intent) {
@@ -50,7 +52,7 @@ class MainController<V : MainContract.View>(view: V) :
         }
 
         if (intentText.contains("tel:")) {
-            view.openDialer(intentText.substringAfter("tel:"))
+            component.prompts.showFragment(DialerFragment.newInstance(intentText.substringAfter("tel:")))
         } else {
             view.showError(R.string.error_couldnt_get_number_from_intent)
         }
@@ -58,7 +60,6 @@ class MainController<V : MainContract.View>(view: V) :
 
     override fun onSearchTextChange(text: String) {
         _fragments.forEach { it.controller.applyFilter(text) }
-//        _fragments[view.currentPageIndex].controller.applyFilter(text)
     }
 
     override fun onSearchFocusChange(isFocus: Boolean) {
@@ -68,8 +69,5 @@ class MainController<V : MainContract.View>(view: V) :
     }
 
     override fun onPageChange(position: Int) {
-//        view.searchText?.let {
-//            _fragments[view.currentPageIndex].controller.applyFilter(it)
-//        }
     }
 }

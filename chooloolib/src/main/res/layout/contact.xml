@@ -7,7 +7,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/contact_image"
-        style="@style/Koler.Bottom.Image"
+        style="@style/Chooloo.Bottom.Image"
         android:layout_width="@dimen/image_size_big"
         android:layout_height="0dp"
         android:layout_margin="@dimen/default_spacing_big"
@@ -16,12 +16,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Koler.Image.Profile"
+        app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contact_text_name"
-        style="@style/Koler.Text.Headline3"
+        style="@style/Chooloo.Text.Headline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"

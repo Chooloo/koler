@@ -14,7 +14,7 @@ class RecentsAdapter(activityComponent: ActivityComponent) :
     override fun onBindListItem(listItem: ListItem, item: RecentAccount) {
         listItem.apply {
             isCompact = component.preferences.isCompact
-            captionText = if (item.date != null) context.getHoursString(item.date!!) else null
+            captionText = if (item.date != null) context.getHoursString(item.date) else null
             component.phones.lookupAccount(item.number) {
                 titleText = it?.name ?: item.number
                 it?.let {

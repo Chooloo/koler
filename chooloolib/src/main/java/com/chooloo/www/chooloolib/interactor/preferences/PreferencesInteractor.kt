@@ -1,20 +1,17 @@
 package com.chooloo.www.chooloolib.interactor.preferences
 
-import android.media.MediaRecorder
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
-open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener> {
+interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener> {
     interface Listener
 
     var isAskSim: Boolean
-    var isRecords: Boolean
     var isCompact: Boolean
     var isAnimations: Boolean
 
     var defaultPage: Page
     var accentTheme: AccentTheme
-    var recordFormat: RecordFormat
 
 
     companion object {
@@ -29,32 +26,6 @@ open interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.List
             companion object {
                 fun fromKey(key: String?) =
                     values().associateBy(AccentTheme::key).getOrDefault(key ?: "", DEFAULT)
-            }
-        }
-
-        enum class RecordFormat(
-            val key: String,
-            val outputFormat: Int,
-            val audioEncoder: Int,
-            val encoding: String
-        ) {
-            AMR_WB(
-                "amr_wb",
-                MediaRecorder.OutputFormat.AMR_WB,
-                MediaRecorder.AudioEncoder.AMR_WB,
-                "amr"
-            ),
-            MPEG_4(
-                "mpeg_4",
-                MediaRecorder.OutputFormat.MPEG_4,
-                MediaRecorder.AudioEncoder.AAC,
-                "mp4"
-            ),
-            DEFAULT(AMR_WB.key, AMR_WB.outputFormat, AMR_WB.audioEncoder, AMR_WB.encoding);
-
-            companion object {
-                fun fromKey(key: String?) =
-                    values().associateBy(RecordFormat::key).getOrDefault(key ?: "", DEFAULT)
             }
         }
 

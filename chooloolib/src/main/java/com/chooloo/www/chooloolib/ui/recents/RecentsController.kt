@@ -4,6 +4,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.RecentsAdapter
 import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.ui.list.ListController
+import com.chooloo.www.chooloolib.ui.recent.RecentFragment
 
 class RecentsController<V : RecentsContract.View>(view: V) :
     ListController<RecentAccount, V>(view),
@@ -22,7 +23,7 @@ class RecentsController<V : RecentsContract.View>(view: V) :
 
 
     override fun onItemClick(item: RecentAccount) {
-        view.openRecent(item)
+        component.prompts.showFragment(RecentFragment.newInstance(item.id))
     }
 
     override fun applyFilter(filter: String) {

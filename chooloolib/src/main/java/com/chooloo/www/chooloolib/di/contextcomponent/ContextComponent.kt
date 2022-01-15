@@ -5,11 +5,11 @@ import android.content.ClipboardManager
 import android.media.AudioManager
 import android.os.PowerManager
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.PackageManagerCompat
 import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
 import com.chooloo.www.chooloolib.interactor.animation.AnimationInteractor
 import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor

@@ -19,13 +19,6 @@ open class ContactsFragment :
         super.onSetup()
     }
 
-    override fun openContact(contact: ContactAccount) {
-        BottomFragment(ContactFragment.newInstance(contact.id)).show(
-            baseActivity.supportFragmentManager,
-            ContactFragment.TAG
-        )
-    }
-
     fun applyFilter(filter: String) {
         controller.applyFilter(filter)
     }

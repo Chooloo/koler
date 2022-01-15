@@ -5,35 +5,33 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import dev.sasikanth.colorsheet.ColorSheet
 
 class DialogsInteractorImpl(
-    private val activity: BaseActivity
+    private val activity: BaseActivity,
+    private val prompts: PromptInteractor
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
     override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
-        BottomFragment(
-            PromptFragment.newInstance(
-                activity.getString(R.string.prompt_yes_or_no),
-                activity.getString(titleRes)
-            ).apply {
-                controller.setOnClickListener(callback::invoke)
-            }).show(activity.supportFragmentManager, PromptFragment.TAG)
+        prompts.showFragment(PromptFragment.newInstance(
+            activity.getString(R.string.prompt_yes_or_no),
+            activity.getString(titleRes)
+        ).apply {
+            controller.setOnClickListener(callback::invoke)
+        })
     }
 
     override fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit) {
-        BottomFragment(
-            PromptFragment.newInstance(
-                activity.getString(R.string.prompt_are_you_sure),
-                activity.getString(titleRes)
-            ).apply {
-                controller.setOnClickListener(callback::invoke)
-            }
-        ).show(activity.supportFragmentManager, PromptFragment.TAG)
+        prompts.showFragment(PromptFragment.newInstance(
+            activity.getString(R.string.prompt_are_you_sure),
+            activity.getString(titleRes)
+        ).apply {
+            controller.setOnClickListener(callback::invoke)
+        })
     }
 
 
@@ -43,14 +41,12 @@ class DialogsInteractorImpl(
         @StringRes subtitleRes: Int?,
         choiceCallback: (String) -> Unit
     ) {
-        BottomFragment(
-            BaseChoicesFragment.newInstance(titleRes, subtitleRes, choices).apply {
-                setOnChoiceClickListener {
-                    choiceCallback.invoke(it)
-                    this@apply.finish()
-                }
+        prompts.showFragment(BaseChoicesFragment.newInstance(titleRes, subtitleRes, choices).apply {
+            setOnChoiceClickListener {
+                choiceCallback.invoke(it)
+                this@apply.finish()
             }
-        ).show(activity.supportFragmentManager, BaseChoicesFragment.TAG)
+        })
     }
 
     override fun <T> askForChoice(

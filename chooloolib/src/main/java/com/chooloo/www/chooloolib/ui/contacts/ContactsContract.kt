@@ -5,7 +5,6 @@ import com.chooloo.www.chooloolib.ui.list.ListContract
 
 interface ContactsContract : ListContract {
     interface View : ListContract.View<ContactAccount> {
-        fun openContact(contact: ContactAccount)
     }
 
     interface Controller<V : View> : ListContract.Controller<ContactAccount, V> {
