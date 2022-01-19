@@ -10,6 +10,7 @@ import android.telecom.InCallService
 import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.data.call.CallNotification
+import com.chooloo.www.chooloolib.ui.call.CallActivity
 
 @SuppressLint("NewApi")
 class CallService : InCallService() {
@@ -48,15 +49,9 @@ class CallService : InCallService() {
     }
 
     private fun startCallActivity() {
-        val appInfo = packageManager.getServiceInfo(
-            ComponentName(this, this.javaClass),
-            PackageManager.GET_META_DATA
-        )
-        appInfo.metaData.getString("call_activity")?.let {
-            val intent = Intent(this, Class.forName(it))
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
+        val intent = Intent(this, CallActivity::class.java)
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
 

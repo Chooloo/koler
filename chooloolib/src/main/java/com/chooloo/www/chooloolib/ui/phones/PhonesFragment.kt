@@ -3,7 +3,7 @@ package com.chooloo.www.chooloolib.ui.phones
 import android.os.Bundle
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
-import com.chooloo.www.chooloolib.ui.contact.ContactFragment.Companion.ARG_CONTACT_ID
+import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.chooloolib.ui.list.ListFragment
 
 class PhonesFragment :

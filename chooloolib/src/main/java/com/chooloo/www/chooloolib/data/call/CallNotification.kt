@@ -7,7 +7,7 @@ import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.ACTION_ANSWER
+import android.content.Intent.*
 import android.os.Build
 import android.telecom.Call.Details.CAPABILITY_MUTE
 import androidx.annotation.RequiresApi
@@ -25,6 +25,7 @@ import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTIO
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNMUTE
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
+import com.chooloo.www.chooloolib.ui.call.CallActivity
 import com.chooloo.www.chooloolib.util.SingletonHolder
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -73,10 +74,10 @@ class CallNotification(
     private val _contentPendingIntent by lazy {
         PendingIntent.getActivity(
             context,
-            0, Intent(),
-//            Intent(context, CallActivity::class.java).apply {
-//                flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-//            },
+            0,
+            Intent(context, CallActivity::class.java).apply {
+                flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
+            },
             0
         )
     }

@@ -2,7 +2,7 @@ package com.chooloo.www.chooloolib.ui.recent
 
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.base.BaseController
-import com.chooloo.www.chooloolib.ui.contact.ContactFragment
+import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.chooloolib.util.getElapsedTimeString
 import java.util.*
@@ -70,7 +70,7 @@ class RecentController<V : RecentContract.View>(view: V) :
         _recent?.let {
             component.phones.lookupAccount(it.number) { account ->
                 account?.contactId?.let { id ->
-                    component.prompts.showFragment(ContactFragment.newInstance(id))
+                    component.prompts.showFragment(BriefContactFragment.newInstance(id))
                 }
             }
         }

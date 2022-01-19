@@ -1,11 +1,11 @@
-package com.chooloo.www.koler.ui.widgets
+package com.chooloo.www.chooloolib.ui.widgets
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.motion.widget.MotionLayout
-import com.chooloo.www.koler.R
-import com.chooloo.www.koler.databinding.CallActionsBinding
+import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.databinding.CallActionsBinding
 
 class CallActions : MotionLayout {
     private val _binding: CallActionsBinding

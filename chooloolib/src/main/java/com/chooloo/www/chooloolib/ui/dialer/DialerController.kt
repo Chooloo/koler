@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.dialer
+package com.chooloo.www.chooloolib.ui.dialer
 
 import android.view.KeyEvent.KEYCODE_1
 import com.chooloo.www.chooloolib.data.account.ContactAccount

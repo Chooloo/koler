@@ -1,106 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/contact_scene">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <com.github.abdularis.civ.CircleImageView
         android:id="@+id/contact_image"
-        style="@style/Chooloo.Bottom.Image"
-        android:layout_width="@dimen/image_size_big"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/default_spacing_big"
-        android:visibility="gone"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
-        tools:visibility="visible" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/contact_text_name"
-        style="@style/Chooloo.Text.Headline3"
+        android:id="@+id/contact_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
-        android:maxLines="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_image"
-        tools:text="Jesus" />
+        android:layout_height="wrap_content" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/contact_image_star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing_small"
-        android:src="@drawable/round_star_24"
-        android:tint="@color/orange_foreground"
-        app:layout_constraintBottom_toBottomOf="@id/contact_text_name"
-        app:layout_constraintStart_toEndOf="@id/contact_text_name"
-        app:layout_constraintTop_toTopOf="@id/contact_text_name" />
-
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:gravity="center_horizontal"
-        app:borderWidth="0dp"
-        app:icon="@drawable/ic_call_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_name" />
-
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginBottom="@dimen/default_spacing"
-        android:gravity="center_horizontal"
-        app:borderWidth="0dp"
-        app:icon="@drawable/ic_edit_black_24dp"
-        app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
-        app:layout_constraintStart_toEndOf="@id/contact_button_call"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_name" />
-
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginBottom="@dimen/default_spacing"
-        android:gravity="center_horizontal"
-        app:borderWidth="0dp"
-        app:icon="@drawable/ic_delete_black_24dp"
-        app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
-        app:layout_constraintStart_toEndOf="@id/contact_button_edit"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_name" />
-
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_sms"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:gravity="center_horizontal"
-        app:borderWidth="0dp"
-        app:icon="@drawable/ic_sms_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_text_name" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/contact_phones_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_button_call" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

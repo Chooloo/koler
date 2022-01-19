@@ -1,8 +1,8 @@
-package com.chooloo.www.koler.ui.callitems
+package com.chooloo.www.chooloolib.ui.callitems
 
 import android.view.View
+import com.chooloo.www.chooloolib.adapter.CallItemsAdapter
 import com.chooloo.www.chooloolib.data.call.Call
-import com.chooloo.www.koler.adapter.CallItemsAdapter
 import com.chooloo.www.chooloolib.ui.list.ListFragment
 
 class CallItemsFragment : ListFragment<Call, CallItemsAdapter>(), CallItemsContract.View {

@@ -1,18 +1,13 @@
-package com.chooloo.www.koler.ui.call
+package com.chooloo.www.chooloolib.ui.call
 
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.text.format.DateUtils
 import android.view.View
 import androidx.core.view.isVisible
-import com.chooloo.www.chooloolib.data.call.Call
+import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.databinding.CallBinding
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
-import com.chooloo.www.koler.R
-import com.chooloo.www.koler.databinding.CallBinding
-import com.chooloo.www.koler.ui.callitems.CallItemsFragment
-import com.chooloo.www.koler.ui.dialer.DialerFragment
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {

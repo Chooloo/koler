@@ -1,12 +1,11 @@
-package com.chooloo.www.koler.adapter
+package com.chooloo.www.chooloolib.adapter
 
 import android.net.Uri
-import com.chooloo.www.chooloolib.adapter.ListAdapter
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.ListData
 import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
-import com.chooloo.www.koler.R
 
 class CallItemsAdapter(component: ActivityComponent) : ListAdapter<Call>(component) {
     override fun onBindListItem(listItem: ListItem, item: Call) {

@@ -1,8 +1,9 @@
-package com.chooloo.www.koler.ui.call
+package com.chooloo.www.chooloolib.ui.call
 
 import android.net.Uri
 import android.telecom.Call.Details.*
 import android.view.KeyEvent
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.data.call.Call.State.*
 import com.chooloo.www.chooloolib.data.call.CantHoldCallException
@@ -12,10 +13,9 @@ import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor.AudioMode.*
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.AudioRoute
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.ui.base.BaseController
+import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
+import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
-import com.chooloo.www.koler.R
-import com.chooloo.www.koler.ui.callitems.CallItemsFragment
-import com.chooloo.www.koler.ui.dialer.DialerFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

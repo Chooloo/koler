@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.dialer
+package com.chooloo.www.chooloolib.ui.dialer
 
 import com.chooloo.www.chooloolib.data.account.ContactAccount
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadContract

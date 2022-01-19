@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.callitems
+package com.chooloo.www.chooloolib.ui.callitems
 
 import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.ui.list.ListContract

@@ -4,12 +4,12 @@ import android.content.Intent
 import com.chooloo.www.chooloolib.data.account.ContactAccount
 import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.ui.base.BaseController
-import com.chooloo.www.chooloolib.ui.contact.ContactFragment
+import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.chooloolib.ui.recent.RecentFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.ui.dialer.DialerFragment
+import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 import java.net.URLDecoder
 
@@ -88,6 +88,6 @@ class MainController<V : MainContract.View>(view: V) :
     }
 
     override fun onContactItemClick(contact: ContactAccount) {
-        component.prompts.showFragment(ContactFragment.newInstance(contact.id))
+        component.prompts.showFragment(BriefContactFragment.newInstance(contact.id))
     }
 }

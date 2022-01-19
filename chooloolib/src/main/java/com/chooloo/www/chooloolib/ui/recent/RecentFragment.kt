@@ -7,9 +7,6 @@ import android.view.View.VISIBLE
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.databinding.RecentBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
-import com.chooloo.www.chooloolib.ui.contact.ContactFragment
-import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 
 class RecentFragment : BaseFragment(), RecentContract.View {
     private lateinit var _presenter: RecentController<RecentFragment>

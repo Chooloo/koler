@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.dialer
+package com.chooloo.www.chooloolib.ui.dialer
 
 import android.content.Context
 import android.os.Bundle
