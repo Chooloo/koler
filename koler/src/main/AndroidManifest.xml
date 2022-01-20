@@ -61,7 +61,7 @@
             </intent-filter>
         </activity>
 
-        
+
         <service
             android:name="com.chooloo.www.chooloolib.service.CallService"
             android:exported="false"

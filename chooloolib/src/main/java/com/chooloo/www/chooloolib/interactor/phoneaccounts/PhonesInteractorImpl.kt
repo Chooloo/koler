@@ -12,6 +12,10 @@ class PhonesInteractorImpl(private val context: Context) :
     BaseInteractorImpl<PhonesInteractor.Listener>(), PhonesInteractor {
 
     override fun lookupAccount(number: String?, callback: (PhoneLookupAccount?) -> Unit) {
+        if (number == null || number.isEmpty()) {
+            callback.invoke(PhoneLookupAccount.PRIVATE)
+            return
+        }
         try {
             PhoneLookupContentResolver(context, number).queryItems { phones ->
                 callback.invoke(phones.getOrNull(0))
