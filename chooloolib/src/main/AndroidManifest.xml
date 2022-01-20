@@ -3,15 +3,40 @@
     package="com.chooloo.www.chooloolib">
 
     <application>
-        <activity android:name=".ui.permissions.PermissionsActivity" />
         <activity
+            android:name=".ui.permissions.PermissionsActivity"
+            android:exported="false" />
+        <activity
+            android:exported="false"
             android:name=".ui.call.CallActivity"
             android:screenOrientation="fullSensor" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".service.CallService"
+            android:exported="true"
+            android:foregroundServiceType="phoneCall"
+            android:permission="android.permission.BIND_INCALL_SERVICE">
+
+            <meta-data
+                android:name="android.telecom.IN_CALL_SERVICE_UI"
+                android:value="true" />
+
+            <intent-filter>
+                <action android:name="android.telecom.InCallService" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".receiver.CallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="action_answer" />
+                <action android:name="action_hangup" />
+            </intent-filter>
+        </receiver>
     </application>
-
-
 </manifest>

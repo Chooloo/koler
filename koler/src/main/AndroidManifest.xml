@@ -38,7 +38,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.chooloo.www.koler.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:screenOrientation="fullUser">
 
@@ -60,30 +60,5 @@
                 <data android:scheme="tel" />
             </intent-filter>
         </activity>
-
-
-        <service
-            android:name="com.chooloo.www.chooloolib.service.CallService"
-            android:exported="false"
-            android:foregroundServiceType="phoneCall"
-            android:permission="android.permission.BIND_INCALL_SERVICE">
-
-            <meta-data
-                android:name="android.telecom.IN_CALL_SERVICE_UI"
-                android:value="true" />
-
-            <intent-filter>
-                <action android:name="android.telecom.InCallService" />
-            </intent-filter>
-        </service>
-
-        <receiver
-            android:name="com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="action_answer" />
-                <action android:name="action_hangup" />
-            </intent-filter>
-        </receiver>
     </application>
 </manifest>

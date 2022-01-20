@@ -3,14 +3,17 @@ apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
 
     defaultConfig {
+        versionCode 69
+        versionName "v1.3.5"
+
+        minSdk 25
+        targetSdk 31
+
         applicationId "com.chooloo.www.koler"
-        minSdkVersion 25
-        targetSdkVersion 31
-        versionCode 68
-        versionName "v1.3.4"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -52,7 +55,7 @@ android {
 
 dependencies {
     annotationProcessor(
-            'androidx.room:room-compiler:2.4.0'
+            'androidx.room:room-compiler:2.4.1'
     )
 
     testImplementation(
@@ -67,6 +70,7 @@ dependencies {
             'com.jraska.livedata:testing:1.0.0',
             'org.mockito:mockito-android:2.24.0',
             'androidx.arch.core:core-testing:2.1.0',
+            "androidx.compose.ui:ui-test-junit4:1.0.4",
             'androidx.test.espresso:espresso-core:3.3.0'
     )
 
