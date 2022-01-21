@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.telecom.TelecomManager
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import com.chooloo.www.chooloolib.interactor.string.StringInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionsActivity
@@ -37,8 +36,9 @@ class PermissionsInteractorImpl(
                 activity.packageName
             )
         }
-        activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
-            .launch(intent)
+        activity.startActivityForResult(intent, 0)
+//        activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+//            .launch(intent)
     }
 
     override fun checkDefaultDialer(errorMessageRes: Int?) {
