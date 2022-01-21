@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/list_item_frame_image"
+        android:layout_width="@dimen/image_size_small"
+        android:layout_height="@dimen/image_size_small"
+        android:layout_margin="@dimen/default_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/list_item_frame_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:textAppearance="@style/Chooloo.Text.Subtitle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/list_item_frame_image"
+        app:layout_constraintTop_toTopOf="@id/list_item_frame_image" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/list_item_frame_caption"
+        style="@style/Chooloo.Text.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/list_item_frame_image"
+        app:layout_constraintEnd_toEndOf="@id/list_item_frame_title"
+        app:layout_constraintStart_toStartOf="@id/list_item_frame_title" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:layoutDescription="@xml/main_scene">
+
+    <!-- menu button -->
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/main_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_menu_button"
+        android:tint="?colorOnBackground"
+        app:backgroundTint="?colorPrimarySurface"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:icon="@drawable/ic_more_vert_black_24dp" />
+
+    <!-- tabs -->
+    <com.chooloo.www.chooloolib.ui.widgets.Tabs
+        android:id="@+id/main_tabs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!-- search bar -->
+    <com.chooloo.www.chooloolib.ui.widgets.SearchBar
+        android:id="@+id/main_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="@dimen/default_spacing" />
+
+    <!-- view pager -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- dialer button -->
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/main_dialpad_button"
+        style="@style/Chooloo.IconButton.Big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        app:borderWidth="0dp"
+        app:icon="@drawable/ic_dialpad_black_24dp" />
+</androidx.constraintlayout.motion.widget.MotionLayout>

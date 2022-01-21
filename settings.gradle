@@ -1,1 +1,3 @@
-include ':app'
+include ':koler'
+include ':chooloolib'
+include ':kontacts'

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--region colors-->
+    <attr name="colorTextDisabled" format="color" />
+    <attr name="colorLightBackground" format="color" />
+    <attr name="colorLightForeground" format="color" />
+    <!--endregion-->
+
+    <!--region styleables-->
+    <declare-styleable name="Chooloo" />
+
+    <declare-styleable name="Chooloo.ListItem">
+        <attr name="title" format="string" localization="suggested" />
+        <attr name="caption" format="string" localization="suggested" />
+        <attr name="header" format="string" />
+        <attr name="src" format="reference" />
+        <attr name="compact" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Chooloo.DialpadKey">
+        <attr name="digit" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="Chooloo.IconButton">
+        <attr name="icon" format="reference" />
+        <attr name="activatedIcon" format="reference" />
+        <attr name="size" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="big" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="Chooloo.Tabs">
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+    <!--endregion-->
+</resources>

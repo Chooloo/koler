@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme Styles -->
+
+    <style name="ChoolooTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorError">@color/color_error</item>
+        <item name="colorControlHighlight">?colorLightBackground</item>
+        <item name="colorPrimary">?android:colorBackground</item>
+        <item name="colorTextDisabled">@color/color_disabled</item>
+        <item name="colorOnBackground">@color/color_on_background</item>
+        <item name="colorLightBackground">#ABEDEDED</item>
+        <item name="colorLightForeground">#95ACACAC</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:statusBarColor">?colorPrimarySurface</item>
+        <item name="android:navigationBarColor">?colorPrimarySurface</item>
+
+        <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
+        <item name="alertDialogTheme">@style/KolerAlertDialog</item>
+    </style>
+
+
+    <style name="KolerBottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="android:navigationBarColor">?colorPrimarySurface</item>
+        <item name="bottomSheetStyle">@style/Chooloo.BottomDialog.BottomSheetStyle</item>
+    </style>
+
+    <style name="KolerAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/KolerAlertDialogButton</item>
+    </style>
+
+    <style name="KolerAlertDialogButton" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/blue_foreground</item>
+    </style>
+
+
+    <style name="Accent" />
+
+    <style name="Accent.Blue">
+        <item name="colorSecondary">@color/blue_background</item>
+        <item name="colorOnSecondary">@color/blue_foreground</item>
+    </style>
+
+    <style name="Accent.Orange">
+        <item name="colorSecondary">@color/orange_background</item>
+        <item name="colorOnSecondary">@color/orange_foreground</item>
+    </style>
+
+    <style name="Accent.Green">
+        <item name="colorSecondary">@color/green_background</item>
+        <item name="colorOnSecondary">@color/green_foreground</item>
+    </style>
+
+    <style name="Accent.Purple">
+        <item name="colorSecondary">@color/purple_background</item>
+        <item name="colorOnSecondary">@color/purple_foreground</item>
+    </style>
+
+    <style name="Accent.Red">
+        <item name="colorSecondary">@color/red_background</item>
+        <item name="colorOnSecondary">@color/red_foreground</item>
+    </style>
+</resources>

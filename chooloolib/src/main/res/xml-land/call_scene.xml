@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        app:constraintSetEnd="@id/constraint_set_active_call"
+        app:constraintSetStart="@id/constraint_set_incoming_call" />
+
+    <ConstraintSet android:id="@+id/constraint_set_incoming_call">
+        <Constraint
+            android:id="@+id/call_middle_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+        <Constraint
+            android:id="@+id/call_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            app:layout_constraintBottom_toTopOf="@id/call_state_text"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_state_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            app:layout_constraintBottom_toTopOf="@id/call_image"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_time_text" />
+        <Constraint
+            android:id="@+id/call_image"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            app:layout_constraintBottom_toTopOf="@id/call_name_text"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/call_image"
+            app:layout_constraintStart_toStartOf="@id/call_image"
+            app:layout_constraintTop_toBottomOf="@id/call_image" />
+        <Constraint
+            android:id="@+id/call_manage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toTopOf="@id/call_actions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_name_text"
+            app:layout_constraintVertical_bias="0.0"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_answer_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_reject_button"
+            app:layout_constraintStart_toEndOf="@id/call_middle_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_reject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/call_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/constraint_set_active_call">
+        <Constraint
+            android:id="@+id/call_middle_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+        <Constraint
+            android:id="@+id/call_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toTopOf="@id/call_state_text"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_state_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            app:layout_constraintBottom_toTopOf="@id/call_image"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_time_text" />
+        <Constraint
+            android:id="@+id/call_image"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            app:layout_constraintBottom_toTopOf="@id/call_name_text"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_image" />
+        <Constraint
+            android:id="@+id/call_manage_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_middle_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/call_name_text"
+            app:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/call_reject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/call_middle_guideline"
+            app:layout_constraintTop_toBottomOf="@id/call_actions"
+            app:layout_constraintVertical_chainStyle="packed" />
+        <Constraint
+            android:id="@+id/call_answer_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Constraint
+            android:id="@+id/call_actions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/call_reject_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/call_middle_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+    </ConstraintSet>
+</MotionScene>

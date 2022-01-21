@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <Transition
+        app:constraintSetEnd="@id/constraint_set_main_collapsed"
+        app:constraintSetStart="@id/constraint_set_main_expanded">
+
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@id/main_fragment_container"
+            app:touchAnchorSide="top" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/constraint_set_main_expanded">
+        <!-- menu button-->
+        <Constraint
+            android:id="@+id/main_menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:layout_marginEnd="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- tabs -->
+        <Constraint
+            android:id="@+id/main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginTop="90dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="200dp" />
+
+        <!-- search bar -->
+        <Constraint
+            android:id="@+id/main_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:layout_marginEnd="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_tabs" />
+
+        <!-- contacts fragment container -->
+        <Constraint
+            android:id="@+id/main_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_search_bar" />
+
+        <!-- add contact button -->
+        <Constraint
+            android:id="@+id/main_add_contact_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/constraint_set_main_collapsed">
+        <!-- menu button-->
+        <Constraint
+            android:id="@+id/main_menu_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            android:layout_marginEnd="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- tabs -->
+        <Constraint
+            android:id="@+id/main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:transformPivotY="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/main_menu_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/main_menu_button" />
+
+        <!-- search bar -->
+        <Constraint
+            android:id="@+id/main_search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/default_spacing"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_tabs" />
+
+        <!-- contacts fragment container -->
+        <Constraint
+            android:id="@+id/main_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_search_bar" />
+
+        <!-- dialpad button -->
+        <Constraint
+            android:id="@+id/main_add_contact_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_spacing"
+            android:layout_marginBottom="@dimen/default_spacing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </ConstraintSet>
+</MotionScene>
