@@ -43,6 +43,7 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     fun askForSim(callback: (SimAccount?) -> Unit)
     fun askForDefaultPage(callback: (Page) -> Unit)
     fun askForCompact(callback: (isCompact: Boolean) -> Unit)
+    fun askForShowBlock(callback: (isShowBlock: Boolean) -> Unit)
     fun askForAnimations(callback: (isAnimations: Boolean) -> Unit)
     fun askForShouldAskSim(callback: (shouldAskSim: Boolean) -> Unit)
     fun askForRoute(callback: (CallAudioInteractor.AudioRoute) -> Unit)

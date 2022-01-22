@@ -9,53 +9,66 @@ import com.chooloo.www.chooloolib.databinding.RecentBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    private lateinit var _presenter: RecentController<RecentFragment>
-    private val _binding by lazy { RecentBinding.inflate(layoutInflater) }
+    private lateinit var controller: RecentController<RecentFragment>
+    private val binding by lazy { RecentBinding.inflate(layoutInflater) }
 
-    override val contentView by lazy { _binding.root }
+    override val contentView by lazy { binding.root }
     override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
 
     override var recentName: String?
-        get() = _binding.recentTextName.text.toString()
+        get() = binding.recentTextName.text.toString()
         set(value) {
-            _binding.recentTextName.text = value
+            binding.recentTextName.text = value
         }
 
     override var recentCaption: String?
-        get() = _binding.recentTextCaption.text.toString()
+        get() = binding.recentTextCaption.text.toString()
         set(value) {
-            _binding.recentTextCaption.text = value
-            _binding.recentTextCaption.visibility = if (value != null) VISIBLE else GONE
+            binding.recentTextCaption.text = value
+            binding.recentTextCaption.visibility = if (value != null) VISIBLE else GONE
         }
 
     override var recentImage: Drawable?
-        get() = _binding.recentTypeImage.drawable
+        get() = binding.recentTypeImage.drawable
         set(value) {
-            _binding.recentTypeImage.setImageDrawable(value)
+            binding.recentTypeImage.setImageDrawable(value)
         }
 
     override var isContactVisible: Boolean
-        get() = _binding.recentButtonContact.isVisible
+        get() = binding.recentButtonContact.isVisible
         set(value) {
-            _binding.recentButtonContact.isVisible = value
+            binding.recentButtonContact.isVisible = value
         }
 
     override var isAddContactVisible: Boolean
-        get() = _binding.recentButtonAddContact.isVisible
+        get() = binding.recentButtonAddContact.isVisible
         set(value) {
-            _binding.recentButtonAddContact.isVisible = value
+            binding.recentButtonAddContact.isVisible = value
+        }
+
+    override var isBlockButtonVisible: Boolean
+        get() = binding.recentButtonBlock.isVisible
+        set(value) {
+            binding.recentButtonBlock.isVisible = value
+        }
+
+    override var isBlockButtonActivated: Boolean
+        get() = binding.recentButtonBlock.isActivated
+        set(value) {
+            binding.recentButtonBlock.isActivated = value
         }
 
 
     override fun onSetup() {
-        _presenter = RecentController(this)
-        _binding.apply {
-            recentButtonSms.setOnClickListener { _presenter.onActionSms() }
-            recentButtonCall.setOnClickListener { _presenter.onActionCall() }
-            recentButtonDelete.setOnClickListener { _presenter.onActionDelete() }
-            recentButtonContact.setOnClickListener { _presenter.onActionOpenContact() }
-            recentButtonAddContact.setOnClickListener { _presenter.onActionAddContact() }
-            recentButtonShowHistory.setOnClickListener { _presenter.onActionShowHistory() }
+        controller = RecentController(this)
+        binding.apply {
+            recentButtonSms.setOnClickListener { controller.onActionSms() }
+            recentButtonCall.setOnClickListener { controller.onActionCall() }
+            recentButtonDelete.setOnClickListener { controller.onActionDelete() }
+            recentButtonContact.setOnClickListener { controller.onActionOpenContact() }
+            recentButtonAddContact.setOnClickListener { controller.onActionAddContact() }
+            recentButtonShowHistory.setOnClickListener { controller.onActionShowHistory() }
+            recentButtonBlock.setOnClickListener { controller.onActionBlock(!isBlockButtonActivated) }
         }
     }
 

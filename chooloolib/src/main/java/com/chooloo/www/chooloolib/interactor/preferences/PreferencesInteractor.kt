@@ -9,7 +9,8 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
     var isAskSim: Boolean
     var isCompact: Boolean
     var isAnimations: Boolean
-
+    var isShowBlocked: Boolean
+    
     var defaultPage: Page
     var accentTheme: AccentTheme
 

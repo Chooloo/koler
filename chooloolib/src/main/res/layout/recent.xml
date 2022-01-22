@@ -47,20 +47,25 @@
         tools:text="4 hours ago, 12 minutes"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
         android:id="@+id/recent_button_show_history"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
         android:layout_margin="@dimen/default_spacing"
-        android:background="@drawable/bubble_background"
-        android:backgroundTint="?colorSecondary"
-        android:elevation="0dp"
-        android:fontFamily="@font/google_sans_bold"
-        android:stateListAnimator="@null"
         android:text="@string/action_show_history"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="?colorOnSecondary"
+        android:layout_height="@dimen/button_text_height"
+        app:layout_constraintBottom_toTopOf="@id/recent_button_block"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
+        android:id="@+id/recent_button_block"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_text_height"
+        android:layout_margin="@dimen/default_spacing"
+        android:backgroundTint="@color/red_background"
+        android:text="@string/action_block_number"
+        android:textColor="@color/red_foreground"
+        app:activatedText="@string/action_unblock_number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

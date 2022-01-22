@@ -29,6 +29,10 @@
     <dimen name="list_item_small_text_top_margin">1dp</dimen>
     <!--endregion-->
 
+    <!--region button-->
+    <dimen name="button_text_height">47dp</dimen>
+    <!--endregion-->
+
     <!--region bottom sheet dialog -->
     <dimen name="swipe_indicator_height">4dp</dimen>
     <dimen name="swipe_indicator_width">35dp</dimen>

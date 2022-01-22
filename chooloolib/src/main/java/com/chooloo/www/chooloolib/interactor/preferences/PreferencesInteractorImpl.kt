@@ -37,6 +37,15 @@ class PreferencesInteractorImpl(
             preferencesManager.putBoolean(R.string.pref_key_animations, value)
         }
 
+    override var isShowBlocked: Boolean
+        get() = preferencesManager.getBoolean(
+            R.string.pref_key_show_blocked,
+            R.bool.pref_default_value_show_blocked
+        )
+        set(value) {
+            preferencesManager.putBoolean(R.string.pref_key_show_blocked, value)
+        }
+
     override var defaultPage: Page
         get() = Page.fromKey(preferencesManager.getString(R.string.pref_key_default_page))
         set(value) {
