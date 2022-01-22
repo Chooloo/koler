@@ -30,6 +30,10 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="Chooloo.TextButton">
+        <attr name="activatedText" format="string" />
+    </declare-styleable>
+
     <declare-styleable name="Chooloo.Tabs">
         <attr name="textSize" format="dimension" />
     </declare-styleable>

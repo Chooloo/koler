@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/pref_key_color"
+        android:title="@string/pref_title_app_color" />
+
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_value_compact"
+        android:key="@string/pref_key_compact"
+        android:title="@string/pref_title_compact" />
+
+    <SwitchPreference
+        android:defaultValue="@bool/pref_default_value_animations"
+        android:key="@string/pref_key_animations"
+        android:title="@string/pref_title_animations" />
+
+    <Preference
+        android:key="@string/pref_key_report_bugs"
+        android:title="@string/pref_title_report_bugs" />
+
+    <Preference
+        android:key="@string/pref_key_rate"
+        android:title="@string/pref_title_rate" />
+</PreferenceScreen>

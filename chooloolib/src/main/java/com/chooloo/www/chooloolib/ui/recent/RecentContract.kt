@@ -11,6 +11,8 @@ interface RecentContract : BaseContract {
         var recentImage: Drawable?
         var isContactVisible: Boolean
         var isAddContactVisible: Boolean
+        var isBlockButtonVisible: Boolean
+        var isBlockButtonActivated: Boolean
     }
 
     interface Controller<V : View> : BaseContract.Controller<V> {
@@ -20,5 +22,6 @@ interface RecentContract : BaseContract {
         fun onActionAddContact()
         fun onActionOpenContact()
         fun onActionShowHistory()
+        fun onActionBlock(isBlock: Boolean)
     }
 }

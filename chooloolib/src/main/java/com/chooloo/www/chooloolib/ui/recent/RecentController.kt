@@ -5,7 +5,6 @@ import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.chooloolib.util.getElapsedTimeString
-import java.util.*
 
 class RecentController<V : RecentContract.View>(view: V) :
     BaseController<V>(view),
@@ -20,22 +19,25 @@ class RecentController<V : RecentContract.View>(view: V) :
         if (_recent!!.duration > 0) {
             recentCaptions.add(getElapsedTimeString(_recent!!.duration))
         }
-        component.permissions.runWithDefaultDialer {
-            if (component.blocked.isNumberBlocked(_recent!!.number)) {
-                recentCaptions.add(
-                    component.strings.getString(R.string.error_blocked).uppercase(Locale.ROOT)
-                )
-            }
-        }
-        view.recentCaption = recentCaptions.joinToString(", ")
-        view.recentImage =
-            component.drawables.getDrawable(component.recents.getCallTypeImage(_recent!!.type))
-        view.recentName =
-            if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
 
-        component.phones.lookupAccount(_recent!!.number) {
-            view.isContactVisible = it?.name != null
-            view.isAddContactVisible = it?.name == null
+        view.apply {
+            recentCaption = recentCaptions.joinToString(", ")
+            recentImage =
+                component.drawables.getDrawable(component.recents.getCallTypeImage(_recent!!.type))
+            recentName =
+                if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
+
+            component.phones.lookupAccount(_recent!!.number) {
+                isContactVisible = it?.name != null
+                isAddContactVisible = it?.name == null
+            }
+
+            isBlockButtonVisible = component.preferences.isShowBlocked
+            if (component.preferences.isShowBlocked) {
+                component.permissions.runWithDefaultDialer {
+                    isBlockButtonActivated = component.blocked.isNumberBlocked(_recent!!.number)
+                }
+            }
         }
     }
 
@@ -83,6 +85,19 @@ class RecentController<V : RecentContract.View>(view: V) :
                     component.prompts.showFragment(RecentFragment.newInstance(recent.id))
                 }
             })
+        }
+    }
+
+    override fun onActionBlock(isBlock: Boolean) {
+        component.permissions.runWithDefaultDialer {
+            _recent?.number?.let {
+                if (isBlock) {
+                    component.blocked.blockNumber(it)
+                } else {
+                    component.blocked.unblockNumber(it)
+                }
+                view.isBlockButtonActivated = isBlock
+            }
         }
     }
 }

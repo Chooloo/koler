@@ -18,6 +18,11 @@ class SettingsController<V : SettingsContract.View>(view: V) :
             R.id.menu_koler_default_page -> component.dialogs.askForDefaultPage {
                 component.preferences.defaultPage = it
             }
+            R.id.menu_koler_show_blocked -> component.permissions.runWithDefaultDialer {
+                component.dialogs.askForShowBlock {
+                    component.preferences.isShowBlocked = it
+                }
+            }
             else -> super.onMenuItemClick(menuItem)
         }
     }

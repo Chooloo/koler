@@ -6,6 +6,11 @@
         android:title="@string/pref_title_ask_sim" />
 
     <item
+        android:id="@+id/menu_koler_show_blocked"
+        android:icon="@drawable/round_block_24"
+        android:title="@string/pref_title_show_blocked" />
+
+    <item
         android:id="@+id/menu_koler_default_page"
         android:icon="@drawable/round_view_carousel_20"
         android:title="@string/pref_title_default_page" />
