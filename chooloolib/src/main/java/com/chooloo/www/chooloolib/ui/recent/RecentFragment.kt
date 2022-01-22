@@ -7,16 +7,13 @@ import android.view.View.VISIBLE
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.databinding.RecentBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import javax.inject.Inject
 
 class RecentFragment : BaseFragment(), RecentContract.View {
-    override val contentView by lazy { binding.root }
-    override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
-
+    private lateinit var controller: RecentController<RecentFragment>
     private val binding by lazy { RecentBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var controller: RecentContract.Controller<RecentFragment>
-
+    override val contentView by lazy { binding.root }
+    override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
 
     override var recentName: String?
         get() = binding.recentTextName.text.toString()
@@ -63,6 +60,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
 
     override fun onSetup() {
+        controller = RecentController(this)
         binding.apply {
             recentButtonSms.setOnClickListener { controller.onActionSms() }
             recentButtonCall.setOnClickListener { controller.onActionCall() }
