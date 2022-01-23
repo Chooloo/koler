@@ -1,6 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'kotlin-android'
+plugins {
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.android.library'
+    id 'dagger.hilt.android.plugin'
+}
 
 android {
     compileSdk 31
@@ -54,6 +57,10 @@ android {
 }
 
 dependencies {
+    kapt(
+            'com.google.dagger:hilt-compiler:2.38.1'
+    )
+
     annotationProcessor(
             'androidx.room:room-compiler:2.4.1'
     )
@@ -92,6 +99,7 @@ dependencies {
             'androidx.fragment:fragment-ktx:1.2.5',
             'com.github.skydoves:androidveil:1.1.1',
             'androidx.arch.core:core-runtime:2.1.0',
+            'com.google.dagger:hilt-android:2.38.1',
             'com.reddit:indicator-fast-scroll:1.4.0',
             'androidx.legacy:legacy-support-v4:1.0.0',
             'androidx.preference:preference-ktx:1.1.1',
