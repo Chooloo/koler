@@ -19,7 +19,7 @@ open class SettingsController<V : SettingsContract.View>(view: V) :
     override fun onMenuItemClick(menuItem: MenuItem) {
         when (menuItem.itemId) {
             R.id.menu_chooloo_rate -> component.navigations.rateApp()
-            R.id.menu_chooloo_donate -> component.navigations.donate()
+//            R.id.menu_chooloo_donate -> component.navigations.donate()
             R.id.menu_chooloo_email -> component.navigations.sendEmail()
             R.id.menu_chooloo_report_bugs -> component.navigations.reportBug()
             R.id.menu_chooloo_animations -> component.dialogs.askForAnimations {
