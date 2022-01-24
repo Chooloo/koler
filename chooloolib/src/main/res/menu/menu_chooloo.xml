@@ -25,10 +25,10 @@
         android:icon="@drawable/round_star_half_20"
         android:title="@string/pref_title_rate" />
 
-    <item
-        android:id="@+id/menu_chooloo_donate"
-        android:icon="@drawable/round_paid_20"
-        android:title="@string/pref_title_donate" />
+    <!--    <item-->
+    <!--        android:id="@+id/menu_chooloo_donate"-->
+    <!--        android:icon="@drawable/round_paid_20"-->
+    <!--        android:title="@string/pref_title_donate" />-->
 
     <item
         android:id="@+id/menu_chooloo_email"
