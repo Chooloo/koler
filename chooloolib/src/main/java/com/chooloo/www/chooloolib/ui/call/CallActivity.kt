@@ -8,7 +8,9 @@ import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.CallBinding
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
     private lateinit var _controller: CallController<CallActivity>
