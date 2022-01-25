@@ -9,13 +9,8 @@ open class ContactsFragment :
     ListFragment<ContactAccount, ContactsAdapter>(),
     ContactsContract.View {
 
-    @Inject
-    override lateinit var controller: ContactsContract.Controller<ContactsFragment>
+    @Inject override lateinit var controller: ContactsContract.Controller<ContactsFragment>
 
-    override fun onSetup() {
-        controller.initialize()
-        super.onSetup()
-    }
 
     fun applyFilter(filter: String) {
         controller.applyFilter(filter)

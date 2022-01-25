@@ -3,22 +3,14 @@ package com.chooloo.www.chooloolib.ui.recents
 import android.os.Bundle
 import com.chooloo.www.chooloolib.adapter.RecentsAdapter
 import com.chooloo.www.chooloolib.data.account.RecentAccount
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
 import com.chooloo.www.chooloolib.ui.list.ListFragment
-import com.chooloo.www.chooloolib.ui.recent.RecentFragment
+import javax.inject.Inject
 
 class RecentsFragment :
     ListFragment<RecentAccount, RecentsAdapter>(),
     RecentsContract.View {
 
-    override val controller: RecentsController<out RecentsFragment> by lazy {
-        RecentsController(this)
-    }
-
-    override fun onSetup() {
-        controller.initialize()
-        super.onSetup()
-    }
+    @Inject override lateinit var controller: RecentsContract.Controller<out RecentsFragment>
 
 
     companion object {

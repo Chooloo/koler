@@ -17,6 +17,6 @@ interface BaseContract {
 
     interface Controller<out V : View> {
         val view: V
-        fun initialize()
+        fun initialize(){}
     }
 }

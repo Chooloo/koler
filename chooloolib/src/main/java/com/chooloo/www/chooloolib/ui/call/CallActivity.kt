@@ -7,16 +7,20 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.CallBinding
+import com.chooloo.www.chooloolib.interactor.animation.AnimationInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
-    private lateinit var _controller: CallController<CallActivity>
+    override val contentView by lazy { binding.root }
+
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
-    override val contentView by lazy { binding.root }
+    @Inject lateinit var animationInteractor: AnimationInteractor
+    @Inject lateinit var controller: CallContract.Controller<CallActivity>
 
     override var imageURI: Uri?
         get() = null
@@ -37,7 +41,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             val old = binding.callStateText.text.toString()
             binding.callStateText.text = value
             if (old != value) {
-                component.animations.focus(binding.callStateText)
+                animationInteractor.focus(binding.callStateText)
             }
         }
 
@@ -109,14 +113,12 @@ class CallActivity : BaseActivity(), CallContract.View {
 
 
     override fun onSetup() {
-        _controller = CallController(this)
-
         binding.apply {
             imageURI = null
-            callActions.setCallActionsListener(_controller)
-            callAnswerButton.setOnClickListener { _controller.onAnswerClick() }
-            callRejectButton.setOnClickListener { _controller.onRejectClick() }
-            callManageButton.setOnClickListener { _controller.onManageClick() }
+            callActions.setCallActionsListener(controller)
+            callAnswerButton.setOnClickListener { controller.onAnswerClick() }
+            callRejectButton.setOnClickListener { controller.onRejectClick() }
+            callManageButton.setOnClickListener { controller.onManageClick() }
         }
     }
 
@@ -136,10 +138,10 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun setElapsedTime(duration: Long?) {
         duration?.let {
-            component.animations.show(binding.callTimeText, true)
+            animationInteractor.show(binding.callTimeText, true)
             binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
-            component.animations.hide(
+            animationInteractor.hide(
                 binding.callTimeText,
                 ifVisible = true, goneOrInvisible = false
             )
@@ -150,20 +152,20 @@ class CallActivity : BaseActivity(), CallContract.View {
         binding.callBanner.text = number
         if (binding.callBanner.visibility != View.VISIBLE) {
             binding.callBanner.visibility = View.VISIBLE
-            component.animations.show(binding.callBanner, true)
-            component.animations.focus(binding.callBanner)
+            animationInteractor.show(binding.callBanner, true)
+            animationInteractor.focus(binding.callBanner)
         }
     }
 
     override fun hideHoldingBanner() {
-        component.animations.hide(binding.callBanner, ifVisible = true, goneOrInvisible = false)
+        animationInteractor.hide(binding.callBanner, ifVisible = true, goneOrInvisible = false)
     }
 
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
         if (binding.callActions.visibility != View.VISIBLE) {
-            component.animations.show(binding.callActions, true)
+            animationInteractor.show(binding.callActions, true)
         }
     }
 

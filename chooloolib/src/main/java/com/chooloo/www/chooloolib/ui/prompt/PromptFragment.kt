@@ -3,12 +3,15 @@ package com.chooloo.www.chooloolib.ui.prompt
 import android.os.Bundle
 import com.chooloo.www.chooloolib.databinding.PromptBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import javax.inject.Inject
 
 class PromptFragment : BaseFragment(), PromptContract.View {
-    val controller by lazy { PromptController(this) }
+    override val contentView by lazy { binding.root }
+
     private val binding by lazy { PromptBinding.inflate(layoutInflater) }
 
-    override val contentView by lazy { binding.root }
+    @Inject lateinit var controller: PromptContract.Controller<PromptFragment>
+
 
     override var title: String?
         get() = binding.promptTitle.text.toString()
@@ -35,7 +38,6 @@ class PromptFragment : BaseFragment(), PromptContract.View {
 
     companion object {
         const val ARG_TITLE = "title"
-        const val TAG = "prompt_fragment"
         const val ARG_SUBTITLE = "subtitle"
 
         fun newInstance(title: String, subtitle: String) = PromptFragment().apply {

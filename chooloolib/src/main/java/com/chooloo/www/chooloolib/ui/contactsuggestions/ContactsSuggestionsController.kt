@@ -7,18 +7,17 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.contacts.ContactsController
 import javax.inject.Inject
 
-class ContactsSuggestionsController @Inject constructor(
-    view: ContactsSuggestionsFragment,
+class ContactsSuggestionsController<V : ContactsSuggestionsContract.View> @Inject constructor(
+    view: V,
     lifecycleOwner: LifecycleOwner,
     liveDataFactory: LiveDataFactory,
     adapter: ContactsSuggestionsAdapter,
     permissionsInteractor: PermissionsInteractor,
-) :
-    ContactsController<ContactsSuggestionsFragment>(
-        view,
-        adapter,
-        lifecycleOwner,
-        liveDataFactory,
-        permissionsInteractor
-    ) {
+) : ContactsController<V>(
+    view,
+    adapter,
+    lifecycleOwner,
+    liveDataFactory,
+    permissionsInteractor
+), ContactsSuggestionsContract.Controller<V> {
 }

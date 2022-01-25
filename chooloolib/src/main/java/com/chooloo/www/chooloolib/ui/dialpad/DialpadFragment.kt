@@ -5,18 +5,21 @@ import android.view.KeyEvent.ACTION_DOWN
 import android.view.View
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.databinding.DialpadBinding
+import com.chooloo.www.chooloolib.interactor.animation.AnimationInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+import javax.inject.Inject
 
 open class DialpadFragment : BaseFragment(), DialpadContract.View {
     override val contentView by lazy { binding.root }
-    
+
     private var _onTextChangedListener: (text: String) -> Unit = { _ -> }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
-    protected open val controller: DialpadController<out DialpadFragment> by lazy {
-        DialpadController(this)
-    }
+
+    @Inject lateinit var animationInteractor: AnimationInteractor
+    @Inject open lateinit var controller: DialpadContract.Controller<out DialpadFragment>
+
 
     override var text: String
         get() = binding.dialpadEditText.text.toString()
@@ -28,9 +31,9 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
         get() = binding.dialpadButtonDelete.isVisible
         set(value) {
             if (value && !isDeleteButtonVisible) {
-                component.animations.show(binding.dialpadButtonDelete, true)
+                animationInteractor.show(binding.dialpadButtonDelete, true)
             } else if (!value && isDeleteButtonVisible) {
-                component.animations.hide(
+                animationInteractor.hide(
                     binding.dialpadButtonDelete,
                     ifVisible = true,
                     goneOrInvisible = false
@@ -115,8 +118,6 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
 
 
     companion object {
-        const val TAG = "dialpad_bottom_dialog_fragment"
-
         fun newInstance() = DialpadFragment()
     }
 }

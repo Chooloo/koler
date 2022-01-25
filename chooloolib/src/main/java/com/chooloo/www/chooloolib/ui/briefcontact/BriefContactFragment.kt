@@ -8,14 +8,17 @@ import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.databinding.BriefContactBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
+import javax.inject.Inject
 
 open class BriefContactFragment : BaseFragment(), BriefContactContract.View {
     override val contentView by lazy { binding.root }
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
 
-    private lateinit var controller: BriefContactController<BriefContactFragment>
     protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
-    protected val phonesFragment by lazy { PhonesFragment.newInstance(contactId) }
+
+    @Inject lateinit var phonesFragment: PhonesFragment
+    @Inject lateinit var controller: BriefContactContract.Controller<BriefContactFragment>
+
 
     override var contactName: String?
         get() = binding.briefContactTextName.text.toString()
@@ -40,8 +43,6 @@ open class BriefContactFragment : BaseFragment(), BriefContactContract.View {
 
 
     override fun onSetup() {
-        controller = BriefContactController(this)
-
         binding.apply {
             contactButtonSms.setOnClickListener { controller.onActionSms() }
             contactButtonCall.setOnClickListener { controller.onActionCall() }
@@ -57,7 +58,6 @@ open class BriefContactFragment : BaseFragment(), BriefContactContract.View {
 
 
     companion object {
-        const val TAG = "contact_fragment"
         const val ARG_CONTACT_ID = "contact_id"
 
         fun newInstance(contactId: Long) = BriefContactFragment().apply {

@@ -4,9 +4,10 @@ import android.view.View
 import com.chooloo.www.chooloolib.adapter.CallItemsAdapter
 import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.ui.list.ListFragment
+import javax.inject.Inject
 
 class CallItemsFragment : ListFragment<Call, CallItemsAdapter>(), CallItemsContract.View {
-    override val controller by lazy { CallItemsController(this) }
+    @Inject override lateinit var controller: CallItemsContract.Controller<CallItemsFragment>
 
 
     override fun showEmpty(isShow: Boolean) {
@@ -19,8 +20,6 @@ class CallItemsFragment : ListFragment<Call, CallItemsAdapter>(), CallItemsContr
 
 
     companion object {
-        const val TAG = "call_items_fragment"
-
         fun newInstance() = CallItemsFragment()
     }
 }

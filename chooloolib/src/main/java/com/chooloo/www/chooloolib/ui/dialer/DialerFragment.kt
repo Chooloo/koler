@@ -6,11 +6,13 @@ import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
 import com.chooloo.www.chooloolib.ui.contactsuggestions.ContactsSuggestionsFragment
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
+import javax.inject.Inject
 
 class DialerFragment : DialpadFragment(), DialerContract.View {
     private val _suggestionsFragment by lazy { ContactsSuggestionsFragment.newInstance() }
 
-    override val controller by lazy { DialerController(this) }
+    @Inject override lateinit var controller: DialerContract.Controller<DialerFragment>
+
 
     override val suggestionsCount: Int
         get() = _suggestionsFragment.controller.adapter.itemCount
@@ -19,9 +21,9 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
         get() = binding.dialpadSuggestionsScrollView.visibility == View.VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                component.animations.show(binding.dialpadSuggestionsScrollView, true)
+                animationInteractor.show(binding.dialpadSuggestionsScrollView, true)
             } else if (!value && isSuggestionsVisible) {
-                component.animations.hide(binding.dialpadSuggestionsScrollView, true, true)
+                animationInteractor.hide(binding.dialpadSuggestionsScrollView, true, true)
             }
         }
 
@@ -29,9 +31,9 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
         get() = binding.dialpadButtonAddContact.visibility == View.VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                component.animations.show(binding.dialpadButtonAddContact, true)
+                animationInteractor.show(binding.dialpadButtonAddContact, true)
             } else if (!value && isAddContactButtonVisible) {
-                component.animations.hide(binding.dialpadButtonAddContact, true, false)
+                animationInteractor.hide(binding.dialpadButtonAddContact, true, false)
             }
         }
 
@@ -74,7 +76,6 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
     }
 
     companion object {
-        const val TAG = "dialer_fragment"
         private const val ARG_NUMBER = "number"
 
         fun newInstance(text: String? = null) = DialerFragment().apply {

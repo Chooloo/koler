@@ -4,7 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
-open class BaseController<V : BaseContract.View> @Inject constructor(
+open class BaseController<V : BaseContract.View>(
     final override var view: V
 ) :
     BaseContract.Controller<V>,
@@ -21,6 +21,4 @@ open class BaseController<V : BaseContract.View> @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     protected open fun onStop() {
     }
-
-    fun initialize(){}
 }

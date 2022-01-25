@@ -5,19 +5,15 @@ import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.chooloolib.ui.list.ListFragment
+import javax.inject.Inject
 
 class PhonesFragment :
     ListFragment<PhoneAccount, PhonesAdapter>(),
     PhonesContract.View {
 
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
-    override lateinit var controller: PhonesController<PhonesFragment>
 
-
-    override fun onSetup() {
-        controller = PhonesController(this)
-        super.onSetup()
-    }
+    @Inject override lateinit var controller: PhonesContract.Controller<PhonesFragment>
 
 
     companion object {
