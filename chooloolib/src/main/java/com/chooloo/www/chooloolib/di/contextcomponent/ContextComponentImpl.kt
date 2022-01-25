@@ -28,6 +28,8 @@ import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.drawable.DrawableInteractorImpl
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractorImpl
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractorImpl
+import com.chooloo.www.chooloolib.interactor.proximity.ProximityInteractor
+import com.chooloo.www.chooloolib.interactor.proximity.ProximityInteractorImpl
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.string.StringInteractorImpl
 import com.chooloo.www.chooloolib.util.PreferencesManager
@@ -118,6 +120,10 @@ open class ContextComponentImpl(
 
     override val callAudios by lazy {
         CallAudioInteractorImpl()
+    }
+
+    override val proximities by lazy {
+        ProximityInteractorImpl(powerManager)
     }
 
     override val preferences by lazy {

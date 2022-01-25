@@ -1,6 +1,5 @@
 package com.chooloo.www.chooloolib.interactor.animation
 
-import android.animation.Animator
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -15,8 +14,12 @@ import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AnimationInteractorImpl(
+@Singleton
+class AnimationInteractorImpl @Inject constructor(
     private val preferencesInteractor: PreferencesInteractor
 ) :
     BaseObservable<AnimationInteractor.Listener>(),

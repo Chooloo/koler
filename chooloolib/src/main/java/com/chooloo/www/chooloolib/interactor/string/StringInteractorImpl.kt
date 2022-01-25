@@ -2,9 +2,13 @@ package com.chooloo.www.chooloolib.interactor.string
 
 import android.content.Context
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class StringInteractorImpl(
-    internal val context: Context
+@Singleton
+class StringInteractorImpl @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : BaseObservable<StringInteractor.Listener>(), StringInteractor {
     override fun getString(stringRes: Int) = context.getString(stringRes)
 }

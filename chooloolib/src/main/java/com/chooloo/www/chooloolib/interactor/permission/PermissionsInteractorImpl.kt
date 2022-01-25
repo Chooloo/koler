@@ -12,9 +12,12 @@ import com.chooloo.www.chooloolib.interactor.string.StringInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionsActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
 
-class PermissionsInteractorImpl(
+@ActivityScoped
+class PermissionsInteractorImpl @Inject constructor(
     private val activity: BaseActivity,
     private val strings: StringInteractor,
     private val telecomManager: TelecomManager

@@ -5,7 +5,6 @@ import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractorImpl
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractorImpl
-import com.chooloo.www.chooloolib.interactor.proximity.ProximityInteractorImpl
 import com.chooloo.www.chooloolib.interactor.screen.ScreenInteractorImpl
 import com.chooloo.www.chooloolib.interactor.sim.SimInteractorImpl
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
@@ -60,10 +59,6 @@ open class ActivityComponentImpl(
         PromptInteractorImpl(fragmentManager)
     }
 
-    override val proximities by lazy {
-        ProximityInteractorImpl(activity, powerManager)
-    }
-
     override val permissions by lazy {
         PermissionsInteractorImpl(
             activity,
@@ -109,5 +104,6 @@ open class ActivityComponentImpl(
     override val contacts get() = contextComponent.contacts
     override val callAudios get() = contextComponent.callAudios
     override val animations get() = contextComponent.animations
+    override val proximities get() = contextComponent.proximities
     override val preferences get() = contextComponent.preferences
 }

@@ -6,8 +6,11 @@ import android.provider.BlockedNumberContract
 import android.provider.BlockedNumberContract.BlockedNumbers
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.util.annotation.RequiresDefaultDialer
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class BlockedInteractorImpl(
+@Singleton
+class BlockedInteractorImpl @Inject constructor(
     private val context: Context
 ) : BaseInteractorImpl<BlockedInteractor.Listener>(), BlockedInteractor {
     @RequiresDefaultDialer

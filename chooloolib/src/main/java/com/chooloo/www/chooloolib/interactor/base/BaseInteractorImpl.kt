@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.collections.HashSet
 
 
-open class BaseInteractorImpl<Listener> : BaseInteractor<Listener> {
+abstract class BaseInteractorImpl<Listener> : BaseInteractor<Listener> {
     private val _listeners by lazy { HashSet<Listener>() }
 
     val listeners: Set<Listener>

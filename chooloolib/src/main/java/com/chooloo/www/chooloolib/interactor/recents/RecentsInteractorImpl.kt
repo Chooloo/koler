@@ -8,9 +8,14 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
 import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RecentsInteractorImpl(private val context: Context) :
-    BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
+@Singleton
+class RecentsInteractorImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
 
     @RequiresPermission(WRITE_CALL_LOG)
     override fun deleteRecent(recentId: Long) {

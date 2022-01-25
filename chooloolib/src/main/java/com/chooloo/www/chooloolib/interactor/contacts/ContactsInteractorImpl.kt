@@ -12,8 +12,11 @@ import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.util.annotation.RequiresDefaultDialer
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ContactsInteractorImpl(
+@Singleton
+class ContactsInteractorImpl @Inject constructor(
     private val context: Context,
     private val blockedInteractor: BlockedInteractor,
     private val phonesInteractor: PhonesInteractor,

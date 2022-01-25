@@ -21,6 +21,7 @@ import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
 import com.chooloo.www.chooloolib.interactor.drawable.DrawableInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.proximity.ProximityInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringInteractor
 import com.chooloo.www.chooloolib.util.PreferencesManager
@@ -46,9 +47,10 @@ interface ContextComponent {
     val strings: StringInteractor
     val blocked: BlockedInteractor
     val recents: RecentsInteractor
-    val drawables: DrawableInteractor
     val contacts: ContactsInteractor
+    val drawables: DrawableInteractor
     val animations: AnimationInteractor
     val callAudios: CallAudioInteractor
+    val proximities: ProximityInteractor
     val preferences: PreferencesInteractor
 }

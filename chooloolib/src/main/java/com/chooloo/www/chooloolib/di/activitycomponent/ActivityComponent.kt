@@ -27,7 +27,6 @@ interface ActivityComponent : ContextComponent {
     val screens: ScreenInteractor
     val prompts: PromptInteractor
     val dialogs: DialogsInteractor
-    val proximities: ProximityInteractor
     val permissions: PermissionsInteractor
     val navigations: NavigationInteractor
 }

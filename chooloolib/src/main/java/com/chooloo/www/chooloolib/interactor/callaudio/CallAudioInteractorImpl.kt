@@ -5,8 +5,11 @@ import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.Audio
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.AudioRoute.*
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-open class CallAudioInteractorImpl :
+@Singleton
+open class CallAudioInteractorImpl @Inject constructor() :
     BaseObservable<CallAudioInteractor.Listener>(),
     CallAudioInteractor {
 

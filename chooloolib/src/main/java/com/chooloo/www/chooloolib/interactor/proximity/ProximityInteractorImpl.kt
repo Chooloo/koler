@@ -2,20 +2,18 @@ package com.chooloo.www.chooloolib.interactor.proximity
 
 import android.os.PowerManager
 import android.os.PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProximityInteractorImpl(
-    private val activity: BaseActivity,
+@Singleton
+class ProximityInteractorImpl @Inject constructor(
     private val powerManager: PowerManager
 ) : BaseObservable<ProximityInteractor.Listener>(),
     ProximityInteractor {
 
     private val _wakeLock by lazy {
-        powerManager.newWakeLock(
-            PROXIMITY_SCREEN_OFF_WAKE_LOCK,
-            activity.localClassName
-        )
+        powerManager.newWakeLock(PROXIMITY_SCREEN_OFF_WAKE_LOCK, "koler:screen_wake_lock")
     }
 
     override fun acquire() {

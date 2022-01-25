@@ -11,8 +11,11 @@ import android.view.KeyEvent
 import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor.AudioMode
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AudioInteractorImpl(
+@Singleton
+class AudioInteractorImpl @Inject constructor(
     private val vibrator: Vibrator,
     private val audioManager: AudioManager
 ) : BaseInteractorImpl<AudioInteractor.Listener>(), AudioInteractor {

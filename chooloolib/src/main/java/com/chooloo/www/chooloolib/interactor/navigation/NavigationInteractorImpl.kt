@@ -21,8 +21,11 @@ import com.chooloo.www.chooloolib.interactor.sim.SimInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
-class NavigationInteractorImpl(
+@ActivityScoped
+class NavigationInteractorImpl @Inject constructor(
     private val sims: SimInteractor,
     private val activity: BaseActivity,
     private val dialogs: DialogsInteractor,

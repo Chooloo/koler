@@ -4,8 +4,12 @@ import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.data.call.Call.State.*
 import com.chooloo.www.chooloolib.data.call.CallList
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CallsInteractorImpl : BaseObservable<CallsInteractor.Listener>(), CallsInteractor {
+@Singleton
+class CallsInteractorImpl @Inject constructor() : BaseObservable<CallsInteractor.Listener>(),
+    CallsInteractor {
     private val _callList: CallList = CallList()
 
     override val mainCall: Call?

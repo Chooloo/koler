@@ -11,12 +11,15 @@ import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
-class SimInteractorImpl(
-    internal val activity: BaseActivity,
+@ActivityScoped
+class SimInteractorImpl @Inject constructor(
+    private val activity: BaseActivity,
     private val telecomManager: TelecomManager,
     private val subscriptionManager: SubscriptionManager,
-    internal val permissionsInteractor: PermissionsInteractor
+    private val permissionsInteractor: PermissionsInteractor
 ) : BaseObservable<SimInteractor.Listener>(), SimInteractor {
     @SuppressLint("MissingPermission")
     override fun getIsMultiSim(callback: (isMultiSim: Boolean) -> Unit) {

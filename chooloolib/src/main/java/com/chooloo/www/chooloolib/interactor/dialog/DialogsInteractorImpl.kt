@@ -10,9 +10,12 @@ import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.scopes.ActivityScoped
 import dev.sasikanth.colorsheet.ColorSheet
+import javax.inject.Inject
 
-class DialogsInteractorImpl(
+@ActivityScoped
+class DialogsInteractorImpl @Inject constructor(
     private val activity: BaseActivity,
     private val prompts: PromptInteractor
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
