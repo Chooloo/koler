@@ -15,7 +15,8 @@ interface BaseContract {
         fun showMessage(@StringRes stringResId: Int)
     }
 
-    interface Controller<V : View> {
+    interface Controller<out V : View> {
         val view: V
+        fun initialize()
     }
 }

@@ -4,7 +4,7 @@ import android.view.MenuItem
 import com.chooloo.www.chooloolib.ui.settings.SettingsController
 import com.chooloo.www.koler.R
 
-class SettingsController<V : SettingsContract.View>(view: V) :
+class SettingsController<V : SettingsContract.View> @Inject constructor(view: V) :
     SettingsController<V>(view),
     SettingsContract.Controller<V> {
 

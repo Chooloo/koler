@@ -17,6 +17,7 @@ interface ListContract : BaseContract {
     }
 
     interface Controller<ItemType, V : View<ItemType>> : BaseContract.Controller<V> {
+        fun applyFilter(filter: String)
         fun onItemClick(item: ItemType) {}
         fun onItemLongClick(item: ItemType) {}
         fun setOnItemClickListener(onItemClickListener: (ItemType) -> Unit)

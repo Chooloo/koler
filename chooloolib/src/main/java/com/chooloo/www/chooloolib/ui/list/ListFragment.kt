@@ -60,5 +60,5 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     }
 
 
-    abstract val controller: ListController<ItemType, out ListFragment<ItemType, Adapter>>
+    abstract val controller: ListContract.Controller<ItemType, out ListFragment<ItemType, out Adapter>>
 }

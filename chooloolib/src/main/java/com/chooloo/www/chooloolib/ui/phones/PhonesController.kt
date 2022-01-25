@@ -1,19 +1,31 @@
 package com.chooloo.www.chooloolib.ui.phones
 
 import android.content.ClipData
+import android.content.ClipboardManager
+import androidx.lifecycle.LifecycleOwner
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
+import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListController
+import javax.inject.Inject
 
-class PhonesController<V : PhonesContract.View>(view: V) :
-    ListController<PhoneAccount, V>(view),
+class PhonesController<V : PhonesContract.View> @Inject constructor(
+    view: V,
+    private val phonesAdapter: PhonesAdapter,
+    private val lifecycleOwner: LifecycleOwner,
+    private val liveDataFactory: LiveDataFactory,
+    private val clipboardManager: ClipboardManager,
+    private val navigationInteractor: NavigationInteractor,
+    private val permissionsInteractor: PermissionsInteractor
+) :
+    ListController<PhoneAccount, V>(view, phonesAdapter),
     PhonesContract.Controller<V> {
 
-    override val adapter by lazy { PhonesAdapter(component) }
-
     private val phonesLiveData by lazy {
-        component.liveDataFactory.allocPhonesProviderLiveData(if (view.contactId == 0L) null else view.contactId)
+        liveDataFactory.allocPhonesProviderLiveData(if (view.contactId == 0L) null else view.contactId)
     }
 
 
@@ -28,20 +40,20 @@ class PhonesController<V : PhonesContract.View>(view: V) :
     }
 
     override fun onItemClick(item: PhoneAccount) {
-        component.navigations.call(item.number)
+        navigationInteractor.call(item.number)
     }
 
     override fun onItemLongClick(item: PhoneAccount) {
-        component.clipboardManager.setPrimaryClip(
+        clipboardManager.setPrimaryClip(
             ClipData.newPlainText("Copied number", item.number)
         )
         view.showMessage(R.string.number_copied_to_clipboard)
     }
 
     override fun fetchData(callback: (items: List<PhoneAccount>, hasPermissions: Boolean) -> Unit) {
-        component.permissions.runWithReadContactsPermissions {
+        permissionsInteractor.runWithReadContactsPermissions {
             if (it) {
-                phonesLiveData.observe(component.lifecycleOwner) { data ->
+                phonesLiveData.observe(lifecycleOwner) { data ->
                     callback.invoke(data, true)
                 }
             } else {

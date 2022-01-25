@@ -1,8 +1,11 @@
 package com.chooloo.www.chooloolib.ui.prompt
 
 import com.chooloo.www.chooloolib.ui.base.BaseController
+import javax.inject.Inject
 
-class PromptController<V : PromptContract.View>(view: V) :
+class PromptController<V : PromptContract.View> @Inject constructor(
+    view: V
+) :
     BaseController<V>(view),
     PromptContract.Controller<V> {
 

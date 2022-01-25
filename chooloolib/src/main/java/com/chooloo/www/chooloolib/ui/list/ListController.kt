@@ -4,7 +4,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.chooloolib.adapter.ListAdapter
 import com.chooloo.www.chooloolib.ui.base.BaseController
 
-abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V) :
+abstract class ListController<ItemType, V : ListContract.View<ItemType>>(
+    view: V,
+    private val adapter: ListAdapter<ItemType>
+) :
     BaseController<V>(view),
     ListContract.Controller<ItemType, V> {
 
@@ -78,9 +81,8 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(view: V
     protected open val noResultsIconRes: Int? = null
     protected open val noResultsTextRes: Int? = null
     protected open val noPermissionsTextRes: Int? = null
-    abstract val adapter: ListAdapter<ItemType>
 
-    open fun applyFilter(filter: String) {
+    override fun applyFilter(filter: String) {
         try {
             adapter.titleFilter = filter
         } catch (e: NullPointerException) {

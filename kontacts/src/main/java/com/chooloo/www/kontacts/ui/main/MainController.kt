@@ -6,7 +6,7 @@ import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.chooloolib.ui.settings.SettingsFragment
 import com.chooloo.www.kontacts.R
 
-class MainController<V : MainContract.View>(view: V) :
+class MainController<V : MainContract.View> @Inject constructor(view: V) :
     BaseController<V>(view),
     MainContract.Controller<V> {
 

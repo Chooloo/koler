@@ -1,23 +1,30 @@
 package com.chooloo.www.chooloolib.ui.contacts
 
+import androidx.lifecycle.LifecycleOwner
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.ContactsAdapter
 import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListController
+import javax.inject.Inject
 
-open class ContactsController<V : ContactsContract.View>(view: V) :
-    ListController<ContactAccount, V>(view),
+open class ContactsController<V : ContactsContract.View> @Inject constructor(
+    view: V,
+    contactsAdapter: ContactsAdapter,
+    private val lifecycleOwner: LifecycleOwner,
+    private val liveDataFactory: LiveDataFactory,
+    private val permissionsInteractor: PermissionsInteractor,
+) :
+    ListController<ContactAccount, V>(view, contactsAdapter),
     ContactsContract.Controller<V> {
 
-    override val adapter by lazy { ContactsAdapter(component) }
     override val noResultsIconRes = R.drawable.round_people_24
     override val noResultsTextRes = R.string.error_no_results_contacts
     override val noPermissionsTextRes = R.string.error_no_permissions_contacts
 
 
-    private val contactsLiveData by lazy {
-        component.liveDataFactory.allocContactsProviderLiveData()
-    }
+    private val contactsLiveData by lazy { liveDataFactory.allocContactsProviderLiveData() }
 
     override fun applyFilter(filter: String) {
         super.applyFilter(filter)
@@ -28,9 +35,9 @@ open class ContactsController<V : ContactsContract.View>(view: V) :
     }
 
     override fun fetchData(callback: (List<ContactAccount>, hasPermissions: Boolean) -> Unit) {
-        component.permissions.runWithReadContactsPermissions {
+        permissionsInteractor.runWithReadContactsPermissions {
             if (it) {
-                contactsLiveData.observe(component.lifecycleOwner) { data ->
+                contactsLiveData.observe(lifecycleOwner) { data ->
                     callback.invoke(data, true)
                 }
             } else {

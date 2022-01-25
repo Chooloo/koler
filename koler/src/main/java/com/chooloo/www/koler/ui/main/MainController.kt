@@ -13,7 +13,7 @@ import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
 import com.chooloo.www.koler.ui.settings.SettingsFragment
 import java.net.URLDecoder
 
-class MainController<V : MainContract.View>(view: V) :
+class MainController<V : MainContract.View> @Inject constructor(view: V) :
     BaseController<V>(view),
     MainContract.Controller<V> {
 

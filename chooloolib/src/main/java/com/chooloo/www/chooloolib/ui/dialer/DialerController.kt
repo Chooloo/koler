@@ -2,9 +2,16 @@ package com.chooloo.www.chooloolib.ui.dialer
 
 import android.view.KeyEvent.KEYCODE_1
 import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractor
+import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadController
+import javax.inject.Inject
 
-class DialerController<V : DialerContract.View>(view: V) :
+class DialerController<V : DialerContract.View> @Inject constructor(
+    view: V,
+    private val recentsInteractor: RecentsInteractor,
+    private val navigationInteractor: NavigationInteractor
+) :
     DialpadController<V>(view),
     DialerContract.Controller<V> {
 
@@ -15,7 +22,7 @@ class DialerController<V : DialerContract.View>(view: V) :
 
     override fun onLongKeyClick(keyCode: Int): Boolean {
         return if (keyCode == KEYCODE_1) {
-            component.navigations.callVoicemail()
+            navigationInteractor.callVoicemail()
             true
         } else {
             super.onLongKeyClick(keyCode)
@@ -24,14 +31,14 @@ class DialerController<V : DialerContract.View>(view: V) :
 
     override fun onCallClick() {
         if (view.text.isEmpty()) {
-            view.text = component.recents.getLastOutgoingCall()
+            view.text = recentsInteractor.getLastOutgoingCall()
         } else {
-            component.navigations.call(view.text)
+            navigationInteractor.call(view.text)
         }
     }
 
     override fun onAddContactClick() {
-        component.navigations.addContact(view.text)
+        navigationInteractor.addContact(view.text)
     }
 
     override fun onTextChanged(text: String?) {
