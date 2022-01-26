@@ -15,12 +15,12 @@ import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
-class SimInteractorImpl @Inject constructor(
+class SimsInteractorImpl @Inject constructor(
     private val activity: BaseActivity,
     private val telecomManager: TelecomManager,
     private val subscriptionManager: SubscriptionManager,
     private val permissionsInteractor: PermissionsInteractor
-) : BaseObservable<SimInteractor.Listener>(), SimInteractor {
+) : BaseObservable<SimsInteractor.Listener>(), SimsInteractor {
     @SuppressLint("MissingPermission")
     override fun getIsMultiSim(callback: (isMultiSim: Boolean) -> Unit) {
         permissionsInteractor.runWithPermissions(arrayOf(READ_PHONE_STATE), {

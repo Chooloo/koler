@@ -7,7 +7,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.CallBinding
-import com.chooloo.www.chooloolib.interactor.animation.AnimationInteractor
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,7 +19,7 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var animationInteractor: AnimationInteractor
+    @Inject lateinit var animationsInteractor: AnimationsInteractor
     @Inject lateinit var controller: CallContract.Controller<CallActivity>
 
     override var imageURI: Uri?
@@ -41,7 +41,7 @@ class CallActivity : BaseActivity(), CallContract.View {
             val old = binding.callStateText.text.toString()
             binding.callStateText.text = value
             if (old != value) {
-                animationInteractor.focus(binding.callStateText)
+                animationsInteractor.focus(binding.callStateText)
             }
         }
 
@@ -138,10 +138,10 @@ class CallActivity : BaseActivity(), CallContract.View {
 
     override fun setElapsedTime(duration: Long?) {
         duration?.let {
-            animationInteractor.show(binding.callTimeText, true)
+            animationsInteractor.show(binding.callTimeText, true)
             binding.callTimeText.text = DateUtils.formatElapsedTime(duration / 1000)
         } ?: run {
-            animationInteractor.hide(
+            animationsInteractor.hide(
                 binding.callTimeText,
                 ifVisible = true, goneOrInvisible = false
             )
@@ -152,20 +152,20 @@ class CallActivity : BaseActivity(), CallContract.View {
         binding.callBanner.text = number
         if (binding.callBanner.visibility != View.VISIBLE) {
             binding.callBanner.visibility = View.VISIBLE
-            animationInteractor.show(binding.callBanner, true)
-            animationInteractor.focus(binding.callBanner)
+            animationsInteractor.show(binding.callBanner, true)
+            animationsInteractor.focus(binding.callBanner)
         }
     }
 
     override fun hideHoldingBanner() {
-        animationInteractor.hide(binding.callBanner, ifVisible = true, goneOrInvisible = false)
+        animationsInteractor.hide(binding.callBanner, ifVisible = true, goneOrInvisible = false)
     }
 
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
         if (binding.callActions.visibility != View.VISIBLE) {
-            animationInteractor.show(binding.callActions, true)
+            animationsInteractor.show(binding.callActions, true)
         }
     }
 

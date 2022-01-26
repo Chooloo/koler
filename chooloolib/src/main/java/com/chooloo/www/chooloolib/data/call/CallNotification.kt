@@ -18,7 +18,7 @@ import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.call.Call.State.DISCONNECTED
 import com.chooloo.www.chooloolib.data.call.Call.State.DISCONNECTING
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
@@ -32,7 +32,7 @@ import com.chooloo.www.chooloolib.util.SingletonHolder
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification(
     private val context: Context
-) : CallsInteractor.Listener, CallAudioInteractor.Listener {
+) : CallsInteractor.Listener, CallAudiosInteractor.Listener {
     private var _call: Call? = null
     private val component by lazy { (context.applicationContext as BaseApp).component }
 
@@ -55,7 +55,7 @@ class CallNotification(
         _call?.let { show(it) }
     }
 
-    override fun onAudioRouteChanged(audioRoute: CallAudioInteractor.AudioRoute) {
+    override fun onAudioRouteChanged(audiosRoute: CallAudiosInteractor.AudioRoute) {
         _call?.let { show(it) }
     }
 

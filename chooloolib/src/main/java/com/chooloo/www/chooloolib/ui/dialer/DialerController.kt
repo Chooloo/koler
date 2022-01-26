@@ -2,19 +2,19 @@ package com.chooloo.www.chooloolib.ui.dialer
 
 import android.view.KeyEvent.KEYCODE_1
 import com.chooloo.www.chooloolib.data.account.ContactAccount
-import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractor
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadController
 import javax.inject.Inject
 
 class DialerController<V : DialerContract.View> @Inject constructor(
     view: V,
-    audioInteractor: AudioInteractor,
+    audiosInteractor: AudiosInteractor,
     private val recentsInteractor: RecentsInteractor,
-    private val navigationInteractor: NavigationInteractor
+    private val navigationsInteractor: NavigationsInteractor
 ) :
-    DialpadController<V>(view, audioInteractor),
+    DialpadController<V>(view, audiosInteractor),
     DialerContract.Controller<V> {
 
     override fun onStart() {
@@ -24,7 +24,7 @@ class DialerController<V : DialerContract.View> @Inject constructor(
 
     override fun onLongKeyClick(keyCode: Int): Boolean {
         return if (keyCode == KEYCODE_1) {
-            navigationInteractor.callVoicemail()
+            navigationsInteractor.callVoicemail()
             true
         } else {
             super.onLongKeyClick(keyCode)
@@ -35,12 +35,12 @@ class DialerController<V : DialerContract.View> @Inject constructor(
         if (view.text.isEmpty()) {
             view.text = recentsInteractor.getLastOutgoingCall()
         } else {
-            navigationInteractor.call(view.text)
+            navigationsInteractor.call(view.text)
         }
     }
 
     override fun onAddContactClick() {
-        navigationInteractor.addContact(view.text)
+        navigationsInteractor.addContact(view.text)
     }
 
     override fun onTextChanged(text: String?) {

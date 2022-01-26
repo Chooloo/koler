@@ -7,7 +7,7 @@ import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 
 interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
@@ -46,5 +46,5 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     fun askForShowBlock(callback: (isShowBlock: Boolean) -> Unit)
     fun askForAnimations(callback: (isAnimations: Boolean) -> Unit)
     fun askForShouldAskSim(callback: (shouldAskSim: Boolean) -> Unit)
-    fun askForRoute(callback: (CallAudioInteractor.AudioRoute) -> Unit)
+    fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit)
 }

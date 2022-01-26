@@ -6,7 +6,7 @@ import com.chooloo.www.chooloolib.data.account.ContactAccount
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
 import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractor
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
@@ -17,7 +17,7 @@ class BriefContactController<V : BriefContactContract.View> @Inject constructor(
     private val phonesInteractor: PhonesInteractor,
     private val dialogsInteractor: DialogsInteractor,
     private val contactsInteractor: ContactsInteractor,
-    private val navigationInteractor: NavigationInteractor,
+    private val navigationsInteractor: NavigationsInteractor,
     private val permissionsInteractor: PermissionsInteractor
 ) :
     BaseController<V>(view),
@@ -42,21 +42,21 @@ class BriefContactController<V : BriefContactContract.View> @Inject constructor(
     }
 
     override fun onActionCall() {
-        _firstPhone?.number?.let { navigationInteractor.call(it) } ?: run {
+        _firstPhone?.number?.let { navigationsInteractor.call(it) } ?: run {
             view.showError(R.string.error_no_number_to_call)
         }
     }
 
     override fun onActionSms() {
-        _firstPhone?.number?.let { navigationInteractor.sendSMS(it) }
+        _firstPhone?.number?.let { navigationsInteractor.sendSMS(it) }
     }
 
     override fun onActionEdit() {
-        navigationInteractor.editContact(view.contactId)
+        navigationsInteractor.editContact(view.contactId)
     }
 
     override fun onActionInfo() {
-        navigationInteractor.viewContact(view.contactId)
+        navigationsInteractor.viewContact(view.contactId)
     }
 
     override fun onActionDelete() {

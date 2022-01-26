@@ -7,8 +7,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StringInteractorImpl @Inject constructor(
+class StringsInteractorImpl @Inject constructor(
     @ApplicationContext private val context: Context
-) : BaseObservable<StringInteractor.Listener>(), StringInteractor {
+) : BaseObservable<StringsInteractor.Listener>(), StringsInteractor {
     override fun getString(stringRes: Int) = context.getString(stringRes)
 }

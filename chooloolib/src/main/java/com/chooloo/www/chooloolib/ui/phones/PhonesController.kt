@@ -7,7 +7,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
 import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractor
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListController
 import javax.inject.Inject
@@ -18,7 +18,7 @@ class PhonesController<V : PhonesContract.View> @Inject constructor(
     private val lifecycleOwner: LifecycleOwner,
     private val liveDataFactory: LiveDataFactory,
     private val clipboardManager: ClipboardManager,
-    private val navigationInteractor: NavigationInteractor,
+    private val navigationsInteractor: NavigationsInteractor,
     private val permissionsInteractor: PermissionsInteractor
 ) :
     ListController<PhoneAccount, V>(view, phonesAdapter),
@@ -40,7 +40,7 @@ class PhonesController<V : PhonesContract.View> @Inject constructor(
     }
 
     override fun onItemClick(item: PhoneAccount) {
-        navigationInteractor.call(item.number)
+        navigationsInteractor.call(item.number)
     }
 
     override fun onItemLongClick(item: PhoneAccount) {

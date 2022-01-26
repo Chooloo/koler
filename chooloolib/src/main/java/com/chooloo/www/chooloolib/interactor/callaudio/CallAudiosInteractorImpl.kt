@@ -1,17 +1,17 @@
 package com.chooloo.www.chooloolib.interactor.callaudio
 
 import android.telecom.CallAudioState
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.AudioRoute
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.AudioRoute.*
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute.*
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class CallAudioInteractorImpl @Inject constructor() :
-    BaseObservable<CallAudioInteractor.Listener>(),
-    CallAudioInteractor {
+open class CallAudiosInteractorImpl @Inject constructor() :
+    BaseObservable<CallAudiosInteractor.Listener>(),
+    CallAudiosInteractor {
 
     private val callAudioState get() = CallService.sInstance?.callAudioState
 

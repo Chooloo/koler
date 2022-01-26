@@ -3,10 +3,10 @@ package com.chooloo.www.chooloolib.ui.recent
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationInteractor
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
@@ -17,11 +17,11 @@ import javax.inject.Inject
 class RecentController<V : RecentContract.View> @Inject constructor(
     view: V,
     private val phonesInteractor: PhonesInteractor,
-    private val promptInteractor: PromptInteractor,
+    private val promptsInteractor: PromptsInteractor,
     private val recentsInteractor: RecentsInteractor,
     private val blockedInteractor: BlockedInteractor,
     private val dialogsInteractor: DialogsInteractor,
-    private val navigationInteractor: NavigationInteractor,
+    private val navigationsInteractor: NavigationsInteractor,
     private val permissionsInteractor: PermissionsInteractor
 ) :
     BaseController<V>(view),
@@ -59,11 +59,11 @@ class RecentController<V : RecentContract.View> @Inject constructor(
     }
 
     override fun onActionSms() {
-        _recent?.let { navigationInteractor.sendSMS(it.number) }
+        _recent?.let { navigationsInteractor.sendSMS(it.number) }
     }
 
     override fun onActionCall() {
-        _recent?.let { navigationInteractor.call(it.number) }
+        _recent?.let { navigationsInteractor.call(it.number) }
     }
 
     override fun onActionDelete() {
@@ -82,14 +82,14 @@ class RecentController<V : RecentContract.View> @Inject constructor(
     }
 
     override fun onActionAddContact() {
-        _recent?.let { navigationInteractor.addContact(it.number) }
+        _recent?.let { navigationsInteractor.addContact(it.number) }
     }
 
     override fun onActionOpenContact() {
         _recent?.let {
             phonesInteractor.lookupAccount(it.number) { account ->
                 account?.contactId?.let { id ->
-                    promptInteractor.showFragment(BriefContactFragment.newInstance(id))
+                    promptsInteractor.showFragment(BriefContactFragment.newInstance(id))
                 }
             }
         }
@@ -97,7 +97,7 @@ class RecentController<V : RecentContract.View> @Inject constructor(
 
     override fun onActionShowHistory() {
         _recent?.let {
-            promptInteractor.showFragment(RecentsFragment.newInstance(it.number).apply {
+            promptsInteractor.showFragment(RecentsFragment.newInstance(it.number).apply {
                 controller.setOnItemClickListener { recent ->
                     component.prompts.showFragment(RecentFragment.newInstance(recent.id))
                 }

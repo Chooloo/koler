@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
-import com.chooloo.www.chooloolib.ui.contactsuggestions.ContactsSuggestionsFragment
+import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsFragment
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 import javax.inject.Inject
 
@@ -21,9 +21,9 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
         get() = binding.dialpadSuggestionsScrollView.visibility == View.VISIBLE
         set(value) {
             if (value && !isSuggestionsVisible) {
-                animationInteractor.show(binding.dialpadSuggestionsScrollView, true)
+                animationsInteractor.show(binding.dialpadSuggestionsScrollView, true)
             } else if (!value && isSuggestionsVisible) {
-                animationInteractor.hide(binding.dialpadSuggestionsScrollView, true, true)
+                animationsInteractor.hide(binding.dialpadSuggestionsScrollView, true, true)
             }
         }
 
@@ -31,9 +31,9 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
         get() = binding.dialpadButtonAddContact.visibility == View.VISIBLE
         set(value) {
             if (value && !isAddContactButtonVisible) {
-                animationInteractor.show(binding.dialpadButtonAddContact, true)
+                animationsInteractor.show(binding.dialpadButtonAddContact, true)
             } else if (!value && isAddContactButtonVisible) {
-                animationInteractor.hide(binding.dialpadButtonAddContact, true, false)
+                animationsInteractor.hide(binding.dialpadButtonAddContact, true, false)
             }
         }
 

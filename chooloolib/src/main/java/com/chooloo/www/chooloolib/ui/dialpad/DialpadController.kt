@@ -1,20 +1,20 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
 import android.view.KeyEvent.*
-import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import javax.inject.Inject
 
 open class DialpadController<V : DialpadContract.View> @Inject constructor(
     view: V,
-    private val audioInteractor: AudioInteractor
+    private val audiosInteractor: AudiosInteractor
 ) :
     BaseController<V>(view),
     DialpadContract.Controller<V> {
 
     override fun onKeyClick(keyCode: Int) {
-        audioInteractor.vibrate(AudioInteractor.SHORT_VIBRATE_LENGTH)
-        audioInteractor.playToneByKey(keyCode)
+        audiosInteractor.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
+        audiosInteractor.playToneByKey(keyCode)
         view.invokeKey(keyCode)
     }
 
@@ -30,7 +30,7 @@ open class DialpadController<V : DialpadContract.View> @Inject constructor(
 
     override fun onDeleteClick() {
         view.invokeKey(KEYCODE_DEL)
-        audioInteractor.vibrate()
+        audiosInteractor.vibrate()
     }
 
     override fun onLongDeleteClick(): Boolean {

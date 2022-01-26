@@ -7,10 +7,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProximityInteractorImpl @Inject constructor(
+class ProximitiesInteractorImpl @Inject constructor(
     private val powerManager: PowerManager
-) : BaseObservable<ProximityInteractor.Listener>(),
-    ProximityInteractor {
+) : BaseObservable<ProximitiesInteractor.Listener>(),
+    ProximitiesInteractor {
 
     private val _wakeLock by lazy {
         powerManager.newWakeLock(PROXIMITY_SCREEN_OFF_WAKE_LOCK, "koler:screen_wake_lock")

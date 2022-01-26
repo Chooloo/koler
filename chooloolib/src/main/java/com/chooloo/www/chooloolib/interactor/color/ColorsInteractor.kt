@@ -4,7 +4,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
-interface ColorInteractor : BaseInteractor<ColorInteractor.Listener> {
+interface ColorsInteractor : BaseInteractor<ColorsInteractor.Listener> {
     interface Listener
 
     fun getColor(@ColorRes colorRes: Int): Int

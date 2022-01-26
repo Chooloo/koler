@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
-interface CallAudioInteractor : BaseInteractor<CallAudioInteractor.Listener> {
+interface CallAudiosInteractor : BaseInteractor<CallAudiosInteractor.Listener> {
     interface Listener {
         fun onMuteChanged(isMuted: Boolean)
         fun onAudioRouteChanged(audioRoute: AudioRoute)

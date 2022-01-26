@@ -15,7 +15,7 @@ class CallItemsController<V : CallItemsContract.View> @Inject constructor(
 
     private var _calls: List<Call> = listOf()
 
-    var calls: List<Call>
+    override var calls: List<Call>
         get() = _calls
         set(value) {
             _calls = value

@@ -8,10 +8,10 @@ import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
-class PromptInteractorImpl @Inject constructor(
+class PromptsInteractorImpl @Inject constructor(
     private val fragmentManager: FragmentManager
-) : BaseInteractorImpl<PromptInteractor.Listener>(),
-    PromptInteractor {
+) : BaseInteractorImpl<PromptsInteractor.Listener>(),
+    PromptsInteractor {
 
     override fun showFragment(fragment: BaseFragment, tag: String?) {
         BottomFragment(fragment).show(fragmentManager, tag)

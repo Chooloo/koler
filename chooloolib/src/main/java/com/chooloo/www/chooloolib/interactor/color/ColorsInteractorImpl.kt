@@ -8,9 +8,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ColorInteractorImpl @Inject constructor(
+class ColorsInteractorImpl @Inject constructor(
     internal val context: Context
-) : BaseObservable<ColorInteractor.Listener>(), ColorInteractor {
+) : BaseObservable<ColorsInteractor.Listener>(), ColorsInteractor {
     override fun getColor(colorRes: Int) = ContextCompat.getColor(context, colorRes)
     override fun getAttrColor(colorRes: Int) =
         TypedValue().also { context.theme.resolveAttribute(colorRes, it, true) }.data

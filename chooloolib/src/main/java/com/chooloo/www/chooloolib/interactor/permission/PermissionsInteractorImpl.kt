@@ -8,7 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.telecom.TelecomManager
 import android.widget.Toast
-import com.chooloo.www.chooloolib.interactor.string.StringInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionsActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @ActivityScoped
 class PermissionsInteractorImpl @Inject constructor(
     private val activity: BaseActivity,
-    private val strings: StringInteractor,
+    private val strings: StringsInteractor,
     private val telecomManager: TelecomManager
 ) :
     BaseObservable<PermissionsInteractor.Listener>(),

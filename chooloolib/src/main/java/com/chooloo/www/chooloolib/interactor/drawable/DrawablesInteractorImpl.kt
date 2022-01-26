@@ -7,9 +7,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DrawableInteractorImpl @Inject constructor(
+class DrawablesInteractorImpl @Inject constructor(
     internal val context: Context
-) : BaseObservable<DrawableInteractor.Listener>(), DrawableInteractor {
+) : BaseObservable<DrawablesInteractor.Listener>(), DrawablesInteractor {
     override fun getDrawable(res: Int) =
         ContextCompat.getDrawable(context, res)
 }

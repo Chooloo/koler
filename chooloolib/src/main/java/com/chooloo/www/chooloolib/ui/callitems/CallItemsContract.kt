@@ -9,6 +9,8 @@ interface CallItemsContract : ListContract {
     }
 
     interface Controller<V : View> : ListContract.Controller<Call, V> {
+        var calls: List<Call>
+
         fun onSplitClick(call: Call)
         fun onRejectClick(call: Call)
     }

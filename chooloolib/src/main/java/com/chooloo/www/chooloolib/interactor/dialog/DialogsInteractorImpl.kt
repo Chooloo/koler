@@ -3,9 +3,9 @@ package com.chooloo.www.chooloolib.interactor.dialog
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.account.SimAccount
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @ActivityScoped
 class DialogsInteractorImpl @Inject constructor(
     private val activity: BaseActivity,
-    private val prompts: PromptInteractor
+    private val prompts: PromptsInteractor
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
     override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
         prompts.showFragment(PromptFragment.newInstance(
@@ -121,7 +121,7 @@ class DialogsInteractorImpl @Inject constructor(
         askForBoolean(R.string.hint_should_ask_sim, callback)
     }
 
-    override fun askForRoute(callback: (CallAudioInteractor.AudioRoute) -> Unit) {
+    override fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit) {
         askForChoice(
             choiceCallback = { callback.invoke(it) },
             titleRes = R.string.action_choose_audio_route,

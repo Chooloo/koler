@@ -5,7 +5,7 @@ import android.telephony.SubscriptionInfo
 import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
-interface SimInteractor : BaseInteractor<SimInteractor.Listener> {
+interface SimsInteractor : BaseInteractor<SimsInteractor.Listener> {
     interface Listener
 
     fun getIsMultiSim(callback: (Boolean) -> Unit)

@@ -3,7 +3,7 @@ package com.chooloo.www.chooloolib.interactor.animation
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-interface AnimationInteractor {
+interface AnimationsInteractor {
     interface Listener
 
     fun focus(view: View)

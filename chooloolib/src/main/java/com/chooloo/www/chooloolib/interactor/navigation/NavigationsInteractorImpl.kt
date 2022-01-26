@@ -17,25 +17,25 @@ import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.interactor.sim.SimInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringInteractor
+import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
-class NavigationInteractorImpl @Inject constructor(
-    private val sims: SimInteractor,
+class NavigationsInteractorImpl @Inject constructor(
+    private val sims: SimsInteractor,
     private val activity: BaseActivity,
     private val dialogs: DialogsInteractor,
-    private val strings: StringInteractor,
+    private val strings: StringsInteractor,
     private val telecomManager: TelecomManager,
     private val permissions: PermissionsInteractor,
     private val preferences: PreferencesInteractor,
 ) :
-    BaseObservable<NavigationInteractor.Listener>(),
-    NavigationInteractor {
+    BaseObservable<NavigationsInteractor.Listener>(),
+    NavigationsInteractor {
 
     override fun donate() {
         activity.startActivity(

@@ -8,17 +8,17 @@ import android.os.VibrationEffect
 import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import android.os.Vibrator
 import android.view.KeyEvent
-import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor.AudioMode
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AudioInteractorImpl @Inject constructor(
+class AudiosInteractorImpl @Inject constructor(
     private val vibrator: Vibrator,
     private val audioManager: AudioManager
-) : BaseInteractorImpl<AudioInteractor.Listener>(), AudioInteractor {
+) : BaseInteractorImpl<AudiosInteractor.Listener>(), AudiosInteractor {
     override var isMuted: Boolean
         get() = audioManager.isMicrophoneMute
         set(value) {

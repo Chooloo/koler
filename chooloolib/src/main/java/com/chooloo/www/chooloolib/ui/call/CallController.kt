@@ -9,18 +9,18 @@ import com.chooloo.www.chooloolib.data.call.Call.State.*
 import com.chooloo.www.chooloolib.data.call.CantHoldCallException
 import com.chooloo.www.chooloolib.data.call.CantMergeCallException
 import com.chooloo.www.chooloolib.data.call.CantSwapCallException
-import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor
-import com.chooloo.www.chooloolib.interactor.audio.AudioInteractor.AudioMode.*
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor.AudioRoute
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode.*
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorInteractor
+import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractor
-import com.chooloo.www.chooloolib.interactor.proximity.ProximityInteractor
-import com.chooloo.www.chooloolib.interactor.screen.ScreenInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
+import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
@@ -36,15 +36,15 @@ import javax.inject.Inject
 class CallController<V : CallContract.View> @Inject constructor(
     view: V,
     private val callsInteractor: CallsInteractor,
-    private val audioInteractor: AudioInteractor,
-    private val colorInteractor: ColorInteractor,
+    private val audiosInteractor: AudiosInteractor,
+    private val colorsInteractor: ColorsInteractor,
     private val phonesInteractor: PhonesInteractor,
-    private val promptInteractor: PromptInteractor,
-    private val stringInteractor: StringInteractor,
-    private val screenInteractor: ScreenInteractor,
+    private val promptsInteractor: PromptsInteractor,
+    private val stringsInteractor: StringsInteractor,
+    private val screensInteractor: ScreensInteractor,
     private val dialogsInteractor: DialogsInteractor,
-    private val callAudioInteractor: CallAudioInteractor,
-    private val proximityInteractor: ProximityInteractor,
+    private val callAudiosInteractor: CallAudiosInteractor,
+    private val proximitiesInteractor: ProximitiesInteractor,
 ) :
     BaseController<V>(view),
     CallContract.Controller<V> {
@@ -60,23 +60,23 @@ class CallController<V : CallContract.View> @Inject constructor(
 
         CallService.sIsActivityActive = true
 
-        proximityInteractor.acquire()
-        screenInteractor.disableKeyboard()
-        screenInteractor.setShowWhenLocked()
+        proximitiesInteractor.acquire()
+        screensInteractor.disableKeyboard()
+        screensInteractor.setShowWhenLocked()
         callsInteractor.registerListener(this@CallController)
-        callAudioInteractor.registerListener(this@CallController)
+        callAudiosInteractor.registerListener(this@CallController)
         callsInteractor.mainCall?.let {
             onCallChanged(it)
             onMainCallChanged(it)
-            callAudioInteractor.isMuted?.let(this@CallController::onMuteChanged)
-            callAudioInteractor.audioRoute?.let(this@CallController::onAudioRouteChanged)
+            callAudiosInteractor.isMuted?.let(this@CallController::onMuteChanged)
+            callAudiosInteractor.audioRoute?.let(this@CallController::onAudioRouteChanged)
         }
 
         view.isManageEnabled = false
     }
 
     override fun onStop() {
-        proximityInteractor.release()
+        proximitiesInteractor.release()
         _timerDisposable?.dispose()
         CallService.sIsActivityActive = false
     }
@@ -109,7 +109,7 @@ class CallController<V : CallContract.View> @Inject constructor(
     }
 
     override fun onMuteClick() {
-        callAudioInteractor.isMuted = !view.isMuteActivated
+        callAudiosInteractor.isMuted = !view.isMuteActivated
     }
 
     override fun onMergeClick() {
@@ -122,17 +122,17 @@ class CallController<V : CallContract.View> @Inject constructor(
     }
 
     override fun onKeypadClick() {
-        promptInteractor.showFragment(DialpadFragment.newInstance().apply {
+        promptsInteractor.showFragment(DialpadFragment.newInstance().apply {
             setOnKeyDownListener(::onKeypadKey)
         })
     }
 
     override fun onAddCallClick() {
-        promptInteractor.showFragment(DialerFragment.newInstance())
+        promptsInteractor.showFragment(DialerFragment.newInstance())
     }
 
     override fun onSpeakerClick() {
-        callAudioInteractor.apply {
+        callAudiosInteractor.apply {
             if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
                 dialogsInteractor.askForRoute { audioRoute = it }
             } else {
@@ -147,7 +147,7 @@ class CallController<V : CallContract.View> @Inject constructor(
 
 
     override fun onNoCalls() {
-        audioInteractor.audioMode = NORMAL
+        audiosInteractor.audioMode = NORMAL
         view.finish()
     }
 
@@ -158,7 +158,7 @@ class CallController<V : CallContract.View> @Inject constructor(
             phonesInteractor.lookupAccount(call.number) {
                 view.showHoldingBanner(
                     String.format(
-                        stringInteractor.getString(R.string.explain_is_on_hold),
+                        stringsInteractor.getString(R.string.explain_is_on_hold),
                         it?.displayString ?: call.number
                     )
                 )
@@ -199,7 +199,7 @@ class CallController<V : CallContract.View> @Inject constructor(
         }
 
         if (call.isConference) {
-            view.nameText = stringInteractor.getString(R.string.conference)
+            view.nameText = stringsInteractor.getString(R.string.conference)
         } else {
             phonesInteractor.lookupAccount(call.number) { account ->
                 account?.photoUri?.let { view.imageURI = Uri.parse(it) }
@@ -212,7 +212,7 @@ class CallController<V : CallContract.View> @Inject constructor(
         view.isHoldEnabled = call.isCapable(CAPABILITY_HOLD)
         view.isMuteEnabled = call.isCapable(CAPABILITY_MUTE)
         view.isSwapEnabled = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
-        view.stateText = stringInteractor.getString(call.state.stringRes)
+        view.stateText = stringsInteractor.getString(call.state.stringRes)
 
         when {
             call.isIncoming -> view.showIncomingCallUI()
@@ -222,15 +222,15 @@ class CallController<V : CallContract.View> @Inject constructor(
 
         when (call.state) {
             INCOMING, ACTIVE -> view.stateTextColor =
-                colorInteractor.getColor(R.color.green_foreground)
+                colorsInteractor.getColor(R.color.green_foreground)
             HOLDING, DISCONNECTING, DISCONNECTED -> view.stateTextColor =
-                colorInteractor.getColor(R.color.red_foreground)
+                colorsInteractor.getColor(R.color.red_foreground)
         }
     }
 
     override fun onManageClick() {
         callsInteractor.mainCall?.children?.let {
-            promptInteractor.showFragment(
+            promptsInteractor.showFragment(
                 CallItemsFragment.newInstance().apply { controller.calls = it }
             )
         }

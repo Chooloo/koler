@@ -2,7 +2,7 @@ package com.chooloo.www.chooloolib.ui.call
 
 import android.net.Uri
 import android.view.KeyEvent
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseContract
 import com.chooloo.www.chooloolib.ui.widgets.CallActions
@@ -39,7 +39,7 @@ interface CallContract : BaseContract {
     interface Controller<V : View> :
         BaseContract.Controller<V>,
         CallsInteractor.Listener,
-        CallAudioInteractor.Listener,
+        CallAudiosInteractor.Listener,
         CallActions.CallActionsListener {
 
         fun onAnswerClick()

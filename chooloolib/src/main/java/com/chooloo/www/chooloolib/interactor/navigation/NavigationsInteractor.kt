@@ -4,7 +4,7 @@ import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 
-interface NavigationInteractor : BaseInteractor<NavigationInteractor.Listener> {
+interface NavigationsInteractor : BaseInteractor<NavigationsInteractor.Listener> {
     interface Listener
 
     fun donate()

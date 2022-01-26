@@ -2,7 +2,7 @@ package com.chooloo.www.chooloolib.interactor.audio
 
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
-interface AudioInteractor : BaseInteractor<AudioInteractor.Listener> {
+interface AudiosInteractor : BaseInteractor<AudiosInteractor.Listener> {
     interface Listener
 
     var isMuted: Boolean
