@@ -5,6 +5,7 @@ import android.app.Notification.EXTRA_NOTIFICATION_ID
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
@@ -78,7 +79,7 @@ class CallNotification(
             Intent(context, CallActivity::class.java).apply {
                 flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
             },
-            0
+            FLAG_IMMUTABLE
         )
     }
 
@@ -146,7 +147,12 @@ class CallNotification(
         }
 
     private fun getCallPendingIntent(callAction: String, rc: Int) =
-        PendingIntent.getBroadcast(context, rc, getCallIntent(callAction), FLAG_CANCEL_CURRENT)
+        PendingIntent.getBroadcast(
+            context,
+            rc,
+            getCallIntent(callAction),
+            FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE
+        )
 
 
     private fun buildNotification(call: Call, callback: (Notification) -> Unit) {
