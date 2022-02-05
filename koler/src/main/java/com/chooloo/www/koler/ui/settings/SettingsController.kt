@@ -42,6 +42,11 @@ class SettingsController @Inject constructor(
                     preferencesInteractor.isShowBlocked = it
                 }
             }
+            R.id.menu_koler_show_blocked -> component.permissions.runWithDefaultDialer {
+                component.dialogs.askForShowBlock {
+                    component.preferences.isShowBlocked = it
+                }
+            }
             else -> super.onMenuItemClick(menuItem)
         }
     }
