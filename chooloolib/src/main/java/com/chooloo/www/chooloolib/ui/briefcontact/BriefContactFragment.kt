@@ -17,8 +17,8 @@ open class BriefContactFragment @Inject constructor() : BaseFragment(), BriefCon
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
     override lateinit var controller: BriefContactContract.Controller
 
-    private val phonesFragment by lazy { fragmentFactory.getPhonesFragment() }
     protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
+    private val phonesFragment by lazy { fragmentFactory.getPhonesFragment(contactId) }
 
     @Inject lateinit var fragmentFactory: FragmentFactory
 
