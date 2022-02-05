@@ -4,31 +4,39 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponentImpl
+import com.chooloo.www.chooloolib.di.factory.controller.ControllerFactory
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
+import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
-    override val component by lazy { ActivityComponentImpl(this) }
+    @Inject lateinit var disposables: CompositeDisposable
+    @Inject lateinit var stringsInteractor: StringsInteractor
+    @Inject lateinit var controllerFactory: ControllerFactory
+    @Inject lateinit var preferencesInteractor: PreferencesInteractor
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(component.preferences.accentTheme.theme)
         super.onCreate(savedInstanceState)
+        setTheme(preferencesInteractor.accentTheme.theme)
         contentView?.let { setContentView(it) }
     }
 
     override fun onStart() {
         super.onStart()
         onSetup()
+        controller.onSetup()
     }
 
     override fun onStop() {
         super.onStop()
-        component.disposables.clear()
+        disposables.clear()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        component.disposables.dispose()
+        disposables.dispose()
     }
 
     override fun finish() {
@@ -38,7 +46,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun showError(stringResId: Int) {
         Toast.makeText(
             applicationContext,
-            component.strings.getString(stringResId),
+            stringsInteractor.getString(stringResId),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -46,7 +54,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun showMessage(stringResId: Int) {
         Toast.makeText(
             this,
-            component.strings.getString(stringResId),
+            stringsInteractor.getString(stringResId),
             Toast.LENGTH_SHORT
         ).show()
     }

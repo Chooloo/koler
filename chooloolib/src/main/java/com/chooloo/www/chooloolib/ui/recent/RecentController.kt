@@ -1,19 +1,40 @@
 package com.chooloo.www.chooloolib.ui.recent
 
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
+import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
+import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
+import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.chooloolib.util.getElapsedTimeString
+import javax.inject.Inject
 
-class RecentController<V : RecentContract.View>(view: V) :
-    BaseController<V>(view),
-    RecentContract.Controller<V> {
+class RecentController @Inject constructor(
+    view: RecentContract.View,
+    private val phonesInteractor: PhonesInteractor,
+    private val recentsInteractor: RecentsInteractor,
+    private val dialogsInteractor: DialogsInteractor,
+    private val promptsInteractor: PromptsInteractor,
+    private val blockedInteractor: BlockedInteractor,
+    private val drawablesInteractor: DrawablesInteractor,
+    private val preferencesInteractor: PreferencesInteractor,
+    private val navigationsInteractor: NavigationsInteractor,
+    private val permissionsInteractor: PermissionsInteractor
+) :
+    BaseController<RecentContract.View>(view),
+    RecentContract.Controller {
 
-    private val _recent by lazy { component.recents.queryRecent(view.recentId) }
+    private val _recent by lazy { recentsInteractor.queryRecent(view.recentId) }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onSetup() {
+        super.onSetup()
         if (_recent == null) return
         val recentCaptions = arrayListOf(_recent!!.relativeTime)
         if (_recent!!.duration > 0) {
@@ -23,39 +44,39 @@ class RecentController<V : RecentContract.View>(view: V) :
         view.apply {
             recentCaption = recentCaptions.joinToString(", ")
             recentImage =
-                component.drawables.getDrawable(component.recents.getCallTypeImage(_recent!!.type))
+                drawablesInteractor.getDrawable(recentsInteractor.getCallTypeImage(_recent!!.type))
             recentName =
                 if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
 
-            component.phones.lookupAccount(_recent!!.number) {
+            phonesInteractor.lookupAccount(_recent!!.number) {
                 isContactVisible = it?.name != null
                 isAddContactVisible = it?.name == null
             }
 
-            isBlockButtonVisible = component.preferences.isShowBlocked
-            if (component.preferences.isShowBlocked) {
-                component.permissions.runWithDefaultDialer {
-                    isBlockButtonActivated = component.blocked.isNumberBlocked(_recent!!.number)
+            isBlockButtonVisible = preferencesInteractor.isShowBlocked
+            if (preferencesInteractor.isShowBlocked) {
+                permissionsInteractor.runWithDefaultDialer {
+                    isBlockButtonActivated = blockedInteractor.isNumberBlocked(_recent!!.number)
                 }
             }
         }
     }
 
     override fun onActionSms() {
-        _recent?.let { component.navigations.sendSMS(it.number) }
+        _recent?.let { navigationsInteractor.sendSMS(it.number) }
     }
 
     override fun onActionCall() {
-        _recent?.let { component.navigations.call(it.number) }
+        _recent?.let { navigationsInteractor.call(it.number) }
     }
 
     override fun onActionDelete() {
         _recent?.let { recent ->
-            component.permissions.runWithWriteCallLogPermissions {
+            permissionsInteractor.runWithWriteCallLogPermissions {
                 if (it) {
-                    component.dialogs.askForValidation(R.string.explain_delete_recent) { result ->
+                    dialogsInteractor.askForValidation(R.string.explain_delete_recent) { result ->
                         if (result) {
-                            component.recents.deleteRecent(recent.id)
+                            recentsInteractor.deleteRecent(recent.id)
                             view.finish()
                         }
                     }
@@ -65,14 +86,14 @@ class RecentController<V : RecentContract.View>(view: V) :
     }
 
     override fun onActionAddContact() {
-        _recent?.let { component.navigations.addContact(it.number) }
+        _recent?.let { navigationsInteractor.addContact(it.number) }
     }
 
     override fun onActionOpenContact() {
         _recent?.let {
-            component.phones.lookupAccount(it.number) { account ->
+            phonesInteractor.lookupAccount(it.number) { account ->
                 account?.contactId?.let { id ->
-                    component.prompts.showFragment(BriefContactFragment.newInstance(id))
+                    promptsInteractor.showFragment(BriefContactFragment.newInstance(id))
                 }
             }
         }
@@ -80,21 +101,21 @@ class RecentController<V : RecentContract.View>(view: V) :
 
     override fun onActionShowHistory() {
         _recent?.let {
-            component.prompts.showFragment(RecentsFragment.newInstance(it.number).apply {
-                controller.setOnItemClickListener { recent ->
-                    component.prompts.showFragment(RecentFragment.newInstance(recent.id))
+            promptsInteractor.showFragment(RecentsFragment.newInstance(it.number).apply {
+                setOnItemClickListener { recent ->
+                    promptsInteractor.showFragment(RecentFragment.newInstance(recent.id))
                 }
             })
         }
     }
 
     override fun onActionBlock(isBlock: Boolean) {
-        component.permissions.runWithDefaultDialer {
+        permissionsInteractor.runWithDefaultDialer {
             _recent?.number?.let {
                 if (isBlock) {
-                    component.blocked.blockNumber(it)
+                    blockedInteractor.blockNumber(it)
                 } else {
-                    component.blocked.unblockNumber(it)
+                    blockedInteractor.unblockNumber(it)
                 }
                 view.isBlockButtonActivated = isBlock
             }

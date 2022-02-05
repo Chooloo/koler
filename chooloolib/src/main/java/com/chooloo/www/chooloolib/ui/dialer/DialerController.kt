@@ -8,18 +8,19 @@ import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadController
 import javax.inject.Inject
 
-class DialerController<V : DialerContract.View> @Inject constructor(
-    view: V,
+class DialerController @Inject constructor(
+    view: DialerContract.View,
     audiosInteractor: AudiosInteractor,
     private val recentsInteractor: RecentsInteractor,
     private val navigationsInteractor: NavigationsInteractor
 ) :
-    DialpadController<V>(view, audiosInteractor),
-    DialerContract.Controller<V> {
+    DialpadController(view, audiosInteractor),
+    DialerContract.Controller {
 
-    override fun onStart() {
-        super.onStart()
-        view.isSuggestionsVisible = false
+
+    override fun onSetup() {
+        super.onSetup()
+        (view as DialerContract.View).isSuggestionsVisible = false
     }
 
     override fun onLongKeyClick(keyCode: Int): Boolean {
@@ -45,13 +46,14 @@ class DialerController<V : DialerContract.View> @Inject constructor(
 
     override fun onTextChanged(text: String?) {
         super.onTextChanged(text)
-        view.apply {
+        (view as DialerContract.View).apply {
             isAddContactButtonVisible = text?.isNotEmpty() == true
             setSuggestionsFilter(text ?: "")
         }
     }
 
     override fun onSuggestionsChanged(contacts: List<ContactAccount>) {
-        view.isSuggestionsVisible = contacts.isNotEmpty() && view.text.isNotEmpty() == true
+        (view as DialerContract.View).isSuggestionsVisible =
+            contacts.isNotEmpty() && view.text.isNotEmpty() == true
     }
 }

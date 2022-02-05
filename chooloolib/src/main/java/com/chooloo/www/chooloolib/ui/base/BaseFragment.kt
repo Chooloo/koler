@@ -7,16 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleObserver
+import com.chooloo.www.chooloolib.di.factory.controller.ControllerFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), BaseContract.View {
+@AndroidEntryPoint
+abstract class BaseFragment : Fragment(), BaseContract.View, LifecycleObserver {
     private var _onFinishListener: () -> Unit = {}
 
-    override val component get() = baseActivity.component
+    @Inject lateinit var baseActivity: BaseActivity
+    @Inject lateinit var controllerFactory: ControllerFactory
 
-    protected val baseActivity by lazy { context as BaseActivity }
 
-    val args: Bundle
-        get() = arguments ?: Bundle()
+    val args get() = arguments ?: Bundle()
 
 
     override fun onCreateView(
@@ -29,13 +33,14 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         assert(context is BaseActivity)
+        (context as BaseActivity).lifecycle.addObserver(this)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         onSetup()
+        controller.onSetup()
     }
-
 
     override fun showError(@StringRes stringResId: Int) {
         baseActivity.showError(stringResId)

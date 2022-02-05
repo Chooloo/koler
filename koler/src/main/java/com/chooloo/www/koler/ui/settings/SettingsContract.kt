@@ -1,12 +1,12 @@
 package com.chooloo.www.koler.ui.settings
 
-import com.chooloo.www.chooloolib.ui.settings.SettingsContract
+import com.chooloo.www.chooloolib.ui.settings.SettingsContract as ChoolooSettingsContract
 
-interface SettingsContract : SettingsContract {
-    interface View : SettingsContract.View {
+interface SettingsContract : ChoolooSettingsContract {
+    interface View : ChoolooSettingsContract.View {
 
     }
 
-    interface Controller<V : View> : SettingsContract.Controller<V> {
+    interface Controller : ChoolooSettingsContract.Controller {
     }
 }

@@ -4,14 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
-import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsFragment
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class DialerFragment : DialpadFragment(), DialerContract.View {
-    private val _suggestionsFragment by lazy { ContactsSuggestionsFragment.newInstance() }
+@AndroidEntryPoint
+class DialerFragment @Inject constructor() : DialpadFragment(), DialerContract.View {
+    override val controller by lazy { controllerFactory.getDialerController(this) }
+    private val _suggestionsFragment by lazy { fragmentFactory.getContactsSuggestionsFragment() }
 
-    @Inject override lateinit var controller: DialerContract.Controller<DialerFragment>
+    @Inject lateinit var fragmentFactory: FragmentFactory
 
 
     override val suggestionsCount: Int
@@ -40,6 +43,7 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
 
     override fun onSetup() {
         super.onSetup()
+        controller.init()
         binding.apply {
             dialpadButtonCall.apply {
                 visibility = View.VISIBLE
@@ -52,14 +56,14 @@ class DialerFragment : DialpadFragment(), DialerContract.View {
                 isLongClickable = true
                 isFocusableInTouchMode = true
 
-                setText(args.getString(ARG_NUMBER))
                 addTextChangedListener(PhoneNumberFormattingTextWatcher())
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
+        binding.dialpadEditText.setText(args.getString(ARG_NUMBER))
         _suggestionsFragment.controller.setOnItemsChangedListener(controller::onSuggestionsChanged)
     }
 

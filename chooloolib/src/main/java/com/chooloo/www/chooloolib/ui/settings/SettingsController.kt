@@ -10,20 +10,20 @@ import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.C
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import javax.inject.Inject
 
-open class SettingsController<V : SettingsContract.View> @Inject constructor(
-    view: V,
+open class SettingsController @Inject constructor(
+    view: SettingsContract.View,
     private val colorsInteractor: ColorsInteractor,
     private val dialogsInteractor: DialogsInteractor,
     private val navigationsInteractor: NavigationsInteractor,
     private val preferencesInteractor: PreferencesInteractor
 ) :
-    BaseController<V>(view),
-    SettingsContract.Controller<V> {
+    BaseController<SettingsContract.View>(view),
+    SettingsContract.Controller {
 
     protected open val menuResList = listOf(R.menu.menu_chooloo)
 
-    override fun onStart() {
-        super.onStart()
+    override fun onSetup() {
+        super.onSetup()
         view.setMenuResList(menuResList)
     }
 

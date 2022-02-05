@@ -2,11 +2,10 @@ package com.chooloo.www.chooloolib.ui.base
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.Lifecycle
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
 
 interface BaseContract {
     interface View {
-        val component: ActivityComponent
+        val controller: Controller<out View>
 
         fun onSetup()
         fun finish() {}
@@ -15,8 +14,10 @@ interface BaseContract {
         fun showMessage(@StringRes stringResId: Int)
     }
 
-    interface Controller<out V : View> {
+    interface Controller<V : View> {
         val view: V
-        fun initialize(){}
+
+        fun init() {}
+        fun onSetup()
     }
 }

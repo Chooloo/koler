@@ -1,23 +1,22 @@
 package com.chooloo.www.chooloolib.ui.base
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View.GONE
-import androidx.annotation.StringRes
 import androidx.appcompat.view.menu.MenuBuilder
 import com.chooloo.www.chooloolib.adapter.MenuAdapter
 import com.chooloo.www.chooloolib.databinding.MenuBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @SuppressLint("RestrictedApi")
-open class BaseMenuFragment : BaseFragment() {
+@AndroidEntryPoint
+abstract class BaseMenuFragment : BaseFragment() {
     override val contentView by lazy { binding.root }
 
     private var _onMenuItemClickListener: (MenuItem) -> Unit = {}
-    private val adapter by lazy { MenuAdapter(component) }
     private val binding by lazy { MenuBinding.inflate(layoutInflater) }
-
     protected open val title by lazy { getString(args.getInt(ARG_TITLE_RES)) }
     protected open val subtitle by lazy {
         val subtitleRes = args.getInt(ARG_SUBTITLE_RES, -1)
@@ -27,6 +26,8 @@ open class BaseMenuFragment : BaseFragment() {
             getString(subtitleRes)
         }
     }
+
+    @Inject lateinit var adapter: MenuAdapter
 
 
     override fun onSetup() {
@@ -67,12 +68,12 @@ open class BaseMenuFragment : BaseFragment() {
         const val ARG_TITLE_RES = "title_res"
         const val ARG_SUBTITLE_RES = "subtitle_res"
 
-        fun newInstance(@StringRes titleRes: Int, @StringRes subtitleRes: Int? = null) =
-            BaseMenuFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_TITLE_RES, titleRes)
-                    subtitleRes?.let { putInt(ARG_SUBTITLE_RES, it) }
-                }
-            }
+//        fun newInstance(@StringRes titleRes: Int, @StringRes subtitleRes: Int? = null) =
+//            BaseMenuFragment().apply {
+//                arguments = Bundle().apply {
+//                    putInt(ARG_TITLE_RES, titleRes)
+//                    subtitleRes?.let { putInt(ARG_SUBTITLE_RES, it) }
+//                }
+//            }
     }
 }

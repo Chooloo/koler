@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -38,11 +40,23 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    hilt {
+        enableAggregatingTask true
+    }
+
+    kapt {
+        correctErrorTypes true
     }
 }
 
 dependencies {
+    kapt(
+            'com.google.dagger:hilt-compiler:2.38.1'
+    )
+
     testImplementation(
             'junit:junit:4.+',
             'androidx.room:room-testing:2.2.6'
@@ -52,7 +66,10 @@ dependencies {
             project(":chooloolib"),
             'androidx.core:core-ktx:1.7.0',
             'androidx.appcompat:appcompat:1.4.1',
+            'io.reactivex.rxjava2:rxjava:2.1.16',
+            'io.reactivex.rxjava2:rxandroid:2.0.1',
             'io.github.l4digital:fastscroll:2.0.1',
+            'com.google.dagger:hilt-android:2.38.1',
             'com.google.android.material:material:1.4.0'
     )
 

@@ -3,13 +3,21 @@ package com.chooloo.www.chooloolib.ui.permissions
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
+import com.chooloo.www.chooloolib.ui.base.BaseController
+import javax.inject.Inject
 
 class PermissionsActivity : BaseActivity() {
+    override val controller = BaseController(this)
+
     private val _rationaleMessage by lazy { intent.getStringExtra(EXTRA_RATIONAL_MESSAGE) }
     private val _allPermissions by lazy { intent.getStringArrayExtra(EXTRA_PERMISSIONS) }
 
     override val contentView = null
+
+    @Inject lateinit var permissionsInteractor: PermissionsInteractor
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +25,7 @@ class PermissionsActivity : BaseActivity() {
         window.statusBarColor = 0
 
         val deniedPermissions =
-            _allPermissions?.filter { !component.permissions.hasSelfPermission(it) }?.toTypedArray()
+            _allPermissions?.filter { !permissionsInteractor.hasSelfPermission(it) }?.toTypedArray()
         if (deniedPermissions?.isEmpty() == true) {
             onGranted()
         } else {
@@ -30,7 +38,7 @@ class PermissionsActivity : BaseActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (component.permissions.hasSelfPermissions(permissions as Array<String>)) {
+        if (permissionsInteractor.hasSelfPermissions(permissions as Array<String>)) {
             onGranted()
         }
 
@@ -45,12 +53,13 @@ class PermissionsActivity : BaseActivity() {
             deniedPermissions.any { !blockedPermissions.contains(it) } -> onDenied() // just denied
             else -> onBlocked(blockedPermissions) // blocked
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == RC_SETTINGS) {
             _allPermissions?.let {
-                component.permissions.checkPermissions(
+                permissionsInteractor.checkPermissions(
                     it,
                     sGrantedCallback,
                     sDeniedCallback,

@@ -1,19 +1,18 @@
 package com.chooloo.www.chooloolib.ui.callitems
 
 import com.chooloo.www.chooloolib.adapter.CallItemsAdapter
+import com.chooloo.www.chooloolib.adapter.ListAdapter
 import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.ui.list.ListController
 import javax.inject.Inject
 
-class CallItemsController<V : CallItemsContract.View> @Inject constructor(
-    view: V,
+class CallItemsController @Inject constructor(
+    view: CallItemsContract.View,
     private val callItemsAdapter: CallItemsAdapter
 ) :
-    ListController<Call, V>(view, callItemsAdapter),
-    CallItemsContract.Controller<V> {
-
-
-    private var _calls: List<Call> = listOf()
+    ListController<Call, CallItemsContract.View>(view, callItemsAdapter),
+    CallItemsContract.Controller {
+    override val adapter: ListAdapter<Call> = callItemsAdapter
 
     override var calls: List<Call>
         get() = _calls
@@ -21,15 +20,17 @@ class CallItemsController<V : CallItemsContract.View> @Inject constructor(
             _calls = value
         }
 
+    private var _calls: List<Call> = listOf()
 
-    override fun onStart() {
-        super.onStart()
+
+    override fun onSetup() {
+        super.onSetup()
         callItemsAdapter.apply {
             setOnItemLeftButtonClickListener(this@CallItemsController::onSplitClick)
             setOnItemRightButtonClickListener(this@CallItemsController::onRejectClick)
         }
     }
-    
+
     override fun fetchData(callback: (items: List<Call>, hasPermissions: Boolean) -> Unit) {
         callback.invoke(_calls, true)
     }

@@ -16,11 +16,11 @@ import javax.inject.Inject
 @SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity(), CallContract.View {
     override val contentView by lazy { binding.root }
+    override lateinit var controller: CallContract.Controller
 
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
     @Inject lateinit var animationsInteractor: AnimationsInteractor
-    @Inject lateinit var controller: CallContract.Controller<CallActivity>
 
     override var imageURI: Uri?
         get() = null
@@ -113,6 +113,7 @@ class CallActivity : BaseActivity(), CallContract.View {
 
 
     override fun onSetup() {
+        controller = controllerFactory.getCallController(this)
         binding.apply {
             imageURI = null
             callActions.setCallActionsListener(controller)

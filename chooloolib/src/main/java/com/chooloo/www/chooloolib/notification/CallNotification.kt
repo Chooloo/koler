@@ -1,4 +1,4 @@
-package com.chooloo.www.chooloolib.data.call
+package com.chooloo.www.chooloolib.notification
 
 import android.app.Notification
 import android.app.Notification.EXTRA_NOTIFICATION_ID
@@ -14,12 +14,16 @@ import android.telecom.Call.Details.CAPABILITY_MUTE
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
-import com.chooloo.www.chooloolib.BaseApp
+import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.data.call.Call.State.DISCONNECTED
 import com.chooloo.www.chooloolib.data.call.Call.State.DISCONNECTING
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
+import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
+import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE
@@ -27,14 +31,22 @@ import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTIO
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNMUTE
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
 import com.chooloo.www.chooloolib.ui.call.CallActivity
-import com.chooloo.www.chooloolib.util.SingletonHolder
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @RequiresApi(Build.VERSION_CODES.O)
-class CallNotification(
-    private val context: Context
+class CallNotification @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val callsInteractor: CallsInteractor,
+    private val colorsInteractor: ColorsInteractor,
+    private val phonesInteractor: PhonesInteractor,
+    private val stringsInteractor: StringsInteractor,
+    private val callAudiosInteractor: CallAudiosInteractor,
+    private val notificationManager: NotificationManagerCompat
 ) : CallsInteractor.Listener, CallAudiosInteractor.Listener {
     private var _call: Call? = null
-    private val component by lazy { (context.applicationContext as BaseApp).component }
 
 
     override fun onNoCalls() {
@@ -62,13 +74,13 @@ class CallNotification(
 
     fun attach() {
         createNotificationChannel()
-        component.calls.registerListener(this)
-        component.callAudios.registerListener(this)
+        callsInteractor.registerListener(this)
+        callAudiosInteractor.registerListener(this)
     }
 
     fun detach() {
-        component.calls.unregisterListener(this)
-        component.callAudios.unregisterListener(this)
+        callsInteractor.unregisterListener(this)
+        callAudiosInteractor.unregisterListener(this)
         cancel()
     }
 
@@ -86,7 +98,7 @@ class CallNotification(
     private val _answerAction by lazy {
         NotificationCompat.Action(
             R.drawable.ic_call_black_24dp,
-            component.strings.getString(R.string.action_answer),
+            stringsInteractor.getString(R.string.action_answer),
             getCallPendingIntent(ACTION_ANSWER, 0)
         )
     }
@@ -94,7 +106,7 @@ class CallNotification(
     private val _hangupAction by lazy {
         NotificationCompat.Action(
             R.drawable.round_call_end_24,
-            component.strings.getString(R.string.action_hangup),
+            stringsInteractor.getString(R.string.action_hangup),
             getCallPendingIntent(ACTION_HANGUP, 1)
         )
     }
@@ -102,7 +114,7 @@ class CallNotification(
     private val _muteAction by lazy {
         NotificationCompat.Action(
             R.drawable.ic_mic_black_24dp,
-            component.strings.getString(R.string.call_action_mute),
+            stringsInteractor.getString(R.string.call_action_mute),
             getCallPendingIntent(ACTION_MUTE, 2)
         )
     }
@@ -110,7 +122,7 @@ class CallNotification(
     private val _unmuteAction by lazy {
         NotificationCompat.Action(
             R.drawable.ic_mic_off_black_24dp,
-            component.strings.getString(R.string.call_action_unmute),
+            stringsInteractor.getString(R.string.call_action_unmute),
             getCallPendingIntent(ACTION_UNMUTE, 3)
         )
     }
@@ -118,7 +130,7 @@ class CallNotification(
     private val _speakerAction by lazy {
         NotificationCompat.Action(
             R.drawable.ic_volume_down_black_24dp,
-            component.strings.getString(R.string.call_action_speaker),
+            stringsInteractor.getString(R.string.call_action_speaker),
             getCallPendingIntent(ACTION_SPEAKER, 4)
         )
     }
@@ -126,15 +138,15 @@ class CallNotification(
     private val _unspeakerAction by lazy {
         NotificationCompat.Action(
             R.drawable.ic_volume_up_black_24dp,
-            component.strings.getString(R.string.call_action_speaker_off),
+            stringsInteractor.getString(R.string.call_action_speaker_off),
             getCallPendingIntent(ACTION_UNSPEAKER, 5)
         )
     }
 
     private val _channel by lazy {
         NotificationChannelCompat.Builder(CHANNEL_ID, IMPORTANCE_HIGH)
-            .setName(component.strings.getString(R.string.call_notification_channel_name))
-            .setDescription(component.strings.getString(R.string.call_notification_channel_description))
+            .setName(stringsInteractor.getString(R.string.call_notification_channel_name))
+            .setDescription(stringsInteractor.getString(R.string.call_notification_channel_description))
             .setLightsEnabled(true)
             .build()
     }
@@ -156,7 +168,7 @@ class CallNotification(
 
 
     private fun buildNotification(call: Call, callback: (Notification) -> Unit) {
-        component.phones.lookupAccount(call.number) {
+        phonesInteractor.lookupAccount(call.number) {
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setWhen(0)
                 .setOngoing(true)
@@ -166,20 +178,20 @@ class CallNotification(
                 .setContentTitle(it?.displayString ?: call.number)
                 .setSmallIcon(R.drawable.icon_full_144)
                 .setContentIntent(_contentPendingIntent)
-                .setColor(component.colors.getAttrColor(R.attr.colorSecondary))
-                .setContentText(component.strings.getString(call.state.stringRes))
+                .setColor(colorsInteractor.getAttrColor(R.attr.colorSecondary))
+                .setContentText(stringsInteractor.getString(call.state.stringRes))
             if (call.isIncoming) {
                 builder.addAction(_answerAction)
             }
             if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
                 builder.addAction(_hangupAction)
             }
-            component.callAudios.isMuted?.let { isMuted ->
+            callAudiosInteractor.isMuted?.let { isMuted ->
                 if (call.isCapable(CAPABILITY_MUTE)) {
                     builder.addAction(if (isMuted) _unmuteAction else _muteAction)
                 }
             }
-            component.callAudios.isSpeakerOn?.let { isSpeakerOn ->
+            callAudiosInteractor.isSpeakerOn?.let { isSpeakerOn ->
                 builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
             }
             callback.invoke(builder.build())
@@ -189,20 +201,19 @@ class CallNotification(
 
     fun show(call: Call) {
         buildNotification(call) {
-            component.notificationManager.notify(ID, it)
+            notificationManager.notify(ID, it)
         }
     }
 
     fun cancel() {
-        component.notificationManager.cancel(ID)
+        notificationManager.cancel(ID)
     }
 
     fun createNotificationChannel() {
-        component.notificationManager.createNotificationChannel(_channel)
+        notificationManager.createNotificationChannel(_channel)
     }
 
-
-    companion object : SingletonHolder<CallNotification, Context>(::CallNotification) {
+    companion object {
         const val ID = 420
         const val CHANNEL_ID = "call_notification_channel"
         const val PRIORITY = NotificationCompat.PRIORITY_LOW

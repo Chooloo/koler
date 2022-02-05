@@ -6,18 +6,21 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.databinding.BriefContactBinding
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-open class BriefContactFragment : BaseFragment(), BriefContactContract.View {
+@AndroidEntryPoint
+open class BriefContactFragment @Inject constructor() : BaseFragment(), BriefContactContract.View {
     override val contentView by lazy { binding.root }
     override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
+    override lateinit var controller: BriefContactContract.Controller
 
+    private val phonesFragment by lazy { fragmentFactory.getPhonesFragment() }
     protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var phonesFragment: PhonesFragment
-    @Inject lateinit var controller: BriefContactContract.Controller<BriefContactFragment>
+    @Inject lateinit var fragmentFactory: FragmentFactory
 
 
     override var contactName: String?
@@ -43,6 +46,7 @@ open class BriefContactFragment : BaseFragment(), BriefContactContract.View {
 
 
     override fun onSetup() {
+        controller = controllerFactory.getBriefContactController(this)
         binding.apply {
             contactButtonSms.setOnClickListener { controller.onActionSms() }
             contactButtonCall.setOnClickListener { controller.onActionCall() }

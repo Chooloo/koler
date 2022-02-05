@@ -4,9 +4,14 @@ import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.kontacts.R
 import com.chooloo.www.kontacts.databinding.MainBinding
+import com.chooloo.www.kontacts.di.factory.controllerfactory.ControllerFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity(), MainContract.View {
     override val contentView by lazy { binding.root }
+    override lateinit var controller: MainContract.Controller
 
     override var searchText: String?
         get() = binding.mainSearchBar.text
@@ -20,10 +25,13 @@ class MainActivity : BaseActivity(), MainContract.View {
             binding.mainTabs.headers = value
         }
 
-    private val controller by lazy { MainController(this) }
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
 
+    @Inject lateinit var controllerFactoryKontacts: ControllerFactory
+
+
     override fun onSetup() {
+        controller = controllerFactoryKontacts.getMainController(this)
         binding.apply {
             mainMenuButton.setOnClickListener { controller.onSettingsClick() }
             mainAddContactButton.setOnClickListener { controller.onAddContactClick() }

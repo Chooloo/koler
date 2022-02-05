@@ -4,17 +4,19 @@ import android.content.Intent
 import android.view.MotionEvent
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.MainBinding
+import com.chooloo.www.koler.di.factory.controller.ControllerFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity(), MainContract.View {
-    private lateinit var _controller: MainController<MainActivity>
-    private val binding by lazy { MainBinding.inflate(layoutInflater) }
-
     override val contentView by lazy { binding.root }
-
+    override val controller by lazy { kolerControllerFactory.getMainController(this) }
 
     override var searchText: String?
         get() = binding.mainSearchBar.text
@@ -34,22 +36,26 @@ class MainActivity : BaseActivity(), MainContract.View {
             binding.mainTabs.headers = value
         }
 
+    private val binding by lazy { MainBinding.inflate(layoutInflater) }
+
+    @Inject lateinit var screensInteractor: ScreensInteractor
+    @Inject lateinit var kolerControllerFactory: ControllerFactory
+
 
     override fun onSetup() {
-        _controller = MainController(this)
-
+        controller.init()
         binding.apply {
-            mainMenuButton.setOnClickListener { _controller.onMenuClick() }
-            mainDialpadButton.setOnClickListener { _controller.onDialpadFabClick() }
+            mainMenuButton.setOnClickListener { controller.onMenuClick() }
+            mainDialpadButton.setOnClickListener { controller.onDialpadFabClick() }
             mainTabs.viewPager = mainViewPager
-            mainSearchBar.setOnTextChangedListener(_controller::onSearchTextChange)
+            mainSearchBar.setOnTextChangedListener(controller::onSearchTextChange)
             mainSearchBar.editText?.setOnFocusChangeListener { _, hasFocus ->
-                _controller.onSearchFocusChange(hasFocus)
+                controller.onSearchFocusChange(hasFocus)
             }
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    _controller.onPageChange(position)
+                    controller.onPageChange(position)
                 }
             })
         }
@@ -58,7 +64,7 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        component.screens.ignoreEditTextFocus(event)
+        screensInteractor.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
     }
 
@@ -79,7 +85,7 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     override fun checkIntent() {
         if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
-            _controller.onViewIntent(intent)
+            controller.onViewIntent(intent)
         }
     }
 }

@@ -6,14 +6,14 @@ import androidx.lifecycle.LifecycleOwner
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
-import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
+import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListController
 import javax.inject.Inject
 
-class PhonesController<V : PhonesContract.View> @Inject constructor(
-    view: V,
+class PhonesController @Inject constructor(
+    view: PhonesContract.View,
     private val phonesAdapter: PhonesAdapter,
     private val lifecycleOwner: LifecycleOwner,
     private val liveDataFactory: LiveDataFactory,
@@ -21,8 +21,8 @@ class PhonesController<V : PhonesContract.View> @Inject constructor(
     private val navigationsInteractor: NavigationsInteractor,
     private val permissionsInteractor: PermissionsInteractor
 ) :
-    ListController<PhoneAccount, V>(view, phonesAdapter),
-    PhonesContract.Controller<V> {
+    ListController<PhoneAccount, PhonesContract.View>(view, phonesAdapter),
+    PhonesContract.Controller {
 
     private val phonesLiveData by lazy {
         liveDataFactory.allocPhonesProviderLiveData(if (view.contactId == 0L) null else view.contactId)

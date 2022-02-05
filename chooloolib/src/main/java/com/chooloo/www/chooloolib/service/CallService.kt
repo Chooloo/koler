@@ -1,37 +1,40 @@
 package com.chooloo.www.chooloolib.service
 
 import android.annotation.SuppressLint
-import android.content.ComponentName
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.pm.PackageManager
 import android.telecom.CallAudioState
 import android.telecom.InCallService
-import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.data.call.Call
-import com.chooloo.www.chooloolib.data.call.CallNotification
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
+import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
+import com.chooloo.www.chooloolib.notification.CallNotification
 import com.chooloo.www.chooloolib.ui.call.CallActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @SuppressLint("NewApi")
+@AndroidEntryPoint
 class CallService : InCallService() {
-    private val _callNotification by lazy { CallNotification.getInstance(this) }
-    private val component get() = (applicationContext as BaseApp).component
+    @Inject lateinit var callsInteractor: CallsInteractor
+    @Inject lateinit var callNotification: CallNotification
+    @Inject lateinit var callAudiosInteractor: CallAudiosInteractor
 
-
+    
     override fun onCreate() {
         super.onCreate()
         sInstance = this
-        _callNotification.attach()
+        callNotification.attach()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        _callNotification.detach()
+        callNotification.detach()
     }
 
     override fun onCallAdded(telecomCall: android.telecom.Call) {
         super.onCallAdded(telecomCall)
-        component.calls.entryAddCall(Call(telecomCall))
+        callsInteractor.entryAddCall(Call(telecomCall))
         if (!sIsActivityActive) {
             startCallActivity()
         }
@@ -39,13 +42,13 @@ class CallService : InCallService() {
 
     override fun onCallRemoved(telecomCall: android.telecom.Call) {
         super.onCallRemoved(telecomCall)
-        component.calls.getCallByTelecomCall(telecomCall)
-            ?.let(component.calls::entryRemoveCall)
+        callsInteractor.getCallByTelecomCall(telecomCall)
+            ?.let(callsInteractor::entryRemoveCall)
     }
 
     override fun onCallAudioStateChanged(audioState: CallAudioState) {
         super.onCallAudioStateChanged(audioState)
-        component.callAudios.entryCallAudioStateChanged(callAudioState)
+        callAudiosInteractor.entryCallAudioStateChanged(callAudioState)
     }
 
     private fun startCallActivity() {

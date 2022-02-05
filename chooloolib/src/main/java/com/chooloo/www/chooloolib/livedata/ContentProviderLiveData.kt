@@ -1,13 +1,10 @@
 package com.chooloo.www.chooloolib.livedata
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import com.chooloo.www.chooloolib.contentresolver.BaseContentResolver
 import io.reactivex.disposables.Disposable
 
-abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any>(
-    protected val context: Context
-) :
+abstract class ContentProviderLiveData<ContentResolver : BaseContentResolver<T>, T : Any> :
     LiveData<List<T>>() {
 
     abstract val contentResolver: ContentResolver

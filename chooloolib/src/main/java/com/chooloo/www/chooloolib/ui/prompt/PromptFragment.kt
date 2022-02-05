@@ -3,14 +3,16 @@ package com.chooloo.www.chooloolib.ui.prompt
 import android.os.Bundle
 import com.chooloo.www.chooloolib.databinding.PromptBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class PromptFragment : BaseFragment(), PromptContract.View {
+@AndroidEntryPoint
+class PromptFragment @Inject constructor() : BaseFragment(), PromptContract.View {
     override val contentView by lazy { binding.root }
+    override lateinit var controller: PromptContract.Controller
 
+    private var _onClickListener: ((result: Boolean) -> Unit)? = null
     private val binding by lazy { PromptBinding.inflate(layoutInflater) }
-
-    @Inject lateinit var controller: PromptContract.Controller<PromptFragment>
 
 
     override var title: String?
@@ -27,14 +29,19 @@ class PromptFragment : BaseFragment(), PromptContract.View {
 
 
     override fun onSetup() {
+        controller = controllerFactory.getPromptController(this)
         binding.apply {
             promptTitle.text = args.getString(ARG_TITLE)
             promptSubtitle.text = args.getString(ARG_SUBTITLE)
             promptButtonNo.setOnClickListener { controller.onNoClick() }
             promptButtonYes.setOnClickListener { controller.onYesClick() }
         }
+        _onClickListener?.let(controller::setOnClickListener)
     }
 
+    fun setOnClickListener(onClickListener: (result: Boolean) -> Unit) {
+        _onClickListener = onClickListener
+    }
 
     companion object {
         const val ARG_TITLE = "title"

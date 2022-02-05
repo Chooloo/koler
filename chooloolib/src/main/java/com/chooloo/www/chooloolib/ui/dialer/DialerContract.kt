@@ -12,7 +12,7 @@ class DialerContract : DialpadContract {
         fun setSuggestionsFilter(filter: String)
     }
 
-    interface Controller<V : View> : DialpadContract.Controller<V> {
+    interface Controller : DialpadContract.Controller {
         fun onCallClick()
         fun onAddContactClick()
         fun onSuggestionsChanged(contacts: List<ContactAccount>)

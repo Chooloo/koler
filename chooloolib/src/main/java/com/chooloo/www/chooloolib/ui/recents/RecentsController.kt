@@ -4,20 +4,20 @@ import androidx.lifecycle.LifecycleOwner
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.adapter.RecentsAdapter
 import com.chooloo.www.chooloolib.data.account.RecentAccount
-import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
+import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListController
 import javax.inject.Inject
 
-class RecentsController<V : RecentsContract.View> @Inject constructor(
-    view: V,
+class RecentsController @Inject constructor(
+    view: RecentsContract.View,
     recentsAdapter: RecentsAdapter,
     private val lifecycleOwner: LifecycleOwner,
     private val liveDataFactory: LiveDataFactory,
     private val permissionsInteractor: PermissionsInteractor
 ) :
-    ListController<RecentAccount, V>(view, recentsAdapter),
-    RecentsContract.Controller<V> {
+    ListController<RecentAccount, RecentsContract.View>(view, recentsAdapter),
+    RecentsContract.Controller {
 
     override val noResultsIconRes = R.drawable.round_history_24
     override val noResultsTextRes = R.string.error_no_results_recents

@@ -15,7 +15,7 @@ interface RecentContract : BaseContract {
         var isBlockButtonActivated: Boolean
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onActionSms()
         fun onActionCall()
         fun onActionDelete()

@@ -12,22 +12,22 @@ import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import javax.inject.Inject
 
-class BriefContactController<V : BriefContactContract.View> @Inject constructor(
-    view: V,
+class BriefContactController @Inject constructor(
+    view: BriefContactContract.View,
     private val phonesInteractor: PhonesInteractor,
     private val dialogsInteractor: DialogsInteractor,
     private val contactsInteractor: ContactsInteractor,
     private val navigationsInteractor: NavigationsInteractor,
     private val permissionsInteractor: PermissionsInteractor
 ) :
-    BaseController<V>(view),
-    BriefContactContract.Controller<V> {
+    BaseController<BriefContactContract.View>(view),
+    BriefContactContract.Controller {
 
     private var _contact: ContactAccount? = null
     private var _firstPhone: PhoneAccount? = null
 
 
-    override fun onStart() {
+    override fun onSetup() {
         contactsInteractor.queryContact(view.contactId) { contact ->
             _contact = contact
             view.apply {

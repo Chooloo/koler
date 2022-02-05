@@ -37,7 +37,9 @@ import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 import com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @SuppressLint("CustomViewStyleable", "Recycle")
 open class ListItem : LinearLayout {
     private var _isPadded: Boolean = true

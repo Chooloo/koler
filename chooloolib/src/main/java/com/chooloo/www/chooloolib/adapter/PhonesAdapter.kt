@@ -6,13 +6,17 @@ import android.view.ViewGroup
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.ListData
 import com.chooloo.www.chooloolib.data.account.PhoneAccount
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemButton
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemHolder
+import javax.inject.Inject
 
-class PhonesAdapter(activityComponent: ActivityComponent) :
-    ListAdapter<PhoneAccount>(activityComponent) {
+class PhonesAdapter @Inject constructor(
+    animationsInteractor: AnimationsInteractor,
+    private val stringsInteractor: StringsInteractor
+) : ListAdapter<PhoneAccount>(animationsInteractor) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemHolder(ListItemButton(parent.context))
@@ -22,8 +26,7 @@ class PhonesAdapter(activityComponent: ActivityComponent) :
         listItem.apply {
             isPadded = false
             titleText = item.number
-            captionText =
-                component.strings.getString(Phone.getTypeLabelResource(item.type))
+            captionText = stringsInteractor.getString(Phone.getTypeLabelResource(item.type))
 
             setTitleBold(true)
             setImageBackgroundColor(Color.TRANSPARENT)

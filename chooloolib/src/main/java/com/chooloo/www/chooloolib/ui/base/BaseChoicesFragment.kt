@@ -5,13 +5,18 @@ import android.view.View
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.adapter.ChoicesAdapter
 import com.chooloo.www.chooloolib.databinding.MenuBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-open class BaseChoicesFragment : BaseFragment() {
+@AndroidEntryPoint
+open class BaseChoicesFragment @Inject constructor() : BaseFragment() {
+    override val contentView by lazy { binding.root }
+    override val controller = BaseController(this)
+
     private var _onChoiceClickListener: (String) -> Unit = {}
-    protected open val adapter by lazy { ChoicesAdapter(component) }
     protected open val binding by lazy { MenuBinding.inflate(layoutInflater) }
 
-    override val contentView by lazy { binding.root }
+    @Inject lateinit var adapter: ChoicesAdapter
 
 
     override fun onSetup() {

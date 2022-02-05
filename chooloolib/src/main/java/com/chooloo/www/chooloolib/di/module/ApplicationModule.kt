@@ -10,8 +10,10 @@ import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactory
-import com.chooloo.www.chooloolib.di.livedatafactory.LiveDataFactoryImpl
+import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
+import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactoryImpl
+import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
+import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactoryImpl
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
@@ -48,52 +50,65 @@ import dagger.hilt.components.SingletonComponent
 
 @Module(includes = [ApplicationModule.BindsModule::class])
 @InstallIn(SingletonComponent::class)
-public class ApplicationModule {
+class ApplicationModule {
     @Provides
-    fun provideVibrator(@ApplicationContext context: Context) =
+    fun provideVibrator(@ApplicationContext context: Context): Vibrator =
         context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+    //region manager
+
     @Provides
-    fun providePowerManager(@ApplicationContext context: Context) =
+    fun providePowerManager(@ApplicationContext context: Context): PowerManager =
         context.getSystemService(Context.POWER_SERVICE) as PowerManager
 
     @Provides
-    fun provideAudioManager(@ApplicationContext context: Context) =
+    fun provideAudioManager(@ApplicationContext context: Context): AudioManager =
         context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     @Provides
-    fun provideTelecomManager(@ApplicationContext context: Context) =
+    fun provideTelecomManager(@ApplicationContext context: Context): TelecomManager =
         context.getSystemService(Context.TELECOM_SERVICE) as TelecomManager
 
     @Provides
-    fun provideKeyguardManager(@ApplicationContext context: Context) =
+    fun provideKeyguardManager(@ApplicationContext context: Context): KeyguardManager =
         context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
     @Provides
-    fun provideClipboardManager(@ApplicationContext context: Context) =
+    fun provideClipboardManager(@ApplicationContext context: Context): ClipboardManager =
         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     @Provides
-    fun provideInputMethodManager(@ApplicationContext context: Context) =
+    fun provideInputMethodManager(@ApplicationContext context: Context): InputMethodManager =
         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
     @Provides
-    fun providePreferencesManager(@ApplicationContext context: Context) =
+    fun providePreferencesManager(@ApplicationContext context: Context): PreferencesManager =
         PreferencesManager.getInstance(context)
 
     @Provides
-    fun provideSubscriptionManager(@ApplicationContext context: Context) =
+    fun provideSubscriptionManager(@ApplicationContext context: Context): SubscriptionManager =
         context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
 
     @Provides
-    fun provideNotificationManager(@ApplicationContext context: Context) =
+    fun provideNotificationManager(@ApplicationContext context: Context): NotificationManagerCompat =
         NotificationManagerCompat.from(context)
 
+    //endregion
 
     @Module
+    @InstallIn(SingletonComponent::class)
     interface BindsModule {
+        //region factory
+
         @Binds
         fun bindLiveDataFactory(liveDataFactoryImpl: LiveDataFactoryImpl): LiveDataFactory
+
+        @Binds
+        fun bindContentResolverFactory(contentResolverFactoryImpl: ContentResolverFactoryImpl): ContentResolverFactory
+
+        //endregion
+
+        //region interactor
 
         @Binds
         fun bindCallsInteractor(callsInteractorImpl: CallsInteractorImpl): CallsInteractor
@@ -133,5 +148,7 @@ public class ApplicationModule {
 
         @Binds
         fun bindPreferencesInteractor(preferencesInteractorImpl: PreferencesInteractorImpl): PreferencesInteractor
+
+        //endregion
     }
 }

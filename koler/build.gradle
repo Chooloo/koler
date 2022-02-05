@@ -1,7 +1,7 @@
 plugins {
+    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'com.android.application'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -21,7 +21,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
     }
@@ -53,6 +53,14 @@ android {
 
     lintOptions {
         checkReleaseBuilds false
+    }
+
+    hilt {
+        enableAggregatingTask true
+    }
+
+    kapt {
+        correctErrorTypes true
     }
 }
 

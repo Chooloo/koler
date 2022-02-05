@@ -4,28 +4,38 @@ import android.graphics.Color
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.chooloolib.data.ListData
 import com.chooloo.www.chooloolib.data.account.RecentAccount
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
+import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.chooloo.www.chooloolib.util.getHoursString
+import javax.inject.Inject
 
-class RecentsAdapter(activityComponent: ActivityComponent) :
-    ListAdapter<RecentAccount>(activityComponent) {
+class RecentsAdapter @Inject constructor(
+    animationsInteractor: AnimationsInteractor,
+    private val preferencesInteractor: PreferencesInteractor,
+    private val phonesInteractor: PhonesInteractor,
+    private val stringsInteractor: StringsInteractor,
+    private val recentsInteractor: RecentsInteractor
+) : ListAdapter<RecentAccount>(animationsInteractor) {
 
     override fun onBindListItem(listItem: ListItem, item: RecentAccount) {
         listItem.apply {
-            isCompact = component.preferences.isCompact
+            isCompact = preferencesInteractor.isCompact
             captionText = if (item.date != null) context.getHoursString(item.date) else null
-            component.phones.lookupAccount(item.number) {
+            phonesInteractor.lookupAccount(item.number) {
                 titleText = it?.name ?: item.number
                 it?.let {
                     captionText = "$captionText · ${
-                        component.strings.getString(Phone.getTypeLabelResource(it.type))
+                        stringsInteractor.getString(Phone.getTypeLabelResource(it.type))
                     }"
                 }
             }
 
             setImageBackgroundColor(Color.TRANSPARENT)
-            setImageResource(component.recents.getCallTypeImage(item.type))
+            setImageResource(recentsInteractor.getCallTypeImage(item.type))
         }
     }
 

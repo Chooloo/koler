@@ -4,14 +4,21 @@ import android.os.Bundle
 import com.chooloo.www.chooloolib.adapter.RecentsAdapter
 import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.ui.list.ListFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class RecentsFragment :
+@AndroidEntryPoint
+class RecentsFragment @Inject constructor() :
     ListFragment<RecentAccount, RecentsAdapter>(),
     RecentsContract.View {
 
-    @Inject override lateinit var controller: RecentsContract.Controller<out RecentsFragment>
+    override lateinit var controller: RecentsContract.Controller
 
+
+    override fun onSetup() {
+        controller = controllerFactory.getRecentsController(this)
+        super.onSetup()
+    }
 
     companion object {
         fun newInstance(filter: String? = null) = RecentsFragment().apply {

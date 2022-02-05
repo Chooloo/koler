@@ -11,9 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 
 
-abstract class BasePreferenceFragment : PreferenceFragmentCompat(), BaseContract.View {
-    override val component get() = baseActivity.component
-
+abstract class BasePreferencesFragment : PreferenceFragmentCompat(), BaseContract.View {
     protected val argsSafely get() = arguments ?: Bundle()
     protected val baseActivity by lazy { context as BaseActivity }
 

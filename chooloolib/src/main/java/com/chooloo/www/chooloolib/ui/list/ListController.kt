@@ -6,7 +6,7 @@ import com.chooloo.www.chooloolib.ui.base.BaseController
 
 abstract class ListController<ItemType, V : ListContract.View<ItemType>>(
     view: V,
-    private val adapter: ListAdapter<ItemType>
+    override val adapter: ListAdapter<ItemType>
 ) :
     BaseController<V>(view),
     ListContract.Controller<ItemType, V> {
@@ -21,7 +21,7 @@ abstract class ListController<ItemType, V : ListContract.View<ItemType>>(
         }
     }
 
-    override fun onStart() {
+    override fun onSetup() {
         adapter.apply {
             registerAdapterDataObserver(_adapterDataObserver)
             setOnItemClickListener(this@ListController::onItemClick)

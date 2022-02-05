@@ -130,7 +130,7 @@ class NavigationsInteractorImpl @Inject constructor(
 
     @SuppressLint("MissingPermission")
     override fun call(number: String) {
-        activity.component.permissions.runWithPermissions(
+        permissions.runWithPermissions(
             arrayOf(Manifest.permission.READ_PHONE_STATE),
             {
                 permissions.runWithDefaultDialer(null, {

@@ -10,7 +10,7 @@ interface DialpadContract : BaseContract {
         fun invokeKey(keyCode: Int)
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onKeyClick(keyCode: Int)
         fun onLongKeyClick(keyCode: Int): Boolean
         fun onDeleteClick()

@@ -2,14 +2,19 @@ package com.chooloo.www.koler
 
 import androidx.preference.PreferenceManager
 import com.chooloo.www.chooloolib.BaseApp
-import com.chooloo.www.chooloolib.data.call.CallNotification
+import com.chooloo.www.chooloolib.notification.CallNotification
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
+@HiltAndroidApp
 open class KolerApp : BaseApp() {
+    @Inject lateinit var callNotification: CallNotification
+
     override fun onCreate() {
         super.onCreate()
-        PreferenceManager.setDefaultValues(this, R.xml.preferences_chooloo, false)
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_koler, false)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            CallNotification(this).createNotificationChannel()
+            callNotification.createNotificationChannel()
         }
     }
 }

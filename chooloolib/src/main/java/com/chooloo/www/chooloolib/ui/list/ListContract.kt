@@ -14,9 +14,13 @@ interface ListContract : BaseContract {
         fun setEmptyIcon(@DrawableRes res: Int?)
         fun setEmptyReason(@StringRes res: Int?)
         fun setAdapter(adapter: ListAdapter<ItemType>)
+        fun setOnItemClickListener(onItemClickListener: (ItemType) -> Unit)
+        fun setOnItemLongClickListener(onItemLongClickListener: (ItemType) -> Unit)
     }
 
     interface Controller<ItemType, V : View<ItemType>> : BaseContract.Controller<V> {
+        val adapter: ListAdapter<ItemType>
+
         fun applyFilter(filter: String)
         fun onItemClick(item: ItemType) {}
         fun onItemLongClick(item: ItemType) {}

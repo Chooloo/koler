@@ -3,15 +3,18 @@ package com.chooloo.www.chooloolib.receiver
 import android.bluetooth.BluetoothAdapter.*
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Context.AUDIO_SERVICE
 import android.content.Intent
 import android.media.AudioManager
 import android.media.AudioManager.MODE_IN_CALL
 import android.media.AudioManager.MODE_NORMAL
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class BluetoothBroadcastReceiver : BroadcastReceiver() {
+    @Inject lateinit var audioManager: AudioManager
+
     override fun onReceive(context: Context, intent: Intent) {
-        val audioManager = context.getSystemService(AUDIO_SERVICE) as AudioManager
         when (intent.action) {
             ACTION_STATE_CHANGED -> {
                 when (intent.getIntExtra(EXTRA_STATE, ERROR)) {

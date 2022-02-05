@@ -3,11 +3,11 @@ package com.chooloo.www.chooloolib.ui.prompt
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import javax.inject.Inject
 
-class PromptController<V : PromptContract.View> @Inject constructor(
-    view: V
+class PromptController @Inject constructor(
+    view: PromptContract.View
 ) :
-    BaseController<V>(view),
-    PromptContract.Controller<V> {
+    BaseController<PromptContract.View>(view),
+    PromptContract.Controller {
 
     private var onClickListener: (result: Boolean) -> Unit = {}
 
@@ -23,7 +23,7 @@ class PromptController<V : PromptContract.View> @Inject constructor(
     }
 
 
-    fun setOnClickListener(onClickListener: (result: Boolean) -> Unit) {
+    override fun setOnClickListener(onClickListener: (result: Boolean) -> Unit) {
         this.onClickListener = onClickListener
     }
 }

@@ -8,8 +8,9 @@ class PromptContract : BaseContract {
         var subtitle: String?
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onNoClick()
         fun onYesClick()
+        fun setOnClickListener(onClickListener: (result: Boolean) -> Unit)
     }
 }

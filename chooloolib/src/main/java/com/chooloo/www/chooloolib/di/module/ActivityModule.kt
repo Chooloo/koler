@@ -1,8 +1,15 @@
 package com.chooloo.www.chooloolib.di.module
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import com.chooloo.www.chooloolib.di.factory.adapter.AdapterFactory
+import com.chooloo.www.chooloolib.di.factory.adapter.AdapterFactoryImpl
+import com.chooloo.www.chooloolib.di.factory.controller.ControllerFactory
+import com.chooloo.www.chooloolib.di.factory.controller.ControllerFactoryImpl
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactoryImpl
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
@@ -20,27 +27,36 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ActivityContext
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.internal.disposables.DisposableContainer
 
 @Module(includes = [ActivityModule.BindsModule::class])
 @InstallIn(ActivityComponent::class)
-public class ActivityModule {
+class ActivityModule {
+    @Provides
+    fun provideDisposables(): CompositeDisposable = CompositeDisposable()
 
     @Provides
-    fun provideDisposables(): DisposableContainer = CompositeDisposable()
+    fun provideFragmentManager(@ActivityContext activity: Context): FragmentManager =
+        (activity as AppCompatActivity).supportFragmentManager
 
     @Provides
-    fun provideFragmentManager(activity: AppCompatActivity): FragmentManager =
-        activity.supportFragmentManager
-
-    @Provides
-    fun provideLifecycleOwner(activity: AppCompatActivity): LifecycleOwner =
-        activity
-
+    fun provideLifecycleOwner(@ActivityContext activity: Context): LifecycleOwner =
+        activity as AppCompatActivity
 
     @Module
+    @InstallIn(ActivityComponent::class)
     interface BindsModule {
+        @Binds
+        fun bindAdapterFactory(adapterFactoryImpl: AdapterFactoryImpl): AdapterFactory
+
+        @Binds
+        fun bindFragmentsFactory(fragmentsFactoryImpl: FragmentFactoryImpl): FragmentFactory
+
+        @Binds
+        fun bindControllerFactory(controllerFactoryImpl: ControllerFactoryImpl): ControllerFactory
+
+
         @Binds
         fun bindSimsInteractor(simsInteractorImpl: SimsInteractorImpl): SimsInteractor
 

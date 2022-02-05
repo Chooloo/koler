@@ -12,8 +12,6 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
     BaseFragment(),
     ListContract.View<ItemType> {
 
-    protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
-
     override val contentView by lazy { binding.root }
 
     override var isScrollerVisible: Boolean
@@ -22,10 +20,15 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
             binding.itemsScrollView.fastScroller.isVisible = value
         }
 
+    private var _onItemClickListener: (ItemType) -> Unit = {}
+    private var _onItemLongClickListener: (ItemType) -> Unit = {}
+    protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
     override fun onSetup() {
         binding.itemsScrollView.fastScroller.setPadding(0, 0, 30, 0)
         args.getString(ARG_FILTER)?.let { controller.applyFilter(it) }
+        controller.setOnItemClickListener(_onItemClickListener)
+        controller.setOnItemLongClickListener(_onItemLongClickListener)
     }
 
     override fun showEmpty(isShow: Boolean) {
@@ -54,11 +57,18 @@ abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
         binding.itemsScrollView.setAdapter(adapter)
     }
 
+    override fun setOnItemClickListener(onItemClickListener: (ItemType) -> Unit) {
+        _onItemClickListener = onItemClickListener
+    }
+
+    override fun setOnItemLongClickListener(onItemLongClickListener: (ItemType) -> Unit) {
+        _onItemLongClickListener = onItemLongClickListener
+    }
 
     companion object {
         const val ARG_FILTER = "filter"
     }
 
 
-    abstract val controller: ListContract.Controller<ItemType, out ListFragment<ItemType, out Adapter>>
+    abstract override val controller: ListContract.Controller<ItemType, out ListContract.View<ItemType>>
 }

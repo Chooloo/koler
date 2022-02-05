@@ -8,17 +8,19 @@ import com.chooloo.www.chooloolib.databinding.DialpadBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-open class DialpadFragment : BaseFragment(), DialpadContract.View {
+@AndroidEntryPoint
+open class DialpadFragment @Inject constructor() : BaseFragment(), DialpadContract.View {
     override val contentView by lazy { binding.root }
+    override val controller by lazy { controllerFactory.getDialpadController(this) }
 
     private var _onTextChangedListener: (text: String) -> Unit = { _ -> }
     private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
     protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
 
     @Inject lateinit var animationsInteractor: AnimationsInteractor
-    @Inject open lateinit var controller: DialpadContract.Controller<out DialpadFragment>
 
 
     override var text: String
@@ -43,6 +45,7 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
 
 
     override fun onSetup() {
+        controller.init()
         binding.apply {
             dialpadButtonDelete.apply {
                 setOnClickListener { controller.onDeleteClick() }
@@ -98,9 +101,12 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
                     keyHex.setOnLongClickListener(it)
                     keyStar.setOnLongClickListener(it)
                 }
-
-            controller.onTextChanged(dialpadEditText.text.toString())
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        controller.onTextChanged(binding.dialpadEditText.text.toString())
     }
 
     override fun invokeKey(keyCode: Int) {
@@ -114,10 +120,5 @@ open class DialpadFragment : BaseFragment(), DialpadContract.View {
 
     fun setOnKeyDownListener(onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit?) {
         _onKeyDownListener = onKeyDownListener
-    }
-
-
-    companion object {
-        fun newInstance() = DialpadFragment()
     }
 }

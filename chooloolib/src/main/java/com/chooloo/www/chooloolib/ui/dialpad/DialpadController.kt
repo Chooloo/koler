@@ -5,12 +5,12 @@ import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import javax.inject.Inject
 
-open class DialpadController<V : DialpadContract.View> @Inject constructor(
-    view: V,
+open class DialpadController @Inject constructor(
+    view: DialpadContract.View,
     private val audiosInteractor: AudiosInteractor
 ) :
-    BaseController<V>(view),
-    DialpadContract.Controller<V> {
+    BaseController<DialpadContract.View>(view),
+    DialpadContract.Controller {
 
     override fun onKeyClick(keyCode: Int) {
         audiosInteractor.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)

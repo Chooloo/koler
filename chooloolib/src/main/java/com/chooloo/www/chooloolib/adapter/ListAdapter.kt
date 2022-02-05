@@ -3,13 +3,13 @@ package com.chooloo.www.chooloolib.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.chooloolib.data.ListData
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemHolder
 import com.l4digital.fastscroll.FastScroller
 
 abstract class ListAdapter<ItemType>(
-    protected val component: ActivityComponent
+    private val animationsInteractor: AnimationsInteractor
 ) : RecyclerView.Adapter<ListItemHolder>(), FastScroller.SectionIndexer {
     private var _titleFilter: String? = null
     private var _data: ListData<ItemType> = ListData()
@@ -49,7 +49,7 @@ abstract class ListAdapter<ItemType>(
                 true
             }
 
-            component.animations.show(this, false)
+            animationsInteractor.show(this, false)
 
             onBindListItem(this, dataItem)
 

@@ -1,12 +1,13 @@
 package com.chooloo.www.chooloolib.interactor.dialog
 
 import androidx.annotation.StringRes
+import androidx.fragment.app.FragmentActivity
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
+import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
@@ -16,15 +17,17 @@ import javax.inject.Inject
 
 @ActivityScoped
 class DialogsInteractorImpl @Inject constructor(
-    private val activity: BaseActivity,
-    private val prompts: PromptsInteractor
+    private val sims: SimsInteractor,
+    private val activity: FragmentActivity,
+    private val prompts: PromptsInteractor,
+    private val callAudios: CallAudiosInteractor
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
     override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
         prompts.showFragment(PromptFragment.newInstance(
             activity.getString(R.string.prompt_yes_or_no),
             activity.getString(titleRes)
         ).apply {
-            controller.setOnClickListener(callback::invoke)
+            setOnClickListener(callback::invoke)
         })
     }
 
@@ -33,7 +36,7 @@ class DialogsInteractorImpl @Inject constructor(
             activity.getString(R.string.prompt_are_you_sure),
             activity.getString(titleRes)
         ).apply {
-            controller.setOnClickListener(callback::invoke)
+            setOnClickListener(callback::invoke)
         })
     }
 
@@ -84,7 +87,7 @@ class DialogsInteractorImpl @Inject constructor(
     }
 
     override fun askForSim(callback: (SimAccount?) -> Unit) {
-        activity.component.sims.getSimAccounts { simAccounts ->
+        sims.getSimAccounts { simAccounts ->
             askForChoice(
                 choices = simAccounts,
                 choiceCallback = callback::invoke,
@@ -127,7 +130,7 @@ class DialogsInteractorImpl @Inject constructor(
             titleRes = R.string.action_choose_audio_route,
             subtitleRes = R.string.explain_choose_audio_route,
             choiceToString = { activity.getString(it.stringRes) },
-            choices = activity.component.callAudios.supportedAudioRoutes.toList()
+            choices = callAudios.supportedAudioRoutes.toList()
         )
     }
 }

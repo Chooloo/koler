@@ -7,13 +7,17 @@ import android.view.View.VISIBLE
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.databinding.RecentBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class RecentFragment : BaseFragment(), RecentContract.View {
-    private lateinit var controller: RecentController<RecentFragment>
-    private val binding by lazy { RecentBinding.inflate(layoutInflater) }
-
+@AndroidEntryPoint
+class RecentFragment @Inject constructor() : BaseFragment(), RecentContract.View {
     override val contentView by lazy { binding.root }
     override val recentId by lazy { args.getLong(ARG_RECENT_ID) }
+    override lateinit var controller: RecentContract.Controller
+
+    private val binding by lazy { RecentBinding.inflate(layoutInflater) }
+
 
     override var recentName: String?
         get() = binding.recentTextName.text.toString()
@@ -60,7 +64,7 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
 
     override fun onSetup() {
-        controller = RecentController(this)
+        controller = controllerFactory.getRecentController(this)
         binding.apply {
             recentButtonSms.setOnClickListener { controller.onActionSms() }
             recentButtonCall.setOnClickListener { controller.onActionCall() }
@@ -74,7 +78,6 @@ class RecentFragment : BaseFragment(), RecentContract.View {
 
 
     companion object {
-        const val TAG = "recent_fragment"
         const val ARG_RECENT_ID = "recent_id"
 
         fun newInstance(recentId: Long) = RecentFragment().apply {

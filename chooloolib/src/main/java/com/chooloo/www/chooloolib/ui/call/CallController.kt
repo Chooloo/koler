@@ -9,8 +9,9 @@ import com.chooloo.www.chooloolib.data.call.Call.State.*
 import com.chooloo.www.chooloolib.data.call.CantHoldCallException
 import com.chooloo.www.chooloolib.data.call.CantMergeCallException
 import com.chooloo.www.chooloolib.data.call.CantSwapCallException
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode.*
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode.NORMAL
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
@@ -23,9 +24,6 @@ import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.ui.base.BaseController
-import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
-import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -33,9 +31,10 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class CallController<V : CallContract.View> @Inject constructor(
-    view: V,
+class CallController @Inject constructor(
+    view: CallContract.View,
     private val callsInteractor: CallsInteractor,
+    private val fragmentFactory: FragmentFactory,
     private val audiosInteractor: AudiosInteractor,
     private val colorsInteractor: ColorsInteractor,
     private val phonesInteractor: PhonesInteractor,
@@ -46,13 +45,13 @@ class CallController<V : CallContract.View> @Inject constructor(
     private val callAudiosInteractor: CallAudiosInteractor,
     private val proximitiesInteractor: ProximitiesInteractor,
 ) :
-    BaseController<V>(view),
-    CallContract.Controller<V> {
+    BaseController<CallContract.View>(view),
+    CallContract.Controller {
 
     private var _currentCallId: String? = null
     private var _timerDisposable: Disposable? = null
 
-    override fun onStart() {
+    override fun onSetup() {
         _timerDisposable = Observable.interval(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -122,13 +121,13 @@ class CallController<V : CallContract.View> @Inject constructor(
     }
 
     override fun onKeypadClick() {
-        promptsInteractor.showFragment(DialpadFragment.newInstance().apply {
+        promptsInteractor.showFragment(fragmentFactory.getDialpadFragment().apply {
             setOnKeyDownListener(::onKeypadKey)
         })
     }
 
     override fun onAddCallClick() {
-        promptsInteractor.showFragment(DialerFragment.newInstance())
+        promptsInteractor.showFragment(fragmentFactory.getDialerFragment())
     }
 
     override fun onSpeakerClick() {
@@ -231,7 +230,7 @@ class CallController<V : CallContract.View> @Inject constructor(
     override fun onManageClick() {
         callsInteractor.mainCall?.children?.let {
             promptsInteractor.showFragment(
-                CallItemsFragment.newInstance().apply { controller.calls = it }
+                fragmentFactory.getCallItemsFragment().apply { controller.calls = it }
             )
         }
     }

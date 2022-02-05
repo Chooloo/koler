@@ -1,4 +1,4 @@
-package com.chooloo.www.chooloolib.di.livedatafactory
+package com.chooloo.www.chooloolib.di.factory.livedata
 
 import com.chooloo.www.chooloolib.livedata.ContactsProviderLiveData
 import com.chooloo.www.chooloolib.livedata.PhonesProviderLiveData

@@ -7,6 +7,6 @@ interface RecentsContract : ListContract {
     interface View : ListContract.View<RecentAccount> {
     }
 
-    interface Controller<V : View> : ListContract.Controller<RecentAccount, V> {
+    interface Controller : ListContract.Controller<RecentAccount, View> {
     }
 }

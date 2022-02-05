@@ -5,18 +5,23 @@ import android.graphics.Color
 import android.view.MenuItem
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.ListData
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
+import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.google.android.material.internal.ViewUtils
+import javax.inject.Inject
 
-class MenuAdapter(component: ActivityComponent) : ListAdapter<MenuItem>(component) {
+class MenuAdapter @Inject constructor(
+    animationsInteractor: AnimationsInteractor,
+    private val colorsInteractor: ColorsInteractor
+) : ListAdapter<MenuItem>(animationsInteractor) {
     @SuppressLint("RestrictedApi")
     override fun onBindListItem(listItem: ListItem, item: MenuItem) {
         listItem.apply {
             setBackgroundColor(Color.TRANSPARENT)
             setTitleTextAppearance(R.style.Chooloo_Text_Subtitle1)
-            setImageTint(component.colors.getColor(R.color.color_opposite))
-            setTitleColor(component.colors.getColor(R.color.color_opposite))
+            setImageTint(colorsInteractor.getColor(R.color.color_opposite))
+            setTitleColor(colorsInteractor.getColor(R.color.color_opposite))
 
             paddingTop = 28
             paddingBottom = 28

@@ -14,7 +14,7 @@ interface MainContract : BaseContract {
         fun setContactsFragment(contactsFragment: ContactsFragment)
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onSettingsClick()
         fun onAddContactClick()
         fun onSearchTextChange(text: String)

@@ -5,7 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 
 open class BaseController<V : BaseContract.View>(
-    final override var view: V
+    override val view: V
 ) :
     BaseContract.Controller<V>,
     LifecycleObserver {
@@ -14,8 +14,15 @@ open class BaseController<V : BaseContract.View>(
         view.getLifecycle().addObserver(this)
     }
 
+
+    override fun onSetup() {}
+
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     protected open fun onStart() {
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    protected open fun onResume() {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)

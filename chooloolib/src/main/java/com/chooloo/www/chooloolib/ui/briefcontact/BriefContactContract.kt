@@ -11,7 +11,7 @@ interface BriefContactContract : BaseContract {
         var isStarIconVisible: Boolean
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onActionSms()
         fun onActionCall()
         fun onActionEdit()

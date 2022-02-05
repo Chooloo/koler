@@ -18,7 +18,7 @@ interface MainContract : BaseContract {
         fun setFragmentsAdapter(count: Int, adapter: (position: Int) -> BaseFragment)
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onMenuClick()
         fun onDialpadFabClick()
         fun onPageChange(position: Int)

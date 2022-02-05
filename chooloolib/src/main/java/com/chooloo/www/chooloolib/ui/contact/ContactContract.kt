@@ -7,7 +7,7 @@ interface ContactContract : BaseContract {
 
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
 
     }
 }

@@ -8,7 +8,7 @@ interface SettingsContract : BaseContract {
         fun setMenuResList(menuResList: List<Int>)
     }
 
-    interface Controller<V : View> : BaseContract.Controller<V> {
+    interface Controller : BaseContract.Controller<View> {
         fun onMenuItemClick(menuItem: MenuItem)
     }
 }

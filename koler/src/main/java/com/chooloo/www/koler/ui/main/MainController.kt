@@ -3,56 +3,64 @@ package com.chooloo.www.koler.ui.main
 import android.content.Intent
 import com.chooloo.www.chooloolib.data.account.ContactAccount
 import com.chooloo.www.chooloolib.data.account.RecentAccount
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseController
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
-import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
-import com.chooloo.www.chooloolib.ui.recent.RecentFragment
-import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
-import com.chooloo.www.koler.R
 import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
-import com.chooloo.www.koler.ui.settings.SettingsFragment
+import com.chooloo.www.chooloolib.ui.recent.RecentFragment
+import com.chooloo.www.koler.R
+import com.chooloo.www.koler.di.factory.fragment.FragmentFactory
 import java.net.URLDecoder
+import javax.inject.Inject
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory as ChoolooFragmentsFactory
 
-class MainController<V : MainContract.View> @Inject constructor(view: V) :
-    BaseController<V>(view),
-    MainContract.Controller<V> {
+class MainController @Inject constructor(
+    view: MainContract.View,
+    private val fragmentFactory: FragmentFactory,
+    private val promptsInteractor: PromptsInteractor,
+    private val stringsInteractor: StringsInteractor,
+    private val permissionsInteractor: PermissionsInteractor,
+    private val preferencesInteractor: PreferencesInteractor,
+    private val choolooFragmentsFactory: ChoolooFragmentsFactory
+) :
+    BaseController<MainContract.View>(view),
+    MainContract.Controller {
 
     private val _fragments by lazy { listOf(_contactsFragment, _recentsFragment) }
-    private val _recentsFragment by lazy {
-        RecentsFragment.newInstance().apply {
-            controller.setOnItemClickListener(::onRecentItemClick)
-        }
-    }
-    private val _contactsFragment by lazy {
-        ContactsFragment.newInstance().apply {
-            controller.setOnItemClickListener(::onContactItemClick)
-        }
-    }
+    private val _recentsFragment by lazy { choolooFragmentsFactory.getRecentsFragment() }
+    private val _contactsFragment by lazy { choolooFragmentsFactory.getContactsFragment() }
 
 
-    override fun onStart() {
-        super.onStart()
+    override fun onSetup() {
+        super.onSetup()
 
-        component.permissions.checkDefaultDialer()
+        permissionsInteractor.checkDefaultDialer()
+
+        _recentsFragment.setOnItemClickListener(::onRecentItemClick)
+        _contactsFragment.setOnItemClickListener(::onContactItemClick)
 
         view.apply {
             setFragmentsAdapter(_fragments.size, _fragments::get)
-            setSearchHint(component.strings.getString(R.string.hint_search_items))
+            setSearchHint(stringsInteractor.getString(R.string.hint_search_items))
 
             headers = arrayOf(
-                component.strings.getString(R.string.contacts),
-                component.strings.getString(R.string.recents)
+                stringsInteractor.getString(R.string.contacts),
+                stringsInteractor.getString(R.string.recents)
             )
-            currentPageIndex = component.preferences.defaultPage.index
+            currentPageIndex = preferencesInteractor.defaultPage.index
         }
     }
 
+
     override fun onMenuClick() {
-        component.prompts.showFragment(SettingsFragment.newInstance())
+        promptsInteractor.showFragment(fragmentFactory.getSettingsFragment())
     }
 
     override fun onDialpadFabClick() {
-        component.prompts.showFragment(DialerFragment.newInstance())
+        promptsInteractor.showFragment(choolooFragmentsFactory.getDialerFragment())
     }
 
     override fun onViewIntent(intent: Intent) {
@@ -64,7 +72,7 @@ class MainController<V : MainContract.View> @Inject constructor(view: V) :
         }
 
         if (intentText.contains("tel:")) {
-            component.prompts.showFragment(DialerFragment.newInstance(intentText.substringAfter("tel:")))
+            promptsInteractor.showFragment(DialerFragment.newInstance(intentText.substringAfter("tel:")))
         } else {
             view.showError(R.string.error_couldnt_get_number_from_intent)
         }
@@ -84,10 +92,10 @@ class MainController<V : MainContract.View> @Inject constructor(view: V) :
     }
 
     override fun onRecentItemClick(recent: RecentAccount) {
-        component.prompts.showFragment(RecentFragment.newInstance(recent.id))
+        promptsInteractor.showFragment(RecentFragment.newInstance(recent.id))
     }
 
     override fun onContactItemClick(contact: ContactAccount) {
-        component.prompts.showFragment(BriefContactFragment.newInstance(contact.id))
+        promptsInteractor.showFragment(BriefContactFragment.newInstance(contact.id))
     }
 }

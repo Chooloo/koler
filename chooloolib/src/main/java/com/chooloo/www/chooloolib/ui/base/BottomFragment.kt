@@ -9,14 +9,13 @@ import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-
 open class BottomFragment<FragmentType : BaseFragment>(
     private val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseContract.View {
+    override val controller = BaseController(this)
+
     protected val baseActivity by lazy { context as BaseActivity }
     private val binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
-
-    override val component get() = baseActivity.component
 
 
     override fun onAttach(context: Context) {

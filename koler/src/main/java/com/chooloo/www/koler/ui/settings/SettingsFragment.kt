@@ -1,11 +1,17 @@
 package com.chooloo.www.koler.ui.settings
 
-import com.chooloo.www.chooloolib.ui.settings.SettingsFragment
+import com.chooloo.www.koler.di.factory.controller.ControllerFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import com.chooloo.www.chooloolib.ui.settings.SettingsFragment as ChoolooSettingsFragment
 
-class SettingsFragment : SettingsFragment(), SettingsContract.View {
-    override val controller by lazy { SettingsController(this) }
+@AndroidEntryPoint
+class SettingsFragment @Inject constructor() : ChoolooSettingsFragment(), SettingsContract.View {
+    override val controller by lazy { kolerControllerFactory.getSettingsController(this) }
 
-    companion object {
-        fun newInstance() = com.chooloo.www.koler.ui.settings.SettingsFragment()
+    @Inject lateinit var kolerControllerFactory: ControllerFactory
+
+    override fun onSetup() {
+        super.onSetup()
     }
 }
