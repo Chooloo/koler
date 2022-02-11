@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.interactor.screen
 
 import android.app.KeyguardManager
+import android.content.Context
 import android.graphics.Rect
 import android.os.Build
 import android.view.MotionEvent
@@ -9,15 +10,20 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
 class ScreensInteractorImpl @Inject constructor(
-    private val activity: BaseActivity,
     private val keyguardManager: KeyguardManager,
+    @ActivityContext private val context: Context,
     private val inputMethodManager: InputMethodManager
 ) : BaseObservable<ScreensInteractor.Listener>(), ScreensInteractor {
+
+    private val activity = context as BaseActivity<*>
+
+
     override fun disableKeyboard() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             keyguardManager.requestDismissKeyguard(activity, null)

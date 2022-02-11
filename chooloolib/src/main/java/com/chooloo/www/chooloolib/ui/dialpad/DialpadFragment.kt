@@ -1,9 +1,8 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
-import android.view.KeyEvent
-import android.view.KeyEvent.ACTION_DOWN
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.databinding.DialpadBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
@@ -12,62 +11,28 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class DialpadFragment @Inject constructor() : BaseFragment(), DialpadContract.View {
+open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState>() {
     override val contentView by lazy { binding.root }
-    override val controller by lazy { controllerFactory.getDialpadController(this) }
-
-    private var _onTextChangedListener: (text: String) -> Unit = { _ -> }
-    private var _onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit? = { _, _ -> }
-    protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
+    override val viewState: DialpadViewState by viewModels()
 
     @Inject lateinit var animationsInteractor: AnimationsInteractor
 
-
-    override var text: String
-        get() = binding.dialpadEditText.text.toString()
-        set(value) {
-            binding.dialpadEditText.setText(value)
-        }
-
-    override var isDeleteButtonVisible: Boolean
-        get() = binding.dialpadButtonDelete.isVisible
-        set(value) {
-            if (value && !isDeleteButtonVisible) {
-                animationsInteractor.show(binding.dialpadButtonDelete, true)
-            } else if (!value && isDeleteButtonVisible) {
-                animationsInteractor.hide(
-                    binding.dialpadButtonDelete,
-                    ifVisible = true,
-                    goneOrInvisible = false
-                )
-            }
-        }
-
+    protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
 
     override fun onSetup() {
-        controller.init()
         binding.apply {
-            dialpadButtonDelete.apply {
-                setOnClickListener { controller.onDeleteClick() }
-                setOnLongClickListener { controller.onLongDeleteClick() }
-            }
+            dialpadButtonCall.isVisible = false
+            dialpadButtonDelete.isVisible = false
+
             dialpadEditText.apply {
                 isClickable = false
                 isLongClickable = false
                 isCursorVisible = false
                 isFocusableInTouchMode = false
-
-                addOnTextChangedListener {
-                    controller.onTextChanged(it)
-                    _onTextChangedListener.invoke(it)
-                }
             }
 
             View.OnClickListener {
-                (it as DialpadKey).keyCode.also { keyCode ->
-                    controller.onKeyClick(keyCode)
-                    _onKeyDownListener.invoke(keyCode, KeyEvent(ACTION_DOWN, keyCode))
-                }
+                viewState.onCharClick((it as DialpadKey).char)
             }
                 .also {
                     key0.setOnClickListener(it)
@@ -85,7 +50,7 @@ open class DialpadFragment @Inject constructor() : BaseFragment(), DialpadContra
                 }
 
             View.OnLongClickListener {
-                controller.onLongKeyClick((it as DialpadKey).keyCode)
+                viewState.onLongKeyClick((it as DialpadKey).char)
             }
                 .also {
                     key0.setOnLongClickListener(it)
@@ -102,23 +67,7 @@ open class DialpadFragment @Inject constructor() : BaseFragment(), DialpadContra
                     keyStar.setOnLongClickListener(it)
                 }
         }
-    }
 
-    override fun onStart() {
-        super.onStart()
-        controller.onTextChanged(binding.dialpadEditText.text.toString())
-    }
-
-    override fun invokeKey(keyCode: Int) {
-        binding.dialpadEditText.onKeyDown(keyCode, KeyEvent(ACTION_DOWN, keyCode))
-    }
-
-
-    fun setOnTextChangedListener(onTextChangedListener: (text: String) -> Unit) {
-        _onTextChangedListener = onTextChangedListener
-    }
-
-    fun setOnKeyDownListener(onKeyDownListener: (keyCode: Int, event: KeyEvent) -> Unit?) {
-        _onKeyDownListener = onKeyDownListener
+        viewState.text.observe(this@DialpadFragment, binding.dialpadEditText::setText)
     }
 }

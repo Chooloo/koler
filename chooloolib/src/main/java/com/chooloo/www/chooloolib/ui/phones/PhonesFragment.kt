@@ -1,21 +1,30 @@
 package com.chooloo.www.chooloolib.ui.phones
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
-import com.chooloo.www.chooloolib.data.account.PhoneAccount
+import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
+import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.chooloolib.ui.list.ListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PhonesFragment @Inject constructor() :
-    ListFragment<PhoneAccount, PhonesAdapter>(),
-    PhonesContract.View {
+class PhonesFragment @Inject constructor() : ListFragment<PhoneAccount, PhonesViewState>() {
+    override val viewState: PhonesViewState by viewModels()
 
-    override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
-    override val controller by lazy { controllerFactory.getPhonesController(this) }
+    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject override lateinit var adapter: PhonesAdapter
 
+
+    override fun onSetup() {
+        viewState.contactId.value = args.getLong(ARG_CONTACT_ID)
+        super.onSetup()
+        viewState.callEvent.observe(this@PhonesFragment) {
+            it.contentIfNew?.let(callNavigations::call)
+        }
+    }
 
     companion object {
         fun newInstance(contactId: Long? = null) = PhonesFragment().apply {
@@ -24,4 +33,5 @@ class PhonesFragment @Inject constructor() :
             }
         }
     }
+
 }

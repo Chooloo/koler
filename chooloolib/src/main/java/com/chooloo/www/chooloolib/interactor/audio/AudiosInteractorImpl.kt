@@ -10,7 +10,6 @@ import android.os.Vibrator
 import android.view.KeyEvent
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,6 +18,7 @@ class AudiosInteractorImpl @Inject constructor(
     private val vibrator: Vibrator,
     private val audioManager: AudioManager
 ) : BaseInteractorImpl<AudiosInteractor.Listener>(), AudiosInteractor {
+
     override var isMuted: Boolean
         get() = audioManager.isMicrophoneMute
         set(value) {
@@ -47,6 +47,10 @@ class AudiosInteractorImpl @Inject constructor(
 
     override fun playTone(tone: Int) {
         playTone(tone, TONE_LENGTH_MS)
+    }
+
+    override fun playToneByChar(char: Char) {
+        playTone(sCharToTone.getOrDefault(char, -1))
     }
 
     override fun playToneByKey(keyCode: Int) {
@@ -94,6 +98,22 @@ class AudiosInteractorImpl @Inject constructor(
                 put(KeyEvent.KEYCODE_9, ToneGenerator.TONE_DTMF_9)
                 put(KeyEvent.KEYCODE_POUND, ToneGenerator.TONE_DTMF_P)
                 put(KeyEvent.KEYCODE_STAR, ToneGenerator.TONE_DTMF_S)
+            }
+        }
+        private val sCharToTone by lazy {
+            HashMap<Char, Int>().apply {
+                put('0', ToneGenerator.TONE_DTMF_0)
+                put('1', ToneGenerator.TONE_DTMF_1)
+                put('2', ToneGenerator.TONE_DTMF_2)
+                put('3', ToneGenerator.TONE_DTMF_3)
+                put('4', ToneGenerator.TONE_DTMF_4)
+                put('5', ToneGenerator.TONE_DTMF_5)
+                put('6', ToneGenerator.TONE_DTMF_6)
+                put('7', ToneGenerator.TONE_DTMF_7)
+                put('8', ToneGenerator.TONE_DTMF_8)
+                put('9', ToneGenerator.TONE_DTMF_9)
+                put('#', ToneGenerator.TONE_DTMF_P)
+                put('*', ToneGenerator.TONE_DTMF_S)
             }
         }
     }

@@ -4,33 +4,43 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.chooloolib.di.factory.controller.ControllerFactory
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
-abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
+abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<VM> {
+    @Inject lateinit var strings: StringsInteractor
     @Inject lateinit var disposables: CompositeDisposable
-    @Inject lateinit var stringsInteractor: StringsInteractor
-    @Inject lateinit var controllerFactory: ControllerFactory
-    @Inject lateinit var preferencesInteractor: PreferencesInteractor
+    @Inject lateinit var preferences: PreferencesInteractor
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(preferencesInteractor.accentTheme.theme)
+        applicationContext.setTheme(preferences.accentTheme.theme)
+        setTheme(preferences.accentTheme.theme)
         contentView?.let { setContentView(it) }
-    }
-
-    override fun onStart() {
-        super.onStart()
         onSetup()
-        controller.onSetup()
+        viewState.apply {
+            attach()
+
+            errorEvent.observe(this@BaseActivity) {
+                it.contentIfNew?.let(this@BaseActivity::showError)
+            }
+
+            finishEvent.observe(this@BaseActivity) {
+                it.contentIfNew?.let { finish() }
+            }
+
+            messageEvent.observe(this@BaseActivity) {
+                it.contentIfNew?.let(this@BaseActivity::showMessage)
+            }
+        }
     }
 
     override fun onStop() {
         super.onStop()
+        viewState.detach()
         disposables.clear()
     }
 
@@ -40,13 +50,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     }
 
     override fun finish() {
-        super<AppCompatActivity>.finish()
+        finishAndRemoveTask()
     }
 
     override fun showError(stringResId: Int) {
         Toast.makeText(
             applicationContext,
-            stringsInteractor.getString(stringResId),
+            strings.getString(stringResId),
             Toast.LENGTH_LONG
         ).show()
     }
@@ -54,10 +64,13 @@ abstract class BaseActivity : AppCompatActivity(), BaseContract.View {
     override fun showMessage(stringResId: Int) {
         Toast.makeText(
             this,
-            stringsInteractor.getString(stringResId),
+            strings.getString(stringResId),
             Toast.LENGTH_SHORT
         ).show()
     }
 
+    open fun <VS : BaseViewState> onFragmentSetup(fragment: BaseFragment<VS>) {}
+
     abstract val contentView: View?
+    abstract override val viewState: VM
 }

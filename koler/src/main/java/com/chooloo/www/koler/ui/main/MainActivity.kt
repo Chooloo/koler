@@ -2,90 +2,137 @@ package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
 import android.view.MotionEvent
+import androidx.activity.viewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.ui.contacts.ContactsViewState
+import com.chooloo.www.chooloolib.ui.recents.RecentsViewState
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.MainBinding
-import com.chooloo.www.koler.di.factory.controller.ControllerFactory
+import com.chooloo.www.koler.di.factory.fragment.FragmentFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory as ChoolooFragmentFactory
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(), MainContract.View {
+class MainActivity : BaseActivity<MainViewState>() {
     override val contentView by lazy { binding.root }
-    override val controller by lazy { kolerControllerFactory.getMainController(this) }
+    override val viewState: MainViewState by viewModels()
 
-    override var searchText: String?
-        get() = binding.mainSearchBar.text
-        set(value) {
-            binding.mainSearchBar.text = value
-        }
-
-    override var currentPageIndex: Int
-        get() = binding.mainViewPager.currentItem
-        set(value) {
-            binding.mainViewPager.currentItem = value
-        }
-
-    override var headers: Array<String>
-        get() = binding.mainTabs.headers
-        set(value) {
-            binding.mainTabs.headers = value
-        }
-
+    private val recentsViewState: RecentsViewState by viewModels()
+    private val contactsViewState: ContactsViewState by viewModels()
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
+    private val _fragments by lazy { listOf(_contactsFragment, _recentsFragment) }
+    private val _recentsFragment by lazy { choolooFragmentFactory.getRecentsFragment() }
+    private val _contactsFragment by lazy { choolooFragmentFactory.getContactsFragment() }
 
-    @Inject lateinit var screensInteractor: ScreensInteractor
-    @Inject lateinit var kolerControllerFactory: ControllerFactory
+    @Inject lateinit var prompts: PromptsInteractor
+    @Inject lateinit var screens: ScreensInteractor
+    @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var choolooFragmentFactory: ChoolooFragmentFactory
 
 
     override fun onSetup() {
-        controller.init()
+        screens.disableKeyboard()
+        screens.setShowWhenLocked()
+
         binding.apply {
-            mainMenuButton.setOnClickListener { controller.onMenuClick() }
-            mainDialpadButton.setOnClickListener { controller.onDialpadFabClick() }
             mainTabs.viewPager = mainViewPager
-            mainSearchBar.setOnTextChangedListener(controller::onSearchTextChange)
-            mainSearchBar.editText?.setOnFocusChangeListener { _, hasFocus ->
-                controller.onSearchFocusChange(hasFocus)
+            mainTabs.setHeadersResList(arrayOf(R.string.contacts, R.string.recents))
+
+            mainMenuButton.setOnClickListener {
+                viewState.onMenuClick()
             }
+
+            mainDialpadButton.setOnClickListener {
+                viewState.onDialpadFabClick()
+            }
+
+            mainSearchBar.setOnTextChangedListener { st ->
+                contactsViewState.onFilterChanged(st)
+                recentsViewState.onFilterChanged(st)
+            }
+
+            mainSearchBar.editText?.setOnFocusChangeListener { _, hasFocus ->
+                viewState.onSearchFocusChange(hasFocus)
+            }
+
+            mainViewPager.adapter = object : FragmentStateAdapter(this@MainActivity) {
+                override fun getItemCount() = _fragments.size
+                override fun createFragment(position: Int) = _fragments[position]
+            }
+
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    controller.onPageChange(position)
+                    viewState.currentPageIndex.value = position
                 }
             })
         }
 
-        checkIntent()
+        viewState.apply {
+            searchText.observe(this@MainActivity) {
+                binding.mainSearchBar.text = it
+            }
+
+            searchHint.observe(this@MainActivity) {
+                binding.mainSearchBar.hint = it.toString()
+            }
+
+            currentPageIndex.observe(this@MainActivity) {
+                binding.mainViewPager.currentItem = it
+            }
+
+            isSearching.observe(this@MainActivity) {
+                if (it) binding.root.transitionToState(R.id.constraint_set_main_collapsed)
+            }
+
+            showMenuEvent.observe(this@MainActivity) { ev ->
+                ev.contentIfNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
+            }
+
+            showRecentEvent.observe(this@MainActivity) { ev ->
+                ev.contentIfNew?.let {
+                    prompts.showFragment(choolooFragmentFactory.getRecentFragment(it))
+                }
+            }
+
+            showContactEvent.observe(this@MainActivity) { ev ->
+                ev.contentIfNew?.let {
+                    prompts.showFragment(choolooFragmentFactory.getBriefContactFragment(it))
+                }
+            }
+
+            showDialerEvent.observe(this@MainActivity) { ev ->
+                ev.contentIfNew?.let {
+                    prompts.showFragment(
+                        choolooFragmentFactory.getDialerFragment(
+                            it
+                        )
+                    )
+                }
+            }
+        }
+
+        if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
+            viewState.onViewIntent(intent)
+        }
+
+        contactsViewState.itemClickedEvent.observe(this) {
+            it.contentIfNew?.let(viewState::onContactItemClick)
+        }
+
+        recentsViewState.itemClickedEvent.observe(this) {
+            it.contentIfNew?.let(viewState::onRecentItemClick)
+        }
     }
+
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        screensInteractor.ignoreEditTextFocus(event)
+        screens.ignoreEditTextFocus(event)
         return super.dispatchTouchEvent(event)
-    }
-
-    override fun setFragmentsAdapter(count: Int, adapter: (position: Int) -> BaseFragment) {
-        binding.mainViewPager.adapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount() = count
-            override fun createFragment(position: Int) = adapter.invoke(position)
-        }
-    }
-
-    override fun showSearching() {
-        binding.root.transitionToState(R.id.constraint_set_main_collapsed)
-    }
-
-    override fun setSearchHint(hint: String) {
-        binding.mainSearchBar.hint = hint
-    }
-
-    override fun checkIntent() {
-        if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
-            controller.onViewIntent(intent)
-        }
     }
 }

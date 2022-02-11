@@ -1,25 +1,17 @@
 package com.chooloo.www.chooloolib.ui.contacts
 
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.ContactsAdapter
-import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.list.ListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 open class ContactsFragment @Inject constructor() :
-    ListFragment<ContactAccount, ContactsAdapter>(),
-    ContactsContract.View {
+    ListFragment<ContactAccount, ContactsViewState>() {
 
-    override lateinit var controller: ContactsContract.Controller
-
-
-    override fun onSetup() {
-        controller = controllerFactory.getContactsController(this)
-        super.onSetup()
-    }
-
-    fun applyFilter(filter: String) {
-        controller.applyFilter(filter)
-    }
+    @Inject override lateinit var adapter: ContactsAdapter
+    override val viewState: ContactsViewState by activityViewModels()
 }

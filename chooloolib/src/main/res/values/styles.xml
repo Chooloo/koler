@@ -32,13 +32,13 @@
     <style name="Chooloo.Text.Subtitle2">
         <item name="android:textSize">@dimen/subtitle_2</item>
         <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
     <style name="Chooloo.Text.Caption" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
     <style name="Chooloo.Text.Button">

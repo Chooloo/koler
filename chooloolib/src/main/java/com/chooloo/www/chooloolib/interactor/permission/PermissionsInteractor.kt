@@ -2,32 +2,30 @@ package com.chooloo.www.chooloolib.interactor.permission
 
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PermissionResult
 
 interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener> {
     interface Listener
 
     val isDefaultDialer: Boolean
 
-    fun requestDefaultDialer()
-    fun checkDefaultDialer(@StringRes errorMessageRes: Int? = null)
+
+    fun entryDefaultDialerResult(granted: Boolean)
+    fun entryPermissionResult(responses: List<PermissionResult>, requestCode: Int)
 
     fun hasSelfPermission(permission: String): Boolean
     fun hasSelfPermissions(permissions: Array<String>): Boolean
 
+    fun checkDefaultDialer(callback: (Boolean) -> Unit)
     fun checkPermissions(
-        permissions: Array<String>,
-        grantedCallback: (() -> Unit)? = null,
-        deniedCallback: (() -> Unit)? = null,
-        blockedCallback: ((permissions: Array<String>) -> Unit)? = null,
-        rationaleMessage: String? = null
+        vararg permissions: String,
+        callback: (List<PermissionResult>) -> Unit
     )
 
     fun runWithPermissions(
         permissions: Array<String>,
         grantedCallback: () -> Unit,
-        deniedCallback: (() -> Unit)? = null,
-        blockedCallback: ((permissions: Array<String>) -> Unit)? = null,
-        rationaleMessage: String? = null,
+        deniedCallback: (() -> Unit)? = null
     )
 
     fun runWithDefaultDialer(
@@ -41,12 +39,10 @@ interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener>
         notGrantedCallback: (() -> Unit)? = null
     )
 
-    fun runWithReadCallLogPermissions(callback: (granted: Boolean) -> Unit)
-    fun runWithReadContactsPermissions(callback: (granted: Boolean) -> Unit)
-    fun runWithWriteContactsPermissions(callback: (granted: Boolean) -> Unit)
-    fun runWithWriteCallLogPermissions(callback: (granted: Boolean) -> Unit)
-
-    companion object {
-        const val RC_DEFAULT = 2
-    }
+    fun runWithReadCallLogPermissions(callback: (Boolean) -> Unit)
+    fun runWithReadContactsPermissions(callback: (Boolean) -> Unit)
+    fun runWithWriteContactsPermissions(callback: (Boolean) -> Unit)
+    fun runWithWriteCallLogPermissions(callback: (Boolean) -> Unit)
+    fun runWithWriteCallPhonePermissions(callback: (Boolean) -> Unit)
+    fun runWithWriteReadPhoneStatePermissions(callback: (Boolean) -> Unit)
 }

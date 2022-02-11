@@ -2,13 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chooloo.www.chooloolib">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application>
         <activity
-            android:name=".ui.permissions.PermissionsActivity"
-            android:exported="false" />
-        <activity
-            android:exported="false"
             android:name=".ui.call.CallActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.permissions.PermissionRequestActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.permissions.DefaultDIalerRequestActivity"
             android:screenOrientation="fullSensor" />
 
         <meta-data

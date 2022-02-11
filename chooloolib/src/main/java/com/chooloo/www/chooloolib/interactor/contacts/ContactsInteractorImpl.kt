@@ -7,7 +7,7 @@ import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.chooloolib.contentresolver.ContactsContentResolver
-import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
@@ -22,6 +22,7 @@ class ContactsInteractorImpl @Inject constructor(
     private val blockedInteractor: BlockedInteractor,
     private val phonesInteractor: PhonesInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
+
     override fun queryContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
         ContactsContentResolver(context, contactId).queryItems { contacts ->
             contacts.let { callback.invoke(contacts.getOrNull(0)) }

@@ -5,7 +5,6 @@ import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.chooloolib.util.PreferencesManager
-import dagger.multibindings.IntKey
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +13,7 @@ class PreferencesInteractorImpl @Inject constructor(
     private val preferencesManager: PreferencesManager
 ) : BaseInteractorImpl<PreferencesInteractor.Listener>(),
     PreferencesInteractor {
+
     override var isAskSim: Boolean
         get() = preferencesManager.getBoolean(
             R.string.pref_key_ask_sim,

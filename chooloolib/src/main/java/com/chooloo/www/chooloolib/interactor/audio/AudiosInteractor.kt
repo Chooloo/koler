@@ -11,6 +11,7 @@ interface AudiosInteractor : BaseInteractor<AudiosInteractor.Listener> {
     var audioMode: AudioMode
 
     fun playTone(tone: Int)
+    fun playToneByChar(char: Char)
     fun playToneByKey(keyCode: Int)
     fun playTone(tone: Int, durationMs: Int)
 

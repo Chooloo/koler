@@ -7,7 +7,9 @@ import com.chooloo.www.chooloolib.contentresolver.PhonesContentResolver
 import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class ContentResolverFactoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ContentResolverFactory {

@@ -3,8 +3,10 @@ package com.chooloo.www.chooloolib.ui.base
 import android.annotation.SuppressLint
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View.GONE
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.MenuAdapter
 import com.chooloo.www.chooloolib.databinding.MenuBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,11 +14,13 @@ import javax.inject.Inject
 
 @SuppressLint("RestrictedApi")
 @AndroidEntryPoint
-abstract class BaseMenuFragment : BaseFragment() {
+open class BaseMenuFragment @Inject constructor() : BaseFragment<BaseViewState>() {
     override val contentView by lazy { binding.root }
+    override val viewState: BaseViewState by viewModels()
 
     private var _onMenuItemClickListener: (MenuItem) -> Unit = {}
     private val binding by lazy { MenuBinding.inflate(layoutInflater) }
+
     protected open val title by lazy { getString(args.getInt(ARG_TITLE_RES)) }
     protected open val subtitle by lazy {
         val subtitleRes = args.getInt(ARG_SUBTITLE_RES, -1)
@@ -37,12 +41,10 @@ abstract class BaseMenuFragment : BaseFragment() {
         }
 
         binding.apply {
-            menuRecyclerView.adapter = adapter
             menuTitle.text = title
-            subtitle?.let { menuSubtitle.text = it }
-            if (subtitle == null) {
-                menuSubtitle.visibility = GONE
-            }
+            menuSubtitle.text = subtitle
+            menuRecyclerView.adapter = adapter
+            menuSubtitle.isVisible = subtitle != null
         }
     }
 
@@ -67,13 +69,5 @@ abstract class BaseMenuFragment : BaseFragment() {
     companion object {
         const val ARG_TITLE_RES = "title_res"
         const val ARG_SUBTITLE_RES = "subtitle_res"
-
-//        fun newInstance(@StringRes titleRes: Int, @StringRes subtitleRes: Int? = null) =
-//            BaseMenuFragment().apply {
-//                arguments = Bundle().apply {
-//                    putInt(ARG_TITLE_RES, titleRes)
-//                    subtitleRes?.let { putInt(ARG_SUBTITLE_RES, it) }
-//                }
-//            }
     }
 }

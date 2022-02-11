@@ -5,7 +5,7 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
-import com.chooloo.www.chooloolib.data.account.SimAccount
+import com.chooloo.www.chooloolib.model.SimAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page

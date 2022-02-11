@@ -168,6 +168,7 @@
     <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
 
     <string name="error_no_permissions">I need permissions :/</string>
+    <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
     <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
     <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
     <string name="error_no_permissions_recents">I need permission to read call log :)</string>

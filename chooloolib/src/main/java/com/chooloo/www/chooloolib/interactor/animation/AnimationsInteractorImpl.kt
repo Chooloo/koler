@@ -42,8 +42,8 @@ class AnimationsInteractorImpl @Inject constructor(
         }
         view.visibility = VISIBLE
         if (_isEnabled) {
-            YoYo.with(Techniques.BounceInUp)
-                .duration(400)
+            YoYo.with(Techniques.FadeInRight)
+                .duration(200)
                 .playOn(view)
         }
     }
@@ -82,7 +82,7 @@ class AnimationsInteractorImpl @Inject constructor(
             recyclerView.apply {
                 layoutAnimation = AnimationUtils.loadLayoutAnimation(
                     recyclerView.context,
-                    R.anim.layout_animation_fall_down
+                    R.anim.layout_animation_fade_in
                 )
                 adapter!!.notifyDataSetChanged()
                 scheduleLayoutAnimation()

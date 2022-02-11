@@ -6,5 +6,5 @@ import com.chooloo.www.chooloolib.ui.base.BaseFragment
 interface PromptsInteractor : BaseInteractor<PromptsInteractor.Listener> {
     interface Listener
 
-    fun showFragment(fragment: BaseFragment, tag: String? = null)
+    fun showFragment(fragment: BaseFragment<*>, tag: String? = null)
 }

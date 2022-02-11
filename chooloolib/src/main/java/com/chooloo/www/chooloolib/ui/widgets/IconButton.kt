@@ -42,8 +42,7 @@ class IconButton : FloatingActionButton {
             _iconActivated = it.getResourceId(R.styleable.Chooloo_IconButton_activatedIcon, NO_ID)
         }.recycle()
 
-        elevation = 0f
-        compatElevation = 0f
+        compatElevation = 3f
         _backgroundTintList = backgroundTintList
         imageTintList = imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
         _imageTintList = imageTintList

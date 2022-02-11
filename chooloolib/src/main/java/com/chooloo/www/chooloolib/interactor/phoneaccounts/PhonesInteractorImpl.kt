@@ -3,8 +3,8 @@ package com.chooloo.www.chooloolib.interactor.phoneaccounts
 import android.content.Context
 import com.chooloo.www.chooloolib.contentresolver.PhoneLookupContentResolver
 import com.chooloo.www.chooloolib.contentresolver.PhonesContentResolver
-import com.chooloo.www.chooloolib.data.account.PhoneAccount
-import com.chooloo.www.chooloolib.data.account.PhoneLookupAccount
+import com.chooloo.www.chooloolib.model.PhoneAccount
+import com.chooloo.www.chooloolib.model.PhoneLookupAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.exceptions.OnErrorNotImplementedException

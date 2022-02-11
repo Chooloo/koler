@@ -6,7 +6,7 @@ import android.provider.CallLog
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
-import com.chooloo.www.chooloolib.data.account.RecentAccount
+import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

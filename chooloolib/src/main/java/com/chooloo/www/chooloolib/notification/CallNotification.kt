@@ -16,9 +16,9 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.data.call.Call
-import com.chooloo.www.chooloolib.data.call.Call.State.DISCONNECTED
-import com.chooloo.www.chooloolib.data.call.Call.State.DISCONNECTING
+import com.chooloo.www.chooloolib.model.Call
+import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTED
+import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTING
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
@@ -46,6 +46,7 @@ class CallNotification @Inject constructor(
     private val callAudiosInteractor: CallAudiosInteractor,
     private val notificationManager: NotificationManagerCompat
 ) : CallsInteractor.Listener, CallAudiosInteractor.Listener {
+
     private var _call: Call? = null
 
 

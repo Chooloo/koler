@@ -10,17 +10,18 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CallBroadcastReceiver : BroadcastReceiver() {
-    @Inject lateinit var callsInteractor: CallsInteractor
-    @Inject lateinit var audiosInteractor: AudiosInteractor
+    @Inject lateinit var calls: CallsInteractor
+    @Inject lateinit var audios: AudiosInteractor
+
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            ACTION_MUTE -> audiosInteractor.isMuted = true
-            ACTION_UNMUTE -> audiosInteractor.isMuted = false
-            ACTION_ANSWER -> callsInteractor.mainCall?.answer()
-            ACTION_HANGUP -> callsInteractor.mainCall?.reject()
-            ACTION_SPEAKER -> audiosInteractor.isSpeakerOn = true
-            ACTION_UNSPEAKER -> audiosInteractor.isSpeakerOn = false
+            ACTION_MUTE -> audios.isMuted = true
+            ACTION_UNMUTE -> audios.isMuted = false
+            ACTION_ANSWER -> calls.mainCall?.answer()
+            ACTION_HANGUP -> calls.mainCall?.reject()
+            ACTION_SPEAKER -> audios.isSpeakerOn = true
+            ACTION_UNSPEAKER -> audios.isSpeakerOn = false
         }
     }
 

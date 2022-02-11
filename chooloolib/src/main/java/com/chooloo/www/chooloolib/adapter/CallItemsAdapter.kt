@@ -2,12 +2,12 @@ package com.chooloo.www.chooloolib.adapter
 
 import android.net.Uri
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.data.ListData
-import com.chooloo.www.chooloolib.data.call.Call
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.model.Call
+import com.chooloo.www.chooloolib.model.ListData
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import javax.inject.Inject
 
@@ -16,9 +16,7 @@ class CallItemsAdapter @Inject constructor(
     private val phonesInteractor: PhonesInteractor,
     private val colorsInteractor: ColorsInteractor,
     private val drawablesInteractor: DrawablesInteractor,
-) : ListAdapter<Call>(
-    animationsInteractor
-) {
+) : ListAdapter<Call>(animationsInteractor) {
     override fun onBindListItem(listItem: ListItem, item: Call) {
         listItem.apply {
             phonesInteractor.lookupAccount(item.number) { account ->

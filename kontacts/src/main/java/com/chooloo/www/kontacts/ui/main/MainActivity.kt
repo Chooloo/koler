@@ -1,60 +1,67 @@
 package com.chooloo.www.kontacts.ui.main
 
+import androidx.activity.viewModels
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.kontacts.R
 import com.chooloo.www.kontacts.databinding.MainBinding
-import com.chooloo.www.kontacts.di.factory.controllerfactory.ControllerFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory as ChoolooFragmentFactory
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(), MainContract.View {
+class MainActivity : BaseActivity<MainViewState>() {
     override val contentView by lazy { binding.root }
-    override lateinit var controller: MainContract.Controller
-
-    override var searchText: String?
-        get() = binding.mainSearchBar.text
-        set(value) {
-            binding.mainSearchBar.text = value
-        }
-
-    override var headers: Array<String>
-        get() = binding.mainTabs.headers
-        set(value) {
-            binding.mainTabs.headers = value
-        }
+    override val viewState: MainViewState by viewModels()
 
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
+    private val _contactsFragment by lazy { fragmentFactory.getContactsFragment() }
 
-    @Inject lateinit var controllerFactoryKontacts: ControllerFactory
+    @Inject lateinit var prompts: PromptsInteractor
+    @Inject lateinit var fragmentFactory: ChoolooFragmentFactory
 
 
     override fun onSetup() {
-        controller = controllerFactoryKontacts.getMainController(this)
         binding.apply {
-            mainMenuButton.setOnClickListener { controller.onSettingsClick() }
-            mainAddContactButton.setOnClickListener { controller.onAddContactClick() }
+            mainTabs.setHeadersResList(arrayOf(R.string.contacts))
+
+            mainMenuButton.setOnClickListener {
+                viewState.onSettingsClick()
+            }
+
+            mainAddContactButton.setOnClickListener {
+                viewState.onAddContactClick()
+            }
+
             mainSearchBar.apply {
-                setOnTextChangedListener(controller::onSearchTextChange)
+                setOnTextChangedListener(viewState::onSearchTextChange)
                 editText?.setOnFocusChangeListener { _, hasFocus ->
-                    controller.onSearchFocusChange(hasFocus)
+                    viewState.onSearchFocusChange(hasFocus)
                 }
             }
         }
-    }
 
-    override fun showSearching() {
-        binding.root.transitionToState(R.id.constraint_set_main_collapsed)
-    }
+        viewState.apply {
+            searchHintRes.observe(this@MainActivity, binding.mainSearchBar::setHint)
 
+            searchText.observe(this@MainActivity) {
+                binding.mainSearchBar.text = it
+            }
 
-    override fun setSearchHint(resId: Int) {
-        binding.mainSearchBar.setHint(resId)
-    }
+            isSearching.observe(this@MainActivity) {
+                if (it) binding.root.transitionToState(R.id.constraint_set_main_collapsed)
+            }
 
-    override fun setContactsFragment(contactsFragment: ContactsFragment) {
+            showMenuEvent.observe(this@MainActivity) {
+                it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
+            }
+        }
+
         supportFragmentManager.beginTransaction()
-            .replace(binding.mainFragmentContainer.id, contactsFragment).commit()
+            .replace(binding.mainFragmentContainer.id, _contactsFragment).commit()
+
+        _contactsFragment.viewState.itemClickedEvent.observe(this@MainActivity) {
+            it.contentIfNew?.let(viewState::onContactClick)
+        }
     }
 }

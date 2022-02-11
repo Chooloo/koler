@@ -402,10 +402,6 @@ open class ListItem : LinearLayout {
         _title.setTextColor(color)
     }
 
-    fun setTitleTextColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
-    }
-
     fun setImageResource(@DrawableRes res: Int) {
         _image.setImageResource(res)
     }

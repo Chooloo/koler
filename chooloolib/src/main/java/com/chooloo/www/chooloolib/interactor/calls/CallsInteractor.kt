@@ -1,6 +1,6 @@
 package com.chooloo.www.chooloolib.interactor.calls
 
-import com.chooloo.www.chooloolib.data.call.Call
+import com.chooloo.www.chooloolib.model.Call
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
 interface CallsInteractor : BaseInteractor<CallsInteractor.Listener>, Call.Listener {

@@ -77,4 +77,8 @@ class Tabs : LinearLayout {
     private fun selectTab(position: Int) {
         _tabs.forEachIndexed { index, tab -> tab.isActivated = index == position }
     }
+
+    fun setHeadersResList(resList: Array<Int>) {
+        headers = resList.map { resources.getString(it) }.toTypedArray()
+    }
 }

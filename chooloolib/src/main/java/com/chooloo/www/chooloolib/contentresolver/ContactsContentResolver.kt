@@ -1,12 +1,11 @@
 package com.chooloo.www.chooloolib.contentresolver
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract
-import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.util.SelectionBuilder
 
 class ContactsContentResolver(context: Context, contactId: Long? = null) :
@@ -38,8 +37,4 @@ class ContactsContentResolver(context: Context, contactId: Long? = null) :
         name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)),
         photoUri = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_THUMBNAIL_URI))
     )
-
-    companion object {
-        val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.READ_CONTACTS)
-    }
 }

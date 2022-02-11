@@ -13,7 +13,7 @@ class PromptsInteractorImpl @Inject constructor(
 ) : BaseInteractorImpl<PromptsInteractor.Listener>(),
     PromptsInteractor {
 
-    override fun showFragment(fragment: BaseFragment, tag: String?) {
+    override fun showFragment(fragment: BaseFragment<*>, tag: String?) {
         BottomFragment(fragment).show(fragmentManager, tag)
     }
 }

@@ -1,29 +1,31 @@
 package com.chooloo.www.chooloolib.adapter
 
 import android.annotation.SuppressLint
+import android.util.TypedValue
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.data.ListData
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
+import com.chooloo.www.chooloolib.model.ListData
+import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.google.android.material.internal.ViewUtils
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@SuppressLint("RestrictedApi")
 class ChoicesAdapter @Inject constructor(
-    animationsInteractor: AnimationsInteractor,
-    private val colorsInteractor: ColorsInteractor,
-    private val drawablesInteractor: DrawablesInteractor
-) : ListAdapter<String>(animationsInteractor) {
-    @SuppressLint("RestrictedApi")
+    animations: AnimationsInteractor,
+    private val colors: ColorsInteractor,
+) : ListAdapter<String>(animations) {
+
     override fun onBindListItem(listItem: ListItem, item: String) {
         listItem.apply {
             setTitleBold(true)
-            setImageTint(colorsInteractor.getColor(R.color.color_opposite))
+            setTitleColor(colors.getAttrColor(R.attr.colorOnSecondary))
 
             titleText = item
+            imageVisibility = false
             imageSize = ViewUtils.dpToPx(context, 30).toInt()
-            imageDrawable = drawablesInteractor.getDrawable(R.drawable.round_fiber_manual_record_20)
         }
     }
 

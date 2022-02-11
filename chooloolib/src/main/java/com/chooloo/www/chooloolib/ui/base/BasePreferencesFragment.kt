@@ -1,6 +1,5 @@
 package com.chooloo.www.chooloolib.ui.base
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,17 +10,12 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
 
 
-abstract class BasePreferencesFragment : PreferenceFragmentCompat(), BaseContract.View {
-    protected val argsSafely get() = arguments ?: Bundle()
-    protected val baseActivity by lazy { context as BaseActivity }
+abstract class BasePreferencesFragment<VM : BaseViewState> :
+    PreferenceFragmentCompat(),
+    BaseView<VM> {
 
-    abstract val preferenceResource: Int
+    protected val baseActivity by lazy { context as BaseActivity<*> }
 
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        assert(context is BaseActivity)
-    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(preferenceResource, rootKey)
@@ -80,11 +74,9 @@ abstract class BasePreferencesFragment : PreferenceFragmentCompat(), BaseContrac
         }
     }
 
-    protected fun <T : Preference> getPreference(@StringRes keyString: Int): T? {
-        return findPreference<T>(getString(keyString))
-    }
-
 
     open fun onPreferenceClickListener(preference: Preference) {}
     open fun onPreferenceChangeListener(preference: Preference, newValue: Any) {}
+
+    abstract val preferenceResource: Int
 }

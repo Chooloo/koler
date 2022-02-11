@@ -4,14 +4,15 @@ import android.graphics.Color
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.view.ViewGroup
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.data.ListData
-import com.chooloo.www.chooloolib.data.account.PhoneAccount
+import com.chooloo.www.chooloolib.model.ListData
+import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemButton
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemHolder
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class PhonesAdapter @Inject constructor(
     animationsInteractor: AnimationsInteractor,
@@ -20,7 +21,6 @@ class PhonesAdapter @Inject constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemHolder(ListItemButton(parent.context))
-
 
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
         listItem.apply {

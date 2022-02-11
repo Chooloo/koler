@@ -12,6 +12,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactoryImpl
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactoryImpl
 import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
 import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactoryImpl
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
@@ -30,6 +32,10 @@ import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
 import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
 import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractorImpl
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractorImpl
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractorImpl
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
@@ -38,8 +44,18 @@ import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
 import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractorImpl
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractorImpl
+import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
+import com.chooloo.www.chooloolib.interactor.sim.SimsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractorImpl
+import com.chooloo.www.chooloolib.repository.calls.CallsRepository
+import com.chooloo.www.chooloolib.repository.calls.CallsRepositoryImpl
+import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
+import com.chooloo.www.chooloolib.repository.contacts.ContactsRepositoryImpl
+import com.chooloo.www.chooloolib.repository.phones.PhonesRepository
+import com.chooloo.www.chooloolib.repository.phones.PhonesRepositoryImpl
+import com.chooloo.www.chooloolib.repository.recents.RecentsRepository
+import com.chooloo.www.chooloolib.repository.recents.RecentsRepositoryImpl
 import com.chooloo.www.chooloolib.util.PreferencesManager
 import dagger.Binds
 import dagger.Module
@@ -47,10 +63,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.reactivex.disposables.CompositeDisposable
 
-@Module(includes = [ApplicationModule.BindsModule::class])
 @InstallIn(SingletonComponent::class)
+@Module(includes = [ApplicationModule.BindsModule::class])
 class ApplicationModule {
+    @Provides
+    fun provideDisposables(): CompositeDisposable = CompositeDisposable()
+
     @Provides
     fun provideVibrator(@ApplicationContext context: Context): Vibrator =
         context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -98,10 +118,29 @@ class ApplicationModule {
     @Module
     @InstallIn(SingletonComponent::class)
     interface BindsModule {
+        //region repository
+
+        @Binds
+        fun bindCallsRepository(callsRepositoryImpl: CallsRepositoryImpl): CallsRepository
+
+        @Binds
+        fun bindPhonesRepository(phonesRepositoryImpl: PhonesRepositoryImpl): PhonesRepository
+
+        @Binds
+        fun bindRecentsRepository(recentsRepositoryImpl: RecentsRepositoryImpl): RecentsRepository
+
+        @Binds
+        fun bindContactsRepository(contactsRepositoryImpl: ContactsRepositoryImpl): ContactsRepository
+
+        //endregion
+
         //region factory
 
         @Binds
         fun bindLiveDataFactory(liveDataFactoryImpl: LiveDataFactoryImpl): LiveDataFactory
+
+        @Binds
+        fun bindFragmentFactory(fragmentFactoryImpl: FragmentFactoryImpl): FragmentFactory
 
         @Binds
         fun bindContentResolverFactory(contentResolverFactoryImpl: ContentResolverFactoryImpl): ContentResolverFactory
@@ -109,6 +148,9 @@ class ApplicationModule {
         //endregion
 
         //region interactor
+
+        @Binds
+        fun bindSimsInteractor(simsInteractorImpl: SimsInteractorImpl): SimsInteractor
 
         @Binds
         fun bindCallsInteractor(callsInteractorImpl: CallsInteractorImpl): CallsInteractor
@@ -147,7 +189,13 @@ class ApplicationModule {
         fun bindProximitiesInteractor(proximitiesInteractorImpl: ProximitiesInteractorImpl): ProximitiesInteractor
 
         @Binds
+        fun bindPermissionsInteractor(permissionsInteractorImpl: PermissionsInteractorImpl): PermissionsInteractor
+
+        @Binds
         fun bindPreferencesInteractor(preferencesInteractorImpl: PreferencesInteractorImpl): PreferencesInteractor
+
+        @Binds
+        fun bindNavigationsInteractor(navigationsInteractorImpl: NavigationsInteractorImpl): NavigationsInteractor
 
         //endregion
     }

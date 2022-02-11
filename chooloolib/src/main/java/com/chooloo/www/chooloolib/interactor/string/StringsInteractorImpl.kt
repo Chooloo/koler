@@ -10,5 +10,6 @@ import javax.inject.Singleton
 class StringsInteractorImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : BaseObservable<StringsInteractor.Listener>(), StringsInteractor {
+
     override fun getString(stringRes: Int) = context.getString(stringRes)
 }

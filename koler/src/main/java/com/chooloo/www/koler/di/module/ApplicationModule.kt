@@ -7,14 +7,14 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-@Module
 @InstallIn(SingletonComponent::class)
+@Module(includes = [ApplicationModule.BindsModule::class])
 class ApplicationModule {
 
     @Module
     @InstallIn(SingletonComponent::class)
     interface BindsModule {
         @Binds
-        fun bindFragmentsFactory(fragmentsFactoryImpl: FragmentFactoryImpl): FragmentFactory
+        fun bindFragmentFactory(fragmentFactoryImpl: FragmentFactoryImpl): FragmentFactory
     }
 }

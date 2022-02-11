@@ -14,6 +14,7 @@ import javax.inject.Singleton
 class BlockedInteractorImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : BaseInteractorImpl<BlockedInteractor.Listener>(), BlockedInteractor {
+
     @RequiresDefaultDialer
     override fun isNumberBlocked(number: String) =
         BlockedNumberContract.isBlocked(context, number)

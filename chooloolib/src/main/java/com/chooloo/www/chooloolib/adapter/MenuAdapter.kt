@@ -4,18 +4,20 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.MenuItem
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.data.ListData
+import com.chooloo.www.chooloolib.model.ListData
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.google.android.material.internal.ViewUtils
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@SuppressLint("RestrictedApi")
 class MenuAdapter @Inject constructor(
     animationsInteractor: AnimationsInteractor,
     private val colorsInteractor: ColorsInteractor
 ) : ListAdapter<MenuItem>(animationsInteractor) {
-    @SuppressLint("RestrictedApi")
+
     override fun onBindListItem(listItem: ListItem, item: MenuItem) {
         listItem.apply {
             setBackgroundColor(Color.TRANSPARENT)
