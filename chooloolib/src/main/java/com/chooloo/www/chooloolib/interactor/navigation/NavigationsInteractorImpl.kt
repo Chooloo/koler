@@ -78,7 +78,10 @@ class NavigationsInteractorImpl @Inject constructor(
     }
 
     override fun goToLauncherActivity() {
-        context.startActivity(context.packageManager.getLaunchIntentForPackage(context.packageName))
+        context.startActivity(
+            context.packageManager.getLaunchIntentForPackage(context.packageName)
+                ?.addFlags(FLAG_ACTIVITY_CLEAR_TASK)
+        )
     }
 
     override fun sendSMS(number: String?) {

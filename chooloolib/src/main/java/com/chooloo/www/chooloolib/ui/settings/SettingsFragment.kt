@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.ui.settings
 
 import android.view.MenuItem
 import androidx.fragment.app.viewModels
-import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseMenuFragment
