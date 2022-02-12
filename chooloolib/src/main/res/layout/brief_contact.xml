@@ -19,7 +19,7 @@
         app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/brief_contact_text_name"
         style="@style/Chooloo.Text.Headline3"
         android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/brief_contact_image"
         tools:text="Jesus" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/contact_image_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

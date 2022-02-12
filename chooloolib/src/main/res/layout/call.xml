@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- call timer -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/call_time_text"
         style="@style/Chooloo.Call.Text.Time"
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- call status -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/call_state_text"
         style="@style/Chooloo.Call.Text.Status"
         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
         tools:visibility="visible" />
 
     <!-- caller name -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/call_name_text"
         style="@style/Chooloo.Call.Text.Name"
         android:layout_width="wrap_content"

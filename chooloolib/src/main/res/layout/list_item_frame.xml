@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/list_item_frame_image"
         android:layout_width="@dimen/image_size_small"
         android:layout_height="@dimen/image_size_small"
@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/list_item_frame_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/list_item_frame_image"
         app:layout_constraintTop_toTopOf="@id/list_item_frame_image" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/list_item_frame_caption"
         style="@style/Chooloo.Text.Caption"
         android:layout_width="0dp"

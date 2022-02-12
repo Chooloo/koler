@@ -56,9 +56,10 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
                     setImageURI(it)
                     isVisible = it != null
                 }
-                isStarIconVisible.observe(this@BriefContactFragment) {
-                    binding.contactImageStar.isVisible = it
-                }
+            }
+
+            isStarIconVisible.observe(this@BriefContactFragment) {
+                binding.contactImageStar.isVisible = it
             }
 
             callEvent.observe(this@BriefContactFragment) {

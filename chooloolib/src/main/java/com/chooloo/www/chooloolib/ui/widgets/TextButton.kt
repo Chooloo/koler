@@ -33,7 +33,7 @@ class TextButton : AppCompatButton {
             _textActivated = it.getString(R.styleable.Chooloo_TextButton_activatedText)
         }.recycle()
 
-        elevation = 3f
+        elevation = 0f
         isAllCaps = false
         stateListAnimator = null
         gravity = Gravity.CENTER

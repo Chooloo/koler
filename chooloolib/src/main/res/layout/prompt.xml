@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/prompt_title"
         style="@style/Chooloo.Text.Headline3"
         android:layout_width="0dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/prompt_subtitle"
         style="@style/Chooloo.Text.Subtitle2"
         android:layout_width="0dp"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="@id/prompt_title"
         app:layout_constraintTop_toBottomOf="@id/prompt_title" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/prompt_button_yes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/prompt_subtitle" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/prompt_button_no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
