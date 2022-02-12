@@ -8,6 +8,7 @@
 
     <ConstraintSet android:id="@+id/constraint_set_incoming_call">
         <Constraint
+            android:id="@+id/call_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +34,7 @@
             app:layout_constraintTop_toBottomOf="@id/call_state_text"
             app:visibilityMode="ignore" />
         <Constraint
+            android:id="@+id/call_manage_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing_big"
@@ -43,6 +45,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:visibilityMode="ignore" />
         <Constraint
+            android:id="@+id/call_answer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_spacing_big"
@@ -71,6 +74,7 @@
 
     <ConstraintSet android:id="@+id/constraint_set_active_call">
         <Constraint
+            android:id="@+id/call_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,6 +100,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:visibilityMode="ignore" />
         <Constraint
+            android:id="@+id/call_manage_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing_big"
@@ -113,6 +118,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
         <Constraint
+            android:id="@+id/call_answer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"

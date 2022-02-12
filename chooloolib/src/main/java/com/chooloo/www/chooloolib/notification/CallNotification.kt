@@ -77,6 +77,7 @@ class CallNotification @Inject constructor(
         createNotificationChannel()
         calls.registerListener(this)
         callAudios.registerListener(this)
+        Thread.currentThread().setUncaughtExceptionHandler { _, _ -> cancel() }
     }
 
     fun detach() {

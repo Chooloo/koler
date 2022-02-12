@@ -13,7 +13,7 @@
         <activity
             android:name=".ui.call.CallActivity"
             android:exported="false"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:configChanges="screenSize|keyboardHidden"
             android:screenOrientation="fullSensor" />
         <activity
             android:name=".ui.permissions.PermissionRequestActivity"

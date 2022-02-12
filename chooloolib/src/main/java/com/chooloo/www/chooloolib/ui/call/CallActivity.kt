@@ -1,6 +1,8 @@
 package com.chooloo.www.chooloolib.ui.call
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
+import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import androidx.activity.viewModels

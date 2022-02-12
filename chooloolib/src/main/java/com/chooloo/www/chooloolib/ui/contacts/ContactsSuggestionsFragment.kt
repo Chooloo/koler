@@ -11,12 +11,13 @@ class ContactsSuggestionsFragment @Inject constructor() : ContactsFragment() {
 
 
     override fun onSetup() {
+        super.onSetup()
         adapter.apply {
             withFavs = false
             isCompact = true
             withHeaders = false
         }
-        super.onSetup()
+        binding.itemsScrollView.fastScroller.isVisible = false
     }
 
     override fun showEmpty(isShow: Boolean) {
