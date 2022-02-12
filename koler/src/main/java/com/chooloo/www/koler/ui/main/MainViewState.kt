@@ -65,9 +65,8 @@ class MainViewState @Inject constructor(
     }
 
     fun onSearchFocusChange(isFocus: Boolean) {
-        if (isFocus) {
-            isSearching.value = true
-        }
+        isSearching.value = isFocus
+        searchHint.value = if (isFocus) "" else strings.getString(R.string.hint_search_items)
     }
 
     fun onRecentItemClick(recent: RecentAccount) {

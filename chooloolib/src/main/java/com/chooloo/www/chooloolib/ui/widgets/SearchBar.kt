@@ -16,6 +16,7 @@ import com.chooloo.www.chooloolib.util.getAttrColor
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
+
 @SuppressLint("UseCompatTextViewDrawableApis")
 class SearchBar : TextInputLayout {
     private var _textInputEditText: TextInputEditText
@@ -67,7 +68,7 @@ class SearchBar : TextInputLayout {
         isHintEnabled = false
         endIconMode = END_ICON_CLEAR_TEXT
         backgroundTintList = ColorStateList.valueOf(colorBackground)
-        background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
+        background = ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
         endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp)
         startIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_search_black_24dp)
 
