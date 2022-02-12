@@ -39,7 +39,7 @@ class BriefContactViewState @Inject constructor(
         contacts.queryContact(contactId) {
             contactName.value = it?.name
             isStarIconVisible.value = it?.starred == true
-            it?.photoUri?.let { contactImage.value = Uri.parse(it) }
+            it?.photoUri?.let { uri -> contactImage.value = Uri.parse(uri) }
         }
         phones.getContactAccounts(contactId) {
             _firstPhone = it?.getOrNull(0)

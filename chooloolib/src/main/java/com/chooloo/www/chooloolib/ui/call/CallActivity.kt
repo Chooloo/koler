@@ -38,6 +38,7 @@ class CallActivity : BaseActivity<CallViewState>() {
         screens.showWhenLocked()
 
         viewState.apply {
+            imageRes.observe(this@CallActivity, binding.callImage::setImageResource)
             stateTextColor.observe(this@CallActivity, binding.callStateText::setTextColor)
 
             name.observe(this@CallActivity) {
@@ -54,7 +55,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                     animations.show(binding.callTimeText, true)
                     binding.callTimeText.text = DateUtils.formatElapsedTime(it / 1000)
                 } ?: run {
-                    animations.hide(binding.callTimeText, true, false)
+                    animations.hide(binding.callTimeText, ifVisible = true, goneOrInvisible = false)
                 }
             }
 

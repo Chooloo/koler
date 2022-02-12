@@ -36,7 +36,7 @@ class MainViewState @Inject constructor(
 
     override fun attach() {
         super.attach()
-        permissions.checkDefaultDialer() {}
+        permissions.checkDefaultDialer {}
         currentPageIndex.value = preferences.defaultPage.index
         searchHint.value = strings.getString(R.string.hint_search_items)
     }

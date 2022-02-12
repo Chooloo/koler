@@ -8,7 +8,6 @@ interface BaseView<out VM : BaseViewState> {
 
     fun onSetup()
     fun finish() {}
-    fun getLifecycle(): Lifecycle
     fun showError(@StringRes stringResId: Int)
     fun showMessage(@StringRes stringResId: Int)
 }

@@ -48,7 +48,7 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragme
         args.getString(ARG_FILTER)?.let(viewState::onFilterChanged)
     }
 
-    open protected fun showEmpty(isShow: Boolean) {
+    protected open fun showEmpty(isShow: Boolean) {
         binding.apply {
             empty.emptyIcon.isVisible = isShow
             empty.emptyText.isVisible = isShow

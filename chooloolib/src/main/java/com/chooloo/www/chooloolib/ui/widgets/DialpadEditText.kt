@@ -35,14 +35,6 @@ class DialpadEditText : AppCompatEditText {
         text?.length?.let { setSelection(it) }
     }
 
-    fun addOnTextChangedListener(onTextChangedListener: (String) -> Unit?) {
-        addTextChangedListener(getTextWatcher(onTextChangedListener))
-    }
-
-    fun removeOnTextChangedListener(onTextChangedListener: (String) -> Unit?) {
-        removeTextChangedListener(getTextWatcher(onTextChangedListener))
-    }
-
     private fun getTextWatcher(onTextChangedListener: (String) -> Unit?) =
         object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}

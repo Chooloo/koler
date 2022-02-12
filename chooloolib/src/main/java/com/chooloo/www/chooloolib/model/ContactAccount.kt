@@ -10,5 +10,8 @@ data class ContactAccount(
     override fun toString() = "Contact with id:$id name:$name"
 
     override fun equals(other: Any?) = other is ContactAccount && id == other.id
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }
 

@@ -33,8 +33,9 @@ class CallService : InCallService() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         callNotification.detach()
+        callNotification.cancel()
+        super.onDestroy()
     }
 
     override fun onCallAdded(telecomCall: android.telecom.Call) {

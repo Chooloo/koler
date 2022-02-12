@@ -84,7 +84,6 @@ class AnimationsInteractorImpl @Inject constructor(
                     recyclerView.context,
                     R.anim.layout_animation_fade_in
                 )
-                adapter!!.notifyDataSetChanged()
                 scheduleLayoutAnimation()
             }
         }

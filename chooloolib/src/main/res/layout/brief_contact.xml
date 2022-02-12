@@ -36,10 +36,11 @@
     <ImageView
         android:id="@+id/contact_image_star"
         android:layout_width="wrap_content"
+        android:contentDescription="@string/content_description_favorite_star"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_small"
         android:src="@drawable/round_star_24"
-        android:tint="@color/orange_foreground"
+        app:tint="@color/orange_foreground"
         app:layout_constraintBottom_toBottomOf="@id/brief_contact_text_name"
         app:layout_constraintStart_toEndOf="@id/brief_contact_text_name"
         app:layout_constraintTop_toTopOf="@id/brief_contact_text_name" />

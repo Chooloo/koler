@@ -4,5 +4,4 @@ import com.chooloo.www.chooloolib.BaseApp
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class KontactsApp : BaseApp() {
-}
+class KontactsApp : BaseApp()

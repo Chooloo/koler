@@ -9,5 +9,4 @@ import javax.inject.Inject
 class RecentsHistoryViewState @Inject constructor(
     permissions: PermissionsInteractor,
     recentsRepository: RecentsRepository
-) : RecentsViewState(recentsRepository, permissions) {
-}
+) : RecentsViewState(recentsRepository, permissions)

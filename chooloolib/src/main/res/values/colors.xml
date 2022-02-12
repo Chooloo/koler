@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background">?colorSecondary</color>
 
     <!--region base colors-->
     <color name="color_hint">#E6E6E6</color>

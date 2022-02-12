@@ -67,7 +67,11 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
                 if (it && !binding.dialpadSuggestionsScrollView.isVisible) {
                     animationsInteractor.show(binding.dialpadSuggestionsScrollView, true)
                 } else if (!it && binding.dialpadSuggestionsScrollView.isVisible) {
-                    animationsInteractor.hide(binding.dialpadSuggestionsScrollView, true, true)
+                    animationsInteractor.hide(
+                        binding.dialpadSuggestionsScrollView,
+                        ifVisible = true,
+                        true
+                    )
                 }
             }
 
@@ -75,7 +79,11 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
                 if (it && !binding.dialpadButtonAddContact.isVisible) {
                     animationsInteractor.show(binding.dialpadButtonAddContact, true)
                 } else if (!it && binding.dialpadButtonAddContact.isVisible) {
-                    animationsInteractor.hide(binding.dialpadButtonAddContact, true, false)
+                    animationsInteractor.hide(
+                        binding.dialpadButtonAddContact,
+                        ifVisible = true,
+                        false
+                    )
                 }
             }
 
@@ -104,7 +112,7 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
             it.peekContent()?.let(viewState::onSuggestionsChanged)
         }
 
-        args.getString(ARG_NUMBER)?.let { it.forEach(viewState::onCharClick) }
+        args.getString(ARG_NUMBER)?.forEach(viewState::onCharClick)
     }
 
     override fun onAttach(context: Context) {

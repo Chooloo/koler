@@ -1,16 +1,13 @@
 package com.chooloo.www.chooloolib.adapter
 
 import android.annotation.SuppressLint
-import android.util.TypedValue
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.model.ListData
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.google.android.material.internal.ViewUtils
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @SuppressLint("RestrictedApi")
 class ChoicesAdapter @Inject constructor(

@@ -9,6 +9,5 @@ import dagger.hilt.android.components.ActivityRetainedComponent
 class ActivityRetainedModule {
     @Module
     @InstallIn(ActivityRetainedComponent::class)
-    interface BindsModule {
-    }
+    interface BindsModule
 }

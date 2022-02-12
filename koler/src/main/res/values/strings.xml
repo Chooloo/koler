@@ -4,5 +4,4 @@
     <string name="pref_title_ask_sim">Should ask for sim</string>
     <string name="pref_title_show_blocked">Show block number option</string>
 
-    <string name="pref_summary_show_blocked">Requires default dialer</string>
 </resources>

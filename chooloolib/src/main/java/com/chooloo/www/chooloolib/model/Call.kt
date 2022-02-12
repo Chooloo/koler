@@ -228,6 +228,12 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         return other is Call && telecomCall == other.telecomCall
     }
 
+    override fun hashCode(): Int {
+        var result = _id.hashCode()
+        result = 31 * result + _call.hashCode()
+        return result
+    }
+
 
     enum class State(private val state: Int, val stringRes: Int) {
         UNKNOWN(-1, R.string.call_status_unknown),
@@ -243,7 +249,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         SELECT_PHONE_ACCOUNT(STATE_SELECT_PHONE_ACCOUNT, R.string.call_status_phone_account);
 
         companion object {
-            fun fromTelecomState(state: Int) =
+            fun fromTelecomState(state: Int): State =
                 Stream.of(*values()).filter { callState: State -> callState.state == state }
                     .findFirst().orElse(UNKNOWN)
         }

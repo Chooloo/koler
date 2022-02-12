@@ -29,8 +29,8 @@ class TextButton : AppCompatButton {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        context.obtainStyledAttributes(attrs, R.styleable.Chooloo_TextButton, defStyleRes, 0).also {
-            _textActivated = it.getString(R.styleable.Chooloo_TextButton_activatedText)
+        context.obtainStyledAttributes(attrs, R.styleable.TextButton, defStyleRes, 0).also {
+            _textActivated = it.getString(R.styleable.TextButton_activatedText)
         }.recycle()
 
         elevation = 0f

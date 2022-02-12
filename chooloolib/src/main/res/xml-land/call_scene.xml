@@ -14,7 +14,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
         <Constraint
-            android:id="@+id/call_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +59,6 @@
             app:layout_constraintStart_toStartOf="@id/call_image"
             app:layout_constraintTop_toBottomOf="@id/call_image" />
         <Constraint
-            android:id="@+id/call_manage_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing_big"
@@ -71,7 +69,6 @@
             app:layout_constraintVertical_bias="0.0"
             app:visibilityMode="ignore" />
         <Constraint
-            android:id="@+id/call_answer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/default_spacing_big"
@@ -105,7 +102,6 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.4" />
         <Constraint
-            android:id="@+id/call_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +147,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/call_image" />
         <Constraint
-            android:id="@+id/call_manage_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -170,7 +165,6 @@
             app:layout_constraintTop_toBottomOf="@id/call_actions"
             app:layout_constraintVertical_chainStyle="packed" />
         <Constraint
-            android:id="@+id/call_answer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />

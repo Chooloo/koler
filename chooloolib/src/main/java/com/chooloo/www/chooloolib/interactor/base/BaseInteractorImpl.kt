@@ -7,7 +7,7 @@ import kotlin.collections.HashSet
 abstract class BaseInteractorImpl<Listener> : BaseInteractor<Listener> {
     private val _listeners by lazy { HashSet<Listener>() }
 
-    val listeners: Set<Listener>
+    private val listeners: Set<Listener>
         get() = Collections.unmodifiableSet(HashSet(_listeners))
 
     @Synchronized

@@ -17,7 +17,7 @@ import com.chooloo.www.chooloolib.util.getSizeInDp
 
 @SuppressLint("Recycle", "CustomViewStyleable")
 class DialpadKey : LinearLayout {
-    var _char: Char = '0'
+    private var _char: Char = '0'
     private var _digitTextView: TextView
     private var _lettersTextView: TextView
 

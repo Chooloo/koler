@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.ui.recents
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

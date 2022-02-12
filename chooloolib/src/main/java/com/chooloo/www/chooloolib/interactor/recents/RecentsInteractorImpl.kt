@@ -45,5 +45,5 @@ class RecentsInteractorImpl @Inject constructor(
         else -> R.drawable.ic_call_made_black_24dp
     }
 
-    override fun getLastOutgoingCall() = CallLog.Calls.getLastOutgoingCall(context)
+    override fun getLastOutgoingCall(): String = CallLog.Calls.getLastOutgoingCall(context)
 }

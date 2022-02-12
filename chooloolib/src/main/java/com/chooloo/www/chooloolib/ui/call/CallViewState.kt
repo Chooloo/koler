@@ -32,14 +32,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CallViewState @Inject constructor(
+    private val calls: CallsInteractor,
+    private val audios: AudiosInteractor,
+    private val colors: ColorsInteractor,
+    private val phones: PhonesInteractor,
+    private val strings: StringsInteractor,
     private val disposables: CompositeDisposable,
-    private val callsInteractor: CallsInteractor,
-    private val audiosInteractor: AudiosInteractor,
-    private val colorsInteractor: ColorsInteractor,
-    private val phonesInteractor: PhonesInteractor,
-    private val stringsInteractor: StringsInteractor,
-    private val callAudiosInteractor: CallAudiosInteractor,
-    private val proximitiesInteractor: ProximitiesInteractor,
+    private val callAudios: CallAudiosInteractor,
+    private val proximities: ProximitiesInteractor,
 ) :
     BaseViewState(),
     CallsInteractor.Listener,
@@ -71,7 +71,7 @@ class CallViewState @Inject constructor(
     val askForRouteEvent = LiveEvent()
     val showCallManagerEvent = LiveEvent()
 
-    var _currentCallId: String? = null
+    private var _currentCallId: String? = null
 
 
     override fun attach() {
@@ -82,35 +82,35 @@ class CallViewState @Inject constructor(
 
         CallService.sIsActivityActive = true
 
-        proximitiesInteractor.acquire()
-        callsInteractor.registerListener(this@CallViewState)
-        callAudiosInteractor.registerListener(this@CallViewState)
-        callsInteractor.mainCall?.let {
+        proximities.acquire()
+        calls.registerListener(this@CallViewState)
+        callAudios.registerListener(this@CallViewState)
+        calls.mainCall?.let {
             onCallChanged(it)
             onMainCallChanged(it)
-            callAudiosInteractor.isMuted?.let(this@CallViewState::onMuteChanged)
-            callAudiosInteractor.audioRoute?.let(this@CallViewState::onAudioRouteChanged)
+            callAudios.isMuted?.let(this@CallViewState::onMuteChanged)
+            callAudios.audioRoute?.let(this@CallViewState::onAudioRouteChanged)
         }
 
         isManageEnabled.value = false
     }
 
     override fun detach() {
-        proximitiesInteractor.release()
+        proximities.release()
         CallService.sIsActivityActive = false
     }
 
     fun onAnswerClick() {
-        _currentCallId?.let { callsInteractor.answerCall(it) }
+        _currentCallId?.let { calls.answerCall(it) }
     }
 
     fun onRejectClick() {
-        _currentCallId?.let { callsInteractor.rejectCall(it) }
+        _currentCallId?.let { calls.rejectCall(it) }
     }
 
     override fun onSwapClick() {
         try {
-            _currentCallId?.let { callsInteractor.swapCall(it) }
+            _currentCallId?.let { calls.swapCall(it) }
         } catch (e: CantSwapCallException) {
             errorEvent.call(R.string.error_cant_swap_calls)
             e.printStackTrace()
@@ -119,7 +119,7 @@ class CallViewState @Inject constructor(
 
     override fun onHoldClick() {
         try {
-            _currentCallId?.let { callsInteractor.toggleHold(it) }
+            _currentCallId?.let { calls.toggleHold(it) }
         } catch (e: CantHoldCallException) {
             errorEvent.call(R.string.error_cant_hold_call)
             e.printStackTrace()
@@ -127,12 +127,12 @@ class CallViewState @Inject constructor(
     }
 
     override fun onMuteClick() {
-        callAudiosInteractor.isMuted = !isMuteActivated.value!!
+        callAudios.isMuted = !isMuteActivated.value!!
     }
 
     override fun onMergeClick() {
         try {
-            _currentCallId?.let { callsInteractor.mergeCall(it) }
+            _currentCallId?.let { calls.mergeCall(it) }
         } catch (e: CantMergeCallException) {
             errorEvent.call(R.string.error_cant_merge_call)
             e.printStackTrace()
@@ -148,7 +148,7 @@ class CallViewState @Inject constructor(
     }
 
     override fun onSpeakerClick() {
-        callAudiosInteractor.apply {
+        callAudios.apply {
             if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
                 askForRouteEvent.call()
             } else {
@@ -158,26 +158,26 @@ class CallViewState @Inject constructor(
     }
 
     fun onCharKey(char: Char) {
-        _currentCallId?.let { callsInteractor.invokeCallKey(it, char) }
+        _currentCallId?.let { calls.invokeCallKey(it, char) }
     }
 
 
     override fun onNoCalls() {
-        audiosInteractor.audioMode = NORMAL
+        audios.audioMode = NORMAL
         finishEvent.call()
     }
 
     override fun onCallChanged(call: Call) {
-        if (callsInteractor.getFirstState(HOLDING)?.id == _currentCallId) {
+        if (calls.getFirstState(HOLDING)?.id == _currentCallId) {
             bannerText.value = null
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
-            phonesInteractor.lookupAccount(call.number) {
+            phones.lookupAccount(call.number) {
                 bannerText.value = String.format(
-                    stringsInteractor.getString(R.string.explain_is_on_hold),
+                    strings.getString(R.string.explain_is_on_hold),
                     it?.displayString ?: call.number
                 )
             }
-        } else if (callsInteractor.getStateCount(HOLDING) == 0) {
+        } else if (calls.getStateCount(HOLDING) == 0) {
             bannerText.value = null
         }
     }
@@ -198,7 +198,7 @@ class CallViewState @Inject constructor(
     }
 
     private fun displayCallTime() {
-        callsInteractor.mainCall?.let {
+        calls.mainCall?.let {
             elapsedTime.value = if (it.isStarted) it.durationTimeMilis else null
         }
     }
@@ -213,9 +213,9 @@ class CallViewState @Inject constructor(
         }
 
         if (call.isConference) {
-            name.value = stringsInteractor.getString(R.string.conference)
+            name.value = strings.getString(R.string.conference)
         } else {
-            phonesInteractor.lookupAccount(call.number) { account ->
+            phones.lookupAccount(call.number) { account ->
                 account?.photoUri?.let { imageURI.value = Uri.parse(it) }
                 name.value = account?.displayString ?: call.number
             }
@@ -226,19 +226,19 @@ class CallViewState @Inject constructor(
         isHoldEnabled.value = call.isCapable(CAPABILITY_HOLD)
         isMuteEnabled.value = call.isCapable(CAPABILITY_MUTE)
         isSwapEnabled.value = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
-        stateText.value = stringsInteractor.getString(call.state.stringRes)
+        stateText.value = strings.getString(call.state.stringRes)
 
         when {
             call.isIncoming -> uiState.value = UIState.INCOMING
-            callsInteractor.isMultiCall -> uiState.value = UIState.MULTI
+            calls.isMultiCall -> uiState.value = UIState.MULTI
             else -> uiState.value = UIState.ACTIVE
         }
 
         when (call.state) {
             INCOMING, ACTIVE -> stateTextColor.value =
-                colorsInteractor.getColor(R.color.green_foreground)
+                colors.getColor(R.color.green_foreground)
             HOLDING, DISCONNECTING, DISCONNECTED -> stateTextColor.value =
-                colorsInteractor.getColor(R.color.red_foreground)
+                colors.getColor(R.color.red_foreground)
         }
     }
 
@@ -247,7 +247,7 @@ class CallViewState @Inject constructor(
     }
 
     fun onAudioRoutePicked(audioRoute: AudioRoute) {
-        callAudiosInteractor.audioRoute = audioRoute
+        callAudios.audioRoute = audioRoute
     }
 
     enum class UIState {

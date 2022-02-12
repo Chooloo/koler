@@ -8,7 +8,7 @@ import android.content.pm.PackageManager
 import android.telecom.TelecomManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.chooloo.www.chooloolib.ui.permissions.DefaultDIalerRequestActivity
+import com.chooloo.www.chooloolib.ui.permissions.DefaultDialerRequestActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PERMISSIONS_ARGUMENT_KEY
 import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PermissionResult
@@ -66,7 +66,7 @@ class PermissionsInteractorImpl @Inject constructor(
             callback.invoke(true)
         } else {
             _onDefaultDialerResultListeners.add(callback)
-            val intent = Intent(context, DefaultDIalerRequestActivity::class.java)
+            val intent = Intent(context, DefaultDialerRequestActivity::class.java)
                 .addFlags(FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
         }

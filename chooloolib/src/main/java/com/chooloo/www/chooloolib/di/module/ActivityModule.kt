@@ -34,9 +34,6 @@ class ActivityModule {
     @InstallIn(ActivityComponent::class)
     interface BindsModule {
         @Binds
-        fun bindCallInteractor(callNavigationsInteractorImpl: CallNavigationsInteractorImpl): CallNavigationsInteractor
-
-        @Binds
         fun bindDialogsInteractor(dialogsInteractorImpl: DialogsInteractorImpl): DialogsInteractor
 
         @Binds
@@ -44,5 +41,8 @@ class ActivityModule {
 
         @Binds
         fun bindPromptsInteractor(promptsInteractorImpl: PromptsInteractorImpl): PromptsInteractor
+
+        @Binds
+        fun bindCallNavigationsInteractor(callNavigationsInteractorImpl: CallNavigationsInteractorImpl): CallNavigationsInteractor
     }
 }

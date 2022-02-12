@@ -9,5 +9,4 @@ import javax.inject.Inject
 class ContactsSuggestionsViewState @Inject constructor(
     permissions: PermissionsInteractor,
     contactsRepository: ContactsRepository
-) : ContactsViewState(contactsRepository, permissions) {
-}
+) : ContactsViewState(contactsRepository, permissions)

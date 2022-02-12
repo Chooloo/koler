@@ -32,7 +32,7 @@ open class DialpadViewState @Inject constructor(
     }
 
 
-    open protected fun onTextChanged(text: String) {
+    protected open fun onTextChanged(text: String) {
         this.text.value = text
         audiosInteractor.vibrate()
     }

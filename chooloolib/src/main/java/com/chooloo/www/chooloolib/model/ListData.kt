@@ -32,7 +32,5 @@ data class ListData<DataType>(
 
         fun fromPhones(phones: List<PhoneAccount>) =
             ListData(phones.toList().distinctBy { it.normalizedNumber })
-
-        fun fromMenuItems(menuItems: List<MenuItem>) = ListData(menuItems)
     }
 }

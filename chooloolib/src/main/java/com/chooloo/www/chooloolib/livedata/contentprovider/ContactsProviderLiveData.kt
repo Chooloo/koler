@@ -13,5 +13,5 @@ class ContactsProviderLiveData(
     private val contactId: Long? = null,
     private val contentResolverFactory: ContentResolverFactory
 ) : ContentProviderLiveData<ContactsContentResolver, ContactAccount>(context) {
-    override val contentResolver by lazy { contentResolverFactory.getContactsContentResolver() }
+    override val contentResolver by lazy { contentResolverFactory.getContactsContentResolver(contactId) }
 }

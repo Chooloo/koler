@@ -119,7 +119,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
         }
 
         historyViewState.itemClickedEvent.observe(this) {
-            it.contentIfNew?.let { viewState.onRecentClick(it.id) }
+            it.contentIfNew?.let { recent -> viewState.onRecentClick(recent.id) }
         }
     }
 

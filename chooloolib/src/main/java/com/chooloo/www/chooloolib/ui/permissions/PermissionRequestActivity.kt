@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.ui.permissions
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PermissionRequestActivity : BaseActivity<BaseViewState>() {
-    override val contentView = null
+    override val contentView: View? = null
     override val viewState: BaseViewState by viewModels()
 
     @Inject lateinit var permissions: PermissionsInteractor

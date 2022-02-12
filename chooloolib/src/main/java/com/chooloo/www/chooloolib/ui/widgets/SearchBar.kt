@@ -1,3 +1,5 @@
+@file:Suppress("KotlinDeprecation")
+
 package com.chooloo.www.chooloolib.ui.widgets
 
 import android.annotation.SuppressLint

@@ -6,7 +6,6 @@ import android.view.MenuItem
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.MenuAdapter
 import com.chooloo.www.chooloolib.databinding.MenuBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +48,7 @@ open class BaseMenuFragment @Inject constructor() : BaseFragment<BaseViewState>(
     }
 
 
-    fun setMenu(menu: MenuBuilder) {
+    private fun setMenu(menu: MenuBuilder) {
         menu.visibleItems.toList().let { adapter.items = it }
     }
 

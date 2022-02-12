@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.settings
 
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.chooloo.www.chooloolib.ui.settings.SettingsFragment as ChoolooSettingsFragment

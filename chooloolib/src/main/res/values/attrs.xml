@@ -30,7 +30,7 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="Chooloo.TextButton">
+    <declare-styleable name="TextButton">
         <attr name="activatedText" format="string" />
     </declare-styleable>
 

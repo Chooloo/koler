@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.adapter
 
 import android.net.Uri
+import android.telecom.Call.Details.CAPABILITY_SEPARATE_FROM_CONFERENCE
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
@@ -38,11 +39,13 @@ class CallItemsAdapter @Inject constructor(
             setImageTint(colorsInteractor.getColor(R.color.color_opposite))
 
             isLeftButtonVisible = true
+            isLeftButtonEnabled = item.isCapable(CAPABILITY_SEPARATE_FROM_CONFERENCE)
             setLeftButtonDrawable(R.drawable.round_call_split_24)
             setLeftButtonTintColor(R.color.orange_foreground)
             setLeftButtonBackgroundTintColor(R.color.orange_background)
 
             isRightButtonVisible = true
+            isRightButtonEnabled = true
             setRightButtonDrawable(R.drawable.round_call_end_24)
             setRightButtonTintColor(R.color.red_foreground)
             setRightButtonBackgroundTintColor(R.color.red_background)

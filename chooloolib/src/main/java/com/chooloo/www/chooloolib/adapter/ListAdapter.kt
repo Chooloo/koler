@@ -81,7 +81,7 @@ abstract class ListAdapter<ItemType>(
 
     private fun getItem(position: Int) = _data.items[position]
 
-    fun getHeader(position: Int): String? {
+    private fun getHeader(position: Int): String? {
         var total = 0
         _data.headersToCounts.values.withIndex().forEach { (index, count) ->
             when (position) {

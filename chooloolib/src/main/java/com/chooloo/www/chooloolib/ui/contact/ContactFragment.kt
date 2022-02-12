@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.ui.contact
 
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

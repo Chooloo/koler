@@ -28,12 +28,9 @@ open class SettingsViewState @Inject constructor(
     val askForThemeModeEvent = LiveEvent()
     val askForAnimationsEvent = LiveEvent()
     val askForColorEvent = DataLiveEvent<Int>()
-    val menuItemClickedEvent = DataLiveEvent<MenuItem>()
 
 
     open fun onMenuItemClick(menuItem: MenuItem) {
-        menuItemClickedEvent.call(menuItem)
-
         when (menuItem.itemId) {
             R.id.menu_chooloo_rate -> navigationsInteractor.rateApp()
             R.id.menu_chooloo_theme_mode -> askForThemeModeEvent.call()
