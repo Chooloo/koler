@@ -32,7 +32,7 @@ class ScreensInteractorImpl @Inject constructor(
         }
     }
 
-    override fun setShowWhenLocked() {
+    override fun showWhenLocked() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             activity.apply {
                 setShowWhenLocked(true)

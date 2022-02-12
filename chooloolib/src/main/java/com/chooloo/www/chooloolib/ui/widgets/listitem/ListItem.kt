@@ -26,7 +26,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.view.marginTop
-import androidx.core.view.updateMargins
 import androidx.core.widget.ImageViewCompat
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.widgets.IconButton
@@ -141,10 +140,22 @@ open class ListItem : LinearLayout {
             _buttonLeft.isVisible = value
         }
 
+    var isLeftButtonEnabled: Boolean
+        get() = _buttonLeft.isEnabled
+        set(value) {
+            _buttonLeft.isEnabled = value
+        }
+
     var isRightButtonVisible: Boolean
         get() = _buttonRight.isVisible
         set(value) {
             _buttonRight.isVisible = value
+        }
+
+    var isRightButtonEnabled: Boolean
+        get() = _buttonRight.isEnabled
+        set(value) {
+            _buttonRight.isEnabled = value
         }
 
 

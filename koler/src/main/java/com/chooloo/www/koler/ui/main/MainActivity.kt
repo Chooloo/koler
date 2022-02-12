@@ -37,7 +37,6 @@ class MainActivity : BaseActivity<MainViewState>() {
 
     override fun onSetup() {
         screens.disableKeyboard()
-        screens.setShowWhenLocked()
 
         binding.apply {
             mainTabs.viewPager = mainViewPager

@@ -11,6 +11,7 @@ import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.call.CallViewState.UIState
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
@@ -26,6 +27,7 @@ class CallActivity : BaseActivity<CallViewState>() {
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
+    @Inject lateinit var screens:ScreensInteractor
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var animations: AnimationsInteractor
@@ -33,6 +35,8 @@ class CallActivity : BaseActivity<CallViewState>() {
 
 
     override fun onSetup() {
+        screens.showWhenLocked()
+
         viewState.apply {
             stateTextColor.observe(this@CallActivity, binding.callStateText::setTextColor)
 
@@ -145,6 +149,10 @@ class CallActivity : BaseActivity<CallViewState>() {
 
             showDialpadEvent.observe(this@CallActivity) {
                 it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getDialpadFragment()) }
+            }
+
+            showCallManagerEvent.observe(this@CallActivity) {
+                it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getCallItemsFragment()) }
             }
         }
 
