@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.telecom.Call.*
 import android.telecom.Call.Details.CAPABILITY_HOLD
+import android.telecom.Call.Details.PROPERTY_ENTERPRISE_CALL
 import android.telecom.Connection
 import android.telecom.DisconnectCause
 import android.telecom.PhoneAccountHandle
@@ -86,6 +87,9 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         } else {
             null
         }
+
+    val isEnterprise: Boolean
+        get() = details.hasProperty(PROPERTY_ENTERPRISE_CALL)
 
     val conferenceableCalls: List<Call>
         get() = fromTelecomCalls(_call.conferenceableCalls)

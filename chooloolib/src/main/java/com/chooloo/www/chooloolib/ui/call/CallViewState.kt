@@ -47,6 +47,7 @@ class CallViewState @Inject constructor(
     CallActions.CallActionsListener {
 
     val name = MutableLiveData<String?>()
+    val imageRes = MutableLiveData<Int>()
     val uiState = MutableLiveData<UIState>()
     val imageURI = MutableLiveData<Uri?>(null)
     val bannerText = MutableLiveData<String>()
@@ -203,6 +204,10 @@ class CallViewState @Inject constructor(
     }
 
     private fun displayCall(call: Call) {
+        if (call.isEnterprise) {
+            imageRes.value = R.drawable.round_business_24
+        }
+
         if (call.isIncoming) {
             uiState.value = UIState.INCOMING
         }
