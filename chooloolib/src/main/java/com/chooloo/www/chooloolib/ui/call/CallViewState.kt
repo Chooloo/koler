@@ -59,7 +59,7 @@ class CallViewState @Inject constructor(
     val isSwapEnabled = MutableLiveData(false)
     val isMergeEnabled = MutableLiveData(false)
     val isManageEnabled = MutableLiveData(false)
-    val isSpeakerEnabled = MutableLiveData(false)
+    val isSpeakerEnabled = MutableLiveData(true)
     val isMuteActivated = MutableLiveData(false)
     val isHoldActivated = MutableLiveData(false)
     val isSpeakerActivated = MutableLiveData(false)

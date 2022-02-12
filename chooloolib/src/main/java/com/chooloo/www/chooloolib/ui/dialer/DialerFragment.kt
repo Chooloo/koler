@@ -103,6 +103,8 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
         suggestionsViewState.itemsChangedEvent.observe(this@DialerFragment) {
             it.peekContent()?.let(viewState::onSuggestionsChanged)
         }
+
+        args.getString(ARG_NUMBER)?.let { it.forEach(viewState::onCharClick) }
     }
 
     override fun onAttach(context: Context) {

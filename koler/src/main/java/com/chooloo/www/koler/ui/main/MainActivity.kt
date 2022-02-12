@@ -109,9 +109,7 @@ class MainActivity : BaseActivity<MainViewState>() {
             showDialerEvent.observe(this@MainActivity) { ev ->
                 ev.contentIfNew?.let {
                     prompts.showFragment(
-                        choolooFragmentFactory.getDialerFragment(
-                            it
-                        )
+                        choolooFragmentFactory.getDialerFragment(it)
                     )
                 }
             }
