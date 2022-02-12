@@ -29,6 +29,10 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
                 it.contentIfNew?.let { dialogs.askForCompact(viewState::onCompactResponse) }
             }
 
+            askForThemeModeEvent.observe(this@SettingsFragment) {
+                it.contentIfNew?.let { dialogs.askForThemeMode(viewState::onThemeModeResponse) }
+            }
+
             askForAnimationsEvent.observe(this@SettingsFragment) {
                 it.contentIfNew?.let { dialogs.askForAnimations(viewState::onAnimationsResponse) }
             }

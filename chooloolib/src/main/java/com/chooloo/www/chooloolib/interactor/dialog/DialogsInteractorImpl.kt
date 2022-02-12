@@ -6,6 +6,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
@@ -111,8 +112,18 @@ class DialogsInteractorImpl @Inject constructor(
         askForChoice(
             choices = Page.values().toList(),
             titleRes = R.string.hint_default_page,
-            choiceCallback = { callback.invoke(it) },
+            choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_default_page,
+            choiceToString = { strings.getString(it.titleRes) }
+        )
+    }
+
+    override fun askForThemeMode(callback: (ThemeMode) -> Unit) {
+        askForChoice(
+            choices = ThemeMode.values().toList(),
+            titleRes = R.string.hint_theme_mode,
+            choiceCallback = callback::invoke,
+            subtitleRes = R.string.explain_choose_theme_mode,
             choiceToString = { strings.getString(it.titleRes) }
         )
     }

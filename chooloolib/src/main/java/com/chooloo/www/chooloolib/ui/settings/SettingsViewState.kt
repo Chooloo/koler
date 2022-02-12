@@ -7,6 +7,7 @@ import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -24,6 +25,7 @@ open class SettingsViewState @Inject constructor(
     open val menuResList = MutableLiveData(listOf(R.menu.menu_chooloo))
 
     val askForCompactEvent = LiveEvent()
+    val askForThemeModeEvent = LiveEvent()
     val askForAnimationsEvent = LiveEvent()
     val askForColorEvent = DataLiveEvent<Int>()
     val menuItemClickedEvent = DataLiveEvent<MenuItem>()
@@ -34,6 +36,7 @@ open class SettingsViewState @Inject constructor(
 
         when (menuItem.itemId) {
             R.id.menu_chooloo_rate -> navigationsInteractor.rateApp()
+            R.id.menu_chooloo_theme_mode -> askForThemeModeEvent.call()
             R.id.menu_chooloo_compact_mode -> askForCompactEvent.call()
             R.id.menu_chooloo_animations -> askForAnimationsEvent.call()
             R.id.menu_chooloo_email -> navigationsInteractor.sendEmail()
@@ -60,5 +63,9 @@ open class SettingsViewState @Inject constructor(
 
     fun onAnimationsResponse(response: Boolean) {
         preferencesInteractor.isAnimations = response
+    }
+
+    fun onThemeModeResponse(response: ThemeMode) {
+        preferencesInteractor.themeMode = response
     }
 }

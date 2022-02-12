@@ -4,6 +4,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
 import com.chooloo.www.chooloolib.util.PreferencesManager
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -54,6 +55,12 @@ class PreferencesInteractorImpl @Inject constructor(
         get() = Page.fromKey(preferencesManager.getString(R.string.pref_key_default_page))
         set(value) {
             preferencesManager.putString(R.string.pref_key_default_page, value.key)
+        }
+
+    override var themeMode: ThemeMode
+        get() = ThemeMode.fromKey(preferencesManager.getString(R.string.pref_key_theme_mode))
+        set(value) {
+            preferencesManager.putString(R.string.pref_key_theme_mode, value.key)
         }
 
     override var accentTheme: AccentTheme
