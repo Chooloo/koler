@@ -1,30 +1,23 @@
 <resources>
-    <string name="dot">·</string>
 
     <!--region titles-->
     <string name="recents">Récents</string>
     <string name="contacts">Contacts</string>
     <string name="conference">Conférence</string>
-    <string name="default_page">Par défaut</string>
+    <string name="default_page">Défaut</string>
     <string name="settings">Paramètres</string>
+    <string name="theme_mode_dark">Obscur</string>
+    <string name="theme_mode_light">Clair</string>
+    <string name="theme_mode_system">Système</string>
     <!--endregion-->
 
     <!--region prompt-->
     <string name="prompt_yes_or_no">Oui ou Non?</string>
-    <string name="prompt_are_you_sure">êtes-vous sûr?</string>
+    <string name="prompt_are_you_sure">Êtes-vous sûr?</string>
     <!--endregion-->
 
     <!--region messages-->
     <string name="number_copied_to_clipboard">Numéro copié dans le presse-papiers</string>
-    <string name="contact_blocked">Contact Bloqué</string>
-    <string name="contact_unblocked">Contact Débloqué</string>
-    <string name="number_blocked">Numéro Bloqué</string>
-    <string name="number_unblocked">Numéro Débloqué</string>
-    <string name="contact_set_favorite">Contact défini comme Favori</string>
-    <string name="contact_unset_favorite">Contact retirer des favoris</string>
-    <string name="recent_deleted_successfully">L\'appel récent a été supprimé avec succès</string>
-    <string name="contact_deleted_successfully">Le contact a été supprimé avec succès</string>
-    <string name="select_sim_account">Sélectionnez le Compte Sim</string>
     <!--endregion-->
 
     <!--region actions-->
@@ -32,9 +25,10 @@
     <string name="action_no">Nope</string>
     <string name="action_answer">Répondre</string>
     <string name="action_hangup">Raccrocher</string>
-    <string name="action_cancel">Annuler</string>
     <string name="action_show_history">Voir l\'Historique</string>
-    <string name="action_choose_audio_route">Définir l\'itineraire audio</string>
+    <string name="action_block_number">Bloqué le numéro</string>
+    <string name="action_unblock_number">Débloqué le numéro</string>
+    <string name="action_choose_audio_route">Définir l\'itinéraire audio</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -44,25 +38,28 @@
 
     <!--region hints-->
     <string name="hint_search">Recherche</string>
+    <string name="hint_theme_mode">Mode du Thème</string>
     <string name="hint_sim_account">Compte Sim</string>
     <string name="hint_default_page">Page par Défaut</string>
     <string name="hint_animations">Afficher les animations</string>
     <string name="hint_search_recents">Recherche dans les Appel Récents</string>
     <string name="hint_search_contacts">Recherche dans les Contacts</string>
     <string name="hint_compact_mode">Compacter les éléments de la liste</string>
-    <string name="hint_search_items">Recherhe dans les contacts &amp; les appels récents</string>
-    <string name="hint_should_ask_sim">Proposer de choisir la SIM à chaque utilisation</string>
+    <string name="hint_search_items">Recherche dans les contacts &amp; les appels récents</string>
+    <string name="hint_dialpad_vibrate">Vibrer lors des clics sur le clavier</string>
+    <string name="hint_should_ask_sim">Proposer de choisir la SIM à chaque appel</string>
+    <string name="hint_dialpad_tones">Activation des tonalités sonores lors de clics sur le clavier</string>
+    <string name="hint_show_blocked">Afficher l\'option de blocage/déblocage des numéros (nécessite le composeur par défaut).</string>
     <!--endregion-->
 
     <!--region warning-->
     <string name="explain_is_on_hold">%s est en attente</string>
-    <string name="explain_block_number">Vous ne recevrez aucun appel de ce numéro</string>
+    <string name="explain_choose_theme_mode">Définissez le mode du thème de Koler, redémarrez l'application pour appliquer les changements.</string>
+    <string name="explain_choose_sim_account">Appeler avec une autre sim</string>
+    <string name="explain_choose_audio_route">Acheminer l\'audio vers une autre source</string>
     <string name="explain_delete_contact">Ce contact sera définitivement supprimé</string>
     <string name="explain_delete_recent">Ce journal d\'appels sera supprimé définitivement</string>
-    <string name="explain_block_contact">Vous ne recevrez aucun appel de ce contact</string>
-    <string name="explain_choose_sim_account">Appel avec une autre sim</string>
     <string name="explain_choose_default_page">Cette page sera sélectionnée à chaque réouverture de Koler</string>
-    <string name="explain_choose_audio_route">Acheminer l\'audio vers une autre source</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -72,26 +69,17 @@
     <!--endregion-->
 
     <!--region call actions -->
-    <string name="call_action_hold">Attente</string>
     <string name="call_action_mute">Coupé le micro</string>
-    <string name="call_action_keypad">Pavé numérique</string>
-    <string name="call_action_unhold">Reprendre</string>
     <string name="call_action_unmute">Réactivé le micro</string>
-    <string name="call_action_record">Enregistrer</string>
-    <string name="call_action_speaker">Haut Parleur</string>
-    <string name="call_action_add_call">Ajouter un Appel</string>
-    <string name="call_action_speaker_off">Couper le Haut Parleur</string>
-    <string name="call_action_record_stop">Arrêter l\'enregistrement</string>
+    <string name="call_action_speaker">Haut-Parleur</string>
+    <string name="call_action_speaker_off">Couper le Haut-Parleur</string>
     <!--endregion-->
 
     <!--region call state-->
     <string name="call_status_new">Nouvel Appel</string>
     <string name="call_status_dialing">numérotation…</string>
-    <string name="call_status_waiting">Attente…</string>
-    <string name="call_status_missed">Appel en Absence</string>
     <string name="call_status_holding">Appel en Attente</string>
     <string name="call_status_connecting">Liaison…</string>
-    <string name="call_status_conferenced">En Conférence</string>
     <string name="call_status_incoming">Appel Entrant</string>
     <string name="call_status_active">Appel en Cours</string>
     <string name="call_status_disconnected">Appel terminé</string>
@@ -103,96 +91,58 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">évaluer</string>
-    <string name="pref_key_email">courriel</string>
-    <string name="pref_key_donate">faire_un_don</string>
-    <string name="pref_key_compact">compacte</string>
+    <string name="pref_key_compact">compact</string>
     <string name="pref_key_ask_sim">choix_sim</string>
     <string name="pref_key_color">couleur_d\'accentuation</string>
     <string name="pref_key_animations">animations</string>
-    <string name="pref_key_set_favorite">définir_comme_favori</string>
-    <string name="pref_key_block_number">bloquer_le_numéro</string>
-    <string name="pref_key_default_page">page_par_défaut</string>
+    <string name="pref_key_theme_mode">mode_du_thème</string>
     <string name="pref_key_report_bugs">signaler_des_bogues</string>
-    <string name="pref_key_record_format">format_d\'enregistrement</string>
-    <string name="pref_key_block_contact">bloquer_un_contact</string>
+    <string name="pref_key_show_blocked">afficher_les_éléments_bloqués</string>
+    <string name="pref_key_default_page">page_par_défaut</string>
+    <string name="pref_key_dialpad_tones">tonalités_du_clavier</string>
     <string name="pref_key_manage_blocked">gérer_les_blocages</string>
-    <string name="pref_key_unset_favorite">favori_non_défini</string>
-    <string name="pref_key_unblock_number">débloquer_le_numéro</string>
-    <string name="pref_key_records_enabled">enregistrement_activé</string>
-    <string name="pref_key_unblock_contact">débloquer_contact</string>
-    <string name="pref_key_scroll_indicator">indicateur_de_défilement</string>
-    <string name="pref_key_default_dialer_blocked_notice">application_téléphone_par_défaut_bloqué</string>
+    <string name="pref_key_dialpad_vibrate">vibration_du_clavier</string>
     <!--endregion-->
 
     <!--region pref title-->
     <string name="pref_title_rate">Évaluer</string>
-    <string name="pref_title_donate">Faire un Don</string>
     <string name="pref_title_compact">Mode Compact</string>
     <string name="pref_title_animations">Animations</string>
     <string name="pref_title_app_color">Couleur d\'Accentuation</string>
+    <string name="pref_title_theme_mode">Mode du Thème</string>
     <string name="pref_title_email">Nous envoyez un courriel</string>
     <string name="pref_title_report_bugs">Signaler des Bogues</string>
-    <string name="pref_title_sim_select">Selection de la Sim</string>
-    <string name="pref_title_block_number">Bloquer le Numéro</string>
-    <string name="pref_title_block_contact">Bloquer le Contact</string>
-    <string name="pref_title_set_favorite">Définir comme Favori</string>
-    <string name="pref_title_records_enabled">Enregistrer les Appels</string>
-    <string name="pref_title_unblock_number">Débloquer le Numéro</string>
-    <string name="pref_title_unblock_contact">Débloquer le Contact</string>
-    <string name="pref_title_unset_favorite">Retirer des Favoris</string>
-    <string name="pref_title_scroll_indicator">Indicateur de défilement</string>
-    <string name="pref_title_manage_blocked">Gérer les numéros bloqués</string>
+    <string name="pref_title_manage_blocked">Gérer les Numéros Bloqués</string>
     <!--endregion-->
 
     <!--region pref summary -->
-    <string name="pref_summary_ask_sim_disabled">Sélection de la Sim non disponible</string>
     <!--endregion-->
 
     <!--region pref default value-->
-    <string name="pref_default_value_sim_select">0</string>
     <!--endregion-->
 
     <!--region errors-->
-    <string name="error_blocked">Bloqué</string>
     <string name="error_no_results">Aucun Résultat</string>
-    <string name="error_no_results_calls">Aucun appels</string>
     <string name="error_no_results_recents">Aucun élément récent</string>
     <string name="error_no_results_contacts">Aucun Contacts</string>
     <string name="error_no_results_phones">Aucun Numéro de Téléphone</string>
-    <string name="error_not_default_dialer">Veuillez définir comme application téléphone par défaut</string>
     <string name="error_not_default_dialer_blocked">Définir koler comme application téléphone par défaut pour voir les numéros bloqués</string>
     <string name="error_not_default_dialer_call">Définissez koler comme application téléphone par défaut pour passer des appels</string>
 
-    <string name="error_no_permissions">J\'ai besoin d\'autorisations :/</string>
+    <string name="error_no_permissions_edit_call_log">Aucune autorisation de modifier le journal des appels :)</string>
     <string name="error_no_permissions_make_call">Aucune autorisation pour passer un appel :(</string>
     <string name="error_no_permissions_phones">J\'ai besoin d'une autorisation pour lire les contacts :)</string>
     <string name="error_no_permissions_recents">J\'ai besoin d'une autorisation pour lire le journal des appels :)</string>
     <string name="error_no_permissions_contacts">J\'ai besoin d'une autorisation pour lire les contacts :)</string>
-    <string name="error_no_permissions_ask_sim">Aucune autorisation pour lire les comptes sim :(</string>
-    <string name="error_no_permissions_voicemail">Aucune autorisation pour passer un appel sur la messagerie vocale :(</string>
-    <string name="error_no_permissions_call_with_sim">Aucune autorisation d\'appeler avec la carte Sim, appel avec la première carte Sim.</string>
-
-    <string name="error_enter_number">Veuillez d'abord entrer un numéro</string>
-
+    
     <string name="error_no_number_to_call">Aucun numéro n\'a été trouvé :(</string>
-    <string name="error_no_phone_account_handle">Aucun identifiant de compte téléphonique n\'a été trouvé</string>
-
     <string name="error_cant_hold_call">Mise en attente impossible</string>
     <string name="error_cant_swap_calls">Impossible d\'échanger les appels</string>
     <string name="error_cant_merge_call">Impossible de fusionner l\'appel</string>
-    <string name="error_cant_hold_other_calls">Impossible de mettre d\'autres appels en attente</string>
-    <string name="error_calls_crowded_cant_answer">Impossible de répondre, ligne trop encombré</string>
-    <string name="error_no_incoming_call_to_answer">Aucun appel entrant auquel répondre n\'a été trouvé</string>
-
     <string name="error_couldnt_get_number_from_intent">Impossible de trouver le numéro</string>
     <!--endregion-->
 
     <!--region pref color values-->
-    <string name="pref_color_value_red">rouge</string>
-    <string name="pref_color_value_blue">bleu</string>
-    <string name="pref_color_value_green">vert</string>
-    <string name="pref_color_value_orange">orange</string>
-    <string name="pref_color_value_purple">violet</string>
     <!--endregion-->
 
     <!--region pref values-->
@@ -222,33 +172,13 @@
     <string name="content_description_reject_button">Touche de Rejet</string>
     <string name="content_description_call_actions_button">Actions d'\appel</string>
     <!--endregion-->
-
+    
     <!--region notification-->
     <string name="call_notification_channel_name">Notification d\'Appel</string>
     <string name="call_notification_channel_description">Notification d\'appel active, affichée pour une utilisation confortable</string>
     <!--endregion-->
 
     <!--region phone type-->
-    <string name="phone_type_home">Domicile</string>
-    <string name="phone_type_mobile">Mobile</string>
-    <string name="phone_type_work">Professionnel</string>
-    <string name="phone_type_fax_work">Fax Professionnel</string>
-    <string name="phone_type_fax_home">Fax Personnel</string>
-    <string name="phone_type_pager">Télétravail</string>
-    <string name="phone_type_other">Autre</string>
-    <string name="phone_type_callback">Rappel</string>
-    <string name="phone_type_car">Voiture</string>
-    <string name="phone_type_company_main">Entreprise Principale</string>
-    <string name="phone_type_isdn">ISDN</string>
-    <string name="phone_type_main">Principal</string>
-    <string name="phone_type_other_fax">Fax</string>
-    <string name="phone_type_radio">Radio</string>
-    <string name="phone_type_telex">Telex</string>
-    <string name="phone_type_tty_ttd">TTY TDD</string>
-    <string name="phone_type_work_mobile">Mobile Professionnel</string>
-    <string name="phone_type_work_pager">Télétravail Professionnel</string>
-    <string name="phone_type_assistant">Assistant</string>
-    <string name="phone_type_mms">MMS</string>
     <!--endregion-->
 
     <!--region audio route-->
@@ -258,4 +188,8 @@
     <string name="audio_route_wired_headset">Casque filaire</string>
     <string name="audio_route_wired_or_earpiece">Filaire ou oreillette</string>
     <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">Étoile de Favoris</string>
+    <string name="content_description_empty_list_icon">Icône de liste vide</string>
 </resources>
