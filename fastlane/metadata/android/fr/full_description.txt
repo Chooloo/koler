@@ -8,6 +8,7 @@ Lors d'un appel en cours, vous pouvez:
 * Rejeter dans un délai déterminé en secondes
 
 L'objectif principal de l'application est d'être plus intuitive et confortable. Pour cette raison, les gestes de balayages sont le principal moyen de contrôler l'application, ce qui rend son utilisation beaucoup plus fluide.
+
 <b>Composeur:</b>
 
 * Appel - Balayez vers le haut
