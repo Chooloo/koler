@@ -65,7 +65,7 @@ class DialpadKey : LinearLayout {
             _char = value
             when (value) {
                 '0' -> _lettersTextView.text = context.getString(R.string.dialpad_0_letters)
-                '1' -> _lettersTextView.setBackgroundResource(R.drawable.ic_voicemail_black_24dp)
+                '1' -> _lettersTextView.setBackgroundResource(R.drawable.round_voicemail_20)
                 '2' -> _lettersTextView.text = context.getString(R.string.dialpad_2_letters)
                 '3' -> _lettersTextView.text = context.getString(R.string.dialpad_3_letters)
                 '4' -> _lettersTextView.text = context.getString(R.string.dialpad_4_letters)

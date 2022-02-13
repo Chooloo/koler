@@ -19,7 +19,7 @@ class ListItemButton : ListItem {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        image.setPadding(15)
+        image.setPadding(18)
         stateListAnimator = null
         imageTintList = ColorStateList.valueOf(colorOnSecondary)
         personLayout.backgroundTintList = ColorStateList.valueOf(colorSecondary)
@@ -30,10 +30,10 @@ class ListItemButton : ListItem {
 
     override fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
         personLayout.setPadding(
+            dimenSpacingSmall + 20,
             dimenSpacingSmall,
-            dimenSpacing - 28,
-            dimenSpacingSmall,
-            dimenSpacing - 28
+            dimenSpacingSmall + 20,
+            dimenSpacingSmall
         )
         header.setPadding(
             if (isEnabled) dimenSpacing else 0,

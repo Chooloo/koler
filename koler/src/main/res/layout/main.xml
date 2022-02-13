@@ -48,5 +48,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_dialpad_black_24dp" />
+        app:icon="@drawable/round_dialpad_24" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

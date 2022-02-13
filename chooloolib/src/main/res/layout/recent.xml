@@ -11,7 +11,7 @@
         android:layout_width="@dimen/image_size_big"
         android:layout_height="0dp"
         android:layout_margin="@dimen/default_spacing"
-        android:src="@drawable/ic_call_missed_black_24dp"
+        android:src="@drawable/round_call_missed_24"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
         android:layout_marginTop="@dimen/default_spacing_big"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_call_black_24dp"
+        app:icon="@drawable/round_call_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_text_caption" />
 
@@ -90,7 +90,7 @@
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_delete_black_24dp"
+        app:icon="@drawable/round_delete_forever_24"
         app:layout_constraintBottom_toTopOf="@id/recent_button_show_history"
         app:layout_constraintEnd_toStartOf="@id/recent_button_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_call"
@@ -132,7 +132,7 @@
         android:layout_marginEnd="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_sms_black_24dp"
+        app:icon="@drawable/round_chat_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_text_caption" />
 </androidx.constraintlayout.widget.ConstraintLayout>

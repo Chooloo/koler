@@ -24,7 +24,7 @@ class PhonesViewState @Inject constructor(
 ) :
     ListViewState<PhoneAccount>() {
 
-    override val noResultsIconRes = R.drawable.ic_call_black_24dp
+    override val noResultsIconRes = R.drawable.round_call_24
     override val noResultsTextRes = R.string.error_no_results_phones
     override val noPermissionsTextRes = R.string.error_no_permissions_phones
 
@@ -43,7 +43,8 @@ class PhonesViewState @Inject constructor(
         phonesLiveData.filter = filter
     }
 
-    override fun onItemClick(item: PhoneAccount) {
+    override fun onItemRightClick(item: PhoneAccount) {
+        super.onItemRightClick(item)
         permissions.runWithPermissions(arrayOf(READ_PHONE_STATE, CALL_PHONE), {
             callEvent.call(item.number)
         }, {

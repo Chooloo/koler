@@ -65,7 +65,7 @@ class AnimationsInteractorImpl @Inject constructor(
             return
         }
         if (_isEnabled) {
-            YoYo.with(Techniques.SlideOutUp)
+            YoYo.with(Techniques.FadeOutDown)
                 .duration(250)
                 .onEnd {
                     view.visibility = if (goneOrInvisible) View.GONE else View.INVISIBLE

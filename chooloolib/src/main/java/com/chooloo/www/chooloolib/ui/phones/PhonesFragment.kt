@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.ui.phones
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
@@ -24,6 +25,7 @@ class PhonesFragment @Inject constructor() : ListFragment<PhoneAccount, PhonesVi
         viewState.callEvent.observe(this@PhonesFragment) {
             it.contentIfNew?.let(callNavigations::call)
         }
+        binding.itemsScrollView.fastScroller.isVisible = false
     }
 
     companion object {
@@ -33,5 +35,4 @@ class PhonesFragment @Inject constructor() : ListFragment<PhoneAccount, PhonesVi
             }
         }
     }
-
 }

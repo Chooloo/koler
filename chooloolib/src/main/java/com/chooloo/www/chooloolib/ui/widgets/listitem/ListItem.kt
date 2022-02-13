@@ -18,7 +18,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
@@ -59,6 +58,7 @@ open class ListItem : LinearLayout {
     protected val dimenImageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
     protected val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     protected val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
+
 
     var imageSize: Int
         get() = image.height
@@ -319,13 +319,17 @@ open class ListItem : LinearLayout {
         addView(personLayout)
     }
 
+    override fun setBackground(background: Drawable?) {
+        personLayout.background = background
+    }
 
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
             personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
         } else {
-            personLayout.background = context.getSelectableItemBackgroundDrawable()
+            personLayout.background =
+                ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
         }
     }
 
@@ -367,7 +371,7 @@ open class ListItem : LinearLayout {
     fun setTitleBold(isBold: Boolean) {
         title.typeface = ResourcesCompat.getFont(
             context,
-            if (isBold) R.font.google_sans_bold else R.font.google_sans_regular
+            if (isBold) R.font.google_sans_medium else R.font.google_sans_regular
         )
     }
 
@@ -460,5 +464,4 @@ open class ListItem : LinearLayout {
     fun setOnRightButtonClickListener(onRightButtonClickListener: () -> Unit) {
         _onRightButtonClickListener = onRightButtonClickListener
     }
-
 }
