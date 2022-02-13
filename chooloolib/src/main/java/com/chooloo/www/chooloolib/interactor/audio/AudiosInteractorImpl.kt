@@ -58,7 +58,7 @@ class AudiosInteractorImpl @Inject constructor(
     }
 
     override fun playTone(tone: Int, durationMs: Int) {
-        if (tone != -1 && isSilent) {
+        if (tone != -1 && !isSilent) {
             synchronized(sToneGeneratorLock) {
                 ToneGenerator(DIAL_TONE_STREAM_TYPE, TONE_RELATIVE_VOLUME).startTone(
                     tone, durationMs
