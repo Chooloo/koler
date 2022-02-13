@@ -56,6 +56,7 @@ open class SettingsViewState @Inject constructor(
 
     fun onCompactResponse(response: Boolean) {
         preferencesInteractor.isCompact = response
+        navigationsInteractor.goToLauncherActivity()
     }
 
     fun onAnimationsResponse(response: Boolean) {
