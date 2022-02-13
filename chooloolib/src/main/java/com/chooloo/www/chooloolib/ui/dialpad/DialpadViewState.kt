@@ -21,7 +21,7 @@ open class DialpadViewState @Inject constructor(
     open fun onCharClick(char: Char) {
         this.char.value = char
         if (preferences.isDialpadTones) audios.playToneByChar(char)
-        audios.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
+        if (preferences.isDialpadVibrate) audios.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
         onTextChanged((text.value ?: "") + char)
     }
 
@@ -36,7 +36,6 @@ open class DialpadViewState @Inject constructor(
 
     protected open fun onTextChanged(text: String) {
         this.text.value = text
-        audios.vibrate()
     }
 }
 

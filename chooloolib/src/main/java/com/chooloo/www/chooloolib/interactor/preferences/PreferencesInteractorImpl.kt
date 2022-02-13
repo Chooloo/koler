@@ -60,6 +60,15 @@ class PreferencesInteractorImpl @Inject constructor(
             preferencesManager.putBoolean(R.string.pref_key_dialpad_tones, value)
         }
 
+    override var isDialpadVibrate: Boolean
+        get() = preferencesManager.getBoolean(
+            R.string.pref_key_dialpad_vibrate,
+            R.bool.pref_default_value_dialpad_vibrate
+        )
+        set(value) {
+            preferencesManager.putBoolean(R.string.pref_key_dialpad_vibrate, value)
+        }
+
     override var defaultPage: Page
         get() = Page.fromKey(preferencesManager.getString(R.string.pref_key_default_page))
         set(value) {

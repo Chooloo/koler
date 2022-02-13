@@ -36,6 +36,15 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
                     dialogs.askForBoolean(R.string.hint_dialpad_tones, viewState::onDialpadTones)
                 }
             }
+
+            askForDialpadVibrateEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForBoolean(
+                        R.string.hint_dialpad_vibrate,
+                        viewState::onDialpadVibrate
+                    )
+                }
+            }
         }
     }
 }

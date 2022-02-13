@@ -29,11 +29,12 @@ class SettingsViewState @Inject constructor(
     val askForDefaultPageEvent = LiveEvent()
     val askForShouldAsmSimEvent = LiveEvent()
     val askForDialpadTonesEvent = LiveEvent()
+    val askForDialpadVibrateEvent = LiveEvent()
 
 
     override fun attach() {
         super.attach()
-        menuResList.value = (menuResList.value ?: emptyList<Int>()) + arrayListOf(R.menu.menu_koler)
+        menuResList.value = arrayListOf(R.menu.menu_koler) + (menuResList.value ?: emptyList())
     }
 
     override fun onMenuItemClick(menuItem: MenuItem) {
@@ -41,6 +42,7 @@ class SettingsViewState @Inject constructor(
             R.id.menu_koler_ask_sim -> askForShouldAsmSimEvent.call()
             R.id.menu_koler_default_page -> askForDefaultPageEvent.call()
             R.id.menu_koler_dialpad_tones -> askForDialpadTonesEvent.call()
+            R.id.menu_koler_dialpad_vibrate -> askForDialpadVibrateEvent.call()
             R.id.menu_koler_show_blocked -> permissionsInteractor.runWithDefaultDialer {
                 askForShowBlockedEvent.call()
             }
@@ -62,5 +64,9 @@ class SettingsViewState @Inject constructor(
 
     fun onDialpadTones(response: Boolean) {
         preferences.isDialpadTones = response
+    }
+
+    fun onDialpadVibrate(response: Boolean) {
+        preferences.isDialpadVibrate = response
     }
 }
