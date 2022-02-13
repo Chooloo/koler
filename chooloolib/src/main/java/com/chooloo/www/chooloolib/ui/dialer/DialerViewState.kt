@@ -59,8 +59,8 @@ class DialerViewState @Inject constructor(
             text.value = recents.getLastOutgoingCall()
         } else {
             text.value?.let(callNumberEvent::call)
+            finishEvent.call()
         }
-        finishEvent.call()
     }
 
     fun onAddContactClick() {
