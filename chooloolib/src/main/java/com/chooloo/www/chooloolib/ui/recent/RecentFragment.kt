@@ -22,10 +22,10 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     private val historyViewState: RecentsHistoryViewState by viewModels()
     private val binding by lazy { RecentBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var callNavigations: CallNavigationsInteractor
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var callNavigations: CallNavigationsInteractor
 
 
     override fun onSetup() {
@@ -61,15 +61,21 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
         viewState.apply {
             recentId.value = args.getLong(ARG_RECENT_ID)
-            recentImage.observe(this@RecentFragment, binding.recentTypeImage::setImageDrawable)
+            image.observe(this@RecentFragment, binding.recentTypeImage::setImageDrawable)
 
-            recentName.observe(this@RecentFragment) {
+            name.observe(this@RecentFragment) {
                 binding.recentTextName.text = it
             }
 
-            recentCaption.observe(this@RecentFragment) {
-                binding.recentTextCaption.text = it
-                binding.recentTextCaption.isVisible = it != null
+            timeString.observe(this@RecentFragment) {
+                binding.recentTextTime.text = it
+            }
+
+            durationString.observe(this@RecentFragment) {
+                it?.let { binding.recentTextDuration.text = it } ?: run {
+                    binding.recentTextDuration.isVisible = false
+                    binding.recentImageDuration.isVisible = false
+                }
             }
 
             isContactVisible.observe(this@RecentFragment) {

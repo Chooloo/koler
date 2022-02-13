@@ -30,10 +30,11 @@ class RecentViewState @Inject constructor(
 ) :
     BaseViewState() {
 
+    val name = MutableLiveData<String?>()
     val recentId = MutableLiveData(0L)
-    val recentName = MutableLiveData<String?>()
-    val recentCaption = MutableLiveData<String?>()
-    val recentImage = MutableLiveData<Drawable?>()
+    val image = MutableLiveData<Drawable?>()
+    val timeString = MutableLiveData<String?>()
+    val durationString = MutableLiveData<String?>()
     val isContactVisible = MutableLiveData(false)
     val isAddContactVisible = MutableLiveData(false)
     val isBlockButtonVisible = MutableLiveData(false)
@@ -51,15 +52,13 @@ class RecentViewState @Inject constructor(
     override fun attach() {
         super.attach()
         if (_recent == null) return
-        val recentCaptions = arrayListOf(_recent!!.relativeTime)
-        if (_recent!!.duration > 0) {
-            recentCaptions.add(getElapsedTimeString(_recent!!.duration))
-        }
 
-        recentCaption.value = recentCaptions.joinToString(", ")
-        recentImage.value =
+        timeString.value = _recent!!.relativeTime
+        durationString.value =
+            if (_recent!!.duration > 0L) getElapsedTimeString(_recent!!.duration) else null
+        image.value =
             drawables.getDrawable(recents.getCallTypeImage(_recent!!.type))
-        recentName.value =
+        name.value =
             if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
 
         phones.lookupAccount(_recent!!.number) {
