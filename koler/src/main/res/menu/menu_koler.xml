@@ -14,4 +14,9 @@
         android:id="@+id/menu_koler_default_page"
         android:icon="@drawable/round_view_carousel_20"
         android:title="@string/pref_title_default_page" />
+
+    <item
+        android:id="@+id/menu_koler_dialpad_tones"
+        android:icon="@drawable/round_music_note_20"
+        android:title="@string/pref_title_dialpad_tones" />
 </menu>

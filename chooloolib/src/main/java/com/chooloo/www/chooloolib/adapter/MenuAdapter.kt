@@ -32,5 +32,5 @@ class MenuAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<MenuItem>) = ListData(data)
+    override fun convertDataToListData(items: List<MenuItem>) = ListData(items)
 }

@@ -11,7 +11,7 @@ open class Event<out T>(private val content: T) {
     /**
      * Returns the content and prevents its use again.
      */
-    val contentIfNew: T?
+    val ifNew: T?
         get() = if (hasBeenHandled) {
             null
         } else {

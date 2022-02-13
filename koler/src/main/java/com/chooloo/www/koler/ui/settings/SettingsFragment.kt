@@ -1,6 +1,7 @@
 package com.chooloo.www.koler.ui.settings
 
 import androidx.fragment.app.activityViewModels
+import com.chooloo.www.chooloolib.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.chooloo.www.chooloolib.ui.settings.SettingsFragment as ChoolooSettingsFragment
@@ -14,15 +15,26 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
 
         viewState.apply {
             askForShowBlockedEvent.observe(this@SettingsFragment) {
-                it.contentIfNew?.let { dialogs.askForShowBlock(viewState::onShowBlockedResponse) }
+                it.ifNew?.let {
+                    dialogs.askForBoolean(R.string.hint_show_blocked, viewState::onShowBlocked)
+                }
             }
 
             askForDefaultPageEvent.observe(this@SettingsFragment) {
-                it.contentIfNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
+                it.ifNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
             }
 
             askForShouldAsmSimEvent.observe(this@SettingsFragment) {
-                it.contentIfNew?.let { dialogs.askForShouldAskSim(viewState::onShouldAskSimResponse) }
+                it.ifNew?.let {
+                    dialogs.askForBoolean(R.string.hint_should_ask_sim, viewState::onShouldAskSim)
+                }
+
+            }
+
+            askForDialpadTonesEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForBoolean(R.string.hint_dialpad_tones, viewState::onDialpadTones)
+                }
             }
         }
     }

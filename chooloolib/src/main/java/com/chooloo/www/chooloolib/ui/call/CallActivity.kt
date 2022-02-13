@@ -1,8 +1,6 @@
 package com.chooloo.www.chooloolib.ui.call
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
-import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
 import androidx.activity.viewModels
@@ -143,19 +141,19 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
 
             askForRouteEvent.observe(this@CallActivity) {
-                it.contentIfNew?.let { dialogs.askForRoute(viewState::onAudioRoutePicked) }
+                it.ifNew?.let { dialogs.askForRoute(viewState::onAudioRoutePicked) }
             }
 
             showDialerEvent.observe(this@CallActivity) {
-                it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getDialerFragment()) }
+                it.ifNew?.let { prompts.showFragment(fragmentFactory.getDialerFragment()) }
             }
 
             showDialpadEvent.observe(this@CallActivity) {
-                it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getDialpadFragment()) }
+                it.ifNew?.let { prompts.showFragment(fragmentFactory.getDialpadFragment()) }
             }
 
             showCallManagerEvent.observe(this@CallActivity) {
-                it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getCallItemsFragment()) }
+                it.ifNew?.let { prompts.showFragment(fragmentFactory.getCallItemsFragment()) }
             }
         }
 

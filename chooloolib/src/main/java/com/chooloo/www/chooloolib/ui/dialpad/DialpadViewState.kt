@@ -2,13 +2,15 @@ package com.chooloo.www.chooloolib.ui.dialpad
 
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 open class DialpadViewState @Inject constructor(
-    private val audiosInteractor: AudiosInteractor
+    private val audios: AudiosInteractor,
+    private val preferences: PreferencesInteractor
 ) :
     BaseViewState() {
 
@@ -18,8 +20,8 @@ open class DialpadViewState @Inject constructor(
 
     open fun onCharClick(char: Char) {
         this.char.value = char
-        audiosInteractor.playToneByChar(char)
-        audiosInteractor.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
+        if (preferences.isDialpadTones) audios.playToneByChar(char)
+        audios.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
         onTextChanged((text.value ?: "") + char)
     }
 
@@ -34,7 +36,7 @@ open class DialpadViewState @Inject constructor(
 
     protected open fun onTextChanged(text: String) {
         this.text.value = text
-        audiosInteractor.vibrate()
+        audios.vibrate()
     }
 }
 

@@ -109,7 +109,7 @@ abstract class ListAdapter<ItemType>(
     }
 
 
-    open fun convertDataToListData(data: List<ItemType>) = ListData(data)
+    open fun convertDataToListData(items: List<ItemType>) = ListData(items)
 
     abstract fun onBindListItem(listItem: ListItem, item: ItemType)
 }

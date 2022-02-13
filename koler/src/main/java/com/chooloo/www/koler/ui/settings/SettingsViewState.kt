@@ -16,18 +16,19 @@ import javax.inject.Inject
 class SettingsViewState @Inject constructor(
     colorsInteractor: ColorsInteractor,
     navigationsInteractor: NavigationsInteractor,
-    private val preferencesInteractor: PreferencesInteractor,
+    private val preferences: PreferencesInteractor,
     private val permissionsInteractor: PermissionsInteractor,
 ) :
     SettingsViewState(
         colorsInteractor,
         navigationsInteractor,
-        preferencesInteractor
+        preferences
     ) {
 
     val askForShowBlockedEvent = LiveEvent()
     val askForDefaultPageEvent = LiveEvent()
     val askForShouldAsmSimEvent = LiveEvent()
+    val askForDialpadTonesEvent = LiveEvent()
 
 
     override fun attach() {
@@ -39,6 +40,7 @@ class SettingsViewState @Inject constructor(
         when (menuItem.itemId) {
             R.id.menu_koler_ask_sim -> askForShouldAsmSimEvent.call()
             R.id.menu_koler_default_page -> askForDefaultPageEvent.call()
+            R.id.menu_koler_dialpad_tones -> askForDialpadTonesEvent.call()
             R.id.menu_koler_show_blocked -> permissionsInteractor.runWithDefaultDialer {
                 askForShowBlockedEvent.call()
             }
@@ -46,15 +48,19 @@ class SettingsViewState @Inject constructor(
         }
     }
 
-    fun onShowBlockedResponse(response: Boolean) {
-        preferencesInteractor.isShowBlocked = response
+    fun onShowBlocked(response: Boolean) {
+        preferences.isShowBlocked = response
     }
 
     fun onDefaultPageResponse(response: Page) {
-        preferencesInteractor.defaultPage = response
+        preferences.defaultPage = response
     }
 
-    fun onShouldAskSimResponse(response: Boolean) {
-        preferencesInteractor.isAskSim = response
+    fun onShouldAskSim(response: Boolean) {
+        preferences.isAskSim = response
+    }
+
+    fun onDialpadTones(response: Boolean) {
+        preferences.isDialpadTones = response
     }
 }

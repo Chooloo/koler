@@ -3,6 +3,7 @@ package com.chooloo.www.chooloolib.ui.dialer
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
@@ -14,10 +15,11 @@ import javax.inject.Inject
 @HiltViewModel
 class DialerViewState @Inject constructor(
     audios: AudiosInteractor,
+    preferences: PreferencesInteractor,
     private val recents: RecentsInteractor,
     private val navigations: NavigationsInteractor
 ) :
-    DialpadViewState(audios) {
+    DialpadViewState(audios, preferences) {
 
     val callVoicemailEvent = LiveEvent()
     val callNumberEvent = DataLiveEvent<String>()

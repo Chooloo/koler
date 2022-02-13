@@ -90,23 +90,23 @@ class MainActivity : BaseActivity<MainViewState>() {
             }
 
             showMenuEvent.observe(this@MainActivity) { ev ->
-                ev.contentIfNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
+                ev.ifNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
             }
 
             showRecentEvent.observe(this@MainActivity) { ev ->
-                ev.contentIfNew?.let {
+                ev.ifNew?.let {
                     prompts.showFragment(choolooFragmentFactory.getRecentFragment(it))
                 }
             }
 
             showContactEvent.observe(this@MainActivity) { ev ->
-                ev.contentIfNew?.let {
+                ev.ifNew?.let {
                     prompts.showFragment(choolooFragmentFactory.getBriefContactFragment(it))
                 }
             }
 
             showDialerEvent.observe(this@MainActivity) { ev ->
-                ev.contentIfNew?.let {
+                ev.ifNew?.let {
                     prompts.showFragment(
                         choolooFragmentFactory.getDialerFragment(it)
                     )
@@ -119,11 +119,11 @@ class MainActivity : BaseActivity<MainViewState>() {
         }
 
         contactsViewState.itemClickedEvent.observe(this) {
-            it.contentIfNew?.let(viewState::onContactItemClick)
+            it.ifNew?.let(viewState::onContactItemClick)
         }
 
         recentsViewState.itemClickedEvent.observe(this) {
-            it.contentIfNew?.let(viewState::onRecentItemClick)
+            it.ifNew?.let(viewState::onRecentItemClick)
         }
     }
 

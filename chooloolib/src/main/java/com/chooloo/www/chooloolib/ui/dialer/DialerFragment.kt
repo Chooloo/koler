@@ -100,11 +100,11 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
             }
 
             callNumberEvent.observe(this@DialerFragment) {
-                it.contentIfNew?.let(callNavigations::call)
+                it.ifNew?.let(callNavigations::call)
             }
 
             callVoicemailEvent.observe(this@DialerFragment) {
-                it.contentIfNew?.let { callNavigations.callVoicemail() }
+                it.ifNew?.let { callNavigations.callVoicemail() }
             }
         }
 

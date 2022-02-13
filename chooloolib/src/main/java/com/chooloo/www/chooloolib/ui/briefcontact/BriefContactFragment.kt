@@ -63,11 +63,11 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             }
 
             callEvent.observe(this@BriefContactFragment) {
-                it.contentIfNew?.let(callNavigations::call)
+                it.ifNew?.let(callNavigations::call)
             }
 
             confirmContactDeleteEvent.observe(this@BriefContactFragment) {
-                it.contentIfNew?.let {
+                it.ifNew?.let {
                     dialogs.askForValidation(R.string.explain_delete_contact) { bl ->
                         if (bl) onDeleteConfirmed()
                     }

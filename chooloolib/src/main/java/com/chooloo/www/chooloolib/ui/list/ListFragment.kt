@@ -30,7 +30,7 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragme
             }
 
             itemsChangedEvent.observe(this@ListFragment) { ev ->
-                ev.contentIfNew?.let { adapter.items = it }
+                ev.ifNew?.let { adapter.items = it }
             }
 
             getItemsObservable { it.observe(this@ListFragment, viewState::onItemsChanged) }

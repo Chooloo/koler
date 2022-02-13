@@ -96,27 +96,27 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
 
             callEvent.observe(this@RecentFragment) { ev ->
-                ev.contentIfNew?.let(callNavigations::call)
+                ev.ifNew?.let(callNavigations::call)
             }
 
             showContactEvent.observe(this@RecentFragment) { ev ->
-                ev.contentIfNew?.let {
+                ev.ifNew?.let {
                     prompts.showFragment(fragmentFactory.getBriefContactFragment(it))
                 }
             }
 
             showRecentEvent.observe(this@RecentFragment) { ev ->
-                ev.contentIfNew?.let { prompts.showFragment(fragmentFactory.getRecentFragment(it)) }
+                ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentFragment(it)) }
             }
 
             showHistoryEvent.observe(this@RecentFragment) { ev ->
-                ev.contentIfNew?.let {
+                ev.ifNew?.let {
                     prompts.showFragment(fragmentFactory.getRecentsHistoryFragment(it))
                 }
             }
 
             confirmRecentDeleteEvent.observe(this@RecentFragment) {
-                it.contentIfNew?.let {
+                it.ifNew?.let {
                     dialogs.askForValidation(R.string.explain_delete_recent) { result ->
                         if (result) viewState.onConfirmDelete()
                     }
@@ -125,7 +125,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
         }
 
         historyViewState.itemClickedEvent.observe(this) {
-            it.contentIfNew?.let { recent -> viewState.onRecentClick(recent.id) }
+            it.ifNew?.let { recent -> viewState.onRecentClick(recent.id) }
         }
     }
 

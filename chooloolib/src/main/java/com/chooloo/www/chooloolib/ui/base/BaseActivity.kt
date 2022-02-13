@@ -25,15 +25,15 @@ abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<
             attach()
 
             errorEvent.observe(this@BaseActivity) {
-                it.contentIfNew?.let(this@BaseActivity::showError)
+                it.ifNew?.let(this@BaseActivity::showError)
             }
 
             finishEvent.observe(this@BaseActivity) {
-                it.contentIfNew?.let { finish() }
+                it.ifNew?.let { finish() }
             }
 
             messageEvent.observe(this@BaseActivity) {
-                it.contentIfNew?.let(this@BaseActivity::showMessage)
+                it.ifNew?.let(this@BaseActivity::showMessage)
             }
         }
     }

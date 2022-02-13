@@ -11,6 +11,7 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
     var isCompact: Boolean
     var isAnimations: Boolean
     var isShowBlocked: Boolean
+    var isDialpadTones: Boolean
 
     var defaultPage: Page
     var themeMode: ThemeMode

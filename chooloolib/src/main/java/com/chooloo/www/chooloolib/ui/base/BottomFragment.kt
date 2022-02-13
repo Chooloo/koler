@@ -45,11 +45,11 @@ open class BottomFragment<FragmentType : BaseFragment<out BaseViewState>>(
             attach()
 
             errorEvent.observe(this@BottomFragment) {
-                it.contentIfNew?.let(this@BottomFragment::showError)
+                it.ifNew?.let(this@BottomFragment::showError)
             }
 
             messageEvent.observe(this@BottomFragment) {
-                it.contentIfNew?.let(this@BottomFragment::showMessage)
+                it.ifNew?.let(this@BottomFragment::showMessage)
             }
         }
 

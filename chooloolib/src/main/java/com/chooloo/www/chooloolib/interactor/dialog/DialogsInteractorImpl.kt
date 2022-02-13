@@ -128,22 +128,6 @@ class DialogsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun askForCompact(callback: (isCompact: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_compact_mode, callback)
-    }
-
-    override fun askForShowBlock(callback: (isShowBlock: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_show_blocked, callback)
-    }
-
-    override fun askForAnimations(callback: (isAnimations: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_animations, callback)
-    }
-
-    override fun askForShouldAskSim(callback: (shouldAskSim: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_should_ask_sim, callback)
-    }
-
     override fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit) {
         askForChoice(
             choiceCallback = { callback.invoke(it) },

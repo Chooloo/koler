@@ -3,6 +3,7 @@
 
     <!--region base colors-->
     <color name="color_hint">#E6E6E6</color>
+    <color name="color_text">#1C1C1C</color>
     <color name="color_error">#B00020</color>
     <color name="color_disabled">#B6B6B6</color>
     <color name="color_opposite">#2E2E2E</color>

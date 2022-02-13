@@ -29,15 +29,15 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
             attach()
 
             errorEvent.observe(this@BaseFragment) {
-                it.contentIfNew?.let(this@BaseFragment::showError)
+                it.ifNew?.let(this@BaseFragment::showError)
             }
 
             finishEvent.observe(this@BaseFragment) {
-                it.contentIfNew?.let { finish() }
+                it.ifNew?.let { finish() }
             }
 
             messageEvent.observe(this@BaseFragment) {
-                it.contentIfNew?.let(this@BaseFragment::showMessage)
+                it.ifNew?.let(this@BaseFragment::showMessage)
             }
         }
 

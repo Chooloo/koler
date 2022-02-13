@@ -22,19 +22,23 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
             menuResList.observe(this@SettingsFragment, this@SettingsFragment::setMenuResList)
 
             askForColorEvent.observe(this@SettingsFragment) { ev ->
-                ev.contentIfNew?.let { dialogs.askForColor(it, viewState::onColorResponse) }
+                ev.ifNew?.let { dialogs.askForColor(it, viewState::onColorResponse) }
             }
 
             askForCompactEvent.observe(this@SettingsFragment) {
-                it.contentIfNew?.let { dialogs.askForCompact(viewState::onCompactResponse) }
+                it.ifNew?.let {
+                    dialogs.askForBoolean(R.string.hint_compact_mode, viewState::onCompactResponse)
+                }
             }
 
             askForThemeModeEvent.observe(this@SettingsFragment) {
-                it.contentIfNew?.let { dialogs.askForThemeMode(viewState::onThemeModeResponse) }
+                it.ifNew?.let { dialogs.askForThemeMode(viewState::onThemeModeResponse) }
             }
 
             askForAnimationsEvent.observe(this@SettingsFragment) {
-                it.contentIfNew?.let { dialogs.askForAnimations(viewState::onAnimationsResponse) }
+                it.ifNew?.let {
+                    dialogs.askForBoolean(R.string.hint_animations, viewState::onAnimationsResponse)
+                }
             }
         }
     }

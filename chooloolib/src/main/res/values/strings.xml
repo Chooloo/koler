@@ -45,9 +45,10 @@
     <string name="hint_search_recents">Search Recents</string>
     <string name="hint_search_contacts">Search Contacts</string>
     <string name="hint_compact_mode">Make list items compact</string>
-    <string name="hint_show_blocked">Show block/unblock option for numbers (requires default dialer).</string>
     <string name="hint_search_items">Search contacts &amp; recents</string>
     <string name="hint_should_ask_sim">Ask for a sim before each call</string>
+    <string name="hint_dialpad_tones">Enabled sound tones on dialpad clicks</string>
+    <string name="hint_show_blocked">Show block/unblock option for numbers (requires default dialer).</string>
     <!--endregion-->
 
     <!--region warning-->
@@ -94,9 +95,10 @@
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
     <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_show_blocked">show_blocked</string>
     <string name="pref_key_default_page">default_page</string>
-    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
     <!--endregion-->
 

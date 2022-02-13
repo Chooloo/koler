@@ -51,6 +51,15 @@ class PreferencesInteractorImpl @Inject constructor(
             preferencesManager.putBoolean(R.string.pref_key_show_blocked, value)
         }
 
+    override var isDialpadTones: Boolean
+        get() = preferencesManager.getBoolean(
+            R.string.pref_key_dialpad_tones,
+            R.bool.pref_default_value_dialpad_tones
+        )
+        set(value) {
+            preferencesManager.putBoolean(R.string.pref_key_dialpad_tones, value)
+        }
+
     override var defaultPage: Page
         get() = Page.fromKey(preferencesManager.getString(R.string.pref_key_default_page))
         set(value) {

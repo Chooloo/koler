@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<MainViewState>() {
             }
 
             showMenuEvent.observe(this@MainActivity) {
-                it.contentIfNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
+                it.ifNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
             }
         }
 
@@ -61,7 +61,7 @@ class MainActivity : BaseActivity<MainViewState>() {
             .replace(binding.mainFragmentContainer.id, _contactsFragment).commit()
 
         _contactsFragment.viewState.itemClickedEvent.observe(this@MainActivity) {
-            it.contentIfNew?.let(viewState::onContactClick)
+            it.ifNew?.let(viewState::onContactClick)
         }
     }
 }
