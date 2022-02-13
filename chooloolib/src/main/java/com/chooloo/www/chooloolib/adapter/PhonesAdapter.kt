@@ -15,7 +15,6 @@ class PhonesAdapter @Inject constructor(
 ) : ListAdapter<PhoneAccount>(animationsInteractor) {
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
         listItem.apply {
-            isPadded = false
             imageVisibility = false
             titleText = item.number
             isRightButtonVisible = true

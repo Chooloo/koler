@@ -353,7 +353,7 @@ open class ListItem : LinearLayout {
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall,
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall
+            if (isCompact) dimenSpacingSmall else dimenSpacingSmall
         )
     }
 

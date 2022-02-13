@@ -1,6 +1,5 @@
 package com.chooloo.www.chooloolib.model
 
-import android.view.MenuItem
 import com.chooloo.www.chooloolib.util.getRelativeDateString
 
 data class ListData<DataType>(
@@ -30,7 +29,9 @@ data class ListData<DataType>(
             recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
         )
 
-        fun fromPhones(phones: List<PhoneAccount>) =
-            ListData(phones.toList().distinctBy { it.normalizedNumber })
+        fun fromPhones(phones: List<PhoneAccount>): ListData<PhoneAccount> {
+            val phones = phones.toList().distinctBy { it.normalizedNumber }
+            return ListData(phones, mapOf(Pair("Phones", phones.size)))
+        }
     }
 }
