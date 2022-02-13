@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/prompt_title"
         style="@style/Chooloo.Text.Headline3"
         android:layout_width="0dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/prompt_subtitle"
         style="@style/Chooloo.Text.Subtitle2"
         android:layout_width="0dp"
@@ -28,19 +28,16 @@
         app:layout_constraintStart_toStartOf="@id/prompt_title"
         app:layout_constraintTop_toBottomOf="@id/prompt_title" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
         android:id="@+id/prompt_button_yes"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_text_height"
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginEnd="@dimen/default_spacing_half"
         android:layout_marginBottom="@dimen/default_spacing"
         android:background="@drawable/bubble_background"
         android:backgroundTint="?colorOnSecondary"
-        android:elevation="0dp"
-        android:fontFamily="@font/google_sans_bold"
-        android:stateListAnimator="@null"
         android:text="@string/action_yes"
         android:textColor="?colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,21 +45,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/prompt_subtitle" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
         android:id="@+id/prompt_button_no"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/button_text_height"
         android:layout_marginStart="@dimen/default_spacing_half"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginEnd="@dimen/default_spacing"
         android:layout_marginBottom="@dimen/default_spacing"
-        android:background="@drawable/bubble_background"
-        android:backgroundTint="?colorSecondary"
-        android:elevation="0dp"
-        android:fontFamily="@font/google_sans_bold"
-        android:stateListAnimator="@null"
         android:text="@string/action_no"
-        android:textColor="?colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/prompt_button_yes"

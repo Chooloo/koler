@@ -1,16 +1,18 @@
 package com.chooloo.www.chooloolib.contentresolver
 
-import android.Manifest.permission.READ_CALL_LOG
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CallLog
-import com.chooloo.www.chooloolib.data.account.RecentAccount
+import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.util.SelectionBuilder
 import java.util.*
 
-class RecentsContentResolver(context: Context, private val recentId: Long? = null) :
+class RecentsContentResolver(
+    context: Context,
+    private val recentId: Long? = null
+) :
     BaseContentResolver<RecentAccount>(context) {
 
     override val uri: Uri = CallLog.Calls.CONTENT_URI
@@ -45,9 +47,5 @@ class RecentsContentResolver(context: Context, private val recentId: Long? = nul
             duration = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DURATION)),
             cachedName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME))
         )
-    }
-
-    companion object {
-        val REQUIRED_PERMISSIONS = arrayOf(READ_CALL_LOG)
     }
 }

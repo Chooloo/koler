@@ -2,13 +2,16 @@ package com.chooloo.www.chooloolib
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.chooloo.www.chooloolib.di.contextcomponent.ContextComponentImpl
+import androidx.preference.PreferenceManager
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import javax.inject.Inject
 
-open class BaseApp : Application() {
-    open val component by lazy { ContextComponentImpl(this) }
+abstract class BaseApp : Application() {
+    @Inject lateinit var preferences: PreferencesInteractor
 
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(preferences.themeMode.mode)
+        PreferenceManager.setDefaultValues(this, R.xml.preferences_chooloo, false)
     }
 }

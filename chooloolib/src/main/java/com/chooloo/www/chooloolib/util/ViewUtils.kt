@@ -35,7 +35,3 @@ fun Context.getSelectableItemBackgroundBorderlessDrawable(): Drawable? {
 @ColorInt
 fun Context.getAttrColor(attrRes: Int): Int =
     TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data
-
-@ColorInt
-fun Context.getColor(@ColorRes colorRes: Int): Int =
-    ContextCompat.getColor(this, colorRes)

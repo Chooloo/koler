@@ -2,7 +2,6 @@
 <resources>
     <!--region text size-->
     <dimen name="caption_1">13sp</dimen>
-    <dimen name="headline_1">46sp</dimen>
     <dimen name="headline_2">30sp</dimen>
     <dimen name="headline_3">24sp</dimen>
     <dimen name="headline_4">18sp</dimen>
@@ -20,23 +19,23 @@
     <!--region image size-->
     <dimen name="image_size_big">90dp</dimen>
     <dimen name="image_size_small">45dp</dimen>
-    <dimen name="corner_radius">20dp</dimen>
+    <dimen name="corner_radius">25dp</dimen>
     <!--endregion-->
 
     <!--region list item -->
-    <dimen name="list_item_padding">15dp</dimen>
-    <dimen name="list_item_padding_sides">20dp</dimen>
-    <dimen name="list_item_small_text_top_margin">1dp</dimen>
+    <!--endregion-->
+
+    <!--region button-->
+    <dimen name="button_text_height">47dp</dimen>
     <!--endregion-->
 
     <!--region bottom sheet dialog -->
-    <dimen name="swipe_indicator_height">4dp</dimen>
+    <dimen name="swipe_indicator_height">2.5dp</dimen>
     <dimen name="swipe_indicator_width">35dp</dimen>
-    <dimen name="swipe_indicator_margin">13dp</dimen>
+    <dimen name="swipe_indicator_margin">8dp</dimen>
     <!--endregion-->
 
     <!--region toolbar-->
-    <dimen name="toolbar_padding">10dp</dimen>
     <!--endregion-->
 
 </resources>

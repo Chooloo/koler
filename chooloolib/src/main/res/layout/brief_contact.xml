@@ -19,7 +19,7 @@
         app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/brief_contact_text_name"
         style="@style/Chooloo.Text.Headline3"
         android:layout_width="wrap_content"
@@ -33,16 +33,20 @@
         app:layout_constraintTop_toBottomOf="@id/brief_contact_image"
         tools:text="Jesus" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/contact_image_star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing_small"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:contentDescription="@string/content_description_favorite_star"
+        android:elevation="-10dp"
+        android:alpha="0.5"
+        android:rotation="21"
         android:src="@drawable/round_star_24"
-        android:tint="@color/orange_foreground"
-        app:layout_constraintBottom_toBottomOf="@id/brief_contact_text_name"
-        app:layout_constraintStart_toEndOf="@id/brief_contact_text_name"
-        app:layout_constraintTop_toTopOf="@id/brief_contact_text_name" />
+        android:translationX="-75dp"
+        android:translationY="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/orange_background" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/contact_button_call"
@@ -52,7 +56,7 @@
         android:layout_marginTop="@dimen/default_spacing_big"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_call_black_24dp"
+        app:icon="@drawable/round_call_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/brief_contact_text_name" />
 
@@ -64,7 +68,7 @@
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_edit_black_24dp"
+        app:icon="@drawable/round_edit_24"
         app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
         app:layout_constraintStart_toEndOf="@id/contact_button_call"
         app:layout_constraintTop_toBottomOf="@id/brief_contact_text_name" />
@@ -77,7 +81,7 @@
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_delete_black_24dp"
+        app:icon="@drawable/round_delete_forever_24"
         app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
         app:layout_constraintStart_toEndOf="@id/contact_button_edit"
         app:layout_constraintTop_toBottomOf="@id/brief_contact_text_name" />
@@ -90,7 +94,7 @@
         android:layout_marginEnd="@dimen/default_spacing"
         android:gravity="center_horizontal"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_sms_black_24dp"
+        app:icon="@drawable/round_chat_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/brief_contact_text_name" />
 
@@ -98,9 +102,12 @@
         android:id="@+id/contact_phones_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_button_call" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

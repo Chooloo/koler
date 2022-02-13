@@ -18,7 +18,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.*
@@ -36,7 +35,9 @@ import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 import com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @SuppressLint("CustomViewStyleable", "Recycle")
 open class ListItem : LinearLayout {
     private var _isPadded: Boolean = true
@@ -45,23 +46,24 @@ open class ListItem : LinearLayout {
     private var _onLeftButtonClickListener: () -> Unit = {}
     private var _onRightButtonClickListener: () -> Unit = {}
 
-    protected val _buttonLeft: IconButton
-    protected val _buttonRight: IconButton
-    protected val _image: AvatarImageView
-    protected val _title: AppCompatTextView
-    protected val _header: AppCompatTextView
-    protected val _caption: AppCompatTextView
-    protected val _personLayout: ConstraintLayout
+    protected val title: TextView
+    protected val header: TextView
+    protected val caption: TextView
+    protected val image: AvatarImageView
+    protected val buttonLeft: IconButton
+    protected val buttonRight: IconButton
+    protected val personLayout: ConstraintLayout
 
     protected val dimenSpacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     protected val dimenImageSize by lazy { resources.getDimensionPixelSize(R.dimen.image_size_small) }
     protected val dimenSpacingBig by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_big) }
     protected val dimenSpacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
+
     var imageSize: Int
-        get() = _image.height
+        get() = image.height
         set(value) {
-            _image.layoutParams = ConstraintLayout.LayoutParams(value, value)
+            image.layoutParams = ConstraintLayout.LayoutParams(value, value)
         }
 
     var isPadded: Boolean
@@ -78,70 +80,82 @@ open class ListItem : LinearLayout {
         }
 
     var titleText: String?
-        get() = _title.text.toString()
+        get() = title.text.toString()
         set(value) {
-            _title.text = value ?: ""
+            title.text = value ?: ""
         }
 
     var headerText: String?
-        get() = _header.text.toString()
+        get() = header.text.toString()
         set(value) {
-            _header.apply {
+            header.apply {
                 text = value
                 visibility = if (value != null && value != "") VISIBLE else GONE
             }
         }
 
     var captionText: String?
-        get() = _caption.text.toString()
+        get() = caption.text.toString()
         set(value) {
-            _caption.apply {
+            caption.apply {
                 text = value ?: ""
                 visibility = if (value == null) GONE else VISIBLE
             }
         }
 
     var imageTextSize: Float
-        get() = _image.textSize
+        get() = image.textSize
         set(value) {
-            _image.textSize = value
+            image.textSize = value
         }
 
     var imageTintList: ColorStateList?
-        get() = _image.imageTintList
+        get() = image.imageTintList
         set(value) {
-            ImageViewCompat.setImageTintList(_image, value)
+            ImageViewCompat.setImageTintList(image, value)
         }
 
     var imageVisibility: Boolean
-        get() = _image.isVisible
+        get() = image.isVisible
         set(value) {
-            _image.isVisible = value
+            image.isVisible = value
             if (!value) {
-                _title.layoutParams =
+                title.layoutParams =
                     ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
-                        setMargins(0, 0, _title.marginTop, 0)
+                        setMargins(0, 0, title.marginTop, 0)
                     }
             }
         }
 
     var imageDrawable: Drawable?
-        get() = _image.drawable
+        get() = image.drawable
         set(value) {
-            _image.setImageDrawable(value)
-            _image.state = SHOW_IMAGE
+            image.setImageDrawable(value)
+            image.state = SHOW_IMAGE
         }
 
     var isLeftButtonVisible: Boolean
-        get() = _buttonLeft.isVisible
+        get() = buttonLeft.isVisible
         set(value) {
-            _buttonLeft.isVisible = value
+            buttonLeft.isVisible = value
+        }
+
+    var isLeftButtonEnabled: Boolean
+        get() = buttonLeft.isEnabled
+        set(value) {
+            buttonLeft.isEnabled = value
         }
 
     var isRightButtonVisible: Boolean
-        get() = _buttonRight.isVisible
+        get() = buttonRight.isVisible
         set(value) {
-            _buttonRight.isVisible = value
+            buttonRight.isVisible = value
+        }
+
+    var isRightButtonEnabled: Boolean
+        get() = buttonRight.isEnabled
+        set(value) {
+            buttonRight.isEnabled = value
         }
 
 
@@ -155,7 +169,7 @@ open class ListItem : LinearLayout {
         orientation = VERTICAL
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
-        _header = AppCompatTextView(context, attrs, defStyleRes).apply {
+        header = TextView(context, attrs, defStyleRes).apply {
             isClickable = true
             isFocusable = true
             id = View.generateViewId()
@@ -167,7 +181,7 @@ open class ListItem : LinearLayout {
             setTextAppearance(R.style.Chooloo_Text_Subtitle2)
         }
 
-        _title = AppCompatTextView(context, attrs, defStyleRes).apply {
+        title = TextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
@@ -177,7 +191,7 @@ open class ListItem : LinearLayout {
             setTextAppearance(R.style.Chooloo_Text_Headline4)
         }
 
-        _caption = AppCompatTextView(context, attrs, defStyleRes).apply {
+        caption = TextView(context, attrs, defStyleRes).apply {
             id = View.generateViewId()
             textAlignment = TEXT_ALIGNMENT_VIEW_START
             layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
@@ -186,7 +200,7 @@ open class ListItem : LinearLayout {
             setPadding(0, context.getSizeInDp(2), 0, 0)
         }
 
-        _image = AvatarImageView(context, attrs).apply {
+        image = AvatarImageView(context, attrs).apply {
             state = SHOW_INITIAL
             id = generateViewId()
             textSize = resources.getDimension(R.dimen.caption_1)
@@ -196,7 +210,7 @@ open class ListItem : LinearLayout {
                 ContextCompat.getColor(context, R.color.color_image_placeholder_background)
         }
 
-        _buttonLeft = IconButton(context, attrs, defStyleRes).apply {
+        buttonLeft = IconButton(context, attrs, defStyleRes).apply {
             size = SIZE_MINI
             visibility = GONE
             id = generateViewId()
@@ -212,7 +226,7 @@ open class ListItem : LinearLayout {
             setOnClickListener { _onLeftButtonClickListener.invoke() }
         }
 
-        _buttonRight = IconButton(context, attrs, defStyleRes).apply {
+        buttonRight = IconButton(context, attrs, defStyleRes).apply {
             size = SIZE_MINI
             visibility = GONE
             id = generateViewId()
@@ -228,7 +242,7 @@ open class ListItem : LinearLayout {
             setOnClickListener { _onRightButtonClickListener.invoke() }
         }
 
-        _personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
+        personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
             id = View.generateViewId()
             background = context.getSelectableItemBackgroundDrawable()
@@ -243,48 +257,48 @@ open class ListItem : LinearLayout {
             isCompact = it.getBoolean(R.styleable.Chooloo_ListItem_compact, false)
         }
 
-        _personLayout.apply {
-            addView(_image)
-            addView(_title)
-            addView(_caption)
-            addView(_buttonLeft)
-            addView(_buttonRight)
+        personLayout.apply {
+            addView(image)
+            addView(title)
+            addView(caption)
+            addView(buttonLeft)
+            addView(buttonRight)
         }
 
         ConstraintSet().apply {
-            clone(_personLayout)
+            clone(personLayout)
 
-            _image.id.also {
+            image.id.also {
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, START, PARENT_ID, START)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
             }
 
-            _title.id.also {
+            title.id.also {
                 setHorizontalBias(it, 0F)
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, END, PARENT_ID, END)
-                connect(it, START, _image.id, END)
-                connect(it, BOTTOM, _caption.id, TOP)
+                connect(it, START, image.id, END)
+                connect(it, BOTTOM, caption.id, TOP)
             }
 
-            _caption.id.also {
-                connect(it, TOP, _title.id, BOTTOM)
-                connect(it, START, _title.id, START)
+            caption.id.also {
+                connect(it, TOP, title.id, BOTTOM)
+                connect(it, START, title.id, START)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
             }
 
-            _buttonRight.id.also {
+            buttonRight.id.also {
                 connect(it, END, PARENT_ID, END)
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
                 setMargin(it, END, dimenSpacingSmall)
             }
 
-            _buttonLeft.id.also {
+            buttonLeft.id.also {
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
-                connect(it, END, _buttonRight.id, START)
+                connect(it, END, buttonRight.id, START)
                 setMargin(it, END, dimenSpacing)
             }
 
@@ -293,85 +307,89 @@ open class ListItem : LinearLayout {
                 TOP,
                 PARENT_ID,
                 BOTTOM,
-                intArrayOf(_title.id, _caption.id),
+                intArrayOf(title.id, caption.id),
                 null,
                 CHAIN_PACKED
             )
 
-            applyTo(_personLayout)
+            applyTo(personLayout)
         }
 
-        addView(_header)
-        addView(_personLayout)
+        addView(header)
+        addView(personLayout)
     }
 
+    override fun setBackground(background: Drawable?) {
+        personLayout.background = background
+    }
 
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
-            _personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
+            personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
         } else {
-            _personLayout.background = context.getSelectableItemBackgroundDrawable()
+            personLayout.background =
+                ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
         }
     }
 
     override fun setOnClickListener(onClickListener: OnClickListener?) {
-        _personLayout.setOnClickListener(onClickListener)
+        personLayout.setOnClickListener(onClickListener)
     }
 
     override fun setOnLongClickListener(onLongClickListener: OnLongClickListener?) {
-        _personLayout.setOnLongClickListener(onLongClickListener)
+        personLayout.setOnLongClickListener(onLongClickListener)
     }
 
 
     protected open fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
-        _personLayout.setPadding(
+        personLayout.setPadding(
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) 3 else dimenSpacing - 7,
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) 3 else dimenSpacing - 7
         )
-        _header.setPadding(
+        header.setPadding(
             if (isEnabled) dimenSpacing else 0,
             if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall,
             if (isEnabled) dimenSpacing else 0,
-            if (isCompact) dimenSpacingSmall - 10 else dimenSpacingSmall
+            if (isCompact) dimenSpacingSmall else dimenSpacingSmall
         )
     }
 
 
     fun setImageUri(imageUri: Uri?) {
-        _image.setImageURI(imageUri)
-        _image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
+        image.setImageURI(imageUri)
+        image.state = if (imageUri != null) SHOW_IMAGE else SHOW_INITIAL
     }
 
     fun setImageInitials(text: String?) {
-        _image.text = text
-        text?.let { _image.state = SHOW_INITIAL }
+        image.text = text
+        text?.let { image.state = SHOW_INITIAL }
     }
 
     fun setTitleBold(isBold: Boolean) {
-        _title.typeface = ResourcesCompat.getFont(
+        title.typeface = ResourcesCompat.getFont(
             context,
-            if (isBold) R.font.google_sans_bold else R.font.google_sans_regular
+            if (isBold) R.font.google_sans_medium else R.font.google_sans_regular
         )
     }
 
 
     fun setPaddingTop(top: Int) {
-        _personLayout.setPadding(
-            _personLayout.paddingLeft,
+        personLayout.setPadding(
+            personLayout.paddingLeft,
             top,
-            _personLayout.paddingRight,
-            _personLayout.paddingBottom
+            personLayout.paddingRight,
+            personLayout.paddingBottom
         )
     }
 
     fun setPaddingBottom(bottom: Int) {
-        _personLayout.setPadding(
-            _personLayout.paddingLeft,
-            _personLayout.paddingTop,
-            _personLayout.paddingRight,
+        personLayout.setPadding(
+            personLayout.paddingLeft,
+            personLayout.paddingTop,
+            personLayout.paddingRight,
             bottom
         )
     }
@@ -386,7 +404,7 @@ open class ListItem : LinearLayout {
                     it + text.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
-                _title.setText(spannable, TextView.BufferType.SPANNABLE)
+                title.setText(spannable, TextView.BufferType.SPANNABLE)
             }
         }
     }
@@ -396,36 +414,32 @@ open class ListItem : LinearLayout {
     }
 
     fun setTitleColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
-    }
-
-    fun setTitleTextColor(@ColorInt color: Int) {
-        _title.setTextColor(color)
+        title.setTextColor(color)
     }
 
     fun setImageResource(@DrawableRes res: Int) {
-        _image.setImageResource(res)
+        image.setImageResource(res)
     }
 
     fun setTitleTextAppearance(@StyleRes resId: Int) {
-        _title.setTextAppearance(resId)
+        title.setTextAppearance(resId)
     }
 
     fun setImageBackgroundColor(@ColorInt color: Int) {
-        _image.setBackgroundColor(color)
+        image.setBackgroundColor(color)
     }
 
     fun setLeftButtonTintColor(@ColorRes colorRes: Int) {
-        _buttonLeft.imageTintList =
+        buttonLeft.imageTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
     fun setLeftButtonDrawable(@DrawableRes drawableRes: Int) {
-        _buttonLeft.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
+        buttonLeft.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
     }
 
     fun setLeftButtonBackgroundTintColor(@ColorRes colorRes: Int) {
-        _buttonLeft.backgroundTintList =
+        buttonLeft.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
@@ -434,21 +448,20 @@ open class ListItem : LinearLayout {
     }
 
     fun setRightButtonTintColor(@ColorRes colorRes: Int) {
-        _buttonRight.imageTintList =
+        buttonRight.imageTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
     fun setRightButtonBackgroundTintColor(@ColorRes colorRes: Int) {
-        _buttonRight.backgroundTintList =
+        buttonRight.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorRes))
     }
 
     fun setRightButtonDrawable(@DrawableRes drawableRes: Int) {
-        _buttonRight.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
+        buttonRight.setImageDrawable(ContextCompat.getDrawable(context, drawableRes))
     }
 
     fun setOnRightButtonClickListener(onRightButtonClickListener: () -> Unit) {
         _onRightButtonClickListener = onRightButtonClickListener
     }
-
 }

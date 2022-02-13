@@ -1,5 +1,4 @@
 <resources>
-    <string name="dot">·</string>
 
     <!--region titles-->
     <string name="recents">Recentes</string>
@@ -15,7 +14,6 @@
     <string name="action_hangup">Desligar</string>
     <string name="action_yes">Sim</string>
     <string name="action_no">Não</string>
-    <string name="action_cancel">Cancelar</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -25,9 +23,6 @@
 
     <!--region hints-->
     <string name="hint_search">Procurar</string>
-    <string name="hint_search_items">Procurar os itens</string>
-    <string name="hint_search_contacts">Procurar nos contatos</string>
-    <string name="hint_search_recents">Procurar nos recentes</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -37,16 +32,10 @@
     <!--endregion-->
 
     <!--region call actions -->
-    <string name="call_action_hold">Colocar em espera</string>
     <string name="call_action_mute">Silenciar</string>
-    <string name="call_action_keypad">Teclado</string>
-    <string name="call_action_unhold">Retomar</string>
     <string name="call_action_unmute">Não silenciar</string>
-    <string name="call_action_record">Gravar</string>
     <string name="call_action_speaker">Alto-falante</string>
-    <string name="call_action_add_call">Adicionar chamada</string>
     <string name="call_action_speaker_off">Desligar alto-falante</string>
-    <string name="call_action_record_stop">Parar de gravar</string>
     <!--endregion-->
 
     <!--region call state-->
@@ -59,31 +48,23 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">avaliar</string>
-    <string name="pref_key_email">e-mail</string>
-    <string name="pref_key_donate">doar</string>
     <string name="pref_key_compact">compacto</string>
     <string name="pref_key_color">destacar_a_cor</string>
-    <string name="pref_key_sim_select">selecionar_sim</string>
     <string name="pref_key_animations">animações</string>
     <string name="pref_key_report_bugs">relatar_bugs</string>
     <string name="pref_key_default_page">tela_padrão</string>
-    <string name="pref_key_record_format">formato_de_gravação</string>
     <!--endregion-->
 
     <!--region pref title-->
     <string name="pref_title_rate">Avaliar</string>
-    <string name="pref_title_donate">Doar</string>
     <string name="pref_title_compact">Modo compacto</string>
     <string name="pref_title_animations">Animações</string>
     <string name="pref_title_app_color">Destacar a cor</string>
     <string name="pref_title_email">Envie um e-mail</string>
     <string name="pref_title_report_bugs">Relatar bugs</string>
-    <string name="pref_title_sim_select">Selecionar Sim</string>
-    <string name="pref_title_default_page">Tela padrão</string>
     <!--endregion-->
 
     <!--region pref default value-->
-    <string name="pref_default_value_sim_select">0</string>
     <!--endregion-->
 
     <!--region errors-->
@@ -92,31 +73,20 @@
     <string name="error_no_results_contacts">Nenhum contato :/</string>
     <string name="error_no_results_recents">Não há recentes :/</string>
 
-    <string name="error_no_permissions">Preciso algumas permissões :/</string>
     <string name="error_no_permissions_contacts">Preciso de permissão para ler os contatos :)</string>
     <string name="error_no_permissions_recents">Preciso de permissão para ler o registro de chamadas :)</string>
     <string name="error_no_permissions_phones">Preciso de permissão para ler os contatos :)</string>
 
-    <string name="error_enter_number">Por favor, digite um número primeiro</string>
     <!--endregion-->
 
     <!--region pref color values-->
-    <string name="pref_color_value_red">vermelho</string>
-    <string name="pref_color_value_blue">azul</string>
-    <string name="pref_color_value_green">verde</string>
-    <string name="pref_color_value_orange">alaranjado</string>
-    <string name="pref_color_value_purple">roxo</string>
     <!--endregion-->
 
     <!--region pref values-->
-    <string name="pref_value_page_contacts">contatos</string>
-    <string name="pref_value_page_recents">recentes</string>
-    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
     <!--endregion-->
 
     <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
-    <string name="dialpad_1_letters">Correio de voz</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
     <string name="dialpad_4_letters">GHI</string>
@@ -130,10 +100,8 @@
     <!--endregion-->
 
     <!--region content descriptions -->
-    <string name="content_description_menu_button">Botão de menu</string>
     <string name="content_description_answer_button">Botão para atender</string>
     <string name="content_description_reject_button">Botão de recusar</string>
-    <string name="content_description_call_actions_button">Ações de chamada</string>
     <!--endregion-->
 
     <!--region notification-->
@@ -142,25 +110,5 @@
     <!--endregion-->
 
     <!--region phone type-->
-    <string name="phone_type_home">Casa</string>
-    <string name="phone_type_mobile">Celular</string>
-    <string name="phone_type_work">Batente</string>
-    <string name="phone_type_fax_work">Batente Fax</string>
-    <string name="phone_type_fax_home">Casa Fax</string>
-    <string name="phone_type_pager">Pager</string>
-    <string name="phone_type_other">Outros</string>
-    <string name="phone_type_callback">Chamar de volta</string>
-    <string name="phone_type_car">Carro</string>
-    <string name="phone_type_company_main">Empresa principal</string>
-    <string name="phone_type_isdn">ISDN</string>
-    <string name="phone_type_main">Principal</string>
-    <string name="phone_type_other_fax">Fax</string>
-    <string name="phone_type_radio">Rádio</string>
-    <string name="phone_type_telex">Telex</string>
-    <string name="phone_type_tty_ttd">TTY TDD</string>
-    <string name="phone_type_work_mobile">Batente celular</string>
-    <string name="phone_type_work_pager">Batente pager</string>
-    <string name="phone_type_assistant">Assistente</string>
-    <string name="phone_type_mms">MMS</string>
     <!--endregion-->
 </resources>

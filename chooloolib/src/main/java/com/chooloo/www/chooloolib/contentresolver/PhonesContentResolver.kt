@@ -1,12 +1,11 @@
 package com.chooloo.www.chooloolib.contentresolver
 
-import android.Manifest.permission.READ_CONTACTS
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
-import com.chooloo.www.chooloolib.data.account.PhoneAccount
+import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.util.SelectionBuilder
 
 class PhonesContentResolver(context: Context, contactId: Long? = null) :
@@ -33,8 +32,4 @@ class PhonesContentResolver(context: Context, contactId: Long? = null) :
         displayName = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME_PRIMARY)),
         normalizedNumber = cursor.getString(cursor.getColumnIndex(Phone.NORMALIZED_NUMBER))
     )
-
-    companion object {
-        val REQUIRED_PERMISSIONS = arrayOf(READ_CONTACTS)
-    }
 }

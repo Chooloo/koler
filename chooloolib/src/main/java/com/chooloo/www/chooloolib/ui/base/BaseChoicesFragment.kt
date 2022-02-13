@@ -3,25 +3,34 @@ package com.chooloo.www.chooloolib.ui.base
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.fragment.app.viewModels
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.ChoicesAdapter
 import com.chooloo.www.chooloolib.databinding.MenuBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-open class BaseChoicesFragment : BaseFragment() {
+@AndroidEntryPoint
+open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewState>() {
+    override val contentView by lazy { binding.root }
+    override val viewState: BaseViewState by viewModels()
+
     private var _onChoiceClickListener: (String) -> Unit = {}
-    protected open val adapter by lazy { ChoicesAdapter(component) }
     protected open val binding by lazy { MenuBinding.inflate(layoutInflater) }
 
-    override val contentView by lazy { binding.root }
+    @Inject lateinit var adapter: ChoicesAdapter
 
 
     override fun onSetup() {
         adapter.apply {
-            items = args.getStringArrayList(ARG_CHOICES)?.toList() as List<String>
             setOnItemClickListener(_onChoiceClickListener::invoke)
+            items = args.getStringArrayList(ARG_CHOICES)?.toList() as List<String>
         }
+        
         binding.apply {
             menuRecyclerView.adapter = adapter
             menuTitle.text = getString(args.getInt(ARG_TITLE_RES))
+
             val subtitleRes = args.getInt(ARG_SUBTITLE_RES, -1)
             if (subtitleRes != -1) {
                 menuSubtitle.text = getString(subtitleRes)
@@ -39,7 +48,6 @@ open class BaseChoicesFragment : BaseFragment() {
 
     companion object {
         const val ARG_CHOICES = "choices"
-        const val TAG = "choice_fragment"
         const val ARG_TITLE_RES = "title_res"
         const val ARG_SUBTITLE_RES = "subtitle_res"
 

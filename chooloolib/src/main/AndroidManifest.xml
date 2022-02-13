@@ -2,13 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chooloo.www.chooloolib">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application>
         <activity
-            android:name=".ui.permissions.PermissionsActivity"
-            android:exported="false" />
-        <activity
-            android:exported="false"
             android:name=".ui.call.CallActivity"
+            android:exported="false"
+            android:configChanges="screenSize|keyboardHidden"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.permissions.PermissionRequestActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.permissions.DefaultDialerRequestActivity"
             android:screenOrientation="fullSensor" />
 
         <meta-data
@@ -30,13 +41,6 @@
             </intent-filter>
         </service>
 
-        <receiver
-            android:name=".receiver.CallBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="action_answer" />
-                <action android:name="action_hangup" />
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".receiver.CallBroadcastReceiver" />
     </application>
 </manifest>

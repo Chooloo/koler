@@ -27,16 +27,10 @@ class Tabs : LinearLayout {
             })
         }
 
-    var headers: Array<String>
+    private var headers: Array<String>
         get() = _tabs.map { it.text.toString() }.toTypedArray()
         set(value) {
             replaceTabs(value.map { getTab(it) }.toTypedArray())
-        }
-
-    var textSize: Float
-        get() = _tabs.getOrNull(0)?.textSize ?: 0f
-        set(value) {
-            _tabs.forEach { it.textSize = value }
         }
 
 
@@ -76,5 +70,9 @@ class Tabs : LinearLayout {
 
     private fun selectTab(position: Int) {
         _tabs.forEachIndexed { index, tab -> tab.isActivated = index == position }
+    }
+
+    fun setHeadersResList(resList: Array<Int>) {
+        headers = resList.map { resources.getString(it) }.toTypedArray()
     }
 }

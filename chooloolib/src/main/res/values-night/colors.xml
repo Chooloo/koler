@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="color_hint">#B6B6B6</color>
+    <color name="color_text">#E1E1E1</color>
     <color name="color_disabled">#BEBEBE</color>
     <color name="color_opposite">#ffffff</color>
     <color name="color_image_placeholder_background">#A1686868</color>

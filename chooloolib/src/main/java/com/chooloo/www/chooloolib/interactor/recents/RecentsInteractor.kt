@@ -1,6 +1,6 @@
 package com.chooloo.www.chooloolib.interactor.recents
 
-import com.chooloo.www.chooloolib.data.account.RecentAccount
+import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
 interface RecentsInteractor : BaseInteractor<RecentsInteractor.Listener> {

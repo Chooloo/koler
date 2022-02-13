@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.PhoneLookup
-import com.chooloo.www.chooloolib.data.account.PhoneLookupAccount
+import com.chooloo.www.chooloolib.model.PhoneLookupAccount
 
 class PhoneLookupContentResolver(context: Context, number: String?) :
     BaseContentResolver<PhoneLookupAccount>(context) {

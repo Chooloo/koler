@@ -6,10 +6,15 @@ import android.provider.BlockedNumberContract
 import android.provider.BlockedNumberContract.BlockedNumbers
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.util.annotation.RequiresDefaultDialer
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class BlockedInteractorImpl(
-    private val context: Context
+@Singleton
+class BlockedInteractorImpl @Inject constructor(
+    @ApplicationContext private val context: Context
 ) : BaseInteractorImpl<BlockedInteractor.Listener>(), BlockedInteractor {
+
     @RequiresDefaultDialer
     override fun isNumberBlocked(number: String) =
         BlockedNumberContract.isBlocked(context, number)

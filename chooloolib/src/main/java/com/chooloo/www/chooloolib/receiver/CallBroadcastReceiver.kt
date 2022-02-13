@@ -3,18 +3,25 @@ package com.chooloo.www.chooloolib.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.chooloo.www.chooloolib.BaseApp
+import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
+import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CallBroadcastReceiver : BroadcastReceiver() {
+    @Inject lateinit var calls: CallsInteractor
+    @Inject lateinit var audios: AudiosInteractor
+
+
     override fun onReceive(context: Context, intent: Intent) {
-        val component = (context.applicationContext as BaseApp).component
         when (intent.action) {
-            ACTION_MUTE -> component.audios.isMuted = true
-            ACTION_UNMUTE -> component.audios.isMuted = false
-            ACTION_ANSWER -> component.calls.mainCall?.answer()
-            ACTION_HANGUP -> component.calls.mainCall?.reject()
-            ACTION_SPEAKER -> component.audios.isSpeakerOn = true
-            ACTION_UNSPEAKER -> component.audios.isSpeakerOn = false
+            ACTION_MUTE -> audios.isMuted = true
+            ACTION_UNMUTE -> audios.isMuted = false
+            ACTION_ANSWER -> calls.mainCall?.answer()
+            ACTION_HANGUP -> calls.mainCall?.reject()
+            ACTION_SPEAKER -> audios.isSpeakerOn = true
+            ACTION_UNSPEAKER -> audios.isSpeakerOn = false
         }
     }
 

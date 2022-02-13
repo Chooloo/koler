@@ -1,36 +1,51 @@
 package com.chooloo.www.chooloolib.interactor.dialog
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.data.account.SimAccount
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.prompt.PromptInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
+import com.chooloo.www.chooloolib.model.SimAccount
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
-import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
 import dev.sasikanth.colorsheet.ColorSheet
+import javax.inject.Inject
 
-class DialogsInteractorImpl(
-    private val activity: BaseActivity,
-    private val prompts: PromptInteractor
+@ActivityScoped
+class DialogsInteractorImpl @Inject constructor(
+    @ActivityContext context: Context,
+    private val sims: SimsInteractor,
+    private val strings: StringsInteractor,
+    private val prompts: PromptsInteractor,
+    private val callAudios: CallAudiosInteractor,
+    private val fragmentsFactory: FragmentFactory
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
+
+    private val activity = context as BaseActivity<*>
+
+
     override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
-        prompts.showFragment(PromptFragment.newInstance(
-            activity.getString(R.string.prompt_yes_or_no),
-            activity.getString(titleRes)
+        prompts.showFragment(fragmentsFactory.getPromptFragment(
+            strings.getString(R.string.prompt_yes_or_no),
+            strings.getString(titleRes)
         ).apply {
-            controller.setOnClickListener(callback::invoke)
+            setOnItemClickListener(callback::invoke)
         })
     }
 
     override fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit) {
-        prompts.showFragment(PromptFragment.newInstance(
-            activity.getString(R.string.prompt_are_you_sure),
-            activity.getString(titleRes)
+        prompts.showFragment(fragmentsFactory.getPromptFragment(
+            strings.getString(R.string.prompt_are_you_sure),
+            strings.getString(titleRes)
         ).apply {
-            controller.setOnClickListener(callback::invoke)
+            setOnItemClickListener(callback::invoke)
         })
     }
 
@@ -41,12 +56,13 @@ class DialogsInteractorImpl(
         @StringRes subtitleRes: Int?,
         choiceCallback: (String) -> Unit
     ) {
-        prompts.showFragment(BaseChoicesFragment.newInstance(titleRes, subtitleRes, choices).apply {
-            setOnChoiceClickListener {
-                choiceCallback.invoke(it)
-                this@apply.finish()
-            }
-        })
+        prompts.showFragment(
+            fragmentsFactory.getChoicesFragment(titleRes, subtitleRes, choices).apply {
+                setOnChoiceClickListener {
+                    choiceCallback.invoke(it)
+                    this@apply.finish()
+                }
+            })
     }
 
     override fun <T> askForChoice(
@@ -81,7 +97,7 @@ class DialogsInteractorImpl(
     }
 
     override fun askForSim(callback: (SimAccount?) -> Unit) {
-        activity.component.sims.getSimAccounts { simAccounts ->
+        sims.getSimAccounts { simAccounts ->
             askForChoice(
                 choices = simAccounts,
                 choiceCallback = callback::invoke,
@@ -96,31 +112,29 @@ class DialogsInteractorImpl(
         askForChoice(
             choices = Page.values().toList(),
             titleRes = R.string.hint_default_page,
-            choiceCallback = { callback.invoke(it) },
+            choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_default_page,
-            choiceToString = { activity.getString(it.titleRes) }
+            choiceToString = { strings.getString(it.titleRes) }
         )
     }
 
-    override fun askForCompact(callback: (isCompact: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_compact_mode, callback)
+    override fun askForThemeMode(callback: (ThemeMode) -> Unit) {
+        askForChoice(
+            choices = ThemeMode.values().toList(),
+            titleRes = R.string.hint_theme_mode,
+            choiceCallback = callback::invoke,
+            subtitleRes = R.string.explain_choose_theme_mode,
+            choiceToString = { strings.getString(it.titleRes) }
+        )
     }
 
-    override fun askForAnimations(callback: (isAnimations: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_animations, callback)
-    }
-
-    override fun askForShouldAskSim(callback: (shouldAskSim: Boolean) -> Unit) {
-        askForBoolean(R.string.hint_should_ask_sim, callback)
-    }
-
-    override fun askForRoute(callback: (CallAudioInteractor.AudioRoute) -> Unit) {
+    override fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit) {
         askForChoice(
             choiceCallback = { callback.invoke(it) },
             titleRes = R.string.action_choose_audio_route,
             subtitleRes = R.string.explain_choose_audio_route,
-            choiceToString = { activity.getString(it.stringRes) },
-            choices = activity.component.callAudios.supportedAudioRoutes.toList()
+            choiceToString = { strings.getString(it.stringRes) },
+            choices = callAudios.supportedAudioRoutes.toList()
         )
     }
 }

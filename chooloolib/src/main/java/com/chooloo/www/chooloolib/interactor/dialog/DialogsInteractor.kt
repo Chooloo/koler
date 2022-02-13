@@ -5,10 +5,11 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
-import com.chooloo.www.chooloolib.data.account.SimAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudioInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
+import com.chooloo.www.chooloolib.model.SimAccount
 
 interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     interface Listener
@@ -42,8 +43,6 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     @RequiresPermission(READ_PHONE_STATE)
     fun askForSim(callback: (SimAccount?) -> Unit)
     fun askForDefaultPage(callback: (Page) -> Unit)
-    fun askForCompact(callback: (isCompact: Boolean) -> Unit)
-    fun askForAnimations(callback: (isAnimations: Boolean) -> Unit)
-    fun askForShouldAskSim(callback: (shouldAskSim: Boolean) -> Unit)
-    fun askForRoute(callback: (CallAudioInteractor.AudioRoute) -> Unit)
+    fun askForThemeMode(callback: (ThemeMode) -> Unit)
+    fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit)
 }

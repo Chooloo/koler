@@ -65,7 +65,7 @@ class CallActions : MotionLayout {
             if (value) {
                 _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
             } else {
-                _binding.callActionSpeaker.iconDefault = R.drawable.ic_volume_down_black_24dp
+                _binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24
             }
         }
 

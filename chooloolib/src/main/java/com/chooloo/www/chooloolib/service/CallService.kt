@@ -1,37 +1,47 @@
 package com.chooloo.www.chooloolib.service
 
 import android.annotation.SuppressLint
-import android.content.ComponentName
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.pm.PackageManager
 import android.telecom.CallAudioState
 import android.telecom.InCallService
-import com.chooloo.www.chooloolib.BaseApp
-import com.chooloo.www.chooloolib.data.call.Call
-import com.chooloo.www.chooloolib.data.call.CallNotification
+import androidx.lifecycle.MutableLiveData
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
+import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
+import com.chooloo.www.chooloolib.model.Call
+import com.chooloo.www.chooloolib.notification.CallNotification
+import com.chooloo.www.chooloolib.repository.calls.CallsRepository
 import com.chooloo.www.chooloolib.ui.call.CallActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @SuppressLint("NewApi")
+@AndroidEntryPoint
 class CallService : InCallService() {
-    private val _callNotification by lazy { CallNotification.getInstance(this) }
-    private val component get() = (applicationContext as BaseApp).component
+    @Inject lateinit var callAudios: CallAudiosInteractor
+    @Inject lateinit var callsRepository: CallsRepository
+    @Inject lateinit var callsInteractor: CallsInteractor
+    @Inject lateinit var callNotification: CallNotification
+
+    val calls = MutableLiveData<List<Call>>()
 
 
     override fun onCreate() {
         super.onCreate()
         sInstance = this
-        _callNotification.attach()
+        callNotification.attach()
     }
 
     override fun onDestroy() {
+        callNotification.detach()
+        callNotification.cancel()
         super.onDestroy()
-        _callNotification.detach()
     }
 
     override fun onCallAdded(telecomCall: android.telecom.Call) {
         super.onCallAdded(telecomCall)
-        component.calls.entryAddCall(Call(telecomCall))
+        addCall(Call(telecomCall))
+        callsInteractor.entryAddCall(Call(telecomCall))
         if (!sIsActivityActive) {
             startCallActivity()
         }
@@ -39,19 +49,32 @@ class CallService : InCallService() {
 
     override fun onCallRemoved(telecomCall: android.telecom.Call) {
         super.onCallRemoved(telecomCall)
-        component.calls.getCallByTelecomCall(telecomCall)
-            ?.let(component.calls::entryRemoveCall)
+        removeCall(Call(telecomCall))
+        callsInteractor.getCallByTelecomCall(telecomCall)
+            ?.let(callsInteractor::entryRemoveCall)
     }
 
     override fun onCallAudioStateChanged(audioState: CallAudioState) {
         super.onCallAudioStateChanged(audioState)
-        component.callAudios.entryCallAudioStateChanged(callAudioState)
+        callAudios.entryCallAudioStateChanged(callAudioState)
     }
 
     private fun startCallActivity() {
         val intent = Intent(this, CallActivity::class.java)
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+    }
+
+    private fun addCall(call: Call) {
+        val list = calls.value?.toMutableList()
+        list?.add(call)
+        calls.value = list
+    }
+
+    private fun removeCall(call: Call) {
+        val list = calls.value?.toMutableList()
+        list?.remove(call)
+        calls.value = list
     }
 
 

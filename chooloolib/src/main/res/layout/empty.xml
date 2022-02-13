@@ -5,17 +5,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/empty_icon"
         android:layout_width="@dimen/image_size_big"
         android:layout_height="@dimen/image_size_big"
-        android:tint="@color/color_hint"
+        android:contentDescription="@string/content_description_empty_list_icon"
+        app:tint="@color/color_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/round_swap_calls_20" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/empty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

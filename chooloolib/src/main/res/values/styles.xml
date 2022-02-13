@@ -5,10 +5,7 @@
     <!--region text -->
     <style name="Chooloo.Text" parent="android:TextAppearance">
         <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="Chooloo.Text.Headline1">
-        <item name="android:textSize">@dimen/headline_1</item>
+        <item name="android:textColor">@color/color_text</item>
     </style>
 
     <style name="Chooloo.Text.Headline2">
@@ -32,42 +29,19 @@
     <style name="Chooloo.Text.Subtitle2">
         <item name="android:textSize">@dimen/subtitle_2</item>
         <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
     <style name="Chooloo.Text.Caption" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
-    <style name="Chooloo.Text.Button">
-        <item name="android:textSize">@dimen/headline_4</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?colorOnSecondary</item>
-    </style>
-
-    <style name="Chooloo.Text.Error">
-        <item name="android:textSize">@dimen/headline_4</item>
-        <item name="android:textColor">@color/red_foreground</item>
-        <item name="android:fontFamily">@font/google_sans_bold</item>
-    </style>
     <!--endregion-->
 
     <!--region button -->
-    <style name="Chooloo.Button" parent="Widget.MaterialComponents.Button" />
 
-    <style name="Chooloo.Button.Icon" parent="Widget.MaterialComponents.Button.Icon">
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:inset">0dp</item>
-        <item name="shapeAppearanceOverlay">@style/Chooloo.ShapeAppearance.Circle</item>
-    </style>
-
-    <style name="Chooloo.Button.TextButton">
-        <item name="android:textColor">?colorOnSecondary</item>
-        <item name="android:textAppearance">@style/Chooloo.Text.Button</item>
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-    </style>
     <!--endregion-->
 
     <!--region icon button-->
@@ -99,8 +73,9 @@
 
     <style name="Chooloo.BottomDialog.ShapeAppearanceOverlay">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="cornerSizeTopRight">@dimen/corner_radius</item>
+        <!--        <item name="cornerSize">@dimen/corner_radius</item>-->
         <item name="cornerSizeTopLeft">@dimen/corner_radius</item>
+        <item name="cornerSizeTopRight">@dimen/corner_radius</item>
         <item name="cornerFamily">rounded</item>
     </style>
     <!--endregion-->
@@ -123,28 +98,7 @@
     <!--endregion-->
 
     <!--region dialpad -->
-    <style name="Chooloo.Dialpad" />
 
-    <style name="Chooloo.Dialpad.Key" />
-
-    <style name="Chooloo.Dialpad.Key.Layout">
-        <item name="android:padding">8dp</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="Chooloo.Dialpad.Key.Text">
-        <item name="android:gravity">center</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="Chooloo.Dialpad.Key.Text.Number">
-        <item name="android:textAppearance">@style/Chooloo.Text.Headline2</item>
-    </style>
-
-    <style name="Chooloo.Dialpad.Key.Text.Letters">
-        <item name="android:textAppearance">@style/Chooloo.Text.Caption</item>
-    </style>
     <!--endregion-->
 
     <!--region call -->
@@ -152,27 +106,6 @@
 
     <style name="Chooloo.Call.Layout">
         <item name="android:fitsSystemWindows">true</item>
-    </style>
-
-    <style name="Chooloo.Call.Button" />
-
-    <style name="Chooloo.Call.Button.Action" />
-
-    <style name="Chooloo.Call.Button.Action.Text">
-        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="Chooloo.Call.Button.Bottom">
-        <item name="android:tint">?colorPrimary</item>
-        <item name="android:scaleType">center</item>
-        <item name="fabCustomSize">70dp</item>
-        <item name="elevation">0dp</item>
-        <item name="android:elevation">0dp</item>
-        <item name="borderWidth">0dp</item>
-        <item name="fabSize">normal</item>
-        <item name="maxImageSize">36dp</item>
     </style>
 
     <style name="Chooloo.Call.Text">
@@ -195,33 +128,17 @@
     <!--endregion-->
 
     <!--region appbar -->
-    <style name="Chooloo.Appbar" />
 
-    <style name="Chooloo.Appbar.Layout">
-        <item name="background">?android:colorBackground</item>
-        <item name="elevation">0dp</item>
-        <item name="layout_scrollFlags">scroll</item>
-    </style>
     <!--endregion-->
 
     <!--region contact-->
     <style name="Chooloo.Bottom" />
-
-    <style name="Chooloo.Bottom.Text">
-        <item name="android:padding">2dp</item>
-        <item name="android:textAlignment">viewStart</item>
-    </style>
 
     <style name="Chooloo.Bottom.Image">
         <item name="android:src">@drawable/round_person_24</item>
     </style>
 
     <!--region shape appearance -->
-    <style name="Chooloo.ShapeAppearance" />
 
-    <style name="Chooloo.ShapeAppearance.Circle">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
     <!--endregion-->
 </resources>

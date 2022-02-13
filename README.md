@@ -1,5 +1,5 @@
-<p align="center"> 
-	       <img src="./app/src/main/ic_launcher-web.png" width=160 height=160>
+<p align="center">
+	       <img src="./koler/src/main/ic_launcher-web.png" width=160 height=160>
 </p>
 
 <h1 align="center">

@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- call timer -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/call_time_text"
         style="@style/Chooloo.Call.Text.Time"
         android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- call status -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/call_state_text"
         style="@style/Chooloo.Call.Text.Status"
         android:layout_width="wrap_content"
@@ -55,11 +55,11 @@
         android:layout_width="@dimen/image_size_big"
         android:layout_height="@dimen/image_size_big"
         app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
-        tools:src="@drawable/ic_account_circle_black_24dp"
+        tools:src="@drawable/round_person_24"
         tools:visibility="visible" />
 
     <!-- caller name -->
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/call_name_text"
         style="@style/Chooloo.Call.Text.Name"
         android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
         android:backgroundTint="@color/green_background"
         android:contentDescription="@string/content_description_answer_button"
         android:tint="@color/green_foreground"
-        app:icon="@drawable/ic_call_black_24dp" />
+        app:icon="@drawable/round_call_24" />
 
     <!-- hangup button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
