@@ -18,21 +18,21 @@ abstract class BaseContentResolver<ItemType>(private val context: Context) {
         DefaultStorIOContentResolver.builder().contentResolver(context.contentResolver).build()
     }
 
-    private val _finalUri: Uri
-        get() = if (filterUri != null && _filter?.isNotEmpty() == true) {
-            Uri.withAppendedPath(filterUri, _filter)
-        } else {
-            uri
-        }
-
     private val _query: Query
         get() = Query.builder()
-            .uri(_finalUri)
+            .uri(finalUri)
             .columns(*projection)
             .whereArgs(*(selectionArgs ?: arrayOf()))
             .where(if (selection == "") null else selection)
             .sortOrder(if (sortOrder == "") null else sortOrder)
             .build()
+
+    val finalUri: Uri
+        get() = if (filterUri != null && _filter?.isNotEmpty() == true) {
+            Uri.withAppendedPath(filterUri, _filter)
+        } else {
+            uri
+        }
 
 
     open var filter: String?
@@ -71,7 +71,7 @@ abstract class BaseContentResolver<ItemType>(private val context: Context) {
     @SuppressLint("CheckResult")
     fun observeUri(observer: () -> Unit): Disposable =
         _ioContentResolver
-            .observeChangesOfUri(_finalUri, BackpressureStrategy.LATEST)
+            .observeChangesOfUri(finalUri, BackpressureStrategy.LATEST)
             .subscribe { observer.invoke() }
             .also { observer.invoke() }
 

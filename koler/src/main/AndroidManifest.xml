@@ -40,6 +40,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="fullUser">
 
             <intent-filter>

@@ -1,3 +1,5 @@
+@file:Suppress("KotlinDeprecation")
+
 package com.chooloo.www.chooloolib.ui.widgets
 
 import android.annotation.SuppressLint
@@ -15,6 +17,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.util.getAttrColor
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+
 
 @SuppressLint("UseCompatTextViewDrawableApis")
 class SearchBar : TextInputLayout {
@@ -67,9 +70,9 @@ class SearchBar : TextInputLayout {
         isHintEnabled = false
         endIconMode = END_ICON_CLEAR_TEXT
         backgroundTintList = ColorStateList.valueOf(colorBackground)
-        background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
-        endIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_close_black_24dp)
-        startIconDrawable = ContextCompat.getDrawable(context, R.drawable.ic_search_black_24dp)
+        background = ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
+        endIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_close_24)
+        startIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_search_24)
 
         setEndIconTintList(ColorStateList.valueOf(colorForeground))
         setStartIconTintList(ColorStateList.valueOf(colorForeground))

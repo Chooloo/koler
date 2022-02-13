@@ -8,19 +8,24 @@ import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
-import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.util.getAttrColor
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
+@SuppressLint("CustomViewStyleable", "Recycle")
 class Tab : AppCompatTextView {
     private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
     private val disabledColor by lazy { context.getAttrColor(R.attr.colorLightBackground) }
 
+    @Inject lateinit var animationsInteractor: AnimationsInteractor
+
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    @SuppressLint("CustomViewStyleable", "Recycle")
     constructor(
         context: Context,
         attrs: AttributeSet? = null,
@@ -44,7 +49,7 @@ class Tab : AppCompatTextView {
 
 
     private fun animateAttention() {
-        (context.applicationContext as BaseApp).component.animations.show(this, true)
+        animationsInteractor.show(this, true)
     }
 
     private fun setColor(@ColorInt color: Int) {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.KeyEvent
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
@@ -18,7 +17,7 @@ import com.chooloo.www.chooloolib.util.getSizeInDp
 
 @SuppressLint("Recycle", "CustomViewStyleable")
 class DialpadKey : LinearLayout {
-    var keyCode = 0
+    private var _char: Char = '0'
     private var _digitTextView: TextView
     private var _lettersTextView: TextView
 
@@ -35,16 +34,17 @@ class DialpadKey : LinearLayout {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
             setTextAppearance(R.style.Chooloo_Text_Headline2)
+            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
         }.also {
             addView(it)
         }
 
         _lettersTextView = TextView(context, attrs, defStyleRes).apply {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-            typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
 
             setPadding(0, context.getSizeInDp(5), 0, 0)
             setTextAppearance(R.style.Chooloo_Text_Caption)
+            typeface = ResourcesCompat.getFont(context, R.font.google_sans_medium)
         }.also {
             addView(it)
         }
@@ -52,67 +52,31 @@ class DialpadKey : LinearLayout {
         orientation = VERTICAL
         layoutParams = LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         background = context.getSelectableItemBackgroundBorderlessDrawable()
-        digit = context.obtainStyledAttributes(attrs, R.styleable.Chooloo_DialpadKey)
-            .getString(R.styleable.Chooloo_DialpadKey_digit)
+        char = context.obtainStyledAttributes(attrs, R.styleable.Chooloo_DialpadKey)
+            .getString(R.styleable.Chooloo_DialpadKey_digit)?.get(0) ?: '0'
 
         setPadding(context.getSizeInDp(7))
     }
 
-    var digit: String?
-        get() = _digitTextView.text.toString()
+    var char: Char
+        get() = _digitTextView.text.toString().toCharArray()[0]
         set(value) {
-            _digitTextView.text = value
+            _digitTextView.text = value.toString()
+            _char = value
             when (value) {
-                "0" -> {
-                    keyCode = KeyEvent.KEYCODE_0
-                    _lettersTextView.text = context.getString(R.string.dialpad_0_letters)
-                }
-                "1" -> {
-                    keyCode = KeyEvent.KEYCODE_1
-                    _lettersTextView.setBackgroundResource(R.drawable.ic_voicemail_black_24dp)
-                }
-                "2" -> {
-                    keyCode = KeyEvent.KEYCODE_2
-                    _lettersTextView.text = context.getString(R.string.dialpad_2_letters)
-                }
-                "3" -> {
-                    keyCode = KeyEvent.KEYCODE_3
-                    _lettersTextView.text = context.getString(R.string.dialpad_3_letters)
-                }
-                "4" -> {
-                    keyCode = KeyEvent.KEYCODE_4
-                    _lettersTextView.text = context.getString(R.string.dialpad_4_letters)
-                }
-                "5" -> {
-                    keyCode = KeyEvent.KEYCODE_5
-                    _lettersTextView.text = context.getString(R.string.dialpad_5_letters)
-                }
-                "6" -> {
-                    keyCode = KeyEvent.KEYCODE_6
-                    _lettersTextView.text = context.getString(R.string.dialpad_6_letters)
-                }
-                "7" -> {
-                    keyCode = KeyEvent.KEYCODE_7
-                    _lettersTextView.text = context.getString(R.string.dialpad_7_letters)
-                }
-                "8" -> {
-                    keyCode = KeyEvent.KEYCODE_8
-                    _lettersTextView.text = context.getString(R.string.dialpad_8_letters)
-                }
-                "9" -> {
-                    keyCode = KeyEvent.KEYCODE_9
-                    _lettersTextView.text = context.getString(R.string.dialpad_9_letters)
-                }
-                "*" -> {
-                    keyCode = KeyEvent.KEYCODE_STAR
-                    _lettersTextView.text = context.getString(R.string.dialpad_star_letters)
-                }
-                "#" -> {
-                    keyCode = KeyEvent.KEYCODE_POUND
-                    _lettersTextView.text = context.getString(R.string.dialpad_pound_letters)
-                }
-                else -> {
-                }
+                '0' -> _lettersTextView.text = context.getString(R.string.dialpad_0_letters)
+                '1' -> _lettersTextView.setBackgroundResource(R.drawable.round_voicemail_20)
+                '2' -> _lettersTextView.text = context.getString(R.string.dialpad_2_letters)
+                '3' -> _lettersTextView.text = context.getString(R.string.dialpad_3_letters)
+                '4' -> _lettersTextView.text = context.getString(R.string.dialpad_4_letters)
+                '5' -> _lettersTextView.text = context.getString(R.string.dialpad_5_letters)
+                '6' -> _lettersTextView.text = context.getString(R.string.dialpad_6_letters)
+                '7' -> _lettersTextView.text = context.getString(R.string.dialpad_7_letters)
+                '8' -> _lettersTextView.text = context.getString(R.string.dialpad_8_letters)
+                '9' -> _lettersTextView.text = context.getString(R.string.dialpad_9_letters)
+                '*' -> _lettersTextView.text = context.getString(R.string.dialpad_star_letters)
+                '#' -> _lettersTextView.text = context.getString(R.string.dialpad_pound_letters)
+                else -> {}
             }
         }
 }

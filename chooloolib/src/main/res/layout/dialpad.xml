@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- The Dialpad View (the whole view, including the edit text) -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -39,7 +38,10 @@
         android:id="@+id/dialpad_keys_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_marginStart="@dimen/default_spacing_big"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing_big"
+        android:layout_marginBottom="@dimen/default_spacing"
         android:stretchColumns="*"
         app:layout_constraintBottom_toTopOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_call_black_24dp"
+        app:icon="@drawable/round_call_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -125,7 +127,7 @@
         android:backgroundTint="?colorSurface"
         android:visibility="gone"
         app:borderWidth="0dp"
-        app:icon="@drawable/ic_arrow_back_ios_24px"
+        app:icon="@drawable/round_keyboard_return_24"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"

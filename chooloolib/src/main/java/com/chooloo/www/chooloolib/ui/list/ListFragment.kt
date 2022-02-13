@@ -1,64 +1,65 @@
 package com.chooloo.www.chooloolib.ui.list
 
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.adapter.ListAdapter
 import com.chooloo.www.chooloolib.databinding.ItemsBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 
-abstract class ListFragment<ItemType, Adapter : ListAdapter<ItemType>> :
-    BaseFragment(),
-    ListContract.View<ItemType> {
-
-    protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
+abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragment<VS>() {
 
     override val contentView by lazy { binding.root }
-
-    override var isScrollerVisible: Boolean
-        get() = binding.itemsScrollView.fastScroller.isVisible
-        set(value) {
-            binding.itemsScrollView.fastScroller.isVisible = value
-        }
+    protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
 
     override fun onSetup() {
+        viewState.apply {
+            isEmpty.observe(this@ListFragment, this@ListFragment::showEmpty)
+            emptyMessage.observe(this@ListFragment, binding.empty.emptyText::setText)
+            emptyIcon.observe(this@ListFragment, binding.empty.emptyIcon::setImageResource)
+
+            filter.observe(this@ListFragment) {
+                adapter.titleFilter = it
+            }
+
+            isLoading.observe(this@ListFragment) {
+                if (it) showEmpty(false)
+            }
+
+            isScrollerVisible.observe(this@ListFragment) {
+                binding.itemsScrollView.fastScroller.isVisible = it
+            }
+
+            itemsChangedEvent.observe(this@ListFragment) { ev ->
+                ev.ifNew?.let { adapter.items = it }
+            }
+
+            getItemsObservable { it.observe(this@ListFragment, viewState::onItemsChanged) }
+        }
+
+        adapter.apply {
+            setOnItemClickListener(viewState::onItemClick)
+            setOnItemLongClickListener(viewState::onItemLongClick)
+            setOnItemLeftButtonClickListener(viewState::onItemLeftClick)
+            setOnItemRightButtonClickListener(viewState::onItemRightClick)
+            binding.itemsScrollView.setAdapter(this)
+        }
+
         binding.itemsScrollView.fastScroller.setPadding(0, 0, 30, 0)
-        args.getString(ARG_FILTER)?.let { controller.applyFilter(it) }
+        args.getString(ARG_FILTER)?.let(viewState::onFilterChanged)
     }
 
-    override fun showEmpty(isShow: Boolean) {
+    protected open fun showEmpty(isShow: Boolean) {
         binding.apply {
-            empty.emptyIcon.visibility = if (isShow) VISIBLE else GONE
-            empty.emptyText.visibility = if (isShow) VISIBLE else GONE
-            itemsScrollView.visibility = if (isShow) GONE else VISIBLE
+            empty.emptyIcon.isVisible = isShow
+            empty.emptyText.isVisible = isShow
+            itemsScrollView.isVisible = !isShow
         }
     }
 
-    override fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            showEmpty(false)
-        }
-    }
 
-    override fun setEmptyReason(@StringRes res: Int?) {
-        res?.let { binding.empty.emptyText.setText(it) }
-    }
-
-    override fun setEmptyIcon(res: Int?) {
-        res?.let { binding.empty.emptyIcon.setImageResource(it) }
-    }
-
-    override fun setAdapter(adapter: ListAdapter<ItemType>) {
-        binding.itemsScrollView.setAdapter(adapter)
-    }
-
+    abstract val adapter: ListAdapter<ItemType>
 
     companion object {
         const val ARG_FILTER = "filter"
     }
-
-
-    abstract val controller: ListController<ItemType, out ListFragment<ItemType, Adapter>>
 }

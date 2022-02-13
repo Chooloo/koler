@@ -1,63 +1,90 @@
 package com.chooloo.www.chooloolib.ui.briefcontact
 
-import android.net.Uri
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.BriefContactBinding
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-open class BriefContactFragment : BaseFragment(), BriefContactContract.View {
+@AndroidEntryPoint
+open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContactViewState>() {
     override val contentView by lazy { binding.root }
-    override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
+    override val viewState: BriefContactViewState by viewModels()
 
-    private lateinit var controller: BriefContactController<BriefContactFragment>
     protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
-    protected val phonesFragment by lazy { PhonesFragment.newInstance(contactId) }
+    private val phonesFragment by lazy { fragmentFactory.getPhonesFragment(viewState.contactId.value) }
 
-    override var contactName: String?
-        get() = binding.briefContactTextName.text.toString()
-        set(value) {
-            binding.briefContactTextName.text = value
-        }
-
-    override var contactImage: Uri?
-        get() = null
-        set(value) {
-            binding.briefContactImage.apply {
-                setImageURI(value)
-                visibility = if (value != null) VISIBLE else GONE
-            }
-        }
-
-    override var isStarIconVisible: Boolean
-        get() = binding.contactImageStar.isVisible
-        set(value) {
-            binding.contactImageStar.isVisible = value
-        }
+    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject lateinit var dialogs: DialogsInteractor
+    @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var permissions: PermissionsInteractor
 
 
     override fun onSetup() {
-        controller = BriefContactController(this)
-
         binding.apply {
-            contactButtonSms.setOnClickListener { controller.onActionSms() }
-            contactButtonCall.setOnClickListener { controller.onActionCall() }
-            contactButtonEdit.setOnClickListener { controller.onActionEdit() }
-            contactButtonDelete.setOnClickListener { controller.onActionDelete() }
+            contactButtonSms.setOnClickListener {
+                viewState.onActionSms()
+            }
+
+            contactButtonCall.setOnClickListener {
+                viewState.onActionCall()
+            }
+
+            contactButtonEdit.setOnClickListener {
+                viewState.onActionEdit()
+            }
+
+            contactButtonDelete.setOnClickListener {
+                viewState.onActionDelete()
+            }
+        }
+
+        viewState.apply {
+            contactName.observe(this@BriefContactFragment) {
+                binding.briefContactTextName.text = it
+            }
+
+            contactImage.observe(this@BriefContactFragment) {
+                binding.briefContactImage.apply {
+                    setImageURI(it)
+                    isVisible = it != null
+                }
+            }
+
+            isStarIconVisible.observe(this@BriefContactFragment) {
+                binding.contactImageStar.isVisible = it
+            }
+
+            callEvent.observe(this@BriefContactFragment) {
+                it.ifNew?.let(callNavigations::call)
+            }
+
+            confirmContactDeleteEvent.observe(this@BriefContactFragment) {
+                it.ifNew?.let {
+                    dialogs.askForValidation(R.string.explain_delete_contact) { bl ->
+                        if (bl) onDeleteConfirmed()
+                    }
+                }
+            }
+
+            onContactId(args.getLong(ARG_CONTACT_ID))
         }
 
         childFragmentManager
             .beginTransaction()
-            .add(binding.contactPhonesFragmentContainer.id, phonesFragment)
+            .replace(binding.contactPhonesFragmentContainer.id, phonesFragment)
             .commitNow()
     }
 
 
     companion object {
-        const val TAG = "contact_fragment"
         const val ARG_CONTACT_ID = "contact_id"
 
         fun newInstance(contactId: Long) = BriefContactFragment().apply {

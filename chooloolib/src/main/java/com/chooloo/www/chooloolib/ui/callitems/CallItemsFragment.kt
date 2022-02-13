@@ -1,26 +1,25 @@
 package com.chooloo.www.chooloolib.ui.callitems
 
-import android.view.View
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.CallItemsAdapter
-import com.chooloo.www.chooloolib.data.call.Call
+import com.chooloo.www.chooloolib.model.Call
 import com.chooloo.www.chooloolib.ui.list.ListFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class CallItemsFragment : ListFragment<Call, CallItemsAdapter>(), CallItemsContract.View {
-    override val controller by lazy { CallItemsController(this) }
+@AndroidEntryPoint
+class CallItemsFragment @Inject constructor() : ListFragment<Call, CallItemsViewState>() {
+    override val viewState: CallItemsViewState by viewModels()
+
+    @Inject override lateinit var adapter: CallItemsAdapter
 
 
     override fun showEmpty(isShow: Boolean) {
         binding.apply {
-            empty.emptyIcon.visibility = View.GONE
-            empty.emptyText.visibility = View.GONE
-            itemsScrollView.visibility = if (isShow) View.GONE else View.VISIBLE
+            empty.emptyIcon.isVisible = false
+            empty.emptyText.isVisible = false
+            itemsScrollView.isVisible = !isShow
         }
-    }
-
-
-    companion object {
-        const val TAG = "call_items_fragment"
-
-        fun newInstance() = CallItemsFragment()
     }
 }

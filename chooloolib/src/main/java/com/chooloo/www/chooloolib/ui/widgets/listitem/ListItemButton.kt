@@ -19,23 +19,23 @@ class ListItemButton : ListItem {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
-        _image.setPadding(15)
+        image.setPadding(18)
         stateListAnimator = null
         imageTintList = ColorStateList.valueOf(colorOnSecondary)
-        _personLayout.backgroundTintList = ColorStateList.valueOf(colorSecondary)
-        _personLayout.background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
+        personLayout.backgroundTintList = ColorStateList.valueOf(colorSecondary)
+        personLayout.background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
 
         setTitleColor(colorOnSecondary)
     }
 
     override fun setPaddingMode(isCompact: Boolean, isEnabled: Boolean) {
-        _personLayout.setPadding(
+        personLayout.setPadding(
+            dimenSpacingSmall + 20,
             dimenSpacingSmall,
-            dimenSpacing - 28,
-            dimenSpacingSmall,
-            dimenSpacing - 28
+            dimenSpacingSmall + 20,
+            dimenSpacingSmall
         )
-        _header.setPadding(
+        header.setPadding(
             if (isEnabled) dimenSpacing else 0,
             dimenSpacingSmall,
             if (isEnabled) dimenSpacing else 0,

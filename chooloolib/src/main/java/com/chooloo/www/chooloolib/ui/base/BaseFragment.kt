@@ -1,22 +1,19 @@
 package com.chooloo.www.chooloolib.ui.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), BaseContract.View {
+abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
     private var _onFinishListener: () -> Unit = {}
 
-    override val component get() = baseActivity.component
+    val args get() = arguments ?: Bundle()
 
-    protected val baseActivity by lazy { context as BaseActivity }
-
-    val args: Bundle
-        get() = arguments ?: Bundle()
+    @Inject lateinit var baseActivity: BaseActivity<*>
 
 
     override fun onCreateView(
@@ -25,24 +22,34 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
         savedInstanceState: Bundle?
     ) = contentView
 
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        assert(context is BaseActivity)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         onSetup()
-    }
+        viewState.apply {
+            attach()
 
+            errorEvent.observe(this@BaseFragment) {
+                it.ifNew?.let(this@BaseFragment::showError)
+            }
+
+            finishEvent.observe(this@BaseFragment) {
+                it.ifNew?.let { finish() }
+            }
+
+            messageEvent.observe(this@BaseFragment) {
+                it.ifNew?.let(this@BaseFragment::showMessage)
+            }
+        }
+
+        baseActivity.onFragmentSetup(this)
+    }
 
     override fun showError(@StringRes stringResId: Int) {
-        baseActivity.showError(stringResId)
+        baseActivity.viewState.errorEvent.call(stringResId)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
-        baseActivity.showMessage(stringResId)
+        baseActivity.viewState.errorEvent.call(stringResId)
     }
 
     override fun finish() {
@@ -50,11 +57,11 @@ abstract class BaseFragment : Fragment(), BaseContract.View {
         _onFinishListener.invoke()
     }
 
-
     fun setOnFinishListener(onFinishListener: () -> Unit) {
         _onFinishListener = onFinishListener
     }
 
 
     abstract val contentView: View
+    abstract override val viewState: VM
 }

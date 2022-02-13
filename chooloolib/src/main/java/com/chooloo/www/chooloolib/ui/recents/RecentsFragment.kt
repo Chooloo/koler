@@ -1,24 +1,17 @@
 package com.chooloo.www.chooloolib.ui.recents
 
 import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.adapter.RecentsAdapter
-import com.chooloo.www.chooloolib.data.account.RecentAccount
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
+import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.list.ListFragment
-import com.chooloo.www.chooloolib.ui.recent.RecentFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class RecentsFragment :
-    ListFragment<RecentAccount, RecentsAdapter>(),
-    RecentsContract.View {
-
-    override val controller: RecentsController<out RecentsFragment> by lazy {
-        RecentsController(this)
-    }
-
-    override fun onSetup() {
-        controller.initialize()
-        super.onSetup()
-    }
+@AndroidEntryPoint
+open class RecentsFragment @Inject constructor() : ListFragment<RecentAccount, RecentsViewState>() {
+    @Inject override lateinit var adapter: RecentsAdapter
+    override val viewState: RecentsViewState by activityViewModels()
 
 
     companion object {

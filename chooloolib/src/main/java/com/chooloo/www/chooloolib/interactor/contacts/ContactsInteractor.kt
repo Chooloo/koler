@@ -1,6 +1,6 @@
 package com.chooloo.www.chooloolib.interactor.contacts
 
-import com.chooloo.www.chooloolib.data.account.ContactAccount
+import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 
 interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> {

@@ -6,11 +6,16 @@ import android.provider.CallLog
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
-import com.chooloo.www.chooloolib.data.account.RecentAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
+import com.chooloo.www.chooloolib.model.RecentAccount
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class RecentsInteractorImpl(private val context: Context) :
-    BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
+@Singleton
+class RecentsInteractorImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
 
     @RequiresPermission(WRITE_CALL_LOG)
     override fun deleteRecent(recentId: Long) {
@@ -31,14 +36,14 @@ class RecentsInteractorImpl(private val context: Context) :
     }
 
     override fun getCallTypeImage(@RecentAccount.CallType callType: Int) = when (callType) {
-        RecentAccount.TYPE_INCOMING -> R.drawable.ic_call_received_black_24dp
-        RecentAccount.TYPE_OUTGOING -> R.drawable.ic_call_made_black_24dp
-        RecentAccount.TYPE_MISSED -> R.drawable.ic_call_missed_black_24dp
-        RecentAccount.TYPE_REJECTED -> R.drawable.ic_call_missed_outgoing_black_24dp
-        RecentAccount.TYPE_VOICEMAIL -> R.drawable.ic_voicemail_black_24dp
+        RecentAccount.TYPE_INCOMING -> R.drawable.round_call_received_24
+        RecentAccount.TYPE_OUTGOING -> R.drawable.round_call_made_24
+        RecentAccount.TYPE_MISSED -> R.drawable.round_call_missed_24
+        RecentAccount.TYPE_REJECTED -> R.drawable.round_call_missed_outgoing_24
+        RecentAccount.TYPE_VOICEMAIL -> R.drawable.round_voicemail_24
         RecentAccount.TYPE_BLOCKED -> R.drawable.round_block_24
-        else -> R.drawable.ic_call_made_black_24dp
+        else -> R.drawable.round_call_made_24
     }
 
-    override fun getLastOutgoingCall() = CallLog.Calls.getLastOutgoingCall(context)
+    override fun getLastOutgoingCall(): String = CallLog.Calls.getLastOutgoingCall(context)
 }

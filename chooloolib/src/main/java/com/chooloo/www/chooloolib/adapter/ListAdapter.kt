@@ -2,15 +2,16 @@ package com.chooloo.www.chooloolib.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chooloo.www.chooloolib.data.ListData
-import com.chooloo.www.chooloolib.di.activitycomponent.ActivityComponent
+import com.chooloo.www.chooloolib.model.ListData
+import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemHolder
 import com.l4digital.fastscroll.FastScroller
 
 abstract class ListAdapter<ItemType>(
-    protected val component: ActivityComponent
+    private val animations: AnimationsInteractor
 ) : RecyclerView.Adapter<ListItemHolder>(), FastScroller.SectionIndexer {
+    private var _isCompact: Boolean = false
     private var _titleFilter: String? = null
     private var _data: ListData<ItemType> = ListData()
     private var _onItemClickListener: (item: ItemType) -> Unit = {}
@@ -32,6 +33,12 @@ abstract class ListAdapter<ItemType>(
             notifyDataSetChanged()
         }
 
+    var isCompact: Boolean
+        get() = _isCompact
+        set(value) {
+            _isCompact = value
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListItemHolder(parent.context)
@@ -39,6 +46,7 @@ abstract class ListAdapter<ItemType>(
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val dataItem = getItem(position)
         holder.listItem.apply {
+            isCompact = _isCompact
             headerText = getHeader(position)
 
             setOnClickListener { _onItemClickListener.invoke(dataItem) }
@@ -49,7 +57,7 @@ abstract class ListAdapter<ItemType>(
                 true
             }
 
-            component.animations.show(this, false)
+            animations.show(this, false)
 
             onBindListItem(this, dataItem)
 
@@ -73,7 +81,7 @@ abstract class ListAdapter<ItemType>(
 
     private fun getItem(position: Int) = _data.items[position]
 
-    fun getHeader(position: Int): String? {
+    private fun getHeader(position: Int): String? {
         var total = 0
         _data.headersToCounts.values.withIndex().forEach { (index, count) ->
             when (position) {
@@ -101,7 +109,7 @@ abstract class ListAdapter<ItemType>(
     }
 
 
-    open fun convertDataToListData(data: List<ItemType>) = ListData(data)
+    open fun convertDataToListData(items: List<ItemType>) = ListData(items)
 
     abstract fun onBindListItem(listItem: ListItem, item: ItemType)
 }

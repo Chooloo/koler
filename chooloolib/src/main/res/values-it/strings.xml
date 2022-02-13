@@ -16,30 +16,19 @@
 
     
     <string name="hint_search">Ricerca</string>
-    <string name="hint_search_contacts">Cerca contatti</string>
-    <string name="hint_search_recents">Cerca recenti</string>
-    
 
-    
+
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md</string>
-    
 
-    
-    <string name="call_action_hold">Aspetta</string>
+
     <string name="call_action_mute">Mute</string>
-    <string name="call_action_keypad">Tastiera</string>
-    <string name="call_action_unhold">Curriculum vitae</string>
     <string name="call_action_unmute">Riattiva</string>
-    <string name="call_action_record">Disco</string>
     <string name="call_action_speaker">Altoparlante</string>
-    <string name="call_action_add_call">Aggiungi chiamata</string>
     <string name="call_action_speaker_off">Altoparlante spento</string>
-    <string name="call_action_record_stop">Interrompi la registrazione</string>
-    
 
-    
+
     <string name="call_status_dialing">Composizione …</string>
     <string name="call_status_holding">Chiamata in attesa</string>
     <string name="call_status_incoming">Chiamata in arrivo</string>
@@ -49,42 +38,19 @@
 
     
     <string name="pref_key_rate">Vota</string>
-    <string name="pref_key_email">e-mail</string>
-    <string name="pref_key_donate">donare</string>
-    <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_report_bugs">report_bugs</string>
-    <string name="pref_key_record_format">record_format</string>
-    
 
-    
+
     <string name="pref_title_rate">Vota</string>
-    <string name="pref_title_donate">Donare</string>
     <string name="pref_title_app_color">Colore accento</string>
     <string name="pref_title_email">Scrivici un\'e-mail</string>
     <string name="pref_title_report_bugs">Segnala bug</string>
-    <string name="pref_title_sim_select">Selezione Sim</string>
-    
 
-    
-    <string name="pref_default_value_sim_select">0</string>
-    
 
-    
     <string name="error_no_results">Nessun risultato :/</string>
-    <string name="error_enter_number">Si prega di inserire prima un numero</string>
-    <string name="error_no_permissions">Ho bisogno di autorizzazioni: /</string>
-    
 
-    
-    <string name="pref_color_value_red">rosso</string>
-    <string name="pref_color_value_blue">blu</string>
-    <string name="pref_color_value_green">verde</string>
-    <string name="pref_color_value_orange">arancia</string>
-    <string name="pref_color_value_purple">viola</string>
-    
 
-    
     <string name="dialpad_0_letters"/>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
@@ -96,17 +62,12 @@
     <string name="dialpad_9_letters">W X Y Z</string>
     <string name="dialpad_star_letters"/>
     <string name="dialpad_pound_letters"/>
-    
 
-    
-    <string name="content_description_menu_button">Pulsante Menu</string>
+
     <string name="content_description_answer_button">Pulsante risposta</string>
     <string name="content_description_reject_button">Pulsante Rifiuta</string>
-    <string name="content_description_call_actions_button">Call Actions</string>
-    
 
 
-    
     <string name="call_notification_channel_name">Notifica di chiamata</string>
     <string name="call_notification_channel_description">Notifica di chiamata attiva, mostrata per un utilizzo confortevole</string>
     

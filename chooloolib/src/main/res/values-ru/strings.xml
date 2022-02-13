@@ -16,30 +16,19 @@
 
     
     <string name="hint_search">Поиск</string>
-    <string name="hint_search_contacts">Поиск контактов</string>
-    <string name="hint_search_recents">Поиск недавних</string>
-    
 
-    
+
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md</string>
-    
 
-    
-    <string name="call_action_hold">Держать</string>
+
     <string name="call_action_mute">Немой</string>
-    <string name="call_action_keypad">Клавиатура</string>
-    <string name="call_action_unhold">Резюме</string>
     <string name="call_action_unmute">Включить звук</string>
-    <string name="call_action_record">Записывать</string>
     <string name="call_action_speaker">Оратор</string>
-    <string name="call_action_add_call">Добавить звонок</string>
     <string name="call_action_speaker_off">Выкл. Динамик</string>
-    <string name="call_action_record_stop">Остановить запись</string>
-    
 
-    
+
     <string name="call_status_dialing">Набор…</string>
     <string name="call_status_holding">Вызов на удержании</string>
     <string name="call_status_incoming">Входящий звонок</string>
@@ -48,42 +37,19 @@
 
 
     <string name="pref_key_rate">оценивать</string>
-    <string name="pref_key_email">Эл. адрес</string>
-    <string name="pref_key_donate">пожертвовать</string>
-    <string name="pref_key_sim_select">sim_select</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_report_bugs">report_bugs</string>
-    <string name="pref_key_record_format">record_format</string>
-    
 
-    
+
     <string name="pref_title_rate">Оценивать</string>
-    <string name="pref_title_donate">Пожертвовать</string>
     <string name="pref_title_app_color">Акцентный цвет</string>
     <string name="pref_title_email">Напишите нам письмо</string>
     <string name="pref_title_report_bugs">Сообщить об ошибках</string>
-    <string name="pref_title_sim_select">Выбор Сима</string>
-    
 
-    
-    <string name="pref_default_value_sim_select">0</string>
-    
 
-    
     <string name="error_no_results">Никаких результатов :/</string>
-    <string name="error_enter_number">Пожалуйста, сначала введите номер</string>
-    <string name="error_no_permissions">Мне нужны разрешения: /</string>
-    
 
-    
-    <string name="pref_color_value_red">красный</string>
-    <string name="pref_color_value_blue">синий</string>
-    <string name="pref_color_value_green">зеленый</string>
-    <string name="pref_color_value_orange">апельсин</string>
-    <string name="pref_color_value_purple">пурпурный</string>
-    
 
-    
     <string name="dialpad_0_letters"/>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
@@ -95,17 +61,12 @@
     <string name="dialpad_9_letters">WXYZ</string>
     <string name="dialpad_star_letters"/>
     <string name="dialpad_pound_letters"/>
-    
 
-    
-    <string name="content_description_menu_button">Кнопка меню</string>
+
     <string name="content_description_answer_button">Кнопка ответа</string>
     <string name="content_description_reject_button">Кнопка отклонения</string>
-    <string name="content_description_call_actions_button">Действия при вызове</string>
-    
 
 
-    
     <string name="call_notification_channel_name">Уведомление о звонке</string>
     <string name="call_notification_channel_description">Уведомление об активном вызове, показанное для удобного использования</string>
     

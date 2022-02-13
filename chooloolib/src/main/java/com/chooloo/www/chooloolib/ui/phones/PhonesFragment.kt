@@ -1,24 +1,32 @@
 package com.chooloo.www.chooloolib.ui.phones
 
 import android.os.Bundle
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
-import com.chooloo.www.chooloolib.data.account.PhoneAccount
+import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
+import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.chooloolib.ui.list.ListFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class PhonesFragment :
-    ListFragment<PhoneAccount, PhonesAdapter>(),
-    PhonesContract.View {
+@AndroidEntryPoint
+class PhonesFragment @Inject constructor() : ListFragment<PhoneAccount, PhonesViewState>() {
+    override val viewState: PhonesViewState by viewModels()
 
-    override val contactId by lazy { args.getLong(ARG_CONTACT_ID) }
-    override lateinit var controller: PhonesController<PhonesFragment>
+    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject override lateinit var adapter: PhonesAdapter
 
 
     override fun onSetup() {
-        controller = PhonesController(this)
+        viewState.contactId.value = args.getLong(ARG_CONTACT_ID)
         super.onSetup()
+        viewState.callEvent.observe(this@PhonesFragment) {
+            it.ifNew?.let(callNavigations::call)
+        }
+        binding.itemsScrollView.fastScroller.isVisible = false
     }
-
 
     companion object {
         fun newInstance(contactId: Long? = null) = PhonesFragment().apply {
