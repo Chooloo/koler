@@ -1,0 +1,195 @@
+<resources>
+
+    <!--region titles-->
+    <string name="recents">Récents</string>
+    <string name="contacts">Contacts</string>
+    <string name="conference">Conférence</string>
+    <string name="default_page">Défaut</string>
+    <string name="settings">Paramètres</string>
+    <string name="theme_mode_dark">Obscur</string>
+    <string name="theme_mode_light">Clair</string>
+    <string name="theme_mode_system">Système</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Oui ou Non?</string>
+    <string name="prompt_are_you_sure">Êtes-vous sûr?</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Numéro copié dans le presse-papiers</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">Yap</string>
+    <string name="action_no">Nope</string>
+    <string name="action_answer">Répondre</string>
+    <string name="action_hangup">Raccrocher</string>
+    <string name="action_show_history">Voir l\'Historique</string>
+    <string name="action_block_number">Bloqué le numéro</string>
+    <string name="action_unblock_number">Débloqué le numéro</string>
+    <string name="action_choose_audio_route">Définir l\'itinéraire audio</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Recherche</string>
+    <string name="hint_theme_mode">Mode du Thème</string>
+    <string name="hint_sim_account">Compte Sim</string>
+    <string name="hint_default_page">Page par Défaut</string>
+    <string name="hint_animations">Afficher les animations</string>
+    <string name="hint_search_recents">Recherche dans les Appel Récents</string>
+    <string name="hint_search_contacts">Recherche dans les Contacts</string>
+    <string name="hint_compact_mode">Compacter les éléments de la liste</string>
+    <string name="hint_search_items">Recherche dans les contacts &amp; les appels récents</string>
+    <string name="hint_dialpad_vibrate">Vibrer lors des clics sur le clavier</string>
+    <string name="hint_should_ask_sim">Proposer de choisir la SIM à chaque appel</string>
+    <string name="hint_dialpad_tones">Activation des tonalités sonores lors de clics sur le clavier</string>
+    <string name="hint_show_blocked">Afficher l\'option de blocage/déblocage des numéros (nécessite le composeur par défaut).</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s est en attente</string>
+    <string name="explain_choose_theme_mode">Définissez le mode du thème de Koler, redémarrez l'application pour appliquer les changements.</string>
+    <string name="explain_choose_sim_account">Appeler avec une autre sim</string>
+    <string name="explain_choose_audio_route">Acheminer l\'audio vers une autre source</string>
+    <string name="explain_delete_contact">Ce contact sera définitivement supprimé</string>
+    <string name="explain_delete_recent">Ce journal d\'appels sera supprimé définitivement</string>
+    <string name="explain_choose_default_page">Cette page sera sélectionnée à chaque réouverture de Koler</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_mute">Coupé le micro</string>
+    <string name="call_action_unmute">Réactivé le micro</string>
+    <string name="call_action_speaker">Haut-Parleur</string>
+    <string name="call_action_speaker_off">Couper le Haut-Parleur</string>
+    <!--endregion-->
+
+    <!--region call state-->
+    <string name="call_status_new">Nouvel Appel</string>
+    <string name="call_status_dialing">numérotation…</string>
+    <string name="call_status_holding">Appel en Attente</string>
+    <string name="call_status_connecting">Liaison…</string>
+    <string name="call_status_incoming">Appel Entrant</string>
+    <string name="call_status_active">Appel en Cours</string>
+    <string name="call_status_disconnected">Appel terminé</string>
+    <string name="call_status_pulling_call">Rappel du Numéro…</string>
+    <string name="call_status_unknown">Statut de l\'appel inconnu</string>
+    <string name="call_status_disconnecting">Déconnexion de l\'appel…</string>
+    <string name="call_status_phone_account">Sélectionnez le compte téléphonique</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">évaluer</string>
+    <string name="pref_key_compact">compact</string>
+    <string name="pref_key_ask_sim">choix_sim</string>
+    <string name="pref_key_color">couleur_d\'accentuation</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">mode_du_thème</string>
+    <string name="pref_key_report_bugs">signaler_des_bogues</string>
+    <string name="pref_key_show_blocked">afficher_les_éléments_bloqués</string>
+    <string name="pref_key_default_page">page_par_défaut</string>
+    <string name="pref_key_dialpad_tones">tonalités_du_clavier</string>
+    <string name="pref_key_manage_blocked">gérer_les_blocages</string>
+    <string name="pref_key_dialpad_vibrate">vibration_du_clavier</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Évaluer</string>
+    <string name="pref_title_compact">Mode Compact</string>
+    <string name="pref_title_animations">Animations</string>
+    <string name="pref_title_app_color">Couleur d\'Accentuation</string>
+    <string name="pref_title_theme_mode">Mode du Thème</string>
+    <string name="pref_title_email">Nous envoyez un courriel</string>
+    <string name="pref_title_report_bugs">Signaler des Bogues</string>
+    <string name="pref_title_manage_blocked">Gérer les Numéros Bloqués</string>
+    <!--endregion-->
+
+    <!--region pref summary -->
+    <!--endregion-->
+
+    <!--region pref default value-->
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">Aucun Résultat</string>
+    <string name="error_no_results_recents">Aucun élément récent</string>
+    <string name="error_no_results_contacts">Aucun Contacts</string>
+    <string name="error_no_results_phones">Aucun Numéro de Téléphone</string>
+    <string name="error_not_default_dialer_blocked">Définir koler comme application téléphone par défaut pour voir les numéros bloqués</string>
+    <string name="error_not_default_dialer_call">Définissez koler comme application téléphone par défaut pour passer des appels</string>
+
+    <string name="error_no_permissions_edit_call_log">Aucune autorisation de modifier le journal des appels :)</string>
+    <string name="error_no_permissions_make_call">Aucune autorisation pour passer un appel :(</string>
+    <string name="error_no_permissions_phones">J\'ai besoin d'une autorisation pour lire les contacts :)</string>
+    <string name="error_no_permissions_recents">J\'ai besoin d'une autorisation pour lire le journal des appels :)</string>
+    <string name="error_no_permissions_contacts">J\'ai besoin d'une autorisation pour lire les contacts :)</string>
+    
+    <string name="error_no_number_to_call">Aucun numéro n\'a été trouvé :(</string>
+    <string name="error_cant_hold_call">Mise en attente impossible</string>
+    <string name="error_cant_swap_calls">Impossible d\'échanger les appels</string>
+    <string name="error_cant_merge_call">Impossible de fusionner l\'appel</string>
+    <string name="error_couldnt_get_number_from_intent">Impossible de trouver le numéro</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">récents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Voicemail</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_menu_button">Bouton de Menu</string>
+    <string name="content_description_answer_button">Touche de Réponse</string>
+    <string name="content_description_reject_button">Touche de Rejet</string>
+    <string name="content_description_call_actions_button">Actions d'\appel</string>
+    <!--endregion-->
+    
+    <!--region notification-->
+    <string name="call_notification_channel_name">Notification d\'Appel</string>
+    <string name="call_notification_channel_description">Notification d\'appel active, affichée pour une utilisation confortable</string>
+    <!--endregion-->
+
+    <!--region phone type-->
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Haut-Parleur</string>
+    <string name="audio_route_earpiece">Oreillette</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Casque filaire</string>
+    <string name="audio_route_wired_or_earpiece">Filaire ou oreillette</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">Étoile de Favoris</string>
+    <string name="content_description_empty_list_icon">Icône de liste vide</string>
+</resources>

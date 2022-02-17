@@ -1,0 +1,23 @@
+L'interface utilisateur de <i>Koler</i> rend tout plus facile. Il utilise des balayages et un design minimaliste, rendant tout plus beau, intuitif, mais toujours productif. Lors d'un appel entrant, vous pouvez effectuer les opérations suivantes avant de répondre:
+* Rejeter un appel et envoyer un SMS à l'appelant
+* Rejeter dans un délai spécifié en secondes
+* Répondre dans un délai spécifié en secondes
+
+Lors d'un appel en cours, vous pouvez:
+
+* Rejeter dans un délai déterminé en secondes
+
+L'objectif principal de l'application est d'être plus intuitive et confortable. Pour cette raison, les gestes de balayages sont le principal moyen de contrôler l'application, ce qui rend son utilisation beaucoup plus fluide.
+
+<b>Composeur:</b>
+
+* Appel - Balayez vers le haut
+* Supprimer le numéro - Balayez vers la gauche
+* Collaber le composeur - Balayage dans la liste des contacts
+
+<b>Appel Entrant:</b>
+
+* Ouvrir le pavé numérique - Balayez vers le haut
+* Rejeté/Terminé - Balayez vers la gauche
+* Répondre - Balayez vers la droite
+* Envoyer un sms - Balayez vers le haut sur l'écran superposer d'envoi de SMS
