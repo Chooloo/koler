@@ -1,0 +1,24 @@
+L'interfaccia utente di chiamata in corso di <i>Koler</i> rende tutto più facile. Usa gli swipe e un design minimalista, rendendo tutto più bello, intuitivo, eppure ancora produttivo. In una chiamata in arrivo, puoi fare quanto segue prima di rispondere:
+
+* Rifiuta e invia un SMS a chi ha chiamato
+* Rifiuta in una quantità specificata di secondi
+* Rispondi in una quantità specificata di secondi
+
+In una chiamata in corso puoi:
+
+* Agganciare in una quantità specificata di secondi
+
+L'obiettivo principale dell'app è di essere più intuitiva e confortevole. Per questo motivo, gli swipe sono il modo principale per controllare l'app, rendendola molto più facile da usare.
+
+<b>Telefono:</b>
+
+* Chiama - Scorri verso l'alto
+* Cancella numero - Scorri verso sinistra
+* Riduci tastierino - Scorri sull'elenco dei contatti
+
+<b>Chiamata in arrivo:</b>
+
+* Apri tastiera - Scorri verso l'alto
+* Rifiuta/Aggancia - Scorri verso sinistra
+* Rispondi - Scorri verso destra
+* Invia SMS - Scorri verso l'alto sull'overlay Invia SMS
