@@ -135,7 +135,7 @@
     <string name="error_no_permissions_recents">J\'ai besoin d\'une autorisation pour lire le journal des appels :)</string>
     <string name="error_no_permissions_contacts">J\'ai besoin d\'une autorisation pour lire les contacts :)</string>
     
-    <string name="error_no_number_to_call">Aucun numéro n\'a été trouvé:(</string>
+    <string name="error_no_number_to_call">Aucun numéro n\'a été trouvé :(</string>
     <string name="error_cant_hold_call">Mise en attente impossible</string>
     <string name="error_cant_swap_calls">Impossible d\'échanger les appels</string>
     <string name="error_cant_merge_call">Impossible de fusionner l\'appel</string>
