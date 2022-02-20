@@ -65,11 +65,11 @@ class CallNotification @Inject constructor(
 
 
     override fun onMuteChanged(isMuted: Boolean) {
-        _call?.let { show(it) }
+        _call?.let(::show)
     }
 
     override fun onAudioRouteChanged(audiosRoute: CallAudiosInteractor.AudioRoute) {
-        _call?.let { show(it) }
+        _call?.let(::show)
     }
 
 
