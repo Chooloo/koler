@@ -3,7 +3,7 @@ package com.chooloo.www.chooloolib.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
+import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -11,17 +11,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CallBroadcastReceiver : BroadcastReceiver() {
     @Inject lateinit var calls: CallsInteractor
-    @Inject lateinit var audios: AudiosInteractor
+    @Inject lateinit var callAudios: CallAudiosInteractor
 
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
-            ACTION_MUTE -> audios.isMuted = true
-            ACTION_UNMUTE -> audios.isMuted = false
+            ACTION_MUTE -> callAudios.isMuted = true
+            ACTION_UNMUTE -> callAudios.isMuted = false
             ACTION_ANSWER -> calls.mainCall?.answer()
             ACTION_HANGUP -> calls.mainCall?.reject()
-            ACTION_SPEAKER -> audios.isSpeakerOn = true
-            ACTION_UNSPEAKER -> audios.isSpeakerOn = false
+            ACTION_SPEAKER -> callAudios.isSpeakerOn = true
+            ACTION_UNSPEAKER -> callAudios.isSpeakerOn = false
         }
     }
 

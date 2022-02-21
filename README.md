@@ -40,9 +40,9 @@ If you want to help us and support us so we can put more attention to the app, p
 Feel free to contact us for every little thing
 
 ## ⚙️ Install
-[<img src="https://github.com/machiav3lli/oandbackupx/blob/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/Chooloo/koler/releases)
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.chooloo.www.koler)
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Git it on F-Droid" height="80">](https://f-droid.org/app/com.chooloo.www.koler)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="Get it on IzzyOnDroid" height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.chooloo.www.koler)
+[<img src="https://github.com/machiav3lli/oandbackupx/blob/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/Chooloo/koler/releases)
 
 ## License
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)
