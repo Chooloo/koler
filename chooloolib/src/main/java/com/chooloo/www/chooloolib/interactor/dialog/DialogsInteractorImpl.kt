@@ -1,6 +1,11 @@
 package com.chooloo.www.chooloolib.interactor.dialog
 
 import android.content.Context
+import android.os.Build.VERSION_CODES.Q
+import android.telecom.PhoneAccountHandle
+import android.telecom.PhoneAccountSuggestion
+import android.telecom.TelecomManager
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
@@ -13,6 +18,7 @@ import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.model.SimAccount
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.chooloo.www.chooloolib.util.fullLabel
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dev.sasikanth.colorsheet.ColorSheet
@@ -24,6 +30,7 @@ class DialogsInteractorImpl @Inject constructor(
     private val sims: SimsInteractor,
     private val strings: StringsInteractor,
     private val prompts: PromptsInteractor,
+    private val telecomManager: TelecomManager,
     private val callAudios: CallAudiosInteractor,
     private val fragmentsFactory: FragmentFactory
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
@@ -130,11 +137,38 @@ class DialogsInteractorImpl @Inject constructor(
 
     override fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit) {
         askForChoice(
-            choiceCallback = { callback.invoke(it) },
+            choiceCallback = callback::invoke,
             titleRes = R.string.action_choose_audio_route,
             subtitleRes = R.string.explain_choose_audio_route,
             choiceToString = { strings.getString(it.stringRes) },
             choices = callAudios.supportedAudioRoutes.toList()
+        )
+    }
+
+    override fun askForPhoneAccountHandle(
+        phonesAccountHandles: List<PhoneAccountHandle>,
+        callback: (PhoneAccountHandle) -> Unit
+    ) {
+        askForChoice(
+            choiceCallback = callback::invoke,
+            titleRes = R.string.action_choose_phone_account,
+            subtitleRes = R.string.explain_choose_phone_account,
+            choiceToString = { telecomManager.getPhoneAccount(it).fullLabel() },
+            choices = phonesAccountHandles
+        )
+    }
+
+    @RequiresApi(Q)
+    override fun askForPhoneAccountSuggestion(
+        phoneAccountSuggestions: List<PhoneAccountSuggestion>,
+        callback: (PhoneAccountSuggestion) -> Unit
+    ) {
+        askForChoice(
+            choiceCallback = callback::invoke,
+            titleRes = R.string.action_choose_phone_account,
+            subtitleRes = R.string.explain_choose_phone_account,
+            choiceToString = { telecomManager.getPhoneAccount(it.phoneAccountHandle).fullLabel() },
+            choices = phoneAccountSuggestions
         )
     }
 }

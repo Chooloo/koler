@@ -1,6 +1,8 @@
 package com.chooloo.www.chooloolib.interactor.dialog
 
 import android.Manifest.permission.READ_PHONE_STATE
+import android.telecom.PhoneAccountHandle
+import android.telecom.PhoneAccountSuggestion
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
@@ -45,4 +47,13 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     fun askForDefaultPage(callback: (Page) -> Unit)
     fun askForThemeMode(callback: (ThemeMode) -> Unit)
     fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit)
+    fun askForPhoneAccountHandle(
+        phonesAccountHandles: List<PhoneAccountHandle>,
+        callback: (PhoneAccountHandle) -> Unit
+    )
+
+    fun askForPhoneAccountSuggestion(
+        phoneAccountSuggestions: List<PhoneAccountSuggestion>,
+        callback: (PhoneAccountSuggestion) -> Unit
+    )
 }
