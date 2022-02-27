@@ -90,7 +90,7 @@
     <!-- answer button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_answer_button"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_background"
@@ -101,7 +101,7 @@
     <!-- hangup button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_reject_button"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_big"

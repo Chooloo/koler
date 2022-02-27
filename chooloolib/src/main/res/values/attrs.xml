@@ -25,8 +25,9 @@
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
         <attr name="size" format="enum">
+            <enum name="big" value="2" />
+            <enum name="mini" value="1" />
             <enum name="normal" value="0" />
-            <enum name="big" value="1" />
         </attr>
     </declare-styleable>
 

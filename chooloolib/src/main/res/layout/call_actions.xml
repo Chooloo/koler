@@ -8,7 +8,7 @@
     <!-- mute -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_mute"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
@@ -21,7 +21,7 @@
     <!-- speaker -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_speaker"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
@@ -34,7 +34,7 @@
     <!-- hold -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_hold"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
@@ -47,7 +47,7 @@
     <!-- add call -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_add_call"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
@@ -61,7 +61,7 @@
     <!-- keypad -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_keypad"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
@@ -75,7 +75,7 @@
     <!-- swap -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_swap"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_swap_calls_24"
@@ -85,7 +85,7 @@
     <!-- merge -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_merge"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_call_merge_24"

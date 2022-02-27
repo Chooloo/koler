@@ -43,7 +43,7 @@
     <!-- add contact button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_add_contact_button"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
