@@ -5,6 +5,7 @@ import android.os.Build
 import android.telecom.Call.Details.*
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
+import android.telecom.TelecomManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
@@ -36,6 +37,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CallViewState @Inject constructor(
+    private val telecomManger: TelecomManager,
     private val calls: CallsInteractor,
     private val audios: AudiosInteractor,
     private val colors: ColorsInteractor,
@@ -97,6 +99,7 @@ class CallViewState @Inject constructor(
             callAudios.isMuted?.let(this@CallViewState::onMuteChanged)
             callAudios.audioRoute?.let(this@CallViewState::onAudioRouteChanged)
         }
+
 
         isManageEnabled.value = false
     }
@@ -230,11 +233,12 @@ class CallViewState @Inject constructor(
 
         if (call.state == SELECT_PHONE_ACCOUNT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                call.suggestedPhoneAccounts.firstOrNull { it.shouldAutoSelect() }?.let {
-                    call.selectPhoneAccount(it.phoneAccountHandle)
-                } ?: run {
-                    selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
-                }
+                selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
+//                call.suggestedPhoneAccounts.firstOrNull { it.shouldAutoSelect() }?.let {
+//                    call.selectPhoneAccount(it.phoneAccountHandle)
+//                } ?: run {
+//                    selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
+//                }
             } else {
                 selectPhoneHandleEvent.call(call.availablePhoneAccounts)
             }

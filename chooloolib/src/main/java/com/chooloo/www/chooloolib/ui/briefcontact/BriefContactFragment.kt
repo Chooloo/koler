@@ -44,6 +44,10 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             contactButtonDelete.setOnClickListener {
                 viewState.onActionDelete()
             }
+
+            briefContactStarButton.setOnClickListener {
+                viewState.onActionStar(it.isActivated)
+            }
         }
 
         viewState.apply {
@@ -59,7 +63,11 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             }
 
             isStarIconVisible.observe(this@BriefContactFragment) {
-                binding.contactImageStar.isVisible = it
+                binding.briefContactStarButton.isVisible = it
+            }
+
+            isStarIconActivated.observe(this@BriefContactFragment) {
+                binding.briefContactStarButton.isActivated = it
             }
 
             callEvent.observe(this@BriefContactFragment) {

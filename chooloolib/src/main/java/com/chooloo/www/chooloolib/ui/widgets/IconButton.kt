@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat.getDrawable
-import androidx.core.view.setPadding
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.util.getAttrColor
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,10 +21,11 @@ class IconButton : FloatingActionButton {
 
     private var _imageTintList: ColorStateList?
     private var _backgroundTintList: ColorStateList?
+    private val _alterActivatedBackground: Boolean
 
     private val dimenPadding by lazy { ViewUtils.dpToPx(context, 15).toInt() }
     private val dimenSizeBig by lazy { ViewUtils.dpToPx(context, 70).toInt() }
-    private val dimenSizeMini by lazy { ViewUtils.dpToPx(context, 50).toInt() }
+    private val dimenSizeMini by lazy { ViewUtils.dpToPx(context, 10).toInt() }
     private val dimenSizeDefault by lazy { ViewUtils.dpToPx(context, 60).toInt() }
     private val dimenCornerSize by lazy { context.resources.getDimension(R.dimen.corner_radius) }
     private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
@@ -49,6 +49,8 @@ class IconButton : FloatingActionButton {
             size = it.getInteger(R.styleable.Chooloo_IconButton_size, 0)
             _iconDefault = it.getResourceId(R.styleable.Chooloo_IconButton_icon, NO_ID)
             _iconActivated = it.getResourceId(R.styleable.Chooloo_IconButton_activatedIcon, NO_ID)
+            _alterActivatedBackground =
+                it.getBoolean(R.styleable.Chooloo_IconButton_alterActivatedBackground, true)
         }.recycle()
 
         compatElevation = 0f
@@ -83,8 +85,10 @@ class IconButton : FloatingActionButton {
         if (_iconActivated != NO_ID) {
             (if (isActivated) _iconActivated else _iconDefault)?.let { setImageResource(it) }
         }
-        imageTintList = if (isActivated) _backgroundTintList else _imageTintList
-        backgroundTintList = if (isActivated) _imageTintList else _backgroundTintList
+        if (_alterActivatedBackground) {
+            imageTintList = if (isActivated) _backgroundTintList else _imageTintList
+            backgroundTintList = if (isActivated) _imageTintList else _backgroundTintList
+        }
     }
 
 

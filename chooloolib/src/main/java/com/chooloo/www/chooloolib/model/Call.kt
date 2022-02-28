@@ -118,11 +118,14 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         get() = details.accountHandle
 
     val availablePhoneAccounts: List<PhoneAccountHandle>
-        get() = extras.getParcelableArrayList(AVAILABLE_PHONE_ACCOUNTS) ?: emptyList()
+        get() = intentExtras.getParcelableArrayList(AVAILABLE_PHONE_ACCOUNTS) ?: emptyList()
 
     val suggestedPhoneAccounts: List<PhoneAccountSuggestion>
         @RequiresApi(Q)
-        get() = extras.getParcelableArrayList(EXTRA_SUGGESTED_PHONE_ACCOUNTS) ?: emptyList()
+        get() = intentExtras.getParcelableArrayList(EXTRA_SUGGESTED_PHONE_ACCOUNTS) ?: emptyList()
+
+    val intentExtras: Bundle
+        get() = details.intentExtras
 
     val isActive: Boolean
         get() = state == ACTIVE

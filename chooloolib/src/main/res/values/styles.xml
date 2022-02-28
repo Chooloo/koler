@@ -73,9 +73,9 @@
 
     <style name="Chooloo.BottomDialog.ShapeAppearanceOverlay">
         <item name="android:windowTranslucentStatus">true</item>
-        <!--        <item name="cornerSize">@dimen/corner_radius</item>-->
-        <item name="cornerSizeTopLeft">@dimen/corner_radius</item>
-        <item name="cornerSizeTopRight">@dimen/corner_radius</item>
+        <item name="cornerSize">@dimen/corner_radius</item>
+        <!--        <item name="cornerSizeTopLeft">@dimen/corner_radius</item>-->
+        <!--        <item name="cornerSizeTopRight">@dimen/corner_radius</item>-->
         <item name="cornerFamily">rounded</item>
     </style>
     <!--endregion-->

@@ -5,6 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/brief_contact_star_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:backgroundTint="@android:color/transparent"
+        android:tint="@color/orange_foreground"
+        app:activatedIcon="@drawable/round_star_24"
+        app:alterActivatedBackground="false"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:icon="@drawable/round_star_border_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/brief_contact_image"
         style="@style/Chooloo.Bottom.Image"
@@ -24,29 +39,12 @@
         style="@style/Chooloo.Text.Headline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_big"
         android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/brief_contact_image"
         tools:text="Jesus" />
-
-    <ImageView
-        android:id="@+id/contact_image_star"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:contentDescription="@string/content_description_favorite_star"
-        android:elevation="-10dp"
-        android:alpha="0.5"
-        android:rotation="21"
-        android:src="@drawable/round_star_24"
-        android:translationX="-75dp"
-        android:translationY="75dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:tint="@color/orange_background" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/contact_button_call"

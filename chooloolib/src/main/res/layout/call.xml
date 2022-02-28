@@ -91,6 +91,7 @@
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_answer_button"
         app:size="big"
+        app:borderWidth="0dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_background"
@@ -103,6 +104,7 @@
         android:id="@+id/call_reject_button"
         app:size="big"
         android:layout_width="wrap_content"
+        app:borderWidth="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_big"
         android:backgroundTint="@color/red_background"
