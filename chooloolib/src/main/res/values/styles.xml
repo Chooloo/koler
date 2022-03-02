@@ -50,8 +50,7 @@
     </style>
 
     <style name="Chooloo.IconButton.Big" parent="Chooloo.IconButton">
-        <item name="fabCustomSize">70dp</item>
-        <item name="maxImageSize">36dp</item>
+        <item name="size">big</item>
     </style>
 
     <!--region image view -->

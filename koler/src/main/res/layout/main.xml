@@ -14,7 +14,7 @@
         android:contentDescription="@string/content_description_menu_button"
         android:tint="?colorOnBackground"
         app:backgroundTint="?colorPrimarySurface"
-        app:borderWidth="0dp"
+        style="@style/Chooloo.IconButton"
         app:fabSize="mini"
         app:icon="@drawable/round_more_vert_24" />
 
@@ -43,10 +43,9 @@
     <!-- dialer button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_dialpad_button"
-        app:size="big"
-        android:layout_width="wrap_content"
+         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        app:borderWidth="0dp"
+        style="@style/Chooloo.IconButton.Big"
         app:icon="@drawable/round_dialpad_24" />
 </androidx.constraintlayout.motion.widget.MotionLayout>
