@@ -173,7 +173,7 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
         }
 
-        dialpadViewState.char.observe(this, viewState::onCharKey)
+        dialpadViewState.char.observe(this@CallActivity, viewState::onCharKey)
     }
 
 
