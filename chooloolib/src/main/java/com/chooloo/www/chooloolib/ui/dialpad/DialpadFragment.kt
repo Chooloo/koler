@@ -2,7 +2,7 @@ package com.chooloo.www.chooloolib.ui.dialpad
 
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.databinding.DialpadBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState>() {
     override val contentView by lazy { binding.root }
-    override val viewState: DialpadViewState by viewModels()
+    override val viewState: DialpadViewState by activityViewModels()
 
     @Inject lateinit var animationsInteractor: AnimationsInteractor
 
