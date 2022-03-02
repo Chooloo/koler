@@ -234,11 +234,6 @@ class CallViewState @Inject constructor(
         if (call.state == SELECT_PHONE_ACCOUNT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
-//                call.suggestedPhoneAccounts.firstOrNull { it.shouldAutoSelect() }?.let {
-//                    call.selectPhoneAccount(it.phoneAccountHandle)
-//                } ?: run {
-//                    selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
-//                }
             } else {
                 selectPhoneHandleEvent.call(call.availablePhoneAccounts)
             }
