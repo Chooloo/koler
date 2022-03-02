@@ -1,8 +1,9 @@
 package com.chooloo.www.chooloolib.model
 
-import android.net.Uri
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
+import com.chooloo.www.chooloolib.util.fullAddress
+import com.chooloo.www.chooloolib.util.fullLabel
 
 data class SimAccount(
     val index: Int,
@@ -13,13 +14,7 @@ data class SimAccount(
     val phoneAccountHandle: PhoneAccountHandle get() = phoneAccount.accountHandle
 
     init {
-        var rawLabel = phoneAccount.label.toString()
-        var rawAddress = phoneAccount.address.toString()
-        if (rawAddress.startsWith("tel:") && rawAddress.substring(4).isNotEmpty()) {
-            rawAddress = Uri.encode(rawAddress.substring(4))
-            rawLabel = "${phoneAccount.label}(${rawAddress})"
-        }
-        label = rawLabel
-        address = rawAddress
+        label = phoneAccount.fullLabel()
+        address = phoneAccount.fullAddress()
     }
 }

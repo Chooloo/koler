@@ -27,6 +27,7 @@ class BriefContactViewState @Inject constructor(
     val contactName = MutableLiveData<String?>()
     val contact = MutableLiveData<ContactAccount>()
     val isStarIconVisible = MutableLiveData<Boolean>()
+    val isStarIconActivated = MutableLiveData<Boolean>()
 
     val callEvent = DataLiveEvent<String>()
     val confirmContactDeleteEvent = LiveEvent()
@@ -38,8 +39,8 @@ class BriefContactViewState @Inject constructor(
         this.contactId.value = contactId
         contacts.queryContact(contactId) {
             contactName.value = it?.name
-            isStarIconVisible.value = it?.starred == true
             it?.photoUri?.let { uri -> contactImage.value = Uri.parse(uri) }
+            isStarIconActivated.value = it?.starred == true
         }
         phones.getContactAccounts(contactId) {
             _firstPhone = it?.getOrNull(0)
@@ -69,5 +70,10 @@ class BriefContactViewState @Inject constructor(
             contactId.value?.let(contacts::deleteContact)
             finishEvent.call()
         }
+    }
+
+    fun onActionStar(isActivate: Boolean) {
+        contactId.value?.let { contacts.toggleContactFavorite(it, !isActivate) }
+        isStarIconActivated.value = !isActivate
     }
 }

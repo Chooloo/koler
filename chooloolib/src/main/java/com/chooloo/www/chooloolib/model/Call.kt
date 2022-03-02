@@ -2,6 +2,8 @@ package com.chooloo.www.chooloolib.model
 
 import android.net.Uri
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES.Q
 import android.os.Bundle
 import android.telecom.Call.*
 import android.telecom.Call.Details.CAPABILITY_HOLD
@@ -9,6 +11,8 @@ import android.telecom.Call.Details.PROPERTY_ENTERPRISE_CALL
 import android.telecom.Connection
 import android.telecom.DisconnectCause
 import android.telecom.PhoneAccountHandle
+import android.telecom.PhoneAccountSuggestion
+import androidx.annotation.RequiresApi
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.model.Call.State.*
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
@@ -55,7 +59,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
 
     val state: State
         get() = State.fromTelecomState(
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (SDK_INT >= Build.VERSION_CODES.S) {
                 details.state
             } else {
                 _call.state
@@ -113,6 +117,15 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     val phoneAccountHandle: PhoneAccountHandle
         get() = details.accountHandle
 
+    val availablePhoneAccounts: List<PhoneAccountHandle>
+        get() = intentExtras.getParcelableArrayList(AVAILABLE_PHONE_ACCOUNTS) ?: emptyList()
+
+    val suggestedPhoneAccounts: List<PhoneAccountSuggestion>
+        @RequiresApi(Q)
+        get() = intentExtras.getParcelableArrayList(EXTRA_SUGGESTED_PHONE_ACCOUNTS) ?: emptyList()
+
+    val intentExtras: Bundle
+        get() = details.intentExtras
 
     val isActive: Boolean
         get() = state == ACTIVE
@@ -153,7 +166,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
      */
     fun reject() {
         if (state == INCOMING) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
                 _call.reject(REJECT_REASON_DECLINED)
             } else {
                 _call.reject(false, "")
@@ -221,6 +234,10 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
 
     fun joinConference(otherCall: Call) {
         _call.conference(otherCall.telecomCall)
+    }
+
+    fun selectPhoneAccount(accountHandle: PhoneAccountHandle) {
+        _call.phoneAccountSelected(accountHandle, false)
     }
 
 

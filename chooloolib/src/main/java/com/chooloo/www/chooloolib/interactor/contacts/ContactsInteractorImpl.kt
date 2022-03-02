@@ -7,10 +7,10 @@ import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.chooloolib.contentresolver.ContactsContentResolver
-import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.util.annotation.RequiresDefaultDialer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

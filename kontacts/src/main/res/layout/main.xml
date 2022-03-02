@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/content_description_menu_button"
         android:tint="?colorOnBackground"
+        style="@style/Chooloo.IconButton"
         app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
         app:fabSize="mini"
@@ -43,10 +44,10 @@
     <!-- add contact button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_add_contact_button"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        app:borderWidth="0dp"
+        style="@style/Chooloo.IconButton"
         app:icon="@drawable/round_person_add_24" />
 </androidx.constraintlayout.motion.widget.MotionLayout>
