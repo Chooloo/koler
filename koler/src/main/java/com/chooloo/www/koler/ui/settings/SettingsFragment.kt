@@ -24,13 +24,6 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
                 it.ifNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
             }
 
-            askForShouldAsmSimEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
-                    dialogs.askForBoolean(R.string.hint_should_ask_sim, viewState::onShouldAskSim)
-                }
-
-            }
-
             askForDialpadTonesEvent.observe(this@SettingsFragment) {
                 it.ifNew?.let {
                     dialogs.askForBoolean(R.string.hint_dialpad_tones, viewState::onDialpadTones)

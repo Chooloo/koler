@@ -15,15 +15,6 @@ class PreferencesInteractorImpl @Inject constructor(
 ) : BaseInteractorImpl<PreferencesInteractor.Listener>(),
     PreferencesInteractor {
 
-    override var isAskSim: Boolean
-        get() = preferencesManager.getBoolean(
-            R.string.pref_key_ask_sim,
-            R.bool.pref_default_value_should_ask_sim
-        )
-        set(value) {
-            preferencesManager.putBoolean(R.string.pref_key_ask_sim, value)
-        }
-
     override var isCompact: Boolean
         get() = preferencesManager.getBoolean(
             R.string.pref_key_compact,

@@ -36,21 +36,6 @@ class CallNavigationsInteractorImpl @Inject constructor(
         }
     }
 
-//    @RequiresPermission(allOf = [Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE])
-//    override fun call(number: String) {
-//        permissions.runWithDefaultDialer(null, {
-//            sims.getIsMultiSim { isMultiSim ->
-//                if (preferences.isAskSim && isMultiSim) {
-//                    dialogs.askForSim { call(it, number) }
-//                } else {
-//                    sims.getSimAccounts { call(it[0], number) }
-//                }
-//            }
-//        }, {
-//            call(null, number)
-//        })
-//    }
-
     @RequiresPermission(allOf = [Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE])
     override fun call(number: String) {
         telecomManager.placeCall(Uri.parse("tel:${Uri.encode(number)}"), Bundle())
