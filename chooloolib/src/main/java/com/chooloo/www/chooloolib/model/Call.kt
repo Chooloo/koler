@@ -29,6 +29,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         fun onCallChanged(call: Call)
     }
 
+    private var _phoneAccountSelected: Boolean = false
     private val _id: String = Call::class.java.simpleName + sIdCounter++
     private val _call: android.telecom.Call = telecomCall
 
@@ -94,6 +95,9 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
 
     val isEnterprise: Boolean
         get() = details.hasProperty(PROPERTY_ENTERPRISE_CALL)
+
+    val phoneAccountSelected: Boolean
+        get() = _phoneAccountSelected
 
     val conferenceableCalls: List<Call>
         get() = fromTelecomCalls(_call.conferenceableCalls)
@@ -238,6 +242,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
 
     fun selectPhoneAccount(accountHandle: PhoneAccountHandle) {
         _call.phoneAccountSelected(accountHandle, false)
+        _phoneAccountSelected = true
     }
 
 

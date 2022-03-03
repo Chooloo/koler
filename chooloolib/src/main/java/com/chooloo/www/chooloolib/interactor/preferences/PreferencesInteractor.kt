@@ -7,7 +7,6 @@ import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener> {
     interface Listener
 
-    var isAskSim: Boolean
     var isCompact: Boolean
     var isAnimations: Boolean
     var isShowBlocked: Boolean

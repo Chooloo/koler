@@ -231,7 +231,7 @@ class CallViewState @Inject constructor(
                 colors.getColor(R.color.red_foreground)
         }
 
-        if (call.state == SELECT_PHONE_ACCOUNT) {
+        if (call.state == SELECT_PHONE_ACCOUNT && !call.phoneAccountSelected) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
             } else {
