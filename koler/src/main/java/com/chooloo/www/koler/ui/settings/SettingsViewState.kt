@@ -25,16 +25,13 @@ class SettingsViewState @Inject constructor(
         preferences
     ) {
 
+    override val menuResList = arrayListOf(R.menu.menu_koler) + super.menuResList
+
     val askForShowBlockedEvent = LiveEvent()
     val askForDefaultPageEvent = LiveEvent()
     val askForDialpadTonesEvent = LiveEvent()
     val askForDialpadVibrateEvent = LiveEvent()
 
-
-    override fun attach() {
-        super.attach()
-        menuResList.value = arrayListOf(R.menu.menu_koler) + (menuResList.value ?: emptyList())
-    }
 
     override fun onMenuItemClick(menuItem: MenuItem) {
         when (menuItem.itemId) {
