@@ -19,7 +19,7 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
     override fun onSetup() {
         super.onSetup()
         viewState.apply {
-            menuResList.observe(this@SettingsFragment, this@SettingsFragment::setMenuResList)
+            setMenuResList(menuResList)
 
             askForColorEvent.observe(this@SettingsFragment) { ev ->
                 ev.ifNew?.let { dialogs.askForColor(it, viewState::onColorResponse) }
