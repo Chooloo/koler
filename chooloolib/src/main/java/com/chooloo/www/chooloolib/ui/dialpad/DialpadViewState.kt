@@ -25,13 +25,7 @@ open class DialpadViewState @Inject constructor(
         onTextChanged((text.value ?: "") + char)
     }
 
-    open fun onLongKeyClick(char: Char) = when (char) {
-        '0' -> {
-            onTextChanged(text.value + "+")
-            true
-        }
-        else -> true
-    }
+    open fun onLongKeyClick(char: Char) = true
 
 
     protected open fun onTextChanged(text: String) {
