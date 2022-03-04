@@ -28,13 +28,16 @@ class DialerViewState @Inject constructor(
     val isAddContactButtonVisible = MutableLiveData<Boolean>()
 
 
-    override fun onLongKeyClick(char: Char): Boolean {
-        return if (char == '1') {
+    override fun onLongKeyClick(char: Char) = when (char) {
+        '0' -> {
+            onTextChanged(text.value + "+")
+            true
+        }
+        '1' -> {
             callVoicemailEvent.call()
             true
-        } else {
-            super.onLongKeyClick(char)
         }
+        else -> super.onLongKeyClick(char)
     }
 
     override fun onTextChanged(text: String) {
