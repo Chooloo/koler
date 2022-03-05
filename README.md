@@ -7,17 +7,18 @@
 </h1>
 
 <p align="center">
-         uniquely stylized phone app with customizable features
+         Dialer but simple and Looks pretty good honestly
 </p>
 
-Koler is a uniquely stylized phone app for Android, designed with the user in mind.
+Koler is an open source MVVM android app.
+Yniquely stylized phone app for Android, designed with the user in mind.
 Believe us we want to make it good, as we use it ourselves.
 
 ## ☕ Support
 Due to lack of support, unfortunately, it's difficult for us to keep supporting the project
 If you like the app and want us to fix and improve it, please consider giving us a boost
 </br>
-
+You can donate with PayPal, or just buy the app from the playstore, allowing you to constantly get updates without the need to come here.
 [![Donate with PayPal](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://paypal.me/theroeiedri?locale.x=en_US)
 
 ## ⭐ Find this repository useful?
