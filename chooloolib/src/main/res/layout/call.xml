@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
-        style="@style/Chooloo.IconButton"
+
         android:src="@drawable/round_people_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
         android:id="@+id/call_answer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:backgroundTint="@color/green_background"
         android:contentDescription="@string/content_description_answer_button"
         android:tint="@color/green_foreground"
@@ -103,7 +103,7 @@
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_reject_button"
         android:layout_width="wrap_content"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_big"
         android:backgroundTint="@color/red_background"

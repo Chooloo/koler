@@ -115,7 +115,7 @@
         android:layout_margin="@dimen/default_spacing"
         app:icon="@drawable/round_call_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/Chooloo.IconButton.Big"
+        app:size="big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -125,7 +125,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?colorSurface"
         android:visibility="gone"
-        style="@style/Chooloo.IconButton"
         app:icon="@drawable/round_keyboard_return_24"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +139,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?colorSurface"
         android:visibility="gone"
-        style="@style/Chooloo.IconButton"
         app:icon="@drawable/round_person_add_24"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toStartOf="@id/dialpad_button_call"
