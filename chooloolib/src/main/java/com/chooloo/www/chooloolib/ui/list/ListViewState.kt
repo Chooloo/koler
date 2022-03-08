@@ -14,6 +14,7 @@ abstract class ListViewState<ItemType> : BaseViewState() {
     val isScrollerVisible = MutableLiveData<Boolean>()
 
     val itemClickedEvent = DataLiveEvent<ItemType>()
+    val itemLongClickedEvent = DataLiveEvent<ItemType>()
     val itemsChangedEvent = DataLiveEvent<List<ItemType>>()
 
 
@@ -36,11 +37,13 @@ abstract class ListViewState<ItemType> : BaseViewState() {
         itemClickedEvent.call(item)
     }
 
+    open fun onItemLongClick(item: ItemType) {
+        itemLongClickedEvent.call(item)
+    }
+
     fun onPermissionsChanged(hasPermissions: Boolean) {
         emptyMessage.value = if (hasPermissions) noResultsTextRes else noPermissionsTextRes
     }
-
-    open fun onItemLongClick(item: ItemType) {}
     open fun onItemLeftClick(item: ItemType) {}
     open fun onItemRightClick(item: ItemType) {}
 
