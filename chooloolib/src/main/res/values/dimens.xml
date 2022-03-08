@@ -35,7 +35,12 @@
     <dimen name="swipe_indicator_margin">8dp</dimen>
     <!--endregion-->
 
-    <!--region toolbar-->
+    <!--region icon button-->
+    <dimen name="icon_button_size_big">80dp</dimen>
+    <dimen name="icon_button_size_small">50dp</dimen>
+    <dimen name="icon_button_size_normal">60dp</dimen>
+    <dimen name="icon_button_padding_big">25dp</dimen>
+    <dimen name="icon_button_padding_small">12dp</dimen>
+    <dimen name="icon_button_padding_normal">20dp</dimen>
     <!--endregion-->
-
 </resources>

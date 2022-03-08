@@ -28,13 +28,13 @@ import androidx.core.view.marginTop
 import androidx.core.widget.ImageViewCompat
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.widgets.IconButton
+import com.chooloo.www.chooloolib.ui.widgets.IconButton.Companion.SIZE_SMALL
 import com.chooloo.www.chooloolib.util.getAttrColor
 import com.chooloo.www.chooloolib.util.getSelectableItemBackgroundDrawable
 import com.chooloo.www.chooloolib.util.getSizeInDp
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
-import com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -211,8 +211,8 @@ open class ListItem : LinearLayout {
         }
 
         buttonLeft = IconButton(context, attrs, defStyleRes).apply {
-            size = SIZE_MINI
             visibility = GONE
+            size = SIZE_SMALL
             id = generateViewId()
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
                 it.setMargins(
@@ -227,8 +227,8 @@ open class ListItem : LinearLayout {
         }
 
         buttonRight = IconButton(context, attrs, defStyleRes).apply {
-            size = SIZE_MINI
             visibility = GONE
+            size = SIZE_SMALL
             id = generateViewId()
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
                 it.setMargins(
