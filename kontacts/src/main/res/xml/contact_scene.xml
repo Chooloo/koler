@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/constraint_set_contact_default">
+        <Constraint
+            android:id="@+id/contact_image"
+            android:layout_width="@dimen/image_size_big"
+            android:layout_height="@dimen/image_size_big"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_image" />
+        <Constraint
+            android:id="@+id/contact_button_call"
+            android:layout_width="@dimen/icon_button_size_normal"
+            android:layout_height="@dimen/icon_button_size_normal"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toStartOf="@id/contact_button_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contact_name" />
+        <Constraint
+            android:id="@+id/contact_button_edit"
+            android:layout_width="@dimen/icon_button_size_normal"
+            android:layout_height="@dimen/icon_button_size_normal"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
+            app:layout_constraintStart_toEndOf="@id/contact_button_call" />
+        <Constraint
+            android:id="@+id/contact_button_delete"
+            android:layout_width="@dimen/icon_button_size_normal"
+            android:layout_height="@dimen/icon_button_size_normal"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
+            app:layout_constraintStart_toEndOf="@id/contact_button_edit"
+            app:layout_constraintTop_toBottomOf="@id/contact_name" />
+        <Constraint
+            android:id="@+id/contact_button_sms"
+            android:layout_width="@dimen/icon_button_size_normal"
+            android:layout_height="@dimen/icon_button_size_normal"
+            android:layout_marginTop="@dimen/default_spacing_big"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/contact_button_delete"
+            app:layout_constraintTop_toBottomOf="@id/contact_name" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/constraint_set_contact_editable" />
+    
+    <Transition
+        app:constraintSetEnd="@id/constraint_set_contact_editable"
+        app:constraintSetStart="@+id/constraint_set_contact_default" />
+</MotionScene>

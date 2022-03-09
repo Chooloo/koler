@@ -35,28 +35,14 @@
     <style name="Chooloo.Text.Caption" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
-
     <!--endregion-->
-
-    <!--region button -->
-
-    <!--endregion-->
-
-    <!--region icon button-->
-    <style name="Chooloo.IconButton" parent="Widget.Design.FloatingActionButton">
-        <item name="borderWidth">0dp</item>
-    </style>
-
-    <style name="Chooloo.IconButton.Big" parent="Chooloo.IconButton">
-        <item name="size">big</item>
-    </style>
 
     <!--region image view -->
     <style name="Chooloo.Image" />
 
     <style name="Chooloo.Image.Profile">
+        <item name="android:src">@drawable/round_person_24</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
@@ -78,7 +64,7 @@
     <!--endregion-->
 
     <!--region list view -->
-    <style name="Chooloo.ListView" parent="Widget.AppCompat.ListView">
+    <style name="Chooloo.ListView">
         <item name="android:requiresFadingEdge">vertical</item>
         <item name="android:fadingMode">fade_in_out</item>
         <item name="android:fadingEdge">vertical</item>
@@ -92,10 +78,6 @@
         <item name="bubbleTextColor">?colorOnSecondary</item>
         <item name="handleColor">?colorSecondary</item>
     </style>
-    <!--endregion-->
-
-    <!--region dialpad -->
-
     <!--endregion-->
 
     <!--region call -->
@@ -124,18 +106,11 @@
     </style>
     <!--endregion-->
 
-    <!--region appbar -->
-
-    <!--endregion-->
-
-    <!--region contact-->
+    <!--region bottom-->
     <style name="Chooloo.Bottom" />
 
     <style name="Chooloo.Bottom.Image">
         <item name="android:src">@drawable/round_person_24</item>
     </style>
-
-    <!--region shape appearance -->
-
     <!--endregion-->
 </resources>

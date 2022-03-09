@@ -22,9 +22,6 @@
     <dimen name="corner_radius">25dp</dimen>
     <!--endregion-->
 
-    <!--region list item -->
-    <!--endregion-->
-
     <!--region button-->
     <dimen name="button_text_height">47dp</dimen>
     <!--endregion-->
@@ -35,7 +32,12 @@
     <dimen name="swipe_indicator_margin">8dp</dimen>
     <!--endregion-->
 
-    <!--region toolbar-->
+    <!--region icon button-->
+    <dimen name="icon_button_size_big">80dp</dimen>
+    <dimen name="icon_button_size_small">50dp</dimen>
+    <dimen name="icon_button_size_normal">65dp</dimen>
+    <dimen name="icon_button_padding_big">25dp</dimen>
+    <dimen name="icon_button_padding_small">11dp</dimen>
+    <dimen name="icon_button_padding_normal">18dp</dimen>
     <!--endregion-->
-
 </resources>

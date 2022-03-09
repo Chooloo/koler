@@ -93,18 +93,6 @@ class MainActivity : BaseActivity<MainViewState>() {
                 ev.ifNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
             }
 
-            showRecentEvent.observe(this@MainActivity) { ev ->
-                ev.ifNew?.let {
-                    prompts.showFragment(choolooFragmentFactory.getRecentFragment(it))
-                }
-            }
-
-            showContactEvent.observe(this@MainActivity) { ev ->
-                ev.ifNew?.let {
-                    prompts.showFragment(choolooFragmentFactory.getBriefContactFragment(it))
-                }
-            }
-
             showDialerEvent.observe(this@MainActivity) { ev ->
                 ev.ifNew?.let {
                     prompts.showFragment(
@@ -116,14 +104,6 @@ class MainActivity : BaseActivity<MainViewState>() {
 
         if (intent.action in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) {
             viewState.onViewIntent(intent)
-        }
-
-        contactsViewState.itemClickedEvent.observe(this) {
-            it.ifNew?.let(viewState::onContactItemClick)
-        }
-
-        recentsViewState.itemClickedEvent.observe(this) {
-            it.ifNew?.let(viewState::onRecentItemClick)
         }
     }
 

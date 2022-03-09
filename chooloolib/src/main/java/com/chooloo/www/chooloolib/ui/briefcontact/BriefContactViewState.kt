@@ -25,15 +25,22 @@ class BriefContactViewState @Inject constructor(
     val contactId = MutableLiveData<Long>()
     val contactImage = MutableLiveData<Uri>()
     val contactName = MutableLiveData<String?>()
-    val contact = MutableLiveData<ContactAccount>()
     val isStarIconVisible = MutableLiveData<Boolean>()
     val isStarIconActivated = MutableLiveData<Boolean>()
 
     val callEvent = DataLiveEvent<String>()
     val confirmContactDeleteEvent = LiveEvent()
 
-    private var _firstPhone: PhoneAccount? = null
+    private var contact: ContactAccount? = null
 
+
+    private fun withFirstNumber(callback: (PhoneAccount?) -> Unit) {
+        contact?.let {
+            phones.getContactAccounts(it.id) {
+                callback.invoke(it?.getOrNull(0))
+            }
+        }
+    }
 
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId
@@ -42,19 +49,18 @@ class BriefContactViewState @Inject constructor(
             it?.photoUri?.let { uri -> contactImage.value = Uri.parse(uri) }
             isStarIconActivated.value = it?.starred == true
         }
-        phones.getContactAccounts(contactId) {
-            _firstPhone = it?.getOrNull(0)
-        }
     }
 
     fun onActionCall() {
-        _firstPhone?.number?.let(callEvent::call) ?: run {
-            errorEvent.call(R.string.error_no_number_to_call)
+        withFirstNumber {
+            it?.number?.let(callEvent::call) ?: run {
+                errorEvent.call(R.string.error_no_number_to_call)
+            }
         }
     }
 
     fun onActionSms() {
-        _firstPhone?.number?.let(navigations::sendSMS)
+        withFirstNumber { it?.number?.let(navigations::sendSMS) }
     }
 
     fun onActionEdit() {

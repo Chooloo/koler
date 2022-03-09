@@ -35,8 +35,8 @@
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_manage_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_normal"
+            android:layout_height="@dimen/icon_button_size_normal"
             android:layout_marginTop="@dimen/default_spacing_big"
             app:layout_constraintBottom_toTopOf="@id/call_actions"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,8 +46,8 @@
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_answer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginStart="@dimen/default_spacing_big"
             android:layout_marginLeft="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
@@ -55,8 +55,8 @@
             app:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/call_reject_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginEnd="@dimen/default_spacing_big"
             android:layout_marginRight="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
@@ -101,8 +101,8 @@
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_manage_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_normal"
+            android:layout_height="@dimen/icon_button_size_normal"
             android:layout_marginTop="@dimen/default_spacing_big"
             app:layout_constraintBottom_toTopOf="@id/call_actions"
             app:layout_constraintEnd_toEndOf="parent"
@@ -112,15 +112,15 @@
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_reject_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
         <Constraint
             android:id="@+id/call_answer_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
