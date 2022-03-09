@@ -43,8 +43,10 @@
     <style name="Chooloo.Image" />
 
     <style name="Chooloo.Image.Profile">
-        <item name="cornerSize">50%</item>
-        <item name="cornerFamily">rounded</item>
+        <item name="android:src">@drawable/round_person_24</item>
+
+<!--        <item name="cornerSize">50%</item>-->
+<!--        <item name="cornerFamily">rounded</item>-->
     </style>
     <!--endregion-->
 

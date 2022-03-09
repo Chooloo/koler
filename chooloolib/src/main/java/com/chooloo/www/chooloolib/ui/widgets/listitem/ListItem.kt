@@ -166,6 +166,7 @@ open class ListItem : LinearLayout {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
+        clipToOutline = true
         orientation = VERTICAL
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
@@ -244,9 +245,11 @@ open class ListItem : LinearLayout {
 
         personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
+            clipToOutline = true
             id = View.generateViewId()
-            background = context.getSelectableItemBackgroundDrawable()
+            foreground = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            background = ContextCompat.getDrawable(context, R.drawable.round_outline)
         }
 
         context.obtainStyledAttributes(attrs, R.styleable.Chooloo_ListItem, 0, 0).also {
@@ -326,10 +329,11 @@ open class ListItem : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
-            personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
+            personLayout.backgroundTintList =
+                ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
         } else {
             personLayout.background =
-                ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
+                ContextCompat.getDrawable(context, R.drawable.bubble_background)
         }
     }
 
