@@ -1,7 +1,11 @@
 package com.chooloo.www.chooloolib.ui.call
 
 import android.net.Uri
+import android.os.Build
 import android.telecom.Call.Details.*
+import android.telecom.PhoneAccountHandle
+import android.telecom.PhoneAccountSuggestion
+import android.telecom.TelecomManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
@@ -21,6 +25,7 @@ import com.chooloo.www.chooloolib.model.CantSwapCallException
 import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.ui.widgets.CallActions
+import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
@@ -32,6 +37,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CallViewState @Inject constructor(
+    private val telecomManger: TelecomManager,
     private val calls: CallsInteractor,
     private val audios: AudiosInteractor,
     private val colors: ColorsInteractor,
@@ -70,6 +76,8 @@ class CallViewState @Inject constructor(
     val showDialpadEvent = LiveEvent()
     val askForRouteEvent = LiveEvent()
     val showCallManagerEvent = LiveEvent()
+    val selectPhoneHandleEvent = DataLiveEvent<List<PhoneAccountHandle>>()
+    val selectPhoneSuggestionEvent = DataLiveEvent<List<PhoneAccountSuggestion>>()
 
     private var _currentCallId: String? = null
 
@@ -91,6 +99,7 @@ class CallViewState @Inject constructor(
             callAudios.isMuted?.let(this@CallViewState::onMuteChanged)
             callAudios.audioRoute?.let(this@CallViewState::onAudioRouteChanged)
         }
+
 
         isManageEnabled.value = false
     }
@@ -184,26 +193,7 @@ class CallViewState @Inject constructor(
 
     override fun onMainCallChanged(call: Call) {
         _currentCallId = call.id
-        displayCall(call)
-    }
 
-
-    override fun onMuteChanged(isMuted: Boolean) {
-        isMuteActivated.value = isMuted
-    }
-
-    override fun onAudioRouteChanged(audioRoute: AudioRoute) {
-        isSpeakerActivated.value = audioRoute == AudioRoute.SPEAKER
-        isBluetoothActivated.value = audioRoute == AudioRoute.BLUETOOTH
-    }
-
-    private fun displayCallTime() {
-        calls.mainCall?.let {
-            elapsedTime.value = if (it.isStarted) it.durationTimeMilis else null
-        }
-    }
-
-    private fun displayCall(call: Call) {
         if (call.isEnterprise) {
             imageRes.value = R.drawable.round_business_24
         }
@@ -240,6 +230,30 @@ class CallViewState @Inject constructor(
             HOLDING, DISCONNECTING, DISCONNECTED -> stateTextColor.value =
                 colors.getColor(R.color.red_foreground)
         }
+
+        if (call.state == SELECT_PHONE_ACCOUNT && !call.phoneAccountSelected) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
+            } else {
+                selectPhoneHandleEvent.call(call.availablePhoneAccounts)
+            }
+        }
+    }
+
+
+    override fun onMuteChanged(isMuted: Boolean) {
+        isMuteActivated.value = isMuted
+    }
+
+    override fun onAudioRouteChanged(audioRoute: AudioRoute) {
+        isSpeakerActivated.value = audioRoute == AudioRoute.SPEAKER
+        isBluetoothActivated.value = audioRoute == AudioRoute.BLUETOOTH
+    }
+
+    private fun displayCallTime() {
+        calls.mainCall?.let {
+            elapsedTime.value = if (it.isStarted) it.durationTimeMilis else null
+        }
     }
 
     fun onManageClick() {
@@ -248,6 +262,10 @@ class CallViewState @Inject constructor(
 
     fun onAudioRoutePicked(audioRoute: AudioRoute) {
         callAudios.audioRoute = audioRoute
+    }
+
+    fun onPhoneAccountHandleSelected(phoneAccountHandle: PhoneAccountHandle) {
+        calls.mainCall?.selectPhoneAccount(phoneAccountHandle)
     }
 
     enum class UIState {

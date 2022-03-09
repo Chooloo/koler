@@ -6,6 +6,7 @@
         <item name="colorError">@color/color_error</item>
         <item name="colorLightBackground">#ABEDEDED</item>
         <item name="colorLightForeground">#95ACACAC</item>
+        <item name="colorSurface">@color/color_surface</item>
         <item name="colorPrimary">?android:colorBackground</item>
         <item name="colorTextDisabled">@color/color_disabled</item>
         <item name="colorControlHighlight">?colorLightBackground</item>

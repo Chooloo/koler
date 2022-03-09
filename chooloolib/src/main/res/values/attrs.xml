@@ -24,9 +24,13 @@
     <declare-styleable name="Chooloo.IconButton">
         <attr name="icon" format="reference" />
         <attr name="activatedIcon" format="reference" />
+        <attr name="alterActivated" format="boolean" />
         <attr name="size" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="big" value="1" />
+            <enum name="big" value="2" />
+            <enum name="huge" value="4" />
+            <enum name="auto" value="0" />
+            <enum name="small" value="3" />
+            <enum name="normal" value="1" />
         </attr>
     </declare-styleable>
 

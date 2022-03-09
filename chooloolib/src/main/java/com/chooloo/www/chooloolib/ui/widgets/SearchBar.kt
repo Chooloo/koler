@@ -53,7 +53,7 @@ class SearchBar : TextInputLayout {
             filters =
                 arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { char -> char.isLetterOrDigit() || char == ' ' } })
 
-            setTextAppearance(R.style.Chooloo_Text_Subtitle2)
+            setTextAppearance(R.style.Chooloo_Text_Subtitle1)
             setPadding(spacingSmall, 0, spacingSmall, 0)
             setHintTextColor(ColorStateList.valueOf(colorForeground))
             setTextColor(context.getAttrColor(R.attr.colorOnSurface))
@@ -69,8 +69,9 @@ class SearchBar : TextInputLayout {
 
         isHintEnabled = false
         endIconMode = END_ICON_CLEAR_TEXT
-        backgroundTintList = ColorStateList.valueOf(colorBackground)
-        background = ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
+        clipToOutline = true
+        background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
+        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSurface))
         endIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_close_24)
         startIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_search_24)
 

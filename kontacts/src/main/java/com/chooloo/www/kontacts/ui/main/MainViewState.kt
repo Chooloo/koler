@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MainViewState @Inject constructor(
     private val navigations: NavigationsInteractor
 ) : BaseViewState() {
-    
+
     val filter = MutableLiveData<String?>()
     val searchText = MutableLiveData<String?>()
     val isSearching = MutableLiveData(false)

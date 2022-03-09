@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/contact_scene">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/contact_image"
+        style="@style/Chooloo.Image.Profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/contact_name"
+        style="@style/Chooloo.Text.Headline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Contact Name" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/contact_button_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/round_call_24"
+        app:size="normal" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/contact_button_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/round_edit_24"
+        app:size="normal" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/contact_button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/round_delete_forever_24"
+        app:size="normal" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/contact_button_sms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/round_chat_24"
+        app:size="normal" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/contact_phones_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bubble_background"
+        android:backgroundTint="?colorSurface" />
+</androidx.constraintlayout.motion.widget.MotionLayout>

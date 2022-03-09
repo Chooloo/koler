@@ -8,87 +8,59 @@
     <!-- mute -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_mute"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
         app:activatedIcon="@drawable/round_mic_off_24"
         app:icon="@drawable/round_mic_24"
-        app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:size="huge" />
 
     <!-- speaker -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_speaker"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
         app:activatedIcon="@drawable/round_volume_up_24"
         app:icon="@drawable/round_volume_down_24"
-        app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
-        app:layout_constraintStart_toEndOf="@id/call_action_mute"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:size="huge" />
 
     <!-- hold -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_hold"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
-        app:activatedIcon="@drawable/round_play_arrow_24"
         app:icon="@drawable/round_pause_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/call_action_speaker"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        app:activatedIcon="@drawable/round_play_arrow_24"
+        app:size="huge" />
 
     <!-- add call -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_add_call"
-        style="@style/Chooloo.IconButton.Big"
+        app:icon="@drawable/round_add_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginBottom="@dimen/default_spacing"
-        app:icon="@drawable/round_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
+        app:size="huge" />
 
     <!-- keypad -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_keypad"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginBottom="@dimen/default_spacing"
         app:icon="@drawable/round_dialpad_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/call_action_hold"
-        app:layout_constraintStart_toEndOf="@id/call_action_add_call"
-        app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
+        app:size="huge" />
 
     <!-- swap -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_swap"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_swap_calls_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:size="huge" />
 
     <!-- merge -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_merge"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_call_merge_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:size="huge" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

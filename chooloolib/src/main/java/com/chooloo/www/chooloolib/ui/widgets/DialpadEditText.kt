@@ -23,7 +23,7 @@ class DialpadEditText : AppCompatEditText {
         textAlignment = TEXT_ALIGNMENT_CENTER
         inputType = InputType.TYPE_CLASS_PHONE
         filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
-            source.filter { char -> char.isDigit() || char in arrayOf('*', '#') }
+            source.filter { char -> char.isDigit() || char in arrayOf('*', '#', '+') }
         })
 
         setBackgroundColor(Color.TRANSPARENT)

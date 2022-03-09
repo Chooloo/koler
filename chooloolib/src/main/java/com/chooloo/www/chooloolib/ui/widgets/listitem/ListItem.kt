@@ -28,13 +28,13 @@ import androidx.core.view.marginTop
 import androidx.core.widget.ImageViewCompat
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.widgets.IconButton
+import com.chooloo.www.chooloolib.ui.widgets.IconButton.Companion.SIZE_SMALL
 import com.chooloo.www.chooloolib.util.getAttrColor
 import com.chooloo.www.chooloolib.util.getSelectableItemBackgroundDrawable
 import com.chooloo.www.chooloolib.util.getSizeInDp
 import com.github.abdularis.civ.AvatarImageView
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
-import com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -166,6 +166,7 @@ open class ListItem : LinearLayout {
         attrs: AttributeSet? = null,
         defStyleRes: Int = 0
     ) : super(context, attrs, defStyleRes) {
+        clipToOutline = true
         orientation = VERTICAL
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
 
@@ -211,7 +212,6 @@ open class ListItem : LinearLayout {
         }
 
         buttonLeft = IconButton(context, attrs, defStyleRes).apply {
-            size = SIZE_MINI
             visibility = GONE
             id = generateViewId()
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
@@ -223,11 +223,11 @@ open class ListItem : LinearLayout {
                 )
             }
 
+            setSize(SIZE_SMALL)
             setOnClickListener { _onLeftButtonClickListener.invoke() }
         }
 
         buttonRight = IconButton(context, attrs, defStyleRes).apply {
-            size = SIZE_MINI
             visibility = GONE
             id = generateViewId()
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
@@ -239,14 +239,17 @@ open class ListItem : LinearLayout {
                 )
             }
 
+            setSize(SIZE_SMALL)
             setOnClickListener { _onRightButtonClickListener.invoke() }
         }
 
         personLayout = ConstraintLayout(context, attrs, defStyleRes).apply {
             isClickable = true
+            clipToOutline = true
             id = View.generateViewId()
-            background = context.getSelectableItemBackgroundDrawable()
+            foreground = context.getSelectableItemBackgroundDrawable()
             layoutParams = ConstraintLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            background = ContextCompat.getDrawable(context, R.drawable.round_outline)
         }
 
         context.obtainStyledAttributes(attrs, R.styleable.Chooloo_ListItem, 0, 0).also {
@@ -326,10 +329,11 @@ open class ListItem : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
-            personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
+            personLayout.backgroundTintList =
+                ColorStateList.valueOf(context.getAttrColor(R.attr.colorSecondary))
         } else {
             personLayout.background =
-                ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
+                ContextCompat.getDrawable(context, R.drawable.bubble_background)
         }
     }
 

@@ -29,6 +29,7 @@
     <string name="action_block_number">Block Number</string>
     <string name="action_unblock_number">Unblock Number</string>
     <string name="action_choose_audio_route">Choose audio route</string>
+    <string name="action_choose_phone_account">Choose phone account</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -57,6 +58,7 @@
     <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
     <string name="explain_choose_sim_account">Call with a different sim</string>
     <string name="explain_choose_audio_route">Route audio to a different source</string>
+    <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
     <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>

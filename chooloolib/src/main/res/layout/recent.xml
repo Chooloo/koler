@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingBottom="@dimen/default_spacing"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -10,8 +11,8 @@
         style="@style/Chooloo.Bottom.Image"
         android:layout_width="@dimen/image_size_big"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/default_spacing"
-        android:src="@drawable/round_call_missed_24"
+        android:layout_margin="@dimen/default_spacing_small"
+        android:src="@drawable/round_call_missed_20"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,11 +25,9 @@
         style="@style/Chooloo.Text.Headline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
         android:maxLines="2"
         app:layout_constraintBottom_toTopOf="@id/recent_image_time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_type_image"
         app:layout_constraintVertical_chainStyle="packed"
@@ -40,7 +39,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/round_schedule_20"
         app:layout_constraintBottom_toBottomOf="@id/recent_text_time"
-        app:layout_constraintStart_toStartOf="@id/recent_text_name"
+        app:layout_constraintEnd_toStartOf="@id/recent_text_time"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/recent_text_time" />
 
     <TextView
@@ -50,9 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_small"
         android:layout_marginTop="@dimen/default_spacing"
+        app:layout_constraintEnd_toStartOf="@id/recent_image_duration"
         app:layout_constraintStart_toEndOf="@id/recent_image_time"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toBottomOf="@id/recent_text_name"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:text="4 hours ago"
         tools:visibility="visible" />
 
@@ -61,9 +63,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/round_timelapse_20"
-        app:layout_constraintBottom_toBottomOf="@id/recent_text_duration"
-        app:layout_constraintStart_toStartOf="@id/recent_image_time"
-        app:layout_constraintTop_toTopOf="@id/recent_text_duration" />
+        android:layout_marginStart="@dimen/default_spacing_small"
+        app:layout_constraintBottom_toBottomOf="@id/recent_image_time"
+        app:layout_constraintEnd_toEndOf="@id/recent_text_duration"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/recent_text_time"
+        app:layout_constraintTop_toTopOf="@id/recent_image_time" />
 
     <TextView
         android:id="@+id/recent_text_duration"
@@ -71,44 +76,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_small"
-        android:layout_marginTop="@dimen/default_spacing_small"
-        app:layout_constraintStart_toEndOf="@id/recent_image_time"
-        app:layout_constraintTop_toBottomOf="@id/recent_image_time"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toBottomOf="@id/recent_image_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/recent_image_duration"
+        app:layout_constraintTop_toTopOf="@id/recent_image_time"
         tools:text="15 minutes"
         tools:visibility="visible" />
-
-    <com.chooloo.www.chooloolib.ui.widgets.TextButton
-        android:id="@+id/recent_button_show_history"
-        android:layout_width="match_parent"
-        android:layout_margin="@dimen/default_spacing"
-        android:text="@string/action_show_history"
-        android:layout_height="@dimen/button_text_height"
-        app:layout_constraintBottom_toTopOf="@id/recent_button_block"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.chooloo.www.chooloolib.ui.widgets.TextButton
-        android:id="@+id/recent_button_block"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_text_height"
-        android:layout_margin="@dimen/default_spacing"
-        android:backgroundTint="@color/red_background"
-        android:text="@string/action_block_number"
-        android:textColor="@color/red_foreground"
-        app:activatedText="@string/action_unblock_number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/recent_button_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
+        app:size="normal"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:gravity="center_horizontal"
-        app:borderWidth="0dp"
         app:icon="@drawable/round_call_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_image_duration" />
@@ -120,9 +103,8 @@
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
-        app:borderWidth="0dp"
+        app:size="normal"
         app:icon="@drawable/round_delete_forever_24"
-        app:layout_constraintBottom_toTopOf="@id/recent_button_show_history"
         app:layout_constraintEnd_toStartOf="@id/recent_button_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_call"
         app:layout_constraintTop_toBottomOf="@id/recent_image_duration" />
@@ -132,11 +114,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
+        app:size="normal"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
-        app:borderWidth="0dp"
         app:icon="@drawable/round_person_24"
-        app:layout_constraintBottom_toTopOf="@id/recent_button_show_history"
         app:layout_constraintEnd_toStartOf="@id/recent_button_add_contact"
         app:layout_constraintStart_toEndOf="@id/recent_button_delete"
         app:layout_constraintTop_toBottomOf="@id/recent_image_duration" />
@@ -146,11 +127,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
+        app:size="normal"
         android:layout_marginBottom="@dimen/default_spacing"
         android:gravity="center_horizontal"
-        app:borderWidth="0dp"
         app:icon="@drawable/round_person_add_24"
-        app:layout_constraintBottom_toTopOf="@id/recent_button_show_history"
         app:layout_constraintEnd_toStartOf="@id/recent_button_sms"
         app:layout_constraintStart_toEndOf="@id/recent_button_contact"
         app:layout_constraintTop_toBottomOf="@id/recent_image_duration" />
@@ -162,8 +142,37 @@
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginEnd="@dimen/default_spacing"
         android:gravity="center_horizontal"
-        app:borderWidth="0dp"
         app:icon="@drawable/round_chat_24"
+        app:size="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recent_image_duration" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
+        android:id="@+id/recent_button_show_history"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_text_height"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:text="@string/action_show_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_button_call" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
+        android:id="@+id/recent_button_block"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_text_height"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginBottom="@dimen/default_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/red_background"
+        android:text="@string/action_block_number"
+        android:textColor="@color/red_foreground"
+        app:activatedText="@string/action_unblock_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
 </androidx.constraintlayout.widget.ConstraintLayout>

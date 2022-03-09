@@ -1,7 +1,6 @@
 package com.chooloo.www.chooloolib.ui.settings
 
 import android.view.MenuItem
-import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
@@ -22,7 +21,7 @@ open class SettingsViewState @Inject constructor(
 ) :
     BaseViewState() {
 
-    open val menuResList = MutableLiveData(listOf(R.menu.menu_chooloo))
+    open val menuResList = listOf(R.menu.menu_chooloo)
 
     val askForCompactEvent = LiveEvent()
     val askForThemeModeEvent = LiveEvent()

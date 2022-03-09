@@ -7,18 +7,23 @@
 </h1>
 
 <p align="center">
-         uniquely stylized phone app with customizable features
+         It's a dialer but it's simple and it looks pretty good honestly
 </p>
 
-Koler is a uniquely stylized phone app for Android, designed with the user in mind.
-Believe us we want to make it good, as we use it ourselves.
+Koler is an open source MVVM android app.
+Designed with the user in mind.
+Believe us we want to make it good, we use it ourselves.
 
 ## ☕ Support
-Due to lack of support, unfortunately, it's difficult for us to keep supporting the project
-If you like the app and want us to fix and improve it, please consider giving us a boost
+We, money, dont have.
+We, money, need.
+You, money, give.
 </br>
-
+You can donate with PayPal.
 [![Donate with PayPal](https://raw.githubusercontent.com/stefan-niedermann/paypal-donate-button/master/paypal-donate-button.png)](https://paypal.me/theroeiedri?locale.x=en_US)
+
+Or you can just buy the app from the playstore.
+You'll get constant updates without the need to get all the way here and download the release all by yourself and install the release all by yourself and then you realize you have a different package name so you contact me but I really don't have time for this so I update it on google play and then you realize your installer doesn't work and then you realize your whole life is like this, miserable and not working but then you see a point of light in the distance so you run towards and and it's the "Buy" button in the Koler's page on google play, it'l make your life easier.
 
 ## ⭐ Find this repository useful?
 Support it by joining [Stargazers](https://github.com/Chooloo/koler/stargazers) for this repository.

@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.ui.call
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.text.format.DateUtils
 import android.view.View
 import androidx.activity.viewModels
@@ -155,7 +156,26 @@ class CallActivity : BaseActivity<CallViewState>() {
             showCallManagerEvent.observe(this@CallActivity) {
                 it.ifNew?.let { prompts.showFragment(fragmentFactory.getCallItemsFragment()) }
             }
+
+            selectPhoneHandleEvent.observe(this@CallActivity) {
+                it.ifNew?.let {
+                    dialogs.askForPhoneAccountHandle(it) {
+                        viewState.onPhoneAccountHandleSelected(it)
+                    }
+                }
+            }
+
+            selectPhoneSuggestionEvent.observe(this@CallActivity) {
+                it.ifNew?.let {
+                    dialogs.askForPhoneAccountSuggestion(it) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            viewState.onPhoneAccountHandleSelected(it.phoneAccountHandle)
+                        }
+                    }
+                }
+            }
         }
+
 
         binding.apply {
             callActions.setCallActionsListener(viewState)
@@ -173,7 +193,7 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
         }
 
-        dialpadViewState.char.observe(this, viewState::onCharKey)
+        dialpadViewState.char.observe(this@CallActivity, viewState::onCharKey)
     }
 
 

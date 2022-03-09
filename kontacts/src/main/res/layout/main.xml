@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    app:layoutDescription="@xml/main_scene"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:layoutDescription="@xml/main_scene">
 
     <!-- menu button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
@@ -15,7 +15,7 @@
         android:tint="?colorOnBackground"
         app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
-        app:fabSize="mini"
+        app:size="small"
         app:icon="@drawable/round_more_vert_24" />
 
     <!-- tabs -->
@@ -43,10 +43,9 @@
     <!-- add contact button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_add_contact_button"
-        style="@style/Chooloo.IconButton.Big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        app:borderWidth="0dp"
-        app:icon="@drawable/round_person_add_24" />
+        app:icon="@drawable/round_person_add_24"
+        app:size="big" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

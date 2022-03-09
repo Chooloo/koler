@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.main
 
+import android.content.ClipData
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
@@ -29,8 +30,6 @@ class MainViewState @Inject constructor(
     val isSearching = MutableLiveData(false)
 
     val showMenuEvent = LiveEvent()
-    val showRecentEvent = DataLiveEvent<Long>()
-    val showContactEvent = DataLiveEvent<Long>()
     val showDialerEvent = DataLiveEvent<String>()
 
 
@@ -61,13 +60,5 @@ class MainViewState @Inject constructor(
     fun onSearchFocusChange(isFocus: Boolean) {
         isSearching.value = isFocus
         searchHint.value = if (isFocus) "" else strings.getString(R.string.hint_search_items)
-    }
-
-    fun onRecentItemClick(recent: RecentAccount) {
-        showRecentEvent.call(recent.id)
-    }
-
-    fun onContactItemClick(contact: ContactAccount) {
-        showContactEvent.call(contact.id)
     }
 }

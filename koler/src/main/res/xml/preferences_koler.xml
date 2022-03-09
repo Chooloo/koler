@@ -6,11 +6,6 @@
         android:icon="@drawable/round_block_24"
         android:key="@string/pref_key_manage_blocked"
         android:title="@string/pref_title_manage_blocked" />
-    
-    <SwitchPreference
-        android:defaultValue="@bool/pref_default_value_should_ask_sim"
-        android:key="@string/pref_key_ask_sim"
-        android:title="@string/pref_title_ask_sim" />
 
     <SwitchPreference
         android:defaultValue="@bool/pref_default_value_show_blocked"
