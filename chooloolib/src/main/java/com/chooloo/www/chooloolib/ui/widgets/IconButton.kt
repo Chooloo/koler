@@ -55,7 +55,7 @@ class IconButton : AppCompatImageButton {
 
         elevation = 0f
         clipToOutline = true
-        scaleType = ScaleType.FIT_XY
+        scaleType = ScaleType.FIT_CENTER
         background = getDrawable(context, R.drawable.bubble_background)
         imageTintList = imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
         backgroundTintList = backgroundTintList ?: ColorStateList.valueOf(colorSecondary)
