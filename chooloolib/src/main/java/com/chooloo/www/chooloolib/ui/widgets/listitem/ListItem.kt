@@ -212,7 +212,6 @@ open class ListItem : LinearLayout {
 
         buttonLeft = IconButton(context, attrs, defStyleRes).apply {
             visibility = GONE
-            size = SIZE_SMALL
             id = generateViewId()
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
                 it.setMargins(
@@ -223,12 +222,12 @@ open class ListItem : LinearLayout {
                 )
             }
 
+            setSize(SIZE_SMALL)
             setOnClickListener { _onLeftButtonClickListener.invoke() }
         }
 
         buttonRight = IconButton(context, attrs, defStyleRes).apply {
             visibility = GONE
-            size = SIZE_SMALL
             id = generateViewId()
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT).also {
                 it.setMargins(
@@ -239,6 +238,7 @@ open class ListItem : LinearLayout {
                 )
             }
 
+            setSize(SIZE_SMALL)
             setOnClickListener { _onRightButtonClickListener.invoke() }
         }
 

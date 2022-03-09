@@ -62,11 +62,7 @@ class CallActions : MotionLayout {
         get() = _isBluetoothActivated
         set(value) {
             _isBluetoothActivated = value
-            if (value) {
-                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
-            } else {
-                _binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24
-            }
+            _binding.callActionSpeaker.setDefaultIcon(if (value) R.drawable.round_bluetooth_audio_24 else R.drawable.round_volume_down_24)
         }
 
 

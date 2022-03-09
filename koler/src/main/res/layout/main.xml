@@ -44,7 +44,6 @@
         android:id="@+id/main_dialpad_button"
          android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
         app:size="big"
         app:icon="@drawable/round_dialpad_24" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -9,32 +9,32 @@
     <ConstraintSet android:id="@+id/constraint_set_single_call">
         <Constraint
             android:id="@+id/call_action_mute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/default_spacing"
             app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/call_action_speaker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing"
             app:layout_constraintEnd_toStartOf="@id/call_action_hold"
             app:layout_constraintStart_toEndOf="@id/call_action_mute"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/call_action_hold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/call_action_speaker"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/call_action_add_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,8 +43,8 @@
             app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
         <Constraint
             android:id="@+id/call_action_keypad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,15 +53,15 @@
             app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
         <Constraint
             android:id="@+id/call_action_merge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_action_swap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:visibilityMode="ignore" />
@@ -70,32 +70,32 @@
     <ConstraintSet android:id="@+id/constraint_set_multi_call">
         <Constraint
             android:id="@+id/call_action_mute"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing"
-            app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/call_action_speaker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing"
             app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
             app:layout_constraintStart_toEndOf="@id/call_action_mute"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/call_action_keypad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/call_action_speaker"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/call_action_swap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -105,8 +105,8 @@
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_action_merge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -116,8 +116,8 @@
             app:visibilityMode="ignore" />
         <Constraint
             android:id="@+id/call_action_hold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -126,8 +126,8 @@
             app:layout_constraintTop_toBottomOf="@id/call_action_keypad" />
         <Constraint
             android:id="@+id/call_action_add_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/icon_button_size_big"
+            android:layout_height="@dimen/icon_button_size_big"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

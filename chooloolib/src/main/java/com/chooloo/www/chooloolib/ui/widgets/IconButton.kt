@@ -25,7 +25,6 @@ class IconButton : AppCompatImageButton {
     @DrawableRes
     private var _iconActivated: Int? = null
 
-
     private var _imageTintList: ColorStateList?
     private var _backgroundTintList: ColorStateList?
     private val _alterActivated: Boolean
@@ -33,19 +32,12 @@ class IconButton : AppCompatImageButton {
     private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
     private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
 
-    @Size
-    var size: Int
-        get() = _size
-        set(value) {
-            _size = value
-        }
-
     var iconDefault: Int?
         get() = _iconDefault
         set(value) {
             _iconDefault = value
-            refreshLayout()
         }
+
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -78,31 +70,11 @@ class IconButton : AppCompatImageButton {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        refreshLayout()
+        setSize(_size)
     }
 
     override fun setActivated(activated: Boolean) {
         super.setActivated(activated)
-        refreshLayout()
-    }
-
-    override fun setEnabled(enabled: Boolean) {
-        super.setEnabled(enabled)
-        refreshLayout()
-    }
-
-    private fun refreshLayout() {
-        when (_size) {
-            SIZE_BIG -> context.resources.getDimension(R.dimen.icon_button_size_big).toInt()
-            SIZE_SMALL -> context.resources.getDimension(R.dimen.icon_button_size_small).toInt()
-            SIZE_NORMAL -> context.resources.getDimension(R.dimen.icon_button_size_normal).toInt()
-            else -> null
-        }?.let {
-            layoutParams = layoutParams.apply {
-                height = it
-                width = it
-            }
-        }
         if (_iconActivated != NO_ID) {
             (if (isActivated) _iconActivated else _iconDefault)?.let { setImageResource(it) }
         }
@@ -110,17 +82,38 @@ class IconButton : AppCompatImageButton {
             imageTintList = if (isActivated) _backgroundTintList else _imageTintList
             backgroundTintList = if (isActivated) _imageTintList else _backgroundTintList
         }
-        imageAlpha = if (isEnabled) 255 else 40
+    }
 
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        imageAlpha = if (isEnabled) 255 else 40
+    }
+
+    fun setSize(@Size size: Int) {
+        _size = size
+        when (_size) {
+            SIZE_BIG -> context.resources.getDimensionPixelSize(R.dimen.icon_button_size_big)
+            SIZE_SMALL -> context.resources.getDimensionPixelSize(R.dimen.icon_button_size_small)
+            SIZE_NORMAL -> context.resources.getDimensionPixelSize(R.dimen.icon_button_size_normal)
+            else -> null
+        }?.let {
+            layoutParams = layoutParams.apply {
+                height = it
+                width = it
+            }
+        }
         setPadding(
             when (_size) {
-                SIZE_BIG -> context.resources.getDimension(R.dimen.icon_button_padding_big).toInt()
-                SIZE_SMALL -> context.resources.getDimension(R.dimen.icon_button_padding_small)
-                    .toInt()
-                else -> context.resources.getDimension(R.dimen.icon_button_padding_normal)
-                    .toInt()
+                SIZE_BIG -> context.resources.getDimensionPixelSize(R.dimen.icon_button_padding_big)
+                SIZE_SMALL -> context.resources.getDimensionPixelSize(R.dimen.icon_button_padding_small)
+                else -> context.resources.getDimensionPixelSize(R.dimen.icon_button_padding_normal)
             }
         )
+    }
+
+    fun setDefaultIcon(iconRes: Int) {
+        _iconDefault = iconRes
+        isActivated = isActivated
     }
 
 
