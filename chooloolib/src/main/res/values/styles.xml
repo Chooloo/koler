@@ -35,7 +35,6 @@
     <style name="Chooloo.Text.Caption" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
     <!--endregion-->
 
@@ -44,9 +43,8 @@
 
     <style name="Chooloo.Image.Profile">
         <item name="android:src">@drawable/round_person_24</item>
-
-<!--        <item name="cornerSize">50%</item>-->
-<!--        <item name="cornerFamily">rounded</item>-->
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">rounded</item>
     </style>
     <!--endregion-->
 

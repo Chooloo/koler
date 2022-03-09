@@ -69,8 +69,9 @@ class SearchBar : TextInputLayout {
 
         isHintEnabled = false
         endIconMode = END_ICON_CLEAR_TEXT
-        backgroundTintList = ColorStateList.valueOf(colorBackground)
-        background = ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
+        clipToOutline = true
+        background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
+        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSurface))
         endIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_close_24)
         startIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_search_24)
 
