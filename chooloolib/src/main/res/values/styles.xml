@@ -64,7 +64,7 @@
     <!--endregion-->
 
     <!--region list view -->
-    <style name="Chooloo.ListView" parent="Widget.AppCompat.ListView">
+    <style name="Chooloo.ListView">
         <item name="android:requiresFadingEdge">vertical</item>
         <item name="android:fadingMode">fade_in_out</item>
         <item name="android:fadingEdge">vertical</item>
