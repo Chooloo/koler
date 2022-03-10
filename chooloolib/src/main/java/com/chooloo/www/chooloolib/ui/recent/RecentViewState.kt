@@ -97,7 +97,7 @@ class RecentViewState @Inject constructor(
     fun onActionOpenContact() {
         _recent?.let {
             phones.lookupAccount(it.number) { account ->
-                account?.contactId?.let(showContactEvent::call)
+                account?.contactId?.let(navigations::viewContact)
             }
         }
     }

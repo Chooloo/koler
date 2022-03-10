@@ -15,7 +15,7 @@ class MainActivity : BaseActivity<MainViewState>() {
     override val viewState: MainViewState by viewModels()
 
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
-    private val _contactsFragment by lazy { fragmentFactory.getContactsFragment() }
+    private val contactsFragment by lazy { fragmentFactory.getContactsFragment() }
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var fragmentFactory: ChoolooFragmentFactory
@@ -57,11 +57,11 @@ class MainActivity : BaseActivity<MainViewState>() {
             }
         }
 
-        supportFragmentManager.beginTransaction()
-            .replace(binding.mainFragmentContainer.id, _contactsFragment).commit()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.mainFragmentContainer.id, contactsFragment)
+            .commit()
 
-        _contactsFragment.viewState.itemClickedEvent.observe(this@MainActivity) {
-            it.ifNew?.let(viewState::onContactClick)
-        }
+        viewState.onIntent(intent)
     }
 }

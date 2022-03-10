@@ -12,28 +12,16 @@
         <item name="colorControlHighlight">?colorLightBackground</item>
         <item name="colorOnBackground">@color/color_on_background</item>
 
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:navigationBarColor">?colorPrimarySurface</item>
 
-        <item name="alertDialogTheme">@style/KolerAlertDialog</item>
-        <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
+        <item name="alertDialogTheme">@style/Chooloo.AlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/Chooloo.BottomSheet</item>
     </style>
 
-
-    <style name="KolerBottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
-        <item name="android:navigationBarColor">?colorPrimarySurface</item>
-        <item name="bottomSheetStyle">@style/Chooloo.BottomDialog.BottomSheetStyle</item>
-<!--        <item name="android:layout_margin">2dp</item>-->
-    </style>
-
-    <style name="KolerAlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <item name="buttonBarButtonStyle">@style/KolerAlertDialogButton</item>
-    </style>
-
-    <style name="KolerAlertDialogButton" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/blue_foreground</item>
+    <style name="ChoolooTheme.Translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 
