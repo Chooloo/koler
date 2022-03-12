@@ -51,7 +51,6 @@
     <!--region bottom dialog -->
     <style name="Chooloo.BottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="android:backgroundDimAmount">0.05</item>
-        <item name="android:navigationBarColor">?colorPrimarySurface</item>
         <item name="bottomSheetStyle">@style/Chooloo.BottomDialog.BottomSheetStyle</item>
     </style>
 
