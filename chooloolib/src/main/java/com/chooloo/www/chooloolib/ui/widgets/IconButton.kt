@@ -53,7 +53,6 @@ class IconButton : AppCompatImageButton {
             _alterActivated = it.getBoolean(R.styleable.Chooloo_IconButton_alterActivated, true)
         }.recycle()
 
-        elevation = 0f
         clipToOutline = true
         scaleType = ScaleType.FIT_CENTER
         background = getDrawable(context, R.drawable.bubble_background)
