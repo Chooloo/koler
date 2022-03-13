@@ -24,9 +24,11 @@
     <com.chooloo.www.chooloolib.ui.widgets.DialpadEditText
         android:id="@+id/dialpad_edit_text"
         style="@style/Chooloo.Text.Headline2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_marginStart="@dimen/default_spacing_big"
+        android:layout_marginEnd="@dimen/default_spacing_big"
+        android:layout_marginBottom="@dimen/default_spacing_big"
         android:minWidth="200dp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_big"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginEnd="@dimen/default_spacing_big"
         android:layout_marginBottom="@dimen/default_spacing"
         android:stretchColumns="*"
@@ -115,7 +117,7 @@
         android:layout_margin="@dimen/default_spacing"
         app:icon="@drawable/round_call_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:size="big"
+        app:size="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

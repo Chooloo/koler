@@ -14,6 +14,7 @@
             android:name=".ui.call.CallActivity"
             android:exported="false"
             android:configChanges="screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
             android:screenOrientation="unspecified" />
         <activity
             android:name=".ui.permissions.PermissionRequestActivity"

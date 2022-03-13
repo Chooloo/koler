@@ -12,11 +12,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 open class ContactsFragment @Inject constructor() :
     ListFragment<ContactAccount, ContactsViewState>() {
+    override val viewState: ContactsViewState by activityViewModels()
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
     @Inject override lateinit var adapter: ContactsAdapter
-    override val viewState: ContactsViewState by activityViewModels()
 
 
     override fun onSetup() {

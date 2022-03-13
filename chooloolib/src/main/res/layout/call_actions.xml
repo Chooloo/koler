@@ -10,6 +10,7 @@
         android:id="@+id/call_action_mute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/icon_button_size_big"
         app:activatedIcon="@drawable/round_mic_off_24"
         app:icon="@drawable/round_mic_24"
         app:size="huge" />
@@ -18,6 +19,7 @@
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_speaker"
         android:layout_width="wrap_content"
+        android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:activatedIcon="@drawable/round_volume_up_24"
         app:icon="@drawable/round_volume_down_24"
@@ -28,6 +30,7 @@
         android:id="@+id/call_action_hold"
         android:layout_width="wrap_content"
         app:icon="@drawable/round_pause_24"
+        android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:activatedIcon="@drawable/round_play_arrow_24"
         app:size="huge" />
@@ -37,6 +40,7 @@
         android:id="@+id/call_action_add_call"
         app:icon="@drawable/round_add_24"
         android:layout_width="wrap_content"
+        android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:size="huge" />
 
@@ -45,6 +49,7 @@
         android:id="@+id/call_action_keypad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/icon_button_size_big"
         app:icon="@drawable/round_dialpad_24"
         app:size="huge" />
 
@@ -52,6 +57,7 @@
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_swap"
         android:layout_width="wrap_content"
+        android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_swap_calls_24"
         app:size="huge" />
@@ -60,6 +66,7 @@
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_action_merge"
         android:layout_width="wrap_content"
+        android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_call_merge_24"
         app:size="huge" />
