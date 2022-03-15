@@ -9,12 +9,11 @@
         <item name="colorLightBackground">#A1686868</item>
         <item name="colorLightForeground">#B1B1B1</item>
 
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:statusBarColor">?colorPrimarySurface</item>
         <item name="android:navigationBarColor">?colorPrimarySurface</item>
 
-
-        <item name="bottomSheetDialogTheme">@style/KolerBottomSheet</item>
-        <item name="alertDialogTheme">@style/KolerAlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/Chooloo.BottomSheet</item>
+        <item name="alertDialogTheme">@style/Chooloo.AlertDialog</item>
     </style>
 </resources>

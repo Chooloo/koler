@@ -1,13 +1,18 @@
 package com.chooloo.www.chooloolib.ui.widgets
 
 import android.content.Context
-import android.graphics.Color
+import android.content.res.ColorStateList
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.view.Gravity
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
+import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.util.getAttrColor
 
 class DialpadEditText : AppCompatEditText {
     constructor(context: Context) : this(context, null)
@@ -19,14 +24,18 @@ class DialpadEditText : AppCompatEditText {
     ) {
         maxLines = 1
         isSingleLine = true
+        clipToOutline = true
+        gravity = Gravity.CENTER
         showSoftInputOnFocus = false
         textAlignment = TEXT_ALIGNMENT_CENTER
         inputType = InputType.TYPE_CLASS_PHONE
+        background = ContextCompat.getDrawable(context, R.drawable.round_outline)
+        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSurface))
         filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
             source.filter { char -> char.isDigit() || char in arrayOf('*', '#', '+') }
         })
 
-        setBackgroundColor(Color.TRANSPARENT)
+        setPadding(resources.getDimension(R.dimen.default_spacing_small).toInt())
         canScrollHorizontally(LAYOUT_DIRECTION_RTL or LAYOUT_DIRECTION_LTR)
     }
 

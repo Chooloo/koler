@@ -64,22 +64,51 @@ dependencies {
     )
 
     androidTestImplementation(
+            'androidx.test:core:1.3.0',
             'androidx.test:runner:1.3.0',
-            'androidx.test.ext:junit:1.1.3',
+            'androidx.test.ext:junit:1.1.2',
+            'com.jraska.livedata:testing:1.0.0',
+            'org.mockito:mockito-android:2.24.0',
+            'androidx.arch.core:core-testing:2.1.0',
             "androidx.compose.ui:ui-test-junit4:1.0.4",
-            'androidx.test.espresso:espresso-core:3.4.0'
+            'androidx.test.espresso:espresso-core:3.3.0'
     )
 
     implementation(
             project(":chooloolib"),
-            'androidx.core:core-ktx:1.7.0',
-            'androidx.appcompat:appcompat:1.4.1',
+            fileTree(include: ['*.jar'], dir: 'libs'),
+            'androidx.wear:wear:1.1.0',
+            'androidx.core:core-ktx:1.6.0',
+            'dev.sasikanth:colorsheet:1.0.1',
+            'androidx.room:room-runtime:2.2.6',
+            'androidx.cardview:cardview:1.0.0',
             'io.reactivex.rxjava2:rxjava:2.1.16',
-            'androidx.fragment:fragment-ktx:1.1.0',
+            'androidx.appcompat:appcompat:1.2.0',
+            'com.jakewharton.timber:timber:4.7.1',
             'androidx.activity:activity-ktx:1.1.0',
-            'io.reactivex.rxjava2:rxandroid:2.0.1',
             'io.github.l4digital:fastscroll:2.0.1',
+            'androidx.arch.core:core-common:2.1.0',
+            'io.reactivex.rxjava2:rxandroid:2.0.1',
+            'androidx.annotation:annotation:1.1.0',
+            'androidx.fragment:fragment-ktx:1.1.0',
+            'com.github.skydoves:androidveil:1.1.1',
+            'androidx.arch.core:core-runtime:2.1.0',
             'com.google.dagger:hilt-android:2.38.1',
-            'com.google.android.material:material:1.4.0'
+            'com.reddit:indicator-fast-scroll:1.4.0',
+            'androidx.legacy:legacy-support-v4:1.0.0',
+            'androidx.preference:preference-ktx:1.1.1',
+            'org.jetbrains.kotlin:kotlin-stdlib:1.4.21',
+            'androidx.biometric:biometric:1.2.0-alpha02',
+            'com.google.android.material:material:1.3.0',
+            'com.android.support:recyclerview-v7:23.2.1',
+            'com.github.abdularis:circularimageview:1.5',
+            'androidx.navigation:navigation-ui-ktx:2.3.3',
+            'androidx.lifecycle:lifecycle-extensions:2.2.0',
+            'com.daimajia.androidanimations:library:2.4@aar',
+            'androidx.constraintlayout:constraintlayout:2.0.4',
+            'com.pushtorefresh.storio3:content-resolver:3.0.0',
+            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
+            'androidx.navigation:navigation-fragment-ktx:2.3.3',
+            'com.googlecode.libphonenumber:libphonenumber:8.12.18'
     )
 }

@@ -1,0 +1,199 @@
+<resources>
+
+    <!--region titles-->
+    <string name="recents">گزارش ها</string>
+    <string name="contacts">مخاطبین</string>
+    <string name="conference">کنفرانس</string>
+    <string name="default_page">پیش فرض</string>
+    <string name="settings">تنظیمات</string>
+    <string name="theme_mode_dark">تاریک</string>
+    <string name="theme_mode_light">روشن</string>
+    <string name="theme_mode_system">دستگاه</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">آره یا نه؟</string>
+    <string name="prompt_are_you_sure">مطمئنی؟</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">از شماره رونوشت گرفته شد</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">آره</string>
+    <string name="action_no">نه</string>
+    <string name="action_answer">پاسخ</string>
+    <string name="action_hangup">قطع</string>
+    <string name="action_show_history">نمایش تاریخچه</string>
+    <string name="action_block_number">مسدودسازی شماره</string>
+    <string name="action_unblock_number">رفع مسدودی شماره</string>
+    <string name="action_choose_audio_route">منبع صوتی را مشخص کنید</string>
+    <string name="action_choose_phone_account">سیم کارت مدنظر را انتخاب کنید</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">جستجو</string>
+    <string name="hint_theme_mode">حالت نمایه</string>
+    <string name="hint_sim_account">سیم کارت</string>
+    <string name="hint_default_page">صفحه پیش فرض</string>
+    <string name="hint_animations">نمایش پویانمایی</string>
+    <string name="hint_search_recents">جستجو در گزارش ها</string>
+    <string name="hint_search_contacts">جستجو در مخاطبین</string>
+    <string name="hint_compact_mode">فهرست را فشرده تر کنید</string>
+    <string name="hint_search_items">جستجوی مخاطبین &amp; گزارش ها</string>
+    <string name="hint_dialpad_vibrate">لرزش هنگام فشردن شماره گیرد</string>
+    <string name="hint_should_ask_sim">انتخاب سیم کارت قبل هر تماس</string>
+    <string name="hint_dialpad_tones">صدا هنگام فشردن شماره گیر</string>
+    <string name="hint_show_blocked">نمایش گزینه مسدودسازی/رفع مسدودی برای شماره ها (می بایست برنامه پیش فرض تماس باشد).</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s در انتظار است</string>
+    <string name="explain_choose_theme_mode">حالت نمایه را تنظیم کنید، برنامه را دوباره بار کنید تا تغییرات را ببینید</string>
+    <string name="explain_choose_sim_account">تماس با سیم کارت متفاوت</string>
+    <string name="explain_choose_audio_route">تغییر منبع صوتی</string>
+    <string name="explain_choose_phone_account">تماس فعلی را با استفاده از سیم کارت خاصی ادامه  دهید</string>
+    <string name="explain_delete_contact">این مخاطب برای همیشه پاک می شود</string>
+    <string name="explain_delete_recent">این گزارش تماس برای همیشه پاک می شود</string>
+    <string name="explain_choose_default_page">هر زمان که برنامه باز شود این صفحه را می بینید</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_mute">بی صدا</string>
+    <string name="call_action_unmute">صدا دار</string>
+    <string name="call_action_speaker">بلندگو</string>
+    <string name="call_action_speaker_off">گوشی</string>
+    <!--endregion-->
+
+    <!--region call state-->
+    <string name="call_status_new">تماس جدید</string>
+    <string name="call_status_dialing">... درحال تماس</string>
+    <string name="call_status_holding">تماس در حالت انتظار</string>
+    <string name="call_status_connecting">در حال برقراری</string>
+    <string name="call_status_incoming">تماس ورودی</string>
+    <string name="call_status_active">تماس در جریان</string>
+    <string name="call_status_disconnected">تماس پایان یافت</string>
+    <string name="call_status_pulling_call">Pulling Call…</string>
+    <string name="call_status_unknown">وضعیت تماس نامشخص</string>
+    <string name="call_status_disconnecting">تماس در حال  خاتمه</string>
+    <string name="call_status_phone_account">انتخاب سیم کارت</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_compact">compact</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_color">accent_color</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">امتیازدهی</string>
+    <string name="pref_title_compact">حالت فشرده</string>
+    <string name="pref_title_animations">پویانمایی ها</string>
+    <string name="pref_title_app_color">رنگ اصلی</string>
+    <string name="pref_title_theme_mode">حالت نمایه</string>
+    <string name="pref_title_email">به ما ایمیل بزنید</string>
+    <string name="pref_title_report_bugs">گزارش مشکل</string>
+    <string name="pref_title_manage_blocked">مدیرت شماره های مسدودشده</string>
+    <!--endregion-->
+
+    <!--region pref summary -->
+    <!--endregion-->
+
+    <!--region pref default value-->
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">نتیجه نداشت</string>
+    <string name="error_no_results_recents">گزارشی موجود نیست</string>
+    <string name="error_no_results_contacts">مخاطبی موحود نیست</string>
+    <string name="error_no_results_phones">شماره ای نیست</string>
+    <string name="error_not_default_dialer_blocked">برای دیدن شماره های مسدود، برنامه را تماس گیرنده پیش فرض کنید </string>
+    <string name="error_not_default_dialer_call">برای برقراری تماس، برنامه را تماس گیرنده پیش فرض کنید</string>
+
+    <string name="error_no_permissions_edit_call_log">:( مجوز دسترسی برای تغییر گزارش ها ندارم</string>
+    <string name="error_no_permissions_make_call">:( مجوز دسترسی برای برقراری تماس ندارم</string>
+    <string name="error_no_permissions_phones"> :) برای خواندن مخاطبین به دسترسی نیاز دارم</string>
+    <string name="error_no_permissions_recents">:) برای خواندن گزارش تماس به دسترسی نیاز دارم</string>
+    <string name="error_no_permissions_contacts"> :) برای خواندن مخاطبین به دسترسی نیاز دارم</string>
+
+    <string name="error_no_number_to_call">:(شماره ای یافت نشد</string>
+
+    <string name="error_cant_hold_call">تماس به حالت انتظار نمی رود</string>
+    <string name="error_cant_swap_calls">تماس جابجا نمی شود</string>
+    <string name="error_cant_merge_call">تماس ادغام نمی شود</string>
+
+    <string name="error_couldnt_get_number_from_intent">شماره یافت نشد</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">مخاطبین</string>
+    <string name="pref_value_page_recents">گزارش ها</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">تماس صوتی</string>
+    <string name="dialpad_2_letters">ب پ ت ث</string>
+    <string name="dialpad_3_letters">اآء</string>
+    <string name="dialpad_4_letters">س ش ص ض</string>
+    <string name="dialpad_5_letters">دذرز</string>
+    <string name="dialpad_6_letters">ج چ ح خ</string>
+    <string name="dialpad_7_letters">ن و ه ی</string>
+    <string name="dialpad_8_letters">ف ق ک گ ل م</string>
+    <string name="dialpad_9_letters">ط ظ ع غ</string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_menu_button">دکمه فهرست</string>
+    <string name="content_description_answer_button">دکمه پاسخگویی تماس</string>
+    <string name="content_description_reject_button">دکمه رد تماس</string>
+    <string name="content_description_call_actions_button">اقدامات تماس</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">اعلان تماس</string>
+    <string name="call_notification_channel_description">اعلان تماس فعال، نمایش برای استفاده راحت</string>
+    <!--endregion-->
+
+    <!--region phone type-->
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">بلندگو</string>
+    <string name="audio_route_earpiece">هدفون</string>
+    <string name="audio_route_bluetooth">بلوتوث</string>
+    <string name="audio_route_wired_headset">هدست سیمی</string>
+    <string name="audio_route_wired_or_earpiece">سیمی یا گوشی</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">ستاره موردعلاقه</string>
+    <string name="content_description_empty_list_icon">آیکون فهرست خالی</string>
+</resources>

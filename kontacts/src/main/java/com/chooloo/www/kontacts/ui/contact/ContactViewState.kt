@@ -23,7 +23,6 @@ class ContactViewState @Inject constructor(
     val contactImage = MutableLiveData<Uri>()
     val contactName = MutableLiveData<String>()
     var isFavorite = MutableLiveData<Boolean>()
-    val isEditable = MutableLiveData(false)
 
     private var contact: ContactAccount? = null
 
@@ -54,7 +53,6 @@ class ContactViewState @Inject constructor(
     }
 
     fun onEditClick() {
-        isEditable.value = true
     }
 
     fun onDeleteClick() {

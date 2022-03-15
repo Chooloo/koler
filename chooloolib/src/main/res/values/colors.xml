@@ -6,10 +6,11 @@
     <color name="color_text">#1C1C1C</color>
     <color name="color_error">#B00020</color>
     <color name="color_surface">#F6F7FB</color>
-    <color name="color_on_surface">#D3E3FD</color>
     <color name="color_disabled">#454746</color>
     <color name="color_opposite">#2E2E2E</color>
     <color name="color_on_background">#C5C5C5</color>
+    <color name="color_light_foreground">#F5ACACAC</color>
+    <color name="color_light_background">#ABEDEDED</color>
     <color name="color_image_placeholder_background">@color/color_surface</color>
     <color name="color_image_placeholder_foreground">#95ACACAC</color>
     <!--endregion-->

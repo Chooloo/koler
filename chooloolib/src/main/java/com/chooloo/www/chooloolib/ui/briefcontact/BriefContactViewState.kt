@@ -36,8 +36,8 @@ class BriefContactViewState @Inject constructor(
 
     private fun withFirstNumber(callback: (PhoneAccount?) -> Unit) {
         contact?.let {
-            phones.getContactAccounts(it.id) {
-                callback.invoke(it?.getOrNull(0))
+            phones.getContactAccounts(it.id) { phones ->
+                callback.invoke(phones?.getOrNull(0))
             }
         }
     }
@@ -45,6 +45,7 @@ class BriefContactViewState @Inject constructor(
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId
         contacts.queryContact(contactId) {
+            contact = it
             contactName.value = it?.name
             it?.photoUri?.let { uri -> contactImage.value = Uri.parse(uri) }
             isStarIconActivated.value = it?.starred == true

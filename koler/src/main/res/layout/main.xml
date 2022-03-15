@@ -42,7 +42,7 @@
     <!-- dialer button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_dialpad_button"
-         android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:size="big"
         app:icon="@drawable/round_dialpad_24" />
