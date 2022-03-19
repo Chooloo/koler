@@ -64,5 +64,6 @@ open class SettingsViewState @Inject constructor(
 
     fun onThemeModeResponse(response: ThemeMode) {
         preferencesInteractor.themeMode = response
+        navigationsInteractor.goToLauncherActivity()
     }
 }
