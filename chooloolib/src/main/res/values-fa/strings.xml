@@ -114,6 +114,7 @@
     <string name="pref_title_theme_mode">حالت نمایه</string>
     <string name="pref_title_email">به ما ایمیل بزنید</string>
     <string name="pref_title_report_bugs">گزارش مشکل</string>
+    <string name="pref_title_manage_blocked">مدیریت شماره های مسدودشده</string>
     <!--endregion-->
 
     <!--region pref summary -->
