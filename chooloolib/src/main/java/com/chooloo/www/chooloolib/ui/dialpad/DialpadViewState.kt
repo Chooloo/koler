@@ -27,6 +27,10 @@ open class DialpadViewState @Inject constructor(
 
     open fun onLongKeyClick(char: Char) = true
 
+    open fun onTextPasted(text: String) {
+        onTextChanged(text)
+    }
+
 
     protected open fun onTextChanged(text: String) {
         this.text.value = text
