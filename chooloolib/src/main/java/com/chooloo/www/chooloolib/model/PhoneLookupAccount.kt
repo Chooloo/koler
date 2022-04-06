@@ -4,6 +4,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 
 data class PhoneLookupAccount(
     val name: String?,
+    val label: String? = null,
     val number: String? = null,
     val contactId: Long? = null,
     val photoUri: String? = null,

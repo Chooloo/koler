@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.ui.dialer
 
+import android.content.ClipboardManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
@@ -17,9 +18,10 @@ class DialerViewState @Inject constructor(
     audios: AudiosInteractor,
     preferences: PreferencesInteractor,
     private val recents: RecentsInteractor,
+    private val clipboardManager: ClipboardManager,
     private val navigations: NavigationsInteractor
 ) :
-    DialpadViewState(audios, preferences) {
+    DialpadViewState(audios, clipboardManager, preferences) {
 
     val callVoicemailEvent = LiveEvent()
     val callNumberEvent = DataLiveEvent<String>()
