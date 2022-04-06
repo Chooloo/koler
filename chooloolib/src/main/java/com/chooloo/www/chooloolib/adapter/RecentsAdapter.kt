@@ -28,9 +28,8 @@ class RecentsAdapter @Inject constructor(
             phones.lookupAccount(item.number) {
                 titleText = it?.name ?: item.number
                 it?.let {
-                    captionText = "$captionText · ${
-                        strings.getString(Phone.getTypeLabelResource(it.type))
-                    }"
+                    captionText =
+                        "$captionText · ${Phone.getTypeLabel(resources, it.type, it.label)}"
                 }
             }
 

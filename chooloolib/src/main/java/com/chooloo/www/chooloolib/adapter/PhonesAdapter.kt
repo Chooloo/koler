@@ -18,7 +18,7 @@ class PhonesAdapter @Inject constructor(
             imageVisibility = false
             titleText = item.number
             isRightButtonVisible = true
-            captionText = strings.getString(Phone.getTypeLabelResource(item.type))
+            captionText = Phone.getTypeLabel(resources, item.type, item.label).toString()
 
             setTitleBold(true)
             setBackground(null)
