@@ -39,9 +39,23 @@ class DialpadEditText : AppCompatEditText {
         canScrollHorizontally(LAYOUT_DIRECTION_RTL or LAYOUT_DIRECTION_LTR)
     }
 
+    private var textContextMenuItemListener: TextContextMenuItemListener? = null
+
+    fun addTextContextMenuItemListener(listener: TextContextMenuItemListener) {
+       textContextMenuItemListener = listener
+    }
+
     override fun setText(text: CharSequence?, type: BufferType?) {
         super.setText(text, type)
         text?.length?.let { setSelection(it) }
+    }
+
+    override fun onTextContextMenuItem(id: Int): Boolean {
+        if (id == android.R.id.paste) {
+            textContextMenuItemListener?.onPaste()
+            return true
+        }
+        return false
     }
 
     private fun getTextWatcher(onTextChangedListener: (String) -> Unit?) =
@@ -52,4 +66,8 @@ class DialpadEditText : AppCompatEditText {
                 onTextChangedListener.invoke(p0.toString())
             }
         }
+}
+
+interface TextContextMenuItemListener {
+    fun onPaste()
 }

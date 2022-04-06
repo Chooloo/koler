@@ -1,5 +1,7 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -7,11 +9,12 @@ import com.chooloo.www.chooloolib.databinding.DialpadBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+import com.chooloo.www.chooloolib.ui.widgets.TextContextMenuItemListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState>() {
+open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState>(), TextContextMenuItemListener {
     override val contentView by lazy { binding.root }
     override val viewState: DialpadViewState by activityViewModels()
 
@@ -29,6 +32,8 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
                 isLongClickable = false
                 isCursorVisible = false
                 isFocusableInTouchMode = false
+
+                addTextContextMenuItemListener(this@DialpadFragment)
             }
 
             View.OnClickListener {
@@ -69,5 +74,12 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
         }
 
         viewState.text.observe(this@DialpadFragment, binding.dialpadEditText::setText)
+    }
+
+    override fun onPaste() {
+        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+        val item = clipboard?.primaryClip?.getItemAt(0)
+        val text = item?.text.toString().replace(Regex("[^+#*0-9]"), "")
+        viewState.onTextPasted(text)
     }
 }
