@@ -6,6 +6,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import io.reactivex.disposables.CompositeDisposable
@@ -27,6 +28,7 @@ abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<
         }
         applicationContext.setTheme(preferences.accentTheme.theme)
         setTheme(preferences.accentTheme.theme)
+        AppCompatDelegate.setDefaultNightMode(preferences.themeMode.mode)
         contentView?.let { setContentView(it) }
         onSetup()
         viewState.apply {
