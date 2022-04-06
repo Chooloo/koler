@@ -50,15 +50,14 @@ class SearchBar : TextInputLayout {
             hint = resources.getString(R.string.hint_search)
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             compoundDrawableTintList = ColorStateList.valueOf(colorForeground)
-            filters =
-                arrayOf(InputFilter { source, _, _, _, _, _ ->
-                    source.forEach { char ->
-                        if (!(char.isLetterOrDigit() || char == ' ')) {
-                            return@InputFilter ""
-                        }
+            filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
+                source.forEach { char ->
+                    if (!(char.isLetterOrDigit() || char == ' ')) {
+                        return@InputFilter ""
                     }
-                    return@InputFilter null
-                })
+                }
+                return@InputFilter null
+            })
 
             setTextAppearance(R.style.Chooloo_Text_Subtitle1)
             setPadding(spacingSmall, 0, spacingSmall, 0)

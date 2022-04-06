@@ -1,7 +1,5 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
-import android.content.ClipboardManager
-import android.content.Context
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -77,9 +75,6 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
     }
 
     override fun onPaste() {
-        val clipboard = activity?.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        val item = clipboard?.primaryClip?.getItemAt(0)
-        val text = item?.text.toString().replace(Regex("[^+#*0-9]"), "")
-        viewState.onTextPasted(text)
+        viewState.onTextPasted()
     }
 }
