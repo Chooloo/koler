@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_big"
         android:layout_marginEnd="@dimen/default_spacing_big"
-        android:layout_marginBottom="@dimen/default_spacing_big"
+        android:layout_marginBottom="@dimen/default_spacing_small"
         android:minWidth="200dp"
         app:layout_constraintBottom_toTopOf="@id/dialpad_keys_layout"
         app:layout_constraintEnd_toEndOf="parent"
