@@ -47,7 +47,7 @@
     <string name="hint_search_contacts">جستجو در مخاطبین</string>
     <string name="hint_compact_mode">فهرست را فشرده تر کنید</string>
     <string name="hint_search_items">جستجوی مخاطبین &amp; گزارش ها</string>
-    <string name="hint_dialpad_vibrate">لرزش هنگام فشردن شماره گیرد</string>
+    <string name="hint_dialpad_vibrate">لرزش هنگام فشردن شماره گیر</string>
     <string name="hint_should_ask_sim">انتخاب سیم کارت قبل هر تماس</string>
     <string name="hint_dialpad_tones">صدا هنگام فشردن شماره گیر</string>
     <string name="hint_show_blocked">نمایش گزینه مسدودسازی/رفع مسدودی برای شماره ها (می بایست برنامه پیش فرض تماس باشد).</string>
@@ -55,7 +55,7 @@
 
     <!--region warning-->
     <string name="explain_is_on_hold">%s در انتظار است</string>
-    <string name="explain_choose_theme_mode">حالت نمایه را تنظیم کنید، برنامه را دوباره بار کنید تا تغییرات را ببینید</string>
+    <string name="explain_choose_theme_mode">حالت نمایه را تنظیم کنید، برنامه را دوباره باز کنید تا تغییرات را ببینید</string>
     <string name="explain_choose_sim_account">تماس با سیم کارت متفاوت</string>
     <string name="explain_choose_audio_route">تغییر منبع صوتی</string>
     <string name="explain_choose_phone_account">تماس فعلی را با استفاده از سیم کارت خاصی ادامه  دهید</string>
@@ -114,7 +114,7 @@
     <string name="pref_title_theme_mode">حالت نمایه</string>
     <string name="pref_title_email">به ما ایمیل بزنید</string>
     <string name="pref_title_report_bugs">گزارش مشکل</string>
-    <string name="pref_title_manage_blocked">مدیرت شماره های مسدودشده</string>
+    <string name="pref_title_manage_blocked">مدیریت شماره های مسدودشده</string>
     <!--endregion-->
 
     <!--region pref summary -->
