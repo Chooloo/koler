@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.ui.recent
 
 import android.Manifest.permission.WRITE_CALL_LOG
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
@@ -31,9 +32,10 @@ class RecentViewState @Inject constructor(
     BaseViewState() {
 
     val name = MutableLiveData<String?>()
+    val imageUri = MutableLiveData<Uri>()
     val recentId = MutableLiveData(0L)
-    val image = MutableLiveData<Drawable?>()
     val timeString = MutableLiveData<String?>()
+    val typeImage = MutableLiveData<Drawable?>()
     val durationString = MutableLiveData<String?>()
     val isContactVisible = MutableLiveData(false)
     val isAddContactVisible = MutableLiveData(false)
@@ -56,12 +58,13 @@ class RecentViewState @Inject constructor(
         timeString.value = _recent!!.relativeTime
         durationString.value =
             if (_recent!!.duration > 0L) getElapsedTimeString(_recent!!.duration) else null
-        image.value =
-            drawables.getDrawable(recents.getCallTypeImage(_recent!!.type))
         name.value =
             if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
+        typeImage.value =
+            drawables.getDrawable(recents.getCallTypeImage(_recent!!.type))
 
         phones.lookupAccount(_recent!!.number) {
+            it?.photoUri?.let { imageUri.value = Uri.parse(it) }
             isContactVisible.value = it?.name != null
             isAddContactVisible.value = it?.name == null
         }

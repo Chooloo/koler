@@ -61,7 +61,8 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
         viewState.apply {
             recentId.value = args.getLong(ARG_RECENT_ID)
-            image.observe(this@RecentFragment, binding.recentTypeImage::setImageDrawable)
+            imageUri.observe(this@RecentFragment, binding.recentContactImage::setImageURI)
+            typeImage.observe(this@RecentFragment, binding.recentTypeImage::setImageDrawable)
 
             name.observe(this@RecentFragment) {
                 binding.recentTextName.text = it
