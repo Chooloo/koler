@@ -38,6 +38,7 @@
 
     <TableLayout
         android:id="@+id/dialpad_keys_layout"
+        android:layoutDirection="ltr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_big"
