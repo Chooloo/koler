@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
@@ -52,6 +53,7 @@ open class ListItem : LinearLayout {
     protected val image: AvatarImageView
     protected val buttonLeft: IconButton
     protected val buttonRight: IconButton
+    protected val captionImage: ImageView
     protected val personLayout: ConstraintLayout
 
     protected val dimenSpacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
@@ -201,6 +203,13 @@ open class ListItem : LinearLayout {
             setPadding(0, context.getSizeInDp(2), 0, 0)
         }
 
+        captionImage = ImageView(context, attrs, defStyleRes).apply {
+            id = View.generateViewId()
+            layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, 0).apply {
+                setMargins(2, 0, 0, 0)
+            }
+        }
+
         image = AvatarImageView(context, attrs).apply {
             state = SHOW_INITIAL
             id = generateViewId()
@@ -266,6 +275,7 @@ open class ListItem : LinearLayout {
             addView(caption)
             addView(buttonLeft)
             addView(buttonRight)
+            addView(captionImage)
         }
 
         ConstraintSet().apply {
@@ -289,6 +299,12 @@ open class ListItem : LinearLayout {
                 connect(it, TOP, title.id, BOTTOM)
                 connect(it, START, title.id, START)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
+            }
+
+            captionImage.id.also {
+                connect(it, TOP, caption.id, TOP)
+                connect(it, START, caption.id, END)
+                connect(it, BOTTOM, caption.id, BOTTOM)
             }
 
             buttonRight.id.also {
@@ -421,8 +437,13 @@ open class ListItem : LinearLayout {
         title.setTextColor(color)
     }
 
+
     fun setImageResource(@DrawableRes res: Int) {
         image.setImageResource(res)
+    }
+
+    fun setCaptionImageRes(@DrawableRes res: Int) {
+        captionImage.setImageResource(res)
     }
 
     fun setTitleTextAppearance(@StyleRes resId: Int) {

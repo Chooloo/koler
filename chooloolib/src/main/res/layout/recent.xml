@@ -7,12 +7,12 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/recent_type_image"
+        android:id="@+id/recent_contact_image"
         style="@style/Chooloo.Bottom.Image"
         android:layout_width="@dimen/image_size_big"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/default_spacing_small"
-        android:src="@drawable/round_call_missed_20"
+        android:layout_margin="@dimen/default_spacing_big"
+        android:visibility="gone"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@id/recent_image_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_type_image"
+        app:layout_constraintTop_toBottomOf="@id/recent_contact_image"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Jesus" />
 
@@ -77,11 +77,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing_small"
         app:layout_constraintBottom_toBottomOf="@id/recent_image_time"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recent_type_image"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/recent_image_duration"
         app:layout_constraintTop_toTopOf="@id/recent_image_time"
         tools:text="15 minutes"
+        tools:visibility="visible" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/recent_type_image"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/default_spacing_small"
+        android:src="@drawable/round_call_missed_20"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/recent_text_duration"
+        app:layout_constraintTop_toTopOf="@id/recent_image_time"
+        app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
         tools:visibility="visible" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton

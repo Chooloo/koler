@@ -17,6 +17,7 @@ class PhoneLookupContentResolver(context: Context, number: String?) :
     override val uri: Uri = PhoneLookup.CONTENT_FILTER_URI.buildUpon().appendPath(number).build()
     override val projection: Array<String> = arrayOf(
         PhoneLookup.TYPE,
+        PhoneLookup.LABEL,
         PhoneLookup.NUMBER,
         PhoneLookup.STARRED,
         PhoneLookup.PHOTO_URI,
@@ -26,6 +27,7 @@ class PhoneLookupContentResolver(context: Context, number: String?) :
 
     @SuppressLint("Range")
     override fun convertCursorToItem(cursor: Cursor) = PhoneLookupAccount(
+        label = cursor.getString(cursor.getColumnIndex(PhoneLookup.LABEL)),
         number = cursor.getString(cursor.getColumnIndex(PhoneLookup.NUMBER)),
         name = cursor.getString(cursor.getColumnIndex(PhoneLookup.DISPLAY_NAME)),
         contactId = cursor.getLong(cursor.getColumnIndex(PhoneLookup.CONTACT_ID)),

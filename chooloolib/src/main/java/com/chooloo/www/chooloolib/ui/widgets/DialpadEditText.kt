@@ -30,7 +30,6 @@ class DialpadEditText : AppCompatEditText {
         textAlignment = TEXT_ALIGNMENT_CENTER
         inputType = InputType.TYPE_CLASS_PHONE
         background = ContextCompat.getDrawable(context, R.drawable.round_outline)
-        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSurface))
         filters = arrayOf(InputFilter { source, _, _, _, _, _ ->
             source.filter { char -> char.isDigit() || char in arrayOf('*', '#', '+') }
         })

@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
+import android.content.ClipboardManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
@@ -10,6 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 open class DialpadViewState @Inject constructor(
     private val audios: AudiosInteractor,
+    private val clipboardManager: ClipboardManager,
     private val preferences: PreferencesInteractor
 ) :
     BaseViewState() {
@@ -27,7 +29,9 @@ open class DialpadViewState @Inject constructor(
 
     open fun onLongKeyClick(char: Char) = true
 
-    open fun onTextPasted(text: String) {
+    open fun onTextPasted() {
+        val item = clipboardManager.primaryClip?.getItemAt(0)
+        val text = item?.text.toString().replace(Regex("[^+#*0-9]"), "")
         onTextChanged(text)
     }
 
