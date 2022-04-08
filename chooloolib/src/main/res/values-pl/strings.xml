@@ -1,0 +1,199 @@
+<resources>
+
+    <!--region titles-->
+    <string name="recents">Ostatnie</string>
+    <string name="contacts">Kontakty</string>
+    <string name="conference">Konferencja</string>
+    <string name="default_page">Domyślne</string>
+    <string name="settings">Ustawienia</string>
+    <string name="theme_mode_dark">Ciemny</string>
+    <string name="theme_mode_light">Jasny</string>
+    <string name="theme_mode_system">Systemowy</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Tak czy Nie?</string>
+    <string name="prompt_are_you_sure">Czy jesteś pewien?</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Numer skopiowany do schowka</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">Tak</string>
+    <string name="action_no">Nie</string>
+    <string name="action_answer">Odbierz</string>
+    <string name="action_hangup">Rozłącz</string>
+    <string name="action_show_history">Pokaż Historię</string>
+    <string name="action_block_number">Zablokuj Numer</string>
+    <string name="action_unblock_number">Odblokuj Numer</string>
+    <string name="action_choose_audio_route">Wybierz ścieżkę dźwięku</string>
+    <string name="action_choose_phone_account">Wybierz konto telefonu</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Szukaj</string>
+    <string name="hint_theme_mode">Motyw</string>
+    <string name="hint_sim_account">Konto Sim</string>
+    <string name="hint_default_page">Domyślna Strona</string>
+    <string name="hint_animations">Pokaż animacje</string>
+    <string name="hint_search_recents">Szukaj Ostatnie</string>
+    <string name="hint_search_contacts">Szukaj Kontakty</string>
+    <string name="hint_compact_mode">Pokaż wszystko w widoku uproszczonym</string>
+    <string name="hint_search_items">Szukaj Kontakty i Ostatnie</string>
+    <string name="hint_dialpad_vibrate">Wibruj na klawiaturze numeryczna</string>
+    <string name="hint_should_ask_sim">Zapytaj o kartę sim przed każdym połączeniem</string>
+    <string name="hint_dialpad_tones">Dźwięk na klawiaturze numerycznej</string>
+    <string name="hint_show_blocked">Pokaż opcje Zablokowanych/Odblokowanych numerów (wymaga domyślnej aplikacji do rozmów).</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s is on hold</string>
+    <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
+    <string name="explain_choose_sim_account">Call with a different sim</string>
+    <string name="explain_choose_audio_route">Route audio to a different source</string>
+    <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
+    <string name="explain_delete_contact">This contact will be deleted permanently</string>
+    <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_mute">Wycisz</string>
+    <string name="call_action_unmute">Wył. Wyciszenie</string>
+    <string name="call_action_speaker">Głośnik</string>
+    <string name="call_action_speaker_off">Wyłącz Głośnik</string>
+    <!--endregion-->
+
+    <!--region call state-->
+    <string name="call_status_new">Nowe połączenie</string>
+    <string name="call_status_dialing">Wybieranie…</string>
+    <string name="call_status_holding">Połączenie wstrzymane</string>
+    <string name="call_status_connecting">Łączenie…</string>
+    <string name="call_status_incoming">Połączenie przychodzące</string>
+    <string name="call_status_active">Połączenie w toku</string>
+    <string name="call_status_disconnected">Połączenie zakończone</string>
+    <string name="call_status_pulling_call">Przechwytywanie połączenia…</string>
+    <string name="call_status_unknown">Nieznany status połączenia</string>
+    <string name="call_status_disconnecting">Rozłączanie…</string>
+    <string name="call_status_phone_account">Wybierz konto telefonu</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_compact">compact</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_color">accent_color</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Oceń</string>
+    <string name="pref_title_compact">Tryb Kompaktowy</string>
+    <string name="pref_title_animations">Animacje</string>
+    <string name="pref_title_app_color">Kolor Akcentowy</string>
+    <string name="pref_title_theme_mode">Tryb Motywu</string>
+    <string name="pref_title_email">Wyślij do nas Emaila</string>
+    <string name="pref_title_report_bugs">Zgłoś Błędy</string>
+    <string name="pref_title_manage_blocked">Zarządzaj Zablokowanymi Numerami</string>
+    <!--endregion-->
+
+    <!--region pref summary -->
+    <!--endregion-->
+
+    <!--region pref default value-->
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">Brak Wyników</string>
+    <string name="error_no_results_recents">Brak ostatnich połączeń</string>
+    <string name="error_no_results_contacts">Brak kontaktów</string>
+    <string name="error_no_results_phones">Brak numerów telefonu</string>
+    <string name="error_not_default_dialer_blocked">Ustaw Koler jako domyślną aplikacje do dzwonienia, aby zobaczyć zablokowane numery</string>
+    <string name="error_not_default_dialer_call">Ustaw Koler jako domyślną aplikację do dzwonienia, aby wykonać połączenie</string>
+
+    <string name="error_no_permissions_edit_call_log">Brak uprawnień do zmiany dziennika połączeń :)</string>
+    <string name="error_no_permissions_make_call">Brak uprawnień do wykonania połączenia :(</string>
+    <string name="error_no_permissions_phones">Potrzebuję uprawnień aby wyszukać kontakty :)</string>
+    <string name="error_no_permissions_recents">Potrzebuję uprawnień aby wyszukać ostatnie połączenia :)</string>
+    <string name="error_no_permissions_contacts">Potrzebuję uprawnień aby wyszukać kontakty :)</string>
+
+    <string name="error_no_number_to_call">Nie znaleziono numeru :(</string>
+
+    <string name="error_cant_hold_call">Nie można wstrzymać połączenia</string>
+    <string name="error_cant_swap_calls">Nie można zamienić połączeń</string>
+    <string name="error_cant_merge_call">Nie można złączyć połączeń</string>
+
+    <string name="error_couldnt_get_number_from_intent">Nie znaleziono numeru</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Poczta głosowa</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_menu_button">Przycisk Menu</string>
+    <string name="content_description_answer_button">Przycisk do Odebrania</string>
+    <string name="content_description_reject_button">Przycisk do Odrzucenia</string>
+    <string name="content_description_call_actions_button">Opcje Rozmowy</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Powiadomienia Połączeń</string>
+    <string name="call_notification_channel_description">Powiadomienie aktywnego połączenia, pokazane dla komfortowego użytku</string>
+    <!--endregion-->
+
+    <!--region phone type-->
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Głośnik</string>
+    <string name="audio_route_earpiece">Słuchawka</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Słuchawki przewodowe</string>
+    <string name="audio_route_wired_or_earpiece">Przewodowy lub słuchawka</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">Ulubione</string>
+    <string name="content_description_empty_list_icon">Pusta lista</string>
+</resources>
