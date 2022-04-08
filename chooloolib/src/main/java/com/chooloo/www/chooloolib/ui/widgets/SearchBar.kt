@@ -26,6 +26,7 @@ class SearchBar : TextInputLayout {
 
     private val colorBackground by lazy { context.getAttrColor(R.attr.colorLightBackground) }
     private val colorForeground by lazy { context.getAttrColor(R.attr.colorLightForeground) }
+    private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
 
@@ -60,7 +61,7 @@ class SearchBar : TextInputLayout {
             })
 
             setTextAppearance(R.style.Chooloo_Text_Subtitle1)
-            setPadding(spacingSmall, 0, spacingSmall, 0)
+            setPadding(spacing, 0, spacingSmall, 0)
             setHintTextColor(ColorStateList.valueOf(colorForeground))
             setTextColor(context.getAttrColor(R.attr.colorOnSurface))
 
@@ -81,6 +82,7 @@ class SearchBar : TextInputLayout {
         endIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_close_24)
         startIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_search_24)
 
+        setPadding(spacingSmall, 0, 0, 0)
         setEndIconTintList(ColorStateList.valueOf(colorForeground))
         setStartIconTintList(ColorStateList.valueOf(colorForeground))
     }
