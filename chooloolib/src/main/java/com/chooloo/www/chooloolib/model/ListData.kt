@@ -24,10 +24,45 @@ data class ListData<DataType>(
             return ListData(contacts, headersToCounts)
         }
 
-        fun fromRecents(recents: List<RecentAccount>) = ListData(
-            recents,
-            recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
-        )
+        fun fromRecents(recents: List<RecentAccount>, isGrouped: Boolean) =
+            if (isGrouped && recents.size > 1) getGroupedRecents(recents)
+            else ListData(
+                recents,
+                recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+            )
+
+        private fun getGroupedRecents(recents: List<RecentAccount>): ListData<RecentAccount> {
+            var prevItem: RecentAccount = recents[0]
+            var prevDate = getRelativeDateString(prevItem.date)
+            var count = 1
+            val groupedRecents: MutableList<RecentAccount> = ArrayList()
+            recents.drop(1).forEach {
+                val date = getRelativeDateString(it.date)
+                if (prevItem.number == it.number && prevDate == date) {
+                    count++
+                } else {
+                    groupedRecents.add(
+                        RecentAccount(
+                            prevItem.number, prevItem.type, prevItem.id,
+                            prevItem.duration, prevItem.date, prevItem.cachedName, count
+                        )
+                    )
+                    count = 1
+                    prevItem = it
+                }
+                prevDate = date
+            }
+            groupedRecents.add(
+                RecentAccount(
+                    prevItem.number, prevItem.type, prevItem.id,
+                    prevItem.duration, prevItem.date, prevItem.cachedName, count
+                )
+            )
+            return ListData(
+                groupedRecents,
+                groupedRecents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+            )
+        }
 
         fun fromPhones(phones: List<PhoneAccount>): ListData<PhoneAccount> {
             val phones = phones.toList().distinctBy { it.normalizedNumber }

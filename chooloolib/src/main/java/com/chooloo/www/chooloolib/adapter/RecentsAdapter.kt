@@ -23,10 +23,19 @@ class RecentsAdapter @Inject constructor(
     private val preferences: PreferencesInteractor
 ) : ListAdapter<RecentAccount>(animations) {
 
+    private var _showHistory: Boolean = false
+
+    var showHistory: Boolean
+        get() = _showHistory
+        set(value) {
+            _showHistory = value
+        }
+
     override fun onBindListItem(listItem: ListItem, item: RecentAccount) {
         listItem.apply {
             isCompact = preferences.isCompact
-            captionText = if (item.date != null) context.getHoursString(item.date) else null
+            val date = if (item.date != null) context.getHoursString(item.date) else ""
+            captionText = if (item.callCount > 1) "(${item.callCount}) $date" else date
             phones.lookupAccount(item.number) {
                 titleText = it?.name ?: item.number
                 it?.let {
@@ -42,5 +51,6 @@ class RecentsAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<RecentAccount>) = ListData.fromRecents(data)
+    override fun convertDataToListData(data: List<RecentAccount>) =
+        ListData.fromRecents(data, !showHistory)
 }

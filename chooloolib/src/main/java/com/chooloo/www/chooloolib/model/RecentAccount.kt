@@ -13,6 +13,7 @@ data class RecentAccount(
     val duration: Long = 0,
     val date: Date? = null,
     val cachedName: String? = null,
+    val callCount: Int = 1,
 ) : Serializable {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
