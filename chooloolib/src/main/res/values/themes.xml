@@ -12,7 +12,7 @@
         <item name="colorControlHighlight">?colorLightBackground</item>
         <item name="colorOnBackground">@color/color_on_background</item>
 
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>
 
         <item name="alertDialogTheme">@style/Chooloo.AlertDialog</item>
