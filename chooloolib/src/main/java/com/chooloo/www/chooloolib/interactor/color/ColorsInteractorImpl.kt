@@ -25,6 +25,19 @@ class ColorsInteractorImpl @Inject constructor(
         return context.createConfigurationContext(configuration)
     }
 
+    override val windowColor: Int
+        get() {
+            val typedValue = TypedValue()
+            context.theme.resolveAttribute(
+                android.R.attr.windowBackground,
+                typedValue,
+                true
+            )
+            return if (typedValue.type in TypedValue.TYPE_FIRST_COLOR_INT..TypedValue.TYPE_LAST_COLOR_INT) {
+                typedValue.data;
+            } else -1
+        }
+
     override fun getColor(colorRes: Int) = ContextCompat.getColor(getThemedContext(), colorRes)
 
     override fun getAttrColor(colorRes: Int) =

@@ -1,35 +1,34 @@
 package com.chooloo.www.chooloolib.ui.base
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
-import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import io.reactivex.disposables.CompositeDisposable
-import javax.annotation.meta.TypeQualifier
 import javax.inject.Inject
 
 abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<VM> {
+    @Inject lateinit var colors: ColorsInteractor
     @Inject lateinit var strings: StringsInteractor
     @Inject lateinit var disposables: CompositeDisposable
     @Inject lateinit var preferences: PreferencesInteractor
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         applicationContext.setTheme(preferences.accentTheme.theme)
         setTheme(preferences.accentTheme.theme)
+        window.statusBarColor = colors.windowColor
         AppCompatDelegate.setDefaultNightMode(preferences.themeMode.mode)
+
         contentView?.let { setContentView(it) }
+
         onSetup()
+
         viewState.apply {
             attach()
 
@@ -45,17 +44,6 @@ abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<
                 it.ifNew?.let(this@BaseActivity::showMessage)
             }
         }
-
-        val typedValue = TypedValue()
-        theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
-        val windowColor: Int = if (typedValue.type >= TypedValue.TYPE_FIRST_COLOR_INT && typedValue.type <= TypedValue.TYPE_LAST_COLOR_INT){
-            typedValue.data;
-        }else -1
-
-        window.apply {
-            statusBarColor = windowColor
-        }
-
     }
 
     override fun onStop() {
