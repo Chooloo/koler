@@ -45,7 +45,7 @@
     <string name="hint_animations">Mostrar animações</string>
     <string name="hint_search_recents">Buscar em recentes</string>
     <string name="hint_search_contacts">Buscar em contatos</string>
-    <string name="hint_compact_mode">Fazer lista de itens compacta</string>
+    <string name="hint_compact_mode">Mostrar lista de itens compatada</string>
     <string name="hint_search_items">Buscar em contatos &amp; recentes</string>
     <string name="hint_dialpad_vibrate">Vibrar ao tocar no discador</string>
     <string name="hint_should_ask_sim">Pergunte qual SIM usar antes de cada ligação</string>
@@ -113,7 +113,7 @@
     <string name="pref_title_app_color">Destacar a cor</string>
     <string name="pref_title_theme_mode">Tipo de tema</string>
     <string name="pref_title_email">Envie um e-mail</string>
-    <string name="pref_title_report_bugs">Relatório de falhas</string>
+    <string name="pref_title_report_bugs">Relatar falhas</string>
     <string name="pref_title_manage_blocked">Gerenciar números bloqueados</string>
     <!--endregion-->
 
@@ -131,7 +131,7 @@
     <string name="error_not_default_dialer_blocked">Defina o Koler como discador padrão para poder ver números bloqueados</string>
     <string name="error_not_default_dialer_call">Defina o Koler como discador padrão para fazer ligações</string>
 
-    <string name="error_no_permissions_edit_call_log">Nenhuma permissão concedida para alterar o registro de ligação</string>
+    <string name="error_no_permissions_edit_call_log">Nenhuma permissão concedida para alterar o registro de ligações</string>
     <string name="error_no_permissions_make_call">Nenhuma permissão concedida para fazer ligação</string>
     <string name="error_no_permissions_phones">Permissão exigida para ler os contatos</string>
     <string name="error_no_permissions_recents">Permissão exigida para ler o registro de ligações</string>
@@ -172,8 +172,8 @@
 
     <!--region content descriptions -->
     <string name="content_description_menu_button">Botão de menu</string>
-    <string name="content_description_answer_button">Botão de responder</string>
-    <string name="content_description_reject_button">Botão de rejeitar</string>
+    <string name="content_description_answer_button">Botão de atender</string>
+    <string name="content_description_reject_button">Botão de recusar</string>
     <string name="content_description_call_actions_button">Opções de ligação</string>
     <!--endregion-->
 
