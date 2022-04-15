@@ -4,6 +4,7 @@
     <bool name="pref_default_value_animations">true</bool>
     <bool name="pref_default_value_show_blocked">false</bool>
     <bool name="pref_default_value_dialpad_tones">true</bool>
+    <bool name="pref_default_value_group_recents">false</bool>
     <bool name="pref_default_value_dialpad_vibrate">true</bool>
     <bool name="pref_default_value_should_ask_sim">false</bool>
 </resources>

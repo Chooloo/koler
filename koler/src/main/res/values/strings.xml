@@ -3,6 +3,7 @@
     <string name="pref_title_default_page">Default Page</string>
     <string name="pref_title_ask_sim">Should ask for sim</string>
     <string name="pref_title_dialpad_tones">Dialpad click tones</string>
+    <string name="pref_title_group_recents">Group similar recents</string>
     <string name="pref_title_show_blocked">Show block number option</string>
     <string name="pref_title_dialpad_vibrate">Vibrate on dialpad clicks</string>
 </resources>

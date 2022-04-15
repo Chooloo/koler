@@ -24,10 +24,41 @@ data class ListData<DataType>(
             return ListData(contacts, headersToCounts)
         }
 
-        fun fromRecents(recents: List<RecentAccount>) = ListData(
-            recents,
-            recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
-        )
+        fun fromRecents(recents: List<RecentAccount>, isGrouped: Boolean) =
+            if (isGrouped && recents.size > 1) {
+                getGroupedRecents(recents)
+            } else {
+                ListData(
+                    recents,
+                    recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+                )
+            }
+
+        private fun getGroupedRecents(recents: List<RecentAccount>): ListData<RecentAccount> {
+            var prevItem: RecentAccount = recents[0]
+            val currentGroup = mutableListOf(prevItem)
+            var prevDate = getRelativeDateString(prevItem.date)
+            val groupedRecents = mutableListOf<RecentAccount>()
+
+            recents.drop(1).forEach { curItem ->
+                val curDate = getRelativeDateString(curItem.date)
+                if (prevItem.number == curItem.number && prevDate == curDate) {
+                    currentGroup.add(curItem)
+                } else {
+                    groupedRecents.add(prevItem.copy(groupAccounts = currentGroup.map { it.copy() }))
+                    currentGroup.clear()
+                    currentGroup.add(curItem)
+                    prevItem = curItem
+                }
+                prevDate = curDate
+            }
+            groupedRecents.add(prevItem.copy(groupAccounts = currentGroup))
+
+            return ListData(
+                groupedRecents,
+                groupedRecents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+            )
+        }
 
         fun fromPhones(phones: List<PhoneAccount>): ListData<PhoneAccount> {
             val phones = phones.toList().distinctBy { it.normalizedNumber }

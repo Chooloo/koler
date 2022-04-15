@@ -15,9 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 open class SettingsViewState @Inject constructor(
-    private val colorsInteractor: ColorsInteractor,
-    private val navigationsInteractor: NavigationsInteractor,
-    private val preferencesInteractor: PreferencesInteractor
+    protected val colors: ColorsInteractor,
+    protected val navigations: NavigationsInteractor,
+    protected val preferences: PreferencesInteractor
 ) :
     BaseViewState() {
 
@@ -31,39 +31,39 @@ open class SettingsViewState @Inject constructor(
 
     open fun onMenuItemClick(menuItem: MenuItem) {
         when (menuItem.itemId) {
-            R.id.menu_chooloo_rate -> navigationsInteractor.rateApp()
+            R.id.menu_chooloo_rate -> navigations.rateApp()
             R.id.menu_chooloo_theme_mode -> askForThemeModeEvent.call()
             R.id.menu_chooloo_compact_mode -> askForCompactEvent.call()
             R.id.menu_chooloo_animations -> askForAnimationsEvent.call()
-            R.id.menu_chooloo_email -> navigationsInteractor.sendEmail()
-            R.id.menu_chooloo_report_bugs -> navigationsInteractor.reportBug()
+            R.id.menu_chooloo_email -> navigations.sendEmail()
+            R.id.menu_chooloo_report_bugs -> navigations.reportBug()
             R.id.menu_chooloo_accent_color -> askForColorEvent.call(R.array.accent_colors)
         }
     }
 
     fun onColorResponse(color: Int) {
-        preferencesInteractor.accentTheme = when (color) {
-            colorsInteractor.getColor(R.color.red_background) -> RED
-            colorsInteractor.getColor(R.color.blue_background) -> BLUE
-            colorsInteractor.getColor(R.color.green_background) -> GREEN
-            colorsInteractor.getColor(R.color.orange_background) -> ORANGE
-            colorsInteractor.getColor(R.color.purple_background) -> PURPLE
+        preferences.accentTheme = when (color) {
+            colors.getColor(R.color.red_background) -> RED
+            colors.getColor(R.color.blue_background) -> BLUE
+            colors.getColor(R.color.green_background) -> GREEN
+            colors.getColor(R.color.orange_background) -> ORANGE
+            colors.getColor(R.color.purple_background) -> PURPLE
             else -> DEFAULT
         }
-        navigationsInteractor.goToLauncherActivity()
+        navigations.goToLauncherActivity()
     }
 
     fun onCompactResponse(response: Boolean) {
-        preferencesInteractor.isCompact = response
-        navigationsInteractor.goToLauncherActivity()
+        preferences.isCompact = response
+        navigations.goToLauncherActivity()
     }
 
     fun onAnimationsResponse(response: Boolean) {
-        preferencesInteractor.isAnimations = response
+        preferences.isAnimations = response
     }
 
     fun onThemeModeResponse(response: ThemeMode) {
-        preferencesInteractor.themeMode = response
-        navigationsInteractor.goToLauncherActivity()
+        preferences.themeMode = response
+        navigations.goToLauncherActivity()
     }
 }

@@ -14,31 +14,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewState @Inject constructor(
-    colorsInteractor: ColorsInteractor,
-    navigationsInteractor: NavigationsInteractor,
-    private val preferences: PreferencesInteractor,
-    private val permissionsInteractor: PermissionsInteractor,
+    colors: ColorsInteractor,
+    navigations: NavigationsInteractor,
+    preferences: PreferencesInteractor,
+    private val permissions: PermissionsInteractor
 ) :
-    SettingsViewState(
-        colorsInteractor,
-        navigationsInteractor,
-        preferences
-    ) {
+    SettingsViewState(colors, navigations, preferences) {
 
     override val menuResList = arrayListOf(R.menu.menu_koler) + super.menuResList
 
     val askForShowBlockedEvent = LiveEvent()
     val askForDefaultPageEvent = LiveEvent()
+    val askForGroupRecentsEvent = LiveEvent()
     val askForDialpadTonesEvent = LiveEvent()
     val askForDialpadVibrateEvent = LiveEvent()
-
 
     override fun onMenuItemClick(menuItem: MenuItem) {
         when (menuItem.itemId) {
             R.id.menu_koler_default_page -> askForDefaultPageEvent.call()
             R.id.menu_koler_dialpad_tones -> askForDialpadTonesEvent.call()
+            R.id.menu_koler_group_recents -> askForGroupRecentsEvent.call()
             R.id.menu_koler_dialpad_vibrate -> askForDialpadVibrateEvent.call()
-            R.id.menu_koler_show_blocked -> permissionsInteractor.runWithDefaultDialer {
+            R.id.menu_koler_show_blocked -> permissions.runWithDefaultDialer {
                 askForShowBlockedEvent.call()
             }
             else -> super.onMenuItemClick(menuItem)
@@ -59,5 +56,10 @@ class SettingsViewState @Inject constructor(
 
     fun onDialpadVibrate(response: Boolean) {
         preferences.isDialpadVibrate = response
+    }
+
+    fun onGroupRecents(response: Boolean) {
+        preferences.isGroupRecents = response
+        navigations.goToLauncherActivity()
     }
 }
