@@ -11,7 +11,7 @@
 </a>
 
 <p align="center">
-         It's a dialer, but it's simple and it looks pretty good honestly
+         A dialer, but it's simple and looks pretty good honestly
 </p>
 
 Copylefted libre MVVM Android app. \
@@ -41,7 +41,7 @@ If you enjoy the app, wish to contribute or simply wish to be with like-minded p
   </a>
 </p>
 
-## Trnslations
+## Translations
 
 <a href="https://hosted.weblate.org/engage/koler/">
 <img src="https://hosted.weblate.org/widgets/koler/-/multi-auto.svg" alt="Translation status" />
