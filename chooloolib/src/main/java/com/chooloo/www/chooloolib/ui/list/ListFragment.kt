@@ -6,7 +6,6 @@ import com.chooloo.www.chooloolib.databinding.ItemsBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 
 abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragment<VS>() {
-
     override val contentView by lazy { binding.root }
     protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
@@ -33,7 +32,9 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragme
                 ev.ifNew?.let { adapter.items = it }
             }
 
-            getItemsObservable { it.observe(this@ListFragment, viewState::onItemsChanged) }
+            if (args.getBoolean(ARG_OBSERVE, true)) {
+                getItemsObservable { it.observe(this@ListFragment, viewState::onItemsChanged) }
+            }
         }
 
         adapter.apply {
@@ -61,5 +62,6 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragme
 
     companion object {
         const val ARG_FILTER = "filter"
+        const val ARG_OBSERVE = "is_observe"
     }
 }

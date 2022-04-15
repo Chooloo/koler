@@ -38,6 +38,15 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
                     )
                 }
             }
+
+            askForGroupRecentsEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForBoolean(
+                        R.string.hint_group_recents,
+                        viewState::onGroupRecents
+                    )
+                }
+            }
         }
     }
 }

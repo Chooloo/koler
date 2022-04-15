@@ -25,39 +25,35 @@ data class ListData<DataType>(
         }
 
         fun fromRecents(recents: List<RecentAccount>, isGrouped: Boolean) =
-            if (isGrouped && recents.size > 1) getGroupedRecents(recents)
-            else ListData(
-                recents,
-                recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
-            )
+            if (isGrouped && recents.size > 1) {
+                getGroupedRecents(recents)
+            } else {
+                ListData(
+                    recents,
+                    recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+                )
+            }
 
         private fun getGroupedRecents(recents: List<RecentAccount>): ListData<RecentAccount> {
             var prevItem: RecentAccount = recents[0]
+            val currentGroup = mutableListOf(prevItem)
             var prevDate = getRelativeDateString(prevItem.date)
-            var count = 1
-            val groupedRecents: MutableList<RecentAccount> = ArrayList()
-            recents.drop(1).forEach {
-                val date = getRelativeDateString(it.date)
-                if (prevItem.number == it.number && prevDate == date) {
-                    count++
+            val groupedRecents = mutableListOf<RecentAccount>()
+
+            recents.drop(1).forEach { curItem ->
+                val curDate = getRelativeDateString(curItem.date)
+                if (prevItem.number == curItem.number && prevDate == curDate) {
+                    currentGroup.add(curItem)
                 } else {
-                    groupedRecents.add(
-                        RecentAccount(
-                            prevItem.number, prevItem.type, prevItem.id,
-                            prevItem.duration, prevItem.date, prevItem.cachedName, count
-                        )
-                    )
-                    count = 1
-                    prevItem = it
+                    groupedRecents.add(prevItem.copy(groupAccounts = currentGroup.map { it.copy() }))
+                    currentGroup.clear()
+                    currentGroup.add(curItem)
+                    prevItem = curItem
                 }
-                prevDate = date
+                prevDate = curDate
             }
-            groupedRecents.add(
-                RecentAccount(
-                    prevItem.number, prevItem.type, prevItem.id,
-                    prevItem.duration, prevItem.date, prevItem.cachedName, count
-                )
-            )
+            groupedRecents.add(prevItem.copy(groupAccounts = currentGroup))
+
             return ListData(
                 groupedRecents,
                 groupedRecents.groupingBy { getRelativeDateString(it.date) }.eachCount()

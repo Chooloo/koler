@@ -4,7 +4,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.livedata.contentprovider.RecentsProviderLiveData
 import com.chooloo.www.chooloolib.model.RecentAccount
@@ -28,7 +27,7 @@ open class RecentsViewState @Inject constructor(
 
     private val recentsLiveData = recentsRepository.getRecents() as RecentsProviderLiveData
 
-    val showRecentEvent = DataLiveEvent<Long>()
+    val showRecentEvent = DataLiveEvent<RecentAccount>()
 
 
     override fun onFilterChanged(filter: String?) {
@@ -38,7 +37,7 @@ open class RecentsViewState @Inject constructor(
 
     override fun onItemClick(item: RecentAccount) {
         super.onItemClick(item)
-        showRecentEvent.call(item.id)
+        showRecentEvent.call(item)
     }
 
     override fun onItemLongClick(item: RecentAccount) {

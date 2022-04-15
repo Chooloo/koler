@@ -1,22 +1,17 @@
-package com.chooloo.www.chooloolib.ui.recents
+package com.chooloo.www.chooloolib.ui.recentshistory
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import com.chooloo.www.chooloolib.adapter.RecentsAdapter
+import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecentsHistoryFragment : RecentsFragment() {
     override val viewState: RecentsHistoryViewState by activityViewModels()
 
-    @Inject
-    override lateinit var adapter: RecentsAdapter
-
     override fun onSetup() {
         super.onSetup()
-
-        adapter.showHistory = true
+        adapter.groupSimilar = false
     }
 
     companion object {
