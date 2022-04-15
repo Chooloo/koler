@@ -297,13 +297,13 @@ open class ListItem : LinearLayout {
 
             caption.id.also {
                 connect(it, TOP, title.id, BOTTOM)
-                connect(it, START, captionImage.id, END)
+                connect(it, START, title.id, START)
                 connect(it, BOTTOM, PARENT_ID, BOTTOM)
             }
 
             captionImage.id.also {
                 connect(it, TOP, caption.id, TOP)
-                connect(it, START, title.id, START)
+                connect(it, START, caption.id, END)
                 connect(it, BOTTOM, caption.id, BOTTOM)
             }
 
