@@ -7,12 +7,13 @@ import java.io.Serializable
 import java.util.*
 
 data class RecentAccount(
+    val date: Date,
+    val id: Long = 0,
     val number: String,
     @CallType val type: Int,
-    val id: Long = 0,
     val duration: Long = 0,
-    val date: Date? = null,
     val cachedName: String? = null,
+    val groupAccounts: List<RecentAccount> = listOf()
 ) : Serializable {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
@@ -27,8 +28,9 @@ data class RecentAccount(
     )
     annotation class CallType
 
-    val relativeTime: String?
-        get() = date?.time?.let { getTimeAgo(it) }
+    val groupCount get() = groupAccounts.size
+
+    val relativeTime by lazy { getTimeAgo(date.time) }
 
     companion object {
         const val TYPE_UNKNOWN = 7

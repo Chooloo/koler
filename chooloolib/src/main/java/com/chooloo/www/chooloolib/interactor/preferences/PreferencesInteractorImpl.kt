@@ -42,6 +42,15 @@ class PreferencesInteractorImpl @Inject constructor(
             preferencesManager.putBoolean(R.string.pref_key_show_blocked, value)
         }
 
+    override var isGroupRecents: Boolean
+        get() = preferencesManager.getBoolean(
+            R.string.pref_key_group_recents,
+            R.bool.pref_default_value_group_recents
+        )
+        set(value) {
+            preferencesManager.putBoolean(R.string.pref_key_group_recents, value)
+        }
+
     override var isDialpadTones: Boolean
         get() = preferencesManager.getBoolean(
             R.string.pref_key_dialpad_tones,

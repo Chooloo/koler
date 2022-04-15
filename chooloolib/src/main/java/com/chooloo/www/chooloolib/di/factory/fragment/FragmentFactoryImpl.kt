@@ -11,7 +11,7 @@ import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.ui.recent.RecentFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
-import com.chooloo.www.chooloolib.ui.recents.RecentsHistoryFragment
+import com.chooloo.www.chooloolib.ui.recentshistory.RecentsHistoryFragment
 import com.chooloo.www.chooloolib.ui.settings.SettingsFragment
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,8 +25,8 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
     override fun getContactsSuggestionsFragment() = ContactsSuggestionsFragment()
     override fun getDialerFragment(text: String?) = DialerFragment.newInstance(text)
     override fun getRecentFragment(recentId: Long) = RecentFragment.newInstance(recentId)
-    override fun getRecentsFragment(filter: String?) = RecentsFragment.newInstance(filter)
     override fun getPhonesFragment(contactId: Long?) = PhonesFragment.newInstance(contactId)
+
     override fun getBriefContactFragment(contactId: Long) =
         BriefContactFragment.newInstance(contactId)
 
@@ -35,6 +35,9 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
 
     override fun getRecentsHistoryFragment(filter: String?) =
         RecentsHistoryFragment.newInstance(filter)
+
+    override fun getRecentsFragment(filter: String?, isGrouped: Boolean?): RecentsFragment =
+        RecentsFragment.newInstance(filter, isGrouped)
 
     override fun getChoicesFragment(
         titleRes: Int,

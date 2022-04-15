@@ -19,4 +19,9 @@
         android:id="@+id/menu_koler_dialpad_vibrate"
         android:icon="@drawable/round_vibration_20"
         android:title="@string/pref_title_dialpad_vibrate" />
+
+    <item
+        android:id="@+id/menu_koler_group_recents"
+        android:icon="@drawable/round_recent_actors_20"
+        android:title="@string/pref_title_group_recents" />
 </menu>

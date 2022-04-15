@@ -10,7 +10,7 @@ import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.recents.RecentsHistoryViewState
+import com.chooloo.www.chooloolib.ui.recents.RecentsViewState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     override val contentView by lazy { binding.root }
     override val viewState: RecentViewState by viewModels()
 
-    private val historyViewState: RecentsHistoryViewState by viewModels()
+    private val historyViewState: RecentsViewState by viewModels()
     private val binding by lazy { RecentBinding.inflate(layoutInflater) }
 
     @Inject lateinit var prompts: PromptsInteractor
@@ -112,7 +112,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
             showHistoryEvent.observe(this@RecentFragment) { ev ->
                 ev.ifNew?.let {
-                    prompts.showFragment(fragmentFactory.getRecentsHistoryFragment(it))
+                    prompts.showFragment(fragmentFactory.getRecentsFragment(it))
                 }
             }
 

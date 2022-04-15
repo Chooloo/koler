@@ -12,7 +12,7 @@ import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.ui.recent.RecentFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
-import com.chooloo.www.chooloolib.ui.recents.RecentsHistoryFragment
+import com.chooloo.www.chooloolib.ui.recentshistory.RecentsHistoryFragment
 import com.chooloo.www.chooloolib.ui.settings.SettingsFragment
 
 interface FragmentFactory {
@@ -23,11 +23,11 @@ interface FragmentFactory {
     fun getRecentFragment(recentId: Long): RecentFragment
     fun getDialerFragment(text: String? = null): DialerFragment
     fun getPhonesFragment(contactId: Long? = null): PhonesFragment
-    fun getRecentsFragment(filter: String? = null): RecentsFragment
     fun getContactsSuggestionsFragment(): ContactsSuggestionsFragment
     fun getBriefContactFragment(contactId: Long): BriefContactFragment
     fun getPromptFragment(title: String, subtitle: String): PromptFragment
     fun getRecentsHistoryFragment(filter: String? = null): RecentsHistoryFragment
+    fun getRecentsFragment(filter: String? = null, isGrouped: Boolean? = null): RecentsFragment
     fun getChoicesFragment(
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int?,

@@ -100,7 +100,6 @@ class CallViewState @Inject constructor(
             callAudios.audioRoute?.let(this@CallViewState::onAudioRouteChanged)
         }
 
-
         isManageEnabled.value = false
     }
 

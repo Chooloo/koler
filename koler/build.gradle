@@ -9,8 +9,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        versionCode 76
-        versionName "v1.4.4"
+        versionCode 77
+        versionName "v1.4.5"
 
         minSdk 25
         targetSdk 31

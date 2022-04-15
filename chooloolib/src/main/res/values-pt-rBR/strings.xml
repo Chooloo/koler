@@ -3,10 +3,21 @@
     <!--region titles-->
     <string name="recents">Recentes</string>
     <string name="contacts">Contatos</string>
+    <string name="conference">Conferência</string>
+    <string name="default_page">Padrão</string>
+    <string name="settings">Configurações</string>
+    <string name="theme_mode_dark">Escuro</string>
+    <string name="theme_mode_light">Claro</string>
+    <string name="theme_mode_system">Sistema</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Sim ou Não?</string>
+    <string name="prompt_are_you_sure">Tem certeza?</string>
     <!--endregion-->
 
     <!--region messages-->
-    <string name="number_copied_to_clipboard">O número foi copiado ao Clipboard</string>
+    <string name="number_copied_to_clipboard">O número foi copiado ao clipboard</string>
     <!--endregion-->
 
     <!--region actions-->
@@ -14,6 +25,11 @@
     <string name="action_hangup">Desligar</string>
     <string name="action_yes">Sim</string>
     <string name="action_no">Não</string>
+    <string name="action_show_history">Mostrar histórico</string>
+    <string name="action_block_number">Bloquear número</string>
+    <string name="action_unblock_number">Desbloquear número</string>
+    <string name="action_choose_audio_route">Escolha a via de áudio</string>
+    <string name="action_choose_phone_account">Escolha uma conta de telefone</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -23,6 +39,29 @@
 
     <!--region hints-->
     <string name="hint_search">Procurar</string>
+    <string name="hint_theme_mode">Tipo de tema</string>
+    <string name="hint_sim_account">Conta de SIM</string>
+    <string name="hint_default_page">Página padrão</string>
+    <string name="hint_animations">Mostrar animações</string>
+    <string name="hint_search_recents">Buscar em recentes</string>
+    <string name="hint_search_contacts">Buscar em contatos</string>
+    <string name="hint_compact_mode">Mostrar lista de itens compatada</string>
+    <string name="hint_search_items">Buscar em contatos &amp; recentes</string>
+    <string name="hint_dialpad_vibrate">Vibrar ao tocar no discador</string>
+    <string name="hint_should_ask_sim">Pergunte qual SIM usar antes de cada ligação</string>
+    <string name="hint_dialpad_tones">Ativar tons de discagem</string>
+    <string name="hint_show_blocked">Mostrar opção de bloqueio/desbloqueio de números (requer discador padrão).</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s está em espera</string>
+    <string name="explain_choose_theme_mode">Definir o tema no Koler, reinicie app para efetuar a mudança</string>
+    <string name="explain_choose_sim_account">Ligar via SIM diferente</string>
+    <string name="explain_choose_audio_route">Encaminhar áudio para uma fonte diferente</string>
+    <string name="explain_choose_phone_account">Continuar a ligação atual usando uma conta de telefone específica</string>
+    <string name="explain_delete_contact">Este contato será excluído permanentemente</string>
+    <string name="explain_delete_recent">Este registro de ligações será excluído permanentemente</string>
+    <string name="explain_choose_default_page">Esta página sempre será mostrada ao reabrir o Koler</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -35,24 +74,36 @@
     <string name="call_action_mute">Silenciar</string>
     <string name="call_action_unmute">Não silenciar</string>
     <string name="call_action_speaker">Alto-falante</string>
-    <string name="call_action_speaker_off">Desligar alto-falante</string>
+    <string name="call_action_speaker_off">Alto-falante desligado</string>
     <!--endregion-->
 
     <!--region call state-->
-    <string name="call_status_dialing">Conectando…</string>
-    <string name="call_status_holding">Chamada em espera</string>
-    <string name="call_status_incoming">Chamada recebida</string>
-    <string name="call_status_disconnected">Chamada concluída</string>
-    <string name="call_status_active">Chamada em andamento</string>
+    <string name="call_status_new">Nova ligação</string>
+    <string name="call_status_dialing">Discando…</string>
+    <string name="call_status_holding">Ligação em espera</string>
+    <string name="call_status_connecting">Conectando…</string>
+    <string name="call_status_incoming">Ligação recebida</string>
+    <string name="call_status_active">Ligação em andamento</string>
+    <string name="call_status_disconnected">Ligação concluída</string>
+    <string name="call_status_pulling_call">Estabelecendo ligação…</string>
+    <string name="call_status_unknown">Status da ligação desconhecido</string>
+    <string name="call_status_disconnecting">A ligação está desconectando…</string>
+    <string name="call_status_phone_account">Selecione conta de telefone</string>
     <!--endregion-->
 
     <!--region pref key-->
-    <string name="pref_key_rate">avaliar</string>
-    <string name="pref_key_compact">compacto</string>
-    <string name="pref_key_color">destacar_a_cor</string>
-    <string name="pref_key_animations">animações</string>
-    <string name="pref_key_report_bugs">relatar_bugs</string>
-    <string name="pref_key_default_page">tela_padrão</string>
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_compact">compact</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_color">accent_color</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
     <!--endregion-->
 
     <!--region pref title-->
@@ -60,33 +111,53 @@
     <string name="pref_title_compact">Modo compacto</string>
     <string name="pref_title_animations">Animações</string>
     <string name="pref_title_app_color">Destacar a cor</string>
+    <string name="pref_title_theme_mode">Tipo de tema</string>
     <string name="pref_title_email">Envie um e-mail</string>
-    <string name="pref_title_report_bugs">Relatar bugs</string>
+    <string name="pref_title_report_bugs">Relatar falhas</string>
+    <string name="pref_title_manage_blocked">Gerenciar números bloqueados</string>
+    <!--endregion-->
+
+    <!--region pref summary -->
     <!--endregion-->
 
     <!--region pref default value-->
     <!--endregion-->
 
     <!--region errors-->
-    <string name="error_no_results">Nenhum resultado :/</string>
-    <string name="error_no_results_phones">Nenhum número de telefone :/</string>
-    <string name="error_no_results_contacts">Nenhum contato :/</string>
-    <string name="error_no_results_recents">Não há recentes :/</string>
+    <string name="error_no_results">Nenhum resultado</string>
+    <string name="error_no_results_recents">Nenhum recente</string>
+    <string name="error_no_results_contacts">Nenhum contato</string>
+    <string name="error_no_results_phones">Nenhum número de telefone</string>
+    <string name="error_not_default_dialer_blocked">Defina o Koler como discador padrão para poder ver números bloqueados</string>
+    <string name="error_not_default_dialer_call">Defina o Koler como discador padrão para fazer ligações</string>
 
-    <string name="error_no_permissions_contacts">Preciso de permissão para ler os contatos :)</string>
-    <string name="error_no_permissions_recents">Preciso de permissão para ler o registro de chamadas :)</string>
-    <string name="error_no_permissions_phones">Preciso de permissão para ler os contatos :)</string>
+    <string name="error_no_permissions_edit_call_log">Nenhuma permissão concedida para alterar o registro de ligações</string>
+    <string name="error_no_permissions_make_call">Nenhuma permissão concedida para fazer ligação</string>
+    <string name="error_no_permissions_phones">Permissão exigida para ler os contatos</string>
+    <string name="error_no_permissions_recents">Permissão exigida para ler o registro de ligações</string>
+    <string name="error_no_permissions_contacts">Permissão exigida para ler os contatos</string>
 
+    <string name="error_no_number_to_call">Nenhum número foi encontrado</string>
+
+    <string name="error_cant_hold_call">Não é possível colocar ligação em espera</string>
+    <string name="error_cant_swap_calls">Não é possível trocar ligações</string>
+    <string name="error_cant_merge_call">Não pode unir ligações</string>
+
+    <string name="error_couldnt_get_number_from_intent">Não foi possível encontrar o número</string>
     <!--endregion-->
 
     <!--region pref color values-->
     <!--endregion-->
 
     <!--region pref values-->
+    <string name="pref_value_page_contacts">contatos</string>
+    <string name="pref_value_page_recents">recentes</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
     <!--endregion-->
 
     <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Correio de voz</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
     <string name="dialpad_4_letters">GHI</string>
@@ -100,15 +171,28 @@
     <!--endregion-->
 
     <!--region content descriptions -->
-    <string name="content_description_answer_button">Botão para atender</string>
+    <string name="content_description_menu_button">Botão de menu</string>
+    <string name="content_description_answer_button">Botão de atender</string>
     <string name="content_description_reject_button">Botão de recusar</string>
+    <string name="content_description_call_actions_button">Opções de ligação</string>
     <!--endregion-->
 
     <!--region notification-->
-    <string name="call_notification_channel_name">Notificação de chamada</string>
-    <string name="call_notification_channel_description">Notificação de chamada ativada, para uso mais confortável</string>
+    <string name="call_notification_channel_name">Notificação de ligação</string>
+    <string name="call_notification_channel_description">Notificação da ligação ativa para facilitar uso mais confortável</string>
     <!--endregion-->
 
     <!--region phone type-->
     <!--endregion-->
+    <!--region audio route-->
+    <string name="audio_route_speaker">Alto-falante</string>
+    <string name="audio_route_earpiece">Fone de ouvido</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Fone de ouvido com fio</string>
+    <string name="audio_route_wired_or_earpiece">Fone de ouvido ou por cabo</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">Estrela de favorito</string>
+    <string name="content_description_empty_list_icon">Ícone de lista vazia</string>
 </resources>

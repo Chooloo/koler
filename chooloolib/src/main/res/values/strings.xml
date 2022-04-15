@@ -50,6 +50,7 @@
     <string name="hint_dialpad_vibrate">Vibrate on dialpad clicks</string>
     <string name="hint_should_ask_sim">Ask for a sim before each call</string>
     <string name="hint_dialpad_tones">Enabled sound tones on dialpad clicks</string>
+    <string name="hint_group_recents">Group recents strikes from the same person</string>
     <string name="hint_show_blocked">Show block/unblock option for numbers (requires default dialer).</string>
     <!--endregion-->
 
@@ -101,6 +102,7 @@
     <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_show_blocked">show_blocked</string>
     <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_group_recents">group_recents</string>
     <string name="pref_key_dialpad_tones">dialpad_tones</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
     <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
@@ -136,6 +138,7 @@
     <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
     <string name="error_no_permissions_recents">I need permission to read call log :)</string>
     <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
 
     <string name="error_no_number_to_call">No number was found :(</string>
 
