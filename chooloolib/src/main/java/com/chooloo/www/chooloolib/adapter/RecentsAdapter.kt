@@ -43,8 +43,8 @@ class RecentsAdapter @Inject constructor(
                     captionText =
                         "$captionText · ${Phone.getTypeLabel(resources, it.type, it.label)} ·"
                     setImageInitials(it.name?.initials())
-                    setImageUri(if (it.photoUri != null) Uri.parse(it.photoUri) else null)
                 }
+                setImageUri(if (it?.photoUri != null) Uri.parse(it.photoUri) else null)
             }
 
             setImageBackgroundColor(Color.TRANSPARENT)
