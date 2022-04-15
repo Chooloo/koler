@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
@@ -18,7 +19,8 @@ class RecentsAdapter @Inject constructor(
     animations: AnimationsInteractor,
     private val phones: PhonesInteractor,
     private val recents: RecentsInteractor,
-    private val preferences: PreferencesInteractor
+    private val preferences: PreferencesInteractor,
+    private val permissions: PermissionsInteractor
 ) : ListAdapter<RecentAccount>(animations) {
 
     private var _groupSimilar: Boolean = false

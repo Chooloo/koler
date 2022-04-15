@@ -138,6 +138,7 @@
     <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
     <string name="error_no_permissions_recents">I need permission to read call log :)</string>
     <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
 
     <string name="error_no_number_to_call">No number was found :(</string>
 

@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.ui.contacts
 
+import android.Manifest.permission.READ_CONTACTS
 import androidx.lifecycle.LiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
@@ -29,7 +30,10 @@ open class ContactsViewState @Inject constructor(
 
     override fun onFilterChanged(filter: String?) {
         super.onFilterChanged(filter)
-        contactsLiveData.filter = filter
+        if (permissions.hasSelfPermission(READ_CONTACTS)) {
+            onPermissionsChanged(true)
+            contactsLiveData.filter = filter
+        }
     }
 
     override fun onItemClick(item: ContactAccount) {

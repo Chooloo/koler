@@ -1,5 +1,7 @@
 package com.chooloo.www.chooloolib.ui.recents
 
+import android.Manifest.permission.READ_CALL_LOG
+import android.Manifest.permission.READ_CONTACTS
 import android.content.ClipData
 import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
@@ -23,7 +25,7 @@ open class RecentsViewState @Inject constructor(
 
     override val noResultsIconRes = R.drawable.round_history_24
     override val noResultsTextRes = R.string.error_no_results_recents
-    override val noPermissionsTextRes = R.string.error_no_permissions_recents
+    override var noPermissionsTextRes = R.string.error_no_permissions_recents
 
     private val recentsLiveData = recentsRepository.getRecents() as RecentsProviderLiveData
 
@@ -32,12 +34,15 @@ open class RecentsViewState @Inject constructor(
 
     override fun onFilterChanged(filter: String?) {
         super.onFilterChanged(filter)
-        recentsLiveData.filter = filter
+        if (permissions.hasSelfPermissions(arrayOf(READ_CONTACTS, READ_CALL_LOG))) {
+            onPermissionsChanged(true)
+            recentsLiveData.filter = filter
+        }
     }
 
     override fun onItemClick(item: RecentAccount) {
         super.onItemClick(item)
-        showRecentEvent.call(item)
+        permissions.runWithReadCallLogPermissions { showRecentEvent.call(item) }
     }
 
     override fun onItemLongClick(item: RecentAccount) {
@@ -47,9 +52,14 @@ open class RecentsViewState @Inject constructor(
     }
 
     override fun getItemsObservable(callback: (LiveData<List<RecentAccount>>) -> Unit) {
-        permissions.runWithReadCallLogPermissions {
-            onPermissionsChanged(it)
-            if (it) callback.invoke(recentsLiveData)
+        permissions.runWithReadCallLogPermissions { clp ->
+            if (!clp) noPermissionsTextRes = R.string.error_no_permissions_recents
+            onPermissionsChanged(clp)
+            permissions.runWithReadContactsPermissions { rcp ->
+                if (!rcp) noPermissionsTextRes = R.string.error_no_permissions_contacts
+                onPermissionsChanged(clp && rcp)
+                if (clp && rcp) callback.invoke(recentsLiveData)
+            }
         }
     }
 }
