@@ -9,6 +9,7 @@ import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,15 +22,16 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
     protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
     private val phonesFragment by lazy { fragmentFactory.getPhonesFragment(viewState.contactId.value) }
 
-    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
     @Inject lateinit var permissions: PermissionsInteractor
+    @Inject lateinit var callNavigations: CallNavigationsInteractor
 
 
     override fun onSetup() {
         binding.apply {
-            contactButtonSms.setOnClickListener {
+            briefContactButtonSms.setOnClickListener {
                 viewState.onActionSms()
             }
 
@@ -37,16 +39,20 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
                 viewState.onActionCall()
             }
 
-            contactButtonEdit.setOnClickListener {
+            briefContactButtonEdit.setOnClickListener {
                 viewState.onActionEdit()
             }
 
-            contactButtonDelete.setOnClickListener {
+            briefContactButtonDelete.setOnClickListener {
                 viewState.onActionDelete()
             }
 
             briefContactStarButton.setOnClickListener {
                 viewState.onActionStar(it.isActivated)
+            }
+
+            briefContactButtonHistory.setOnClickListener {
+                viewState.onActionHistory()
             }
         }
 
@@ -82,12 +88,15 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
                 }
             }
 
+            showHistoryEvent.observe(this@BriefContactFragment) { ev ->
+                ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentsFragment(it)) }
+            }
             onContactId(args.getLong(ARG_CONTACT_ID))
         }
 
         childFragmentManager
             .beginTransaction()
-            .replace(binding.contactPhonesFragmentContainer.id, phonesFragment)
+            .replace(binding.briefContactPhonesFragmentContainer.id, phonesFragment)
             .commitNow()
     }
 

@@ -93,6 +93,14 @@ class NavigationsInteractorImpl @Inject constructor(
         )
     }
 
+    override fun openWhatsapp(number: String?) {
+        context.startActivity(
+            Intent(ACTION_VIEW)
+                .setData(Uri.parse("http://api.whatsapp.com/send?phone=$number"))
+                .addFlags(FLAG_ACTIVITY_NEW_TASK)
+        )
+    }
+
     override fun addContact(number: String) {
         context.startActivity(
             Intent(ACTION_INSERT)

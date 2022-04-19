@@ -163,14 +163,28 @@
 
     <com.chooloo.www.chooloolib.ui.widgets.TextButton
         android:id="@+id/recent_button_show_history"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/button_text_height"
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing_small"
         android:text="@string/action_show_history"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/recent_button_whatsapp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_button_call" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
+        android:id="@+id/recent_button_whatsapp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_text_height"
+        android:layout_marginStart="@dimen/default_spacing_small"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:backgroundTint="@color/green_background"
+        android:text="@string/action_open_whatsapp"
+        android:textColor="@color/green_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/recent_button_show_history"
         app:layout_constraintTop_toBottomOf="@id/recent_button_call" />
 
     <com.chooloo.www.chooloolib.ui.widgets.TextButton
@@ -188,5 +202,5 @@
         app:activatedText="@string/action_unblock_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_button_show_history" />
+        app:layout_constraintTop_toBottomOf="@id/recent_button_whatsapp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

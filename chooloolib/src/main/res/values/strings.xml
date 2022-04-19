@@ -26,6 +26,7 @@
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
     <string name="action_show_history">Show History</string>
+    <string name="action_open_whatsapp">Open WhatsApp</string>
     <string name="action_block_number">Block Number</string>
     <string name="action_unblock_number">Unblock Number</string>
     <string name="action_choose_audio_route">Choose audio route</string>

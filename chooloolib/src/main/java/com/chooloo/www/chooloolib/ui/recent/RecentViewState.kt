@@ -109,6 +109,10 @@ class RecentViewState @Inject constructor(
         _recent?.let { showHistoryEvent.call(it.number) }
     }
 
+    fun onActionOpenWhatsapp() {
+        navigations.openWhatsapp(_recent?.number)
+    }
+
     fun onActionBlock(isBlock: Boolean) {
         permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             _recent?.number?.let {
