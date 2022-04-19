@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
 import com.chooloo.www.kontacts.databinding.ContactBinding
@@ -18,6 +19,7 @@ class ContactFragment : BaseFragment<ContactViewState>() {
     private val binding by lazy { ContactBinding.inflate(layoutInflater) }
     private val phonesFragment by lazy { fragmentFactory.getPhonesFragment() }
 
+    @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
     @Inject lateinit var callNavigations: CallNavigationsInteractor
 
@@ -39,6 +41,12 @@ class ContactFragment : BaseFragment<ContactViewState>() {
             contactImage.observe(this@ContactFragment) {
                 binding.contactImage.setImageURI(it)
             }
+
+            showHistoryEvent.observe(this@ContactFragment) {
+                it.ifNew?.let {
+                    prompts.showFragment(fragmentFactory.getRecentsFragment(it))
+                }
+            }
         }
 
         binding.apply {
@@ -46,6 +54,8 @@ class ContactFragment : BaseFragment<ContactViewState>() {
             contactButtonCall.setOnClickListener { viewState.onCallClick() }
             contactButtonEdit.setOnClickListener { viewState.onEditClick() }
             contactButtonDelete.setOnClickListener { viewState.onDeleteClick() }
+            contactButtonHistory.setOnClickListener { viewState.onHistoryClick() }
+            contactButtonWhatsapp.setOnClickListener { viewState.onWhatsappClick() }
         }
 
         arguments?.getLong(ARG_CONTACT_ID)?.let { viewState.onContactId(it) }

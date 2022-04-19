@@ -31,50 +31,76 @@
         android:layout_width="@dimen/icon_button_size_normal"
         android:layout_height="@dimen/icon_button_size_normal"
         android:layout_marginTop="@dimen/default_spacing_big"
-        app:layout_constraintEnd_toStartOf="@id/contact_button_edit"
+        app:layout_constraintEnd_toStartOf="@id/brief_contact_button_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_name"
         android:src="@drawable/round_call_24"
         app:size="normal" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_edit"
+        android:id="@+id/brief_contact_button_edit"
         android:layout_width="@dimen/icon_button_size_normal"
         android:layout_height="@dimen/icon_button_size_normal"
         android:layout_marginTop="@dimen/default_spacing_big"
-        app:layout_constraintEnd_toStartOf="@id/contact_button_delete"
+        app:layout_constraintEnd_toStartOf="@id/brief_contact_button_delete"
         app:layout_constraintStart_toEndOf="@id/contact_button_call"
         app:layout_constraintTop_toBottomOf="@id/contact_name"
         android:src="@drawable/round_edit_24"
         app:size="normal" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_delete"
+        android:id="@+id/brief_contact_button_delete"
         android:layout_width="@dimen/icon_button_size_normal"
         android:layout_height="@dimen/icon_button_size_normal"
         android:layout_marginTop="@dimen/default_spacing_big"
-        app:layout_constraintEnd_toStartOf="@id/contact_button_sms"
-        app:layout_constraintStart_toEndOf="@id/contact_button_edit"
+        app:layout_constraintEnd_toStartOf="@id/brief_contact_button_sms"
+        app:layout_constraintStart_toEndOf="@id/brief_contact_button_edit"
         app:layout_constraintTop_toBottomOf="@id/contact_name"
         android:src="@drawable/round_delete_forever_24"
         app:size="normal" />
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/contact_button_sms"
+        android:id="@+id/brief_contact_button_sms"
         android:layout_width="@dimen/icon_button_size_normal"
         android:layout_height="@dimen/icon_button_size_normal"
         android:layout_marginTop="@dimen/default_spacing_big"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/contact_button_delete"
+        app:layout_constraintStart_toEndOf="@id/brief_contact_button_delete"
         app:layout_constraintTop_toBottomOf="@id/contact_name"
         android:src="@drawable/round_chat_24"
         app:size="normal" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
+        android:id="@+id/brief_contact_button_history"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_text_height"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:text="@string/action_show_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contact_button_call" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.TextButton
+        android:id="@+id/brief_contact_button_whatsapp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_text_height"
+        android:layout_marginStart="@dimen/default_spacing_small"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:backgroundTint="@color/green_background"
+        android:text="@string/action_open_whatsapp"
+        android:textColor="@color/green_foreground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/brief_contact_button_history"
+        app:layout_constraintTop_toBottomOf="@id/contact_button_call" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/contact_phones_container"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/default_spacing"
-        app:layout_constraintTop_toBottomOf="@id/contact_button_call"
+        app:layout_constraintTop_toBottomOf="@id/brief_contact_button_history"
         android:layout_height="wrap_content"
         android:background="@drawable/bubble_background"
         android:backgroundTint="?colorSurface" />

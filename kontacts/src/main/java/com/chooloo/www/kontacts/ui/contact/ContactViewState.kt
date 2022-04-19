@@ -23,6 +23,7 @@ class ContactViewState @Inject constructor(
     val contactImage = MutableLiveData<Uri>()
     val contactName = MutableLiveData<String>()
     var isFavorite = MutableLiveData<Boolean>()
+    val showHistoryEvent = DataLiveEvent<String>()
 
     private var contact: ContactAccount? = null
 
@@ -53,6 +54,14 @@ class ContactViewState @Inject constructor(
     }
 
     fun onEditClick() {
+    }
+
+    fun onHistoryClick() {
+        contact?.name?.let { showHistoryEvent.call(it) }
+    }
+
+    fun onWhatsappClick() {
+
     }
 
     fun onDeleteClick() {

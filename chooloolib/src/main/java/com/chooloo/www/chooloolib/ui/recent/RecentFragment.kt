@@ -38,6 +38,10 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
                 viewState.onActionCall()
             }
 
+            recentButtonBlock.setOnClickListener {
+                viewState.onActionBlock(!viewState.isBlockButtonActivated.value!!)
+            }
+
             recentButtonDelete.setOnClickListener {
                 viewState.onActionDelete()
             }
@@ -46,16 +50,16 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
                 viewState.onActionOpenContact()
             }
 
+            recentButtonWhatsapp.setOnClickListener {
+                viewState.onActionOpenWhatsapp()
+            }
+
             recentButtonAddContact.setOnClickListener {
                 viewState.onActionAddContact()
             }
 
             recentButtonShowHistory.setOnClickListener {
                 viewState.onActionShowHistory()
-            }
-
-            recentButtonBlock.setOnClickListener {
-                viewState.onActionBlock(!viewState.isBlockButtonActivated.value!!)
             }
         }
 
