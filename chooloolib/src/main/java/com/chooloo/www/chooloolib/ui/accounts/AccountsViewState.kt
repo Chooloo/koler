@@ -24,14 +24,12 @@ class AccountsViewState @Inject constructor(
     override val noResultsTextRes = R.string.error_no_results_phones
     override val noPermissionsTextRes = R.string.error_no_permissions_phones
 
+    val contactId = MutableLiveData(0L)
     val callEvent = DataLiveEvent<String>()
 
+    private val accountsLiveData
+        get() = contactId.value?.let { rawContactsRepository.getRawContacts(it) }
 
-    private val rawContactsLiveData by lazy {
-        contactId.value?.let { rawContactsRepository.getRawContacts(it) }
-    }
-
-    val contactId = MutableLiveData(0L)
 
     override fun onItemRightClick(item: RawContactAccount) {
         super.onItemRightClick(item)
@@ -43,7 +41,11 @@ class AccountsViewState @Inject constructor(
     override fun getItemsObservable(callback: (LiveData<List<RawContactAccount>>) -> Unit) {
         permissions.runWithReadContactsPermissions {
             onPermissionsChanged(it)
-            if (it) rawContactsLiveData?.let(callback::invoke)
+            if (it) accountsLiveData?.let(callback::invoke)
         }
+    }
+
+    fun onContactId(contactId: Long) {
+        this.contactId.value = contactId
     }
 }

@@ -22,7 +22,7 @@ class AccountsFragment @Inject constructor() :
 
 
     override fun onSetup() {
-        viewState.contactId.value = args.getLong(ARG_CONTACT_ID)
+        viewState.onContactId(args.getLong(ARG_CONTACT_ID))
         super.onSetup()
         viewState.callEvent.observe(this@AccountsFragment) {
             it.ifNew?.let(callNavigations::call)

@@ -29,13 +29,9 @@ class PhonesViewState @Inject constructor(
     override val noPermissionsTextRes = R.string.error_no_permissions_phones
 
     val callEvent = DataLiveEvent<String>()
-
-
-    private val phonesLiveData by lazy {
-        phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value) as PhonesLiveData
-    }
-
     val contactId = MutableLiveData(0L)
+
+    private val phonesLiveData get() = phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value) as PhonesLiveData
 
 
     override fun onFilterChanged(filter: String?) {
@@ -64,5 +60,9 @@ class PhonesViewState @Inject constructor(
             onPermissionsChanged(it)
             if (it) callback.invoke(phonesLiveData)
         }
+    }
+
+    fun onContactId(contactId: Long) {
+        this.contactId.value = contactId
     }
 }

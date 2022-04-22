@@ -26,8 +26,8 @@ interface FragmentFactory {
     fun getPhonesFragment(contactId: Long? = null): PhonesFragment
     fun getContactsSuggestionsFragment(): ContactsSuggestionsFragment
     fun getBriefContactFragment(contactId: Long): BriefContactFragment
-    fun getPromptFragment(title: String, subtitle: String): PromptFragment
     fun getAccountsFragment(contactId: Long? = null): AccountsFragment
+    fun getPromptFragment(title: String, subtitle: String): PromptFragment
     fun getRecentsHistoryFragment(filter: String? = null): RecentsHistoryFragment
     fun getRecentsFragment(filter: String? = null, isGrouped: Boolean? = null): RecentsFragment
     fun getChoicesFragment(
