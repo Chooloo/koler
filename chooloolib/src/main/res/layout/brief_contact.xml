@@ -136,7 +136,7 @@
             android:layout_marginBottom="@dimen/default_spacing_small"
             android:background="@drawable/bubble_background"
             android:backgroundTint="?colorSurface"
-            android:paddingBottom="@dimen/default_spacing"
+            android:paddingBottom="@dimen/default_spacing_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/brief_contact_button_history" />
@@ -151,7 +151,7 @@
             android:layout_marginBottom="@dimen/default_spacing_small"
             android:background="@drawable/bubble_background"
             android:backgroundTint="?colorSurface"
-            android:paddingBottom="@dimen/default_spacing"
+            android:paddingBottom="@dimen/default_spacing_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
