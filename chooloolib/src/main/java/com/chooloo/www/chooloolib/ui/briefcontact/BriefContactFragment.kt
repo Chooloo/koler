@@ -21,6 +21,7 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
 
     protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
     private val phonesFragment by lazy { fragmentFactory.getPhonesFragment(viewState.contactId.value) }
+    private val accountsFragment by lazy { fragmentFactory.getAccountsFragment(viewState.contactId.value) }
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
@@ -91,8 +92,23 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             showHistoryEvent.observe(this@BriefContactFragment) { ev ->
                 ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentsFragment(it)) }
             }
+
+            isPhonesListVisible.observe(this@BriefContactFragment) {
+                binding.briefContactPhonesFragmentContainer.isVisible = it
+            }
+
+            isAccountsListVisible.observe(this@BriefContactFragment) {
+                binding.briefContactAccountsFragmentContainer.isVisible = it
+            }
+
+
             onContactId(args.getLong(ARG_CONTACT_ID))
         }
+
+        childFragmentManager
+            .beginTransaction()
+            .replace(binding.briefContactAccountsFragmentContainer.id, accountsFragment)
+            .commitNow()
 
         childFragmentManager
             .beginTransaction()

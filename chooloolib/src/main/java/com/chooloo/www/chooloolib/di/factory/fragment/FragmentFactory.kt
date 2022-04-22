@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
+import com.chooloo.www.chooloolib.ui.accounts.AccountsFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsFragment
 import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
@@ -26,6 +27,7 @@ interface FragmentFactory {
     fun getContactsSuggestionsFragment(): ContactsSuggestionsFragment
     fun getBriefContactFragment(contactId: Long): BriefContactFragment
     fun getPromptFragment(title: String, subtitle: String): PromptFragment
+    fun getAccountsFragment(contactId: Long? = null): AccountsFragment
     fun getRecentsHistoryFragment(filter: String? = null): RecentsHistoryFragment
     fun getRecentsFragment(filter: String? = null, isGrouped: Boolean? = null): RecentsFragment
     fun getChoicesFragment(

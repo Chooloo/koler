@@ -42,6 +42,8 @@ import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractorImpl
 import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
 import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractorImpl
+import com.chooloo.www.chooloolib.interactor.rawcontacts.RawContactsInteractor
+import com.chooloo.www.chooloolib.interactor.rawcontacts.RawContactsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
@@ -54,6 +56,8 @@ import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
 import com.chooloo.www.chooloolib.repository.contacts.ContactsRepositoryImpl
 import com.chooloo.www.chooloolib.repository.phones.PhonesRepository
 import com.chooloo.www.chooloolib.repository.phones.PhonesRepositoryImpl
+import com.chooloo.www.chooloolib.repository.rawcontacts.RawContactsRepository
+import com.chooloo.www.chooloolib.repository.rawcontacts.RawContactsRepositoryImpl
 import com.chooloo.www.chooloolib.repository.recents.RecentsRepository
 import com.chooloo.www.chooloolib.repository.recents.RecentsRepositoryImpl
 import com.chooloo.www.chooloolib.util.PreferencesManager
@@ -132,6 +136,9 @@ class ApplicationModule {
         @Binds
         fun bindContactsRepository(contactsRepositoryImpl: ContactsRepositoryImpl): ContactsRepository
 
+        @Binds
+        fun bindRawContactsRepoistory(rawContactsRepositoryImpl: RawContactsRepositoryImpl): RawContactsRepository
+
         //endregion
 
         //region factory
@@ -184,6 +191,9 @@ class ApplicationModule {
 
         @Binds
         fun bindCallAudiosInteractor(callAudiosInteractorImpl: CallAudiosInteractorImpl): CallAudiosInteractor
+
+        @Binds
+        fun bindRawContactsInteractor(rawContactsInteractorImpl: RawContactsInteractorImpl): RawContactsInteractor
 
         @Binds
         fun bindProximitiesInteractor(proximitiesInteractorImpl: ProximitiesInteractorImpl): ProximitiesInteractor

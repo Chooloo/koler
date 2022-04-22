@@ -7,9 +7,8 @@ import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.contentprovider.PhonesProviderLiveData
+import com.chooloo.www.chooloolib.livedata.PhonesLiveData
 import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.repository.phones.PhonesRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PhonesViewState @Inject constructor(
-    private val navigations: NavigationsInteractor,
     private val permissions: PermissionsInteractor,
     private val phonesRepository: PhonesRepository,
     private val clipboardManager: ClipboardManager
@@ -34,7 +32,7 @@ class PhonesViewState @Inject constructor(
 
 
     private val phonesLiveData by lazy {
-        phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value) as PhonesProviderLiveData
+        phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value) as PhonesLiveData
     }
 
     val contactId = MutableLiveData(0L)
@@ -52,11 +50,6 @@ class PhonesViewState @Inject constructor(
         }, {
             errorEvent.call(R.string.error_no_permissions_make_call)
         })
-    }
-
-    override fun onItemLeftClick(item: PhoneAccount) {
-        super.onItemLeftClick(item)
-        navigations.openWhatsapp(item.number)
     }
 
     override fun onItemLongClick(item: PhoneAccount) {

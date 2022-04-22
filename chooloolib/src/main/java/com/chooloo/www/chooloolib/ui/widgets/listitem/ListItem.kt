@@ -101,7 +101,7 @@ open class ListItem : LinearLayout {
         set(value) {
             caption.apply {
                 text = value ?: ""
-                visibility = if (value == null) GONE else VISIBLE
+                visibility = if (value in arrayOf(null, "")) GONE else VISIBLE
             }
         }
 
@@ -288,11 +288,11 @@ open class ListItem : LinearLayout {
             }
 
             title.id.also {
-                setHorizontalBias(it, 0F)
                 connect(it, TOP, PARENT_ID, TOP)
                 connect(it, END, PARENT_ID, END)
                 connect(it, START, image.id, END)
                 connect(it, BOTTOM, caption.id, TOP)
+                setHorizontalBias(it, 0F)
             }
 
             caption.id.also {

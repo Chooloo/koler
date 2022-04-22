@@ -4,7 +4,7 @@ import android.Manifest.permission.READ_CONTACTS
 import androidx.lifecycle.LiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.contentprovider.ContactsProviderLiveData
+import com.chooloo.www.chooloolib.livedata.ContactsLiveData
 import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
@@ -23,7 +23,7 @@ open class ContactsViewState @Inject constructor(
     override val noResultsTextRes = R.string.error_no_results_contacts
     override val noPermissionsTextRes = R.string.error_no_permissions_contacts
 
-    private val contactsLiveData = contactsRepository.getContacts() as ContactsProviderLiveData
+    private val contactsLiveData = contactsRepository.getContacts() as ContactsLiveData
 
     val showContactEvent = DataLiveEvent<Long>()
 

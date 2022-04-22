@@ -27,11 +27,13 @@ class BriefContactViewState @Inject constructor(
     val contactName = MutableLiveData<String?>()
     val isStarIconVisible = MutableLiveData<Boolean>()
     val isStarIconActivated = MutableLiveData<Boolean>()
+    val isPhonesListVisible = MutableLiveData<Boolean>()
+    val isAccountsListVisible = MutableLiveData<Boolean>()
 
     val callEvent = DataLiveEvent<String>()
     val confirmContactDeleteEvent = LiveEvent()
     val showHistoryEvent = DataLiveEvent<String>()
-    
+
     private var contact: ContactAccount? = null
 
 

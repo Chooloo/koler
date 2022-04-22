@@ -1,4 +1,4 @@
-package com.chooloo.www.chooloolib.livedata.contentprovider
+package com.chooloo.www.chooloolib.livedata
 
 import android.content.Context
 import android.database.ContentObserver

@@ -27,7 +27,7 @@ abstract class ListViewState<ItemType> : BaseViewState() {
         emptyMessage.value = noResultsTextRes
     }
 
-    fun onItemsChanged(items: List<ItemType>) {
+    open fun onItemsChanged(items: List<ItemType>) {
         isLoading.value = false
         isEmpty.value = items.isEmpty()
         itemsChangedEvent.call(items)

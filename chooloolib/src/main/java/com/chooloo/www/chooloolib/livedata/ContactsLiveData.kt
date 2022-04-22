@@ -1,4 +1,4 @@
-package com.chooloo.www.chooloolib.livedata.contentprovider
+package com.chooloo.www.chooloolib.livedata
 
 import android.content.Context
 import com.chooloo.www.chooloolib.contentresolver.ContactsContentResolver
@@ -8,7 +8,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
 @Singleton
-class ContactsProviderLiveData(
+class ContactsLiveData(
     @ApplicationContext context: Context,
     private val contactId: Long? = null,
     private val contentResolverFactory: ContentResolverFactory

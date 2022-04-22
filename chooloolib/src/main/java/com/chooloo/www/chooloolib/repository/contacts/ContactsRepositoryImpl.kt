@@ -13,7 +13,7 @@ class ContactsRepositoryImpl @Inject constructor(
     private val contentResolverFactory: ContentResolverFactory
 ) : ContactsRepository {
     override fun getContacts(): LiveData<List<ContactAccount>> =
-        liveDataFactory.getContactsProviderLiveData()
+        liveDataFactory.getContactsLiveData()
 
     override fun getContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
         contentResolverFactory.getContactsContentResolver(contactId).queryItems {

@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.di.factory.fragment
 
+import com.chooloo.www.chooloolib.ui.accounts.AccountsFragment
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
@@ -25,10 +26,14 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
     override fun getContactsSuggestionsFragment() = ContactsSuggestionsFragment()
     override fun getDialerFragment(text: String?) = DialerFragment.newInstance(text)
     override fun getRecentFragment(recentId: Long) = RecentFragment.newInstance(recentId)
-    override fun getPhonesFragment(contactId: Long?) = PhonesFragment.newInstance(contactId)
+    override fun getAccountsFragment(contactId: Long?) =
+        AccountsFragment.newInstance(contactId)
 
     override fun getBriefContactFragment(contactId: Long) =
         BriefContactFragment.newInstance(contactId)
+
+    override fun getPhonesFragment(contactId: Long?) =
+        PhonesFragment.newInstance(contactId)
 
     override fun getPromptFragment(title: String, subtitle: String) =
         PromptFragment.newInstance(title, subtitle)

@@ -8,5 +8,5 @@ import javax.inject.Singleton
 class PhonesRepositoryImpl @Inject constructor(
     private val liveDataFactory: LiveDataFactory
 ) : PhonesRepository {
-    override fun getPhones(contactId: Long?) = liveDataFactory.getPhonesProviderLiveData(contactId)
+    override fun getPhones(contactId: Long?) = liveDataFactory.getPhonesLiveData(contactId)
 }

@@ -18,9 +18,9 @@ import javax.inject.Singleton
 
 @Singleton
 class ContactsInteractorImpl @Inject constructor(
+    private val phones: PhonesInteractor,
+    private val blocked: BlockedInteractor,
     @ApplicationContext private val context: Context,
-    private val blockedInteractor: BlockedInteractor,
-    private val phonesInteractor: PhonesInteractor,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
 
     override fun queryContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
@@ -42,15 +42,15 @@ class ContactsInteractorImpl @Inject constructor(
 
     @RequiresDefaultDialer
     override fun blockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phonesInteractor.getContactAccounts(contactId) { accounts ->
-            accounts?.forEach { blockedInteractor.blockNumber(it.number) }
+        phones.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { blocked.blockNumber(it.number) }
             onSuccess?.invoke()
         }
     }
 
     override fun unblockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phonesInteractor.getContactAccounts(contactId) { accounts ->
-            accounts?.forEach { blockedInteractor.unblockNumber(it.number) }
+        phones.getContactAccounts(contactId) { accounts ->
+            accounts?.forEach { blocked.unblockNumber(it.number) }
             onSuccess?.invoke()
         }
     }
@@ -64,8 +64,8 @@ class ContactsInteractorImpl @Inject constructor(
     }
 
     override fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit) {
-        phonesInteractor.getContactAccounts(contactId) { accounts ->
-            callback.invoke(accounts?.all { blockedInteractor.isNumberBlocked(it.number) } ?: false)
+        phones.getContactAccounts(contactId) { accounts ->
+            callback.invoke(accounts?.all { blocked.isNumberBlocked(it.number) } ?: false)
         }
     }
 }

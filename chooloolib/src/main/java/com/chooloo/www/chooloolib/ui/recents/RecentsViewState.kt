@@ -7,7 +7,7 @@ import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.contentprovider.RecentsProviderLiveData
+import com.chooloo.www.chooloolib.livedata.RecentsLiveData
 import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.repository.recents.RecentsRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
@@ -27,7 +27,7 @@ open class RecentsViewState @Inject constructor(
     override val noResultsTextRes = R.string.error_no_results_recents
     override var noPermissionsTextRes = R.string.error_no_permissions_recents
 
-    private val recentsLiveData = recentsRepository.getRecents() as RecentsProviderLiveData
+    private val recentsLiveData = recentsRepository.getRecents() as RecentsLiveData
 
     val showRecentEvent = DataLiveEvent<RecentAccount>()
 
