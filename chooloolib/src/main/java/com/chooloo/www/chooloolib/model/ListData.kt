@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.model
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.BaseApp
 import com.chooloo.www.chooloolib.R
@@ -9,11 +10,6 @@ data class ListData<DataType>(
     val items: List<DataType> = arrayListOf(),
     val headersToCounts: Map<String, Int> = emptyMap()
 ) {
-    object Strings {
-        fun get(@StringRes stringRes: Int, vararg formatArgs: Any = emptyArray()): String {
-            return BaseApp.instance.getString(stringRes, *formatArgs)
-        }
-    }
     companion object {
         fun fromContacts(
             contacts: List<ContactAccount>,
@@ -68,9 +64,9 @@ data class ListData<DataType>(
             )
         }
 
-        fun fromPhones(phones: List<PhoneAccount>): ListData<PhoneAccount> {
+        fun fromPhones(phones: List<PhoneAccount>, context: Context): ListData<PhoneAccount> {
             val phones = phones.toList().distinctBy { it.normalizedNumber }
-            return ListData(phones, mapOf(Pair(Strings.get(R.string.hint_phones), phones.size)))
+            return ListData(phones, mapOf(Pair(context.getString(R.string.hint_phones), phones.size)))
         }
     }
 }
