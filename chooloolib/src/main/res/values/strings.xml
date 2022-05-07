@@ -39,6 +39,7 @@
 
     <!--region hints-->
     <string name="hint_search">Search</string>
+    <string name="hint_phones">Phones</string>
     <string name="hint_theme_mode">Theme Mode</string>
     <string name="hint_sim_account">Sim Account</string>
     <string name="hint_default_page">Default Page</string>
@@ -63,6 +64,7 @@
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
     <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <string name="pick_a_color">Pick a color</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -196,6 +198,20 @@
     <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
     <!--endregion-->
 
+    <!--region time-->
+    <string name="time_moments_ago">Moments ago</string>
+    <string name="time_a_minute_ago">A minute ago</string>
+    <string name="time_minutes_ago">%s minutes ago</string>
+    <string name="time_an_hour_ago">An hour ago</string>
+    <string name="time_hours_ago">%s hours ago</string>
+    <string name="time_yesterday">Yesterday</string>
+    <string name="time_tomorrow">Tomorrow</string>
+    <string name="time_in_the_future">In the future</string>
+    <string name="time_hours_abbrev">hrs</string>
+    <string name="time_minutes_abbrev">mins</string>
+    <string name="time_seconds_abbrev">sec</string>
+    <!--endregion-->
+    
     <!--region content description-->
     <string name="content_description_favorite_star">Favorite star</string>
     <string name="content_description_empty_list_icon">Empty list icon</string>

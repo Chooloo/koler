@@ -8,9 +8,13 @@ import javax.inject.Inject
 
 abstract class BaseApp : Application() {
     @Inject lateinit var preferences: PreferencesInteractor
+    companion object {
+        lateinit var instance: BaseApp private set
+    }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         AppCompatDelegate.setDefaultNightMode(preferences.themeMode.mode)
         PreferenceManager.setDefaultValues(this, R.xml.preferences_chooloo, false)
     }

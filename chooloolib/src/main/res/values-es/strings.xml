@@ -101,7 +101,7 @@
     <string name="action_block_number">Bloquear número</string>
     <string name="action_unblock_number">Desbloquear número</string>
     <string name="hint_search_items">Buscar contactos y llamadas recientes</string>
-    <string name="hint_dialpad_vibrate">Vibrar al pulsar las teclas del marcador</string>
+    <string name="hint_dialpad_vibrate">Vibrar al pulsar el teclado numérico</string>
     <string name="hint_should_ask_sim">Preguntar qué SIM utilizar antes de cada llamada</string>
     <string name="hint_dialpad_tones">Activar tonos al pulsar las teclas del marcador</string>
     <string name="hint_show_blocked">Mostrar opción de bloquear/desbloquear números de teléfono (requiere ser la aplicación de teléfono predeterminada).</string>
@@ -133,8 +133,24 @@
     <string name="error_couldnt_get_number_from_intent">No se pudo encontrar el número</string>
     <string name="error_cant_hold_call">No se puede retener la llamada</string>
     <string name="error_cant_swap_calls">No se pueden intercambiar las llamadas</string>
-    <string name="error_cant_merge_call">No se puede unir la llamada</string>
+    <string name="error_cant_merge_call">No se puede fusionar la llamada</string>
     <string name="error_no_number_to_call">No se encontró ningún número :(</string>
     <string name="explain_choose_phone_account">Continuar con la llamada actual usando una cuenta de teléfono específica</string>
+    <string name="hint_group_recents">Agrupar llamadas recientes de la misma persona</string>
+    <string name="call_status_pulling_call">Transfiriendo llamada…</string>
+    <string name="error_no_permissions_contacts_and_call_log">Necesito permiso para leer los contactos y el historial de llamadas :)</string>
+    <string name="time_moments_ago">Hace un momento</string>
+    <string name="time_a_minute_ago">Hace un minuto</string>
+    <string name="time_minutes_ago">Hace %s minutos</string>
+    <string name="time_an_hour_ago">Hace una hora</string>
+    <string name="time_hours_ago">Hace %s horas</string>
+    <string name="time_yesterday">Ayer</string>
+    <string name="time_tomorrow">Mañana</string>
+    <string name="time_in_the_future">En el futuro</string>
+    <string name="time_hours_abbrev">h</string>
+    <string name="time_minutes_abbrev">min</string>
+    <string name="time_seconds_abbrev">s</string>
+    <string name="hint_phones">Teléfonos</string>
+    <string name="pick_a_color">Escoja un color</string>
 
 </resources>

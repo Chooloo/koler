@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_title_default_page">Página predeterminada</string>
+    <string name="pref_title_dialpad_tones">Tonos del teclado numérico</string>
+    <string name="pref_title_show_blocked">Mostrar opción de bloquear números</string>
+    <string name="pref_title_group_recents">Agrupar llamadas recientes similares</string>
+    <string name="pref_title_dialpad_vibrate">Vibrar al pulsar el teclado numérico</string>
+    <string name="pref_title_ask_sim">Preguntar por la SIM</string>
+</resources>

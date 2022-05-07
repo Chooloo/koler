@@ -1,11 +1,19 @@
 package com.chooloo.www.chooloolib.model
 
+import androidx.annotation.StringRes
+import com.chooloo.www.chooloolib.BaseApp
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.util.getRelativeDateString
 
 data class ListData<DataType>(
     val items: List<DataType> = arrayListOf(),
     val headersToCounts: Map<String, Int> = emptyMap()
 ) {
+    object Strings {
+        fun get(@StringRes stringRes: Int, vararg formatArgs: Any = emptyArray()): String {
+            return BaseApp.instance.getString(stringRes, *formatArgs)
+        }
+    }
     companion object {
         fun fromContacts(
             contacts: List<ContactAccount>,
@@ -62,7 +70,7 @@ data class ListData<DataType>(
 
         fun fromPhones(phones: List<PhoneAccount>): ListData<PhoneAccount> {
             val phones = phones.toList().distinctBy { it.normalizedNumber }
-            return ListData(phones, mapOf(Pair("Phones", phones.size)))
+            return ListData(phones, mapOf(Pair(Strings.get(R.string.hint_phones), phones.size)))
         }
     }
 }
