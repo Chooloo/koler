@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_title_default_page">默认页面</string>
+    <string name="pref_title_dialpad_tones">拨号盘触摸音效</string>
+    <string name="pref_title_group_recents">Group similar recents</string>
+    <string name="pref_title_ask_sim">Should ask for sim</string>
+    <string name="pref_title_show_blocked">Show block number option</string>
+    <string name="pref_title_dialpad_vibrate">点击拨号盘时振动</string>
+</resources>
