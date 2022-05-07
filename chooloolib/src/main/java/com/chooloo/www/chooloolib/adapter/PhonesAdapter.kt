@@ -11,17 +11,16 @@ import javax.inject.Inject
 
 class PhonesAdapter @Inject constructor(
     animationsInteractor: AnimationsInteractor,
-    private val strings: StringsInteractor
 ) : ListAdapter<PhoneAccount>(animationsInteractor) {
     override fun onBindListItem(listItem: ListItem, item: PhoneAccount) {
         listItem.apply {
+            background = null
             imageVisibility = false
             titleText = item.number
             isRightButtonVisible = true
             captionText = Phone.getTypeLabel(resources, item.type, item.label).toString()
 
             setTitleBold(true)
-            setBackground(null)
             setRightButtonDrawable(R.drawable.round_call_20)
         }
     }

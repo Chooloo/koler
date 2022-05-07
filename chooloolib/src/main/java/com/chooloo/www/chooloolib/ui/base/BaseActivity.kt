@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
+import com.chooloo.www.chooloolib.util.getWindowColor
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -22,7 +23,7 @@ abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<
 
         applicationContext.setTheme(preferences.accentTheme.theme)
         setTheme(preferences.accentTheme.theme)
-        window.statusBarColor = colors.windowColor
+        window.statusBarColor = getWindowColor()
         AppCompatDelegate.setDefaultNightMode(preferences.themeMode.mode)
 
         contentView?.let { setContentView(it) }

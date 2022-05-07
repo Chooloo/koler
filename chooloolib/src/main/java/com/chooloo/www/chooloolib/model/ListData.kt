@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.model
 
+import com.chooloo.www.chooloolib.model.RawContactAccount.RawContactType
 import com.chooloo.www.chooloolib.util.getRelativeDateString
 
 data class ListData<DataType>(
@@ -60,9 +61,32 @@ data class ListData<DataType>(
             )
         }
 
-        fun fromPhones(phones: List<PhoneAccount>): ListData<PhoneAccount> {
+        fun fromPhones(
+            phones: List<PhoneAccount>,
+            withHeader: Boolean = true
+        ): ListData<PhoneAccount> {
             val phones = phones.toList().distinctBy { it.normalizedNumber }
-            return ListData(phones, mapOf(Pair("Phones", phones.size)))
+            return ListData(phones, mapOf(Pair(if (withHeader) "Phones" else "", phones.size)))
         }
+
+        fun fromRawContacts(
+            rawContacts: List<RawContactAccount>,
+            accounts: Boolean = false,
+            withHeader: Boolean = true,
+        ) = ListData(if (accounts) {
+            rawContacts.filter {
+                it.type in arrayOf(RawContactType.CUSTOM, RawContactType.WHATSAPP)
+            }
+        } else {
+            rawContacts
+        }, mapOf(
+            Pair(
+                if (withHeader) {
+                    if (accounts) "Accounts" else "Raw Contacts"
+                } else {
+                    ""
+                }, rawContacts.size
+            )
+        ))
     }
 }

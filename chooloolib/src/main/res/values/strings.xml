@@ -26,6 +26,7 @@
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
     <string name="action_show_history">Show History</string>
+    <string name="action_open_whatsapp">Open WhatsApp</string>
     <string name="action_block_number">Block Number</string>
     <string name="action_unblock_number">Unblock Number</string>
     <string name="action_choose_audio_route">Choose audio route</string>
@@ -199,4 +200,14 @@
     <!--region content description-->
     <string name="content_description_favorite_star">Favorite star</string>
     <string name="content_description_empty_list_icon">Empty list icon</string>
+    <!--endregion-->
+
+    <!--region type label-->
+    <string name="type_label_im">IM</string>
+    <string name="type_label_name">Name</string>
+    <string name="type_label_phone">Phone</string>
+    <string name="type_label_email">Email</string>
+    <string name="type_label_custom">Custom</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <string name="type_label_organization">Organization</string>
 </resources>

@@ -30,6 +30,7 @@ class BriefContactViewState @Inject constructor(
 
     val callEvent = DataLiveEvent<String>()
     val confirmContactDeleteEvent = LiveEvent()
+    val showHistoryEvent = DataLiveEvent<String>()
 
     private var contact: ContactAccount? = null
 
@@ -77,6 +78,10 @@ class BriefContactViewState @Inject constructor(
             contactId.value?.let(contacts::deleteContact)
             finishEvent.call()
         }
+    }
+
+    fun onActionHistory() {
+        contact?.name?.let { showHistoryEvent.call(it) }
     }
 
     fun onActionStar(isActivate: Boolean) {
