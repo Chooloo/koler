@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
@@ -13,10 +14,12 @@ import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
 import com.chooloo.www.chooloolib.util.getHoursString
 import com.chooloo.www.chooloolib.util.initials
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class RecentsAdapter @Inject constructor(
     animations: AnimationsInteractor,
+    @ApplicationContext private val context: Context,
     private val phones: PhonesInteractor,
     private val recents: RecentsInteractor,
     private val preferences: PreferencesInteractor,
@@ -55,5 +58,5 @@ class RecentsAdapter @Inject constructor(
     }
 
     override fun convertDataToListData(data: List<RecentAccount>) =
-        ListData.fromRecents(data, groupSimilar)
+        ListData.fromRecents(data, groupSimilar, context)
 }

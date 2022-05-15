@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.model
 
+import android.content.Context
 import android.provider.CallLog
 import androidx.annotation.IntDef
 import com.chooloo.www.chooloolib.util.getTimeAgo
@@ -7,6 +8,7 @@ import java.io.Serializable
 import java.util.*
 
 data class RecentAccount(
+    private val context: Context,
     val date: Date,
     val id: Long = 0,
     val number: String,
@@ -30,7 +32,7 @@ data class RecentAccount(
 
     val groupCount get() = groupAccounts.size
 
-    val relativeTime by lazy { getTimeAgo(date.time) }
+    val relativeTime by lazy { getTimeAgo(date.time, context) }
 
     companion object {
         const val TYPE_UNKNOWN = 7

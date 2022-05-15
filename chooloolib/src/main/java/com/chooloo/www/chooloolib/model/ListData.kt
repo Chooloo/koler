@@ -1,5 +1,7 @@
 package com.chooloo.www.chooloolib.model
 
+import android.content.Context
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.model.RawContactAccount.RawContactType
 import com.chooloo.www.chooloolib.util.getRelativeDateString
 
@@ -25,24 +27,24 @@ data class ListData<DataType>(
             return ListData(contacts, headersToCounts)
         }
 
-        fun fromRecents(recents: List<RecentAccount>, isGrouped: Boolean) =
+        fun fromRecents(recents: List<RecentAccount>, isGrouped: Boolean, context: Context) =
             if (isGrouped && recents.size > 1) {
-                getGroupedRecents(recents)
+                getGroupedRecents(recents, context)
             } else {
                 ListData(
                     recents,
-                    recents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+                    recents.groupingBy { getRelativeDateString(it.date, context) }.eachCount()
                 )
             }
 
-        private fun getGroupedRecents(recents: List<RecentAccount>): ListData<RecentAccount> {
+        private fun getGroupedRecents(recents: List<RecentAccount>, context: Context): ListData<RecentAccount> {
             var prevItem: RecentAccount = recents[0]
             val currentGroup = mutableListOf(prevItem)
-            var prevDate = getRelativeDateString(prevItem.date)
+            var prevDate = getRelativeDateString(prevItem.date, context)
             val groupedRecents = mutableListOf<RecentAccount>()
 
             recents.drop(1).forEach { curItem ->
-                val curDate = getRelativeDateString(curItem.date)
+                val curDate = getRelativeDateString(curItem.date, context)
                 if (prevItem.number == curItem.number && prevDate == curDate) {
                     currentGroup.add(curItem)
                 } else {
@@ -57,16 +59,17 @@ data class ListData<DataType>(
 
             return ListData(
                 groupedRecents,
-                groupedRecents.groupingBy { getRelativeDateString(it.date) }.eachCount()
+                groupedRecents.groupingBy { getRelativeDateString(it.date, context) }.eachCount()
             )
         }
 
         fun fromPhones(
             phones: List<PhoneAccount>,
+            context: Context,
             withHeader: Boolean = true
         ): ListData<PhoneAccount> {
             val phones = phones.toList().distinctBy { it.normalizedNumber }
-            return ListData(phones, mapOf(Pair(if (withHeader) "Phones" else "", phones.size)))
+            return ListData(phones, mapOf(Pair(if (withHeader) context.getString(R.string.hint_phones) else "", phones.size)))
         }
 
         fun fromRawContacts(

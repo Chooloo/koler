@@ -10,7 +10,7 @@ import com.chooloo.www.chooloolib.util.SelectionBuilder
 import java.util.*
 
 class RecentsContentResolver(
-    context: Context,
+    private val context: Context,
     private val recentId: Long? = null
 ) :
     BaseContentResolver<RecentAccount>(context) {
@@ -45,7 +45,8 @@ class RecentsContentResolver(
             date = Date(cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE))),
             number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER)),
             duration = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DURATION)),
-            cachedName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME))
+            cachedName = cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)),
+            context = context
         )
     }
 }

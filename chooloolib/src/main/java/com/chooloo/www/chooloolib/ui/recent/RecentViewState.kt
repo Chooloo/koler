@@ -12,6 +12,7 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
+import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -27,7 +28,8 @@ class RecentViewState @Inject constructor(
     private val drawables: DrawablesInteractor,
     private val preferences: PreferencesInteractor,
     private val navigations: NavigationsInteractor,
-    private val permissions: PermissionsInteractor
+    private val permissions: PermissionsInteractor,
+    private val stringsInteractor: StringsInteractor
 ) :
     BaseViewState() {
 
@@ -57,7 +59,7 @@ class RecentViewState @Inject constructor(
 
         timeString.value = _recent!!.relativeTime
         durationString.value =
-            if (_recent!!.duration > 0L) getElapsedTimeString(_recent!!.duration) else null
+            if (_recent!!.duration > 0L) getElapsedTimeString(_recent!!.duration, stringsInteractor) else null
         name.value =
             if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
         typeImage.value =
