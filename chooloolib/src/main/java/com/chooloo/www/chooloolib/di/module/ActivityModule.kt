@@ -3,8 +3,6 @@ package com.chooloo.www.chooloolib.di.module
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
@@ -41,8 +39,5 @@ class ActivityModule {
 
         @Binds
         fun bindPromptsInteractor(promptsInteractorImpl: PromptsInteractorImpl): PromptsInteractor
-
-        @Binds
-        fun bindCallNavigationsInteractor(callNavigationsInteractorImpl: CallNavigationsInteractorImpl): CallNavigationsInteractor
     }
 }

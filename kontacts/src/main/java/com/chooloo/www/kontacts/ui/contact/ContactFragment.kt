@@ -3,10 +3,10 @@ package com.chooloo.www.kontacts.ui.contact
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.accounts.AccountsFragment
+import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.kontacts.databinding.ContactBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class ContactFragment : BaseFragment<ContactViewState>() {
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
-    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
     override fun onSetup() {
@@ -31,7 +31,7 @@ class ContactFragment : BaseFragment<ContactViewState>() {
             }
 
             callEvent.observe(this@ContactFragment) {
-                it.ifNew?.let(callNavigations::call)
+                it.ifNew?.let(telecomInteractor::callNumber)
             }
 
             contactName.observe(this@ContactFragment) {

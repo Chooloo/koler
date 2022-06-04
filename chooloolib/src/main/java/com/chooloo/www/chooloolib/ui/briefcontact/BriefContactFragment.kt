@@ -7,10 +7,10 @@ import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.BriefContactBinding
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.accounts.AccountsViewState
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.phones.PhonesViewState
@@ -32,7 +32,7 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
     @Inject lateinit var permissions: PermissionsInteractor
-    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
     override fun onSetup() {
@@ -83,7 +83,7 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             }
 
             callEvent.observe(this@BriefContactFragment) {
-                it.ifNew?.let(callNavigations::call)
+                it.ifNew?.let(telecomInteractor::callNumber)
             }
 
             confirmContactDeleteEvent.observe(this@BriefContactFragment) {

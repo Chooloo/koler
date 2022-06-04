@@ -6,9 +6,9 @@ import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.RecentBinding
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsViewState
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +25,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
-    @Inject lateinit var callNavigations: CallNavigationsInteractor
+    @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
     override fun onSetup() {
@@ -101,7 +101,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
 
             callEvent.observe(this@RecentFragment) { ev ->
-                ev.ifNew?.let(callNavigations::call)
+                ev.ifNew?.let(telecomInteractor::callNumber)
             }
 
             showContactEvent.observe(this@RecentFragment) { ev ->
