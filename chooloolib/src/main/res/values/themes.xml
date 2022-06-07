@@ -50,4 +50,5 @@
         <item name="colorSecondary">@color/red_background</item>
         <item name="colorOnSecondary">@color/red_foreground</item>
     </style>
+
 </resources>

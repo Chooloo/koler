@@ -13,6 +13,8 @@
         android:padding="@dimen/icon_button_size_big"
         app:activatedIcon="@drawable/round_mic_off_24"
         app:icon="@drawable/round_mic_24"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 
     <!-- speaker -->
@@ -23,6 +25,8 @@
         android:layout_height="wrap_content"
         app:activatedIcon="@drawable/round_volume_up_24"
         app:icon="@drawable/round_volume_down_24"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 
     <!-- hold -->
@@ -33,6 +37,8 @@
         android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:activatedIcon="@drawable/round_play_arrow_24"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 
     <!-- add call -->
@@ -42,6 +48,8 @@
         android:layout_width="wrap_content"
         android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 
     <!-- keypad -->
@@ -51,6 +59,8 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/icon_button_size_big"
         app:icon="@drawable/round_dialpad_24"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 
     <!-- swap -->
@@ -60,6 +70,8 @@
         android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_swap_calls_24"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 
     <!-- merge -->
@@ -69,5 +81,7 @@
         android:padding="@dimen/icon_button_size_big"
         android:layout_height="wrap_content"
         app:icon="@drawable/round_call_merge_24"
+        android:tint="@color/color_on_background"
+        app:backgroundTint="@color/color_fab"
         app:size="huge" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -49,12 +49,12 @@
     <!--endregion-->
 
     <!--region bottom dialog -->
-    <style name="Chooloo.BottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+    <style name="Chooloo.BottomSheet" parent="Theme.Material3.DayNight.BottomSheetDialog">
         <item name="android:backgroundDimAmount">0.05</item>
         <item name="bottomSheetStyle">@style/Chooloo.BottomDialog.BottomSheetStyle</item>
     </style>
 
-    <style name="Chooloo.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+    <style name="Chooloo.AlertDialog" parent="Theme.Material3.DayNight.Dialog.Alert">
         <item name="buttonBarButtonStyle">@style/Chooloo.AlertDialog.Button</item>
     </style>
 
@@ -65,14 +65,16 @@
 
     <style name="Chooloo.BottomDialog" />
 
-    <style name="Chooloo.BottomDialog.BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="Chooloo.BottomDialog.BottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
         <item name="shapeAppearanceOverlay">@style/Chooloo.BottomDialog.ShapeAppearanceOverlay
         </item>
         <item name="behavior_peekHeight">600dp</item>
+        <item name="android:backgroundTint">@color/color_card_bg</item>
     </style>
 
     <style name="Chooloo.BottomDialog.ShapeAppearanceOverlay">
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:backgroundTint">@color/color_card_bg</item>
         <item name="cornerSizeTopRight">@dimen/corner_radius</item>
         <item name="cornerSizeTopLeft">@dimen/corner_radius</item>
         <item name="cornerFamily">rounded</item>
