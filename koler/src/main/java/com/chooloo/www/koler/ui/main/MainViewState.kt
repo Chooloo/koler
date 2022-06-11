@@ -51,7 +51,13 @@ class MainViewState @Inject constructor(
     fun onViewIntent(intent: Intent) {
         try {
             val intentText = URLDecoder.decode(intent.dataString ?: "", "utf-8")
-            showDialerEvent.call(intentText.substringAfter("tel:"))
+            // I made this variable seperate instead of calculating it when
+            // calling showDialerEvent and for some reason it made it start working.
+            // Perhaps the space added after "tel:" also did the trick. Not sure
+            // but it's working great now.
+            // TODO: Turn off dialpad sounds when clicking numbers.
+            val number = intentText.substringAfter("tel: ")
+            showDialerEvent.call(number)
         } catch (e: Exception) {
             errorEvent.call(R.string.error_couldnt_get_number_from_intent)
         }
