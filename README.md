@@ -11,7 +11,7 @@
 </a>
 
 <p align="center">
-         A dialer, but it's simple and looks pretty good honestly
+         A dialer, but it's simple and looks pretty good honestly!
 </p>
 
 Copylefted libre MVVM Android app. \
