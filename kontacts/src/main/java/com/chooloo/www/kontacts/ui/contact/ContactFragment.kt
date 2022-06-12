@@ -50,12 +50,14 @@ class ContactFragment : BaseFragment<ContactViewState>() {
         }
 
         binding.apply {
-            contactButtonSms.setOnClickListener { viewState.onSmsClick() }
+
+
+//            contactButtonSms.setOnClickListener { viewState.onSmsClick() }
             contactButtonCall.setOnClickListener { viewState.onCallClick() }
-            contactButtonEdit.setOnClickListener { viewState.onEditClick() }
-            contactButtonDelete.setOnClickListener { viewState.onDeleteClick() }
-            contactButtonHistory.setOnClickListener { viewState.onHistoryClick() }
-            contactButtonWhatsapp.setOnClickListener { viewState.onWhatsappClick() }
+//            contactButtonEdit.setOnClickListener { viewState.onEditClick() }
+//            contactButtonDelete.setOnClickListener { viewState.onDeleteClick() }
+//            contactButtonHistory.setOnClickListener { viewState.onHistoryClick() }
+//            contactButtonWhatsapp.setOnClickListener { viewState.onWhatsappClick() }
         }
 
         arguments?.getLong(ARG_CONTACT_ID)?.let { viewState.onContactId(it) }

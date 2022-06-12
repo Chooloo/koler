@@ -48,6 +48,7 @@ open class SettingsViewState @Inject constructor(
             colors.getColor(R.color.green_background) -> GREEN
             colors.getColor(R.color.orange_background) -> ORANGE
             colors.getColor(R.color.purple_background) -> PURPLE
+            colors.getColor(R.color.system_background) -> SYSTEM
             else -> DEFAULT
         }
         navigations.goToLauncherActivity()

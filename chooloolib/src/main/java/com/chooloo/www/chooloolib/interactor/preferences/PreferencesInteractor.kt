@@ -37,6 +37,7 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
             GREEN("green", R.style.Accent_Green),
             ORANGE("orange", R.style.Accent_Orange),
             PURPLE("purple", R.style.Accent_Purple),
+            SYSTEM("system", R.style.Accent_System),
             DEFAULT(BLUE.key, BLUE.theme);
 
             companion object {

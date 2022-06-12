@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_surface">@android:color/system_accent1_200</color>
+    <color name="color_text">@android:color/primary_text_light</color>
+    <color name="color_on_background">@android:color/system_accent1_800</color>
+    <color name="color_fab">@android:color/system_accent1_300</color>
+    <color name="color_bg">@android:color/system_neutral1_100</color>
+    <color name="color_card_bg">@android:color/system_neutral1_50</color>
+    <color name="color_image_placeholder_background">@android:color/system_accent1_300</color>
+    <color name="color_image_placeholder_foreground">@android:color/system_accent1_900</color>
+    <color name="color_light_foreground">@android:color/system_accent1_800</color>
+    <color name="color_light_background">@android:color/system_accent1_50</color>
+    <color name="color_opposite">@android:color/system_accent1_900</color>
+    <color name="color_hint">@android:color/system_neutral1_600</color>
 
-    <!--region base colors-->
-    <color name="color_hint">#E6E6E6</color>
-    <color name="color_text">#1C1C1C</color>
-    <color name="color_error">#B00020</color>
-    <color name="color_surface">#F6F7FB</color>
-    <color name="color_disabled">#454746</color>
-    <color name="color_opposite">#2E2E2E</color>
-    <color name="color_on_background">#C5C5C5</color>
-    <color name="color_light_foreground">#F5ACACAC</color>
-    <color name="color_light_background">#ABEDEDED</color>
-    <color name="color_image_placeholder_background">@color/color_surface</color>
-    <color name="color_image_placeholder_foreground">#95ACACAC</color>
-    <color name="color_fab">#4F9FE1</color>
-    <color name="color_card_bg">#F6F7FB</color>
-    <color name="color_on_surface">#F6F7FB</color>
-
-    <!--endregion-->
-
+    <!--  As a hack, I'm overiding the accent colors automatically
+      if the user is running v31 -->
     <!--region accent colors-->
     <color name="blue_background">#E8F0FD</color>
     <color name="blue_foreground">#4F9FE1</color>

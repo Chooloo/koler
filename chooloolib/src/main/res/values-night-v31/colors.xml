@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_surface">@android:color/system_accent1_800</color>
+    <color name="color_text">@android:color/primary_text_dark</color>
+    <color name="color_on_background">@android:color/system_accent1_100</color>
+    <color name="color_fab">@android:color/system_accent1_700</color>
+    <color name="color_bg">@android:color/system_neutral1_800</color>
+    <color name="color_card_bg">@android:color/system_neutral1_900</color>
+    <color name="color_image_placeholder_background">@android:color/system_accent1_800</color>
+    <color name="color_image_placeholder_foreground">@android:color/system_accent1_50</color>
+    <color name="color_light_foreground">@android:color/system_accent1_200</color>
+    <color name="color_light_background">@android:color/system_accent1_700</color>
+    <color name="color_opposite">@android:color/system_accent1_100</color>
+    <color name="color_hint">@android:color/system_neutral1_600</color>
+    <color name="color_on_surface">@android:color/system_accent1_300</color>
+    <!--  As a hack, I'm overiding the accent colors automatically
+  if the user is running v31 -->
+    <!--region accent colors-->
+    <color name="blue_background">#566682</color>
+    <color name="blue_foreground">#AFCBFA</color>
+
+    <color name="orange_background">#816553</color>
+    <color name="orange_foreground">#EBBA96</color>
+
+    <color name="green_background">#587363</color>
+    <color name="green_foreground">#A2CFAE</color>
+
+    <color name="purple_background">#6b5781</color>
+    <color name="purple_foreground">#D7AEFC</color>
+
+    <color name="red_background">#7d5858</color>
+    <color name="red_foreground">#F5AEA8</color>
+
+    <color name="system_background">@color/color_fab</color>
+    <color name="system_foreground">@color/color_on_background</color>
+
+    <array name="accent_colors">
+        <item>@color/blue_background</item>
+        <item>@color/orange_background</item>
+        <item>@color/green_background</item>
+        <item>@color/purple_background</item>
+        <item>@color/red_background</item>
+        <item>@color/system_background</item>
+    </array>
+    <!--endregion-->
+</resources>
