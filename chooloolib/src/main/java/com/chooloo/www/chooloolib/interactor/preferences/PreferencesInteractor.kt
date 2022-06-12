@@ -18,6 +18,7 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
     var themeMode: ThemeMode
     var accentTheme: AccentTheme
 
+    fun setDefaultValues()
 
     companion object {
         enum class ThemeMode(val key: String, val titleRes: Int, val mode: Int) {

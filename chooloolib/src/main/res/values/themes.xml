@@ -2,7 +2,7 @@
 <resources>
     <!-- Theme Styles -->
 
-    <style name="ChoolooTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="ChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorError">@color/color_error</item>
         <item name="colorLightBackground">@color/color_light_background</item>
         <item name="colorLightForeground">@color/color_light_foreground</item>
