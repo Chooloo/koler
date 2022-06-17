@@ -26,6 +26,7 @@
     <string name="action_answer">پاسخ</string>
     <string name="action_hangup">قطع</string>
     <string name="action_show_history">نمایش تاریخچه</string>
+    <string name="action_open_whatsapp">باز کردن واتسا‌پ</string>
     <string name="action_block_number">مسدودسازی شماره</string>
     <string name="action_unblock_number">رفع مسدودی شماره</string>
     <string name="action_choose_audio_route">منبع صوتی را مشخص کنید</string>
@@ -50,6 +51,7 @@
     <string name="hint_dialpad_vibrate">لرزش هنگام فشردن شماره گیر</string>
     <string name="hint_should_ask_sim">انتخاب سیم کارت قبل هر تماس</string>
     <string name="hint_dialpad_tones">صدا هنگام فشردن شماره گیر</string>
+    <string name="hint_group_recents">مکالمات گروهی اخیر از همان شخص</string>
     <string name="hint_show_blocked">نمایش گزینه مسدودسازی/رفع مسدودی برای شماره ها (می بایست برنامه پیش فرض تماس باشد).</string>
     <!--endregion-->
 
@@ -101,6 +103,7 @@
     <string name="pref_key_report_bugs">report_bugs</string>
     <string name="pref_key_show_blocked">show_blocked</string>
     <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_group_recents">group_recents</string>
     <string name="pref_key_dialpad_tones">dialpad_tones</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
     <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
@@ -136,6 +139,7 @@
     <string name="error_no_permissions_phones"> :) برای خواندن مخاطبین به دسترسی نیاز دارم</string>
     <string name="error_no_permissions_recents">:) برای خواندن گزارش تماس به دسترسی نیاز دارم</string>
     <string name="error_no_permissions_contacts"> :) برای خواندن مخاطبین به دسترسی نیاز دارم</string>
+    <string name="error_no_permissions_contacts_and_call_log"> (: برای خواندن مخاطبین و گزارشهای تماس نیاز به مجوز دارم</string>
 
     <string name="error_no_number_to_call">:(شماره ای یافت نشد</string>
 
@@ -196,4 +200,14 @@
     <!--region content description-->
     <string name="content_description_favorite_star">ستاره موردعلاقه</string>
     <string name="content_description_empty_list_icon">آیکون فهرست خالی</string>
+    <!--endregion-->
+    
+    <!--region type label-->
+    <string name="type_label_im">IM</string>
+    <string name="type_label_name">نام</string>
+    <string name="type_label_phone">شماره</string>
+    <string name="type_label_email">ایمیل</string>
+    <string name="type_label_custom">شخصی سازی</string>
+    <string name="type_label_whatsapp">واتساپ</string>
+    <string name="type_label_organization">سازمان</string>
 </resources>
