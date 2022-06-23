@@ -2,8 +2,7 @@
 <resources>
   <!--region titles-->
   <string name="recents">Son Aramalar</string>
-  <string name="contacts">Kişiler
-</string>
+  <string name="contacts">Kişiler</string>
   <string name="conference">Konferans</string>
   <string name="default_page">Varsayılan</string>
   <string name="settings">Ayarlar</string>
