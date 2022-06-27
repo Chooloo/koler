@@ -72,6 +72,7 @@ dependencies {
     )
 
     implementation(
+            'com.squareup.picasso:picasso:2.5.2',
             'androidx.core:core-ktx:1.7.0',
             'dev.sasikanth:colorsheet:1.0.1',
             'androidx.appcompat:appcompat:1.4.1',

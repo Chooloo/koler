@@ -53,6 +53,8 @@ import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractorImpl
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractorImpl
 import com.chooloo.www.chooloolib.repository.calls.CallsRepository
 import com.chooloo.www.chooloolib.repository.calls.CallsRepositoryImpl
 import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
@@ -165,6 +167,9 @@ class ApplicationModule {
 
         @Binds
         fun bindSimsInteractor(simsInteractorImpl: SimsInteractorImpl): SimsInteractor
+
+        @Binds
+        fun bindThemesInteractor(themesInteractor: ThemesInteractorImpl): ThemesInteractor
 
         @Binds
         fun bindCallsInteractor(callsInteractorImpl: CallsInteractorImpl): CallsInteractor

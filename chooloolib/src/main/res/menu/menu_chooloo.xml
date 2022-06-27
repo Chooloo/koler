@@ -2,29 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_chooloo_accent_color"
-        android:icon="@drawable/round_palette_20"
+        android:contentDescription="@string/in_development"
+        android:enabled="false"
+        android:icon="@drawable/palette"
         android:title="@string/pref_title_app_color" />
 
     <item
         android:id="@+id/menu_chooloo_theme_mode"
-        android:icon="@drawable/round_invert_colors_20"
+        android:icon="@drawable/invert_colors"
         android:title="@string/pref_title_theme_mode" />
 
     <item
-        android:id="@+id/menu_chooloo_compact_mode"
-        android:icon="@drawable/round_view_compact_20"
-        android:title="@string/pref_title_compact" />
-    <item
         android:id="@+id/menu_chooloo_animations"
-        android:icon="@drawable/round_animation_20"
+        android:icon="@drawable/animation"
         android:title="@string/pref_title_animations" />
     <item
         android:id="@+id/menu_chooloo_report_bugs"
-        android:icon="@drawable/round_report_problem_20"
+        android:icon="@drawable/bug_report"
         android:title="@string/pref_title_report_bugs" />
     <item
         android:id="@+id/menu_chooloo_rate"
-        android:icon="@drawable/round_star_half_20"
+        android:icon="@drawable/grade"
         android:title="@string/pref_title_rate" />
 
     <!--    <item-->
@@ -34,6 +32,6 @@
 
     <item
         android:id="@+id/menu_chooloo_email"
-        android:icon="@drawable/round_email_20"
+        android:icon="@drawable/mail"
         android:title="@string/pref_title_email" />
 </menu>

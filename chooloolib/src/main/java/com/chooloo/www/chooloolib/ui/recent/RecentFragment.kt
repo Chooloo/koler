@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.ui.recent
 
 import android.os.Bundle
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.RecentBinding
@@ -10,7 +11,9 @@ import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.ui.recent.menu.RecentMenuViewState
 import com.chooloo.www.chooloolib.ui.recents.RecentsViewState
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,6 +23,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     override val viewState: RecentViewState by viewModels()
 
     private val historyViewState: RecentsViewState by viewModels()
+    private val menuViewState: RecentMenuViewState by activityViewModels()
     private val binding by lazy { RecentBinding.inflate(layoutInflater) }
 
     @Inject lateinit var prompts: PromptsInteractor
@@ -29,79 +33,77 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
 
     override fun onSetup() {
+        binding.recentContactImage.isVisible = false
+
         binding.apply {
-            recentButtonSms.setOnClickListener {
-                viewState.onActionSms()
+            recentButtonMore.setOnClickListener {
+                viewState.onMoreClick()
             }
 
-            recentButtonCall.setOnClickListener {
-                viewState.onActionCall()
+            recentMainActions.recentButtonSms.setOnClickListener {
+                viewState.onSms()
             }
 
-            recentButtonBlock.setOnClickListener {
-                viewState.onActionBlock(!viewState.isBlockButtonActivated.value!!)
+            recentMainActions.recentButtonCall.setOnClickListener {
+                viewState.onCall()
             }
 
-            recentButtonDelete.setOnClickListener {
-                viewState.onActionDelete()
+            recentMainActions.recentButtonContact.setOnClickListener {
+                viewState.onOpenContact()
             }
 
-            recentButtonContact.setOnClickListener {
-                viewState.onActionOpenContact()
+            recentMainActions.recentButtonAddContact.setOnClickListener {
+                viewState.onAddContact()
             }
 
-            recentButtonWhatsapp.setOnClickListener {
-                viewState.onActionOpenWhatsapp()
-            }
-
-            recentButtonAddContact.setOnClickListener {
-                viewState.onActionAddContact()
-            }
-
-            recentButtonShowHistory.setOnClickListener {
-                viewState.onActionShowHistory()
-            }
         }
 
         viewState.apply {
-            recentId.value = args.getLong(ARG_RECENT_ID)
-            imageUri.observe(this@RecentFragment, binding.recentContactImage::setImageURI)
-            typeImage.observe(this@RecentFragment, binding.recentTypeImage::setImageDrawable)
+            onRecentId(args.getLong(ARG_RECENT_ID))
+            menuViewState.recentId.value = args.getLong(ARG_RECENT_ID)
+
+            imageUri.observe(this@RecentFragment) {
+                binding.recentContactImage.isVisible = true
+                Picasso.with(baseActivity).load(it).into(binding.recentContactImage)
+            }
+
+            typeImage.observe(this@RecentFragment) {
+                binding.recentTypeImage.setImageResource(it)
+            }
+            typeImage.observe(this@RecentFragment, binding.recentTypeImage::setImageResource)
 
             name.observe(this@RecentFragment) {
                 binding.recentTextName.text = it
             }
 
-            timeString.observe(this@RecentFragment) {
-                binding.recentTextTime.text = it
+            caption.observe(this@RecentFragment) {
+                binding.recentCaption.text = it
             }
 
-            durationString.observe(this@RecentFragment) {
-                it?.let { binding.recentTextDuration.text = it } ?: run {
-                    binding.recentTextDuration.isVisible = false
-                    binding.recentImageDuration.isVisible = false
-                }
+            isBlocked.observe(this@RecentFragment) {
+                menuViewState.isBlocked.value = it
+            }
+
+            recentNumber.observe(this@RecentFragment) {
+                menuViewState.recentNumber.value = it
             }
 
             isContactVisible.observe(this@RecentFragment) {
-                binding.recentButtonContact.isVisible = it
+                binding.recentMainActions.recentButtonContact.isVisible = it
             }
 
             isAddContactVisible.observe(this@RecentFragment) {
-                binding.recentButtonAddContact.isVisible = it
+                binding.recentMainActions.recentButtonAddContact.isVisible = it
             }
-
-            isBlockButtonVisible.observe(this@RecentFragment) {
-                binding.recentButtonBlock.isVisible = it
-            }
-
-            isBlockButtonActivated.observe(this@RecentFragment) {
-                binding.recentButtonBlock.isActivated = it
-            }
-
 
             callEvent.observe(this@RecentFragment) { ev ->
                 ev.ifNew?.let(telecomInteractor::callNumber)
+            }
+
+            showMoreEvent.observe(this@RecentFragment) {
+                it.ifNew?.let {
+                    prompts.showFragment(fragmentFactory.getRecentMenuFragment())
+                }
             }
 
             showContactEvent.observe(this@RecentFragment) { ev ->
@@ -112,12 +114,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
             showRecentEvent.observe(this@RecentFragment) { ev ->
                 ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentFragment(it)) }
-            }
-
-            showHistoryEvent.observe(this@RecentFragment) { ev ->
-                ev.ifNew?.let {
-                    prompts.showFragment(fragmentFactory.getRecentsFragment(it))
-                }
             }
 
             confirmRecentDeleteEvent.observe(this@RecentFragment) {

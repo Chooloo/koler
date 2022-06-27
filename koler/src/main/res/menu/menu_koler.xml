@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_koler_show_blocked"
-        android:icon="@drawable/round_block_24"
-        android:title="@string/pref_title_show_blocked" />
-
-    <item
         android:id="@+id/menu_koler_default_page"
-        android:icon="@drawable/round_view_carousel_20"
+        android:icon="@drawable/view_carousel"
         android:title="@string/pref_title_default_page" />
 
     <item
         android:id="@+id/menu_koler_dialpad_tones"
-        android:icon="@drawable/round_music_note_20"
+        android:icon="@drawable/music_note"
         android:title="@string/pref_title_dialpad_tones" />
 
     <item
         android:id="@+id/menu_koler_dialpad_vibrate"
-        android:icon="@drawable/round_vibration_20"
+        android:icon="@drawable/vibration"
         android:title="@string/pref_title_dialpad_vibrate" />
 
     <item
         android:id="@+id/menu_koler_group_recents"
-        android:icon="@drawable/round_recent_actors_20"
+        android:icon="@drawable/recent_actors"
         android:title="@string/pref_title_group_recents" />
 </menu>

@@ -22,7 +22,6 @@
     <string name="pref_title_email">Schreibe uns eine E-Mail</string>
     <string name="pref_title_app_color">Akzent Farbe</string>
     <string name="pref_title_animations">Animationen</string>
-    <string name="pref_title_compact">Kompakter Modus</string>
     <string name="pref_title_rate">Bewerten</string>
     <string name="error_no_results">Keine Ergebnisse gefunden :/</string>
     <string name="error_no_results_phones">Keine Telefonnummern gefunden :/</string>

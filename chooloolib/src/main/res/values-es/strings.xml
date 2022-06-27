@@ -120,12 +120,10 @@
     <string name="content_description_empty_list_icon">Icono de lista vacía</string>
     <string name="dialpad_1_letters">Buzón de voz</string>
     <string name="pref_title_animations">Animaciones</string>
-    <string name="pref_title_compact">Modo compacto</string>
     <string name="hint_sim_account">Cuenta SIM</string>
     <string name="hint_animations">Mostrar animaciones</string>
     <string name="hint_search_recents">Buscar llamadas recientes</string>
     <string name="hint_search_contacts">Buscar contactos</string>
-    <string name="hint_compact_mode">Hacer compactos los elementos de la lista</string>
     <string name="hint_theme_mode">Modo del tema</string>
     <string name="action_choose_phone_account">Escoger la cuenta de teléfono</string>
     <string name="action_choose_audio_route">Escoger vía del audio</string>

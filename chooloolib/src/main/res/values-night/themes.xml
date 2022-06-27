@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorError">@color/color_error</item>
-        <item name="colorSurface">@color/color_surface</item>
-        <item name="colorPrimary">?android:colorBackground</item>
-        <item name="colorTextDisabled">@color/color_disabled</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-        <item name="colorLightBackground">#A1686868</item>
-        <item name="colorLightForeground">#B1B1B1</item>
 
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:fontFamily">@font/google_sans_regular</item>
-        <item name="android:navigationBarColor">?colorPrimarySurface</item>
-
-        <item name="bottomSheetDialogTheme">@style/Chooloo.BottomSheet</item>
-        <item name="alertDialogTheme">@style/Chooloo.AlertDialog</item>
+    <style name="ChoolooTheme" parent="BaseChoolooTheme">
+        <item name="colorSurfaceVariant">#42474e</item>
+        <item name="colorOnSurfaceVariant">#c2c7ce</item>
     </style>
 </resources>

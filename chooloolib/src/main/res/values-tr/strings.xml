@@ -40,7 +40,6 @@
   <string name="hint_animations">Animasyonları göster</string>
   <string name="hint_search_recents">Son Aramaları ara</string>
   <string name="hint_search_contacts">Kişileri ara</string>
-  <string name="hint_compact_mode">Liste öğelerini sıkışık hale getir</string>
   <string name="hint_search_items">Kişileri ve son aramaları ara</string>
   <string name="hint_dialpad_vibrate">Tuş takımı tıklamalarında titreşim</string>
   <string name="hint_should_ask_sim">Her aramadan önce bir sim isteyin</string>
@@ -82,7 +81,6 @@
   <!--endregion-->
   <!--region pref key-->
   <string name="pref_key_rate">rate</string>
-  <string name="pref_key_compact">compact</string>
   <string name="pref_key_ask_sim">ask_sim</string>
   <string name="pref_key_color">accent_color</string>
   <string name="pref_key_animations">animations</string>
@@ -96,7 +94,6 @@
   <!--endregion-->
   <!--region pref title-->
   <string name="pref_title_rate">Değerlendir</string>
-  <string name="pref_title_compact">Sıkışık Mod</string>
   <string name="pref_title_animations">Animasyonlar</string>
   <string name="pref_title_app_color">Vurgu Rengi</string>
   <string name="pref_title_theme_mode">Uygulama Teması</string>

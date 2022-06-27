@@ -54,7 +54,6 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
-    <string name="pref_key_compact">compact</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
     <string name="pref_key_report_bugs">report_bugs</string>
@@ -63,7 +62,6 @@
 
     <!--region pref title-->
     <string name="pref_title_rate">Ocijeni</string>
-    <string name="pref_title_compact">Kompaktni način</string>
     <string name="pref_title_animations">Animacije</string>
     <string name="pref_title_app_color">Boja teme</string>
     <string name="pref_title_email">Pošalji nam e-poštu</string>

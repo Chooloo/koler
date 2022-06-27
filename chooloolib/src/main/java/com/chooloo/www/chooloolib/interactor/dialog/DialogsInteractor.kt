@@ -10,7 +10,7 @@ import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 import com.chooloo.www.chooloolib.model.SimAccount
 
 interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
@@ -24,6 +24,7 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
         choices: List<String>,
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int? = null,
+        selectedChoiceIndex: Int? = null,
         choiceCallback: (String) -> Unit
     )
 
@@ -32,6 +33,7 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
         choiceToString: (T) -> String,
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int? = null,
+        selectedChoice: T? = null,
         choiceCallback: (T) -> Unit
     )
 

@@ -8,7 +8,6 @@ import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -24,68 +23,67 @@ class BriefContactViewState @Inject constructor(
 ) : BaseViewState() {
     val contactId = MutableLiveData<Long>()
     val contactImage = MutableLiveData<Uri>()
+    val isFavorite = MutableLiveData<Boolean>()
     val contactName = MutableLiveData<String?>()
-    val isStarIconVisible = MutableLiveData<Boolean>()
-    val isStarIconActivated = MutableLiveData<Boolean>()
+    val contactNumber = MutableLiveData<String?>()
 
+    val showMoreEvent = LiveEvent()
     val callEvent = DataLiveEvent<String>()
-    val confirmContactDeleteEvent = LiveEvent()
-    val showHistoryEvent = DataLiveEvent<String>()
 
+    private var firstNumber: String? = null
     private var contact: ContactAccount? = null
 
 
-    private fun withFirstNumber(callback: (PhoneAccount?) -> Unit) {
-        contact?.let {
-            phones.getContactAccounts(it.id) { phones ->
-                callback.invoke(phones?.getOrNull(0))
+    private fun withFirstNumber(callback: (String?) -> Unit) {
+        if (firstNumber != null) {
+            callback.invoke(firstNumber)
+        } else {
+            contact?.let {
+                phones.getContactAccounts(it.id) { phones ->
+                    firstNumber = phones?.getOrNull(0)?.number
+                    callback.invoke(firstNumber)
+                }
             }
         }
     }
 
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId
-        contacts.queryContact(contactId) {
+        contacts.observeContact(contactId) {
             contact = it
             contactName.value = it?.name
-            it?.photoUri?.let { uri -> contactImage.value = Uri.parse(uri) }
-            isStarIconActivated.value = it?.starred == true
+            isFavorite.value = it?.starred == true
+            withFirstNumber { contactNumber.value = it }
+            it?.photoUri?.let { uri ->
+                contactImage.value = Uri.parse(uri)
+            }
         }
     }
 
-    fun onActionCall() {
+    fun onCallClick() {
         withFirstNumber {
-            it?.number?.let(callEvent::call) ?: run {
+            it?.let(callEvent::call) ?: run {
                 errorEvent.call(R.string.error_no_number_to_call)
             }
         }
     }
 
-    fun onActionSms() {
-        withFirstNumber { it?.number?.let(navigations::sendSMS) }
+    fun onSmsClick() {
+        withFirstNumber { it?.let(navigations::sendSMS) }
     }
 
-    fun onActionEdit() {
+    fun onEditClick() {
         contactId.value?.let(navigations::editContact)
     }
 
-    fun onActionDelete() {
-        confirmContactDeleteEvent.call()
-    }
-
-    fun onDeleteConfirmed() {
+    fun onDelete() {
         permissions.runWithWriteContactsPermissions {
             contactId.value?.let(contacts::deleteContact)
             finishEvent.call()
         }
     }
 
-    fun onActionHistory() {
-        contact?.name?.let { showHistoryEvent.call(it) }
-    }
-
-    fun onActionStar(isActivate: Boolean) {
-        contactId.value?.let { contacts.toggleContactFavorite(it, !isActivate) }
-        isStarIconActivated.value = !isActivate
+    fun onMoreClick() {
+        showMoreEvent.call()
     }
 }

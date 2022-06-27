@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.ui.base
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,10 @@ open class BottomFragment<FragmentType : BaseFragment<out BaseViewState>>(
 ) : BottomSheetDialogFragment(), BaseView<BaseViewState> {
     override val viewState: BaseViewState by viewModels()
 
-    private val binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
+    private val binding by lazy {
+        val contextThemeWrapper = ContextThemeWrapper(activity, activity?.theme)
+        BottomDialogBinding.inflate(layoutInflater.cloneInContext(contextThemeWrapper))
+    }
 
     @Inject lateinit var baseActivity: BaseActivity<*>
 

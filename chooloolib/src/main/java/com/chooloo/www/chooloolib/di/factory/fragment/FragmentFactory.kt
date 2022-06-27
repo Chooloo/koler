@@ -1,10 +1,11 @@
 package com.chooloo.www.chooloolib.di.factory.fragment
 
 import androidx.annotation.StringRes
+import com.chooloo.www.chooloolib.ui.accounts.AccountsFragment
 import com.chooloo.www.chooloolib.ui.base.BaseChoicesFragment
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
+import com.chooloo.www.chooloolib.ui.briefcontact.menu.BriefContactMenuFragment
 import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
-import com.chooloo.www.chooloolib.ui.accounts.AccountsFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsFragment
 import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
@@ -12,6 +13,7 @@ import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.ui.recent.RecentFragment
+import com.chooloo.www.chooloolib.ui.recent.menu.RecentMenuFragment
 import com.chooloo.www.chooloolib.ui.recents.RecentsFragment
 import com.chooloo.www.chooloolib.ui.recentshistory.RecentsHistoryFragment
 import com.chooloo.www.chooloolib.ui.settings.SettingsFragment
@@ -21,7 +23,9 @@ interface FragmentFactory {
     fun getSettingsFragment(): SettingsFragment
     fun getContactsFragment(): ContactsFragment
     fun getCallItemsFragment(): CallItemsFragment
+    fun getRecentMenuFragment(): RecentMenuFragment
     fun getRecentFragment(recentId: Long): RecentFragment
+    fun getBriefContactMenuFragment(): BriefContactMenuFragment
     fun getDialerFragment(text: String? = null): DialerFragment
     fun getPhonesFragment(contactId: Long? = null): PhonesFragment
     fun getContactsSuggestionsFragment(): ContactsSuggestionsFragment
@@ -33,6 +37,7 @@ interface FragmentFactory {
     fun getChoicesFragment(
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int?,
-        choices: List<String>
+        choices: List<String>,
+        selectedChoiceIndex: Int? = null
     ): BaseChoicesFragment
 }

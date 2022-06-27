@@ -11,7 +11,7 @@ abstract class BaseApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        themes.applyTheme()
         preferences.setDefaultValues()
+        themes.applyThemeMode(preferences.themeMode)
     }
 }

@@ -48,7 +48,6 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">taksi</string>
-    <string name="pref_key_compact">kompakta</string>
     <string name="pref_key_color">akcenta_koloro</string>
     <string name="pref_key_animations">animacioj</string>
     <string name="pref_key_report_bugs">raporti_cimigoj</string>
@@ -57,7 +56,6 @@
 
     <!--region pref title-->
     <string name="pref_title_rate">Taksi</string>
-    <string name="pref_title_compact">Kompakta modo</string>
     <string name="pref_title_animations">Animacioj</string>
     <string name="pref_title_app_color">Akcenta koloro</string>
     <string name="pref_title_email">Sendi retpoŝtmesaĝon al ni</string>

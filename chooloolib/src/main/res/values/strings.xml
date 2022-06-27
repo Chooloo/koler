@@ -3,12 +3,15 @@
     <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
+    <string name="actions">Actions</string>
     <string name="conference">Conference</string>
     <string name="default_page">Default</string>
     <string name="settings">Settings</string>
     <string name="theme_mode_dark">Dark</string>
     <string name="theme_mode_light">Light</string>
     <string name="theme_mode_system">System</string>
+    <string name="theme_mode_dynamic">Dynamic</string>
+    <string name="in_development">In Development...</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -25,9 +28,15 @@
     <string name="action_no">Nope</string>
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
+    <string name="action_manage_calls">Manage Calls</string>
     <string name="action_show_history">Show History</string>
     <string name="action_open_whatsapp">Open WhatsApp</string>
     <string name="action_block_number">Block Number</string>
+    <string name="action_delete_contact">Delete Contact</string>
+    <string name="action_delete_recent">Delete Recent</string>
+    <string name="action_set_favorite">Set As Favorite</string>
+    <string name="action_unset_favorite">Unset As Favorite</string>
+    <string name="action_open_in_whatsapp">Open In Whatsapp</string>
     <string name="action_unblock_number">Unblock Number</string>
     <string name="action_choose_audio_route">Choose audio route</string>
     <string name="action_choose_phone_account">Choose phone account</string>
@@ -46,7 +55,6 @@
     <string name="hint_animations">Show animations</string>
     <string name="hint_search_recents">Search Recents</string>
     <string name="hint_search_contacts">Search Contacts</string>
-    <string name="hint_compact_mode">Make list items compact</string>
     <string name="hint_search_items">Search contacts &amp; recents</string>
     <string name="hint_dialpad_vibrate">Vibrate on dialpad clicks</string>
     <string name="hint_should_ask_sim">Ask for a sim before each call</string>
@@ -95,7 +103,6 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
-    <string name="pref_key_compact">compact</string>
     <string name="pref_key_ask_sim">ask_sim</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
@@ -111,7 +118,6 @@
 
     <!--region pref title-->
     <string name="pref_title_rate">Rate</string>
-    <string name="pref_title_compact">Compact Mode</string>
     <string name="pref_title_animations">Animations</string>
     <string name="pref_title_app_color">Accent Color</string>
     <string name="pref_title_theme_mode">Theme Mode</string>
@@ -175,6 +181,10 @@
     <!--endregion-->
 
     <!--region content descriptions -->
+    <string name="content_description_call">Call</string>
+    <string name="content_description_edit">Edit</string>
+    <string name="content_description_delete">Delete</string>
+    <string name="content_description_sms">Send SMS</string>
     <string name="content_description_menu_button">Menu Button</string>
     <string name="content_description_answer_button">Answer Button</string>
     <string name="content_description_reject_button">Reject Button</string>
@@ -210,4 +220,9 @@
     <string name="type_label_custom">Custom</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organization</string>
+    <string name="action_call">Call</string>
+    <string name="content_description_call_number">Call Number</string>
+    <string name="content_description_add_contact">Add Contact</string>
+    <string name="content_description_open_contact">Open Contact</string>
+    <string name="content_description_send_sms">Send SMS</string>
 </resources>

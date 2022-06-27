@@ -35,14 +35,20 @@ class RecentsInteractorImpl @Inject constructor(
         }
     }
 
+    override fun observeRecent(recentId: Long, callback: (RecentAccount?) -> Unit) {
+        RecentsContentResolver(context, recentId).observeItems {
+            callback.invoke(it.getOrNull(0))
+        }
+    }
+
     override fun getCallTypeImage(@RecentAccount.CallType callType: Int) = when (callType) {
-        RecentAccount.TYPE_INCOMING -> R.drawable.round_call_received_20
-        RecentAccount.TYPE_OUTGOING -> R.drawable.round_call_made_20
-        RecentAccount.TYPE_MISSED -> R.drawable.round_call_missed_20
-        RecentAccount.TYPE_REJECTED -> R.drawable.round_call_missed_outgoing_20
-        RecentAccount.TYPE_VOICEMAIL -> R.drawable.round_voicemail_20
-        RecentAccount.TYPE_BLOCKED -> R.drawable.round_block_24
-        else -> R.drawable.round_call_made_20
+        RecentAccount.TYPE_INCOMING -> R.drawable.call_received
+        RecentAccount.TYPE_OUTGOING -> R.drawable.call_made
+        RecentAccount.TYPE_MISSED -> R.drawable.call_missed
+        RecentAccount.TYPE_REJECTED -> R.drawable.call_missed_outgoing
+        RecentAccount.TYPE_VOICEMAIL -> R.drawable.voicemail
+        RecentAccount.TYPE_BLOCKED -> R.drawable.block
+        else -> R.drawable.call_made
     }
 
     override fun getLastOutgoingCall(): String = CallLog.Calls.getLastOutgoingCall(context)

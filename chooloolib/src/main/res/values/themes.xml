@@ -1,53 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Theme Styles -->
 
-    <style name="ChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorError">@color/color_error</item>
-        <item name="colorLightBackground">@color/color_light_background</item>
-        <item name="colorLightForeground">@color/color_light_foreground</item>
-        <item name="colorSurface">@color/color_surface</item>
-        <item name="colorPrimary">?android:colorBackground</item>
-        <item name="colorTextDisabled">@color/color_disabled</item>
-        <item name="colorControlHighlight">?colorLightBackground</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:fontFamily">@font/google_sans_regular</item>
-
-        <item name="alertDialogTheme">@style/Chooloo.AlertDialog</item>
+    <style name="BaseChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="elevationOverlayEnabled">false</item>
         <item name="bottomSheetDialogTheme">@style/Chooloo.BottomSheet</item>
+        <item name="android:statusBarColor">?colorSurface</item>
+
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorOnPrimary">@color/blue_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_primary</item>
+        <item name="colorOnSecondary">@color/blue_on_primary</item>
+        <item name="colorSecondaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_on_primary_container</item>
+        <item name="colorTertiary">@color/blue_primary</item>
+        <item name="colorOnTertiary">@color/blue_on_primary</item>
+        <item name="colorTertiaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_on_primary_container</item>
     </style>
 
-    <style name="ChoolooTheme.Translucent">
-        <item name="android:windowBackground">@android:color/transparent</item>
+    <style name="ChoolooTheme" parent="BaseChoolooTheme">
+        <item name="colorSurfaceVariant">#A8DCE3E9</item>
+        <item name="colorOnSurfaceVariant">#B5464D53</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
-
 
     <style name="Accent" />
 
     <style name="Accent.Blue">
-        <item name="colorSecondary">@color/blue_background</item>
-        <item name="colorOnSecondary">@color/blue_foreground</item>
-    </style>
-
-    <style name="Accent.Orange">
-        <item name="colorSecondary">@color/orange_background</item>
-        <item name="colorOnSecondary">@color/orange_foreground</item>
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorOnPrimary">@color/blue_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_primary</item>
+        <item name="colorOnSecondary">@color/blue_on_primary</item>
+        <item name="colorSecondaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_on_primary_container</item>
+        <item name="colorTertiary">@color/blue_primary</item>
+        <item name="colorOnTertiary">@color/blue_on_primary</item>
+        <item name="colorTertiaryContainer">@color/blue_primary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_on_primary_container</item>
     </style>
 
     <style name="Accent.Green">
-        <item name="colorSecondary">@color/green_background</item>
-        <item name="colorOnSecondary">@color/green_foreground</item>
-    </style>
-
-    <style name="Accent.Purple">
-        <item name="colorSecondary">@color/purple_background</item>
-        <item name="colorOnSecondary">@color/purple_foreground</item>
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorOnPrimary">@color/green_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_on_primary_container</item>
+        <item name="colorSecondary">?colorPrimary</item>
+        <item name="colorOnSecondary">?colorOnPrimary</item>
+        <item name="colorSecondaryContainer">?colorOnPrimaryContainer</item>
+        <item name="colorOnSecondaryContainer">?colorOnPrimaryContainer</item>
+        <item name="colorTertiary">?colorPrimary</item>
+        <item name="colorOnTertiary">?colorOnPrimary</item>
+        <item name="colorTertiaryContainer">?colorPrimaryContainer</item>
+        <item name="colorOnTertiaryContainer">?colorOnPrimaryContainer</item>
     </style>
 
     <style name="Accent.Red">
-        <item name="colorSecondary">@color/red_background</item>
-        <item name="colorOnSecondary">@color/red_foreground</item>
+        <item name="colorPrimary">@color/red_primary</item>
+        <item name="colorOnPrimary">@color/red_on_primary</item>
+        <item name="colorPrimaryContainer">@color/red_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/red_on_primary_container</item>
+        <item name="colorSecondary">?colorPrimary</item>
+        <item name="colorOnSecondary">?colorOnPrimary</item>
+        <item name="colorSecondaryContainer">?colorOnPrimaryContainer</item>
+        <item name="colorOnSecondaryContainer">?colorOnPrimaryContainer</item>
+        <item name="colorTertiary">?colorPrimary</item>
+        <item name="colorOnTertiary">?colorOnPrimary</item>
+        <item name="colorTertiaryContainer">?colorPrimaryContainer</item>
+        <item name="colorOnTertiaryContainer">?colorOnPrimaryContainer</item>
+    </style>
+
+    <style name="Accent.Purple">
+        <item name="colorPrimary">@color/purple_primary</item>
+        <item name="colorOnPrimary">@color/purple_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_on_primary_container</item>
+        <item name="colorSecondary">?colorPrimary</item>
+        <item name="colorOnSecondary">?colorOnPrimary</item>
+        <item name="colorSecondaryContainer">?colorOnPrimaryContainer</item>
+        <item name="colorOnSecondaryContainer">?colorOnPrimaryContainer</item>
+        <item name="colorTertiary">?colorPrimary</item>
+        <item name="colorOnTertiary">?colorOnPrimary</item>
+        <item name="colorTertiaryContainer">?colorPrimaryContainer</item>
+        <item name="colorOnTertiaryContainer">?colorOnPrimaryContainer</item>
     </style>
 </resources>
