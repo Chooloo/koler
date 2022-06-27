@@ -14,12 +14,6 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
         super.onSetup()
 
         viewState.apply {
-            askForShowBlockedEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
-                    dialogs.askForBoolean(R.string.hint_show_blocked, viewState::onShowBlocked)
-                }
-            }
-
             askForDefaultPageEvent.observe(this@SettingsFragment) {
                 it.ifNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
             }

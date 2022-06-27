@@ -23,7 +23,7 @@ open class RecentsViewState @Inject constructor(
 ) :
     ListViewState<RecentAccount>() {
 
-    override val noResultsIconRes = R.drawable.round_history_24
+    override val noResultsIconRes = R.drawable.history
     override val noResultsTextRes = R.string.error_no_results_recents
     override var noPermissionsTextRes = R.string.error_no_permissions_recents
 

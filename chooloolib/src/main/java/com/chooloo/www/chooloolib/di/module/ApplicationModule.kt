@@ -8,6 +8,7 @@ import android.os.PowerManager
 import android.os.Vibrator
 import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
+import android.telephony.TelephonyManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
@@ -50,6 +51,10 @@ import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractorImpl
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractorImpl
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractorImpl
 import com.chooloo.www.chooloolib.repository.calls.CallsRepository
 import com.chooloo.www.chooloolib.repository.calls.CallsRepositoryImpl
 import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
@@ -96,6 +101,10 @@ class ApplicationModule {
     @Provides
     fun provideKeyguardManager(@ApplicationContext context: Context): KeyguardManager =
         context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+
+    @Provides
+    fun provideTelephonyManager(@ApplicationContext context: Context): TelephonyManager =
+        context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
     @Provides
     fun provideClipboardManager(@ApplicationContext context: Context): ClipboardManager =
@@ -160,6 +169,9 @@ class ApplicationModule {
         fun bindSimsInteractor(simsInteractorImpl: SimsInteractorImpl): SimsInteractor
 
         @Binds
+        fun bindThemesInteractor(themesInteractor: ThemesInteractorImpl): ThemesInteractor
+
+        @Binds
         fun bindCallsInteractor(callsInteractorImpl: CallsInteractorImpl): CallsInteractor
 
         @Binds
@@ -176,6 +188,9 @@ class ApplicationModule {
 
         @Binds
         fun bindBlockedInteractor(blockedInteractorImpl: BlockedInteractorImpl): BlockedInteractor
+
+        @Binds
+        fun bindTelecomInteractor(telecomInteractorImpl: TelecomInteractorImpl): TelecomInteractor
 
         @Binds
         fun bindRecentsInteractor(recentsInteractorImpl: RecentsInteractorImpl): RecentsInteractor

@@ -41,28 +41,33 @@ class CallActions : MotionLayout {
 
 
     var isHoldActivated: Boolean
-        get() = _binding.callActionHold.isActivated
+        get() = _binding.callActionHold.isChecked
         set(value) {
-            _binding.callActionHold.isActivated = value
+            _binding.callActionHold.isChecked = value
         }
 
     var isMuteActivated: Boolean
-        get() = _binding.callActionMute.isActivated
+        get() = _binding.callActionMute.isChecked
         set(value) {
-            _binding.callActionMute.isActivated = value
+            _binding.callActionMute.isChecked = value
         }
 
     var isSpeakerActivated: Boolean
-        get() = _binding.callActionSpeaker.isActivated
+        get() = _binding.callActionSpeaker.isChecked
         set(value) {
-            _binding.callActionSpeaker.isActivated = value
+            _binding.callActionSpeaker.isChecked = value
+            _binding.callActionSpeaker.setIconResource(if (value) R.drawable.volume_up else R.drawable.volume_down)
         }
 
     var isBluetoothActivated: Boolean
         get() = _isBluetoothActivated
         set(value) {
             _isBluetoothActivated = value
-            _binding.callActionSpeaker.setDefaultIcon(if (value) R.drawable.round_bluetooth_audio_24 else R.drawable.round_volume_down_24)
+            if (value) {
+                _binding.callActionSpeaker.setIconResource(R.drawable.bluetooth_searching)
+            } else {
+                isSpeakerActivated = isSpeakerActivated
+            }
         }
 
 

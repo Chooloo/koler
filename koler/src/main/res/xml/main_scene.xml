@@ -62,12 +62,12 @@
         <!-- dialpad button -->
         <Constraint
             android:id="@+id/main_dialpad_button"
-            android:layout_width="@dimen/icon_button_size_big"
-            android:layout_height="@dimen/icon_button_size_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_spacing_big"
+            android:layout_marginEnd="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/constraint_set_main_collapsed">
@@ -98,7 +98,7 @@
         <Constraint
             android:id="@+id/main_search_bar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/search_bar_height"
             android:layout_marginStart="@dimen/default_spacing"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="@dimen/default_spacing"
@@ -119,11 +119,11 @@
         <!-- dialpad button -->
         <Constraint
             android:id="@+id/main_dialpad_button"
-            android:layout_width="@dimen/icon_button_size_big"
-            android:layout_height="@dimen/icon_button_size_big"
-            android:layout_marginBottom="@dimen/default_spacing_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_spacing_medium"
+            android:layout_marginEnd="@dimen/default_spacing_medium"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
 </MotionScene>

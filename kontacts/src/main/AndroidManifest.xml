@@ -40,7 +40,6 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@style/ChoolooTheme.Translucent"
             android:windowSoftInputMode="stateUnchanged">
 
             <intent-filter>

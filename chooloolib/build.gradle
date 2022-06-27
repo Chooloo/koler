@@ -72,6 +72,7 @@ dependencies {
     )
 
     implementation(
+            'com.squareup.picasso:picasso:2.5.2',
             'androidx.core:core-ktx:1.7.0',
             'dev.sasikanth:colorsheet:1.0.1',
             'androidx.appcompat:appcompat:1.4.1',
@@ -82,7 +83,7 @@ dependencies {
             'io.github.l4digital:fastscroll:2.0.1',
             'io.reactivex.rxjava2:rxandroid:2.0.1',
             'com.google.dagger:hilt-android:2.38.1',
-            'com.google.android.material:material:1.4.0',
+            'com.google.android.material:material:1.6.0',
             'com.github.abdularis:circularimageview:1.5',
             'com.daimajia.androidanimations:library:2.4@aar',
             'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',

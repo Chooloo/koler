@@ -6,23 +6,24 @@
     android:layout_height="wrap_content"
     android:fitsSystemWindows="true">
 
-    <View
-        android:id="@+id/bottom_dialog_fragment_swipe_indicator"
-        android:layout_width="@dimen/swipe_indicator_width"
-        android:layout_height="@dimen/swipe_indicator_height"
-        android:layout_margin="@dimen/swipe_indicator_margin"
-        android:background="@drawable/swipe_indicator_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <View-->
+    <!--        android:id="@+id/bottom_dialog_fragment_swipe_indicator"-->
+    <!--        android:layout_width="@dimen/swipe_indicator_width"-->
+    <!--        android:layout_height="@dimen/swipe_indicator_height"-->
+    <!--        android:layout_margin="@dimen/swipe_indicator_margin"-->
+    <!--        android:background="@drawable/swipe_indicator_background"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <FrameLayout
         android:id="@+id/bottom_dialog_fragment_placeholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/default_spacing"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_dialog_fragment_swipe_indicator" />
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--        app:layout_constraintTop_toBottomOf="@id/bottom_dialog_fragment_swipe_indicator" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

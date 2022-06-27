@@ -20,7 +20,7 @@ class AccountsViewState @Inject constructor(
 ) :
     ListViewState<RawContactAccount>() {
 
-    override val noResultsIconRes = R.drawable.round_call_24
+    override val noResultsIconRes = R.drawable.call
     override val noResultsTextRes = R.string.error_no_results_phones
     override val noPermissionsTextRes = R.string.error_no_permissions_phones
 

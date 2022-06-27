@@ -27,7 +27,6 @@
     <string name="hint_animations">显示动效</string>
     <string name="hint_search_recents">搜索最近通话</string>
     <string name="hint_search_contacts">搜索联系人</string>
-    <string name="hint_compact_mode">让列表紧凑</string>
     <string name="hint_search_items">搜索联系人或最近通话</string>
     <string name="hint_dialpad_vibrate">点击拨号盘时振动</string>
     <string name="hint_should_ask_sim">在拨号前选择SIM卡</string>
@@ -51,7 +50,6 @@
     <string name="call_status_disconnecting">电话停止连接</string>
     <string name="call_status_phone_account">选择手机账号</string>
     <string name="pref_title_rate">速度</string>
-    <string name="pref_title_compact">紧凑模式</string>
     <string name="pref_title_animations">动效</string>
     <string name="pref_title_app_color">主要颜色</string>
     <string name="pref_title_theme_mode">主题模式</string>
