@@ -12,6 +12,8 @@
     <string name="theme_mode_system">System</string>
     <string name="theme_mode_dynamic">Dynamic</string>
     <string name="in_development">In Development...</string>
+    <string name="pop_up_notification">Pop-Up Notification</string>
+    <string name="full_screen">Full Screen</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -55,6 +57,7 @@
     <string name="hint_animations">Show animations</string>
     <string name="hint_search_recents">Search Recents</string>
     <string name="hint_search_contacts">Search Contacts</string>
+    <string name="hint_incoming_call_mode">Incoming Call Mode</string>
     <string name="hint_search_items">Search contacts &amp; recents</string>
     <string name="hint_dialpad_vibrate">Vibrate on dialpad clicks</string>
     <string name="hint_should_ask_sim">Ask for a sim before each call</string>
@@ -67,6 +70,7 @@
     <string name="explain_is_on_hold">%s is on hold</string>
     <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
     <string name="explain_choose_sim_account">Call with a different sim</string>
+    <string name="explain_choose_incoming_call_mode">Incoming call view mode</string>
     <string name="explain_choose_audio_route">Route audio to a different source</string>
     <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
@@ -114,6 +118,7 @@
     <string name="pref_key_dialpad_tones">dialpad_tones</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
     <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <string name="pref_key_incoming_call_mode">incoming_call_mode</string>
     <!--endregion-->
 
     <!--region pref title-->

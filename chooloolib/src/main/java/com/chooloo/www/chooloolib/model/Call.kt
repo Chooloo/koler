@@ -6,8 +6,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
 import android.os.Bundle
 import android.telecom.Call.*
-import android.telecom.Call.Details.CAPABILITY_HOLD
-import android.telecom.Call.Details.PROPERTY_ENTERPRISE_CALL
+import android.telecom.Call.Details.*
 import android.telecom.Connection
 import android.telecom.DisconnectCause
 import android.telecom.PhoneAccountHandle
@@ -32,11 +31,13 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
     private var _phoneAccountSelected: Boolean = false
     private val _id: String = Call::class.java.simpleName + sIdCounter++
     private val _call: android.telecom.Call = telecomCall
+    private val _pastStates = mutableListOf<State>()
 
     init {
         _call.registerCallback(object : android.telecom.Call.Callback() {
             override fun onStateChanged(call: android.telecom.Call?, state: Int) {
                 invokeListeners { it.onCallChanged(this@Call) }
+                _pastStates.add(State.fromTelecomState(state))
             }
 
             override fun onDetailsChanged(call: android.telecom.Call?, details: Details?) {
@@ -142,6 +143,20 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
 
     val isIncoming: Boolean
         get() = state == INCOMING
+
+    val isDirectionIncoming: Boolean
+        get() = if (SDK_INT >= Q) {
+            _call.details.callDirection == DIRECTION_INCOMING
+        } else {
+            INCOMING in _pastStates
+        }
+
+    val isDirectionOutgoing: Boolean
+        get() = if (SDK_INT >= Q) {
+            _call.details.callDirection == DIRECTION_OUTGOING
+        } else {
+            DIALING in _pastStates
+        }
 
     val children: List<Call>
         get() = _call.children.map(::Call).toList()

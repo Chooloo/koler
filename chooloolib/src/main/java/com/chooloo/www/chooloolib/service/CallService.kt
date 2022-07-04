@@ -8,6 +8,8 @@ import android.telecom.InCallService
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.model.Call
 import com.chooloo.www.chooloolib.notification.CallNotification
 import com.chooloo.www.chooloolib.repository.calls.CallsRepository
@@ -21,6 +23,7 @@ class CallService : InCallService() {
     @Inject lateinit var callAudios: CallAudiosInteractor
     @Inject lateinit var callsRepository: CallsRepository
     @Inject lateinit var callsInteractor: CallsInteractor
+    @Inject lateinit var preferences: PreferencesInteractor
     @Inject lateinit var callNotification: CallNotification
 
     val calls = MutableLiveData<List<Call>>()
@@ -34,18 +37,19 @@ class CallService : InCallService() {
 
     override fun onDestroy() {
         callNotification.detach()
-        callNotification.cancel()
         super.onDestroy()
     }
 
     override fun onCallAdded(telecomCall: android.telecom.Call) {
         super.onCallAdded(telecomCall)
-        addCall(Call(telecomCall))
-        callsInteractor.entryAddCall(Call(telecomCall))
-        if (!sIsActivityActive) {
+        val call = Call(telecomCall)
+        addCall(call)
+        callsInteractor.entryAddCall(call)
+        if (!sIsActivityActive && (preferences.incomingCallMode == IncomingCallMode.FULL_SCREEN || call.isDirectionOutgoing)) {
             startCallActivity()
         }
     }
+
 
     override fun onCallRemoved(telecomCall: android.telecom.Call) {
         super.onCallRemoved(telecomCall)

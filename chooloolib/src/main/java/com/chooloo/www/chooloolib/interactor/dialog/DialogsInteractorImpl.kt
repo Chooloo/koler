@@ -11,6 +11,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
@@ -139,6 +140,17 @@ class DialogsInteractorImpl @Inject constructor(
             choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_theme_mode,
             selectedChoice = preferences.themeMode,
+            choiceToString = { strings.getString(it.titleRes) }
+        )
+    }
+
+    override fun askForIncomingCallMode(callback: (IncomingCallMode) -> Unit) {
+        askForChoice(
+            choices = IncomingCallMode.values().toList(),
+            titleRes = R.string.hint_incoming_call_mode,
+            choiceCallback = callback::invoke,
+            subtitleRes = R.string.explain_choose_incoming_call_mode,
+            selectedChoice = preferences.incomingCallMode,
             choiceToString = { strings.getString(it.titleRes) }
         )
     }

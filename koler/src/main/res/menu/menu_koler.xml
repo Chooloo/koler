@@ -19,4 +19,9 @@
         android:id="@+id/menu_koler_group_recents"
         android:icon="@drawable/recent_actors"
         android:title="@string/pref_title_group_recents" />
+
+    <item
+        android:id="@+id/menu_koler_incoming_call_mode"
+        android:icon="@drawable/phone_msg"
+        android:title="@string/pref_title_incoming_call_mode" />
 </menu>

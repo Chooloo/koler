@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.settings
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
@@ -28,6 +29,8 @@ class SettingsViewState @Inject constructor(
     val askForGroupRecentsEvent = LiveEvent()
     val askForDialpadTonesEvent = LiveEvent()
     val askForDialpadVibrateEvent = LiveEvent()
+    val askForIncomingCallModeEvent = LiveEvent()
+
 
     override fun onMenuItemClick(itemId: Int) {
         when (itemId) {
@@ -35,6 +38,7 @@ class SettingsViewState @Inject constructor(
             R.id.menu_koler_dialpad_tones -> askForDialpadTonesEvent.call()
             R.id.menu_koler_group_recents -> askForGroupRecentsEvent.call()
             R.id.menu_koler_dialpad_vibrate -> askForDialpadVibrateEvent.call()
+            R.id.menu_koler_incoming_call_mode -> askForIncomingCallModeEvent.call()
             else -> super.onMenuItemClick(itemId)
         }
     }
@@ -55,5 +59,9 @@ class SettingsViewState @Inject constructor(
     fun onGroupRecents(response: Boolean) {
         preferences.isGroupRecents = response
         navigations.goToLauncherActivity()
+    }
+
+    fun onIncomingCallMode(response: IncomingCallMode) {
+        preferences.incomingCallMode = response
     }
 }

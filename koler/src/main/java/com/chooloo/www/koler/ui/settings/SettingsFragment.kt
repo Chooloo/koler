@@ -41,6 +41,12 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
                     )
                 }
             }
+
+            askForIncomingCallModeEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForIncomingCallMode(viewState::onIncomingCallMode)
+                }
+            }
         }
     }
 }

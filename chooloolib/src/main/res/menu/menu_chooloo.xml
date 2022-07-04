@@ -16,10 +16,12 @@
         android:id="@+id/menu_chooloo_animations"
         android:icon="@drawable/animation"
         android:title="@string/pref_title_animations" />
+
     <item
         android:id="@+id/menu_chooloo_report_bugs"
         android:icon="@drawable/bug_report"
         android:title="@string/pref_title_report_bugs" />
+
     <item
         android:id="@+id/menu_chooloo_rate"
         android:icon="@drawable/grade"
