@@ -28,7 +28,7 @@ android {
 
     dataBinding {
         //noinspection DataBindingWithoutKapt
-        enabled = true
+          enabled = true
     }
 
     buildTypes {
