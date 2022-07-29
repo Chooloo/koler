@@ -117,10 +117,10 @@
     <!--endregion-->
 
     <!--region audio route-->
-    <string name="audio_route_speaker">Speaker</string>
-    <string name="audio_route_earpiece">Earpiece</string>
+    <string name="audio_route_speaker">Zvučnik</string>
+    <string name="audio_route_earpiece">Slušalica</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
-    <string name="audio_route_wired_headset">Wired Headset</string>
-    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
+    <string name="audio_route_wired_headset">Žičane slušalice</string>
+    <string name="audio_route_wired_or_earpiece">Žičano ili slušalica</string>
     <!--endregion-->
 </resources>
