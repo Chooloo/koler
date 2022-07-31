@@ -3,12 +3,15 @@
     <!--region titles-->
     <string name="recents">Récents</string>
     <string name="contacts">Contacts</string>
+    <string name="actions">Actions</string>
     <string name="conference">Conférence</string>
     <string name="default_page">Défaut</string>
     <string name="settings">Paramètres</string>
     <string name="theme_mode_dark">Sombre</string>
     <string name="theme_mode_light">Clair</string>
     <string name="theme_mode_system">Système</string>
+    <string name="theme_mode_dynamic">Dynamique</string>
+    <string name="in_development">En développement...</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -25,10 +28,18 @@
     <string name="action_no">Nope</string>
     <string name="action_answer">Répondre</string>
     <string name="action_hangup">Raccrocher</string>
+    <string name="action_manage_calls">Gérer les appels</string>
     <string name="action_show_history">Historique des appels</string>
+    <string name="action_open_whatsapp">Ouvrir WhatsApp</string>
     <string name="action_block_number">Bloquer ce numéro</string>
+    <string name="action_delete_contact">Supprimer le Contact</string>
+    <string name="action_delete_recent">Supprimer les éléments récents</string>
+    <string name="action_set_favorite">Définir comme favori</string>
+    <string name="action_unset_favorite">Retirer des Favoris</string>
+    <string name="action_open_in_whatsapp">Ouvrir dans Whatsapp</string>
     <string name="action_unblock_number">Débloquer ce numéro</string>
     <string name="action_choose_audio_route">Sortie audio</string>
+    <string name="action_choose_phone_account">Choisir un compte téléphonique</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -48,6 +59,7 @@
     <string name="hint_dialpad_vibrate">Vibrer à l\'appui sur le clavier</string>
     <string name="hint_should_ask_sim">Choisir la SIM pour chaque appel</string>
     <string name="hint_dialpad_tones">Jouer un son à l\'appui sur le clavier</string>
+    <string name="hint_group_recents">Grouper les appels récents de la même personne</string>
     <string name="hint_show_blocked">Afficher les options de blocage/déblocage des numéros (doit être le composeur par défaut)</string>
     <!--endregion-->
 
@@ -56,6 +68,7 @@
     <string name="explain_choose_theme_mode">Choisissez le thème de Koler. Un redémarrage de l\'application est requis pour appliquer les changements.</string>
     <string name="explain_choose_sim_account">Choisissez la carte SIM à utiliser lors des appels</string>
     <string name="explain_choose_audio_route">Sélectionnez la sortie audio de l\'appel</string>
+    <string name="explain_choose_phone_account">Continuer l\'appel en cours en utilisant un compte téléphonique spécifique</string>
     <string name="explain_delete_contact">Ce contact sera définitivement supprimé</string>
     <string name="explain_delete_recent">Cette entrée du journal d\'appels sera définitivement supprimée</string>
     <string name="explain_choose_default_page">Cette page sera affichée au démarrage de Koler</string>
@@ -89,17 +102,18 @@
     <!--endregion-->
 
     <!--region pref key-->
-    <string name="pref_key_rate">évaluer</string>
-    <string name="pref_key_ask_sim">choix_sim</string>
-    <string name="pref_key_color">couleur_d\'accentuation</string>
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
-    <string name="pref_key_theme_mode">mode_du_thème</string>
-    <string name="pref_key_report_bugs">signaler_des_bogues</string>
-    <string name="pref_key_show_blocked">afficher_les_éléments_bloqués</string>
-    <string name="pref_key_default_page">page_par_défaut</string>
-    <string name="pref_key_dialpad_tones">tonalités_du_clavier</string>
-    <string name="pref_key_manage_blocked">gérer_les_blocages</string>
-    <string name="pref_key_dialpad_vibrate">vibration_du_clavier</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_group_recents">group_recents</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
     <!--endregion-->
 
     <!--region pref title-->
@@ -131,11 +145,14 @@
     <string name="error_no_permissions_phones">J\'ai besoin de votre autorisation pour passer des appels :)</string>
     <string name="error_no_permissions_recents">J\'ai besoin de votre autorisation pour lire le journal d\'appels :)</string>
     <string name="error_no_permissions_contacts">J\'ai besoin de votre autorisation pour lire les contacts :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">J\'ai besoin de votre autorisation pour lire les contacts et le journal des appels :)</string>
     
     <string name="error_no_number_to_call">Aucun numéro n\'a été trouvé :(</string>
+
     <string name="error_cant_hold_call">Mise en attente impossible !</string>
     <string name="error_cant_swap_calls">Impossible de changer d\'appel</string>
     <string name="error_cant_merge_call">Impossible de fusionner les appels</string>
+
     <string name="error_couldnt_get_number_from_intent">Impossible de trouver le numéro demandé</string>
     <!--endregion-->
 
@@ -164,6 +181,10 @@
     <!--endregion-->
 
     <!--region content descriptions -->
+    <string name="content_description_call">Appeler</string>
+    <string name="content_description_edit">Editer</string>
+    <string name="content_description_delete">Effacer</string>
+    <string name="content_description_sms">Envoyer un SMS</string>
     <string name="content_description_menu_button">Bouton de menu</string>
     <string name="content_description_answer_button">Bouton de réponse</string>
     <string name="content_description_reject_button">Bouton de rejet</string>
@@ -189,4 +210,19 @@
     <!--region content description-->
     <string name="content_description_favorite_star">Étoile de Favoris</string>
     <string name="content_description_empty_list_icon">Icône de liste vide</string>
+    <!--endregion-->
+
+    <!--region type label-->
+    <string name="type_label_im">IM</string>
+    <string name="type_label_name">Nom</string>
+    <string name="type_label_phone">Téléphone</string>
+    <string name="type_label_email">Email</string>
+    <string name="type_label_custom">Personnaliser</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <string name="type_label_organization">Organisation</string>
+    <string name="action_call">Appel</string>
+    <string name="content_description_call_number">Numéro de l\'appelant</string>
+    <string name="content_description_add_contact">Ajouter le Contact</string>
+    <string name="content_description_open_contact">Ouvrir le Contact</string>
+    <string name="content_description_send_sms">Envoyer un SMS</string>
 </resources>
