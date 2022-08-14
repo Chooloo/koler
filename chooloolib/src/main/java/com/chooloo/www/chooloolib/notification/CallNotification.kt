@@ -99,7 +99,7 @@ class CallNotification @Inject constructor(
 
     private val _answerAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_call_24,
+            R.drawable.call,
             strings.getString(R.string.action_answer),
             getCallPendingIntent(ACTION_ANSWER, 0)
         )
@@ -107,7 +107,7 @@ class CallNotification @Inject constructor(
 
     private val _hangupAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_call_end_24,
+            R.drawable.call_end,
             strings.getString(R.string.action_hangup),
             getCallPendingIntent(ACTION_HANGUP, 1)
         )
@@ -115,7 +115,7 @@ class CallNotification @Inject constructor(
 
     private val _muteAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_mic_24,
+            R.drawable.mic,
             strings.getString(R.string.call_action_mute),
             getCallPendingIntent(ACTION_MUTE, 2)
         )
@@ -123,7 +123,7 @@ class CallNotification @Inject constructor(
 
     private val _unmuteAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_mic_off_24,
+            R.drawable.mic_off,
             strings.getString(R.string.call_action_unmute),
             getCallPendingIntent(ACTION_UNMUTE, 3)
         )
@@ -131,7 +131,7 @@ class CallNotification @Inject constructor(
 
     private val _speakerAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_volume_down_24,
+            R.drawable.volume_down,
             strings.getString(R.string.call_action_speaker),
             getCallPendingIntent(ACTION_SPEAKER, 4)
         )
@@ -139,7 +139,7 @@ class CallNotification @Inject constructor(
 
     private val _unspeakerAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_volume_up_24,
+            R.drawable.volume_up,
             strings.getString(R.string.call_action_speaker_off),
             getCallPendingIntent(ACTION_UNSPEAKER, 5)
         )

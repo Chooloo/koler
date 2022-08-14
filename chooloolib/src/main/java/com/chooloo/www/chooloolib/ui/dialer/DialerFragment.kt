@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsViewState
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +21,8 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
     private val suggestionsViewState: ContactsSuggestionsViewState by activityViewModels()
     private val _suggestionsFragment by lazy { fragmentFactory.getContactsSuggestionsFragment() }
 
-    @Inject lateinit var callNavigations: CallNavigationsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
     override fun onSetup() {
@@ -61,6 +61,7 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
         viewState.apply {
             text.observe(this@DialerFragment) {
                 suggestionsViewState.onFilterChanged(it)
+                telecomInteractor.handleSpecialChars(it)
             }
 
             isSuggestionsVisible.observe(this@DialerFragment) {
@@ -100,11 +101,11 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
             }
 
             callNumberEvent.observe(this@DialerFragment) {
-                it.ifNew?.let(callNavigations::call)
+                it.ifNew?.let(telecomInteractor::callNumber)
             }
 
             callVoicemailEvent.observe(this@DialerFragment) {
-                it.ifNew?.let { callNavigations.callVoicemail() }
+                it.ifNew?.let { telecomInteractor.callVoicemail() }
             }
         }
 

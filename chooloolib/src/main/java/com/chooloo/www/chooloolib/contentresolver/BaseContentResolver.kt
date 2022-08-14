@@ -67,7 +67,6 @@ abstract class BaseContentResolver<ItemType>(private val context: Context) {
     fun queryItems(callback: (List<ItemType>) -> Unit): Disposable =
         queryCursor { callback.invoke(convertCursorToItems(it)) }
 
-
     @SuppressLint("CheckResult")
     fun observeUri(observer: () -> Unit): Disposable =
         _ioContentResolver

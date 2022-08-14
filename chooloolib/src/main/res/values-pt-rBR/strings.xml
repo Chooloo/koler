@@ -45,7 +45,6 @@
     <string name="hint_animations">Mostrar animações</string>
     <string name="hint_search_recents">Buscar em recentes</string>
     <string name="hint_search_contacts">Buscar em contatos</string>
-    <string name="hint_compact_mode">Mostrar lista de itens compatada</string>
     <string name="hint_search_items">Buscar em contatos &amp; recentes</string>
     <string name="hint_dialpad_vibrate">Vibrar ao tocar no discador</string>
     <string name="hint_should_ask_sim">Pergunte qual SIM usar antes de cada ligação</string>
@@ -93,7 +92,6 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
-    <string name="pref_key_compact">compact</string>
     <string name="pref_key_ask_sim">ask_sim</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
@@ -108,7 +106,6 @@
 
     <!--region pref title-->
     <string name="pref_title_rate">Avaliar</string>
-    <string name="pref_title_compact">Modo compacto</string>
     <string name="pref_title_animations">Animações</string>
     <string name="pref_title_app_color">Destacar a cor</string>
     <string name="pref_title_theme_mode">Tipo de tema</string>

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 
 class DataLiveEvent<T> : MutableLiveData<Event<T?>> {
     constructor() : super()
+    constructor(value: T) : this(Event(value))
     constructor(value: Event<T>) : super(value)
 
     fun call(value: T) {

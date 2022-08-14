@@ -194,7 +194,7 @@ class CallViewState @Inject constructor(
         _currentCallId = call.id
 
         if (call.isEnterprise) {
-            imageRes.value = R.drawable.round_business_24
+            imageRes.value = R.drawable.corporate_fare
         }
 
         if (call.isIncoming) {
@@ -225,9 +225,9 @@ class CallViewState @Inject constructor(
 
         when (call.state) {
             INCOMING, ACTIVE -> stateTextColor.value =
-                colors.getColor(R.color.green_foreground)
+                colors.getColor(R.color.green_on_primary_container)
             HOLDING, DISCONNECTING, DISCONNECTED -> stateTextColor.value =
-                colors.getColor(R.color.red_foreground)
+                colors.getAttrColor(R.attr.colorError)
         }
 
         if (call.state == SELECT_PHONE_ACCOUNT && !call.phoneAccountSelected) {

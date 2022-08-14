@@ -9,7 +9,6 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragme
     override val contentView by lazy { binding.root }
     protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
-
     override fun onSetup() {
         viewState.apply {
             isEmpty.observe(this@ListFragment, this@ListFragment::showEmpty)

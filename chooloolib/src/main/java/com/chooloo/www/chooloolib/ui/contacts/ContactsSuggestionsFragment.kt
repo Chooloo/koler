@@ -14,7 +14,6 @@ class ContactsSuggestionsFragment @Inject constructor() : ContactsFragment() {
         super.onSetup()
         adapter.apply {
             withFavs = false
-            isCompact = true
             withHeaders = false
         }
         binding.itemsScrollView.fastScroller.isVisible = false

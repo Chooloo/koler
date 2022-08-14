@@ -19,7 +19,7 @@ open class ContactsViewState @Inject constructor(
 ) :
     ListViewState<ContactAccount>() {
 
-    override val noResultsIconRes = R.drawable.round_people_24
+    override val noResultsIconRes = R.drawable.group
     override val noResultsTextRes = R.string.error_no_results_contacts
     override val noPermissionsTextRes = R.string.error_no_permissions_contacts
 

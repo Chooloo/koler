@@ -10,11 +10,12 @@ import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 import com.chooloo.www.chooloolib.model.SimAccount
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
@@ -32,7 +33,8 @@ class DialogsInteractorImpl @Inject constructor(
     private val prompts: PromptsInteractor,
     private val telecomManager: TelecomManager,
     private val callAudios: CallAudiosInteractor,
-    private val fragmentsFactory: FragmentFactory
+    private val fragmentsFactory: FragmentFactory,
+    private val preferences: PreferencesInteractor,
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
 
     private val activity = context as BaseActivity<*>
@@ -61,15 +63,17 @@ class DialogsInteractorImpl @Inject constructor(
         choices: List<String>,
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int?,
+        selectedChoiceIndex: Int?,
         choiceCallback: (String) -> Unit
     ) {
         prompts.showFragment(
-            fragmentsFactory.getChoicesFragment(titleRes, subtitleRes, choices).apply {
-                setOnChoiceClickListener {
-                    choiceCallback.invoke(it)
-                    this@apply.finish()
-                }
-            })
+            fragmentsFactory.getChoicesFragment(titleRes, subtitleRes, choices, selectedChoiceIndex)
+                .apply {
+                    setOnChoiceClickListener {
+                        choiceCallback.invoke(it)
+                        this@apply.finish()
+                    }
+                })
     }
 
     override fun <T> askForChoice(
@@ -77,13 +81,15 @@ class DialogsInteractorImpl @Inject constructor(
         choiceToString: (T) -> String,
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int?,
+        selectedChoice: T?,
         choiceCallback: (T) -> Unit
     ) {
         val objectsToStringMap = choices.associateBy({ choiceToString.invoke(it) }, { it })
         askForChoice(
             objectsToStringMap.keys.toList(),
             titleRes,
-            subtitleRes
+            subtitleRes,
+            choices.indexOf(selectedChoice)
         ) {
             choiceCallback.invoke(objectsToStringMap[it]!!)
         }
@@ -121,6 +127,7 @@ class DialogsInteractorImpl @Inject constructor(
             titleRes = R.string.hint_default_page,
             choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_default_page,
+            selectedChoice = preferences.defaultPage,
             choiceToString = { strings.getString(it.titleRes) }
         )
     }
@@ -131,6 +138,7 @@ class DialogsInteractorImpl @Inject constructor(
             titleRes = R.string.hint_theme_mode,
             choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_theme_mode,
+            selectedChoice = preferences.themeMode,
             choiceToString = { strings.getString(it.titleRes) }
         )
     }
@@ -141,6 +149,7 @@ class DialogsInteractorImpl @Inject constructor(
             titleRes = R.string.action_choose_audio_route,
             subtitleRes = R.string.explain_choose_audio_route,
             choiceToString = { strings.getString(it.stringRes) },
+            selectedChoice = callAudios.audioRoute,
             choices = callAudios.supportedAudioRoutes.toList()
         )
     }

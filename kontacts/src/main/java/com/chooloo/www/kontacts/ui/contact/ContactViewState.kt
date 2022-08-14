@@ -37,7 +37,7 @@ class ContactViewState @Inject constructor(
     }
 
     fun onContactId(contactId: Long) {
-        contacts.queryContact(contactId) { ca ->
+        contacts.observeContact(contactId) { ca ->
             contact = ca
             contactName.value = ca?.name
             isFavorite.value = ca?.starred == true

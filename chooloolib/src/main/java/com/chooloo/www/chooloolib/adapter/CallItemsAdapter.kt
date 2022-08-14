@@ -9,22 +9,20 @@ import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.model.Call
 import com.chooloo.www.chooloolib.model.ListData
-import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
+import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import javax.inject.Inject
 
 class CallItemsAdapter @Inject constructor(
     animationsInteractor: AnimationsInteractor,
     private val phonesInteractor: PhonesInteractor,
-    private val colorsInteractor: ColorsInteractor,
-    private val drawablesInteractor: DrawablesInteractor,
 ) : ListAdapter<Call>(animationsInteractor) {
-    override fun onBindListItem(listItem: ListItem, item: Call) {
-        listItem.apply {
+    override fun onBindListItem(listItemHolder: ListItemHolder, item: Call) {
+        listItemHolder.apply {
             phonesInteractor.lookupAccount(item.number) { account ->
                 account?.photoUri?.let {
                     setImageUri(Uri.parse(it))
                 } ?: run {
-                    imageDrawable = drawablesInteractor.getDrawable(R.drawable.round_person_20)
+                    setImageResource(R.drawable.person)
                 }
 
                 account?.displayString?.let {
@@ -35,20 +33,14 @@ class CallItemsAdapter @Inject constructor(
                 }
             }
 
-//            imageSize = ViewUtils.dpToPx(context, 30).toInt()
-            setImageTint(colorsInteractor.getColor(R.color.color_opposite))
-
             isLeftButtonVisible = true
-            isLeftButtonEnabled = item.isCapable(CAPABILITY_SEPARATE_FROM_CONFERENCE)
-            setLeftButtonDrawable(R.drawable.round_call_split_24)
-            setLeftButtonTintColor(R.color.orange_foreground)
-            setLeftButtonBackgroundTintColor(R.color.orange_background)
-
             isRightButtonVisible = true
             isRightButtonEnabled = true
-            setRightButtonDrawable(R.drawable.round_call_end_24)
-            setRightButtonTintColor(R.color.red_foreground)
-            setRightButtonBackgroundTintColor(R.color.red_background)
+            isLeftButtonEnabled = item.isCapable(CAPABILITY_SEPARATE_FROM_CONFERENCE)
+
+            setLeftButtonIcon(R.drawable.call_split)
+            setRightButtonIcon(R.drawable.call_end)
+            setRightButtonIconTint(R.color.negative_foreground)
         }
     }
 

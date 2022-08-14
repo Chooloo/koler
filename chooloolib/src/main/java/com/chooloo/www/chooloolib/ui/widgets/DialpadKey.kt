@@ -21,6 +21,7 @@ class DialpadKey : LinearLayout {
     private var _digitTextView: TextView
     private var _lettersTextView: TextView
 
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(
@@ -33,7 +34,7 @@ class DialpadKey : LinearLayout {
         _digitTextView = TextView(context, attrs, defStyleRes).apply {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
-            setTextAppearance(R.style.Chooloo_Text_Headline2)
+            setTextAppearance(R.style.TextAppearance_Material3_HeadlineMedium)
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
         }.also {
             addView(it)
@@ -42,7 +43,7 @@ class DialpadKey : LinearLayout {
         _lettersTextView = TextView(context, attrs, defStyleRes).apply {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
-            setTextAppearance(R.style.Chooloo_Text_Caption)
+            setTextAppearance(R.style.TextAppearance_Material3_LabelSmall)
             setPadding(0, context.getSizeInDp(2), 0, 0)
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_medium)
         }.also {
@@ -65,7 +66,7 @@ class DialpadKey : LinearLayout {
             _char = value
             when (value) {
                 '0' -> _lettersTextView.text = context.getString(R.string.dialpad_0_letters)
-                '1' -> _lettersTextView.setBackgroundResource(R.drawable.round_voicemail_20)
+                '1' -> _lettersTextView.setBackgroundResource(R.drawable.voicemail)
                 '2' -> _lettersTextView.text = context.getString(R.string.dialpad_2_letters)
                 '3' -> _lettersTextView.text = context.getString(R.string.dialpad_3_letters)
                 '4' -> _lettersTextView.text = context.getString(R.string.dialpad_4_letters)

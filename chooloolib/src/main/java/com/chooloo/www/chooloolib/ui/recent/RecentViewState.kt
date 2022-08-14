@@ -1,10 +1,7 @@
 package com.chooloo.www.chooloolib.ui.recent
 
-import android.Manifest.permission.WRITE_CALL_LOG
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
@@ -12,6 +9,7 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
+import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -30,99 +28,68 @@ class RecentViewState @Inject constructor(
     private val permissions: PermissionsInteractor
 ) :
     BaseViewState() {
-
     val name = MutableLiveData<String?>()
     val imageUri = MutableLiveData<Uri>()
     val recentId = MutableLiveData(0L)
-    val timeString = MutableLiveData<String?>()
-    val typeImage = MutableLiveData<Drawable?>()
-    val durationString = MutableLiveData<String?>()
+    val typeImage = MutableLiveData<Int>()
+    val caption = MutableLiveData<String>()
+    val isBlocked = MutableLiveData<Boolean>()
+    val recentNumber = MutableLiveData<String>()
+
     val isContactVisible = MutableLiveData(false)
     val isAddContactVisible = MutableLiveData(false)
-    val isBlockButtonVisible = MutableLiveData(false)
-    val isBlockButtonActivated = MutableLiveData(false)
 
+    val showMoreEvent = LiveEvent()
     val callEvent = DataLiveEvent<String>()
     val confirmRecentDeleteEvent = LiveEvent()
     val showRecentEvent = DataLiveEvent<Long>()
     val showContactEvent = DataLiveEvent<Long>()
-    val showHistoryEvent = DataLiveEvent<String>()
 
-    private val _recent by lazy { recents.queryRecent(recentId.value!!) }
+    private var _recent: RecentAccount? = null
 
 
     override fun attach() {
         super.attach()
         if (_recent == null) return
+    }
 
-        timeString.value = _recent!!.relativeTime
-        durationString.value =
-            if (_recent!!.duration > 0L) getElapsedTimeString(_recent!!.duration) else null
-        name.value =
-            if (_recent!!.cachedName?.isNotEmpty() == true) _recent!!.cachedName else _recent!!.number
-        typeImage.value =
-            drawables.getDrawable(recents.getCallTypeImage(_recent!!.type))
+    fun onRecentId(recentId: Long) {
+        this.recentId.value = recentId
+        recents.observeRecent(recentId) {
+            _recent = it
+            recentNumber.value = it?.number
+            name.value =
+                if (_recent!!.cachedName?.isNotEmpty() == true) it?.cachedName else it?.number
+            it?.type?.let { typeImage.value = recents.getCallTypeImage(it) }
 
-        phones.lookupAccount(_recent!!.number) {
-            it?.photoUri?.let { imageUri.value = Uri.parse(it) }
-            isContactVisible.value = it?.name != null
-            isAddContactVisible.value = it?.name == null
-        }
-
-        isBlockButtonVisible.value = preferences.isShowBlocked
-        if (preferences.isShowBlocked) {
-            permissions.runWithDefaultDialer {
-                isBlockButtonActivated.value = blocked.isNumberBlocked(_recent!!.number)
+            caption.value = "${it?.relativeTime} • ${
+                if (it?.duration ?: -1 > 0L) "${
+                    getElapsedTimeString(it?.duration!!)
+                } •" else ""
+            }"
+            phones.lookupAccount(it?.number) {
+                it?.photoUri?.let { imageUri.value = Uri.parse(it) }
+                isContactVisible.value = it?.name != null
+                isAddContactVisible.value = it?.name == null
             }
         }
     }
 
-    fun onActionSms() {
-        _recent?.let { navigations.sendSMS(it.number) }
+    fun onSms() {
+        navigations.sendSMS(recentNumber.value)
     }
 
-    fun onActionCall() {
-        _recent?.let { callEvent.call(it.number) }
+    fun onCall() {
+        recentNumber.value?.let { callEvent.call(it) }
     }
 
-    fun onActionDelete() {
-        permissions.runWithPermissions(arrayOf(WRITE_CALL_LOG), {
-            confirmRecentDeleteEvent.call()
-        }, {
-            errorEvent.call(R.string.error_no_permissions_edit_call_log)
-        })
+    fun onAddContact() {
+        recentNumber.value?.let { navigations.addContact(it) }
     }
 
-    fun onActionAddContact() {
-        _recent?.let { navigations.addContact(it.number) }
-    }
-
-    fun onActionOpenContact() {
-        _recent?.let {
-            phones.lookupAccount(it.number) { account ->
-                account?.contactId?.let(navigations::viewContact)
-            }
-        }
-    }
-
-    fun onActionShowHistory() {
-        _recent?.let { showHistoryEvent.call(it.number) }
-    }
-
-    fun onActionOpenWhatsapp() {
-        navigations.openWhatsapp(_recent?.number)
-    }
-
-    fun onActionBlock(isBlock: Boolean) {
-        permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
-            _recent?.number?.let {
-                if (isBlock) {
-                    blocked.blockNumber(it)
-                } else {
-                    blocked.unblockNumber(it)
-                }
-                isBlockButtonActivated.value = isBlock
-            }
+    fun onOpenContact() {
+        phones.lookupAccount(recentNumber.value) { account ->
+            account?.contactId?.let(navigations::viewContact)
         }
     }
 
@@ -131,9 +98,13 @@ class RecentViewState @Inject constructor(
     }
 
     fun onConfirmDelete() {
-        _recent?.let {
-            recents.deleteRecent(it.id)
+        recentId.value?.let {
+            recents.deleteRecent(it)
             finishEvent.call()
         }
+    }
+
+    fun onMoreClick() {
+        showMoreEvent.call()
     }
 }

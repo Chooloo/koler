@@ -10,11 +10,13 @@
         android:layout_width="@dimen/image_size_big"
         android:layout_height="@dimen/image_size_big"
         android:contentDescription="@string/content_description_empty_list_icon"
-        app:tint="@color/color_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/round_swap_calls_20" />
+        app:layout_constraintBottom_toTopOf="@id/empty_text"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/swap_calls"
+        app:tint="?colorOnSurfaceVariant" />
 
     <TextView
         android:id="@+id/empty_text"
@@ -22,8 +24,10 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/default_spacing_small"
         android:text="@string/error_no_results"
-        android:textAppearance="@style/Chooloo.Text.Headline4"
-        android:textColor="@color/color_hint"
+        android:textAppearance="@style/Chooloo.Text.Headline"
+        android:textColor="?colorOnSurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/empty_icon" />

@@ -15,8 +15,7 @@
         android:tint="?colorOnBackground"
         app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
-        app:size="small"
-        app:icon="@drawable/round_more_vert_24" />
+        app:icon="@drawable/more_vert" />
 
     <!-- tabs -->
     <com.chooloo.www.chooloolib.ui.widgets.Tabs
@@ -46,6 +45,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        app:icon="@drawable/round_person_add_24"
-        app:size="big" />
+        app:icon="@drawable/person_add" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

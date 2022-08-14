@@ -13,6 +13,7 @@ import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.util.annotation.RequiresDefaultDialer
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,13 +21,24 @@ import javax.inject.Singleton
 class ContactsInteractorImpl @Inject constructor(
     private val phones: PhonesInteractor,
     private val blocked: BlockedInteractor,
+    private val disposables: CompositeDisposable,
     @ApplicationContext private val context: Context,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
 
     override fun queryContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
-        ContactsContentResolver(context, contactId).queryItems { contacts ->
-            contacts.let { callback.invoke(contacts.getOrNull(0)) }
-        }
+        disposables.add(
+            ContactsContentResolver(context, contactId).queryItems { contacts ->
+                contacts.let { callback.invoke(contacts.getOrNull(0)) }
+            }
+        )
+    }
+
+    override fun observeContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
+        disposables.add(
+            ContactsContentResolver(context, contactId).observeItems { contacts ->
+                contacts.let { callback.invoke(contacts.getOrNull(0)) }
+            }
+        )
     }
 
 
