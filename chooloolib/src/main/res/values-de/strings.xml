@@ -1,42 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Koler</string>
-    <string name="recents">Kürzlich</string>
-    <string name="contacts">Kontakte</string>
-    <string name="number_copied_to_clipboard">Nummer wurde in die Zwischenablage kopiert</string>
-    <string name="action_answer">Beantworten</string>
-    <string name="action_hangup">Auflegen</string>
-    <string name="action_yes">Jap</string>
-    <string name="action_no">Nope</string>
-    <string name="hint_search">Suchen</string>
-    <string name="call_action_mute">Stummschalten</string>
-    <string name="call_action_unmute">Stummschaltung aus</string>
-    <string name="call_action_speaker">Lautsprecher</string>
-    <string name="call_action_speaker_off">Lautsprecher aus</string>
-    <string name="call_status_dialing">Wählt…</string>
-    <string name="call_status_holding">Anruf wird gehalten</string>
-    <string name="call_status_incoming">Eingehender Anruf</string>
-    <string name="call_status_disconnected">Anruf endete</string>
-    <string name="call_status_active">Anruf im gange</string>
-    <string name="pref_title_report_bugs">Fehler melden</string>
-    <string name="pref_title_email">Schreibe uns eine E-Mail</string>
-    <string name="pref_title_app_color">Akzent Farbe</string>
-    <string name="pref_title_animations">Animationen</string>
-    <string name="pref_title_rate">Bewerten</string>
-    <string name="error_no_results">Keine Ergebnisse gefunden :/</string>
-    <string name="error_no_results_phones">Keine Telefonnummern gefunden :/</string>
-    <string name="error_no_results_contacts">Keine Kontakte gefunden :/</string>
-    <string name="error_no_results_recents">Keine kürzlich kontaktierten Kontakte gefunden :/</string>
-    <string name="error_no_permissions_contacts">Ich brauche die Berechtigung um die Kontakte auszulesen :/</string>
-    <string name="error_no_permissions_recents">Ich brauche die Berechtigung um die Anrufliste auszulesen :/</string>
-    <string name="error_no_permissions_phones">Ich brauche die Berechtigung um die Kontakte auszulesen :/</string>
-    <string name="content_description_answer_button">Annahme Knopf</string>
-    <string name="content_description_reject_button">Ablehnen Knopf</string>
-    <string name="call_notification_channel_name">Anruf Benachrichtigung</string>
-    <string name="call_notification_channel_description">Aktive Anrufbenachrichtigung, wird zur komfortablen Nutzung angezeigt</string>
-</resources>
-
-<resources>
 
     <!--region titles-->
     <string name="recents">Anrufliste</string>
@@ -67,13 +30,13 @@
     <string name="action_answer">Beantworten</string>
     <string name="action_hangup">Auflegen</string>
     <string name="action_manage_calls">Manage Calls</string>
-    <string name="action_show_history">Show History</string>
+    <string name="action_show_history">Anrufhistorie anzeigen</string>
     <string name="action_open_whatsapp">WhatsApp öffen</string>
     <string name="action_block_number">Nummer blockieren</string>
     <string name="action_delete_contact">Kontakt löschen</string>
     <string name="action_delete_recent">Eintrag löschen</string>
-    <string name="action_set_favorite">Als Fovorit markieren</string>
-    <string name="action_unset_favorite">Fovorit entfernen</string>
+    <string name="action_set_favorite">Als Favorit markieren</string>
+    <string name="action_unset_favorite">Favorit entfernen</string>
     <string name="action_open_in_whatsapp">In Whatsapp öffnen</string>
     <string name="action_unblock_number">Blockierung der Nummer aufheben</string>
     <string name="action_choose_audio_route">Audioausgang wählen</string>
@@ -102,10 +65,10 @@
     <!--endregion-->
 
     <!--region warning-->
-    <string name="explain_is_on_hold">%s is on hold</string>
+    <string name="explain_is_on_hold">%s wird gehalten</string>
     <string name="explain_choose_theme_mode">Wähle das Koler-Design. App muss zum Anzeigen der Änderung neu gestartet werden.</string>
     <string name="explain_choose_sim_account">Rufe mit einer anderen SIM an</string>
-    <string name="explain_choose_audio_route">Leite den Ton an eine andere Quelle um</string>
+    <string name="explain_choose_audio_route">Leite den Ton an einen anderen Ausgang um</string>
     <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">Dieser Kontakt wird dauerhalt gelöscht.</string>
     <string name="explain_delete_recent">Dieser Eintrag wird dauerhaft gelöscht.</string>
@@ -131,7 +94,7 @@
     <string name="call_status_holding">Anruf wird gehalten</string>
     <string name="call_status_connecting">Verbinde…</string>
     <string name="call_status_incoming">Eingehender Anruf</string>
-    <string name="call_status_active">Call In Progress</string>
+    <string name="call_status_active">Anruf aktiv</string>
     <string name="call_status_disconnected">Anruf beendet</string>
     <string name="call_status_pulling_call">Pulling Call…</string>
     <string name="call_status_unknown">Anrufstatus unbekannt</string>
@@ -155,13 +118,13 @@
     <!--endregion-->
 
     <!--region pref title-->
-    <string name="pref_title_rate">Rate</string>
-    <string name="pref_title_animations">Animations</string>
-    <string name="pref_title_app_color">Accent Color</string>
-    <string name="pref_title_theme_mode">Theme Mode</string>
-    <string name="pref_title_email">Email Us</string>
-    <string name="pref_title_report_bugs">Report Bugs</string>
-    <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
+    <string name="pref_title_rate">Bewerten</string>
+    <string name="pref_title_animations">Animationen</string>
+    <string name="pref_title_app_color">Farbakzente</string>
+    <string name="pref_title_theme_mode">Design</string>
+    <string name="pref_title_email">Schrebe uns eine E-Mail</string>
+    <string name="pref_title_report_bugs">Fehler melden</string>
+    <string name="pref_title_manage_blocked">Blockierte Nummern verwalten</string>
     <!--endregion-->
 
     <!--region pref summary -->
@@ -175,15 +138,15 @@
     <string name="error_no_results_recents">Keine kürzlichen Anrufe</string>
     <string name="error_no_results_contacts">Keine Kontakte</string>
     <string name="error_no_results_phones">Keine Telefonnummern</string>
-    <string name="error_not_default_dialer_blocked">Wähle Koler als Standardtelefonapp aus, um blockierte nummern zu sehen.</string>
+    <string name="error_not_default_dialer_blocked">Wähle Koler als Standardtelefonapp aus, um blockierte Nummern zu sehen.</string>
     <string name="error_not_default_dialer_call">Wähle Koler als Standardtelefonapp aus, um Anrufe zu tätigen.</string>
 
-    <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
-    <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
-    <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_recents">I need permission to read call log :)</string>
-    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
+    <string name="error_no_permissions_edit_call_log">Fehlende Berechtigung, die Anrufhistorie zu ändern :)</string>
+    <string name="error_no_permissions_make_call">Fehlende Berechtigung, Anrufe zu tätigen :(</string>
+    <string name="error_no_permissions_phones">Berechtigung nötig, um Telefonnummern zu lesen :)</string>
+    <string name="error_no_permissions_recents">Berechtigung nötig, um die Anrufhistorie einzusehen :)</string>
+    <string name="error_no_permissions_contacts">Berechtigung nötig, um Kontakte einzusehen :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">Berechtigungen nötig, um Kontakte und Anrufhistorie einzusehen :)</string>
 
     <string name="error_no_number_to_call">Keine Nummer gefunden</string>
 
@@ -191,7 +154,7 @@
     <string name="error_cant_swap_calls">Anruf kann nicht gewechselt werden</string>
     <string name="error_cant_merge_call">Can\'t merge call</string>
 
-    <string name="error_couldnt_get_number_from_intent">Nummer konnten nicht gefunden werden</string>
+    <string name="error_couldnt_get_number_from_intent">Nummer konnte nicht gefunden werden</string>
     <!--endregion-->
 
     <!--region pref color values-->
@@ -230,8 +193,8 @@
     <!--endregion-->
 
     <!--region notification-->
-    <string name="call_notification_channel_name">Call Notification</string>
-    <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
+    <string name="call_notification_channel_name">Anruf-Benachrichtigung</string>
+    <string name="call_notification_channel_description">Anruf-Benachrichtigung, für komfortable Anrufsteuerung</string>
     <!--endregion-->
 
     <!--region phone type-->
