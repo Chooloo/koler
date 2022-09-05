@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.model.RawContactAccount
 import com.chooloo.www.chooloolib.repository.rawcontacts.RawContactsRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
@@ -33,8 +34,12 @@ class AccountsViewState @Inject constructor(
 
     override fun onItemRightClick(item: RawContactAccount) {
         super.onItemRightClick(item)
-        if (item.type == RawContactAccount.RawContactType.WHATSAPP) {
-            navigations.openWhatsapp(item.data)
+
+        when(item.type){
+            RawContactAccount.RawContactType.WHATSAPP -> navigations.openMessager(PreferencesInteractor.Companion.Messager.WHATSAPP,item.data)
+            RawContactAccount.RawContactType.TELEGRAM -> navigations.openMessager(PreferencesInteractor.Companion.Messager.TELEGRAM,item.data)
+            RawContactAccount.RawContactType.SIGNAL -> navigations.openMessager(PreferencesInteractor.Companion.Messager.SIGNAL,item.data)
+           // RawContactAccount.RawContactType.THREEMA -> navigations.openMessager(PreferencesInteractor.Companion.Messager.THREEMA,item.data)
         }
     }
 

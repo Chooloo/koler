@@ -12,6 +12,7 @@ import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Messager
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
@@ -139,6 +140,17 @@ class DialogsInteractorImpl @Inject constructor(
             choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_theme_mode,
             selectedChoice = preferences.themeMode,
+            choiceToString = { strings.getString(it.titleRes) }
+        )
+    }
+
+    override fun askForMessager(callback: (Messager) -> Unit) {
+        askForChoice(
+            choices = Messager.values().toList(),
+            titleRes = R.string.pref_title_messager,
+            choiceCallback = callback::invoke,
+            subtitleRes = R.string.explain_choose_messager,
+            selectedChoice = preferences.openMessager,
             choiceToString = { strings.getString(it.titleRes) }
         )
     }

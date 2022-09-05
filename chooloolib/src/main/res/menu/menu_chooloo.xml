@@ -16,6 +16,12 @@
         android:id="@+id/menu_chooloo_animations"
         android:icon="@drawable/animation"
         android:title="@string/pref_title_animations" />
+
+    <item
+        android:id="@+id/menu_chooloo_messager"
+        android:icon="@drawable/whatsapp"
+        android:title="@string/pref_title_messager" />
+
     <item
         android:id="@+id/menu_chooloo_report_bugs"
         android:icon="@drawable/bug_report"

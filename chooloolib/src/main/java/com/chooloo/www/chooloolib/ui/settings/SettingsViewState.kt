@@ -4,6 +4,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Messager
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
@@ -28,6 +29,7 @@ open class SettingsViewState @Inject constructor(
     val askForThemeModeEvent = LiveEvent()
     val askForAnimationsEvent = LiveEvent()
     val askForColorEvent = DataLiveEvent<Int>()
+    val askForMessagerEvent = LiveEvent()
 
     init {
         title.value = strings.getString(R.string.settings)
@@ -41,6 +43,7 @@ open class SettingsViewState @Inject constructor(
             R.id.menu_chooloo_theme_mode -> askForThemeModeEvent.call()
             R.id.menu_chooloo_animations -> askForAnimationsEvent.call()
             R.id.menu_chooloo_accent_color -> askForColorEvent.call(R.array.accent_colors)
+            R.id.menu_chooloo_messager -> askForMessagerEvent.call()
             else -> super.onMenuItemClick(itemId)
         }
     }
@@ -64,5 +67,9 @@ open class SettingsViewState @Inject constructor(
         preferences.themeMode = response
         themes.applyThemeMode(response)
         navigations.goToLauncherActivity()
+    }
+
+    fun onMessagerResponse(response: Messager){
+        preferences.openMessager = response
     }
 }

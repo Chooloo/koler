@@ -22,6 +22,8 @@ class AccountsAdapter @Inject constructor(
             if (item.type == RawContactAccount.RawContactType.WHATSAPP) {
                 setRightButtonIcon(R.drawable.whatsapp)
             }
+
+            //TODO: add there other messager
         }
     }
 

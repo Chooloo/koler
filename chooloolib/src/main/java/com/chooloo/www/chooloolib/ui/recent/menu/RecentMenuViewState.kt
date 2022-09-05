@@ -30,7 +30,7 @@ class RecentMenuViewState @Inject constructor(
         super.onMenuItemClick(itemId)
         when (itemId) {
             R.id.menu_recent_history -> onShowHistory()
-            R.id.menu_recent_whatsapp -> onOpenWhatsapp()
+            R.id.menu_recent_whatsapp -> onOpenMessager() //TODO: rename button
             R.id.menu_recent_block -> onBlock(true)
             R.id.menu_recent_unblock -> onBlock(false)
         }
@@ -40,8 +40,8 @@ class RecentMenuViewState @Inject constructor(
         showHistoryEvent.call()
     }
 
-    fun onOpenWhatsapp() {
-        navigations.openWhatsapp(recentNumber.value)
+    fun onOpenMessager() {
+        navigations.openMessager(null,recentNumber.value)
     }
 
     fun onBlock(isBlock: Boolean) {

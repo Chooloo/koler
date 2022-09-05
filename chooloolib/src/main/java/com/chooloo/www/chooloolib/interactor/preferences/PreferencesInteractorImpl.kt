@@ -6,6 +6,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Messager
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 import com.chooloo.www.chooloolib.util.PreferencesManager
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -71,6 +72,12 @@ class PreferencesInteractorImpl @Inject constructor(
         get() = AccentTheme.fromKey(preferencesManager.getString(R.string.pref_key_color))
         set(value) {
             preferencesManager.putString(R.string.pref_key_color, value.key)
+        }
+
+    override var openMessager: Messager
+        get() = Messager.fromKey(preferencesManager.getString(R.string.pref_key_messager))
+        set(value) {
+            preferencesManager.putString(R.string.pref_key_messager, value.key)
         }
 
     override fun setDefaultValues() {

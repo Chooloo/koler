@@ -9,7 +9,9 @@ import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Messager
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 import com.chooloo.www.chooloolib.model.SimAccount
 
@@ -48,6 +50,7 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     fun askForSim(callback: (SimAccount?) -> Unit)
     fun askForDefaultPage(callback: (Page) -> Unit)
     fun askForThemeMode(callback: (ThemeMode) -> Unit)
+    fun askForMessager(callback: (Messager) -> Unit)
     fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit)
     fun askForPhoneAccountHandle(
         phonesAccountHandles: List<PhoneAccountHandle>,

@@ -15,6 +15,7 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
     var defaultPage: Page
     var themeMode: ThemeMode
     var accentTheme: AccentTheme
+    var openMessager: Messager
 
     fun setDefaultValues()
 
@@ -40,6 +41,18 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
             companion object {
                 fun fromKey(key: String?) =
                     values().associateBy(Page::key).getOrDefault(key ?: "", DEFAULT)
+            }
+        }
+
+        enum class Messager(val key: String, val url: String, val index: Int, val titleRes: Int){
+            WHATSAPP("whatsapp", "http://api.whatsapp.com/send?phone=", 0, R.string.whatsapp),
+            TELEGRAM("telegram", "https://t.me/", 1, R.string.telegram),
+            SIGNAL("signal","https://signal.me/#p/",2,R.string.signal);
+            //THREEMA("threema","https://threema.id/",3, R.string.threema);
+
+            companion object {
+                fun fromKey(key: String?) =
+                    values().associateBy(Messager::key).getOrDefault(key ?: "", WHATSAPP)
             }
         }
     }

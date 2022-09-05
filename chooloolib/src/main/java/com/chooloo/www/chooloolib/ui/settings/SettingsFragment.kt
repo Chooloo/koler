@@ -31,6 +31,11 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
                     dialogs.askForBoolean(R.string.hint_animations, viewState::onAnimationsResponse)
                 }
             }
+            askForMessagerEvent.observe(this@SettingsFragment){
+                it.ifNew?.let {
+                    dialogs.askForMessager(viewState::onMessagerResponse)
+                }
+            }
         }
     }
 }

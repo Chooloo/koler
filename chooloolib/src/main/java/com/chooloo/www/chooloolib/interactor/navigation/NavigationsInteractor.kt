@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.interactor.navigation
 
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 
 interface NavigationsInteractor : BaseInteractor<NavigationsInteractor.Listener> {
@@ -14,7 +15,7 @@ interface NavigationsInteractor : BaseInteractor<NavigationsInteractor.Listener>
     fun manageBlockedNumber()
     fun goToLauncherActivity()
     fun sendSMS(number: String?)
-    fun openWhatsapp(number: String?)
+    fun openMessager(type: PreferencesInteractor.Companion.Messager?,number: String?)
     fun addContact(number: String)
     fun viewContact(contactId: Long)
     fun editContact(contactId: Long)

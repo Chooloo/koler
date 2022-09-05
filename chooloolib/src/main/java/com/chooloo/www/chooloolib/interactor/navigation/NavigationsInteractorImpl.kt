@@ -9,8 +9,10 @@ import android.provider.ContactsContract
 import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
+import com.chooloo.www.chooloolib.util.PreferencesManager
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -20,6 +22,7 @@ import javax.inject.Singleton
 class NavigationsInteractorImpl @Inject constructor(
     private val strings: StringsInteractor,
     private val telecomManager: TelecomManager,
+    private val preferencesManager: PreferencesManager,
     @ApplicationContext private val context: Context,
 ) :
     BaseObservable<NavigationsInteractor.Listener>(),
@@ -93,10 +96,18 @@ class NavigationsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun openWhatsapp(number: String?) {
+    override fun openMessager(type: PreferencesInteractor.Companion.Messager?, number: String?) {
+        var url = "";
+        if(type == null){
+            var setting = preferencesManager.getString(R.string.pref_key_messager)
+            url = PreferencesInteractor.Companion.Messager.fromKey(setting).url
+        }else{
+            url = type.url;
+        }
+
         context.startActivity(
             Intent(ACTION_VIEW)
-                .setData(Uri.parse("http://api.whatsapp.com/send?phone=$number"))
+                .setData(Uri.parse("$url$number"))
                 .addFlags(FLAG_ACTIVITY_NEW_TASK)
         )
     }

@@ -20,7 +20,11 @@ data class RawContactAccount(
         EMAIL(Email.CONTENT_ITEM_TYPE, R.string.type_label_email),
         NAME(StructuredName.CONTENT_ITEM_TYPE, R.string.type_label_name),
         ORGANIZATION(Organization.CONTENT_ITEM_TYPE, R.string.type_label_organization),
-        WHATSAPP("vnd.android.cursor.item/vnd.com.whatsapp.profile", R.string.type_label_whatsapp);
+        WHATSAPP("vnd.android.cursor.item/vnd.com.whatsapp.profile", R.string.whatsapp),
+        TELEGRAM("vnd.android.cursor.item/vnd.org.telegram.messenger.android.profile", R.string.telegram),
+        SIGNAL("vnd.android.cursor.item/vnd.org.thoughtcrime.securesms.contact", R.string.signal),
+        THREEMA("vnd.android.cursor.item/vnd.ch.threema.app.profile", R.string.threema);
+
 
         companion object {
             fun fromContentType(contentType: String) =

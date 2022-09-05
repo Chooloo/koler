@@ -12,6 +12,10 @@
     <string name="theme_mode_system">System</string>
     <string name="theme_mode_dynamic">Dynamic</string>
     <string name="in_development">In Development...</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="telegram">Telegram</string>
+    <string name="signal">Signal</string>
+    <string name="threema">Threema</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -72,6 +76,7 @@
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
     <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <string name="explain_choose_messager">Set messager to open in recent</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -114,6 +119,7 @@
     <string name="pref_key_dialpad_tones">dialpad_tones</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
     <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <string name="pref_key_messager">selected_messager</string>
     <!--endregion-->
 
     <!--region pref title-->
@@ -124,6 +130,7 @@
     <string name="pref_title_email">Email Us</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
+    <string name="pref_title_messager">Messager to open</string>
     <!--endregion-->
 
     <!--region pref summary -->
@@ -218,7 +225,6 @@
     <string name="type_label_phone">Phone</string>
     <string name="type_label_email">Email</string>
     <string name="type_label_custom">Custom</string>
-    <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organization</string>
     <string name="action_call">Call</string>
     <string name="content_description_call_number">Call Number</string>
