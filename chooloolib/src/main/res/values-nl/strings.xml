@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Koler</string>
+    <string name="recents">Recent</string>
+    <string name="contacts">Contacte</string>
+    <string name="number_copied_to_clipboard">Nummer word naar het klembord gekopieerd</string>
+    <string name="action_answer">Beantwoorden</string>
+    <string name="action_hangup">Ophangen</string>
+    <string name="action_yes">Ja</string>
+    <string name="action_no">Nee</string>
+    <string name="hint_search">Zoeken</string>
+    <string name="call_action_mute">Dempen</string>
+    <string name="call_action_unmute">Niet meer dempen</string>
+    <string name="call_action_speaker">Luidspreker</string>
+    <string name="call_action_speaker_off">Luidspreker uit</string>
+    <string name="call_status_dialing">Kiest…</string>
+    <string name="call_status_holding">Oproep staat in de wacht</string>
+    <string name="call_status_incoming">Binnenkomende oproep</string>
+    <string name="call_status_disconnected">Oproep beëindigd</string>
+    <string name="call_status_active">Oproep bezig</string>
+    <string name="pref_title_report_bugs">Bugs melden</string>
+    <string name="pref_title_email">Schrijf ons een email</string>
+    <string name="pref_title_app_color">Accentkleur</string>
+    <string name="pref_title_animations"a>Animaties</string>
+    <string name="pref_title_rate">Beoordelen</string>
+    <string name="error_no_results">Geen resultaten gevonden :/</string>
+    <string name="error_no_results_phones">Geen telefoonnummer gevonden :/</string>
+    <string name="error_no_results_contacts">Geen contacten gevonden :/</string>
+    <string name="error_no_results_recents">Geen recent gecontacteerde contacten gevonden :/</string>
+    <string name="error_no_permissions_contacts">Toestemming nodig om contacten te lezen :/</string>
+    <string name="error_no_permissions_recents">Toestemming nodig om recenten te lezen :/</string>
+    <string name="error_no_permissions_phones">Toestemming nodig om telefoongesprekken te lezen :/</string>
+    <string name="content_description_answer_button">Aanvaardingsknop</string>
+    <string name="content_description_reject_button">Afwijzingsknop</string>
+    <string name="call_notification_channel_name">Oproepmelding</string>
+    <string name="call_notification_channel_description">Actieve oproepmelding, weergegeven voor gemakkelijk gebruik</string>
+</resources>
