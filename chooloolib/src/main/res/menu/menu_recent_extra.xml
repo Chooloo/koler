@@ -11,9 +11,9 @@
         android:title="@string/action_show_history" />
 
     <item
-        android:id="@+id/menu_recent_whatsapp"
+        android:id="@+id/menu_recent_messenger"
         android:icon="@drawable/whatsapp"
-        android:title="@string/action_open_in_whatsapp" />
+        android:title="@string/action_open_in_messenger" />
 
     <item
         android:id="@+id/menu_recent_block"

@@ -40,7 +40,7 @@
     <string name="action_delete_recent">Delete Recent</string>
     <string name="action_set_favorite">Set As Favorite</string>
     <string name="action_unset_favorite">Unset As Favorite</string>
-    <string name="action_open_in_whatsapp">Open In Whatsapp</string>
+    <string name="action_open_in_messenger">Open In Messenger</string>
     <string name="action_unblock_number">Unblock Number</string>
     <string name="action_choose_audio_route">Choose audio route</string>
     <string name="action_choose_phone_account">Choose phone account</string>

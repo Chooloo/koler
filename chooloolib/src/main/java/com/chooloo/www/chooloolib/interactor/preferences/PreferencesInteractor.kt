@@ -48,8 +48,8 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
             WHATSAPP("whatsapp", "http://api.whatsapp.com/send?phone=", 0, R.string.whatsapp),
             TELEGRAM("telegram", "https://t.me/", 1, R.string.telegram),
             SIGNAL("signal","https://signal.me/#p/",2,R.string.signal);
-            //THREEMA("threema","https://threema.id/",3, R.string.threema);
-
+            //THREEMA("threema","https://threema.id/compose?text=''&id=",3, R.string.threema);
+            // threema need the id from the contact list not working currently
             companion object {
                 fun fromKey(key: String?) =
                     values().associateBy(Messager::key).getOrDefault(key ?: "", WHATSAPP)
