@@ -221,6 +221,7 @@
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organization</string>
     <string name="action_call">Call</string>
+    <string name="action_delete">Delete</string>
     <string name="content_description_call_number">Call Number</string>
     <string name="content_description_add_contact">Add Contact</string>
     <string name="content_description_open_contact">Open Contact</string>
