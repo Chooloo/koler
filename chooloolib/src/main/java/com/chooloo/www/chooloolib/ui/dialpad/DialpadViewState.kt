@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
+import com.chooloo.www.chooloolib.ui.widgets.DialpadEditText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,13 +19,16 @@ open class DialpadViewState @Inject constructor(
 
     val text = MutableLiveData("")
     val char = MutableLiveData<Char>()
-
+    val editTextRef = MutableLiveData<DialpadEditText>()
 
     open fun onCharClick(char: Char) {
         this.char.value = char
         if (preferences.isDialpadTones) audios.playToneByChar(char)
         if (preferences.isDialpadVibrate) audios.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
-        onTextChanged((text.value ?: "") + char)
+
+        var pos = editTextRef.value?.selectionStart!!
+        onTextChanged((text.value ?: "").replaceRange(pos, pos, char.toString()))
+        editTextRef.value?.setSelection(pos+1)
     }
 
     open fun onLongKeyClick(char: Char) = true

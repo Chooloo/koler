@@ -32,7 +32,9 @@ class DialerViewState @Inject constructor(
 
     override fun onLongKeyClick(char: Char) = when (char) {
         '0' -> {
-            onTextChanged(text.value + "+")
+            var pos = editTextRef.value?.selectionStart!!
+            onTextChanged((text.value ?: "").replaceRange(pos, pos, "+"))
+            editTextRef.value?.setSelection(pos+1)
             true
         }
         '1' -> {
@@ -50,7 +52,18 @@ class DialerViewState @Inject constructor(
     }
 
     fun onDeleteClick() {
-        text.value?.dropLast(1)?.let(this::onTextChanged)
+        // note: overwork this code if the dev are better in kotin :D
+
+        var pos = editTextRef.value!!.selectionStart
+        if(pos == 0 && editTextRef.value!!.selectionEnd == text.value!!.length){
+             this.onLongDeleteClick();
+            return;
+        }
+
+        if(pos-1 < 0) return
+
+        text.value?.removeRange(pos-1, pos)?.let(this::onTextChanged)
+        editTextRef.value?.setSelection(pos-1)
     }
 
     fun onLongDeleteClick(): Boolean {

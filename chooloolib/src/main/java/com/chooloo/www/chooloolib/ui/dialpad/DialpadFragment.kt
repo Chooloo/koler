@@ -34,6 +34,9 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
                 addTextContextMenuItemListener(this@DialpadFragment)
             }
 
+            //promote edit to the viewstate
+            viewState.editTextRef.value = dialpadEditText
+
             View.OnClickListener {
                 viewState.onCharClick((it as DialpadKey).char)
             }
@@ -69,8 +72,9 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
                     keyHex.setOnLongClickListener(it)
                     keyStar.setOnLongClickListener(it)
                 }
-        }
 
+
+        }
         viewState.text.observe(this@DialpadFragment, binding.dialpadEditText::setText)
     }
 
