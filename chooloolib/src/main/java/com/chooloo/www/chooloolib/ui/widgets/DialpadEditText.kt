@@ -46,7 +46,7 @@ class DialpadEditText : AppCompatEditText {
 
     override fun setText(text: CharSequence?, type: BufferType?) {
         super.setText(text, type)
-        text?.length?.let { setSelection(it) }
+        text?.trim()?.length?.let { setSelection(it) }
     }
 
     override fun onTextContextMenuItem(id: Int): Boolean {
