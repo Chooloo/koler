@@ -3,17 +3,23 @@ package com.chooloo.www.chooloolib.ui.list
 import androidx.core.view.isVisible
 import com.chooloo.www.chooloolib.adapter.ListAdapter
 import com.chooloo.www.chooloolib.databinding.ItemsBinding
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.ui.permissioned.PermissionedFragment
 
-abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragment<VS>() {
-    override val contentView by lazy { binding.root }
+abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : PermissionedFragment<VS>() {
+    override val mainContentView by lazy { binding.root }
+
     protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
-    override fun onSetup() {
+
+    override fun _onSetup() {
         viewState.apply {
             isEmpty.observe(this@ListFragment, this@ListFragment::showEmpty)
             emptyMessage.observe(this@ListFragment, binding.empty.emptyText::setText)
             emptyIcon.observe(this@ListFragment, binding.empty.emptyIcon::setImageResource)
+
+            items.observe(this@ListFragment) {
+                adapter.items = it
+            }
 
             filter.observe(this@ListFragment) {
                 adapter.titleFilter = it
@@ -25,14 +31,6 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragme
 
             isScrollerVisible.observe(this@ListFragment) {
                 binding.itemsScrollView.fastScroller.isVisible = it
-            }
-
-            itemsChangedEvent.observe(this@ListFragment) { ev ->
-                ev.ifNew?.let { adapter.items = it }
-            }
-
-            if (args.getBoolean(ARG_OBSERVE, true)) {
-                getItemsObservable { it.observe(this@ListFragment, viewState::onItemsChanged) }
             }
         }
 

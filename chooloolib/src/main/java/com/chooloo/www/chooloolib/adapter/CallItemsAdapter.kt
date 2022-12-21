@@ -3,22 +3,25 @@ package com.chooloo.www.chooloolib.adapter
 import android.net.Uri
 import android.telecom.Call.Details.CAPABILITY_SEPARATE_FROM_CONFERENCE
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.Call
+import com.chooloo.www.chooloolib.data.model.ListData
+import com.chooloo.www.chooloolib.di.module.IoScope
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.model.ListData
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CallItemsAdapter @Inject constructor(
     animationsInteractor: AnimationsInteractor,
+    @IoScope private val ioScope: CoroutineScope,
     private val phonesInteractor: PhonesInteractor,
 ) : ListAdapter<Call>(animationsInteractor) {
     override fun onBindListItem(listItemHolder: ListItemHolder, item: Call) {
         listItemHolder.apply {
-            phonesInteractor.lookupAccount(item.number) { account ->
+            ioScope.launch {
+                val account = phonesInteractor.lookupAccount(item.number)
                 account?.photoUri?.let {
                     setImageUri(Uri.parse(it))
                 } ?: run {

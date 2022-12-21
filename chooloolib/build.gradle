@@ -9,11 +9,9 @@ android {
     compileSdk 31
 
     defaultConfig {
-        versionCode 2
-        versionName "2.0"
 
         minSdk 25
-        targetSdk 31
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -86,7 +84,10 @@ dependencies {
             'com.google.android.material:material:1.6.0',
             'com.github.abdularis:circularimageview:1.5',
             'com.daimajia.androidanimations:library:2.4@aar',
-            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
-            'com.pushtorefresh.storio3:content-resolver:3.0.0'
+            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1',
+            'com.pushtorefresh.storio3:content-resolver:3.0.0',
+            'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1',
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9",
     )
 }

@@ -24,7 +24,7 @@ open class BaseMenuFragment @Inject constructor() : BaseFragment<BaseViewState>(
     @Inject lateinit var adapter: MenuAdapter
 
 
-    override fun onSetup() {
+    override fun _onSetup() {
         adapter.setOnItemClickListener(::onMenuItemClick)
 
         viewState.apply {

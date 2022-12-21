@@ -137,12 +137,12 @@ open class ListItemHolder(protected val binding: ListItemBinding) :
 
     fun setImageUri(imageUri: Uri?) {
         showImageOrInitials = imageUri != null
-        Picasso.with(context).load(imageUri).into(binding.listItemImage)
+        binding.listItemImage.setImageURI(imageUri)
     }
 
     fun setImageResource(imageRes: Int) {
         showImageOrInitials = true
-        Picasso.with(context).load(imageRes).into(binding.listItemImage)
+        binding.listItemImage.setImageResource(imageRes)
     }
 
     fun setImageDrawable(drawable: Drawable) {

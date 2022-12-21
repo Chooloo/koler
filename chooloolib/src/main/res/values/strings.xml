@@ -230,4 +230,5 @@
     <string name="content_description_add_contact">Add Contact</string>
     <string name="content_description_open_contact">Open Contact</string>
     <string name="content_description_send_sms">Send SMS</string>
+    <string name="grant">grant</string>
 </resources>

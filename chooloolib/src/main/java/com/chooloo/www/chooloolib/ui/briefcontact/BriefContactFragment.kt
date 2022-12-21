@@ -32,12 +32,10 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
-    @Inject lateinit var permissions: PermissionsInteractor
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun onSetup() {
+    override fun _onSetup() {
         binding.briefContactImage.isVisible = false
 
         binding.apply {

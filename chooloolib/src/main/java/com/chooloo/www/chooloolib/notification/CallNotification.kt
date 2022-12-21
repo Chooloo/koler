@@ -18,6 +18,10 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.Call
+import com.chooloo.www.chooloolib.data.model.Call.State.DISCONNECTED
+import com.chooloo.www.chooloolib.data.model.Call.State.DISCONNECTING
+import com.chooloo.www.chooloolib.di.module.IoScope
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
@@ -25,9 +29,6 @@ import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTED
-import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTING
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE
@@ -36,6 +37,8 @@ import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTIO
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
 import com.chooloo.www.chooloolib.ui.call.CallActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,6 +49,7 @@ class CallNotification @Inject constructor(
     private val colors: ColorsInteractor,
     private val phones: PhonesInteractor,
     private val strings: StringsInteractor,
+    @IoScope private val ioScope: CoroutineScope,
     private val callAudios: CallAudiosInteractor,
     private val preferences: PreferencesInteractor,
     @ApplicationContext private val context: Context,
@@ -172,41 +176,40 @@ class CallNotification @Inject constructor(
             FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE
         )
 
-    private fun buildNotification(call: Call, callback: (Notification) -> Unit) {
-        phones.lookupAccount(call.number) { phoneAccount ->
-            val builder = NotificationCompat.Builder(context, _channel.id)
-                .setWhen(0)
-                .setOngoing(true)
-                .setColorized(true)
-                .setPriority(PRIORITY)
-                .setOnlyAlertOnce(true)
-                .setCategory(CATEGORY_CALL)
-                .setContentTitle(phoneAccount?.displayString ?: call.number)
-                .setSmallIcon(R.drawable.icon_full_144)
-                .setContentIntent(_contentPendingIntent)
-                .setColor(colors.getAttrColor(R.attr.colorSecondary))
-                .setContentText(strings.getString(call.state.stringRes))
+    private suspend fun buildNotification(call: Call, callback: (Notification) -> Unit) {
+        val phoneAccount = phones.lookupAccount(call.number)
+        val builder = NotificationCompat.Builder(context, _channel.id)
+            .setWhen(0)
+            .setOngoing(true)
+            .setColorized(true)
+            .setPriority(PRIORITY)
+            .setOnlyAlertOnce(true)
+            .setCategory(CATEGORY_CALL)
+            .setContentTitle(phoneAccount?.displayString ?: call.number)
+            .setSmallIcon(R.drawable.icon_full_144)
+            .setContentIntent(_contentPendingIntent)
+            .setColor(colors.getAttrColor(R.attr.colorSecondary))
+            .setContentText(strings.getString(call.state.stringRes))
 
-            if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-                builder.addAction(_hangupAction)
-            }
-
-            if (call.isIncoming) {
-                builder.addAction(_answerAction)
-            } else if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-                callAudios.isMuted?.let { isMuted ->
-                    if (call.isCapable(CAPABILITY_MUTE)) {
-                        builder.addAction(if (isMuted) _unmuteAction else _muteAction)
-                    }
-                }
-
-                callAudios.isSpeakerOn?.let { isSpeakerOn ->
-                    builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
-                }
-            }
-
-            callback.invoke(builder.build())
+        if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
+            builder.addAction(_hangupAction)
         }
+
+        if (call.isIncoming) {
+            builder.addAction(_answerAction)
+        } else if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
+            callAudios.isMuted?.let { isMuted ->
+                if (call.isCapable(CAPABILITY_MUTE)) {
+                    builder.addAction(if (isMuted) _unmuteAction else _muteAction)
+                }
+            }
+
+            callAudios.isSpeakerOn?.let { isSpeakerOn ->
+                builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
+            }
+        }
+
+        callback.invoke(builder.build())
     }
 
 
@@ -223,7 +226,9 @@ class CallNotification @Inject constructor(
     }
 
     fun show(call: Call) {
-        buildNotification(call) { notificationManager.notify(ID, it) }
+        ioScope.launch {
+            buildNotification(call) { notificationManager.notify(ID, it) }
+        }
     }
 
     fun refresh() {

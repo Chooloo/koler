@@ -80,14 +80,14 @@
                 tools:visibility="visible" />
 
             <ImageView
-                android:id="@+id/list_item_caption_image"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/list_item_caption"
-                app:layout_constraintStart_toEndOf="@id/list_item_caption"
-                app:layout_constraintTop_toTopOf="@id/list_item_caption"
-                app:tint="?android:textColorHint" />
+                    android:id="@+id/list_item_caption_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/list_item_caption"
+                    app:layout_constraintStart_toEndOf="@id/list_item_caption"
+                    app:layout_constraintTop_toTopOf="@id/list_item_caption"
+                    app:tint="?android:textColorHint" android:contentDescription="TODO"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/list_item_left_button"

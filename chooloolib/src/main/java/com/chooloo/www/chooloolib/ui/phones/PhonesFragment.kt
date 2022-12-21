@@ -5,7 +5,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.adapter.PhonesAdapter
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
-import com.chooloo.www.chooloolib.model.PhoneAccount
+import com.chooloo.www.chooloolib.data.model.PhoneAccount
 import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
 import com.chooloo.www.chooloolib.ui.list.ListFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,9 +18,9 @@ class PhonesFragment @Inject constructor() : ListFragment<PhoneAccount, PhonesVi
     @Inject override lateinit var adapter: PhonesAdapter
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
-    override fun onSetup() {
+    override fun _onSetup() {
         viewState.onContactId(args.getLong(ARG_CONTACT_ID))
-        super.onSetup()
+        super._onSetup()
         viewState.callEvent.observe(this@PhonesFragment) {
             it.ifNew?.let(telecomInteractor::callNumber)
         }

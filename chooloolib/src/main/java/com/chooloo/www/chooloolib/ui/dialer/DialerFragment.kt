@@ -7,9 +7,8 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
-import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsViewState
+import com.chooloo.www.chooloolib.ui.contacts.suggestions.ContactsSuggestionsViewState
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,12 +20,11 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
     private val suggestionsViewState: ContactsSuggestionsViewState by activityViewModels()
     private val _suggestionsFragment by lazy { fragmentFactory.getContactsSuggestionsFragment() }
 
-    @Inject lateinit var fragmentFactory: FragmentFactory
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun onSetup() {
-        super.onSetup()
+    override fun _onSetup() {
+        super._onSetup()
         binding.apply {
             dialpadButtonCall.isVisible = true
 
@@ -109,9 +107,7 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
             }
         }
 
-        suggestionsViewState.itemsChangedEvent.observe(this@DialerFragment) {
-            it.peekContent()?.let(viewState::onSuggestionsChanged)
-        }
+        suggestionsViewState.items.observe(this@DialerFragment, viewState::onSuggestionsChanged)
 
         args.getString(ARG_NUMBER)?.forEach(viewState::onCharClick)
     }

@@ -2,30 +2,24 @@ package com.chooloo.www.chooloolib.ui.recent
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
-import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
+import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.data.model.RecentAccount
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
-import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
 import com.chooloo.www.chooloolib.util.getElapsedTimeString
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RecentViewState @Inject constructor(
     private val phones: PhonesInteractor,
     private val recents: RecentsInteractor,
-    private val blocked: BlockedInteractor,
-    private val drawables: DrawablesInteractor,
-    private val preferences: PreferencesInteractor,
     private val navigations: NavigationsInteractor,
-    private val permissions: PermissionsInteractor
 ) :
     BaseViewState() {
     val name = MutableLiveData<String?>()
@@ -48,29 +42,30 @@ class RecentViewState @Inject constructor(
     private var _recent: RecentAccount? = null
 
 
-    override fun attach() {
-        super.attach()
+    override fun _attach() {
+        super._attach()
         if (_recent == null) return
     }
 
     fun onRecentId(recentId: Long) {
         this.recentId.value = recentId
-        recents.observeRecent(recentId) {
-            _recent = it
-            recentNumber.value = it?.number
-            name.value =
-                if (_recent!!.cachedName?.isNotEmpty() == true) it?.cachedName else it?.number
-            it?.type?.let { typeImage.value = recents.getCallTypeImage(it) }
+        viewModelScope.launch {
+            recents.getRecent(recentId).collect {
+                _recent = it
+                recentNumber.value = it?.number
+                name.value =
+                    if (_recent!!.cachedName?.isNotEmpty() == true) it?.cachedName else it?.number
+                it?.type?.let { typeImage.value = recents.getCallTypeImage(it) }
 
-            caption.value = "${it?.relativeTime} • ${
-                if (it?.duration ?: -1 > 0L) "${
-                    getElapsedTimeString(it?.duration!!)
-                } •" else ""
-            }"
-            phones.lookupAccount(it?.number) {
-                it?.photoUri?.let { imageUri.value = Uri.parse(it) }
-                isContactVisible.value = it?.name != null
-                isAddContactVisible.value = it?.name == null
+                caption.value = "${it?.relativeTime} • ${
+                    if (it?.duration ?: -1 > 0L) "${
+                        getElapsedTimeString(it?.duration!!)
+                    } •" else ""
+                }"
+                val lookupAccount = phones.lookupAccount(it?.number)
+                lookupAccount?.photoUri?.let { pu -> imageUri.value = Uri.parse(pu) }
+                isContactVisible.value = lookupAccount?.name != null
+                isAddContactVisible.value = lookupAccount?.name == null
             }
         }
     }
@@ -88,7 +83,8 @@ class RecentViewState @Inject constructor(
     }
 
     fun onOpenContact() {
-        phones.lookupAccount(recentNumber.value) { account ->
+        viewModelScope.launch {
+            val account = phones.lookupAccount(recentNumber.value)
             account?.contactId?.let(navigations::viewContact)
         }
     }

@@ -5,9 +5,15 @@ import android.os.Build
 import android.telecom.Call.Details.*
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
-import android.telecom.TelecomManager
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.api.service.CallService
+import com.chooloo.www.chooloolib.data.model.Call
+import com.chooloo.www.chooloolib.data.model.Call.State.*
+import com.chooloo.www.chooloolib.data.model.CantHoldCallException
+import com.chooloo.www.chooloolib.data.model.CantMergeCallException
+import com.chooloo.www.chooloolib.data.model.CantSwapCallException
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode.NORMAL
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
@@ -17,12 +23,6 @@ import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.model.Call.State.*
-import com.chooloo.www.chooloolib.model.CantHoldCallException
-import com.chooloo.www.chooloolib.model.CantMergeCallException
-import com.chooloo.www.chooloolib.model.CantSwapCallException
-import com.chooloo.www.chooloolib.service.CallService
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.ui.widgets.CallActions
 import com.chooloo.www.chooloolib.util.DataLiveEvent
@@ -32,12 +32,12 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
 class CallViewState @Inject constructor(
-    private val telecomManger: TelecomManager,
     private val calls: CallsInteractor,
     private val audios: AudiosInteractor,
     private val colors: ColorsInteractor,
@@ -56,7 +56,7 @@ class CallViewState @Inject constructor(
     val imageRes = MutableLiveData<Int>()
     val uiState = MutableLiveData<UIState>()
     val imageURI = MutableLiveData<Uri?>(null)
-    val bannerText = MutableLiveData<String>()
+    val bannerText = MutableLiveData<String?>()
     val stateText = MutableLiveData<String?>()
     val elapsedTime = MutableLiveData<Long>()
     val stateTextColor = MutableLiveData<Int>()
@@ -82,7 +82,7 @@ class CallViewState @Inject constructor(
     private var _currentCallId: String? = null
 
 
-    override fun attach() {
+    override fun _attach() {
         disposables.add(Observable.interval(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -179,10 +179,10 @@ class CallViewState @Inject constructor(
         if (calls.getFirstState(HOLDING)?.id == _currentCallId) {
             bannerText.value = null
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
-            phones.lookupAccount(call.number) {
+            viewModelScope.launch {
                 bannerText.value = String.format(
                     strings.getString(R.string.explain_is_on_hold),
-                    it?.displayString ?: call.number
+                    phones.lookupAccount(call.number)?.displayString ?: call.number
                 )
             }
         } else if (calls.getStateCount(HOLDING) == 0) {
@@ -204,7 +204,8 @@ class CallViewState @Inject constructor(
         if (call.isConference) {
             name.value = strings.getString(R.string.conference)
         } else {
-            phones.lookupAccount(call.number) { account ->
+            viewModelScope.launch {
+                val account = phones.lookupAccount(call.number)
                 account?.photoUri?.let { imageURI.value = Uri.parse(it) }
                 name.value = account?.displayString ?: call.number
             }

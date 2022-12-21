@@ -28,14 +28,14 @@ class CallActivity : BaseActivity<CallViewState>() {
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
-    @Inject lateinit var screens:ScreensInteractor
+    @Inject lateinit var screens: ScreensInteractor
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var animations: AnimationsInteractor
     @Inject lateinit var fragmentFactory: FragmentFactory
 
 
-    override fun onSetup() {
+    override fun _onSetup() {
         screens.showWhenLocked()
 
         viewState.apply {

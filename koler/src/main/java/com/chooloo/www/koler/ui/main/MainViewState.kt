@@ -1,13 +1,10 @@
 package com.chooloo.www.koler.ui.main
 
-import android.content.ClipData
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -33,8 +30,8 @@ class MainViewState @Inject constructor(
     val showDialerEvent = DataLiveEvent<String>()
 
 
-    override fun attach() {
-        super.attach()
+    override fun _attach() {
+        super._attach()
         permissions.checkDefaultDialer {}
         currentPageIndex.value = preferences.defaultPage.index
         searchHint.value = strings.getString(R.string.hint_search_items)

@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.ui.recent.menu
 
 import android.Manifest
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
@@ -10,6 +11,7 @@ import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.ui.base.menu.BaseMenuViewState
 import com.chooloo.www.chooloolib.util.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,10 +49,12 @@ class RecentMenuViewState @Inject constructor(
     fun onBlock(isBlock: Boolean) {
         permissions.runWithDefaultDialer(R.string.error_not_default_dialer_blocked) {
             recentNumber.value?.let {
-                if (isBlock) {
-                    blocked.blockNumber(it)
-                } else {
-                    blocked.unblockNumber(it)
+                viewModelScope.launch {
+                    if (isBlock) {
+                        blocked.blockNumber(it)
+                    } else {
+                        blocked.unblockNumber(it)
+                    }
                 }
                 isBlocked.value = isBlock
                 finishEvent.call()

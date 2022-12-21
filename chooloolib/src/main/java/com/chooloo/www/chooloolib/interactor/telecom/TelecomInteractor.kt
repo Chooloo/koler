@@ -1,7 +1,7 @@
 package com.chooloo.www.chooloolib.interactor.telecom
 
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.model.SimAccount
+import com.chooloo.www.chooloolib.data.model.SimAccount
 
 interface TelecomInteractor : BaseInteractor<TelecomInteractor.Listener> {
     interface Listener {}

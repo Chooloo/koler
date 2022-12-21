@@ -1,12 +1,13 @@
 package com.chooloo.www.chooloolib.ui.dialer
 
+import android.Manifest
 import android.content.ClipboardManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
+import com.chooloo.www.chooloolib.data.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -22,6 +23,8 @@ class DialerViewState @Inject constructor(
     private val navigations: NavigationsInteractor
 ) :
     DialpadViewState(audios, clipboardManager, preferences) {
+
+    override val requiredPermissions = listOf(Manifest.permission.CALL_PHONE)
 
     val callVoicemailEvent = LiveEvent()
     val callNumberEvent = DataLiveEvent<String>()

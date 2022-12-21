@@ -1,16 +1,13 @@
 package com.chooloo.www.chooloolib.ui.phones
 
-import android.Manifest.permission.CALL_PHONE
-import android.Manifest.permission.READ_PHONE_STATE
+import android.Manifest.permission.*
 import android.content.ClipData
 import android.content.ClipboardManager
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.PhoneAccount
+import com.chooloo.www.chooloolib.data.repository.phones.PhonesRepository
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.PhonesLiveData
-import com.chooloo.www.chooloolib.model.PhoneAccount
-import com.chooloo.www.chooloolib.repository.phones.PhonesRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,21 +19,24 @@ class PhonesViewState @Inject constructor(
     private val phonesRepository: PhonesRepository,
     private val clipboardManager: ClipboardManager
 ) :
-    ListViewState<PhoneAccount>() {
+    ListViewState<PhoneAccount>(permissions) {
 
     override val noResultsIconRes = R.drawable.call
     override val noResultsTextRes = R.string.error_no_results_phones
-    override val noPermissionsTextRes = R.string.error_no_permissions_phones
+
+    override val requiredPermissions = listOf(READ_CONTACTS)
+
+    override val itemsFlow get() = phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value)
+
 
     val callEvent = DataLiveEvent<String>()
     val contactId = MutableLiveData(0L)
 
-    private val phonesLiveData get() = phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value) as PhonesLiveData
-
 
     override fun onFilterChanged(filter: String?) {
         super.onFilterChanged(filter)
-        phonesLiveData.filter = filter
+        // TODO implement filter
+//        phones.filter = filter
     }
 
     override fun onItemRightClick(item: PhoneAccount) {
@@ -53,13 +53,6 @@ class PhonesViewState @Inject constructor(
             ClipData.newPlainText("Copied number", item.number)
         )
         messageEvent.call(R.string.number_copied_to_clipboard)
-    }
-
-    override fun getItemsObservable(callback: (LiveData<List<PhoneAccount>>) -> Unit) {
-        permissions.runWithReadContactsPermissions {
-            onPermissionsChanged(it)
-            if (it) callback.invoke(phonesLiveData)
-        }
     }
 
     fun onContactId(contactId: Long) {

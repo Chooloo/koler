@@ -1,6 +1,5 @@
 package com.chooloo.www.chooloolib.ui.settings
 
-import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
@@ -15,8 +14,8 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
     @Inject lateinit var dialogs: DialogsInteractor
 
 
-    override fun onSetup() {
-        super.onSetup()
+    override fun _onSetup() {
+        super._onSetup()
         viewState.apply {
             askForColorEvent.observe(this@SettingsFragment) { ev ->
                 ev.ifNew?.let { dialogs.askForColor(it, viewState::onColorResponse) }

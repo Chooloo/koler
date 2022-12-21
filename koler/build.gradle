@@ -13,7 +13,7 @@ android {
         versionName "v1.5.0"
 
         minSdk 25
-        targetSdk 31
+        targetSdk 33
 
         applicationId "com.chooloo.www.koler"
 

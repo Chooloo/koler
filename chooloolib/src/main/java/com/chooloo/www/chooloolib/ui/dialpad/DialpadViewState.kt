@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
+import com.chooloo.www.chooloolib.ui.permissioned.PermissionedViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,7 +15,7 @@ open class DialpadViewState @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val preferences: PreferencesInteractor
 ) :
-    BaseViewState() {
+    PermissionedViewState() {
 
     val text = MutableLiveData("")
     val char = MutableLiveData<Char>()

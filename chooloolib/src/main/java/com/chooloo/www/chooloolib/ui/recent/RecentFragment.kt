@@ -28,11 +28,10 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun onSetup() {
+    override fun _onSetup() {
         binding.recentContactImage.isVisible = false
 
         binding.apply {

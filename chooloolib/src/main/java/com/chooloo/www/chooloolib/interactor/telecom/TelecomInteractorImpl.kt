@@ -11,7 +11,7 @@ import android.telecom.PhoneAccount
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
-import com.chooloo.www.chooloolib.model.SimAccount
+import com.chooloo.www.chooloolib.data.model.SimAccount
 import com.chooloo.www.chooloolib.util.CallUtils
 import com.chooloo.www.chooloolib.util.PhoneNumberUtils
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable

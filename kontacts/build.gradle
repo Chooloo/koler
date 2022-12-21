@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.chooloo.www.kontacts"
         minSdk 25
-        targetSdk 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 

@@ -4,8 +4,8 @@ import android.content.Context
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.model.ListData
-import com.chooloo.www.chooloolib.model.PhoneAccount
+import com.chooloo.www.chooloolib.data.model.ListData
+import com.chooloo.www.chooloolib.data.model.PhoneAccount
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

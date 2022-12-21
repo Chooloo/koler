@@ -4,18 +4,19 @@ import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.ListData
+import com.chooloo.www.chooloolib.data.model.RecentAccount
+import com.chooloo.www.chooloolib.di.module.IoScope
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
-import com.chooloo.www.chooloolib.model.ListData
-import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import com.chooloo.www.chooloolib.util.getHoursString
 import com.chooloo.www.chooloolib.util.initials
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class RecentsAdapter @Inject constructor(
@@ -23,8 +24,7 @@ class RecentsAdapter @Inject constructor(
     private val phones: PhonesInteractor,
     private val recents: RecentsInteractor,
     private val drawables: DrawablesInteractor,
-    private val preferences: PreferencesInteractor,
-    private val permissions: PermissionsInteractor,
+    @IoScope private val ioScope: CoroutineScope,
     @ApplicationContext private val context: Context
 ) : ListAdapter<RecentAccount>(animations) {
 
@@ -43,10 +43,11 @@ class RecentsAdapter @Inject constructor(
 
             captionText = if (item.groupCount > 1) "(${item.groupCount}) $date ·" else "$date ·"
 
-            phones.lookupAccount(item.number) {
-                titleText = it?.name ?: item.number
-                setImageUri(if (it?.photoUri != null) Uri.parse(it.photoUri) else null)
-                it?.let {
+            ioScope.launch {
+                val account = phones.lookupAccount(item.number)
+                titleText = account?.name ?: item.number
+                setImageUri(if (account?.photoUri != null) Uri.parse(account.photoUri) else null)
+                account?.let {
                     captionText =
                         "$captionText ${
                             Phone.getTypeLabel(
@@ -57,7 +58,9 @@ class RecentsAdapter @Inject constructor(
                         } ·"
                     imageInitials = it.name?.initials()
                     if (it.name == null || it.name.isEmpty()) {
-                        drawables.getDrawable(R.drawable.person)?.let(this::setImageDrawable)
+                        drawables.getDrawable(R.drawable.person)?.let {
+                            setImageDrawable(it)
+                        }
                     }
                 }
             }

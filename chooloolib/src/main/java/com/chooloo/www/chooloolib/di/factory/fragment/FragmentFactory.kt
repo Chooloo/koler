@@ -7,9 +7,10 @@ import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.briefcontact.menu.BriefContactMenuFragment
 import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
-import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsFragment
+import com.chooloo.www.chooloolib.ui.contacts.suggestions.ContactsSuggestionsFragment
 import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
+import com.chooloo.www.chooloolib.ui.permission.PermissionFragment
 import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.ui.recent.RecentFragment
@@ -24,6 +25,7 @@ interface FragmentFactory {
     fun getContactsFragment(): ContactsFragment
     fun getCallItemsFragment(): CallItemsFragment
     fun getRecentMenuFragment(): RecentMenuFragment
+    fun getPermissionFragment(): PermissionFragment
     fun getRecentFragment(recentId: Long): RecentFragment
     fun getBriefContactMenuFragment(): BriefContactMenuFragment
     fun getDialerFragment(text: String? = null): DialerFragment

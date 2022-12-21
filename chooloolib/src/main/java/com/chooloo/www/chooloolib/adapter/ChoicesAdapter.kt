@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.chooloo.www.chooloolib.databinding.ListItemBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.model.ListData
+import com.chooloo.www.chooloolib.data.model.ListData
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ChoiceItemHolder
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import javax.inject.Inject

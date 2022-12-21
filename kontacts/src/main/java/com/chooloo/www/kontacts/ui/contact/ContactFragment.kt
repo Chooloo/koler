@@ -24,7 +24,7 @@ class ContactFragment : BaseFragment<ContactViewState>() {
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun onSetup() {
+    override fun _onSetup() {
         viewState.apply {
             contactId.observe(this@ContactFragment) {
                 setRawContactsFragment(accountsFragment)

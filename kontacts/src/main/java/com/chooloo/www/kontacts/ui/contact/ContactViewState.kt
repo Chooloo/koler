@@ -2,14 +2,16 @@ package com.chooloo.www.kontacts.ui.contact
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.data.model.ContactAccount
+import com.chooloo.www.chooloolib.data.model.PhoneAccount
 import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.model.PhoneAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,18 +32,20 @@ class ContactViewState @Inject constructor(
 
     private fun withFirstNumber(callback: (PhoneAccount) -> Unit) {
         contact?.let {
-            phones.getContactAccounts(it.id) {
-                it?.getOrNull(0)?.let(callback::invoke)
+            viewModelScope.launch {
+                phones.getContactAccounts(it.id).getOrNull(0)?.let(callback::invoke)
             }
         }
     }
 
     fun onContactId(contactId: Long) {
-        contacts.observeContact(contactId) { ca ->
-            contact = ca
-            contactName.value = ca?.name
-            isFavorite.value = ca?.starred == true
-            ca?.photoUri?.let { contactImage.value = Uri.parse(it) }
+        viewModelScope.launch {
+            contacts.getContact(contactId).collect { contact ->
+                this@ContactViewState.contact = contact
+                contactName.value = contact?.name ?: "Unknown"
+                isFavorite.value = contact?.starred == true
+                contact?.photoUri?.let { contactImage.value = Uri.parse(it) }
+            }
         }
     }
 

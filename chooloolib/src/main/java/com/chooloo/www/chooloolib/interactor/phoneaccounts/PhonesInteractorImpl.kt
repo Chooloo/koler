@@ -1,38 +1,27 @@
 package com.chooloo.www.chooloolib.interactor.phoneaccounts
 
-import android.content.Context
-import com.chooloo.www.chooloolib.contentresolver.PhoneLookupContentResolver
-import com.chooloo.www.chooloolib.contentresolver.PhonesContentResolver
-import com.chooloo.www.chooloolib.model.PhoneAccount
-import com.chooloo.www.chooloolib.model.PhoneLookupAccount
+import com.chooloo.www.chooloolib.data.model.PhoneAccount
+import com.chooloo.www.chooloolib.data.model.PhoneLookupAccount
+import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class PhonesInteractorImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val contentResolverFactory: ContentResolverFactory,
 ) : BaseInteractorImpl<PhonesInteractor.Listener>(), PhonesInteractor {
 
-    override fun lookupAccount(number: String?, callback: (PhoneLookupAccount?) -> Unit) {
+    override suspend fun lookupAccount(number: String?): PhoneLookupAccount? =
         if (number == null || number.isEmpty()) {
-            callback.invoke(PhoneLookupAccount.PRIVATE)
-            return
-        }
-        try {
-            PhoneLookupContentResolver(context, number).queryItems { phones ->
-                callback.invoke(phones.getOrNull(0))
-            }
+            PhoneLookupAccount.PRIVATE
+        } else try {
+            contentResolverFactory.getPhoneLookupContentResolver(number).queryItems().getOrNull(0)
         } catch (e: OnErrorNotImplementedException) {
-            callback.invoke(null)
+            null
         }
-    }
 
-    override fun getContactAccounts(contactId: Long, callback: (Array<PhoneAccount>?) -> Unit) {
-        PhonesContentResolver(context, contactId).queryItems {
-            callback.invoke(it.toTypedArray())
-        }
-    }
+    override suspend fun getContactAccounts(contactId: Long): List<PhoneAccount> =
+        contentResolverFactory.getPhonesContentResolver(contactId).queryItems().toList()
 }

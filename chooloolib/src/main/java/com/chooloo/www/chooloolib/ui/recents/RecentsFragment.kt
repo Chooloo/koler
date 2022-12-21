@@ -3,10 +3,9 @@ package com.chooloo.www.chooloolib.ui.recents
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.adapter.RecentsAdapter
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.data.model.RecentAccount
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.model.RecentAccount
 import com.chooloo.www.chooloolib.ui.list.ListFragment
 import com.chooloo.www.chooloolib.ui.recentshistory.RecentsHistoryViewState
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,14 +16,15 @@ open class RecentsFragment @Inject constructor() : ListFragment<RecentAccount, R
     @Inject override lateinit var adapter: RecentsAdapter
     override val viewState: RecentsViewState by activityViewModels()
 
-    @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
-    @Inject lateinit var preferences: PreferencesInteractor
     private val recentsHistoryViewState: RecentsHistoryViewState by activityViewModels()
 
+    @Inject lateinit var prompts: PromptsInteractor
+    @Inject lateinit var preferences: PreferencesInteractor
 
-    override fun onSetup() {
-        super.onSetup()
+
+    override fun _onSetup() {
+        super._onSetup()
+        
         adapter.groupSimilar = args.getBoolean(ARG_IS_GROUPED, preferences.isGroupRecents)
 
         viewState.showRecentEvent.observe(this@RecentsFragment) { ev ->

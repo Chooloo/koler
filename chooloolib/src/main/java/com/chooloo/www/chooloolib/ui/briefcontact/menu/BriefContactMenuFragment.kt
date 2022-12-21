@@ -3,7 +3,6 @@ package com.chooloo.www.chooloolib.ui.briefcontact.menu
 import android.view.MenuItem
 import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.menu.BaseMenuFragment
@@ -16,11 +15,10 @@ class BriefContactMenuFragment @Inject constructor() : BaseMenuFragment() {
 
     @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
 
 
-    override fun onSetup() {
-        super.onSetup()
+    override fun _onSetup() {
+        super._onSetup()
         viewState.apply {
             showHistoryEvent.observe(this@BriefContactMenuFragment) { ev ->
                 ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentsFragment(viewState.contactName.value)) }

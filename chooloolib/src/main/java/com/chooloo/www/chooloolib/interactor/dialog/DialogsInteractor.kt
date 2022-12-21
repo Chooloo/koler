@@ -12,7 +12,7 @@ import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
-import com.chooloo.www.chooloolib.model.SimAccount
+import com.chooloo.www.chooloolib.data.model.SimAccount
 
 interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     interface Listener

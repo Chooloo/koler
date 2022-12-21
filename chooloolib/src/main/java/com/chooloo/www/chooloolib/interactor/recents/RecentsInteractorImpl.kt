@@ -5,16 +5,17 @@ import android.content.Context
 import android.provider.CallLog
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
+import com.chooloo.www.chooloolib.data.model.RecentAccount
+import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepository
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import com.chooloo.www.chooloolib.model.RecentAccount
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RecentsInteractorImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val recentsRepository: RecentsRepository
 ) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
 
     @RequiresPermission(WRITE_CALL_LOG)
@@ -26,20 +27,9 @@ class RecentsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun queryRecent(recentId: Long) =
-        RecentsContentResolver(context, recentId).queryItems().getOrNull(0)
+    override fun getRecent(recentId: Long) = recentsRepository.getRecent(recentId)
 
-    override fun queryRecent(recentId: Long, callback: (RecentAccount?) -> Unit) {
-        RecentsContentResolver(context, recentId).queryItems {
-            callback.invoke(it.getOrNull(0))
-        }
-    }
-
-    override fun observeRecent(recentId: Long, callback: (RecentAccount?) -> Unit) {
-        RecentsContentResolver(context, recentId).observeItems {
-            callback.invoke(it.getOrNull(0))
-        }
-    }
+    override fun getRecents() = recentsRepository.getRecents()
 
     override fun getCallTypeImage(@RecentAccount.CallType callType: Int) = when (callType) {
         RecentAccount.TYPE_INCOMING -> R.drawable.call_received

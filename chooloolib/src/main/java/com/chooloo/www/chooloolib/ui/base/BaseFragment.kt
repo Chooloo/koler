@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import javax.inject.Inject
 
 abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
@@ -14,6 +16,8 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
     val args get() = arguments ?: Bundle()
 
     @Inject lateinit var baseActivity: BaseActivity<*>
+    @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var permissions: PermissionsInteractor
 
 
     override fun onCreateView(
@@ -55,6 +59,10 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
     override fun finish() {
         super.finish()
         _onFinishListener.invoke()
+    }
+
+    protected open fun onSetup(){
+        _onSetup()
     }
 
     fun setOnFinishListener(onFinishListener: () -> Unit) {

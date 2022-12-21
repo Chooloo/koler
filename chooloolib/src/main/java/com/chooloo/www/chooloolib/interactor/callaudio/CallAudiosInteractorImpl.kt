@@ -3,7 +3,7 @@ package com.chooloo.www.chooloolib.interactor.callaudio
 import android.telecom.CallAudioState
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute.*
-import com.chooloo.www.chooloolib.service.CallService
+import com.chooloo.www.chooloolib.api.service.CallService
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -2,16 +2,18 @@ package com.chooloo.www.chooloolib.ui.briefcontact
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.ContactAccount
 import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,8 +41,8 @@ class BriefContactViewState @Inject constructor(
             callback.invoke(firstNumber)
         } else {
             contact?.let {
-                phones.getContactAccounts(it.id) { phones ->
-                    firstNumber = phones?.getOrNull(0)?.number
+                viewModelScope.launch {
+                    firstNumber = phones.getContactAccounts(it.id).getOrNull(0)?.number
                     callback.invoke(firstNumber)
                 }
             }
@@ -49,13 +51,15 @@ class BriefContactViewState @Inject constructor(
 
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId
-        contacts.observeContact(contactId) {
-            contact = it
-            contactName.value = it?.name
-            isFavorite.value = it?.starred == true
-            withFirstNumber { contactNumber.value = it }
-            it?.photoUri?.let { uri ->
-                contactImage.value = Uri.parse(uri)
+        viewModelScope.launch {
+            contacts.getContact(contactId).collect {
+                contact = it
+                contactName.value = it?.name
+                isFavorite.value = it?.starred == true
+                withFirstNumber { contactNumber.value = it }
+                it?.photoUri?.let { uri ->
+                    contactImage.value = Uri.parse(uri)
+                }
             }
         }
     }
