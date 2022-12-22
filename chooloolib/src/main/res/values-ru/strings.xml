@@ -16,8 +16,8 @@
     <string name="hint_search">Поиск</string>
     <string name="call_action_mute">Выкл. микрофон</string>
     <string name="call_action_unmute">Вкл. микрофон</string>
-    <string name="call_action_speaker">Вкл. Динамик</string>
-    <string name="call_action_speaker_off">Выкл. Динамик</string>
+    <string name="call_action_speaker">Вкл. динамик</string>
+    <string name="call_action_speaker_off">Выкл. динамик</string>
     <string name="call_status_dialing">Набор…</string>
     <string name="call_status_holding">Вызов на удержании</string>
     <string name="call_status_incoming">Входящий вызов</string>
