@@ -26,6 +26,6 @@ class PhonesAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<PhoneAccount>) =
-        ListData.fromPhones(data, withHeader = false)
+    override fun convertDataToListData(items: List<PhoneAccount>) =
+        ListData.fromPhones(items, withHeader = false)
 }

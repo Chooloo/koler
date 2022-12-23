@@ -68,7 +68,7 @@
   <!--endregion-->
   <!--region call state-->
   <string name="call_status_new">Yeni Arama</string>
-  <string name="call_status_dialing">Aranıyor...</string>
+  <string name="call_status_dialing">Aranıyor…</string>
   <string name="call_status_holding">Arama Beklemede</string>
   <string name="call_status_connecting">Bağlanıyor…</string>
   <string name="call_status_incoming">Gelen Arama</string>

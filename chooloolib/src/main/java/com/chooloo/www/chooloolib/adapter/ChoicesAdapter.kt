@@ -35,5 +35,5 @@ class ChoicesAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<String>) = ListData(data)
+    override fun convertDataToListData(items: List<String>) = ListData(items)
 }

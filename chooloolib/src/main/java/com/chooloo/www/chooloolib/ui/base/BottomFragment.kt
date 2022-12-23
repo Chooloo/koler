@@ -11,7 +11,7 @@ import com.chooloo.www.chooloolib.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
-open class BottomFragment<FragmentType : BaseFragment<out BaseViewState>>(
+open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
     private val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseView<BaseViewState> {
     override val viewState: BaseViewState by viewModels()

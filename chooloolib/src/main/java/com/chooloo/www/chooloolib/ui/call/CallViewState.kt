@@ -225,10 +225,16 @@ class CallViewState @Inject constructor(
         }
 
         when (call.state) {
-            INCOMING, ACTIVE -> stateTextColor.value =
+            ACTIVE,
+            INCOMING-> stateTextColor.value =
                 colors.getColor(R.color.green_on_primary_container)
-            HOLDING, DISCONNECTING, DISCONNECTED -> stateTextColor.value =
+
+            HOLDING,
+            DISCONNECTING,
+            DISCONNECTED -> stateTextColor.value =
                 colors.getAttrColor(R.attr.colorError)
+
+            else -> {}
         }
 
         if (call.state == SELECT_PHONE_ACCOUNT && !call.phoneAccountSelected) {

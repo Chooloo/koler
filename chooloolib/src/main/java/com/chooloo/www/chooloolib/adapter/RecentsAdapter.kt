@@ -69,6 +69,6 @@ class RecentsAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<RecentAccount>) =
-        ListData.fromRecents(data, groupSimilar)
+    override fun convertDataToListData(items: List<RecentAccount>) =
+        ListData.fromRecents(items, groupSimilar)
 }

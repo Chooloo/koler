@@ -25,6 +25,6 @@ class AccountsAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<RawContactAccount>) =
-        ListData.fromRawContacts(data, accounts = true, withHeader = false)
+    override fun convertDataToListData(items: List<RawContactAccount>) =
+        ListData.fromRawContacts(items, accounts = true, withHeader = false)
 }

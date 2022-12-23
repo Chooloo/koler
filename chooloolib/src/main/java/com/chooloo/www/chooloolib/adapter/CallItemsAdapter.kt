@@ -47,5 +47,5 @@ class CallItemsAdapter @Inject constructor(
         }
     }
 
-    override fun convertDataToListData(data: List<Call>) = ListData(data)
+    override fun convertDataToListData(items: List<Call>) = ListData(items)
 }
