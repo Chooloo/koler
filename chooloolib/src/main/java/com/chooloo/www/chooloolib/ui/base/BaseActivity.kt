@@ -25,7 +25,7 @@ abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<
         themes.applyThemeMode(preferences.themeMode)
         contentView?.let { setContentView(it) }
 
-        _onSetup()
+        onSetup()
 
         viewState.apply {
             attach()

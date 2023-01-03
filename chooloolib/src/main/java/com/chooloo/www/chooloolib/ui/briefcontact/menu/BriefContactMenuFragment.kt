@@ -17,8 +17,8 @@ class BriefContactMenuFragment @Inject constructor() : BaseMenuFragment() {
     @Inject lateinit var prompts: PromptsInteractor
 
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
         viewState.apply {
             showHistoryEvent.observe(this@BriefContactMenuFragment) { ev ->
                 ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentsFragment(viewState.contactName.value)) }

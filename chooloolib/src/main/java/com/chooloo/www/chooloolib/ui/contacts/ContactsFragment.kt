@@ -17,8 +17,8 @@ open class ContactsFragment @Inject constructor() :
     @Inject override lateinit var adapter: ContactsAdapter
 
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
 
         viewState.showContactEvent.observe(this@ContactsFragment) { ev ->
             ev.ifNew?.let {

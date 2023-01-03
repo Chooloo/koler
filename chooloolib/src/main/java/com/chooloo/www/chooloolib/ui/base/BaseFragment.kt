@@ -28,10 +28,9 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onSetup()
-        viewState.apply {
-            attach()
+        onSetupHook()
 
+        viewState.apply {
             errorEvent.observe(this@BaseFragment) {
                 it.ifNew?.let(this@BaseFragment::showError)
             }
@@ -61,8 +60,9 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
         _onFinishListener.invoke()
     }
 
-    protected open fun onSetup(){
-        _onSetup()
+    protected open fun onSetupHook() {
+        onSetup()
+        viewState.attach()
     }
 
     fun setOnFinishListener(onFinishListener: () -> Unit) {

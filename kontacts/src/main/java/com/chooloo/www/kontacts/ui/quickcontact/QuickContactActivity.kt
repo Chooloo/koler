@@ -19,7 +19,7 @@ class QuickContactActivity : BaseActivity<QuickContactViewState>() {
     @Inject lateinit var fragmentFactory: FragmentFactory
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         viewState.apply {
             showContactEvent.observe(this@QuickContactActivity) {
                 it.ifNew?.let { contactId ->

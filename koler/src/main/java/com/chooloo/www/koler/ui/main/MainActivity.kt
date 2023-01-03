@@ -35,7 +35,7 @@ class MainActivity : BaseActivity<MainViewState>() {
     @Inject lateinit var choolooFragmentFactory: ChoolooFragmentFactory
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         screens.disableKeyboard()
 
         binding.apply {

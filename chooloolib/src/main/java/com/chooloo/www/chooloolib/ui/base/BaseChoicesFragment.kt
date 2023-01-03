@@ -20,7 +20,7 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
     @Inject lateinit var adapter: ChoicesAdapter
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         adapter.apply {
             setOnItemClickListener(_onChoiceClickListener::invoke)
             selectedIndex = args.getInt(ARG_SELECTED_INDEX, -1)

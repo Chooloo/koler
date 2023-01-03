@@ -17,7 +17,7 @@ class PromptFragment @Inject constructor() : BaseFragment<PromptViewState>() {
     private val binding by lazy { PromptBinding.inflate(layoutInflater) }
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         binding.apply {
             viewState.title.value = args.getString(ARG_TITLE)
             viewState.subtitle.value = args.getString(ARG_SUBTITLE)

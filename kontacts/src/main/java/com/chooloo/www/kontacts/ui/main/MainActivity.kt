@@ -21,7 +21,7 @@ class MainActivity : BaseActivity<MainViewState>() {
     @Inject lateinit var fragmentFactory: ChoolooFragmentFactory
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         binding.apply {
             mainTabs.setHeadersResList(arrayOf(R.string.contacts))
 

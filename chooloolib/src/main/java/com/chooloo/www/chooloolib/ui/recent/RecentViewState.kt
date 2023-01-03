@@ -42,8 +42,8 @@ class RecentViewState @Inject constructor(
     private var _recent: RecentAccount? = null
 
 
-    override fun _attach() {
-        super._attach()
+    override fun attach() {
+        super.attach()
         if (_recent == null) return
     }
 

@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.ui.permissioned
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.databinding.PermissionedBinding
@@ -18,52 +17,48 @@ abstract class PermissionedFragment<out VM : PermissionedViewState> : BaseFragme
     private val _permissionFragment by lazy { fragmentFactory.getPermissionFragment() }
 
 
-    override fun onSetup() {
-        viewState.apply {
-            if (permissions.hasSelfPermissions(requiredPermissions.toTypedArray())) {
-                addMainFragment()
+    override fun onSetupHook() {
+        _permissionViewState.apply {
+            onPermissions(viewState.requiredPermissions)
+            viewState.permissionsTextRes?.let(::onTextRes)
+            viewState.permissionsImageRes?.let(::onImageRes)
+            isGranted.observe(this@PermissionedFragment, viewState::onIsPermissionGranted)
+        }
+
+        viewState.shouldShowMainFragment.observe(this@PermissionedFragment) {
+            if (it) {
+                showMainFragment()
             } else {
-                addPermissionsFragment()
-                _permissionViewState.apply {
-                    onPermissions(requiredPermissions)
-                    permissionsTextRes?.let(::onTextRes)
-                    permissionsImageRes?.let(::onImageRes)
-                    isGranted.observe(this@PermissionedFragment) {
-                        if (it) {
-                            addMainFragment()
-                        }
-                        onIsPermissionGranted(it)
-                    }
-                }
+                showPermissionsFragment()
             }
         }
+
+        viewState.attachHook()
     }
 
-    private fun addMainFragment() {
-        removePermissionsFragment()
-        mainContentView.parent?.let { (it as ViewGroup).removeView(mainContentView) }
-        _binding.root.addView(mainContentView)
-        _onSetup()
-    }
-
-    private fun addPermissionsFragment() {
-        _binding.permissionedPermissionContainer.isVisible = true
-
-        childFragmentManager.beginTransaction()
-            .add(
-                _binding.permissionedPermissionContainer.id,
-                fragmentFactory.getPermissionFragment(),
-                PERMISSIONS_FRAGMENT_TAG
-            )
-            .commit()
-    }
-
-    private fun removePermissionsFragment() {
+    private fun showMainFragment() {
         childFragmentManager.findFragmentByTag(PERMISSIONS_FRAGMENT_TAG)?.let {
             childFragmentManager.beginTransaction().remove(it).commit()
         }
-
         _binding.permissionedPermissionContainer.isVisible = false
+        mainContentView.parent?.let { (it as ViewGroup).removeView(mainContentView) }
+        _binding.root.addView(mainContentView)
+        super.onSetupHook()
+    }
+
+    private fun showPermissionsFragment() {
+        _binding.root.removeView(mainContentView)
+        _binding.permissionedPermissionContainer.isVisible = true
+
+        childFragmentManager.findFragmentByTag(PERMISSIONS_FRAGMENT_TAG)?.let { } ?: run {
+            childFragmentManager.beginTransaction()
+                .add(
+                    _binding.permissionedPermissionContainer.id,
+                    fragmentFactory.getPermissionFragment(),
+                    PERMISSIONS_FRAGMENT_TAG
+                )
+                .commit()
+        }
     }
 
     abstract val mainContentView: View

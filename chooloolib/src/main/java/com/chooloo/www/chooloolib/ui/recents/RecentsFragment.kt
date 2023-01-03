@@ -22,9 +22,9 @@ open class RecentsFragment @Inject constructor() : ListFragment<RecentAccount, R
     @Inject lateinit var preferences: PreferencesInteractor
 
 
-    override fun _onSetup() {
-        super._onSetup()
-        
+    override fun onSetup() {
+        super.onSetup()
+
         adapter.groupSimilar = args.getBoolean(ARG_IS_GROUPED, preferences.isGroupRecents)
 
         viewState.showRecentEvent.observe(this@RecentsFragment) { ev ->

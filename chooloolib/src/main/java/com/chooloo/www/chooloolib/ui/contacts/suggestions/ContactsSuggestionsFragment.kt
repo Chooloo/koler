@@ -11,8 +11,8 @@ class ContactsSuggestionsFragment @Inject constructor() : ContactsFragment() {
     override val viewState: ContactsSuggestionsViewState by activityViewModels()
 
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
         adapter.apply {
             withFavs = false
             withHeaders = false

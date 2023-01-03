@@ -11,7 +11,7 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : Permission
     protected val binding by lazy { ItemsBinding.inflate(layoutInflater) }
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         viewState.apply {
             isEmpty.observe(this@ListFragment, this@ListFragment::showEmpty)
             emptyMessage.observe(this@ListFragment, binding.empty.emptyText::setText)

@@ -29,7 +29,7 @@ class DefaultDialerRequestActivity : BaseActivity<BaseViewState>() {
         }
     }
 
-    override fun _onSetup() {}
+    override fun onSetup() {}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

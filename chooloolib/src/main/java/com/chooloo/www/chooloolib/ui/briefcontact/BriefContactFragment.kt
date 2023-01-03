@@ -35,7 +35,7 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         binding.briefContactImage.isVisible = false
 
         binding.apply {

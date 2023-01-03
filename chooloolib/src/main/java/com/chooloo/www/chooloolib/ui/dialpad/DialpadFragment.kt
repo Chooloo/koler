@@ -21,7 +21,7 @@ open class DialpadFragment @Inject constructor() : PermissionedFragment<DialpadV
 
     protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
 
-    override fun _onSetup() {
+    override fun onSetup() {
         binding.apply {
             dialpadButtonCall.isVisible = false
             dialpadButtonDelete.isVisible = false

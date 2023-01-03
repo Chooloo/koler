@@ -82,7 +82,7 @@ class CallViewState @Inject constructor(
     private var _currentCallId: String? = null
 
 
-    override fun _attach() {
+    override fun attach() {
         disposables.add(Observable.interval(1, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())

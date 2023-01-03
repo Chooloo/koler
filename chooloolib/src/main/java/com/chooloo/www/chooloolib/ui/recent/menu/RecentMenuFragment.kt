@@ -17,8 +17,8 @@ class RecentMenuFragment @Inject constructor() : BaseMenuFragment() {
     @Inject lateinit var dialogs: DialogsInteractor
 
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
         viewState.apply {
             showHistoryEvent.observe(this@RecentMenuFragment) { ev ->
                 ev.ifNew?.let {

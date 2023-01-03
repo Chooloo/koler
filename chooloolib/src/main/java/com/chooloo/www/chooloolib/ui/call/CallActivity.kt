@@ -44,7 +44,7 @@ class CallActivity : BaseActivity<CallViewState>() {
     lateinit var fragmentFactory: FragmentFactory
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         screens.showWhenLocked()
 
         viewState.apply {

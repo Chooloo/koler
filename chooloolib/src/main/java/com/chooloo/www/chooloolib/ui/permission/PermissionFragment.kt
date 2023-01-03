@@ -16,7 +16,7 @@ class PermissionFragment @Inject constructor() : BaseFragment<PermissionViewStat
     private val _binding by lazy { PermissionBinding.inflate(layoutInflater) }
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         viewState.apply {
             textRes.observe(this@PermissionFragment, _binding.noPermissionText::setText)
             imageRes.observe(this@PermissionFragment) {

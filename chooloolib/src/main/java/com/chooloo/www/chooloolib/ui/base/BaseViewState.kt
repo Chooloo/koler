@@ -9,14 +9,6 @@ open class BaseViewState : ViewModel() {
     val errorEvent = DataLiveEvent<Int>()
     val messageEvent = DataLiveEvent<Int>()
 
-    open fun _attach() {}
-    open fun _detach() {}
-
-    open fun detach() {
-        _detach()
-    }
-
-    open fun attach() {
-        _attach()
-    }
+    open fun attach() {}
+    open fun detach() {}
 }

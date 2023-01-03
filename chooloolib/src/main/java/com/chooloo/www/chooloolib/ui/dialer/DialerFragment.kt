@@ -23,8 +23,8 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
         binding.apply {
             dialpadButtonCall.isVisible = true
 

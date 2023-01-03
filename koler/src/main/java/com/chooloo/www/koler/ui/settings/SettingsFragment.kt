@@ -10,8 +10,8 @@ import com.chooloo.www.chooloolib.ui.settings.SettingsFragment as ChoolooSetting
 class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
     override val viewState: SettingsViewState by activityViewModels()
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
 
         viewState.apply {
             askForDefaultPageEvent.observe(this@SettingsFragment) {

@@ -30,8 +30,8 @@ class MainViewState @Inject constructor(
     val showDialerEvent = DataLiveEvent<String>()
 
 
-    override fun _attach() {
-        super._attach()
+    override fun attach() {
+        super.attach()
         permissions.checkDefaultDialer {}
         currentPageIndex.value = preferences.defaultPage.index
         searchHint.value = strings.getString(R.string.hint_search_items)

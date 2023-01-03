@@ -26,7 +26,7 @@ class PermissionRequestActivity : BaseActivity<BaseViewState>() {
         }
     }
 
-    override fun _onSetup() {}
+    override fun onSetup() {}
 
     private fun requestPermissions() {
         val permissions = intent?.getStringArrayExtra(PERMISSIONS_ARGUMENT_KEY) ?: arrayOf()

@@ -37,10 +37,10 @@ open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _onSetup()
+        onSetup()
     }
 
-    override fun _onSetup() {
+    override fun onSetup() {
         fragment.setOnFinishListener {
             this@BottomFragment.dismiss()
         }

@@ -31,7 +31,7 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
-    override fun _onSetup() {
+    override fun onSetup() {
         binding.recentContactImage.isVisible = false
 
         binding.apply {

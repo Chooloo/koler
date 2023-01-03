@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 abstract class ListViewState<ItemType>(
     private val permissions: PermissionsInteractor
-) : PermissionedViewState() {
+) : PermissionedViewState(permissions) {
     val items = MutableLiveData<List<ItemType>>()
     val filter = MutableLiveData<String>()
     val emptyIcon = MutableLiveData<Int>()
@@ -26,7 +26,7 @@ abstract class ListViewState<ItemType>(
     protected open val noResultsTextRes: Int? = null
 
 
-    override fun _attach() {
+    override fun attach() {
         emptyIcon.value = noResultsIconRes
         emptyMessage.value = noResultsTextRes
         viewModelScope.launch {

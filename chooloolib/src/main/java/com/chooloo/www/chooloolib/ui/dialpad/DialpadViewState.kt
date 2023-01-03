@@ -3,8 +3,8 @@ package com.chooloo.www.chooloolib.ui.dialpad
 import android.content.ClipboardManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.ui.permissioned.PermissionedViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,9 +13,10 @@ import javax.inject.Inject
 open class DialpadViewState @Inject constructor(
     private val audios: AudiosInteractor,
     private val clipboardManager: ClipboardManager,
-    private val preferences: PreferencesInteractor
+    private val preferences: PreferencesInteractor,
+    private val permissions: PermissionsInteractor
 ) :
-    PermissionedViewState() {
+    PermissionedViewState(permissions) {
 
     val text = MutableLiveData("")
     val char = MutableLiveData<Char>()

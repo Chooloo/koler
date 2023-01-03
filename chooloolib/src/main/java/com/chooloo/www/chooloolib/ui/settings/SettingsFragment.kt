@@ -14,8 +14,8 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
     @Inject lateinit var dialogs: DialogsInteractor
 
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
         viewState.apply {
             askForColorEvent.observe(this@SettingsFragment) { ev ->
                 ev.ifNew?.let { dialogs.askForColor(it, viewState::onColorResponse) }

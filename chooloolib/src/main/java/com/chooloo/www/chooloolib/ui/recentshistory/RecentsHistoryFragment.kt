@@ -9,8 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class RecentsHistoryFragment : RecentsFragment() {
     override val viewState: RecentsHistoryViewState by activityViewModels()
 
-    override fun _onSetup() {
-        super._onSetup()
+    override fun onSetup() {
+        super.onSetup()
         adapter.groupSimilar = false
     }
 

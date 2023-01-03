@@ -23,8 +23,8 @@ class PermissionViewState @Inject constructor(
     val isGranted: LiveData<Boolean> = _isGranted
 
 
-    override fun _attach() {
-        super._attach()
+    override fun attach() {
+        super.attach()
         checkPermission()
     }
 

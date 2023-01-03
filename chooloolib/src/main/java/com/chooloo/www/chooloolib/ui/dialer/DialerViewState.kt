@@ -8,6 +8,7 @@ import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.data.model.ContactAccount
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
@@ -18,11 +19,12 @@ import javax.inject.Inject
 class DialerViewState @Inject constructor(
     audios: AudiosInteractor,
     preferences: PreferencesInteractor,
+    clipboardManager: ClipboardManager,
+    permissions: PermissionsInteractor,
     private val recents: RecentsInteractor,
-    private val clipboardManager: ClipboardManager,
-    private val navigations: NavigationsInteractor
+    private val navigations: NavigationsInteractor,
 ) :
-    DialpadViewState(audios, clipboardManager, preferences) {
+    DialpadViewState(audios, clipboardManager, preferences, permissions) {
 
     override val requiredPermissions = listOf(Manifest.permission.CALL_PHONE)
 
