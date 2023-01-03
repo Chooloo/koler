@@ -6,17 +6,18 @@
     android:layout_height="match_parent">
 
     <ImageView
-            android:id="@+id/no_permission_image"
-            android:layout_width="@dimen/image_size_big"
-            android:layout_height="@dimen/image_size_big"
-            app:layout_constraintBottom_toTopOf="@id/no_permission_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/person"
-            app:tint="?colorSurfaceVariant"
-            tools:tint="#000000" android:contentDescription="TODO"/>
+        android:id="@+id/no_permission_image"
+        android:layout_width="@dimen/image_size_big"
+        android:layout_height="@dimen/image_size_big"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toTopOf="@id/no_permission_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/person"
+        app:tint="?colorSurfaceVariant"
+        tools:tint="#000000" />
 
     <TextView
         android:id="@+id/no_permission_text"
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_small"
         android:text="@string/grant"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
