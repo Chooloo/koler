@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         versionCode 79
@@ -28,7 +28,7 @@ android {
 
     dataBinding {
         //noinspection DataBindingWithoutKapt
-          enabled = true
+        enabled = true
     }
 
     buildTypes {

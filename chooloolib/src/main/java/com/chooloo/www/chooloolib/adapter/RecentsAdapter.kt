@@ -7,6 +7,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.model.ListData
 import com.chooloo.www.chooloolib.data.model.RecentAccount
 import com.chooloo.www.chooloolib.di.module.IoScope
+import com.chooloo.www.chooloolib.di.module.MainScope
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
@@ -25,6 +26,7 @@ class RecentsAdapter @Inject constructor(
     private val recents: RecentsInteractor,
     private val drawables: DrawablesInteractor,
     @IoScope private val ioScope: CoroutineScope,
+    @MainScope private val mainScope: CoroutineScope,
     @ApplicationContext private val context: Context
 ) : ListAdapter<RecentAccount>(animations) {
 
@@ -45,21 +47,24 @@ class RecentsAdapter @Inject constructor(
 
             ioScope.launch {
                 val account = phones.lookupAccount(item.number)
-                titleText = account?.name ?: item.number
-                setImageUri(if (account?.photoUri != null) Uri.parse(account.photoUri) else null)
-                account?.let {
-                    captionText =
-                        "$captionText ${
-                            Phone.getTypeLabel(
-                                context.resources,
-                                it.type,
-                                it.label
-                            )
-                        } ·"
-                    imageInitials = it.name?.initials()
-                    if (it.name == null || it.name.isEmpty()) {
-                        drawables.getDrawable(R.drawable.person)?.let {
-                            setImageDrawable(it)
+
+                mainScope.launch {
+                    titleText = account?.name ?: item.number
+                    setImageUri(account?.photoUri?.let(Uri::parse))
+                    account?.let {
+                        captionText =
+                            "$captionText ${
+                                Phone.getTypeLabel(
+                                    context.resources,
+                                    it.type,
+                                    it.label
+                                )
+                            } ·"
+                        imageInitials = it.name?.initials()
+                        if (it.name == null || it.name.isEmpty()) {
+                            drawables.getDrawable(R.drawable.person)?.let {
+                                setImageDrawable(it)
+                            }
                         }
                     }
                 }

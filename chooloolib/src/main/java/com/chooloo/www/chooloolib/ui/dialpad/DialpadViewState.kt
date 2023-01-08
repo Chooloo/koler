@@ -21,7 +21,6 @@ open class DialpadViewState @Inject constructor(
     val text = MutableLiveData("")
     val char = MutableLiveData<Char>()
 
-
     open fun onCharClick(char: Char) {
         this.char.value = char
         if (preferences.isDialpadTones) audios.playToneByChar(char)

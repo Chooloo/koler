@@ -6,6 +6,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.model.Call
 import com.chooloo.www.chooloolib.data.model.ListData
 import com.chooloo.www.chooloolib.di.module.IoScope
+import com.chooloo.www.chooloolib.di.module.MainScope
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
@@ -17,22 +18,26 @@ class CallItemsAdapter @Inject constructor(
     animationsInteractor: AnimationsInteractor,
     @IoScope private val ioScope: CoroutineScope,
     private val phonesInteractor: PhonesInteractor,
+    @MainScope private val mainScope: CoroutineScope,
 ) : ListAdapter<Call>(animationsInteractor) {
     override fun onBindListItem(listItemHolder: ListItemHolder, item: Call) {
         listItemHolder.apply {
             ioScope.launch {
                 val account = phonesInteractor.lookupAccount(item.number)
-                account?.photoUri?.let {
-                    setImageUri(Uri.parse(it))
-                } ?: run {
-                    setImageResource(R.drawable.person)
-                }
 
-                account?.displayString?.let {
-                    titleText = it
-                    captionText = item.number
-                } ?: run {
-                    titleText = item.number
+                mainScope.launch {
+                    account?.photoUri?.let {
+                        setImageUri(Uri.parse(it))
+                    } ?: run {
+                        setImageResource(R.drawable.person)
+                    }
+
+                    account?.displayString?.let {
+                        titleText = it
+                        captionText = item.number
+                    } ?: run {
+                        titleText = item.number
+                    }
                 }
             }
 

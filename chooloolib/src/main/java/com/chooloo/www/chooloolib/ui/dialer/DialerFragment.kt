@@ -110,10 +110,7 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
         suggestionsViewState.items.observe(this@DialerFragment, viewState::onSuggestionsChanged)
 
         args.getString(ARG_NUMBER)?.forEach(viewState::onCharClick)
-    }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
         childFragmentManager
             .beginTransaction()
             .add(binding.dialpadSuggestionsContainer.id, _suggestionsFragment)

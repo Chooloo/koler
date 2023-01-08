@@ -148,7 +148,7 @@
     <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
     <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
     <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_recents">I need permission to read call log :)</string>
+    <string name="error_no_permissions_recents">I need permission to read call log and contacts :)</string>
     <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
     <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
 

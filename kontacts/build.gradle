@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -53,6 +54,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.core:core-ktx:+'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     kapt(
             'com.google.dagger:hilt-compiler:2.38.1',
             'androidx.hilt:hilt-compiler:1.0.0-alpha01'
