@@ -11,6 +11,7 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,13 +24,9 @@ open class RecentsViewState @Inject constructor(
 
     override val noResultsIconRes = R.drawable.history
     override val noResultsTextRes = R.string.error_no_results_recents
-
     override val permissionsImageRes = R.drawable.history
     override val permissionsTextRes = R.string.error_no_permissions_recents
     override val requiredPermissions = listOf(READ_CALL_LOG, READ_CONTACTS)
-
-    override val itemsFlow get() = recentsRepository.getRecents()
-
     val showRecentEvent = DataLiveEvent<RecentAccount>()
 
 
@@ -43,4 +40,7 @@ open class RecentsViewState @Inject constructor(
         clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", item.number))
         messageEvent.call(R.string.number_copied_to_clipboard)
     }
+
+    override fun getItemsFlow(filter: String?): Flow<List<RecentAccount>>? =
+        recentsRepository.getRecents(filter)
 }

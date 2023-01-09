@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecentsRepository {
     fun getRecent(recentId: Long? = null): Flow<RecentAccount?>
-    fun getRecents(): Flow<List<RecentAccount>>
+    fun getRecents(filter: String? = null): Flow<List<RecentAccount>>
 }

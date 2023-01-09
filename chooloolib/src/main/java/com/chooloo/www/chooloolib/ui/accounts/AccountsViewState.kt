@@ -10,6 +10,7 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,13 +23,10 @@ class AccountsViewState @Inject constructor(
 
     override val noResultsIconRes = R.drawable.call
     override val noResultsTextRes = R.string.error_no_results_phones
-
     override val requiredPermissions = listOf(READ_CONTACTS)
 
-    override val itemsFlow get() = contactId.value?.let(rawContactsRepository::getRawContacts)
-
-    val contactId = MutableLiveData(0L)
     val callEvent = DataLiveEvent<String>()
+    val contactId = MutableLiveData(0L)
 
 
     override fun onItemRightClick(item: RawContactAccount) {
@@ -37,6 +35,9 @@ class AccountsViewState @Inject constructor(
             navigations.openWhatsapp(item.data)
         }
     }
+
+    override fun getItemsFlow(filter: String?): Flow<List<RawContactAccount>>? =
+        contactId.value?.let { rawContactsRepository.getRawContacts(it, filter) }
 
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId

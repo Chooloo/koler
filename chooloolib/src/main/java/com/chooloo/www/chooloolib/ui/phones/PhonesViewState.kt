@@ -11,6 +11,7 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,18 +27,12 @@ class PhonesViewState @Inject constructor(
 
     override val requiredPermissions = listOf(READ_CONTACTS)
 
-    override val itemsFlow get() = phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value)
-
-
     val callEvent = DataLiveEvent<String>()
     val contactId = MutableLiveData(0L)
 
 
-    override fun onFilterChanged(filter: String?) {
-        super.onFilterChanged(filter)
-        // TODO implement filter
-//        phones.filter = filter
-    }
+    override fun getItemsFlow(filter: String?): Flow<List<PhoneAccount>> =
+        phonesRepository.getPhones(if (contactId.value == 0L) null else contactId.value, filter)
 
     override fun onItemRightClick(item: PhoneAccount) {
         super.onItemRightClick(item)
@@ -57,5 +52,6 @@ class PhonesViewState @Inject constructor(
 
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId
+        updateItemsFlow()
     }
 }

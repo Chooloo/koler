@@ -23,8 +23,8 @@ class ContactViewState @Inject constructor(
     val callEvent = DataLiveEvent<String>()
     val contactId = MutableLiveData<Long>()
     val contactImage = MutableLiveData<Uri>()
-    val contactName = MutableLiveData<String>()
     var isFavorite = MutableLiveData<Boolean>()
+    val contactName = MutableLiveData<String>()
     val showHistoryEvent = DataLiveEvent<String>()
 
     private var contact: ContactAccount? = null

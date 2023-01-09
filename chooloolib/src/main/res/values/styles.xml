@@ -70,7 +70,7 @@
     </style>
 
     <style name="Chooloo.FastScrollView" parent="Chooloo.ListView">
-        <item name="hideScrollbar"><false></false></item>
+        <item name="hideScrollbar">false</item>
         <item name="bubbleColor">?colorSecondary</item>
         <item name="bubbleTextColor">?colorOnSecondary</item>
         <item name="handleColor">?colorSecondary</item>

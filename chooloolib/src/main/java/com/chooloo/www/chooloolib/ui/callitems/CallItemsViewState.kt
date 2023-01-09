@@ -5,6 +5,7 @@ import com.chooloo.www.chooloolib.data.repository.calls.CallsRepository
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,8 +14,6 @@ class CallItemsViewState @Inject constructor(
     private val callsRepository: CallsRepository
 ) :
     ListViewState<Call>(permissions) {
-
-    override val itemsFlow get() = callsRepository.getCalls()
 
     override fun onItemLeftClick(item: Call) {
         super.onItemLeftClick(item)
@@ -27,4 +26,7 @@ class CallItemsViewState @Inject constructor(
         item.reject()
         finishEvent.call()
     }
+
+    override fun getItemsFlow(filter: String?): Flow<List<Call>>? =
+        callsRepository.getCalls()
 }

@@ -9,8 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 abstract class ListViewState<ItemType>(
-    private val permissions: PermissionsInteractor
+    permissions: PermissionsInteractor
 ) : PermissionedViewState(permissions) {
+    private var _itemsFlow: Flow<List<ItemType>>? = null
+
     val items = MutableLiveData<List<ItemType>>()
     val filter = MutableLiveData<String>()
     val emptyIcon = MutableLiveData<Int>()
@@ -29,8 +31,13 @@ abstract class ListViewState<ItemType>(
     override fun attach() {
         emptyIcon.value = noResultsIconRes
         emptyMessage.value = noResultsTextRes
+        updateItemsFlow()
+    }
+
+    protected fun updateItemsFlow() {
         viewModelScope.launch {
-            itemsFlow?.collect(this@ListViewState::onItemsChanged)
+            _itemsFlow = getItemsFlow(filter.value)
+            _itemsFlow?.collect(this@ListViewState::onItemsChanged)
         }
     }
 
@@ -42,6 +49,7 @@ abstract class ListViewState<ItemType>(
 
     open fun onFilterChanged(filter: String?) {
         this.filter.value = filter
+        updateItemsFlow()
     }
 
     open fun onItemClick(item: ItemType) {
@@ -55,5 +63,5 @@ abstract class ListViewState<ItemType>(
     open fun onItemLeftClick(item: ItemType) {}
     open fun onItemRightClick(item: ItemType) {}
 
-    abstract protected val itemsFlow: Flow<List<ItemType>>?
+    abstract fun getItemsFlow(filter: String?): Flow<List<ItemType>>?
 }

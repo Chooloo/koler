@@ -11,8 +11,10 @@ import javax.inject.Singleton
 class ContactsRepositoryImpl @Inject constructor(
     private val contentResolverFactory: ContentResolverFactory
 ) : ContactsRepository {
-    override fun getContacts() =
-        contentResolverFactory.getContactsContentResolver().getItemsFlow()
+    override fun getContacts(filter: String?): Flow<List<ContactAccount>> =
+        contentResolverFactory.getContactsContentResolver().apply {
+            this.filter = filter
+        }.getItemsFlow()
 
     override fun getContact(contactId: Long): Flow<ContactAccount?> = flow {
         contentResolverFactory.getContactsContentResolver(contactId).getItemsFlow().collect {
