@@ -58,7 +58,7 @@ class CallViewState @Inject constructor(
     val imageURI = MutableLiveData<Uri?>(null)
     val bannerText = MutableLiveData<String?>()
     val stateText = MutableLiveData<String?>()
-    val elapsedTime = MutableLiveData<Long>()
+    val elapsedTime = MutableLiveData<Long?>()
     val stateTextColor = MutableLiveData<Int>()
 
     val isHoldEnabled = MutableLiveData<Boolean>()

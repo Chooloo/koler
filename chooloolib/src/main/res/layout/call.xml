@@ -2,9 +2,9 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layoutDescription="@xml/call_scene"
     tools:context="com.chooloo.www.chooloolib.ui.call.CallActivity">
 
@@ -32,20 +32,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="94:34"
-        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="94:34"
+        tools:visibility="visible" />
 
     <!-- call status -->
     <TextView
         android:id="@+id/call_state_text"
-        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
+        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_time_text"
@@ -63,10 +62,10 @@
     <!-- caller name -->
     <TextView
         android:id="@+id/call_name_text"
-        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_image"
@@ -75,10 +74,10 @@
     <!-- conference manage button -->
     <Button
         android:id="@+id/call_manage_button"
+        style="@style/Widget.Material3.Button.TonalButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
-        style="@style/Widget.Material3.Button.TonalButton.Icon"
         android:src="@drawable/group"
         android:text="@string/action_manage_calls"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,8 +93,8 @@
     <!-- answer button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/call_answer_button"
-        android:layout_width="wrap_content"
         style="@style/Chooloo.Button.FAB.Large"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_big"
         android:backgroundTint="@color/positive_background"
@@ -106,12 +105,12 @@
     <!-- hangup button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/call_reject_button"
-        android:layout_width="wrap_content"
         style="@style/Chooloo.Button.FAB.Large"
-        android:backgroundTint="@color/negative_background"
-        android:tint="@color/negative_foreground"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing_big"
+        android:backgroundTint="@color/negative_background"
         android:contentDescription="@string/content_description_reject_button"
+        android:tint="@color/negative_foreground"
         app:srcCompat="@drawable/call_end" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

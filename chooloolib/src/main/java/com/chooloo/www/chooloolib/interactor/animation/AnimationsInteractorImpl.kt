@@ -42,7 +42,7 @@ class AnimationsInteractorImpl @Inject constructor(
         }
         view.visibility = VISIBLE
         if (_isEnabled) {
-            YoYo.with(Techniques.FadeInDown)
+            YoYo.with(Techniques.SlideInDown)
                 .duration(100)
                 .playOn(view)
         }

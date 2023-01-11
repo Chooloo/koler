@@ -65,8 +65,11 @@ data class ListData<DataType>(
             phones: List<PhoneAccount>,
             withHeader: Boolean = true
         ): ListData<PhoneAccount> {
-            val distinctPhones = phones.toList().distinctBy { it.normalizedNumber }
-            return ListData(distinctPhones, mapOf(Pair(if (withHeader) "Phones" else "", distinctPhones.size)))
+            val distinctPhones = phones.toList().distinctBy { it.cleanNumber }
+            return ListData(
+                distinctPhones,
+                mapOf(Pair(if (withHeader) "Phones" else "", distinctPhones.size))
+            )
         }
 
         fun fromRawContacts(
