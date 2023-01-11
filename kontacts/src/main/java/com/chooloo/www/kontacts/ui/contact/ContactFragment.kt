@@ -5,7 +5,6 @@ import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
-import com.chooloo.www.chooloolib.ui.accounts.AccountsFragment
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.kontacts.databinding.ContactBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,18 +16,17 @@ class ContactFragment : BaseFragment<ContactViewState>() {
     override val viewState: ContactViewState by activityViewModels()
 
     private val binding by lazy { ContactBinding.inflate(layoutInflater) }
-    private val accountsFragment by lazy { fragmentFactory.getAccountsFragment() }
 
-    @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
-    @Inject lateinit var telecomInteractor: TelecomInteractor
+    @Inject
+    lateinit var prompts: PromptsInteractor
+
+    @Inject
+    lateinit var telecomInteractor: TelecomInteractor
 
 
     override fun onSetup() {
         viewState.apply {
-            contactId.observe(this@ContactFragment) {
-                setRawContactsFragment(accountsFragment)
-            }
+            contactId.observe(this@ContactFragment, ::setRawContactsFragment)
 
             callEvent.observe(this@ContactFragment) {
                 it.ifNew?.let(telecomInteractor::callNumber)
@@ -61,7 +59,8 @@ class ContactFragment : BaseFragment<ContactViewState>() {
         arguments?.getLong(ARG_CONTACT_ID)?.let { viewState.onContactId(it) }
     }
 
-    private fun setRawContactsFragment(accountsFragment: AccountsFragment) {
+    private fun setRawContactsFragment(contactId: Long) {
+        val accountsFragment = fragmentFactory.getAccountsFragment(contactId)
         childFragmentManager
             .beginTransaction()
             .replace(binding.contactPhonesContainer.id, accountsFragment)

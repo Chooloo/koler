@@ -18,6 +18,7 @@ class PhonesFragment @Inject constructor() : ListFragment<PhoneAccount, PhonesVi
     @Inject override lateinit var adapter: PhonesAdapter
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
+
     override fun onSetup() {
         viewState.onContactId(args.getLong(ARG_CONTACT_ID))
         super.onSetup()
