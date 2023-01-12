@@ -13,32 +13,34 @@ import javax.inject.Inject
 class RecentMenuFragment @Inject constructor() : BaseMenuFragment() {
     override val viewState: RecentMenuViewState by activityViewModels()
 
-    @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var dialogs: DialogsInteractor
+    @Inject
+    lateinit var prompts: PromptsInteractor
+
+    @Inject
+    lateinit var dialogs: DialogsInteractor
 
 
     override fun onSetup() {
         super.onSetup()
         viewState.apply {
-            showHistoryEvent.observe(this@RecentMenuFragment) { ev ->
-                ev.ifNew?.let {
-                    prompts.showFragment(fragmentFactory.getRecentsHistoryFragment(viewState.recentNumber.value))
-                }
-            }
-
             isBlocked.observe(this@RecentMenuFragment) {
                 changeItemVisibility(R.id.menu_recent_block, !it)
                 changeItemVisibility(R.id.menu_recent_unblock, it)
             }
-        }
-    }
 
-    override fun onMenuItemClick(menuItem: MenuItem) {
-        if (menuItem.itemId == R.id.menu_brief_contact_delete) {
-            dialogs.askForValidation(R.string.explain_delete_contact) { bl ->
-                if (bl) viewState.onDelete()
+            showHistoryEvent.observe(this@RecentMenuFragment) {
+                it.ifNew?.let {
+                    prompts.showFragment(fragmentFactory.getRecentsHistoryFragment(viewState.recentNumber.value))
+                }
+            }
+
+            confirmDeleteEvent.observe(this@RecentMenuFragment) {
+                it.ifNew?.let {
+                    dialogs.askForValidation(R.string.explain_delete_contact) { bl ->
+                        if (bl) viewState.onDelete()
+                    }
+                }
             }
         }
-        super.onMenuItemClick(menuItem)
     }
 }

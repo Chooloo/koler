@@ -7,6 +7,7 @@ import com.chooloo.www.chooloolib.data.repository.contacts.ContactsRepository
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -24,12 +25,14 @@ open class ContactsViewState @Inject constructor(
     override val permissionsTextRes = R.string.error_no_permissions_contacts
     override val requiredPermissions = listOf(READ_CONTACTS)
 
-    val showContactEvent = DataLiveEvent<Long>()
+    private val _showContactEvent = MutableDataLiveEvent<Long>()
+
+    val showContactEvent = _showContactEvent as DataLiveEvent<Long>
 
 
     override fun onItemClick(item: ContactAccount) {
         super.onItemClick(item)
-        showContactEvent.call(item.id)
+        _showContactEvent.call(item.id)
     }
 
     override fun getItemsFlow(filter: String?): Flow<List<ContactAccount>>? =

@@ -12,6 +12,8 @@ import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -28,11 +30,17 @@ class DialerViewState @Inject constructor(
 
     override val requiredPermissions = listOf(Manifest.permission.CALL_PHONE)
 
-    val callVoicemailEvent = LiveEvent()
-    val callNumberEvent = DataLiveEvent<String>()
-    val isSuggestionsVisible = MutableLiveData(false)
-    val isDeleteButtonVisible = MutableLiveData<Boolean>()
-    val isAddContactButtonVisible = MutableLiveData<Boolean>()
+    private val _isSuggestionsVisible = MutableLiveData(false)
+    private val _isDeleteButtonVisible = MutableLiveData<Boolean>()
+    private val _isAddContactButtonVisible = MutableLiveData<Boolean>()
+    private val _callVoicemailEvent = MutableLiveEvent()
+    private val _callNumberEvent = MutableDataLiveEvent<String>()
+
+    val isSuggestionsVisible = _isSuggestionsVisible as MutableLiveData<Boolean>
+    val isDeleteButtonVisible = _isDeleteButtonVisible as MutableLiveData<Boolean>
+    val isAddContactButtonVisible = _isAddContactButtonVisible as MutableLiveData<Boolean>
+    val callVoicemailEvent = _callVoicemailEvent as LiveEvent
+    val callNumberEvent = _callNumberEvent as DataLiveEvent<String>
 
 
     override fun onLongKeyClick(char: Char) = when (char) {
@@ -41,7 +49,7 @@ class DialerViewState @Inject constructor(
             true
         }
         '1' -> {
-            callVoicemailEvent.call()
+            _callVoicemailEvent.call()
             true
         }
         else -> super.onLongKeyClick(char)
@@ -68,8 +76,8 @@ class DialerViewState @Inject constructor(
         if (text.value?.isEmpty() == true) {
             text.value = recents.getLastOutgoingCall()
         } else {
-            text.value?.let(callNumberEvent::call)
-            finishEvent.call()
+            text.value?.let(_callNumberEvent::call)
+            onFinish()
         }
     }
 

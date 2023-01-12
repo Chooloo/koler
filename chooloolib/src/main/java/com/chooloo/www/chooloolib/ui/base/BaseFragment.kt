@@ -48,11 +48,11 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
     }
 
     override fun showError(@StringRes stringResId: Int) {
-        baseActivity.viewState.errorEvent.call(stringResId)
+        baseActivity.viewState.onError(stringResId)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
-        baseActivity.viewState.messageEvent.call(stringResId)
+        baseActivity.viewState.onMessage(stringResId)
     }
 
     override fun finish() {

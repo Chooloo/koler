@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.ui.briefcontact
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
@@ -12,6 +13,8 @@ import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,19 +24,25 @@ class BriefContactViewState @Inject constructor(
     private val phones: PhonesInteractor,
     private val contacts: ContactsInteractor,
     private val navigations: NavigationsInteractor,
-    private val permissions: PermissionsInteractor
 ) : BaseViewState() {
-    val contactId = MutableLiveData<Long>()
-    val contactImage = MutableLiveData<Uri>()
-    val isFavorite = MutableLiveData<Boolean>()
-    val contactName = MutableLiveData<String?>()
-    val contactNumber = MutableLiveData<String?>()
-
-    val showMoreEvent = LiveEvent()
-    val callEvent = DataLiveEvent<String>()
-
     private var firstNumber: String? = null
     private var contact: ContactAccount? = null
+
+    private val _contactId = MutableLiveData<Long>()
+    private val _contactImage = MutableLiveData<Uri>()
+    private val _isFavorite = MutableLiveData<Boolean>()
+    private val _contactName = MutableLiveData<String?>()
+    private val _contactNumber = MutableLiveData<String?>()
+    private val _showMoreEvent = MutableLiveEvent()
+    private val _callEvent = MutableDataLiveEvent<String>()
+
+    val contactId = _contactId as LiveData<Long>
+    val contactImage = _contactImage as LiveData<Uri>
+    val isFavorite = _isFavorite as LiveData<Boolean>
+    val contactName = _contactName as LiveData<String?>
+    val contactNumber = _contactNumber as LiveData<String?>
+    val showMoreEvent = _showMoreEvent as LiveEvent
+    val callEvent = _callEvent as DataLiveEvent<String>
 
 
     private fun withFirstNumber(callback: (String?) -> Unit) {
@@ -50,15 +59,15 @@ class BriefContactViewState @Inject constructor(
     }
 
     fun onContactId(contactId: Long) {
-        this.contactId.value = contactId
+        _contactId.value = contactId
         viewModelScope.launch {
             contacts.getContact(contactId).collect {
                 contact = it
-                contactName.value = it?.name
-                isFavorite.value = it?.starred == true
-                withFirstNumber { contactNumber.value = it }
+                _contactName.value = it?.name
+                _isFavorite.value = it?.starred == true
+                withFirstNumber { _contactNumber.value = it }
                 it?.photoUri?.let { uri ->
-                    contactImage.value = Uri.parse(uri)
+                    _contactImage.value = Uri.parse(uri)
                 }
             }
         }
@@ -66,8 +75,8 @@ class BriefContactViewState @Inject constructor(
 
     fun onCallClick() {
         withFirstNumber {
-            it?.let(callEvent::call) ?: run {
-                errorEvent.call(R.string.error_no_number_to_call)
+            it?.let(_callEvent::call) ?: run {
+                onError(R.string.error_no_number_to_call)
             }
         }
     }
@@ -80,14 +89,7 @@ class BriefContactViewState @Inject constructor(
         contactId.value?.let(navigations::editContact)
     }
 
-    fun onDelete() {
-        permissions.runWithWriteContactsPermissions {
-            contactId.value?.let(contacts::deleteContact)
-            finishEvent.call()
-        }
-    }
-
     fun onMoreClick() {
-        showMoreEvent.call()
+        _showMoreEvent.call()
     }
 }

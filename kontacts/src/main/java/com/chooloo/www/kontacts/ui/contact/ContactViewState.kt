@@ -71,7 +71,7 @@ class ContactViewState @Inject constructor(
     fun onDeleteClick() {
         contact?.let {
             contacts.deleteContact(it.id)
-            finishEvent.call()
+            onFinish()
         }
     }
 }

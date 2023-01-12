@@ -27,7 +27,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     private val binding by lazy { RecentBinding.inflate(layoutInflater) }
 
     @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var dialogs: DialogsInteractor
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
@@ -59,7 +58,10 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
         viewState.apply {
             onRecentId(args.getLong(ARG_RECENT_ID))
-            menuViewState.recentId.value = args.getLong(ARG_RECENT_ID)
+            menuViewState.onRecentId(args.getLong(ARG_RECENT_ID))
+            isBlocked.observe(this@RecentFragment, menuViewState::onIsBlocked)
+            recentNumber.observe(this@RecentFragment, menuViewState::onRecentNumber)
+            typeImage.observe(this@RecentFragment, binding.recentTypeImage::setImageResource)
 
             imageUri.observe(this@RecentFragment) {
                 binding.recentContactImage.isVisible = true
@@ -69,7 +71,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
             typeImage.observe(this@RecentFragment) {
                 binding.recentTypeImage.setImageResource(it)
             }
-            typeImage.observe(this@RecentFragment, binding.recentTypeImage::setImageResource)
 
             name.observe(this@RecentFragment) {
                 binding.recentTextName.text = it
@@ -77,14 +78,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
             caption.observe(this@RecentFragment) {
                 binding.recentCaption.text = it
-            }
-
-            isBlocked.observe(this@RecentFragment) {
-                menuViewState.isBlocked.value = it
-            }
-
-            recentNumber.observe(this@RecentFragment) {
-                menuViewState.recentNumber.value = it
             }
 
             isContactVisible.observe(this@RecentFragment) {
@@ -113,14 +106,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
             showRecentEvent.observe(this@RecentFragment) { ev ->
                 ev.ifNew?.let { prompts.showFragment(fragmentFactory.getRecentFragment(it)) }
-            }
-
-            confirmRecentDeleteEvent.observe(this@RecentFragment) {
-                it.ifNew?.let {
-                    dialogs.askForValidation(R.string.explain_delete_recent) { result ->
-                        if (result) viewState.onConfirmDelete()
-                    }
-                }
             }
         }
 

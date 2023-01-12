@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.ui.settings
 
+import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
@@ -11,6 +12,8 @@ import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 import com.chooloo.www.chooloolib.ui.base.menu.BaseMenuViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,23 +27,25 @@ open class SettingsViewState @Inject constructor(
 ) :
     BaseMenuViewState() {
     override val menuResList = listOf(R.menu.menu_chooloo)
+    override val _title = MutableLiveData(strings.getString(R.string.settings))
 
-    val askForThemeModeEvent = LiveEvent()
-    val askForAnimationsEvent = LiveEvent()
-    val askForColorEvent = DataLiveEvent<Int>()
+    private val _askForThemeModeEvent = MutableLiveEvent()
+    private val _askForAnimationsEvent = MutableLiveEvent()
+    private val _askForColorEvent = MutableDataLiveEvent<Int>()
 
-    init {
-        title.value = strings.getString(R.string.settings)
-    }
+    val askForThemeModeEvent = _askForThemeModeEvent as LiveEvent
+    val askForAnimationsEvent = _askForAnimationsEvent as LiveEvent
+    val askForColorEvent = _askForColorEvent as DataLiveEvent<Int>
+
 
     override fun onMenuItemClick(itemId: Int) {
         when (itemId) {
             R.id.menu_chooloo_rate -> navigations.rateApp()
             R.id.menu_chooloo_email -> navigations.sendEmail()
             R.id.menu_chooloo_report_bugs -> navigations.reportBug()
-            R.id.menu_chooloo_theme_mode -> askForThemeModeEvent.call()
-            R.id.menu_chooloo_animations -> askForAnimationsEvent.call()
-            R.id.menu_chooloo_accent_color -> askForColorEvent.call(R.array.accent_colors)
+            R.id.menu_chooloo_theme_mode -> _askForThemeModeEvent.call()
+            R.id.menu_chooloo_animations -> _askForAnimationsEvent.call()
+            R.id.menu_chooloo_accent_color -> _askForColorEvent.call(R.array.accent_colors)
             else -> super.onMenuItemClick(itemId)
         }
     }

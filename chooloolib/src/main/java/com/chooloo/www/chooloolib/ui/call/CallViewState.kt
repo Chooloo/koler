@@ -5,6 +5,7 @@ import android.os.Build
 import android.telecom.Call.Details.*
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
@@ -27,6 +28,8 @@ import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.ui.widgets.CallActions
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -52,32 +55,61 @@ class CallViewState @Inject constructor(
     CallAudiosInteractor.Listener,
     CallActions.CallActionsListener {
 
-    val name = MutableLiveData<String?>()
-    val imageRes = MutableLiveData<Int>()
-    val uiState = MutableLiveData<UIState>()
-    val imageURI = MutableLiveData<Uri?>(null)
-    val bannerText = MutableLiveData<String?>()
-    val stateText = MutableLiveData<String?>()
-    val elapsedTime = MutableLiveData<Long?>()
-    val stateTextColor = MutableLiveData<Int>()
+    private val _name = MutableLiveData<String?>()
+    private val _imageRes = MutableLiveData<Int>()
+    private val _uiState = MutableLiveData<UIState>()
+    private val _imageURI = MutableLiveData<Uri?>(null)
+    private val _bannerText = MutableLiveData<String?>()
+    private val _stateText = MutableLiveData<String?>()
+    private val _elapsedTime = MutableLiveData<Long?>()
+    private val _stateTextColor = MutableLiveData<Int>()
 
-    val isHoldEnabled = MutableLiveData<Boolean>()
-    val isMuteEnabled = MutableLiveData<Boolean>()
-    val isSwapEnabled = MutableLiveData<Boolean>()
-    val isMergeEnabled = MutableLiveData<Boolean>()
-    val isMuteActivated = MutableLiveData<Boolean>()
-    val isHoldActivated = MutableLiveData<Boolean>()
-    val isManageEnabled = MutableLiveData(false)
-    val isSpeakerEnabled = MutableLiveData(true)
-    val isSpeakerActivated = MutableLiveData<Boolean>()
-    val isBluetoothActivated = MutableLiveData<Boolean>()
+    private val _isHoldEnabled = MutableLiveData<Boolean>()
+    private val _isMuteEnabled = MutableLiveData<Boolean>()
+    private val _isSwapEnabled = MutableLiveData<Boolean>()
+    private val _isMergeEnabled = MutableLiveData<Boolean>()
+    private val _isMuteActivated = MutableLiveData<Boolean>()
+    private val _isHoldActivated = MutableLiveData<Boolean>()
+    private val _isManageEnabled = MutableLiveData(false)
+    private val _isSpeakerEnabled = MutableLiveData(true)
+    private val _isSpeakerActivated = MutableLiveData<Boolean>()
+    private val _isBluetoothActivated = MutableLiveData<Boolean>()
 
-    val showDialerEvent = LiveEvent()
-    val showDialpadEvent = LiveEvent()
-    val askForRouteEvent = LiveEvent()
-    val showCallManagerEvent = LiveEvent()
-    val selectPhoneHandleEvent = DataLiveEvent<List<PhoneAccountHandle>>()
-    val selectPhoneSuggestionEvent = DataLiveEvent<List<PhoneAccountSuggestion>>()
+    private val _showDialerEvent = MutableLiveEvent()
+    private val _showDialpadEvent = MutableLiveEvent()
+    private val _askForRouteEvent = MutableLiveEvent()
+    private val _showCallManagerEvent = MutableLiveEvent()
+    private val _selectPhoneHandleEvent = MutableDataLiveEvent<List<PhoneAccountHandle>>()
+    private val _selectPhoneSuggestionEvent = MutableDataLiveEvent<List<PhoneAccountSuggestion>>()
+
+
+    val name = _name as LiveData<String?>
+    val imageRes = _imageRes as LiveData<Int>
+    val uiState = _uiState as LiveData<UIState>
+    val imageURI = _imageURI as LiveData<Uri?>
+    val bannerText = _bannerText as LiveData<String?>
+    val stateText = _stateText as LiveData<String?>
+    val elapsedTime = _elapsedTime as LiveData<Long?>
+    val stateTextColor = _stateTextColor as LiveData<Int>
+
+    val isHoldEnabled = _isHoldEnabled as LiveData<Boolean>
+    val isMuteEnabled = _isMuteEnabled as LiveData<Boolean>
+    val isSwapEnabled = _isSwapEnabled as LiveData<Boolean>
+    val isMergeEnabled = _isMergeEnabled as LiveData<Boolean>
+    val isMuteActivated = _isMuteActivated as LiveData<Boolean>
+    val isHoldActivated = _isHoldActivated as LiveData<Boolean>
+    val isManageEnabled = _isManageEnabled as LiveData<Boolean>
+    val isSpeakerEnabled = _isSpeakerEnabled as LiveData<Boolean>
+    val isSpeakerActivated = _isSpeakerActivated as LiveData<Boolean>
+    val isBluetoothActivated = _isBluetoothActivated as LiveData<Boolean>
+
+    val showDialerEvent = _showDialerEvent as LiveEvent
+    val showDialpadEvent = _showDialpadEvent as LiveEvent
+    val askForRouteEvent = _askForRouteEvent as LiveEvent
+    val showCallManagerEvent = _showCallManagerEvent as LiveEvent
+    val selectPhoneHandleEvent = _selectPhoneHandleEvent as DataLiveEvent<List<PhoneAccountHandle>>
+    val selectPhoneSuggestionEvent =
+        _selectPhoneSuggestionEvent as DataLiveEvent<List<PhoneAccountSuggestion>>
 
     private var _currentCallId: String? = null
 
@@ -100,7 +132,7 @@ class CallViewState @Inject constructor(
             callAudios.audioRoute?.let(this@CallViewState::onAudioRouteChanged)
         }
 
-        isManageEnabled.value = false
+        _isManageEnabled.value = false
     }
 
     override fun detach() {
@@ -109,27 +141,27 @@ class CallViewState @Inject constructor(
     }
 
     fun onAnswerClick() {
-        _currentCallId?.let { calls.answerCall(it) }
+        _currentCallId?.let(calls::answerCall)
     }
 
     fun onRejectClick() {
-        _currentCallId?.let { calls.rejectCall(it) }
+        _currentCallId?.let(calls::rejectCall)
     }
 
     override fun onSwapClick() {
         try {
-            _currentCallId?.let { calls.swapCall(it) }
+            _currentCallId?.let(calls::swapCall)
         } catch (e: CantSwapCallException) {
-            errorEvent.call(R.string.error_cant_swap_calls)
+            onError(R.string.error_cant_swap_calls)
             e.printStackTrace()
         }
     }
 
     override fun onHoldClick() {
         try {
-            _currentCallId?.let { calls.toggleHold(it) }
+            _currentCallId?.let(calls::toggleHold)
         } catch (e: CantHoldCallException) {
-            errorEvent.call(R.string.error_cant_hold_call)
+            onError(R.string.error_cant_hold_call)
             e.printStackTrace()
         }
     }
@@ -140,25 +172,25 @@ class CallViewState @Inject constructor(
 
     override fun onMergeClick() {
         try {
-            _currentCallId?.let { calls.mergeCall(it) }
+            _currentCallId?.let(calls::mergeCall)
         } catch (e: CantMergeCallException) {
-            errorEvent.call(R.string.error_cant_merge_call)
+            onError(R.string.error_cant_merge_call)
             e.printStackTrace()
         }
     }
 
     override fun onKeypadClick() {
-        showDialpadEvent.call()
+        _showDialpadEvent.call()
     }
 
     override fun onAddCallClick() {
-        showDialerEvent.call()
+        _showDialerEvent.call()
     }
 
     override fun onSpeakerClick() {
         callAudios.apply {
             if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
-                askForRouteEvent.call()
+                _askForRouteEvent.call()
             } else {
                 isSpeakerOn = !isSpeakerActivated.value!!
             }
@@ -172,21 +204,21 @@ class CallViewState @Inject constructor(
 
     override fun onNoCalls() {
         audios.audioMode = NORMAL
-        finishEvent.call()
+        onFinish()
     }
 
     override fun onCallChanged(call: Call) {
         if (calls.getFirstState(HOLDING)?.id == _currentCallId) {
-            bannerText.value = null
+            _bannerText.value = null
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
             viewModelScope.launch {
-                bannerText.value = String.format(
+                _bannerText.value = String.format(
                     strings.getString(R.string.explain_is_on_hold),
                     phones.lookupAccount(call.number)?.displayString ?: call.number
                 )
             }
         } else if (calls.getStateCount(HOLDING) == 0) {
-            bannerText.value = null
+            _bannerText.value = null
         }
     }
 
@@ -194,44 +226,44 @@ class CallViewState @Inject constructor(
         _currentCallId = call.id
 
         if (call.isEnterprise) {
-            imageRes.value = R.drawable.corporate_fare
+            _imageRes.value = R.drawable.corporate_fare
         }
 
         if (call.isIncoming) {
-            uiState.value = UIState.INCOMING
+            _uiState.value = UIState.INCOMING
         }
 
         if (call.isConference) {
-            name.value = strings.getString(R.string.conference)
+            _name.value = strings.getString(R.string.conference)
         } else {
             viewModelScope.launch {
                 val account = phones.lookupAccount(call.number)
-                account?.photoUri?.let { imageURI.value = Uri.parse(it) }
-                name.value = account?.displayString ?: call.number
+                account?.photoUri?.let { _imageURI.value = Uri.parse(it) }
+                _name.value = account?.displayString ?: call.number
             }
         }
 
-        isHoldActivated.value = call.isHolding
-        isManageEnabled.value = call.isConference
-        isHoldEnabled.value = call.isCapable(CAPABILITY_HOLD)
-        isMuteEnabled.value = call.isCapable(CAPABILITY_MUTE)
-        isSwapEnabled.value = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
-        stateText.value = strings.getString(call.state.stringRes)
+        _isHoldActivated.value = call.isHolding
+        _isManageEnabled.value = call.isConference
+        _isHoldEnabled.value = call.isCapable(CAPABILITY_HOLD)
+        _isMuteEnabled.value = call.isCapable(CAPABILITY_MUTE)
+        _isSwapEnabled.value = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
+        _stateText.value = strings.getString(call.state.stringRes)
 
         when {
-            call.isIncoming -> uiState.value = UIState.INCOMING
-            calls.isMultiCall -> uiState.value = UIState.MULTI
-            else -> uiState.value = UIState.ACTIVE
+            call.isIncoming -> _uiState.value = UIState.INCOMING
+            calls.isMultiCall -> _uiState.value = UIState.MULTI
+            else -> _uiState.value = UIState.ACTIVE
         }
 
         when (call.state) {
             ACTIVE,
-            INCOMING-> stateTextColor.value =
+            INCOMING -> _stateTextColor.value =
                 colors.getColor(R.color.green_on_primary_container)
 
             HOLDING,
             DISCONNECTING,
-            DISCONNECTED -> stateTextColor.value =
+            DISCONNECTED -> _stateTextColor.value =
                 colors.getAttrColor(R.attr.colorError)
 
             else -> {}
@@ -239,31 +271,31 @@ class CallViewState @Inject constructor(
 
         if (call.state == SELECT_PHONE_ACCOUNT && !call.phoneAccountSelected) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
+                _selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
             } else {
-                selectPhoneHandleEvent.call(call.availablePhoneAccounts)
+                _selectPhoneHandleEvent.call(call.availablePhoneAccounts)
             }
         }
     }
 
 
     override fun onMuteChanged(isMuted: Boolean) {
-        isMuteActivated.value = isMuted
+        _isMuteActivated.value = isMuted
     }
 
     override fun onAudioRouteChanged(audioRoute: AudioRoute) {
-        isSpeakerActivated.value = audioRoute == AudioRoute.SPEAKER
-        isBluetoothActivated.value = audioRoute == AudioRoute.BLUETOOTH
+        _isSpeakerActivated.value = audioRoute == AudioRoute.SPEAKER
+        _isBluetoothActivated.value = audioRoute == AudioRoute.BLUETOOTH
     }
 
     private fun displayCallTime() {
         calls.mainCall?.let {
-            elapsedTime.value = if (it.isStarted) it.durationTimeMilis else null
+            _elapsedTime.value = if (it.isStarted) it.durationTimeMilis else null
         }
     }
 
     fun onManageClick() {
-        showCallManagerEvent.call()
+        _showCallManagerEvent.call()
     }
 
     fun onAudioRoutePicked(audioRoute: AudioRoute) {

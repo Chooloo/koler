@@ -12,10 +12,10 @@ class PromptViewState @Inject constructor() : BaseViewState() {
 
     
     fun onNoClick() {
-        finishEvent.call()
+        onFinish()
     }
 
     fun onYesClick() {
-        finishEvent.call()
+        onFinish()
     }
 }

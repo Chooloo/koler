@@ -58,13 +58,13 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
 
         viewState.apply {
             isFavorite.observe(this@BriefContactFragment) {
-                menuViewState.isFavorite.value = it
+                menuViewState.onIsFavorite(it)
                 binding.briefContactIconFav.isVisible = it
             }
 
             contactName.observe(this@BriefContactFragment) {
                 binding.briefContactTextName.text = it
-                it?.let(menuViewState.contactName::setValue)
+                it?.let(menuViewState::onContactName)
             }
 
             contactNumber.observe(this@BriefContactFragment) {
@@ -90,7 +90,8 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             }
 
             onContactId(args.getLong(ARG_CONTACT_ID))
-            menuViewState.contactId.value = args.getLong(ARG_CONTACT_ID)
+
+            menuViewState.onContactId(args.getLong(ARG_CONTACT_ID))
         }
 
         childFragmentManager

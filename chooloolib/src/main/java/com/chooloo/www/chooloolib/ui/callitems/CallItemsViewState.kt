@@ -18,13 +18,13 @@ class CallItemsViewState @Inject constructor(
     override fun onItemLeftClick(item: Call) {
         super.onItemLeftClick(item)
         item.leaveConference()
-        finishEvent.call()
+        onFinish()
     }
 
     override fun onItemRightClick(item: Call) {
         super.onItemRightClick(item)
         item.reject()
-        finishEvent.call()
+        onFinish()
     }
 
     override fun getItemsFlow(filter: String?): Flow<List<Call>>? =

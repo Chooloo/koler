@@ -67,7 +67,7 @@ class MainActivity : BaseActivity<MainViewState>() {
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    viewState.currentPageIndex.value = position
+                    viewState.onPageSelected(position)
                 }
             })
         }

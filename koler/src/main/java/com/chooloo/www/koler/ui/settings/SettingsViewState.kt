@@ -9,6 +9,7 @@ import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
 import com.chooloo.www.chooloolib.ui.settings.SettingsViewState
 import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import com.chooloo.www.koler.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -25,20 +26,26 @@ class SettingsViewState @Inject constructor(
 
     override val menuResList = arrayListOf(R.menu.menu_koler) + super.menuResList
 
-    val askForDefaultPageEvent = LiveEvent()
-    val askForGroupRecentsEvent = LiveEvent()
-    val askForDialpadTonesEvent = LiveEvent()
-    val askForDialpadVibrateEvent = LiveEvent()
-    val askForIncomingCallModeEvent = LiveEvent()
+    private val _askForDefaultPageEvent = MutableLiveEvent()
+    private val _askForGroupRecentsEvent = MutableLiveEvent()
+    private val _askForDialpadTonesEvent = MutableLiveEvent()
+    private val _askForDialpadVibrateEvent = MutableLiveEvent()
+    private val _askForIncomingCallModeEvent = MutableLiveEvent()
+
+    val askForDefaultPageEvent = _askForDefaultPageEvent as LiveEvent
+    val askForGroupRecentsEvent = _askForGroupRecentsEvent as LiveEvent
+    val askForDialpadTonesEvent = _askForDialpadTonesEvent as LiveEvent
+    val askForDialpadVibrateEvent = _askForDialpadVibrateEvent as LiveEvent
+    val askForIncomingCallModeEvent = _askForIncomingCallModeEvent as LiveEvent
 
 
     override fun onMenuItemClick(itemId: Int) {
         when (itemId) {
-            R.id.menu_koler_default_page -> askForDefaultPageEvent.call()
-            R.id.menu_koler_dialpad_tones -> askForDialpadTonesEvent.call()
-            R.id.menu_koler_group_recents -> askForGroupRecentsEvent.call()
-            R.id.menu_koler_dialpad_vibrate -> askForDialpadVibrateEvent.call()
-            R.id.menu_koler_incoming_call_mode -> askForIncomingCallModeEvent.call()
+            R.id.menu_koler_default_page -> _askForDefaultPageEvent.call()
+            R.id.menu_koler_dialpad_tones -> _askForDialpadTonesEvent.call()
+            R.id.menu_koler_group_recents -> _askForGroupRecentsEvent.call()
+            R.id.menu_koler_dialpad_vibrate -> _askForDialpadVibrateEvent.call()
+            R.id.menu_koler_incoming_call_mode -> _askForIncomingCallModeEvent.call()
             else -> super.onMenuItemClick(itemId)
         }
     }
