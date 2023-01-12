@@ -34,7 +34,7 @@ class DialpadKey : LinearLayout {
         _digitTextView = TextView(context, attrs, defStyleRes).apply {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
 
-            setTextAppearance(R.style.TextAppearance_Material3_HeadlineMedium)
+            setTextAppearance(R.style.TextAppearance_Material3_HeadlineLarge)
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
         }.also {
             addView(it)
