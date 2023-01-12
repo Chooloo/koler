@@ -58,7 +58,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
         viewState.apply {
             onRecentId(args.getLong(ARG_RECENT_ID))
-            menuViewState.onRecentId(args.getLong(ARG_RECENT_ID))
             isBlocked.observe(this@RecentFragment, menuViewState::onIsBlocked)
             recentNumber.observe(this@RecentFragment, menuViewState::onRecentNumber)
             typeImage.observe(this@RecentFragment, binding.recentTypeImage::setImageResource)
@@ -111,6 +110,14 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
 
         historyViewState.itemClickedEvent.observe(this) {
             it.ifNew?.let { recent -> viewState.onRecentClick(recent.id) }
+        }
+
+        menuViewState.apply {
+            finishEvent.observe(this@RecentFragment) {
+                viewState.onFinish()
+            }
+
+            onRecentId(args.getLong(ARG_RECENT_ID))
         }
     }
 

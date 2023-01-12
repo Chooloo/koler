@@ -62,13 +62,13 @@ class RecentViewState @Inject constructor(
         viewModelScope.launch {
             recents.getRecent(recentId).collect {
                 _recent = it
-                _recentNumber.value = it?.number
+                it?.number?.let { _recentNumber.value = it }
                 _name.value =
-                    if (_recent!!.cachedName?.isNotEmpty() == true) it?.cachedName else it?.number
+                    if (_recent?.cachedName?.isNotEmpty() == true) it?.cachedName else it?.number
                 it?.type?.let { _typeImage.value = recents.getCallTypeImage(it) }
 
-                _caption.value = "${it?.relativeTime} • ${
-                    if (it?.duration ?: -1 > 0L) "${
+                _caption.value = "${it?.relativeTime ?: ""} • ${
+                    if ((it?.duration ?: -1) > 0L) "${
                         getElapsedTimeString(it?.duration!!)
                     } •" else ""
                 }"

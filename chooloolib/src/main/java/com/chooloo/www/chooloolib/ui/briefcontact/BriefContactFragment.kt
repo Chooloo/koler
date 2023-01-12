@@ -91,7 +91,13 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
 
             onContactId(args.getLong(ARG_CONTACT_ID))
 
-            menuViewState.onContactId(args.getLong(ARG_CONTACT_ID))
+            menuViewState.apply {
+                finishEvent.observe(this@BriefContactFragment) {
+                    viewState.onFinish()
+                }
+
+                onContactId(args.getLong(ARG_CONTACT_ID))
+            }
         }
 
         childFragmentManager
