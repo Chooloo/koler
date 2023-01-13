@@ -57,7 +57,7 @@ class MainViewState @Inject constructor(
     fun onViewIntent(intent: Intent) {
         try {
             val intentText = URLDecoder.decode(intent.dataString ?: "", "utf-8")
-            _showDialerEvent.call(intentText.substringAfter("tel:"))
+            _showDialerEvent.call(intentText.substringAfter("tel:").trim())
         } catch (e: Exception) {
             onError(R.string.error_couldnt_get_number_from_intent)
         }
