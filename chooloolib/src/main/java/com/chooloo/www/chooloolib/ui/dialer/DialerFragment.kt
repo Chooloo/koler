@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DialerFragment @Inject constructor() : DialpadFragment() {
-    override val viewState: DialerViewState by viewModels()
+    override val viewState: DialerViewState by activityViewModels()
 
     private val suggestionsViewState: ContactsSuggestionsViewState by activityViewModels()
     private val _suggestionsFragment by lazy { fragmentFactory.getContactsSuggestionsFragment() }

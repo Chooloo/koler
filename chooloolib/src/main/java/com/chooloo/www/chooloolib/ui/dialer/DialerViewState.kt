@@ -26,7 +26,7 @@ class DialerViewState @Inject constructor(
     private val recents: RecentsInteractor,
     private val navigations: NavigationsInteractor,
 ) :
-    DialpadViewState(audios, clipboardManager, preferences, permissions) {
+    DialpadViewState(permissions, audios, preferences, clipboardManager) {
 
     override val requiredPermissions = listOf(Manifest.permission.CALL_PHONE)
 
@@ -63,29 +63,29 @@ class DialerViewState @Inject constructor(
     }
 
     fun onDeleteClick() {
-        text.value?.dropLast(1)?.let(this::onTextChanged)
+        _text.value?.dropLast(1)?.let(this::onTextChanged)
     }
 
     fun onLongDeleteClick(): Boolean {
         onTextChanged("")
-        text.value = ""
+        _text.value = ""
         return true
     }
 
     fun onCallClick() {
         if (text.value?.isEmpty() == true) {
-            text.value = recents.getLastOutgoingCall()
+            _text.value = recents.getLastOutgoingCall()
         } else {
-            text.value?.let(_callNumberEvent::call)
+            _text.value?.let(_callNumberEvent::call)
             onFinish()
         }
     }
 
     fun onAddContactClick() {
-        text.value?.let(navigations::addContact)
+        _text.value?.let(navigations::addContact)
     }
 
     fun onSuggestionsChanged(contacts: List<ContactAccount>) {
-        isSuggestionsVisible.value = contacts.isNotEmpty() && text.value?.isNotEmpty() == true
+        isSuggestionsVisible.value = contacts.isNotEmpty() && _text.value?.isNotEmpty() == true
     }
 }
