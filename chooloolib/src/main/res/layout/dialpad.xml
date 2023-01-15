@@ -113,12 +113,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialpad_button_call"
+        style="@style/Chooloo.Button.FAB.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
-        style="@style/Chooloo.Button.FAB.Large"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription="@string/action_call"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/call" />
@@ -129,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:icon="@drawable/keyboard_return"
+        app:icon="@drawable/backspace"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.53"
