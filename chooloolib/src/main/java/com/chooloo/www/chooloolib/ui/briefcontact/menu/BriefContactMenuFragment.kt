@@ -29,7 +29,7 @@ class BriefContactMenuFragment @Inject constructor() : BaseMenuFragment() {
 
             showHistoryEvent.observe(this@BriefContactMenuFragment) {
                 it.ifNew?.let {
-                    prompts.showFragment(fragmentFactory.getRecentsFragment(viewState.contactName.value))
+                    prompts.showFragment(fragmentFactory.getRecentsHistoryFragment(viewState.contactName.value))
                 }
             }
 
