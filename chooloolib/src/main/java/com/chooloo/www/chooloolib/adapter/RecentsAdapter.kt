@@ -49,7 +49,7 @@ class RecentsAdapter @Inject constructor(
                 val account = phones.lookupAccount(item.number)
 
                 mainScope.launch {
-                    titleText = account?.name ?: item.number
+                    titleText = account?.name ?: item.cachedName ?: item.number
                     setImageUri(account?.photoUri?.let(Uri::parse))
                     account?.let {
                         captionText =
