@@ -27,7 +27,6 @@ open class SettingsViewState @Inject constructor(
 ) :
     BaseMenuViewState() {
     override val menuResList = listOf(R.menu.menu_chooloo)
-    override val _title = MutableLiveData(strings.getString(R.string.settings))
 
     private val _askForThemeModeEvent = MutableLiveEvent()
     private val _askForAnimationsEvent = MutableLiveEvent()
@@ -37,6 +36,9 @@ open class SettingsViewState @Inject constructor(
     val askForAnimationsEvent = _askForAnimationsEvent as LiveEvent
     val askForColorEvent = _askForColorEvent as DataLiveEvent<Int>
 
+    init {
+        _title.value = strings.getString(R.string.settings)
+    }
 
     override fun onMenuItemClick(itemId: Int) {
         when (itemId) {

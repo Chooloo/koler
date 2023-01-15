@@ -18,6 +18,7 @@ import javax.inject.Inject
 open class BaseMenuFragment @Inject constructor() : BaseFragment<BaseViewState>() {
     override val contentView by lazy { binding.root }
     override val viewState: BaseMenuViewState by viewModels()
+
     private val binding by lazy { MenuBinding.inflate(layoutInflater) }
     protected var menu: MenuBuilder? = null
 

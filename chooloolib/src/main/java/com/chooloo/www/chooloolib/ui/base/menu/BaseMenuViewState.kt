@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 
 abstract class BaseMenuViewState : BaseViewState() {
-    protected open val _title = MutableLiveData<String>()
-    protected open val _subtitle = MutableLiveData<String>()
+    protected val _title = MutableLiveData<String>()
+    protected val _subtitle = MutableLiveData<String>()
 
     val title = _title as LiveData<String>
     val subtitle = _subtitle as LiveData<String>
