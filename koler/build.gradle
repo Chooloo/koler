@@ -51,9 +51,6 @@ android {
         viewBinding true
     }
 
-    lintOptions {
-        checkReleaseBuilds false
-    }
 
     hilt {
         enableAggregatingTask true
@@ -61,6 +58,10 @@ android {
 
     kapt {
         correctErrorTypes true
+    }
+    namespace 'com.chooloo.www.koler'
+    lint {
+        checkReleaseBuilds false
     }
 }
 

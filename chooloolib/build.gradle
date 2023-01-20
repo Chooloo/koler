@@ -50,6 +50,7 @@ android {
     kapt {
         correctErrorTypes true
     }
+    namespace 'com.chooloo.www.chooloolib'
 }
 
 dependencies {

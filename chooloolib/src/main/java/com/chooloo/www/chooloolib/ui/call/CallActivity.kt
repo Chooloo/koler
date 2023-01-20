@@ -210,7 +210,6 @@ class CallActivity : BaseActivity<CallViewState>() {
         dialpadViewState.char.observe(this@CallActivity, viewState::onCharKey)
     }
 
-
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
         if (binding.callActions.visibility != View.VISIBLE) {

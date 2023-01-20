@@ -35,8 +35,8 @@ class ScreensInteractorImpl @Inject constructor(
     override fun showWhenLocked() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             activity.apply {
-                setShowWhenLocked(true)
                 setTurnScreenOn(true)
+                setShowWhenLocked(true)
                 keyguardManager.requestDismissKeyguard(this, null)
             }
         } else {

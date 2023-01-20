@@ -51,6 +51,7 @@ android {
     kapt {
         correctErrorTypes true
     }
+    namespace 'com.chooloo.www.kontacts'
 }
 
 dependencies {
