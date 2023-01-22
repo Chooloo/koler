@@ -259,7 +259,7 @@ class CallViewState @Inject constructor(
         when (call.state) {
             ACTIVE,
             INCOMING -> _stateTextColor.value =
-                colors.getColor(R.color.green_on_primary_container)
+                colors.getColor(R.color.positive_background)
 
             HOLDING,
             DISCONNECTING,

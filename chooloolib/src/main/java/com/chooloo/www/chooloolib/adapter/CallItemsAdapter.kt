@@ -48,7 +48,7 @@ class CallItemsAdapter @Inject constructor(
 
             setLeftButtonIcon(R.drawable.call_split)
             setRightButtonIcon(R.drawable.call_end)
-            setRightButtonIconTint(R.color.negative_foreground)
+            setRightButtonIconTint(R.color.negative_background)
         }
     }
 

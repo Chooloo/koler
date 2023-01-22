@@ -20,11 +20,13 @@
     <dimen name="image_size_big">110dp</dimen>
     <dimen name="image_size_medium">45dp</dimen>
     <dimen name="image_size_small">30dp</dimen>
-    <dimen name="corner_radius">18dp</dimen>
+    <dimen name="corner_radius">20dp</dimen>
     <!--endregion-->
 
     <!--region button-->
     <dimen name="button_text_height">47dp</dimen>
+    <dimen name="button_primary_height">40dp</dimen>
+    <dimen name="button_secondary_height">30dp</dimen>
     <!--endregion-->
 
     <!--region bottom sheet dialog -->

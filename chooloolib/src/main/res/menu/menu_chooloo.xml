@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_chooloo_accent_color"
-        android:contentDescription="@string/in_development"
-        android:enabled="false"
-        android:icon="@drawable/palette"
-        android:title="@string/pref_title_app_color" />
-
-    <item
         android:id="@+id/menu_chooloo_theme_mode"
         android:icon="@drawable/invert_colors"
         android:title="@string/pref_title_theme_mode" />

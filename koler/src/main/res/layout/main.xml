@@ -10,11 +10,9 @@
     <!-- menu button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Chooloo.Button.Secondary"
         android:contentDescription="@string/content_description_menu_button"
         app:icon="@drawable/more_vert"
-        style="@style/Chooloo.Button.Icon.Small"
         tools:layout_editor_absoluteX="346dp"
         tools:layout_editor_absoluteY="18dp" />
 
@@ -41,11 +39,9 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!-- dialer button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_dialpad_button"
-        android:layout_width="wrap_content"
-        style="@style/Chooloo.Button.FAB"
-        android:layout_height="wrap_content"
+        style="@style/Chooloo.Button.Primary"
         android:contentDescription="@string/content_description_dialer_button"
-        app:srcCompat="@drawable/dialpad" />
+        app:icon="@drawable/dialpad" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

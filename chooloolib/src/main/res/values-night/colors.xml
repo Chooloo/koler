@@ -1,34 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <color name="positive_background">#d9e7cb</color>-->
-    <!--    <color name="positive_foreground">#131f0d</color>-->
-    <color name="positive_background">#587363</color>
-    <color name="positive_foreground">#A2CFAE</color>
-
-    <!--    <color name="negative_background">#ffdad9</color>-->
-    <!--    <color name="negative_foreground">#2c1516</color>-->
-    <color name="negative_background">#7d5858</color>
-    <color name="negative_foreground">#F5AEA8</color>
-
-    <!--region accent colors-->
-    <color name="blue_primary">#76D1FE</color>
-    <color name="blue_on_primary">#20323C</color>
-    <color name="blue_primary_container">#014C69</color>
-    <color name="blue_on_primary_container">#C1E7FE</color>
-
-    <color name="green_primary">#9cd67e</color>
-    <color name="green_on_primary">#0c3900</color>
-    <color name="green_primary_container">#205107</color>
-    <color name="green_on_primary_container">#9cd67e</color>
-
-    <color name="red_primary">#19686a</color>
-    <color name="red_on_primary">#ffffff</color>
-    <color name="red_primary_container">#a8eff0</color>
-    <color name="red_on_primary_container">#a8eff0</color>
-
-    <color name="purple_primary">#19686a</color>
-    <color name="purple_on_primary">#ffffff</color>
-    <color name="purple_primary_container">#a8eff0</color>
-    <color name="purple_on_primary_container">#a8eff0</color>
-    <!--endregion-->
+    <color name="primary">#76D1FE</color>
+    <color name="surface_disabled">#3776D1FE</color>
+    <color name="surface_variant">#42474e</color>
+    <color name="on_surface_variant">#c2c7ce</color>
+    <color name="on_primary">#20323C</color>
+    <color name="primary_container">#014C69</color>
+    <color name="on_primary_container">#C1E7FE</color>
 </resources>

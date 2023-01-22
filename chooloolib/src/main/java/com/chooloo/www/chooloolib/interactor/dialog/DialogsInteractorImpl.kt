@@ -105,12 +105,12 @@ class DialogsInteractorImpl @Inject constructor(
         noColorOption: Boolean,
         selectedColor: Int?
     ) {
-        ColorSheet().colorPicker(
-            colors = activity.resources.getIntArray(R.array.accent_colors),
-            listener = callback::invoke,
-            noColorOption = true,
-            selectedColor = selectedColor
-        ).show(activity.supportFragmentManager)
+//        ColorSheet().colorPicker(
+//            colors = activity.resources.getIntArray(R.array.accent_colors),
+//            listener = callback::invoke,
+//            noColorOption = true,
+//            selectedColor = selectedColor
+//        ).show(activity.supportFragmentManager)
     }
 
     override fun askForSim(callback: (SimAccount?) -> Unit) {

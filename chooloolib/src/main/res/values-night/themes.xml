@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ChoolooTheme" parent="BaseChoolooTheme">
-        <item name="colorSurfaceVariant">#42474e</item>
-        <item name="colorOnSurfaceVariant">#c2c7ce</item>
+    <style name="ChoolooTheme">
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

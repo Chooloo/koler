@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <Preference
-        android:key="@string/pref_key_color"
-        android:title="@string/pref_title_app_color" />
-
     <SwitchPreference
         android:defaultValue="@bool/pref_default_value_animations"
         android:key="@string/pref_key_animations"

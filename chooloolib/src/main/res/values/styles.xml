@@ -15,11 +15,12 @@
     </style>
 
     <style name="Chooloo.Text.Title" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Chooloo.Text.Body" parent="TextAppearance.Material3.BodySmall">
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
     <style name="Chooloo.Text.Caption" parent="TextAppearance.Material3.LabelSmall">
@@ -78,7 +79,27 @@
     <!--endregion-->
 
     <!--region button-->
-    <style name="Chooloo.Button" />
+    <style name="Chooloo.Button">
+        <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="Chooloo.Button.Primary">
+        <item name="tint">?colorPrimary</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="elevation">5dp</item>
+        <item name="android:colorAccent">?colorPrimary</item>
+        <item name="android:shadowColor">?colorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/button_primary_height</item>
+    </style>
+
+    <style name="Chooloo.Button.Secondary">
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/button_secondary_height</item>
+        <item name="android:colorAccent">?colorSurfaceVariant</item>
+    </style>
 
     <style name="Chooloo.Button.Filled" parent="Widget.Material3.Button" />
 
@@ -116,7 +137,7 @@
 
     <style name="Chooloo.Button.FAB" parent="Widget.Material3.FloatingActionButton.Large.Primary">
         <item name="fabCustomSize">70dp</item>
-        <item name="elevation">0dp</item>
+        <item name="elevation">10dp</item>
         <item name="maxImageSize">21dp</item>
     </style>
 
