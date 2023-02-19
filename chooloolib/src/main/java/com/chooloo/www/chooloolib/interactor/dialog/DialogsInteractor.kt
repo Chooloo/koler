@@ -17,7 +17,11 @@ import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     interface Listener
 
-    fun askForBoolean(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
+    fun askForBoolean(
+        @StringRes titleRes: Int,
+        isActivated: Boolean,
+        callback: (result: Boolean) -> Boolean
+    )
 
     fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
 

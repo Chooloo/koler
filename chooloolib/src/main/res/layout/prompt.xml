@@ -46,12 +46,13 @@
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/prompt_button_yes"
-        style="@style/Chooloo.Button.Primary"
+        style="@style/Chooloo.Button.Secondary.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:layout_marginEnd="@dimen/default_spacing_big"
         android:layout_marginBottom="@dimen/default_spacing"
+        app:activated="true"
         app:icon="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

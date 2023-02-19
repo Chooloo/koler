@@ -40,13 +40,15 @@ class DialogsInteractorImpl @Inject constructor(
     private val preferences: PreferencesInteractor,
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
 
-    private val activity = context as BaseActivity<*>
-
-
-    override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
+    override fun askForBoolean(
+        @StringRes titleRes: Int,
+        isActivated: Boolean,
+        callback: (result: Boolean) -> Boolean
+    ) {
         prompts.showFragment(fragmentsFactory.getPromptFragment(
             strings.getString(R.string.prompt_yes_or_no),
-            strings.getString(titleRes)
+            strings.getString(titleRes),
+            isActivated
         ).apply {
             setOnItemClickListener(callback::invoke)
         })
@@ -55,9 +57,13 @@ class DialogsInteractorImpl @Inject constructor(
     override fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit) {
         prompts.showFragment(fragmentsFactory.getPromptFragment(
             strings.getString(R.string.prompt_are_you_sure),
-            strings.getString(titleRes)
+            strings.getString(titleRes),
+            true
         ).apply {
-            setOnItemClickListener(callback::invoke)
+            setOnItemClickListener {
+                callback.invoke(it)
+                true
+            }
         })
     }
 

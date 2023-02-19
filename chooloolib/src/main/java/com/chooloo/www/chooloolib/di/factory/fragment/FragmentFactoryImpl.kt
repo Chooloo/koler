@@ -42,8 +42,12 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
     override fun getPhonesFragment(contactId: Long?) =
         PhonesFragment.newInstance(contactId)
 
-    override fun getPromptFragment(title: String, subtitle: String) =
-        PromptFragment.newInstance(title, subtitle)
+    override fun getPromptFragment(
+        title: String,
+        subtitle: String,
+        isActivated: Boolean
+    ): PromptFragment =
+        PromptFragment.newInstance(title, subtitle, isActivated)
 
     override fun getRecentsHistoryFragment(filter: String?) =
         RecentsHistoryFragment.newInstance(filter)

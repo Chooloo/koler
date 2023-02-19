@@ -27,12 +27,12 @@ open class SettingsViewState @Inject constructor(
     override val menuResList = listOf(R.menu.menu_chooloo)
 
     private val _askForThemeModeEvent = MutableLiveEvent()
-    private val _askForAnimationsEvent = MutableLiveEvent()
+    private val _askForAnimationsEvent = MutableDataLiveEvent<Boolean>()
     private val _askForColorEvent = MutableDataLiveEvent<Int>()
 
     val askForThemeModeEvent = _askForThemeModeEvent as LiveEvent
-    val askForAnimationsEvent = _askForAnimationsEvent as LiveEvent
     val askForColorEvent = _askForColorEvent as DataLiveEvent<Int>
+    val askForAnimationsEvent = _askForAnimationsEvent as DataLiveEvent<Boolean>
 
     init {
         _title.value = strings.getString(R.string.settings)
@@ -44,7 +44,7 @@ open class SettingsViewState @Inject constructor(
             R.id.menu_chooloo_email -> navigations.sendEmail()
             R.id.menu_chooloo_report_bugs -> navigations.reportBug()
             R.id.menu_chooloo_theme_mode -> _askForThemeModeEvent.call()
-            R.id.menu_chooloo_animations -> _askForAnimationsEvent.call()
+            R.id.menu_chooloo_animations -> _askForAnimationsEvent.call(preferences.isAnimations)
             else -> super.onMenuItemClick(itemId)
         }
     }

@@ -31,9 +31,11 @@ class IconButton : ImageButton {
         attrs: AttributeSet? = null,
         defStyleRes: Int = R.style.Chooloo_Button_Secondary
     ) : super(context, attrs, defStyleRes) {
+        var isActivated = false
         context.obtainStyledAttributes(attrs, R.styleable.Chooloo_IconButton, 0, defStyleRes).also {
             val iconRes = it.getResourceId(R.styleable.Chooloo_IconButton_icon, NO_ID)
             val checkedIconRes = it.getResourceId(R.styleable.Chooloo_IconButton_checkedIcon, NO_ID)
+            isActivated = it.getBoolean(R.styleable.Chooloo_IconButton_activated, false)
 
             _iconDefault = if (iconRes == NO_ID) null else iconRes
             _iconChecked = if (checkedIconRes == NO_ID) null else checkedIconRes
@@ -44,6 +46,7 @@ class IconButton : ImageButton {
 
         setIcon(_iconDefault)
         refreshColors()
+        setActivated(isActivated)
     }
 
     override fun setActivated(activated: Boolean) {

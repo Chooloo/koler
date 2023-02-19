@@ -12,6 +12,7 @@
 
     <declare-styleable name="Chooloo.IconButton">
         <attr name="icon" format="reference" />
+        <attr name="activated" format="boolean" />
         <attr name="checkedIcon" format="reference" />
     </declare-styleable>
 
