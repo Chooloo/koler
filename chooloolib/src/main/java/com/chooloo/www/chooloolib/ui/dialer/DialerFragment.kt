@@ -1,12 +1,11 @@
 package com.chooloo.www.chooloolib.ui.dialer
 
-import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.commitNow
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.contacts.suggestions.ContactsSuggestionsViewState
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
@@ -111,10 +110,9 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
 
         args.getString(ARG_NUMBER)?.forEach(viewState::onCharClick)
 
-        childFragmentManager
-            .beginTransaction()
-            .add(binding.dialpadSuggestionsContainer.id, _suggestionsFragment)
-            .commitNow()
+        childFragmentManager.commitNow {
+            add(binding.dialpadSuggestionsContainer.id, _suggestionsFragment)
+        }
     }
 
     companion object {

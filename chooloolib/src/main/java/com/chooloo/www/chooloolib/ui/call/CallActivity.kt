@@ -28,20 +28,11 @@ class CallActivity : BaseActivity<CallViewState>() {
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
-    @Inject
-    lateinit var screens: ScreensInteractor
-
-    @Inject
-    lateinit var dialogs: DialogsInteractor
-
-    @Inject
-    lateinit var prompts: PromptsInteractor
-
-    @Inject
-    lateinit var animations: AnimationsInteractor
-
-    @Inject
-    lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var screens: ScreensInteractor
+    @Inject lateinit var dialogs: DialogsInteractor
+    @Inject lateinit var prompts: PromptsInteractor
+    @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var animations: AnimationsInteractor
 
 
     override fun onSetup() {
@@ -156,7 +147,12 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
 
             askForRouteEvent.observe(this@CallActivity) {
-                it.ifNew?.let { dialogs.askForRoute(viewState::onAudioRoutePicked) }
+                it.ifNew?.let {
+                    dialogs.askForRoute {
+                        viewState.onAudioRoutePicked(it)
+                        true
+                    }
+                }
             }
 
             showDialerEvent.observe(this@CallActivity) {
@@ -175,6 +171,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                 it.ifNew?.let {
                     dialogs.askForPhoneAccountHandle(it) {
                         viewState.onPhoneAccountHandleSelected(it)
+                        true
                     }
                 }
             }
@@ -184,7 +181,9 @@ class CallActivity : BaseActivity<CallViewState>() {
                     dialogs.askForPhoneAccountSuggestion(it) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             viewState.onPhoneAccountHandleSelected(it.phoneAccountHandle)
+                            return@askForPhoneAccountSuggestion true
                         }
+                        false
                     }
                 }
             }

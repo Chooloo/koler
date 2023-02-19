@@ -14,10 +14,15 @@
             android:name=".ui.call.CallActivity"
             android:configChanges="screenSize|keyboardHidden"
             android:excludeFromRecents="true"
-            android:exported="false"
+            android:exported="true"
             android:noHistory="true"
             android:screenOrientation="unspecified"
-            android:showOnLockScreen="true" />
+            android:showOnLockScreen="true">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".ui.permissions.PermissionRequestActivity"
             android:screenOrientation="unspecified" />

@@ -20,7 +20,7 @@ class CallItemsAdapter @Inject constructor(
     private val phonesInteractor: PhonesInteractor,
     @MainScope private val mainScope: CoroutineScope,
 ) : ListAdapter<Call>(animationsInteractor) {
-    override fun onBindListItem(listItemHolder: ListItemHolder, item: Call) {
+    override fun onBindListItem(listItemHolder: ListItemHolder, item: Call, position: Int) {
         listItemHolder.apply {
             ioScope.launch {
                 val account = phonesInteractor.lookupAccount(item.number)
@@ -48,7 +48,7 @@ class CallItemsAdapter @Inject constructor(
 
             setLeftButtonIcon(R.drawable.call_split)
             setRightButtonIcon(R.drawable.call_end)
-            setRightButtonIconTint(R.color.negative_background)
+            setRightButtonIconTint(R.color.negative)
         }
     }
 

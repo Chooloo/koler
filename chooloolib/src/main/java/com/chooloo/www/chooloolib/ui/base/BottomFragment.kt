@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -57,8 +58,9 @@ open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
             }
         }
 
-        childFragmentManager.beginTransaction()
-            .replace(binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
+        childFragmentManager.commit {
+            replace(binding.bottomDialogFragmentPlaceholder.id, fragment)
+        }
     }
 
     override fun showError(@StringRes stringResId: Int) {

@@ -36,7 +36,11 @@ open class ContactsAdapter @Inject constructor(
         }
 
 
-    override fun onBindListItem(listItemHolder: ListItemHolder, item: ContactAccount) {
+    override fun onBindListItem(
+        listItemHolder: ListItemHolder,
+        item: ContactAccount,
+        position: Int
+    ) {
         listItemHolder.apply {
             titleText = item.name
             imageInitials = item.name?.initials()

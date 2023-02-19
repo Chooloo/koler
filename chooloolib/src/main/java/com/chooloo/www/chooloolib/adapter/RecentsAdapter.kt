@@ -39,7 +39,11 @@ class RecentsAdapter @Inject constructor(
         }
 
 
-    override fun onBindListItem(listItemHolder: ListItemHolder, item: RecentAccount) {
+    override fun onBindListItem(
+        listItemHolder: ListItemHolder,
+        item: RecentAccount,
+        position: Int
+    ) {
         listItemHolder.apply {
             val date = context.getHoursString(item.date)
 

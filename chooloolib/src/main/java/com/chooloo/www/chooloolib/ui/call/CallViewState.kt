@@ -2,7 +2,9 @@ package com.chooloo.www.chooloolib.ui.call
 
 import android.net.Uri
 import android.os.Build
-import android.telecom.Call.Details.*
+import android.telecom.Call.Details.CAPABILITY_HOLD
+import android.telecom.Call.Details.CAPABILITY_MUTE
+import android.telecom.Call.Details.CAPABILITY_SWAP_CONFERENCE
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import androidx.lifecycle.LiveData
@@ -11,7 +13,12 @@ import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.api.service.CallService
 import com.chooloo.www.chooloolib.data.model.Call
-import com.chooloo.www.chooloolib.data.model.Call.State.*
+import com.chooloo.www.chooloolib.data.model.Call.State.ACTIVE
+import com.chooloo.www.chooloolib.data.model.Call.State.DISCONNECTED
+import com.chooloo.www.chooloolib.data.model.Call.State.DISCONNECTING
+import com.chooloo.www.chooloolib.data.model.Call.State.HOLDING
+import com.chooloo.www.chooloolib.data.model.Call.State.INCOMING
+import com.chooloo.www.chooloolib.data.model.Call.State.SELECT_PHONE_ACCOUNT
 import com.chooloo.www.chooloolib.data.model.CantHoldCallException
 import com.chooloo.www.chooloolib.data.model.CantMergeCallException
 import com.chooloo.www.chooloolib.data.model.CantSwapCallException
@@ -25,7 +32,7 @@ import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
-import com.chooloo.www.chooloolib.ui.widgets.CallActions
+import com.chooloo.www.chooloolib.ui.callactions.CallActions
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
 import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
@@ -57,7 +64,7 @@ class CallViewState @Inject constructor(
 
     private val _name = MutableLiveData<String?>()
     private val _imageRes = MutableLiveData<Int>()
-    private val _uiState = MutableLiveData<UIState>()
+    private val _uiState = MutableLiveData<UIState>(UIState.ACTIVE)
     private val _imageURI = MutableLiveData<Uri?>(null)
     private val _bannerText = MutableLiveData<String?>()
     private val _stateText = MutableLiveData<String?>()
@@ -133,6 +140,11 @@ class CallViewState @Inject constructor(
         }
 
         _isManageEnabled.value = false
+
+//        // text code
+//        _uiState.value = UIState.INCOMING
+//        _elapsedTime.value = 1L
+//        _stateText.value = strings.getString(R.string.call_status_connecting)
     }
 
     override fun detach() {
@@ -259,12 +271,12 @@ class CallViewState @Inject constructor(
         when (call.state) {
             ACTIVE,
             INCOMING -> _stateTextColor.value =
-                colors.getColor(R.color.positive_background)
+                colors.getColor(R.color.on_positive)
 
             HOLDING,
             DISCONNECTING,
             DISCONNECTED -> _stateTextColor.value =
-                colors.getAttrColor(R.attr.colorError)
+                colors.getColor(R.color.on_negative)
 
             else -> {}
         }

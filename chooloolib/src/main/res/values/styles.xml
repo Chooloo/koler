@@ -8,16 +8,17 @@
         <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
-    <style name="Chooloo.Text.Headline" parent='TextAppearance.Material3.HeadlineMedium' />
-
-    <style name="Chooloo.Text.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
-        <item name="fontFamily">@font/google_sans_medium</item>
+    <style name="Chooloo.Text.Headline" parent='TextAppearance.Material3.HeadlineMedium'>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
     <style name="Chooloo.Text.Title" parent="TextAppearance.Material3.TitleMedium">
         <item name="android:fontFamily">@font/google_sans_bold</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="Chooloo.Text.Title.Small" parent="TextAppearance.Material3.TitleSmall" />
 
     <style name="Chooloo.Text.Body" parent="TextAppearance.Material3.BodySmall">
         <item name="android:fontFamily">@font/google_sans_bold</item>
@@ -35,7 +36,7 @@
 
     <style name="Chooloo.Image.Profile">
         <item name="android:src">@drawable/person</item>
-        <item name="cornerSize">15%</item>
+        <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
     <!--endregion-->
@@ -72,78 +73,62 @@
 
     <style name="Chooloo.FastScrollView" parent="Chooloo.ListView">
         <item name="hideScrollbar">false</item>
-        <item name="bubbleColor">?colorSecondary</item>
-        <item name="bubbleTextColor">?colorOnSecondary</item>
-        <item name="handleColor">?colorSecondary</item>
+        <item name="bubbleColor">?colorSurfaceVariant</item>
+        <item name="bubbleTextColor">?colorOnSurfaceVariant</item>
+        <item name="handleColor">?colorSurfaceVariant</item>
     </style>
     <!--endregion-->
 
     <!--region button-->
     <style name="Chooloo.Button">
-        <item name="cornerRadius">@dimen/corner_radius</item>
-        <item name="android:scaleType">fitXY</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 
     <style name="Chooloo.Button.Primary">
-        <item name="tint">?colorPrimary</item>
-        <item name="android:scaleType">fitXY</item>
-        <item name="elevation">5dp</item>
-        <item name="android:colorAccent">?colorPrimary</item>
-        <item name="android:shadowColor">?colorPrimary</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/button_primary_height</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/bubble_background</item>
+        <item name="android:textColor">?colorOnSecondaryContainer</item>
+        <item name="android:tint">?colorOnSecondaryContainer</item>
+        <item name="android:backgroundTint">?colorSecondaryContainer</item>
     </style>
 
-    <style name="Chooloo.Button.Secondary">
-        <item name="android:scaleType">fitXY</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/button_secondary_height</item>
-        <item name="android:colorAccent">?colorSurfaceVariant</item>
-    </style>
-
-    <style name="Chooloo.Button.Filled" parent="Widget.Material3.Button" />
-
-    <style name="Chooloo.Button.Tonal" parent="Widget.Material3.Button.TonalButton" />
-
-    <style name="Chooloo.Button.Text" parent="Widget.Material3.Button.TextButton" />
-
-    <style name="Chooloo.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton" />
-
-    <style name="Chooloo.Button.Icon" parent="Widget.Material3.Button.IconButton" />
-
-    <style name="Chooloo.Button.Icon.Small" />
-
-    <style name="Chooloo.Button.Icon.Small.Filled">
-        <item name="iconTint">?colorOnPrimary</item>
+    <style name="Chooloo.Button.Primary.Selectable">
+        <item name="android:tint">?colorOnSurfaceVariant</item>
+        <item name="android:textColor">?colorOnSurfaceVariant</item>
         <item name="android:backgroundTint">?colorSurfaceVariant</item>
     </style>
 
-    <style name="Chooloo.Button.Icon.Medium">
-        <item name="iconSize">32dp</item>
+    <style name="Chooloo.Button.Primary.Secondary">
+        <item name="android:tint">?colorOnSurface</item>
+        <item name="android:backgroundTint">?colorSurface</item>
     </style>
 
-    <style name="Chooloo.Button.Icon.Medium.Filled">
-        <item name="android:checked">true</item>
+    <style name="Chooloo.Button.Secondary">
+        <item name="android:padding">8dp</item>
+        <item name="android:tint">?colorOnSurfaceVariant</item>
+        <item name="android:backgroundTint">?colorSurfaceVariant</item>
     </style>
 
-    <style name="Chooloo.Button.Icon.Big">
-        <item name="iconTint">@color/m3_text_button_foreground_color_selector</item>
-        <item name="iconSize">55dp</item>
+    <style name="Chooloo.Button.Secondary.Icon">
+        <item name="android:background">@drawable/circle_background</item>
     </style>
 
-    <style name="Chooloo.Button.Icon.Big.Filled">
-        <item name="android:checked">true</item>
+    <style name="Chooloo.Button.FAB" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="elevation">0dp</item>
     </style>
 
-    <style name="Chooloo.Button.FAB" parent="Widget.Material3.FloatingActionButton.Large.Primary">
-        <item name="fabCustomSize">70dp</item>
-        <item name="elevation">10dp</item>
-        <item name="maxImageSize">21dp</item>
+    <style name="Chooloo.Button.FAB.Primary" parent="Widget.Material3.FloatingActionButton.Large.Primary">
+        <item name="elevation">0dp</item>
+        <item name="tint">?colorOnSecondaryContainer</item>
+        <item name="backgroundTint">?colorSecondaryContainer</item>
     </style>
 
-    <style name="Chooloo.Button.FAB.Large">
-        <item name="fabCustomSize">77dp</item>
-        <item name="maxImageSize">28dp</item>
+    <style name="Chooloo.Button.FAB.Secondary" parent="Widget.Material3.FloatingActionButton.Secondary">
+        <item name="backgroundTint">?colorSecondaryContainer</item>
+        <item name="tint">?colorOnSecondaryContainer</item>
+        <item name="fabCustomSize">60dp</item>
+        <item name="maxImageSize">30dp</item>
     </style>
     <!--endregion-->
 </resources>

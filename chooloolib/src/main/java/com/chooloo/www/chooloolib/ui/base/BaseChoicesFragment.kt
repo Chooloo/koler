@@ -14,7 +14,7 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
     override val contentView by lazy { binding.root }
     override val viewState: BaseViewState by viewModels()
 
-    private var _onChoiceClickListener: (String) -> Unit = {}
+    private var _onChoiceSelectedListener: (String) -> Boolean = { true }
     protected open val binding by lazy { MenuBinding.inflate(layoutInflater) }
 
     @Inject lateinit var adapter: ChoicesAdapter
@@ -22,11 +22,11 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
 
     override fun onSetup() {
         adapter.apply {
-            setOnItemClickListener(_onChoiceClickListener::invoke)
+            setOnChoiceSelectedListener(_onChoiceSelectedListener)
             selectedIndex = args.getInt(ARG_SELECTED_INDEX, -1)
             items = args.getStringArrayList(ARG_CHOICES)?.toList() as List<String>
         }
-        
+
         binding.apply {
             menuRecyclerView.adapter = adapter
 
@@ -45,8 +45,8 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
     }
 
 
-    fun setOnChoiceClickListener(onChoiceClickListener: (String) -> Unit) {
-        _onChoiceClickListener = onChoiceClickListener
+    fun setOnChoiceClickListener(onChoiceSelectedListener: (String) -> Boolean) {
+        _onChoiceSelectedListener = onChoiceSelectedListener
     }
 
 

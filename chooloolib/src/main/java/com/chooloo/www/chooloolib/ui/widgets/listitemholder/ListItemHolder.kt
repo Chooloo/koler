@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.ui.widgets.listitemholder
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.Spannable
@@ -8,7 +9,9 @@ import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.chooloo.www.chooloolib.R
@@ -16,7 +19,6 @@ import com.chooloo.www.chooloolib.databinding.ListItemBinding
 import com.chooloo.www.chooloolib.util.getAttrColor
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_IMAGE
 import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
-import com.squareup.picasso.Picasso
 
 open class ListItemHolder(protected val binding: ListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -156,11 +158,12 @@ open class ListItemHolder(protected val binding: ListItemBinding) :
     }
 
     fun setLeftButtonIcon(iconRes: Int) {
-        binding.listItemLeftButton.setIconResource(iconRes)
+        binding.listItemLeftButton.setImageResource(iconRes)
     }
 
     fun setLeftButtonIconTint(tintRes: Int) {
-        binding.listItemLeftButton.setIconTintResource(tintRes)
+        binding.listItemLeftButton.imageTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, tintRes))
     }
 
     fun setLeftButtonBackgroundTint(tintRes: Int) {
@@ -169,12 +172,18 @@ open class ListItemHolder(protected val binding: ListItemBinding) :
     }
 
     fun setRightButtonIcon(iconRes: Int) {
-        binding.listItemRightButton.setIconResource(iconRes)
+        binding.listItemRightButton.setImageResource(iconRes)
     }
 
     fun setRightButtonIconTint(tintRes: Int) {
-        binding.listItemRightButton.setIconTintResource(tintRes)
+        binding.listItemRightButton.imageTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(context, tintRes))
     }
+
+    fun setRightButtonIconTintColor(@ColorInt color: Int) {
+        binding.listItemRightButton.imageTintList = ColorStateList.valueOf(color)
+    }
+
 
     fun setRightButtonBackgroundTint(tintRes: Int) {
         binding.listItemRightButton.backgroundTintList =
@@ -188,10 +197,5 @@ open class ListItemHolder(protected val binding: ListItemBinding) :
                     width = size
                     height = size
                 }
-    }
-
-    fun setSelected() {
-        binding.listItemMainLayout.strokeColor = context.getAttrColor(R.attr.colorPrimary)
-        binding.listItemTitle.setTextColor(context.getAttrColor(R.attr.colorPrimary))
     }
 }

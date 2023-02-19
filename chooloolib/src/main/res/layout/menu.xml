@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/menu_title"
         android:layout_width="wrap_content"
-        android:textAppearance="@style/Chooloo.Text.HeadlineSmall"
+        android:textAppearance="@style/Chooloo.Text.Headline"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_marginStart="@dimen/default_spacing"

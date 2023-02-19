@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ChoolooTheme">
+    <style name="ChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar">false</item>
+
+        <item name="colorBackgroundVariant">@color/background_variant</item>
+        <item name="colorOnBackgroundVariant">@color/on_background_variant</item>
     </style>
 </resources>

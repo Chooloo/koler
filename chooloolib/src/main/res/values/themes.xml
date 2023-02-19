@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--    <style name="ChoolooTheme" parent="Theme.AppCompat.DayNight.NoActionBar">-->
     <style name="ChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
 
         <item name="elevationOverlayEnabled">false</item>
@@ -11,18 +12,33 @@
 
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/on_primary</item>
-        <item name="colorSurfaceDisabled">@color/surface_disabled</item>
         <item name="colorPrimaryContainer">@color/primary_container</item>
         <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
-        <item name="colorSecondary">@color/primary</item>
-        <item name="colorOnSecondary">@color/on_primary</item>
-        <item name="colorSecondaryContainer">@color/primary_container</item>
-        <item name="colorOnSecondaryContainer">@color/on_primary_container</item>
-        <item name="colorTertiary">@color/primary</item>
-        <item name="colorOnTertiary">@color/on_primary</item>
-        <item name="colorTertiaryContainer">@color/primary_container</item>
-        <item name="colorOnTertiaryContainer">@color/on_primary_container</item>
+
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
+
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/on_tertiary_container</item>
+
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
+
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/on_background</item>
+
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
         <item name="colorSurfaceVariant">@color/surface_variant</item>
         <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+
+        <item name="colorBackgroundVariant">@color/background_variant</item>
+        <item name="colorOnBackgroundVariant">@color/on_background_variant</item>
     </style>
 </resources>

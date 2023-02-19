@@ -24,8 +24,8 @@ class SearchBar : TextInputLayout {
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
-    private val colorBackground by lazy { context.getAttrColor(R.attr.colorSurfaceVariant) }
-    private val colorForeground by lazy { context.getAttrColor(R.attr.colorOnSurfaceVariant) }
+    private val colorBackground by lazy { context.getAttrColor(R.attr.colorSecondaryContainer) }
+    private val colorForeground by lazy { context.getAttrColor(R.attr.colorOnSecondaryContainer) }
     private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
@@ -60,8 +60,8 @@ class SearchBar : TextInputLayout {
                 return@InputFilter null
             })
 
-            setTextAppearance(R.style.TextAppearance_Material3_TitleSmall)
             setPadding(spacing, 0, spacingSmall, 0)
+            setTextAppearance(R.style.Chooloo_Text_Title_Small)
             setHintTextColor(ColorStateList.valueOf(colorForeground))
 
             addTextChangedListener(

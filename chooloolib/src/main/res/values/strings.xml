@@ -91,6 +91,14 @@
     <string name="call_action_speaker_off">Off Speaker</string>
     <!--endregion-->
 
+    <string name="call_action_id_add">call_action_add</string>
+    <string name="call_action_id_mute">call_action_mute</string>
+    <string name="call_action_id_hold">call_action_hold</string>
+    <string name="call_action_id_swap">call_action_swap</string>
+    <string name="call_action_id_merge">call_action_merge</string>
+    <string name="call_action_id_keypad">call_action_keypad</string>
+    <string name="call_action_id_speaker">call_action_speaker</string>
+
     <!--region call state-->
     <string name="call_status_new">New Call</string>
     <string name="call_status_dialing">Dialing…</string>

@@ -2,7 +2,8 @@
 <resources>
     <!--region styleables-->
     <declare-styleable name="Chooloo">
-        <attr name="colorSurfaceDisabled" format="color" />
+        <attr name="colorBackgroundVariant" format="color" />
+        <attr name="colorOnBackgroundVariant" format="color" />
     </declare-styleable>
 
     <declare-styleable name="Chooloo.DialpadKey">

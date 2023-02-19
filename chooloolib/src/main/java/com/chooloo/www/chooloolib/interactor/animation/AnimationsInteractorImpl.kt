@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.interactor.animation
 
+import android.animation.ValueAnimator.REVERSE
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -30,8 +31,10 @@ class AnimationsInteractorImpl @Inject constructor(
 
     override fun focus(view: View) {
         if (_isEnabled) {
-            YoYo.with(Techniques.Tada)
-                .duration(200)
+            YoYo.with(Techniques.FadeIn)
+                .duration(800)
+                .repeatMode(REVERSE)
+                .repeat(Animation.INFINITE)
                 .playOn(view)
         }
     }

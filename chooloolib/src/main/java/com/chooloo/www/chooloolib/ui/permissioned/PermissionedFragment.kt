@@ -3,6 +3,7 @@ package com.chooloo.www.chooloolib.ui.permissioned
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.databinding.PermissionedBinding
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
@@ -37,9 +38,10 @@ abstract class PermissionedFragment<out VM : PermissionedViewState> : BaseFragme
     }
 
     private fun showMainFragment() {
-        childFragmentManager.findFragmentByTag(PERMISSIONS_FRAGMENT_TAG)?.let {
-            childFragmentManager.beginTransaction().remove(it).commit()
+        childFragmentManager.findFragmentByTag(PERMISSIONS_FRAGMENT_TAG)?.let { fragment ->
+            childFragmentManager.commit { remove(fragment) }
         }
+
         _binding.permissionedPermissionContainer.isVisible = false
         mainContentView.parent?.let { (it as ViewGroup).removeView(mainContentView) }
         _binding.root.addView(mainContentView)
@@ -51,13 +53,13 @@ abstract class PermissionedFragment<out VM : PermissionedViewState> : BaseFragme
         _binding.permissionedPermissionContainer.isVisible = true
 
         childFragmentManager.findFragmentByTag(PERMISSIONS_FRAGMENT_TAG)?.let { } ?: run {
-            childFragmentManager.beginTransaction()
-                .add(
+            childFragmentManager.commit {
+                add(
                     _binding.permissionedPermissionContainer.id,
                     fragmentFactory.getPermissionFragment(),
                     PERMISSIONS_FRAGMENT_TAG
                 )
-                .commit()
+            }
         }
     }
 

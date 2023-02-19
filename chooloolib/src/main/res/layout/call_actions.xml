@@ -1,69 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layoutDescription="@xml/call_actions_scene">
+    android:layout_height="wrap_content">
 
-    <!-- mute -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_mute"
-        android:checkable="true"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/call_actions_recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:checkedIcon="@drawable/mic_off"
-        app:icon="@drawable/mic" />
-
-    <!-- speaker -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_speaker"
-        android:layout_width="wrap_content"
-        android:checkable="true"
-        android:layout_height="wrap_content"
-        app:checkedIcon="@drawable/volume_up"
-        app:icon="@drawable/volume_down" />
-
-    <!-- hold -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_hold"
-        android:checkable="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:checkedIcon="@drawable/play_arrow"
-        app:icon="@drawable/pause" />
-
-    <!-- add call -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_add_call"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        app:icon="@drawable/add" />
-
-    <!-- keypad -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_keypad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/dialpad" />
-
-    <!-- swap -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_swap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/swap_calls" />
-
-    <!-- merge -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        style="@style/Chooloo.Button.Icon.Big"
-        android:id="@+id/call_action_merge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/call_merge" />
-</androidx.constraintlayout.motion.widget.MotionLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

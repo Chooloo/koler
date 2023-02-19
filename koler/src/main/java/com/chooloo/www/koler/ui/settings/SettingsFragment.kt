@@ -15,7 +15,12 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
 
         viewState.apply {
             askForDefaultPageEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
+                it.ifNew?.let {
+                    dialogs.askForDefaultPage {
+                        viewState.onDefaultPageResponse(it)
+                        true
+                    }
+                }
             }
 
             askForDialpadTonesEvent.observe(this@SettingsFragment) {
@@ -44,7 +49,10 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
 
             askForIncomingCallModeEvent.observe(this@SettingsFragment) {
                 it.ifNew?.let {
-                    dialogs.askForIncomingCallMode(viewState::onIncomingCallMode)
+                    dialogs.askForIncomingCallMode {
+                        viewState.onIncomingCallMode(it)
+                        true
+                    }
                 }
             }
         }
