@@ -45,11 +45,11 @@
                 android:layout_width="@dimen/image_size_medium"
                 android:layout_height="@dimen/image_size_medium"
                 android:layout_marginStart="@dimen/default_spacing_medium"
-                app:avatarBackgroundColor="?colorBackgroundVariant"
+                app:avatarBackgroundColor="?colorSurfaceVariant"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textColor="?colorOnBackgroundVariant"
+                app:textColor="?colorOnSurfaceVariant"
                 app:textSize="@dimen/caption_1"
                 app:view_state="INITIAL" />
 

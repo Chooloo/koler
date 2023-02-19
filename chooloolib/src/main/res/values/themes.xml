@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--    <style name="ChoolooTheme" parent="Theme.AppCompat.DayNight.NoActionBar">-->
-    <style name="ChoolooTheme" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="ChoolooTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>

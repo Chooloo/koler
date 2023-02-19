@@ -12,8 +12,8 @@ class ChoiceItemHolder(binding: ListItemBinding) : ListItemHolder(binding) {
     init {
         isImageVisible = false
 
-        _defaultTextColor = context.getAttrColor(R.attr.colorOnBackgroundVariant)
-        _defaultBackgroundColor = context.getAttrColor(R.attr.colorBackgroundVariant)
+        _defaultTextColor = context.getAttrColor(R.attr.colorOnSurfaceVariant)
+        _defaultBackgroundColor = context.getAttrColor(R.attr.colorSurfaceVariant)
 
         binding.root.setPadding(dimenSpacing, dimenSpacingSmall, dimenSpacing, dimenSpacingSmall)
         binding.listItemTitle.setTextColor(_defaultTextColor)
