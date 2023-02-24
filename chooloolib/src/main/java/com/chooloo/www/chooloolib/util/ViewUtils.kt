@@ -7,15 +7,6 @@ import android.util.TypedValue
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 
-fun Context.navBarHeight(): Int {
-    val resource = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-    return if (resource > 0) resources.getDimensionPixelSize(resource) else 0
-}
-
-fun Context.hasNavBar(): Boolean {
-    val resource = resources.getIdentifier("config_showNavigationBar", "bool", "android")
-    return resource > 0 && resources.getBoolean(resource)
-}
 
 fun Context.getSizeInDp(px: Int) =
     (px * resources.displayMetrics.density + 0.5f).toInt()

@@ -6,7 +6,7 @@ import android.telecom.TelecomManager
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
 import androidx.annotation.RequiresPermission
-import com.chooloo.www.chooloolib.model.SimAccount
+import com.chooloo.www.chooloolib.data.model.SimAccount
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,30 +18,18 @@ class SimsInteractorImpl @Inject constructor(
 ) : BaseObservable<SimsInteractor.Listener>(), SimsInteractor {
 
     @RequiresPermission(READ_PHONE_STATE)
-    override fun getIsMultiSim(callback: (isMultiSim: Boolean) -> Unit) {
-        callback.invoke(telecomManager.callCapablePhoneAccounts.size > 1)
-    }
+    override suspend fun getIsMultiSim(): Boolean =
+        telecomManager.callCapablePhoneAccounts.size > 1
 
     @RequiresPermission(READ_PHONE_STATE)
-    override fun getSimAccounts(callback: (List<SimAccount>) -> Unit) {
-        getPhoneAccounts {
-            callback.invoke(it.mapIndexed { index, phoneAccount ->
-                SimAccount(index, phoneAccount)
-            })
-        }
-    }
+    override suspend fun getSimAccounts(): List<SimAccount> =
+        getPhoneAccounts().mapIndexed(::SimAccount)
 
     @RequiresPermission(READ_PHONE_STATE)
-    override fun getPhoneAccounts(callback: (List<PhoneAccount>) -> Unit) {
-        val phoneAccounts = ArrayList<PhoneAccount>()
-        telecomManager.callCapablePhoneAccounts.forEach { pah ->
-            phoneAccounts.add(telecomManager.getPhoneAccount(pah))
-        }
-        callback.invoke(phoneAccounts)
-    }
+    override suspend fun getPhoneAccounts(): List<PhoneAccount> =
+        telecomManager.callCapablePhoneAccounts.map(telecomManager::getPhoneAccount)
 
     @RequiresPermission(READ_PHONE_STATE)
-    override fun getSubscriptionInfos(callback: (List<SubscriptionInfo>) -> Unit) {
-        callback.invoke(subscriptionManager.activeSubscriptionInfoList)
-    }
+    override suspend fun getSubscriptionInfos(): List<SubscriptionInfo> =
+        subscriptionManager.activeSubscriptionInfoList
 }

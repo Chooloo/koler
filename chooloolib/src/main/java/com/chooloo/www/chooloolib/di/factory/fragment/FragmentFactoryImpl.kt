@@ -7,9 +7,10 @@ import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment
 import com.chooloo.www.chooloolib.ui.briefcontact.menu.BriefContactMenuFragment
 import com.chooloo.www.chooloolib.ui.callitems.CallItemsFragment
 import com.chooloo.www.chooloolib.ui.contacts.ContactsFragment
-import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsFragment
+import com.chooloo.www.chooloolib.ui.contacts.suggestions.ContactsSuggestionsFragment
 import com.chooloo.www.chooloolib.ui.dialer.DialerFragment
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
+import com.chooloo.www.chooloolib.ui.permission.PermissionFragment
 import com.chooloo.www.chooloolib.ui.phones.PhonesFragment
 import com.chooloo.www.chooloolib.ui.prompt.PromptFragment
 import com.chooloo.www.chooloolib.ui.recent.RecentFragment
@@ -26,12 +27,12 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
     override fun getSettingsFragment() = SettingsFragment()
     override fun getContactsFragment() = ContactsFragment()
     override fun getCallItemsFragment() = CallItemsFragment()
+    override fun getPermissionFragment() = PermissionFragment()
     override fun getRecentMenuFragment() = RecentMenuFragment()
     override fun getContactsSuggestionsFragment() = ContactsSuggestionsFragment()
     override fun getDialerFragment(text: String?) = DialerFragment.newInstance(text)
     override fun getRecentFragment(recentId: Long) = RecentFragment.newInstance(recentId)
     override fun getBriefContactMenuFragment() = BriefContactMenuFragment()
-
     override fun getAccountsFragment(contactId: Long?) =
         AccountsFragment.newInstance(contactId)
 
@@ -41,8 +42,12 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
     override fun getPhonesFragment(contactId: Long?) =
         PhonesFragment.newInstance(contactId)
 
-    override fun getPromptFragment(title: String, subtitle: String) =
-        PromptFragment.newInstance(title, subtitle)
+    override fun getPromptFragment(
+        title: String,
+        subtitle: String,
+        isActivated: Boolean
+    ): PromptFragment =
+        PromptFragment.newInstance(title, subtitle, isActivated)
 
     override fun getRecentsHistoryFragment(filter: String?) =
         RecentsHistoryFragment.newInstance(filter)

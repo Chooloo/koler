@@ -29,7 +29,7 @@
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/contact_button_call"
+        android:id="@+id/brief_contact_button_call"
         app:layout_constraintEnd_toStartOf="@id/contact_button_edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contact_name"
@@ -41,7 +41,7 @@
         android:layout_height="@dimen/icon_button_size_normal"
         android:layout_marginTop="@dimen/default_spacing_big"
         android:icon="@drawable/edit"
-        app:layout_constraintStart_toEndOf="@id/contact_button_call"
+        app:layout_constraintStart_toEndOf="@id/brief_contact_button_call"
         app:layout_constraintTop_toBottomOf="@id/contact_name"
         app:layout_constraintEnd_toStartOf="@id/contact_button_delete" />
 
@@ -75,7 +75,7 @@
         android:text="@string/action_show_history"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contact_button_call" />
+        app:layout_constraintTop_toBottomOf="@id/brief_contact_button_call" />
 
     <Button
         android:id="@+id/contact_button_whatsapp"
@@ -84,12 +84,12 @@
         android:layout_marginStart="@dimen/default_spacing_small"
         android:layout_marginTop="@dimen/default_spacing"
         android:layout_marginEnd="@dimen/default_spacing"
-        android:backgroundTint="@color/green_primary_container"
+        android:backgroundTint="@color/positive"
         android:text="@string/action_open_whatsapp"
-        android:textColor="@color/green_on_primary_container"
+        android:textColor="@color/positive"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/contact_button_history"
-        app:layout_constraintTop_toBottomOf="@id/contact_button_call" />
+        app:layout_constraintTop_toBottomOf="@id/brief_contact_button_call" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/contact_phones_container"

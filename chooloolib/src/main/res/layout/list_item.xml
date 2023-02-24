@@ -13,7 +13,7 @@
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginTop="@dimen/default_spacing"
         android:paddingBottom="@dimen/default_spacing"
-        android:textAppearance="@style/Chooloo.Text.Body"
+        android:textAppearance="@style/Chooloo.Text.Title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Header" />
@@ -89,9 +89,9 @@
                 app:layout_constraintTop_toTopOf="@id/list_item_caption"
                 app:tint="?android:textColorHint" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.chooloo.www.chooloolib.ui.widgets.IconButton
                 android:id="@+id/list_item_left_button"
-                style="@style/Chooloo.Button.Icon.Small"
+                style="@style/Chooloo.Button.Secondary.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/default_spacing_small"
@@ -100,9 +100,9 @@
                 app:layout_constraintEnd_toStartOf="@id/list_item_right_button"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.chooloo.www.chooloolib.ui.widgets.IconButton
                 android:id="@+id/list_item_right_button"
-                style="@style/Chooloo.Button.Icon.Small"
+                style="@style/Chooloo.Button.Secondary.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/default_spacing_medium"

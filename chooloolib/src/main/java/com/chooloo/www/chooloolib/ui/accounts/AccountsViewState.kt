@@ -1,34 +1,32 @@
 package com.chooloo.www.chooloolib.ui.accounts
 
-import androidx.lifecycle.LiveData
+import android.Manifest.permission.READ_CONTACTS
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.RawContactAccount
+import com.chooloo.www.chooloolib.data.repository.rawcontacts.RawContactsRepository
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.model.RawContactAccount
-import com.chooloo.www.chooloolib.repository.rawcontacts.RawContactsRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountsViewState @Inject constructor(
+    permissions: PermissionsInteractor,
     private val navigations: NavigationsInteractor,
-    private val permissions: PermissionsInteractor,
     private val rawContactsRepository: RawContactsRepository
 ) :
-    ListViewState<RawContactAccount>() {
+    ListViewState<RawContactAccount>(permissions) {
 
     override val noResultsIconRes = R.drawable.call
     override val noResultsTextRes = R.string.error_no_results_phones
-    override val noPermissionsTextRes = R.string.error_no_permissions_phones
+    override val requiredPermissions = listOf(READ_CONTACTS)
 
-    val contactId = MutableLiveData(0L)
     val callEvent = DataLiveEvent<String>()
-
-    private val accountsLiveData
-        get() = contactId.value?.let { rawContactsRepository.getRawContacts(it) }
+    val contactId = MutableLiveData(0L)
 
 
     override fun onItemRightClick(item: RawContactAccount) {
@@ -38,12 +36,8 @@ class AccountsViewState @Inject constructor(
         }
     }
 
-    override fun getItemsObservable(callback: (LiveData<List<RawContactAccount>>) -> Unit) {
-        permissions.runWithReadContactsPermissions {
-            onPermissionsChanged(it)
-            if (it) accountsLiveData?.let(callback::invoke)
-        }
-    }
+    override fun getItemsFlow(filter: String?): Flow<List<RawContactAccount>>? =
+        contactId.value?.let { rawContactsRepository.getRawContacts(it, filter) }
 
     fun onContactId(contactId: Long) {
         this.contactId.value = contactId

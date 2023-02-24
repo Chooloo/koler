@@ -1,23 +1,20 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    id "com.android.application"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
 }
 
 android {
-    compileSdk 31
+    namespace "com.chooloo.www.koler"
+    compileSdk rootProject.ext.sdkVersion
 
     defaultConfig {
-        versionCode 79
-        versionName "v1.5.0"
-
-        minSdk 25
-        targetSdk 31
-
+        versionCode 80
+        versionName "v1.6.0"
+        targetSdk rootProject.ext.sdkVersion
+        minSdk rootProject.ext.minSdkVersion
         applicationId "com.chooloo.www.koler"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -26,105 +23,93 @@ android {
         }
     }
 
-    dataBinding {
-        //noinspection DataBindingWithoutKapt
-        enabled = true
-    }
-
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_18
+        targetCompatibility JavaVersion.VERSION_18
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_18.toString()
     }
 
-    buildFeatures {
-        viewBinding true
-    }
-
-    lintOptions {
-        checkReleaseBuilds false
-    }
-
-    hilt {
-        enableAggregatingTask true
-    }
-
-    kapt {
-        correctErrorTypes true
-    }
+    kotlin { jvmToolchain(18) }
+    dataBinding { enabled true }
+    kapt { correctErrorTypes true }
+    lint { checkReleaseBuilds false }
+    buildFeatures { viewBinding true }
+    hilt { enableAggregatingTask true }
 }
 
 dependencies {
     kapt(
-            'com.google.dagger:hilt-compiler:2.38.1',
-            'androidx.hilt:hilt-compiler:1.0.0-alpha01'
+            "androidx.hilt:hilt-compiler:1.0.0",
+            "com.google.dagger:hilt-compiler:${rootProject.ext.hiltVersion}"
     )
 
     annotationProcessor(
-            'androidx.room:room-compiler:2.4.1'
+            "androidx.room:room-compiler:2.5.0"
     )
 
     testImplementation(
-            'junit:junit:4.13.2',
-            'androidx.room:room-testing:2.2.6'
+            "junit:junit:4.13.2",
+            "androidx.room:room-testing:2.2.6"
     )
 
     androidTestImplementation(
-            'androidx.test:core:1.3.0',
-            'androidx.test:runner:1.3.0',
-            'androidx.test.ext:junit:1.1.2',
-            'com.jraska.livedata:testing:1.0.0',
-            'org.mockito:mockito-android:2.24.0',
-            'androidx.arch.core:core-testing:2.1.0',
+            "androidx.test:core:1.3.0",
+            "androidx.test:runner:1.3.0",
+            "androidx.test.ext:junit:1.1.2",
+            "com.jraska.livedata:testing:1.0.0",
+            "org.mockito:mockito-android:2.24.0",
+            "androidx.arch.core:core-testing:2.1.0",
             "androidx.compose.ui:ui-test-junit4:1.0.4",
-            'androidx.test.espresso:espresso-core:3.3.0'
+            "androidx.test.espresso:espresso-core:3.3.0"
     )
 
     implementation(
             project(":chooloolib"),
-            fileTree(include: ['*.jar'], dir: 'libs'),
-            'androidx.wear:wear:1.1.0',
-            'androidx.core:core-ktx:1.6.0',
-            'dev.sasikanth:colorsheet:1.0.1',
-            'androidx.room:room-runtime:2.2.6',
-            'androidx.cardview:cardview:1.0.0',
-            'io.reactivex.rxjava2:rxjava:2.1.16',
-            'androidx.appcompat:appcompat:1.2.0',
-            'com.jakewharton.timber:timber:4.7.1',
-            'androidx.activity:activity-ktx:1.1.0',
-            'io.github.l4digital:fastscroll:2.0.1',
-            'androidx.arch.core:core-common:2.1.0',
-            'io.reactivex.rxjava2:rxandroid:2.0.1',
-            'androidx.annotation:annotation:1.1.0',
-            'androidx.fragment:fragment-ktx:1.1.0',
-            'com.github.skydoves:androidveil:1.1.1',
-            'androidx.arch.core:core-runtime:2.1.0',
-            'com.google.dagger:hilt-android:2.38.1',
-            'com.reddit:indicator-fast-scroll:1.4.0',
-            'androidx.legacy:legacy-support-v4:1.0.0',
-            'androidx.preference:preference-ktx:1.1.1',
-            'org.jetbrains.kotlin:kotlin-stdlib:1.4.21',
-            'androidx.biometric:biometric:1.2.0-alpha02',
-            'com.google.android.material:material:1.3.0',
-            'com.android.support:recyclerview-v7:23.2.1',
-            'com.github.abdularis:circularimageview:1.5',
-            'androidx.navigation:navigation-ui-ktx:2.3.3',
-            'androidx.lifecycle:lifecycle-extensions:2.2.0',
-            'com.daimajia.androidanimations:library:2.4@aar',
-            'androidx.constraintlayout:constraintlayout:2.0.4',
-            'com.pushtorefresh.storio3:content-resolver:3.0.0',
-            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
-            'androidx.navigation:navigation-fragment-ktx:2.3.3',
-            'com.googlecode.libphonenumber:libphonenumber:8.12.18'
+            fileTree(include: ["*.jar"], dir: "libs"),
+
+            // ktx
+            "androidx.fragment:fragment-ktx:1.5.5",
+            "androidx.activity:activity-ktx:1.6.1",
+            "androidx.preference:preference-ktx:1.2.0",
+            "androidx.navigation:navigation-ui-ktx:2.5.3",
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1",
+            "androidx.navigation:navigation-fragment-ktx:2.5.3",
+            "androidx.core:core-ktx:${rootProject.ext.coreKtxVersion}",
+
+            "dev.sasikanth:colorsheet:1.0.1",
+            "androidx.room:room-runtime:2.2.6",
+            "androidx.cardview:cardview:1.0.0",
+            "io.reactivex.rxjava2:rxjava:2.1.16",
+            "com.jakewharton.timber:timber:4.7.1",
+            "io.github.l4digital:fastscroll:2.0.1",
+            "androidx.arch.core:core-common:2.1.0",
+            "io.reactivex.rxjava2:rxandroid:2.0.1",
+            "androidx.annotation:annotation:1.1.0",
+            "com.github.skydoves:androidveil:1.1.1",
+            "androidx.arch.core:core-runtime:2.1.0",
+            "com.reddit:indicator-fast-scroll:1.4.0",
+            "androidx.legacy:legacy-support-v4:1.0.0",
+            "org.jetbrains.kotlin:kotlin-stdlib:1.4.21",
+            "androidx.biometric:biometric:1.2.0-alpha02",
+            "com.google.android.material:material:1.3.0",
+            "com.android.support:recyclerview-v7:23.2.1",
+            "com.github.abdularis:circularimageview:1.5",
+            "androidx.lifecycle:lifecycle-extensions:2.2.0",
+            "com.daimajia.androidanimations:library:2.4@aar",
+            "androidx.constraintlayout:constraintlayout:2.1.4",
+            "com.pushtorefresh.storio3:content-resolver:3.0.0",
+            "com.googlecode.libphonenumber:libphonenumber:8.12.18",
+            "com.google.dagger:hilt-android:${rootProject.ext.hiltVersion}",
+            "androidx.appcompat:appcompat:${rootProject.ext.appCompatVersion}",
     )
 }

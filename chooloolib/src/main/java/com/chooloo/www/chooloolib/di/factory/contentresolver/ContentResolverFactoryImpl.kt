@@ -1,27 +1,29 @@
 package com.chooloo.www.chooloolib.di.factory.contentresolver
 
-import android.content.Context
-import com.chooloo.www.chooloolib.contentresolver.*
-import dagger.hilt.android.qualifiers.ApplicationContext
+import android.content.ContentResolver
+import com.chooloo.www.chooloolib.data.contentresolver.*
+import com.chooloo.www.chooloolib.di.module.IoDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ContentResolverFactoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val contentResolver: ContentResolver,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ContentResolverFactory {
     override fun getRecentsContentResolver(recentId: Long?) =
-        RecentsContentResolver(context, recentId)
+        RecentsContentResolver(recentId, contentResolver, ioDispatcher)
 
     override fun getPhonesContentResolver(contactId: Long?) =
-        PhonesContentResolver(context, contactId)
+        PhonesContentResolver(contactId, contentResolver, ioDispatcher)
 
     override fun getContactsContentResolver(contactId: Long?) =
-        ContactsContentResolver(context, contactId)
+        ContactsContentResolver(contactId, contentResolver, ioDispatcher)
 
     override fun getRawContactsContentResolver(contactId: Long) =
-        RawContactsContentResolver(context, contactId)
+        RawContactsContentResolver(contactId, contentResolver, ioDispatcher)
 
     override fun getPhoneLookupContentResolver(number: String?) =
-        PhoneLookupContentResolver(context, number)
+        PhoneLookupContentResolver(number, contentResolver, ioDispatcher)
 }

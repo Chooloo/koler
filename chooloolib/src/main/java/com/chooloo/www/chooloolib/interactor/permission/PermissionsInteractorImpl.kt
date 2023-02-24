@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.telecom.TelecomManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.chooloo.www.chooloolib.di.module.IoDispatcher
 import com.chooloo.www.chooloolib.ui.permissions.DefaultDialerRequestActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity
 import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PERMISSIONS_ARGUMENT_KEY
@@ -16,14 +17,19 @@ import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Compa
 import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.REQUEST_CODE_ARGUMENT_KEY
 import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.resume
 
 @Singleton
 class PermissionsInteractorImpl @Inject constructor(
     private val telecomManager: TelecomManager,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) :
     BaseObservable<PermissionsInteractor.Listener>(),
     PermissionsInteractor {
@@ -84,6 +90,23 @@ class PermissionsInteractorImpl @Inject constructor(
         _onPermissionsResultListeners[_requestCode] = callback
     }
 
+    override suspend fun checkPermissions(vararg permissions: String): Boolean =
+        withContext(ioDispatcher) {
+            suspendCancellableCoroutine { continuation ->
+                checkPermissions(*permissions) { results ->
+                    continuation.resume(results.all { it.state == GRANTED })
+                }
+            }
+        }
+
+    override suspend fun checkPermission(permission: String): Boolean = withContext(ioDispatcher) {
+        suspendCancellableCoroutine { continuation ->
+            checkPermissions(permission) { results ->
+                continuation.resume(results.all { it.state == GRANTED })
+            }
+        }
+    }
+
     override fun runWithPermissions(
         permissions: Array<String>,
         grantedCallback: () -> Unit,
@@ -100,6 +123,14 @@ class PermissionsInteractorImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun runWithPermissions(vararg permissions: String, callback: (Boolean) -> Unit) {
+        runWithPermissions(
+            permissions as Array<String>,
+            { callback.invoke(true) },
+            { callback.invoke(false) }
+        )
     }
 
     override fun runWithDefaultDialer(errorMessageRes: Int?, callback: () -> Unit) {

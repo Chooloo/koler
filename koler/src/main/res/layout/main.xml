@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -10,13 +9,11 @@
     <!-- menu button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/main_menu_button"
+        style="@style/Chooloo.Button.Secondary.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/content_description_menu_button"
-        app:icon="@drawable/more_vert"
-        style="@style/Chooloo.Button.Icon.Small"
-        tools:layout_editor_absoluteX="346dp"
-        tools:layout_editor_absoluteY="18dp" />
+        app:icon="@drawable/more_vert" />
 
     <!-- tabs -->
     <com.chooloo.www.chooloolib.ui.widgets.Tabs
@@ -43,8 +40,8 @@
     <!-- dialer button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_dialpad_button"
+        style="@style/Chooloo.Button.FAB.Primary"
         android:layout_width="wrap_content"
-        style="@style/Chooloo.Button.FAB"
         android:layout_height="wrap_content"
         android:contentDescription="@string/content_description_dialer_button"
         app:srcCompat="@drawable/dialpad" />

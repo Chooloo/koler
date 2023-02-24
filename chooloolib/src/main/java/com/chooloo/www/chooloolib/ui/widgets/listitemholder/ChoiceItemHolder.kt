@@ -2,19 +2,32 @@ package com.chooloo.www.chooloolib.ui.widgets.listitemholder
 
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.ListItemBinding
-import com.google.android.material.internal.ViewUtils
+import com.chooloo.www.chooloolib.util.getAttrColor
 
 class ChoiceItemHolder(binding: ListItemBinding) : ListItemHolder(binding) {
     val dimenSpacingSmall by lazy { context.resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
-    val dimenSpacingMedium by lazy { context.resources.getDimensionPixelSize(R.dimen.default_spacing_medium) }
+    private val _defaultBackgroundColor: Int
+    private val _defaultTextColor: Int
 
     init {
         isImageVisible = false
-        isRightButtonVisible = true
 
-        setRightButtonIcon(R.drawable.chevron_right)
-        binding.root.setPadding(dimenSpacingSmall, dimenSpacingSmall, dimenSpacingSmall, dimenSpacingSmall)
-        binding.listItemMainLayout.strokeWidth = ViewUtils.dpToPx(context, 1).toInt()
-        binding.listItemMainConstraintLayout.setPadding(dimenSpacingSmall, dimenSpacingSmall, 0, dimenSpacingSmall)
+        _defaultTextColor = context.getAttrColor(R.attr.colorOnSurfaceVariant)
+        _defaultBackgroundColor = context.getAttrColor(R.attr.colorSurfaceVariant)
+
+        binding.root.setPadding(dimenSpacing, dimenSpacingSmall, dimenSpacing, dimenSpacingSmall)
+        binding.listItemTitle.setTextColor(_defaultTextColor)
+        binding.listItemMainLayout.setCardBackgroundColor(_defaultBackgroundColor)
+        binding.listItemMainConstraintLayout.setPadding(
+            dimenSpacing,
+            dimenSpacing,
+            0,
+            dimenSpacing
+        )
+    }
+
+    fun setSelected(isSelected: Boolean) {
+        binding.listItemMainLayout.setCardBackgroundColor(if (isSelected) context.getAttrColor(R.attr.colorSecondaryContainer) else _defaultBackgroundColor)
+        binding.listItemTitle.setTextColor(if (isSelected) context.getAttrColor(R.attr.colorOnSecondaryContainer) else _defaultTextColor)
     }
 }

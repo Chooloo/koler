@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.interactor.audio
 
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import kotlinx.coroutines.flow.StateFlow
 
 interface AudiosInteractor : BaseInteractor<AudiosInteractor.Listener> {
     interface Listener
@@ -17,7 +18,7 @@ interface AudiosInteractor : BaseInteractor<AudiosInteractor.Listener> {
 
     fun vibrate(millis: Long = 10)
 
-    
+
     enum class AudioMode(val mode: Int) {
         NORMAL(android.media.AudioManager.MODE_NORMAL),
         IN_CALL(android.media.AudioManager.MODE_IN_CALL),
@@ -25,7 +26,6 @@ interface AudiosInteractor : BaseInteractor<AudiosInteractor.Listener> {
         RINGTONE(android.media.AudioManager.MODE_RINGTONE),
         IN_COMMUNICATION(android.media.AudioManager.MODE_IN_COMMUNICATION)
     }
-
 
     companion object {
         const val SHORT_VIBRATE_LENGTH: Long = 20

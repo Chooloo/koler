@@ -1,6 +1,7 @@
 package com.chooloo.www.kontacts.ui.main
 
 import androidx.activity.viewModels
+import androidx.fragment.app.commit
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.kontacts.R
@@ -57,10 +58,9 @@ class MainActivity : BaseActivity<MainViewState>() {
             }
         }
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(binding.mainFragmentContainer.id, contactsFragment)
-            .commit()
+        supportFragmentManager.commit {
+            replace(binding.mainFragmentContainer.id, contactsFragment)
+        }
 
         viewState.onIntent(intent)
     }

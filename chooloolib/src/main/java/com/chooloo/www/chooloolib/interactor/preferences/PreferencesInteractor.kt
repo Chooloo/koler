@@ -14,32 +14,29 @@ interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener>
 
     var defaultPage: Page
     var themeMode: ThemeMode
-    var accentTheme: AccentTheme
+    var incomingCallMode: IncomingCallMode
 
     fun setDefaultValues()
 
     companion object {
-        enum class AccentTheme(val key: String, val theme: Int) {
-            RED("red", R.style.Accent_Red),
-            BLUE("blue", R.style.Accent_Blue),
-            GREEN("green", R.style.Accent_Green),
-            PURPLE("purple", R.style.Accent_Purple),
-            DEFAULT(BLUE.key, BLUE.theme);
+        enum class Page(val key: String, val index: Int, val titleRes: Int) {
+            CONTACTS("contacts", 0, R.string.contacts),
+            RECENTS("recents", 1, R.string.recents);
 
             companion object {
                 fun fromKey(key: String?) =
-                    values().associateBy(AccentTheme::key).getOrDefault(key ?: "", DEFAULT)
+                    values().associateBy(Page::key).getOrDefault(key ?: "", CONTACTS)
             }
         }
 
-        enum class Page(val key: String, val index: Int, val titleRes: Int) {
-            CONTACTS("contacts", 0, R.string.contacts),
-            RECENTS("recents", 1, R.string.recents),
-            DEFAULT(CONTACTS.key, CONTACTS.index, R.string.default_page);
+        enum class IncomingCallMode(val key: String, val index: Int, val titleRes: Int) {
+            POP_UP("popup_notification", 0, R.string.pop_up_notification),
+            FULL_SCREEN("full_screen", 1, R.string.full_screen);
 
             companion object {
                 fun fromKey(key: String?) =
-                    values().associateBy(Page::key).getOrDefault(key ?: "", DEFAULT)
+                    IncomingCallMode.values().associateBy(IncomingCallMode::key)
+                        .getOrDefault(key ?: "", FULL_SCREEN)
             }
         }
     }

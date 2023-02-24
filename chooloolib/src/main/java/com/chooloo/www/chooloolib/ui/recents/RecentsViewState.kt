@@ -4,62 +4,47 @@ import android.Manifest.permission.READ_CALL_LOG
 import android.Manifest.permission.READ_CONTACTS
 import android.content.ClipData
 import android.content.ClipboardManager
-import androidx.lifecycle.LiveData
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.RecentAccount
+import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepository
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.RecentsLiveData
-import com.chooloo.www.chooloolib.model.RecentAccount
-import com.chooloo.www.chooloolib.repository.recents.RecentsRepository
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 open class RecentsViewState @Inject constructor(
-    recentsRepository: RecentsRepository,
-    private val permissions: PermissionsInteractor,
-    private val clipboardManager: ClipboardManager
+    permissions: PermissionsInteractor,
+    private val clipboardManager: ClipboardManager,
+    private val recentsRepository: RecentsRepository,
 ) :
-    ListViewState<RecentAccount>() {
+    ListViewState<RecentAccount>(permissions) {
 
     override val noResultsIconRes = R.drawable.history
     override val noResultsTextRes = R.string.error_no_results_recents
-    override var noPermissionsTextRes = R.string.error_no_permissions_recents
+    override val permissionsImageRes = R.drawable.history
+    override val permissionsTextRes = R.string.error_no_permissions_recents
+    override val requiredPermissions = listOf(READ_CALL_LOG, READ_CONTACTS)
 
-    private val recentsLiveData = recentsRepository.getRecents() as RecentsLiveData
+    private val _showRecentEvent = MutableDataLiveEvent<RecentAccount>()
 
-    val showRecentEvent = DataLiveEvent<RecentAccount>()
+    val showRecentEvent = _showRecentEvent as DataLiveEvent<RecentAccount>
 
-
-    override fun onFilterChanged(filter: String?) {
-        super.onFilterChanged(filter)
-        if (permissions.hasSelfPermissions(arrayOf(READ_CONTACTS, READ_CALL_LOG))) {
-            onPermissionsChanged(true)
-            recentsLiveData.filter = filter
-        }
-    }
 
     override fun onItemClick(item: RecentAccount) {
         super.onItemClick(item)
-        permissions.runWithReadCallLogPermissions { showRecentEvent.call(item) }
+        _showRecentEvent.call(item)
     }
 
     override fun onItemLongClick(item: RecentAccount) {
         super.onItemLongClick(item)
         clipboardManager.setPrimaryClip(ClipData.newPlainText("Copied number", item.number))
-        messageEvent.call(R.string.number_copied_to_clipboard)
+        onMessage(R.string.number_copied_to_clipboard)
     }
 
-    override fun getItemsObservable(callback: (LiveData<List<RecentAccount>>) -> Unit) {
-        permissions.runWithReadCallLogPermissions { clp ->
-            if (!clp) noPermissionsTextRes = R.string.error_no_permissions_recents
-            onPermissionsChanged(clp)
-            permissions.runWithReadContactsPermissions { rcp ->
-                if (!rcp) noPermissionsTextRes = R.string.error_no_permissions_contacts
-                onPermissionsChanged(clp && rcp)
-                if (clp && rcp) callback.invoke(recentsLiveData)
-            }
-        }
-    }
+    override fun getItemsFlow(filter: String?): Flow<List<RecentAccount>>? =
+        recentsRepository.getRecents(filter)
 }

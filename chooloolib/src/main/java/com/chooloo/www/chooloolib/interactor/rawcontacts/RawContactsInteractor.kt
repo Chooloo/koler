@@ -1,10 +1,11 @@
 package com.chooloo.www.chooloolib.interactor.rawcontacts
 
+import com.chooloo.www.chooloolib.data.model.RawContactAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.model.RawContactAccount
+import kotlinx.coroutines.flow.Flow
 
 interface RawContactsInteractor : BaseInteractor<RawContactsInteractor.Listener> {
     interface Listener
 
-    fun queryRawContacts(contactId: Long, callback: (List<RawContactAccount>) -> Unit)
+    fun getRawContacts(contactId: Long): Flow<List<RawContactAccount>>
 }

@@ -41,11 +41,11 @@
     <string name="call_status_new">新电话</string>
     <string name="call_status_dialing">正在拨号</string>
     <string name="call_status_holding">暂停通话</string>
-    <string name="call_status_connecting">连接中...</string>
+    <string name="call_status_connecting">连接中…</string>
     <string name="call_status_incoming">来电</string>
     <string name="call_status_active">正在通话</string>
     <string name="call_status_disconnected">通话结束</string>
-    <string name="call_status_pulling_call">拉电话...</string>
+    <string name="call_status_pulling_call">拉电话…</string>
     <string name="call_status_unknown">通话状态未知</string>
     <string name="call_status_disconnecting">电话停止连接</string>
     <string name="call_status_phone_account">选择手机账号</string>

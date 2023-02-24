@@ -1,13 +1,19 @@
 package com.chooloo.www.chooloolib.ui.base.menu
 
 import android.view.MenuItem
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 
 abstract class BaseMenuViewState : BaseViewState() {
-    val title = MutableLiveData<String>()
-    val subtitle = MutableLiveData<String>()
+    protected val _title = MutableLiveData<String>()
+    protected val _subtitle = MutableLiveData<String>()
+
+    val title = _title as LiveData<String>
+    val subtitle = _subtitle as LiveData<String>
+
     abstract val menuResList: List<Int>
+
 
     open fun onMenuItemClick(menuItem: MenuItem) {
         onMenuItemClick(menuItem.itemId)

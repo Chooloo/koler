@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--region styleables-->
-    <declare-styleable name="Chooloo" />
+    <declare-styleable name="Chooloo">
+        <attr name="colorBackgroundVariant" format="color" />
+        <attr name="colorOnBackgroundVariant" format="color" />
+    </declare-styleable>
 
     <declare-styleable name="Chooloo.DialpadKey">
         <attr name="digit" format="string" />
     </declare-styleable>
 
     <declare-styleable name="Chooloo.IconButton">
+        <attr name="icon" format="reference" />
+        <attr name="activated" format="boolean" />
         <attr name="checkedIcon" format="reference" />
     </declare-styleable>
 

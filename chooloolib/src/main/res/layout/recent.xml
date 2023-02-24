@@ -3,83 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/default_spacing"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/default_spacing">
 
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
-        android:id="@+id/recent_button_more"
-        style="@style/Chooloo.Button.Icon.Small"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recent_name_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_spacing"
-        app:icon="@drawable/more_vert"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/recent_contact_image"
-        android:layout_width="@dimen/image_size_big"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/default_spacing_big"
-        android:background="?colorPrimary"
-        android:src="@drawable/person"
-        android:tint="?colorSurface"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_button_more"
-        app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/recent_text_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_spacing"
-        android:layout_marginTop="@dimen/default_spacing"
-        android:layout_marginEnd="@dimen/default_spacing"
-        android:textAlignment="center"
-        android:textAppearance="@style/Chooloo.Text.HeadlineSmall"
-        android:maxLines="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_contact_image"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Jesus" />
+        <TextView
+            android:id="@+id/recent_text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_spacing_big"
+            android:layout_marginTop="@dimen/default_spacing"
+            android:layout_marginEnd="@dimen/default_spacing"
+            android:maxLines="2"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/Chooloo.Text.Headline"
+            app:layout_constraintBottom_toTopOf="@id/recent_caption"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Jesus" />
 
-    <TextView
-        android:id="@+id/recent_caption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_small"
-        android:textAppearance="@style/Chooloo.Text.Body"
-        app:layout_constraintEnd_toStartOf="@id/recent_type_image"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_text_name"
-        tools:text="2 minutes ago" />
+        <TextView
+            android:id="@+id/recent_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_spacing_small"
+            android:textAppearance="@style/Chooloo.Text.Body"
+            app:layout_constraintStart_toStartOf="@id/recent_text_name"
+            app:layout_constraintTop_toBottomOf="@id/recent_text_name"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="2 minutes ago" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/recent_type_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="3dp"
-        android:src="@drawable/call_missed"
-        android:tint="?colorPrimary"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintBottom_toBottomOf="@id/recent_caption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/recent_caption"
-        app:layout_constraintTop_toTopOf="@id/recent_caption" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/recent_contact_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/default_spacing_big"
+            android:background="?colorSurface"
+            android:backgroundTint="?colorSurface"
+            android:src="@drawable/person"
+            android:tint="?colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="@id/recent_caption"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recent_text_name"
+            app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
+            tools:visibility="visible" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/recent_type_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="3dp"
+            android:src="@drawable/call_missed"
+            android:tint="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/recent_caption"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/recent_caption"
+            app:layout_constraintTop_toTopOf="@id/recent_caption" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <include
         android:id="@+id/recent_main_actions"
-        app:layout_constraintStart_toStartOf="parent"
         layout="@layout/recent_main_actions"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing_big"
+        android:layout_margin="@dimen/default_spacing"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recent_caption" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recent_name_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

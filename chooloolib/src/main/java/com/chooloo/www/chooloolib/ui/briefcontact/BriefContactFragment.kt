@@ -1,19 +1,21 @@
 package com.chooloo.www.chooloolib.ui.briefcontact
 
 import android.os.Bundle
+import android.view.View.LAYOUT_DIRECTION_LTR
+import android.view.View.LAYOUT_DIRECTION_RTL
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commitNow
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.databinding.BriefContactBinding
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.accounts.AccountsViewState
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
 import com.chooloo.www.chooloolib.ui.briefcontact.menu.BriefContactMenuViewState
 import com.chooloo.www.chooloolib.ui.phones.PhonesViewState
+import com.chooloo.www.chooloolib.util.isRTL
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,8 +34,6 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
 
     @Inject lateinit var prompts: PromptsInteractor
     @Inject lateinit var dialogs: DialogsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
-    @Inject lateinit var permissions: PermissionsInteractor
     @Inject lateinit var telecomInteractor: TelecomInteractor
 
 
@@ -41,32 +41,36 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
         binding.briefContactImage.isVisible = false
 
         binding.apply {
-            briefContactButtonMore.setOnClickListener {
-                viewState.onMoreClick()
-            }
+            briefContactMainActions.apply {
+                briefContactButtonMore.setOnClickListener {
+                    viewState.onMoreClick()
+                }
 
-            briefContactMainActions.briefContactButtonSms.setOnClickListener {
-                viewState.onSmsClick()
-            }
+                briefContactButtonSms.setOnClickListener {
+                    viewState.onSmsClick()
+                }
 
-            briefContactMainActions.contactButtonCall.setOnClickListener {
-                viewState.onCallClick()
-            }
+                briefContactButtonCall.setOnClickListener {
+                    viewState.onCallClick()
+                }
 
-            briefContactMainActions.briefContactButtonEdit.setOnClickListener {
-                viewState.onEditClick()
+                briefContactButtonEdit.setOnClickListener {
+                    viewState.onEditClick()
+                }
             }
         }
 
         viewState.apply {
             isFavorite.observe(this@BriefContactFragment) {
-                menuViewState.isFavorite.value = it
+                menuViewState.onIsFavorite(it)
                 binding.briefContactIconFav.isVisible = it
             }
 
             contactName.observe(this@BriefContactFragment) {
                 binding.briefContactTextName.text = it
-                it?.let(menuViewState.contactName::setValue)
+                it?.let(menuViewState::onContactName)
+                binding.briefContactNameLayout.layoutDirection =
+                    if (it?.isRTL() == true) LAYOUT_DIRECTION_RTL else LAYOUT_DIRECTION_LTR
             }
 
             contactNumber.observe(this@BriefContactFragment) {
@@ -92,18 +96,23 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
             }
 
             onContactId(args.getLong(ARG_CONTACT_ID))
-            menuViewState.contactId.value = args.getLong(ARG_CONTACT_ID)
+
+            menuViewState.apply {
+                finishEvent.observe(this@BriefContactFragment) {
+                    viewState.onFinish()
+                }
+
+                onContactId(args.getLong(ARG_CONTACT_ID))
+            }
         }
 
-        childFragmentManager
-            .beginTransaction()
-            .replace(binding.briefContactAccountsFragmentContainer.id, accountsFragment)
-            .commitNow()
+        childFragmentManager.commitNow {
+            replace(binding.briefContactAccountsFragmentContainer.id, accountsFragment)
+        }
 
-        childFragmentManager
-            .beginTransaction()
-            .replace(binding.briefContactPhonesFragmentContainer.id, phonesFragment)
-            .commitNow()
+        childFragmentManager.commitNow {
+            replace(binding.briefContactPhonesFragmentContainer.id, phonesFragment)
+        }
 
         accountsViewState.isEmpty.observe(this@BriefContactFragment) {
             binding.briefContactAccountsFragmentContainer.isVisible = !it

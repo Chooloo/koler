@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    <color name="positive_background">#d9e7cb</color>-->
-    <!--    <color name="positive_foreground">#131f0d</color>-->
-    <color name="positive_background">#587363</color>
-    <color name="positive_foreground">#A2CFAE</color>
+    <color name="positive">#378a28</color>
+    <color name="on_positive">#7cd46c</color>
+    <color name="negative">#d40a00</color>
+    <color name="on_negative">#ff9e99</color>
 
-    <!--    <color name="negative_background">#ffdad9</color>-->
-    <!--    <color name="negative_foreground">#2c1516</color>-->
-    <color name="negative_background">#7d5858</color>
-    <color name="negative_foreground">#F5AEA8</color>
+    <color name="primary">#5bdbbe</color>
+    <color name="on_primary">#00382e</color>
+    <color name="primary_container">#005143</color>
+    <color name="on_primary_container">#7af8da</color>
 
-    <!--region accent colors-->
-    <color name="blue_primary">#76D1FE</color>
-    <color name="blue_on_primary">#20323C</color>
-    <color name="blue_primary_container">#014C69</color>
-    <color name="blue_on_primary_container">#C1E7FE</color>
+    <color name="secondary">#b1ccc3</color>
+    <color name="on_secondary">#00382e</color>
+    <color name="secondary_container">#334b45</color>
+    <color name="on_secondary_container">#cde8df</color>
 
-    <color name="green_primary">#9cd67e</color>
-    <color name="green_on_primary">#0c3900</color>
-    <color name="green_primary_container">#205107</color>
-    <color name="green_on_primary_container">#9cd67e</color>
+    <color name="tertiary">#aacbe3</color>
+    <color name="on_tertiary">#103447</color>
+    <color name="tertiary_container">#2a4a5f</color>
+    <color name="on_tertiary_container">#c7e7ff</color>
 
-    <color name="red_primary">#19686a</color>
-    <color name="red_on_primary">#ffffff</color>
-    <color name="red_primary_container">#a8eff0</color>
-    <color name="red_on_primary_container">#a8eff0</color>
+    <color name="error">#ffb4ab</color>
+    <color name="on_error">#690005</color>
+    <color name="error_container">#93000a</color>
+    <color name="on_error_container">#ffdad6</color>
 
-    <color name="purple_primary">#19686a</color>
-    <color name="purple_on_primary">#ffffff</color>
-    <color name="purple_primary_container">#a8eff0</color>
-    <color name="purple_on_primary_container">#a8eff0</color>
-    <!--endregion-->
+    <color name="background">#191c1b</color>
+    <color name="on_background">#e1e3e0</color>
+
+    <color name="surface">#191c1b</color>
+    <color name="on_surface">#e1e3e0</color>
+    <color name="surface_variant">#3f4945</color>
+    <color name="on_surface_variant">#bfc9c4</color>
+
+    <color name="surface_disabled">#43036489</color>
+
+    <color name="background_variant">#3f4945</color>
+    <color name="on_background_variant">#bfc9c4</color>
 </resources>

@@ -9,6 +9,7 @@ import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseActivity
 import com.chooloo.www.chooloolib.ui.contacts.ContactsViewState
+import com.chooloo.www.chooloolib.ui.dialer.DialerViewState
 import com.chooloo.www.chooloolib.ui.recents.RecentsViewState
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.databinding.MainBinding
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity<MainViewState>() {
     override val contentView by lazy { binding.root }
     override val viewState: MainViewState by viewModels()
 
+    private val _dialerViewState: DialerViewState by viewModels()
     private val recentsViewState: RecentsViewState by viewModels()
     private val contactsViewState: ContactsViewState by viewModels()
     private val binding by lazy { MainBinding.inflate(layoutInflater) }
@@ -67,7 +69,7 @@ class MainActivity : BaseActivity<MainViewState>() {
             mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    viewState.currentPageIndex.value = position
+                    viewState.onPageSelected(position)
                 }
             })
         }
@@ -95,9 +97,8 @@ class MainActivity : BaseActivity<MainViewState>() {
 
             showDialerEvent.observe(this@MainActivity) { ev ->
                 ev.ifNew?.let {
-                    prompts.showFragment(
-                        choolooFragmentFactory.getDialerFragment(it)
-                    )
+                    prompts.showFragment(choolooFragmentFactory.getDialerFragment())
+                    _dialerViewState.onTextChanged(it)
                 }
             }
         }

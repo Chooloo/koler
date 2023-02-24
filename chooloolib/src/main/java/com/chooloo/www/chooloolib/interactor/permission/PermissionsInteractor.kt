@@ -22,11 +22,20 @@ interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener>
         callback: (List<PermissionResult>) -> Unit
     )
 
+    suspend fun checkPermission(permission: String): Boolean
+    suspend fun checkPermissions(vararg permissions: String): Boolean
+
     fun runWithPermissions(
         permissions: Array<String>,
         grantedCallback: () -> Unit,
         deniedCallback: (() -> Unit)? = null
     )
+
+    fun runWithPermissions(
+        vararg permissions: String,
+        callback: (Boolean) -> Unit
+    )
+
 
     fun runWithDefaultDialer(
         @StringRes errorMessageRes: Int? = null,
