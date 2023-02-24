@@ -6,9 +6,9 @@ import android.os.Build.VERSION_CODES
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.ViewGroup
+import com.chooloo.www.chooloolib.data.model.ListData
 import com.chooloo.www.chooloolib.databinding.ListItemBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.data.model.ListData
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.MenuItemHolder
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class MenuAdapter @Inject constructor(
         ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
 
-    override fun onBindListItem(listItemHolder: ListItemHolder, item: MenuItem) {
+    override fun onBindListItem(listItemHolder: ListItemHolder, item: MenuItem, position: Int) {
         listItemHolder.apply {
             isClickable = item.isEnabled
             titleText = item.title.toString()
@@ -29,7 +29,7 @@ class MenuAdapter @Inject constructor(
                 captionText = item.contentDescription?.toString()
             }
 
-            setImageDrawable(item.icon)
+            item.icon?.let(::setImageDrawable)
         }
     }
 

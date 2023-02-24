@@ -64,8 +64,8 @@
             android:id="@+id/main_dialpad_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_spacing_big"
             android:layout_marginEnd="@dimen/default_spacing_big"
+            android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>
@@ -121,8 +121,8 @@
             android:id="@+id/main_dialpad_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_spacing_medium"
             android:layout_marginEnd="@dimen/default_spacing_medium"
+            android:layout_marginBottom="@dimen/default_spacing_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </ConstraintSet>

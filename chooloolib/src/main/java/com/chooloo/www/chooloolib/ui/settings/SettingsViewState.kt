@@ -1,11 +1,9 @@
 package com.chooloo.www.chooloolib.ui.settings
 
-import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
@@ -29,12 +27,12 @@ open class SettingsViewState @Inject constructor(
     override val menuResList = listOf(R.menu.menu_chooloo)
 
     private val _askForThemeModeEvent = MutableLiveEvent()
-    private val _askForAnimationsEvent = MutableLiveEvent()
+    private val _askForAnimationsEvent = MutableDataLiveEvent<Boolean>()
     private val _askForColorEvent = MutableDataLiveEvent<Int>()
 
     val askForThemeModeEvent = _askForThemeModeEvent as LiveEvent
-    val askForAnimationsEvent = _askForAnimationsEvent as LiveEvent
     val askForColorEvent = _askForColorEvent as DataLiveEvent<Int>
+    val askForAnimationsEvent = _askForAnimationsEvent as DataLiveEvent<Boolean>
 
     init {
         _title.value = strings.getString(R.string.settings)
@@ -46,20 +44,19 @@ open class SettingsViewState @Inject constructor(
             R.id.menu_chooloo_email -> navigations.sendEmail()
             R.id.menu_chooloo_report_bugs -> navigations.reportBug()
             R.id.menu_chooloo_theme_mode -> _askForThemeModeEvent.call()
-            R.id.menu_chooloo_animations -> _askForAnimationsEvent.call()
-            R.id.menu_chooloo_accent_color -> _askForColorEvent.call(R.array.accent_colors)
+            R.id.menu_chooloo_animations -> _askForAnimationsEvent.call(preferences.isAnimations)
             else -> super.onMenuItemClick(itemId)
         }
     }
 
     fun onColorResponse(color: Int) {
-        preferences.accentTheme = when (color) {
-            colors.getColor(R.color.red_primary) -> RED
-            colors.getColor(R.color.blue_primary) -> BLUE
-            colors.getColor(R.color.green_primary) -> GREEN
-            colors.getColor(R.color.purple_primary) -> PURPLE
-            else -> DEFAULT
-        }
+//        preferences.accentTheme = when (color) {
+//            colors.getColor(R.color.red_primary) -> RED
+//            colors.getColor(R.color.primary) -> BLUE
+//            colors.getColor(R.color.green_primary) -> GREEN
+//            colors.getColor(R.color.purple_primary) -> PURPLE
+//            else -> DEFAULT
+//        }
         navigations.goToLauncherActivity()
     }
 

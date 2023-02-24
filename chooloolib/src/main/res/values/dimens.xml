@@ -14,17 +14,20 @@
     <dimen name="default_spacing_big">28dp</dimen>
     <dimen name="default_spacing_small">6dp</dimen>
     <dimen name="default_spacing_medium">14dp</dimen>
+    <dimen name="default_spacing_small_plus">8dp</dimen>
     <!--endregion-->
 
     <!--region image size-->
     <dimen name="image_size_big">110dp</dimen>
     <dimen name="image_size_medium">45dp</dimen>
     <dimen name="image_size_small">30dp</dimen>
-    <dimen name="corner_radius">18dp</dimen>
+    <dimen name="corner_radius">20dp</dimen>
     <!--endregion-->
 
     <!--region button-->
     <dimen name="button_text_height">47dp</dimen>
+    <dimen name="button_primary_height">70dp</dimen>
+    <dimen name="button_secondary_height">30dp</dimen>
     <!--endregion-->
 
     <!--region bottom sheet dialog -->
@@ -35,7 +38,7 @@
 
     <!--region icon button-->
     <dimen name="icon_button_size_big">80dp</dimen>
-    <dimen name="icon_button_size_small">50dp</dimen>
+    <dimen name="icon_button_size_small">30dp</dimen>
     <dimen name="icon_button_size_normal">65dp</dimen>
     <dimen name="icon_button_padding_big">25dp</dimen>
     <dimen name="icon_button_padding_small">11dp</dimen>

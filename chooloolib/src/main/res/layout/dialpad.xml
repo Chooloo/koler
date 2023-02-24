@@ -113,11 +113,10 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dialpad_button_call"
-        style="@style/Chooloo.Button.FAB.Large"
+        style="@style/Chooloo.Button.FAB.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_spacing"
-        android:contentDescription="@string/action_call"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,9 +124,11 @@
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/dialpad_button_delete"
-        style="@style/Chooloo.Button.Icon.Medium"
+        style="@style/Chooloo.Button.Secondary.Icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/default_spacing"
+        android:padding="12dp"
         android:visibility="gone"
         app:icon="@drawable/backspace"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"
@@ -139,9 +140,11 @@
 
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/dialpad_button_add_contact"
-        style="@style/Chooloo.Button.Icon.Medium"
+        style="@style/Chooloo.Button.Secondary.Icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/default_spacing"
+        android:padding="12dp"
         android:visibility="gone"
         app:icon="@drawable/person_add"
         app:layout_constraintBottom_toBottomOf="@id/dialpad_button_call"

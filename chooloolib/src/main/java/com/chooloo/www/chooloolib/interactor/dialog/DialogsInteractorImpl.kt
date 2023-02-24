@@ -23,7 +23,6 @@ import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
 import com.chooloo.www.chooloolib.util.fullLabel
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
-import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,13 +40,15 @@ class DialogsInteractorImpl @Inject constructor(
     private val preferences: PreferencesInteractor,
 ) : BaseObservable<DialogsInteractor.Listener>(), DialogsInteractor {
 
-    private val activity = context as BaseActivity<*>
-
-
-    override fun askForBoolean(titleRes: Int, callback: (result: Boolean) -> Unit) {
+    override fun askForBoolean(
+        @StringRes titleRes: Int,
+        isActivated: Boolean,
+        callback: (result: Boolean) -> Boolean
+    ) {
         prompts.showFragment(fragmentsFactory.getPromptFragment(
             strings.getString(R.string.prompt_yes_or_no),
-            strings.getString(titleRes)
+            strings.getString(titleRes),
+            isActivated
         ).apply {
             setOnItemClickListener(callback::invoke)
         })
@@ -56,9 +57,13 @@ class DialogsInteractorImpl @Inject constructor(
     override fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit) {
         prompts.showFragment(fragmentsFactory.getPromptFragment(
             strings.getString(R.string.prompt_are_you_sure),
-            strings.getString(titleRes)
+            strings.getString(titleRes),
+            true
         ).apply {
-            setOnItemClickListener(callback::invoke)
+            setOnItemClickListener {
+                callback.invoke(it)
+                true
+            }
         })
     }
 
@@ -68,16 +73,12 @@ class DialogsInteractorImpl @Inject constructor(
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int?,
         selectedChoiceIndex: Int?,
-        choiceCallback: (String) -> Unit
+        choiceCallback: (String) -> Boolean
     ) {
         prompts.showFragment(
             fragmentsFactory.getChoicesFragment(titleRes, subtitleRes, choices, selectedChoiceIndex)
-                .apply {
-                    setOnChoiceClickListener {
-                        choiceCallback.invoke(it)
-                        this@apply.finish()
-                    }
-                })
+                .apply { setOnChoiceClickListener(choiceCallback) }
+        )
     }
 
     override fun <T> askForChoice(
@@ -86,7 +87,7 @@ class DialogsInteractorImpl @Inject constructor(
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int?,
         selectedChoice: T?,
-        choiceCallback: (T) -> Unit
+        choiceCallback: (T) -> Boolean
     ) {
         val objectsToStringMap = choices.associateBy({ choiceToString.invoke(it) }, { it })
         askForChoice(
@@ -105,15 +106,15 @@ class DialogsInteractorImpl @Inject constructor(
         noColorOption: Boolean,
         selectedColor: Int?
     ) {
-        ColorSheet().colorPicker(
-            colors = activity.resources.getIntArray(R.array.accent_colors),
-            listener = callback::invoke,
-            noColorOption = true,
-            selectedColor = selectedColor
-        ).show(activity.supportFragmentManager)
+//        ColorSheet().colorPicker(
+//            colors = activity.resources.getIntArray(R.array.accent_colors),
+//            listener = callback::invoke,
+//            noColorOption = true,
+//            selectedColor = selectedColor
+//        ).show(activity.supportFragmentManager)
     }
 
-    override fun askForSim(callback: (SimAccount?) -> Unit) {
+    override fun askForSim(callback: (SimAccount?) -> Boolean) {
         CoroutineScope(Dispatchers.IO).launch {
             askForChoice(
                 choices = sims.getSimAccounts(),
@@ -125,7 +126,7 @@ class DialogsInteractorImpl @Inject constructor(
         }
     }
 
-    override fun askForDefaultPage(callback: (Page) -> Unit) {
+    override fun askForDefaultPage(callback: (Page) -> Boolean) {
         askForChoice(
             choices = Page.values().toList(),
             titleRes = R.string.hint_default_page,
@@ -136,7 +137,7 @@ class DialogsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun askForThemeMode(callback: (ThemeMode) -> Unit) {
+    override fun askForThemeMode(callback: (ThemeMode) -> Boolean) {
         askForChoice(
             choices = ThemeMode.values().toList(),
             titleRes = R.string.hint_theme_mode,
@@ -147,7 +148,7 @@ class DialogsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun askForIncomingCallMode(callback: (IncomingCallMode) -> Unit) {
+    override fun askForIncomingCallMode(callback: (IncomingCallMode) -> Boolean) {
         askForChoice(
             choices = IncomingCallMode.values().toList(),
             titleRes = R.string.hint_incoming_call_mode,
@@ -158,7 +159,7 @@ class DialogsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit) {
+    override fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Boolean) {
         askForChoice(
             choiceCallback = callback::invoke,
             titleRes = R.string.action_choose_audio_route,
@@ -171,7 +172,7 @@ class DialogsInteractorImpl @Inject constructor(
 
     override fun askForPhoneAccountHandle(
         phonesAccountHandles: List<PhoneAccountHandle>,
-        callback: (PhoneAccountHandle) -> Unit
+        callback: (PhoneAccountHandle) -> Boolean
     ) {
         askForChoice(
             choiceCallback = callback::invoke,
@@ -185,7 +186,7 @@ class DialogsInteractorImpl @Inject constructor(
     @RequiresApi(Q)
     override fun askForPhoneAccountSuggestion(
         phoneAccountSuggestions: List<PhoneAccountSuggestion>,
-        callback: (PhoneAccountSuggestion) -> Unit
+        callback: (PhoneAccountSuggestion) -> Boolean
     ) {
         askForChoice(
             choiceCallback = callback::invoke,

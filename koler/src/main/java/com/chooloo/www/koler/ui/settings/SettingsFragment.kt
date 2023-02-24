@@ -15,36 +15,56 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
 
         viewState.apply {
             askForDefaultPageEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
+                it.ifNew?.let {
+                    dialogs.askForDefaultPage {
+                        viewState.onDefaultPageResponse(it)
+                        true
+                    }
+                }
             }
 
             askForDialpadTonesEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
-                    dialogs.askForBoolean(R.string.hint_dialpad_tones, viewState::onDialpadTones)
+                it.ifNew?.let { isActivated ->
+                    dialogs.askForBoolean(
+                        R.string.hint_dialpad_tones,
+                        isActivated
+                    ) {
+                        viewState.onDialpadTones(it)
+                        true
+                    }
                 }
             }
 
             askForDialpadVibrateEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
+                it.ifNew?.let { isActivated ->
                     dialogs.askForBoolean(
                         R.string.hint_dialpad_vibrate,
-                        viewState::onDialpadVibrate
-                    )
+                        isActivated
+                    ) {
+                        viewState.onDialpadVibrate(it)
+                        true
+                    }
                 }
             }
 
             askForGroupRecentsEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
+                it.ifNew?.let { isActivated ->
                     dialogs.askForBoolean(
                         R.string.hint_group_recents,
-                        viewState::onGroupRecents
-                    )
+                        isActivated
+                    ) {
+                        viewState.onGroupRecents(it)
+                        true
+                    }
                 }
             }
 
             askForIncomingCallModeEvent.observe(this@SettingsFragment) {
                 it.ifNew?.let {
-                    dialogs.askForIncomingCallMode(viewState::onIncomingCallMode)
+                    dialogs.askForIncomingCallMode {
+                        viewState.onIncomingCallMode(it)
+                        true
+                    }
                 }
             }
         }

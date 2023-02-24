@@ -1,43 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:rowCount="1"
+    android:useDefaultMargins="true">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/contact_button_call"
-        style="@style/Chooloo.Button.FAB.Large"
-        android:layout_width="wrap_content"
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/brief_contact_button_call"
+        style="@style/Chooloo.Button.Primary"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_columnWeight="1"
+        android:padding="15dp"
+        android:layout_margin="@dimen/default_spacing_small_plus"
         android:contentDescription="@string/content_description_call"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/call" />
+        android:gravity="center"
+        app:icon='@drawable/call' />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/brief_contact_button_edit"
-        style="@style/Chooloo.Button.FAB.Large"
-        android:layout_width="wrap_content"
+        style="@style/Chooloo.Button.Primary"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_columnWeight="1"
+        android:layout_margin="@dimen/default_spacing_small_plus"
         android:contentDescription="@string/content_description_edit"
+        android:gravity="center"
+        android:padding="15dp"
+        app:icon="@drawable/edit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/contact_button_call"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/edit" />
+        app:layout_constraintStart_toEndOf="@id/brief_contact_button_call"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/brief_contact_button_sms"
-        style="@style/Chooloo.Button.FAB.Large"
-        android:layout_width="wrap_content"
+        style="@style/Chooloo.Button.Primary"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_spacing"
+        android:layout_columnWeight="1"
+        android:layout_margin="@dimen/default_spacing_small_plus"
         android:contentDescription="@string/content_description_sms"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/brief_contact_button_edit"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/chat" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:gravity="center"
+        android:padding="15dp"
+        app:icon="@drawable/chat" />
+
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/brief_contact_button_more"
+        style="@style/Chooloo.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:layout_margin="@dimen/default_spacing_small_plus"
+        android:contentDescription="@string/content_description_menu_button"
+        android:gravity="center"
+        android:padding="15dp"
+        app:icon="@drawable/more_vert" />
+</GridLayout>

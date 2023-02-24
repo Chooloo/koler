@@ -3,82 +3,82 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/default_spacing"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/default_spacing">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.chooloo.www.chooloolib.ui.widgets.IconButton
-            android:id="@+id/brief_contact_button_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/default_spacing"
-            style="@style/Chooloo.Button.Icon"
-            app:icon="@drawable/more_vert"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.chooloo.www.chooloolib.ui.widgets.IconButton
-            android:id="@+id/brief_contact_icon_fav"
-            style="@style/Chooloo.Button.Icon"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/brief_contact_name_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_spacing"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="parent"
-            app:icon="@drawable/star"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/brief_contact_image"
-            android:layout_width="@dimen/image_size_big"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/default_spacing_big"
-            android:background="?colorPrimary"
-            android:src="@drawable/person"
-            android:tint="?colorSurface"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/brief_contact_button_more"
-            app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/brief_contact_text_name"
-            android:layout_marginStart="@dimen/default_spacing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_spacing"
-            android:maxLines="2"
-            android:layout_marginEnd="@dimen/default_spacing"
-            android:textAppearance="@style/Chooloo.Text.HeadlineSmall"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/brief_contact_image"
-            tools:text="Jesus" />
+            <ImageView
+                android:id="@+id/brief_contact_icon_fav"
+                android:layout_width="@dimen/icon_button_size_small"
+                android:layout_height="@dimen/icon_button_size_small"
+                android:layout_marginStart="@dimen/default_spacing"
+                android:background="@android:color/transparent"
+                android:src="@drawable/star"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?colorSecondaryContainer" />
 
-        <TextView
-            android:id="@+id/brief_contact_text_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_spacing_small"
-            android:textAppearance="@style/Chooloo.Text.Body"
-            app:layout_constraintEnd_toEndOf="@id/brief_contact_text_name"
-            app:layout_constraintStart_toStartOf="@id/brief_contact_text_name"
-            app:layout_constraintTop_toBottomOf="@id/brief_contact_text_name"
-            tools:text="023804932" />
+            <TextView
+                android:id="@+id/brief_contact_text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_spacing_big"
+                android:layout_marginTop="@dimen/default_spacing"
+                android:layout_marginEnd="@dimen/default_spacing"
+                android:maxLines="2"
+                android:textAppearance="@style/Chooloo.Text.Headline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/brief_contact_icon_fav"
+                tools:text="Jesus" />
+
+            <TextView
+                android:id="@+id/brief_contact_text_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_spacing_small"
+                android:textAppearance="@style/Chooloo.Text.Body"
+                app:layout_constraintStart_toStartOf="@id/brief_contact_text_name"
+                app:layout_constraintTop_toBottomOf="@id/brief_contact_text_name"
+                tools:text="023804932" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/brief_contact_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/default_spacing_big"
+                android:background="?colorSurface"
+                android:backgroundTint="?colorSurface"
+                android:src="@drawable/person"
+                android:tint="?colorOnSurface"
+                app:layout_constraintBottom_toBottomOf="@id/brief_contact_text_number"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/brief_contact_text_name"
+                app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/brief_contact_main_actions"
             layout="@layout/brief_contact_main_actions"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_margin="@dimen/default_spacing"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/brief_contact_text_number" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/brief_contact_name_layout" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/brief_contact_phones_fragment_container"
@@ -95,8 +95,8 @@
             android:id="@+id/brief_contact_accounts_fragment_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:backgroundTint="?colorSurface"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/brief_contact_phones_fragment_container" />
     </androidx.constraintlayout.widget.ConstraintLayout>

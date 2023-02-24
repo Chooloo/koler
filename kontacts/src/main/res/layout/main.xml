@@ -12,8 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/content_description_menu_button"
-        android:tint="?colorOnBackground"
-        app:backgroundTint="?colorPrimarySurface"
         app:borderWidth="0dp"
         app:icon="@drawable/more_vert" />
 

@@ -1,6 +1,7 @@
 package com.chooloo.www.chooloolib.di.module
 
 import android.app.KeyguardManager
+import android.app.UiModeManager
 import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.Context
@@ -87,6 +88,10 @@ class ApplicationModule {
     fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =
         context.contentResolver
     //region manager
+
+    @Provides
+    fun provideUiManager(@ApplicationContext context: Context): UiModeManager =
+        context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 
     @Provides
     fun providePowerManager(@ApplicationContext context: Context): PowerManager =

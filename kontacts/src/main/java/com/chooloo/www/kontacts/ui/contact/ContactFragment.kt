@@ -2,7 +2,7 @@ package com.chooloo.www.kontacts.ui.contact
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import androidx.fragment.app.commit
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
@@ -49,7 +49,6 @@ class ContactFragment : BaseFragment<ContactViewState>() {
 
         binding.apply {
             contactButtonSms.setOnClickListener { viewState.onSmsClick() }
-            contactButtonCall.setOnClickListener { viewState.onCallClick() }
             contactButtonEdit.setOnClickListener { viewState.onEditClick() }
             contactButtonDelete.setOnClickListener { viewState.onDeleteClick() }
             contactButtonHistory.setOnClickListener { viewState.onHistoryClick() }
@@ -61,10 +60,9 @@ class ContactFragment : BaseFragment<ContactViewState>() {
 
     private fun setRawContactsFragment(contactId: Long) {
         val accountsFragment = fragmentFactory.getAccountsFragment(contactId)
-        childFragmentManager
-            .beginTransaction()
-            .replace(binding.contactPhonesContainer.id, accountsFragment)
-            .commit()
+        childFragmentManager.commit {
+            replace(binding.contactPhonesContainer.id, accountsFragment)
+        }
     }
 
     companion object {

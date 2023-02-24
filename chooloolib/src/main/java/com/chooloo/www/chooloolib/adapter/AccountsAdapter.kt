@@ -12,7 +12,11 @@ class AccountsAdapter @Inject constructor(
     animations: AnimationsInteractor,
     private val strings: StringsInteractor
 ) : ListAdapter<RawContactAccount>(animations) {
-    override fun onBindListItem(listItemHolder: ListItemHolder, item: RawContactAccount) {
+    override fun onBindListItem(
+        listItemHolder: ListItemHolder,
+        item: RawContactAccount,
+        position: Int
+    ) {
         listItemHolder.apply {
             captionText = null
             isImageVisible = false

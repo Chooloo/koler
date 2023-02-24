@@ -39,7 +39,11 @@ class RecentsAdapter @Inject constructor(
         }
 
 
-    override fun onBindListItem(listItemHolder: ListItemHolder, item: RecentAccount) {
+    override fun onBindListItem(
+        listItemHolder: ListItemHolder,
+        item: RecentAccount,
+        position: Int
+    ) {
         listItemHolder.apply {
             val date = context.getHoursString(item.date)
 
@@ -60,11 +64,9 @@ class RecentsAdapter @Inject constructor(
                                     it.label
                                 )
                             } ·"
-                        imageInitials = it.name?.initials()
-                        if (it.name == null || it.name.isEmpty()) {
-                            drawables.getDrawable(R.drawable.person)?.let {
-                                setImageDrawable(it)
-                            }
+                        imageInitials = it.name?.initials() ?: it.number?.getOrNull(0).toString()
+                        if (it.name.isNullOrEmpty()) {
+                            drawables.getDrawable(R.drawable.person)?.let(::setImageDrawable)
                         }
                     }
                 }

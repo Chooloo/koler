@@ -22,12 +22,23 @@ open class SettingsFragment @Inject constructor() : BaseMenuFragment() {
             }
 
             askForThemeModeEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let { dialogs.askForThemeMode(viewState::onThemeModeResponse) }
+                it.ifNew?.let {
+                    dialogs.askForThemeMode {
+                        viewState.onThemeModeResponse(it)
+                        true
+                    }
+                }
             }
 
             askForAnimationsEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
-                    dialogs.askForBoolean(R.string.hint_animations, viewState::onAnimationsResponse)
+                it.ifNew?.let { isActivated ->
+                    dialogs.askForBoolean(
+                        R.string.hint_animations,
+                        isActivated
+                    ) {
+                        viewState.onAnimationsResponse(it)
+                        true
+                    }
                 }
             }
         }

@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
@@ -66,12 +65,6 @@ class PreferencesInteractorImpl @Inject constructor(
         get() = ThemeMode.fromKey(prefs.getString(R.string.pref_key_theme_mode))
         set(value) {
             prefs.putString(R.string.pref_key_theme_mode, value.key)
-        }
-
-    override var accentTheme: AccentTheme
-        get() = AccentTheme.fromKey(prefs.getString(R.string.pref_key_color))
-        set(value) {
-            prefs.putString(R.string.pref_key_color, value.key)
         }
 
     override var incomingCallMode: IncomingCallMode

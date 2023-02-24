@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.databinding.RecentBinding
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
 import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
 import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
@@ -33,27 +30,12 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
     override fun onSetup() {
         binding.recentContactImage.isVisible = false
 
-        binding.apply {
-            recentButtonMore.setOnClickListener {
-                viewState.onMoreClick()
-            }
-
-            recentMainActions.recentButtonSms.setOnClickListener {
-                viewState.onSms()
-            }
-
-            recentMainActions.recentButtonCall.setOnClickListener {
-                viewState.onCall()
-            }
-
-            recentMainActions.recentButtonContact.setOnClickListener {
-                viewState.onOpenContact()
-            }
-
-            recentMainActions.recentButtonAddContact.setOnClickListener {
-                viewState.onAddContact()
-            }
-
+        binding.recentMainActions.apply {
+            recentButtonSms.setOnClickListener { viewState.onSms() }
+            recentButtonCall.setOnClickListener { viewState.onCall() }
+            recentButtonMore.setOnClickListener { viewState.onMoreClick() }
+            recentButtonContact.setOnClickListener { viewState.onOpenContact() }
+            recentButtonAddContact.setOnClickListener { viewState.onAddContact() }
         }
 
         viewState.apply {
@@ -65,10 +47,6 @@ class RecentFragment @Inject constructor() : BaseFragment<RecentViewState>() {
             imageUri.observe(this@RecentFragment) {
                 binding.recentContactImage.isVisible = true
                 Picasso.with(baseActivity).load(it).into(binding.recentContactImage)
-            }
-
-            typeImage.observe(this@RecentFragment) {
-                binding.recentTypeImage.setImageResource(it)
             }
 
             name.observe(this@RecentFragment) {
