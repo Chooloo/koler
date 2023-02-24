@@ -22,7 +22,7 @@ class ThemesInteractorImpl @Inject constructor(
         if (themeMode == ThemeMode.DYNAMIC) {
             DynamicColors.applyToActivitiesIfAvailable(context as Application)
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && themeMode != ThemeMode.SYSTEM) {
                 uiManager.setApplicationNightMode(themeMode.mode)
             } else {
                 AppCompatDelegate.setDefaultNightMode(themeMode.mode)
