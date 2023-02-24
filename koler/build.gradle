@@ -10,8 +10,8 @@ android {
     compileSdk rootProject.ext.sdkVersion
 
     defaultConfig {
-        versionCode 79
-        versionName "v1.5.0"
+        versionCode 80
+        versionName "v1.6.0"
         targetSdk rootProject.ext.sdkVersion
         minSdk rootProject.ext.minSdkVersion
         applicationId "com.chooloo.www.koler"
