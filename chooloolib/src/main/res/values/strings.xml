@@ -13,6 +13,7 @@
     <string name="in_development">In Development…</string>
     <string name="pop_up_notification">Pop-Up Notification</string>
     <string name="full_screen">Full Screen</string>
+    <string name="loading">Loading…</string>
     <!--endregion-->
 
     <!--region prompt-->

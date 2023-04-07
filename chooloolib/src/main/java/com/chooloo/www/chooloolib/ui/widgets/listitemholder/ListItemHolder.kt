@@ -1,7 +1,6 @@
 package com.chooloo.www.chooloolib.ui.widgets.listitemholder
 
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.Spannable
@@ -10,6 +9,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.compose.runtime.Composable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -104,6 +104,10 @@ open class ListItemHolder(protected val binding: ListItemBinding) :
     init {
         binding.listItemLeftButton.setOnClickListener { _onLeftButtonClickListener.invoke() }
         binding.listItemRightButton.setOnClickListener { _onRightButtonClickListener.invoke() }
+    }
+
+    fun setContent(content: @Composable () -> Unit) {
+        binding.listItemComposeView.setContent(content)
     }
 
     fun setOnClickListener(onClickListener: View.OnClickListener?) {

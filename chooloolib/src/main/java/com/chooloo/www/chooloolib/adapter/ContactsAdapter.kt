@@ -7,6 +7,7 @@ import com.chooloo.www.chooloolib.di.module.IoScope
 import com.chooloo.www.chooloolib.di.module.MainScope
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.ui.list.ListItem
 import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import com.chooloo.www.chooloolib.util.initials
 import kotlinx.coroutines.CoroutineScope
@@ -52,6 +53,17 @@ open class ContactsAdapter @Inject constructor(
                 }
             }
 
+            ioScope.launch {
+                val number = phones.getContactAccounts(item.id).firstOrNull()?.number
+                mainScope.launch {
+                    setContent {
+                        ListItem(
+                            title = item.name ?: "Unknown",
+                            caption = number.toString()
+                        )
+                    }
+                }
+            }
             setImageUri(if (item.photoUri != null) Uri.parse(item.photoUri) else null)
         }
     }

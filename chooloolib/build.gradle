@@ -44,7 +44,7 @@ android {
     kapt { correctErrorTypes true }
     hilt { enableAggregatingTask true }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.2"
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
 }
 
@@ -88,6 +88,7 @@ dependencies {
             "androidx.core:core-ktx:${rootProject.ext.coreKtxVersion}",
 
             // compose
+            "io.coil-kt:coil-compose:1.4.0",
             'androidx.compose.material3:material3',
             'androidx.compose.ui:ui-tooling-preview',
             'androidx.compose.runtime:runtime-rxjava2',
