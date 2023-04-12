@@ -8,7 +8,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.data.model.ContactAccount
-import com.chooloo.www.chooloolib.ui.list.ListItem
 
 @Composable
 fun <Item> List(
@@ -36,7 +35,8 @@ fun ListPreview() {
         emptyImageVector = Icons.Default.Person,
         emptyStringRes = R.string.error_no_results_contacts,
         itemBuilder = { contact ->
-            ListItem(
+            HeaderedListItem(
+                header = "header",
                 title = contact.name ?: "Unknown",
                 caption = contact.starred.toString()
             )
