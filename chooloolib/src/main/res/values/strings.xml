@@ -36,6 +36,7 @@
     <string name="action_block_number">Block Number</string>
     <string name="action_delete_contact">Delete Contact</string>
     <string name="action_delete_recent">Delete Recent</string>
+    <string name="action_clear_recents">Delete All Recent Calls</string>
     <string name="action_set_favorite">Set As Favorite</string>
     <string name="action_unset_favorite">Unset As Favorite</string>
     <string name="action_open_in_whatsapp">Open In Whatsapp</string>
@@ -75,6 +76,7 @@
     <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_clear_recents">All call history will be deleted permanently</string>
     <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
     <!--endregion-->
 

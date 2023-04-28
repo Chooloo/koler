@@ -59,6 +59,14 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
                 }
             }
 
+            clearRecentsEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForValidation(R.string.explain_clear_recents) { bl ->
+                        if (bl) viewState.onClearRecents()
+                    }
+                }
+            }
+
             askForIncomingCallModeEvent.observe(this@SettingsFragment) {
                 it.ifNew?.let {
                     dialogs.askForIncomingCallMode {
