@@ -1,10 +1,13 @@
 package com.chooloo.www.koler.ui.settings
 
+import android.Manifest
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
+import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
 import com.chooloo.www.chooloolib.ui.settings.SettingsViewState
@@ -22,7 +25,9 @@ class SettingsViewState @Inject constructor(
     themes: ThemesInteractor,
     strings: StringsInteractor,
     navigations: NavigationsInteractor,
-    preferences: PreferencesInteractor
+    preferences: PreferencesInteractor,
+    private val recents: RecentsInteractor,
+    private val permissions: PermissionsInteractor
 ) :
     SettingsViewState(themes, colors, strings, navigations, preferences) {
 
@@ -32,11 +37,13 @@ class SettingsViewState @Inject constructor(
     private val _askForIncomingCallModeEvent = MutableLiveEvent()
     private val _askForDialpadTonesEvent = MutableDataLiveEvent<Boolean>()
     private val _askForGroupRecentsEvent = MutableDataLiveEvent<Boolean>()
+    private val _clearRecentsEvent = MutableLiveEvent()
     private val _askForDialpadVibrateEvent = MutableDataLiveEvent<Boolean>()
 
     val askForDefaultPageEvent = _askForDefaultPageEvent as LiveEvent
     val askForIncomingCallModeEvent = _askForIncomingCallModeEvent as LiveEvent
     val askForGroupRecentsEvent = _askForGroupRecentsEvent as DataLiveEvent<Boolean>
+    val clearRecentsEvent = _clearRecentsEvent as LiveEvent
     val askForDialpadTonesEvent = _askForDialpadTonesEvent as DataLiveEvent<Boolean>
     val askForDialpadVibrateEvent = _askForDialpadVibrateEvent as DataLiveEvent<Boolean>
 
@@ -47,6 +54,7 @@ class SettingsViewState @Inject constructor(
             R.id.menu_koler_incoming_call_mode -> _askForIncomingCallModeEvent.call()
             R.id.menu_koler_dialpad_tones -> _askForDialpadTonesEvent.call(preferences.isDialpadTones)
             R.id.menu_koler_group_recents -> _askForGroupRecentsEvent.call(preferences.isGroupRecents)
+            R.id.menu_koler_clear_recents -> _clearRecentsEvent.call()
             R.id.menu_koler_dialpad_vibrate -> _askForDialpadVibrateEvent.call(preferences.isDialpadVibrate)
             else -> super.onMenuItemClick(itemId)
         }
@@ -68,6 +76,15 @@ class SettingsViewState @Inject constructor(
     fun onGroupRecents(response: Boolean) {
         preferences.isGroupRecents = response
         navigations.goToLauncherActivity()
+    }
+
+    fun onClearRecents() {
+        permissions.runWithPermissions(arrayOf(Manifest.permission.WRITE_CALL_LOG), {
+            recents.deleteAllRecents()
+            onFinish()
+        }, {
+            onError(com.chooloo.www.chooloolib.R.string.error_no_permissions_edit_call_log)
+        })
     }
 
     fun onIncomingCallMode(response: IncomingCallMode) {
