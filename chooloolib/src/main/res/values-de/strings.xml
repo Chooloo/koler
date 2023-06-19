@@ -99,7 +99,7 @@
     <string name="call_status_pulling_call">Pulling Call…</string>
     <string name="call_status_unknown">Anrufstatus unbekannt</string>
     <string name="call_status_disconnecting">Trenne Verbindung…</string>
-    <string name="call_status_phone_account">Select phone account</string>
+    <string name="call_status_phone_account">Telefonkonto auswählen</string>
     <!--endregion-->
 
     <!--region pref key-->
