@@ -210,7 +210,7 @@
 
     <!--region content description-->
     <string name="content_description_favorite_star">Favoritenstern</string>
-    <string name="content_description_empty_list_icon">Empty list icon</string>
+    <string name="content_description_empty_list_icon">Symbol für eine leere Liste</string>
     <!--endregion-->
 
     <!--region type label-->
