@@ -152,7 +152,7 @@
 
     <string name="error_cant_hold_call">Anruf kann nicht gehalten werden</string>
     <string name="error_cant_swap_calls">Anruf kann nicht gewechselt werden</string>
-    <string name="error_cant_merge_call">Can\'t merge call</string>
+    <string name="error_cant_merge_call">Kann den Anruf nicht zusammenführen</string>
 
     <string name="error_couldnt_get_number_from_intent">Nummer konnte nicht gefunden werden</string>
     <!--endregion-->
