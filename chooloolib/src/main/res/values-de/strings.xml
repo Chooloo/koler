@@ -224,6 +224,6 @@
     <string name="action_call">Anrufen</string>
     <string name="content_description_call_number">Nummer Anrufen</string>
     <string name="content_description_add_contact">Kontakt hinzufügen</string>
-    <string name="content_description_open_contact">Kontakt hinzufügen</string>
+    <string name="content_description_open_contact">Kontakt öffnen</string>
     <string name="content_description_send_sms">SMS senden</string>
 </resources>
