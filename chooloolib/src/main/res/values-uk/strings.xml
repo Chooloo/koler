@@ -85,7 +85,7 @@
     <string name="error_no_number_to_call">Не знайдено номера :(</string>
     <string name="error_cant_hold_call">Не можу притримати виклик</string>
     <string name="error_cant_swap_calls">Не можу перемкнути дзвінки</string>
-    <string name="error_cant_merge_call">Не можу з/'єднати дзвінки</string>
+    <string name="error_cant_merge_call">Не можу зєднати дзвінки</string>
     <string name="error_couldnt_get_number_from_intent">Не можу знайти номер</string>
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_1_letters">Гол.пошта</string>
