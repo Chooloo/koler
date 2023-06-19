@@ -218,7 +218,7 @@
     <string name="type_label_name">Name</string>
     <string name="type_label_phone">Telefon</string>
     <string name="type_label_email">E-Mail</string>
-    <string name="type_label_custom">Benutzerdfefiniert</string>
+    <string name="type_label_custom">Benutzerdefiniert</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organisation</string>
     <string name="action_call">Anrufen</string>
