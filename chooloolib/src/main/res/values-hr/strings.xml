@@ -1,95 +1,41 @@
 <resources>
-
-    <!--region titles-->
     <string name="recents">Nedavno</string>
     <string name="contacts">Kontakti</string>
-    <!--endregion-->
-
-    <!--region messages-->
     <string name="number_copied_to_clipboard">Broj kopiran u međuspremnik</string>
-    <!--endregion-->
-
-    <!--region actions-->
     <string name="action_answer">Prihvati</string>
     <string name="action_hangup">Odbij</string>
     <string name="action_yes">Da</string>
     <string name="action_no">Ne</string>
-    <!--endregion-->
-
-    <!--region Koler-->
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
-    <!--endregion-->
-
-    <!--region hints-->
     <string name="hint_search">Traži</string>
-    <!--endregion-->
-
-    <!--region warning-->
     <string name="explain_is_on_hold">%s is on hold</string>
     <string name="explain_delete_contact">Are you sure you want to delete that contact?</string>
     <string name="explain_delete_recent">Are you sure you want to delete that recent call?</string>
-    <!--endregion-->
-
-    <!--region urls-->
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
-    <!--endregion-->
-
-    <!--region call actions -->
     <string name="call_action_mute">Isključi zvuk</string>
     <string name="call_action_unmute">Uključi zvuk</string>
     <string name="call_action_speaker">Zvučnik</string>
     <string name="call_action_speaker_off">Isključi zvučnik</string>
-    <!--endregion-->
-
-    <!--region call state-->
     <string name="call_status_dialing">Pozivanje…</string>
     <string name="call_status_holding">Poziv na čekanju</string>
     <string name="call_status_incoming">Dolazni poziv</string>
     <string name="call_status_disconnected">Poziv završen</string>
     <string name="call_status_active">Poziv u tijeku</string>
-    <!--endregion-->
-
-    <!--region pref key-->
-    <string name="pref_key_rate">rate</string>
-    <string name="pref_key_color">accent_color</string>
-    <string name="pref_key_animations">animations</string>
-    <string name="pref_key_report_bugs">report_bugs</string>
-    <string name="pref_key_default_page">default_page</string>
-    <!--endregion-->
-
-    <!--region pref title-->
     <string name="pref_title_rate">Ocijeni</string>
     <string name="pref_title_animations">Animacije</string>
     <string name="pref_title_app_color">Boja teme</string>
     <string name="pref_title_email">Pošalji nam e-poštu</string>
     <string name="pref_title_report_bugs">Prijavi grešku</string>
-    <!--endregion-->
-
-    <!--region pref default value-->
-    <!--endregion-->
-
-    <!--region errors-->
     <string name="error_no_results">Nema rezultata :/</string>
     <string name="error_no_results_phones">Nema telefonskih brojeva :/</string>
     <string name="error_no_results_contacts">Nema kontakata :/</string>
     <string name="error_no_results_recents">Nema nedavnog :/</string>
-
     <string name="error_no_permissions_contacts">Treba mi dozvola za čitanje kontakata :)</string>
     <string name="error_no_permissions_recents">Treba mi dozvola za čitanje nedavnih poziva :)</string>
     <string name="error_no_permissions_phones">Treba mi dozvola za čitanje kontakata :)</string>
-
-    <!--endregion-->
-
-    <!--region pref color values-->
-    <!--endregion-->
-
-    <!--region pref values-->
-    <!--endregion-->
-
-    <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
@@ -101,26 +47,13 @@
     <string name="dialpad_9_letters">WXYZ</string>
     <string name="dialpad_star_letters" />
     <string name="dialpad_pound_letters" />
-    <!--endregion-->
-
-    <!--region content descriptions -->
     <string name="content_description_answer_button">Tipka za prihvat poziva</string>
     <string name="content_description_reject_button">Tipka za odbijanje poziva</string>
-    <!--endregion-->
-
-    <!--region notification-->
     <string name="call_notification_channel_name">Obavijesti o pozivima</string>
     <string name="call_notification_channel_description">Obavijesti aktivnih poziva, prikazane za ugodno korištenje</string>
-    <!--endregion-->
-
-    <!--region phone type-->
-    <!--endregion-->
-
-    <!--region audio route-->
     <string name="audio_route_speaker">Speaker</string>
     <string name="audio_route_earpiece">Earpiece</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Wired Headset</string>
     <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
-    <!--endregion-->
 </resources>

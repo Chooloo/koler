@@ -1,5 +1,4 @@
 <resources>
-
     <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
@@ -139,12 +138,6 @@
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
     <!--endregion-->
 
-    <!--region pref summary -->
-    <!--endregion-->
-
-    <!--region pref default value-->
-    <!--endregion-->
-
     <!--region errors-->
     <string name="error_no_results">No Results</string>
     <string name="error_no_results_recents">No Recents</string>
@@ -168,9 +161,6 @@
     <string name="error_cant_merge_call">Can\'t merge call</string>
 
     <string name="error_couldnt_get_number_from_intent">Couldn\'t find number</string>
-    <!--endregion-->
-
-    <!--region pref color values-->
     <!--endregion-->
 
     <!--region pref values-->
@@ -210,9 +200,6 @@
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
     <!--endregion-->
 
-    <!--region phone type-->
-    <!--endregion-->
-
     <!--region audio route-->
     <string name="audio_route_speaker">Speaker</string>
     <string name="audio_route_earpiece">Earpiece</string>
@@ -240,4 +227,5 @@
     <string name="content_description_open_contact">Open Contact</string>
     <string name="content_description_send_sms">Send SMS</string>
     <string name="grant">grant</string>
+    <!--endregion-->
 </resources>

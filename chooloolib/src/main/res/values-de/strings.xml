@@ -1,7 +1,4 @@
-
 <resources>
-
-    <!--region titles-->
     <string name="recents">Anrufliste</string>
     <string name="contacts">Kontakte</string>
     <string name="actions">Aktionen</string>
@@ -13,18 +10,9 @@
     <string name="theme_mode_system">System</string>
     <string name="theme_mode_dynamic">Dynamisch</string>
     <string name="in_development">In Entwicklung...</string>
-    <!--endregion-->
-
-    <!--region prompt-->
     <string name="prompt_yes_or_no">Ja oder nein?</string>
     <string name="prompt_are_you_sure">Bist Du sicher?</string>
-    <!--endregion-->
-
-    <!--region messages-->
     <string name="number_copied_to_clipboard">Nummer in Zwischenablage kopiert</string>
-    <!--endregion-->
-
-    <!--region actions-->
     <string name="action_yes">Ja</string>
     <string name="action_no">Nein</string>
     <string name="action_answer">Beantworten</string>
@@ -41,14 +29,8 @@
     <string name="action_unblock_number">Blockierung der Nummer aufheben</string>
     <string name="action_choose_audio_route">Audioausgang wählen</string>
     <string name="action_choose_phone_account">Telefonkonto auswählen</string>
-    <!--endregion-->
-
-    <!--region Koler-->
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
-    <!--endregion-->
-
-    <!--region hints-->
     <string name="hint_search">Suche</string>
     <string name="hint_theme_mode">Design</string>
     <string name="hint_sim_account">SIM-Karte</string>
@@ -62,9 +44,6 @@
     <string name="hint_dialpad_tones">Wähltastentöne</string>
     <string name="hint_group_recents">Anrufeinträge einer Person gruppieren</string>
     <string name="hint_show_blocked">Zeige Optionen zum Blockieren und Wiederfreischalten von Nummern (benötigt die Standardtelefonapp)</string>
-    <!--endregion-->
-
-    <!--region warning-->
     <string name="explain_is_on_hold">%s wird gehalten</string>
     <string name="explain_choose_theme_mode">Wähle das Koler-Design. App muss zum Anzeigen der Änderung neu gestartet werden.</string>
     <string name="explain_choose_sim_account">Rufe mit einer anderen SIM an</string>
@@ -73,22 +52,13 @@
     <string name="explain_delete_contact">Dieser Kontakt wird dauerhalt gelöscht.</string>
     <string name="explain_delete_recent">Dieser Eintrag wird dauerhaft gelöscht.</string>
     <string name="explain_choose_default_page">Diese Seite wird angezeigt, wenn du Koler öffnest.</string>
-    <!--endregion-->
-
-    <!--region urls-->
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
-    <!--endregion-->
-
-    <!--region call actions -->
     <string name="call_action_mute">Stumm</string>
     <string name="call_action_unmute">Stummschaltung aufheben</string>
     <string name="call_action_speaker">Lautsprecher</string>
     <string name="call_action_speaker_off">Lautsprecher deaktivieren</string>
-    <!--endregion-->
-
-    <!--region call state-->
     <string name="call_status_new">Neuer Anruf</string>
     <string name="call_status_dialing">Wählt…</string>
     <string name="call_status_holding">Anruf wird gehalten</string>
@@ -100,24 +70,6 @@
     <string name="call_status_unknown">Anrufstatus unbekannt</string>
     <string name="call_status_disconnecting">Trenne Verbindung…</string>
     <string name="call_status_phone_account">Telefonkonto auswählen</string>
-    <!--endregion-->
-
-    <!--region pref key-->
-    <string name="pref_key_rate">rate</string>
-    <string name="pref_key_ask_sim">ask_sim</string>
-    <string name="pref_key_color">accent_color</string>
-    <string name="pref_key_animations">animations</string>
-    <string name="pref_key_theme_mode">theme_mode</string>
-    <string name="pref_key_report_bugs">report_bugs</string>
-    <string name="pref_key_show_blocked">show_blocked</string>
-    <string name="pref_key_default_page">default_page</string>
-    <string name="pref_key_group_recents">group_recents</string>
-    <string name="pref_key_dialpad_tones">dialpad_tones</string>
-    <string name="pref_key_manage_blocked">manage_blocked</string>
-    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
-    <!--endregion-->
-
-    <!--region pref title-->
     <string name="pref_title_rate">Bewerten</string>
     <string name="pref_title_animations">Animationen</string>
     <string name="pref_title_app_color">Farbakzente</string>
@@ -125,48 +77,23 @@
     <string name="pref_title_email">Schrebe uns eine E-Mail</string>
     <string name="pref_title_report_bugs">Fehler melden</string>
     <string name="pref_title_manage_blocked">Blockierte Nummern verwalten</string>
-    <!--endregion-->
-
-    <!--region pref summary -->
-    <!--endregion-->
-
-    <!--region pref default value-->
-    <!--endregion-->
-
-    <!--region errors-->
     <string name="error_no_results">Keine Ergebnisse</string>
     <string name="error_no_results_recents">Keine kürzlichen Anrufe</string>
     <string name="error_no_results_contacts">Keine Kontakte</string>
     <string name="error_no_results_phones">Keine Telefonnummern</string>
     <string name="error_not_default_dialer_blocked">Wähle Koler als Standardtelefonapp aus, um blockierte Nummern zu sehen.</string>
     <string name="error_not_default_dialer_call">Wähle Koler als Standardtelefonapp aus, um Anrufe zu tätigen.</string>
-
     <string name="error_no_permissions_edit_call_log">Fehlende Berechtigung, die Anrufhistorie zu ändern :)</string>
     <string name="error_no_permissions_make_call">Fehlende Berechtigung, Anrufe zu tätigen :(</string>
     <string name="error_no_permissions_phones">Berechtigung nötig, um Telefonnummern zu lesen :)</string>
     <string name="error_no_permissions_recents">Berechtigung nötig, um die Anrufhistorie einzusehen :)</string>
     <string name="error_no_permissions_contacts">Berechtigung nötig, um Kontakte einzusehen :)</string>
     <string name="error_no_permissions_contacts_and_call_log">Berechtigungen nötig, um Kontakte und Anrufhistorie einzusehen :)</string>
-
     <string name="error_no_number_to_call">Keine Nummer gefunden</string>
-
     <string name="error_cant_hold_call">Anruf kann nicht gehalten werden</string>
     <string name="error_cant_swap_calls">Anruf kann nicht gewechselt werden</string>
     <string name="error_cant_merge_call">Kann den Anruf nicht zusammenführen</string>
-
     <string name="error_couldnt_get_number_from_intent">Nummer konnte nicht gefunden werden</string>
-    <!--endregion-->
-
-    <!--region pref color values-->
-    <!--endregion-->
-
-    <!--region pref values-->
-    <string name="pref_value_page_contacts">contacts</string>
-    <string name="pref_value_page_recents">recents</string>
-    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
-    <!--endregion-->
-
-    <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_1_letters">Voicemail</string>
     <string name="dialpad_2_letters">ABC</string>
@@ -179,9 +106,6 @@
     <string name="dialpad_9_letters">WXYZ</string>
     <string name="dialpad_star_letters" />
     <string name="dialpad_pound_letters" />
-    <!--endregion-->
-
-    <!--region content descriptions -->
     <string name="content_description_call">Anruf</string>
     <string name="content_description_edit">Bearbeiten</string>
     <string name="content_description_delete">Löschen</string>
@@ -190,30 +114,15 @@
     <string name="content_description_answer_button">Annehmen-Knopf</string>
     <string name="content_description_reject_button">Ablehen-Knopf</string>
     <string name="content_description_call_actions_button">Anrufaktionen</string>
-    <!--endregion-->
-
-    <!--region notification-->
     <string name="call_notification_channel_name">Anruf-Benachrichtigung</string>
     <string name="call_notification_channel_description">Anruf-Benachrichtigung, für komfortable Anrufsteuerung</string>
-    <!--endregion-->
-
-    <!--region phone type-->
-    <!--endregion-->
-
-    <!--region audio route-->
     <string name="audio_route_speaker">Lautsprecher</string>
     <string name="audio_route_earpiece">Ohrmuschel</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Gabelgebundenes Headset (mit Mikro)</string>
     <string name="audio_route_wired_or_earpiece">Kabelgebundene Kopfhörer (ohne Mikro)</string>
-    <!--endregion-->
-
-    <!--region content description-->
     <string name="content_description_favorite_star">Favoritenstern</string>
     <string name="content_description_empty_list_icon">Symbol für eine leere Liste</string>
-    <!--endregion-->
-
-    <!--region type label-->
     <string name="type_label_im">IM</string>
     <string name="type_label_name">Name</string>
     <string name="type_label_phone">Telefon</string>
