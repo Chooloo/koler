@@ -40,7 +40,7 @@
     <string name="action_open_in_whatsapp">In Whatsapp öffnen</string>
     <string name="action_unblock_number">Blockierung der Nummer aufheben</string>
     <string name="action_choose_audio_route">Audioausgang wählen</string>
-    <string name="action_choose_phone_account">Choose phone account</string>
+    <string name="action_choose_phone_account">Telefonkonto auswählen</string>
     <!--endregion-->
 
     <!--region Koler-->
