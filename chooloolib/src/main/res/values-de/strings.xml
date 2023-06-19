@@ -59,7 +59,7 @@
     <string name="hint_search_items">Kontakte &amp; Anrufliste durchsuchen</string>
     <string name="hint_dialpad_vibrate">Wähtastenvibration</string>
     <string name="hint_should_ask_sim">Vor jedem Anruf nach SIM fragen</string>
-    <string name="hint_dialpad_tones">Wähtastentöne</string>
+    <string name="hint_dialpad_tones">Wähltastentöne</string>
     <string name="hint_group_recents">Anrufeinträge einer Person gruppieren</string>
     <string name="hint_show_blocked">Zeige Optionen zum Blockieren und Wiederfreischalten von Nummern (benötigt die Standardtelefonapp)</string>
     <!--endregion-->
