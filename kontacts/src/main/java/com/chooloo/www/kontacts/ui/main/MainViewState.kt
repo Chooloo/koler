@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.data.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
-import com.chooloo.www.chooloolib.util.DataLiveEvent
-import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import com.chooloo.www.kontacts.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,8 +22,8 @@ class MainViewState @Inject constructor(
     val isSearching = MutableLiveData(false)
     val searchHintRes = MutableLiveData(R.string.hint_search_contacts)
 
-    val showMenuEvent = LiveEvent()
-    val showContactEvent = DataLiveEvent<Uri>()
+    val showMenuEvent = MutableLiveEvent()
+    val showContactEvent = MutableDataLiveEvent<Uri>()
 
 
     fun onSettingsClick() {
