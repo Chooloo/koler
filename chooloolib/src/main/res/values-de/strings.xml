@@ -69,7 +69,7 @@
     <string name="explain_choose_theme_mode">Wähle das Koler-Design. App muss zum Anzeigen der Änderung neu gestartet werden.</string>
     <string name="explain_choose_sim_account">Rufe mit einer anderen SIM an</string>
     <string name="explain_choose_audio_route">Leite den Ton an einen anderen Ausgang um</string>
-    <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
+    <string name="explain_choose_phone_account">Fortsetzen des laufenden Gesprächs unter Verwendung eines bestimmten Telefonkontos</string>
     <string name="explain_delete_contact">Dieser Kontakt wird dauerhalt gelöscht.</string>
     <string name="explain_delete_recent">Dieser Eintrag wird dauerhaft gelöscht.</string>
     <string name="explain_choose_default_page">Diese Seite wird angezeigt, wenn du Koler öffnest.</string>
