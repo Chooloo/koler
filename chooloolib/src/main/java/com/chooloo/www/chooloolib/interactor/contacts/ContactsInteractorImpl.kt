@@ -6,11 +6,10 @@ import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract.Contacts
 import androidx.annotation.RequiresPermission
-import com.chooloo.www.chooloolib.contentresolver.ContactsContentResolver
+import com.chooloo.www.chooloolib.data.repository.contacts.ContactsRepository
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
 import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
 import com.chooloo.www.chooloolib.util.annotation.RequiresDefaultDialer
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -20,15 +19,13 @@ import javax.inject.Singleton
 class ContactsInteractorImpl @Inject constructor(
     private val phones: PhonesInteractor,
     private val blocked: BlockedInteractor,
+    private val contactsRepository: ContactsRepository,
     @ApplicationContext private val context: Context,
 ) : BaseInteractorImpl<ContactsInteractor.Listener>(), ContactsInteractor {
 
-    override fun queryContact(contactId: Long, callback: (ContactAccount?) -> Unit) {
-        ContactsContentResolver(context, contactId).queryItems { contacts ->
-            contacts.let { callback.invoke(contacts.getOrNull(0)) }
-        }
-    }
+    override fun getContact(contactId: Long) = contactsRepository.getContact(contactId)
 
+    override fun getContacts() = contactsRepository.getContacts()
 
     @RequiresPermission(WRITE_CONTACTS)
     override fun deleteContact(contactId: Long) {
@@ -41,18 +38,14 @@ class ContactsInteractorImpl @Inject constructor(
     }
 
     @RequiresDefaultDialer
-    override fun blockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phones.getContactAccounts(contactId) { accounts ->
-            accounts?.forEach { blocked.blockNumber(it.number) }
-            onSuccess?.invoke()
-        }
+    override suspend fun blockContact(contactId: Long) {
+        val contactAccounts = phones.getContactAccounts(contactId)
+        contactAccounts.forEach { blocked.blockNumber(it.number) }
     }
 
-    override fun unblockContact(contactId: Long, onSuccess: (() -> Unit)?) {
-        phones.getContactAccounts(contactId) { accounts ->
-            accounts?.forEach { blocked.unblockNumber(it.number) }
-            onSuccess?.invoke()
-        }
+    override suspend fun unblockContact(contactId: Long) {
+        val contactAccounts = phones.getContactAccounts(contactId)
+        contactAccounts.forEach { blocked.unblockNumber(it.number) }
     }
 
     @RequiresPermission(WRITE_CONTACTS)
@@ -63,9 +56,8 @@ class ContactsInteractorImpl @Inject constructor(
         context.contentResolver.update(Contacts.CONTENT_URI, contentValues, filter, null)
     }
 
-    override fun getIsContactBlocked(contactId: Long, callback: (Boolean) -> Unit) {
-        phones.getContactAccounts(contactId) { accounts ->
-            callback.invoke(accounts?.all { blocked.isNumberBlocked(it.number) } ?: false)
-        }
+    override suspend fun getIsContactBlocked(contactId: Long): Boolean {
+        val contactAccounts = phones.getContactAccounts(contactId)
+        return contactAccounts.all { blocked.isNumberBlocked(it.number) }
     }
 }

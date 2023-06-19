@@ -45,7 +45,6 @@
     <string name="hint_animations">نمایش پویانمایی</string>
     <string name="hint_search_recents">جستجو در گزارش ها</string>
     <string name="hint_search_contacts">جستجو در مخاطبین</string>
-    <string name="hint_compact_mode">فهرست را فشرده تر کنید</string>
     <string name="hint_search_items">جستجوی مخاطبین &amp; گزارش ها</string>
     <string name="hint_dialpad_vibrate">لرزش هنگام فشردن شماره گیر</string>
     <string name="hint_should_ask_sim">انتخاب سیم کارت قبل هر تماس</string>
@@ -79,7 +78,7 @@
 
     <!--region call state-->
     <string name="call_status_new">تماس جدید</string>
-    <string name="call_status_dialing">... درحال تماس</string>
+    <string name="call_status_dialing">… درحال تماس</string>
     <string name="call_status_holding">تماس در حالت انتظار</string>
     <string name="call_status_connecting">در حال برقراری</string>
     <string name="call_status_incoming">تماس ورودی</string>
@@ -93,7 +92,6 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
-    <string name="pref_key_compact">compact</string>
     <string name="pref_key_ask_sim">ask_sim</string>
     <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
@@ -108,7 +106,6 @@
 
     <!--region pref title-->
     <string name="pref_title_rate">امتیازدهی</string>
-    <string name="pref_title_compact">حالت فشرده</string>
     <string name="pref_title_animations">پویانمایی ها</string>
     <string name="pref_title_app_color">رنگ اصلی</string>
     <string name="pref_title_theme_mode">حالت نمایه</string>

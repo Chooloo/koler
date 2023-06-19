@@ -1,21 +1,32 @@
 package com.chooloo.www.chooloolib.di.module
 
 import android.app.KeyguardManager
+import android.app.UiModeManager
 import android.content.ClipboardManager
+import android.content.ContentResolver
 import android.content.Context
 import android.media.AudioManager
 import android.os.PowerManager
 import android.os.Vibrator
 import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
+import android.telephony.TelephonyManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
+import com.chooloo.www.chooloolib.data.repository.calls.CallsRepository
+import com.chooloo.www.chooloolib.data.repository.calls.CallsRepositoryImpl
+import com.chooloo.www.chooloolib.data.repository.contacts.ContactsRepository
+import com.chooloo.www.chooloolib.data.repository.contacts.ContactsRepositoryImpl
+import com.chooloo.www.chooloolib.data.repository.phones.PhonesRepository
+import com.chooloo.www.chooloolib.data.repository.phones.PhonesRepositoryImpl
+import com.chooloo.www.chooloolib.data.repository.rawcontacts.RawContactsRepository
+import com.chooloo.www.chooloolib.data.repository.rawcontacts.RawContactsRepositoryImpl
+import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepository
+import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepositoryImpl
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactoryImpl
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
 import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactoryImpl
-import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
-import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactoryImpl
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
@@ -50,16 +61,10 @@ import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
 import com.chooloo.www.chooloolib.interactor.sim.SimsInteractorImpl
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractorImpl
-import com.chooloo.www.chooloolib.repository.calls.CallsRepository
-import com.chooloo.www.chooloolib.repository.calls.CallsRepositoryImpl
-import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
-import com.chooloo.www.chooloolib.repository.contacts.ContactsRepositoryImpl
-import com.chooloo.www.chooloolib.repository.phones.PhonesRepository
-import com.chooloo.www.chooloolib.repository.phones.PhonesRepositoryImpl
-import com.chooloo.www.chooloolib.repository.rawcontacts.RawContactsRepository
-import com.chooloo.www.chooloolib.repository.rawcontacts.RawContactsRepositoryImpl
-import com.chooloo.www.chooloolib.repository.recents.RecentsRepository
-import com.chooloo.www.chooloolib.repository.recents.RecentsRepositoryImpl
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
+import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractorImpl
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractorImpl
 import com.chooloo.www.chooloolib.util.PreferencesManager
 import dagger.Binds
 import dagger.Module
@@ -79,7 +84,14 @@ class ApplicationModule {
     fun provideVibrator(@ApplicationContext context: Context): Vibrator =
         context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+    @Provides
+    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =
+        context.contentResolver
     //region manager
+
+    @Provides
+    fun provideUiManager(@ApplicationContext context: Context): UiModeManager =
+        context.getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
 
     @Provides
     fun providePowerManager(@ApplicationContext context: Context): PowerManager =
@@ -96,6 +108,10 @@ class ApplicationModule {
     @Provides
     fun provideKeyguardManager(@ApplicationContext context: Context): KeyguardManager =
         context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+
+    @Provides
+    fun provideTelephonyManager(@ApplicationContext context: Context): TelephonyManager =
+        context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
     @Provides
     fun provideClipboardManager(@ApplicationContext context: Context): ClipboardManager =
@@ -144,9 +160,6 @@ class ApplicationModule {
         //region factory
 
         @Binds
-        fun bindLiveDataFactory(liveDataFactoryImpl: LiveDataFactoryImpl): LiveDataFactory
-
-        @Binds
         fun bindFragmentFactory(fragmentFactoryImpl: FragmentFactoryImpl): FragmentFactory
 
         @Binds
@@ -158,6 +171,9 @@ class ApplicationModule {
 
         @Binds
         fun bindSimsInteractor(simsInteractorImpl: SimsInteractorImpl): SimsInteractor
+
+        @Binds
+        fun bindThemesInteractor(themesInteractor: ThemesInteractorImpl): ThemesInteractor
 
         @Binds
         fun bindCallsInteractor(callsInteractorImpl: CallsInteractorImpl): CallsInteractor
@@ -176,6 +192,9 @@ class ApplicationModule {
 
         @Binds
         fun bindBlockedInteractor(blockedInteractorImpl: BlockedInteractorImpl): BlockedInteractor
+
+        @Binds
+        fun bindTelecomInteractor(telecomInteractorImpl: TelecomInteractorImpl): TelecomInteractor
 
         @Binds
         fun bindRecentsInteractor(recentsInteractorImpl: RecentsInteractorImpl): RecentsInteractor

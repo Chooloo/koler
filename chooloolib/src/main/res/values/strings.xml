@@ -3,12 +3,17 @@
     <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
+    <string name="actions">Actions</string>
     <string name="conference">Conference</string>
     <string name="default_page">Default</string>
     <string name="settings">Settings</string>
     <string name="theme_mode_dark">Dark</string>
     <string name="theme_mode_light">Light</string>
     <string name="theme_mode_system">System</string>
+    <string name="theme_mode_dynamic">Dynamic</string>
+    <string name="in_development">In Development…</string>
+    <string name="pop_up_notification">Pop-Up Notification</string>
+    <string name="full_screen">Full Screen</string>
     <!--endregion-->
 
     <!--region prompt-->
@@ -25,9 +30,16 @@
     <string name="action_no">Nope</string>
     <string name="action_answer">Answer</string>
     <string name="action_hangup">Hangup</string>
+    <string name="action_manage_calls">Manage Calls</string>
     <string name="action_show_history">Show History</string>
     <string name="action_open_whatsapp">Open WhatsApp</string>
     <string name="action_block_number">Block Number</string>
+    <string name="action_delete_contact">Delete Contact</string>
+    <string name="action_delete_recent">Delete Recent</string>
+    <string name="action_clear_recents">Delete All Recent Calls</string>
+    <string name="action_set_favorite">Set As Favorite</string>
+    <string name="action_unset_favorite">Unset As Favorite</string>
+    <string name="action_open_in_whatsapp">Open In Whatsapp</string>
     <string name="action_unblock_number">Unblock Number</string>
     <string name="action_choose_audio_route">Choose audio route</string>
     <string name="action_choose_phone_account">Choose phone account</string>
@@ -46,7 +58,7 @@
     <string name="hint_animations">Show animations</string>
     <string name="hint_search_recents">Search Recents</string>
     <string name="hint_search_contacts">Search Contacts</string>
-    <string name="hint_compact_mode">Make list items compact</string>
+    <string name="hint_incoming_call_mode">Incoming Call Mode</string>
     <string name="hint_search_items">Search contacts &amp; recents</string>
     <string name="hint_dialpad_vibrate">Vibrate on dialpad clicks</string>
     <string name="hint_should_ask_sim">Ask for a sim before each call</string>
@@ -59,10 +71,12 @@
     <string name="explain_is_on_hold">%s is on hold</string>
     <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
     <string name="explain_choose_sim_account">Call with a different sim</string>
+    <string name="explain_choose_incoming_call_mode">Incoming call view mode</string>
     <string name="explain_choose_audio_route">Route audio to a different source</string>
     <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_clear_recents">All call history will be deleted permanently</string>
     <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
     <!--endregion-->
 
@@ -78,6 +92,14 @@
     <string name="call_action_speaker">Speaker</string>
     <string name="call_action_speaker_off">Off Speaker</string>
     <!--endregion-->
+
+    <string name="call_action_id_add">call_action_add</string>
+    <string name="call_action_id_mute">call_action_mute</string>
+    <string name="call_action_id_hold">call_action_hold</string>
+    <string name="call_action_id_swap">call_action_swap</string>
+    <string name="call_action_id_merge">call_action_merge</string>
+    <string name="call_action_id_keypad">call_action_keypad</string>
+    <string name="call_action_id_speaker">call_action_speaker</string>
 
     <!--region call state-->
     <string name="call_status_new">New Call</string>
@@ -95,9 +117,7 @@
 
     <!--region pref key-->
     <string name="pref_key_rate">rate</string>
-    <string name="pref_key_compact">compact</string>
     <string name="pref_key_ask_sim">ask_sim</string>
-    <string name="pref_key_color">accent_color</string>
     <string name="pref_key_animations">animations</string>
     <string name="pref_key_theme_mode">theme_mode</string>
     <string name="pref_key_report_bugs">report_bugs</string>
@@ -107,13 +127,12 @@
     <string name="pref_key_dialpad_tones">dialpad_tones</string>
     <string name="pref_key_manage_blocked">manage_blocked</string>
     <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <string name="pref_key_incoming_call_mode">incoming_call_mode</string>
     <!--endregion-->
 
     <!--region pref title-->
     <string name="pref_title_rate">Rate</string>
-    <string name="pref_title_compact">Compact Mode</string>
     <string name="pref_title_animations">Animations</string>
-    <string name="pref_title_app_color">Accent Color</string>
     <string name="pref_title_theme_mode">Theme Mode</string>
     <string name="pref_title_email">Email Us</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
@@ -135,9 +154,10 @@
     <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
 
     <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
+    <string name="error_no_permissions_edit_contacts">No permission to change contacts :)</string>
     <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
     <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_recents">I need permission to read call log :)</string>
+    <string name="error_no_permissions_recents">I need permission to read call log and contacts :)</string>
     <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
     <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
 
@@ -175,6 +195,10 @@
     <!--endregion-->
 
     <!--region content descriptions -->
+    <string name="content_description_call">Call</string>
+    <string name="content_description_edit">Edit</string>
+    <string name="content_description_delete">Delete</string>
+    <string name="content_description_sms">Send SMS</string>
     <string name="content_description_menu_button">Menu Button</string>
     <string name="content_description_answer_button">Answer Button</string>
     <string name="content_description_reject_button">Reject Button</string>
@@ -210,4 +234,10 @@
     <string name="type_label_custom">Custom</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organization</string>
+    <string name="action_call">Call</string>
+    <string name="content_description_call_number">Call Number</string>
+    <string name="content_description_add_contact">Add Contact</string>
+    <string name="content_description_open_contact">Open Contact</string>
+    <string name="content_description_send_sms">Send SMS</string>
+    <string name="grant">grant</string>
 </resources>

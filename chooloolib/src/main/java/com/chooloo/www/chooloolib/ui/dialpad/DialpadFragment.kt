@@ -6,14 +6,15 @@ import androidx.fragment.app.activityViewModels
 import com.chooloo.www.chooloolib.databinding.DialpadBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.chooloo.www.chooloolib.ui.permissioned.PermissionedFragment
 import com.chooloo.www.chooloolib.ui.widgets.DialpadKey
 import com.chooloo.www.chooloolib.ui.widgets.TextContextMenuItemListener
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState>(), TextContextMenuItemListener {
-    override val contentView by lazy { binding.root }
+open class DialpadFragment @Inject constructor() : PermissionedFragment<DialpadViewState>(), TextContextMenuItemListener {
+    override val mainContentView by lazy { binding.root }
     override val viewState: DialpadViewState by activityViewModels()
 
     @Inject lateinit var animationsInteractor: AnimationsInteractor

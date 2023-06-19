@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_hint">#B6B6B6</color>
-    <color name="color_text">#E1E1E1</color>
-    <color name="color_surface">#292A2E</color>
-    <color name="color_disabled">#C4C6C5</color>
-    <color name="color_opposite">#ffffff</color>
-    <color name="color_image_placeholder_background">@color/color_surface</color>
-    <color name="color_image_placeholder_foreground">#B1B1B1</color>
+    <color name="positive">#378a28</color>
+    <color name="on_positive">#7cd46c</color>
+    <color name="negative">#d40a00</color>
+    <color name="on_negative">#ff9e99</color>
 
-    <!--region accent colors-->
-    <color name="blue_background">#566682</color>
-    <color name="blue_foreground">#AFCBFA</color>
+    <color name="primary">#5bdbbe</color>
+    <color name="on_primary">#00382e</color>
+    <color name="primary_container">#005143</color>
+    <color name="on_primary_container">#7af8da</color>
 
-    <color name="orange_background">#816553</color>
-    <color name="orange_foreground">#EBBA96</color>
+    <color name="secondary">#b1ccc3</color>
+    <color name="on_secondary">#00382e</color>
+    <color name="secondary_container">#334b45</color>
+    <color name="on_secondary_container">#cde8df</color>
 
-    <color name="green_background">#587363</color>
-    <color name="green_foreground">#A2CFAE</color>
+    <color name="tertiary">#aacbe3</color>
+    <color name="on_tertiary">#103447</color>
+    <color name="tertiary_container">#2a4a5f</color>
+    <color name="on_tertiary_container">#c7e7ff</color>
 
-    <color name="purple_background">#6b5781</color>
-    <color name="purple_foreground">#D7AEFC</color>
+    <color name="error">#ffb4ab</color>
+    <color name="on_error">#690005</color>
+    <color name="error_container">#93000a</color>
+    <color name="on_error_container">#ffdad6</color>
 
-    <color name="red_background">#7d5858</color>
-    <color name="red_foreground">#F5AEA8</color>
-    <!--endregion-->
+    <color name="background">#191c1b</color>
+    <color name="on_background">#e1e3e0</color>
+
+    <color name="surface">#191c1b</color>
+    <color name="on_surface">#e1e3e0</color>
+    <color name="surface_variant">#3f4945</color>
+    <color name="on_surface_variant">#bfc9c4</color>
+
+    <color name="surface_disabled">#43036489</color>
+
+    <color name="background_variant">#3f4945</color>
+    <color name="on_background_variant">#bfc9c4</color>
 </resources>

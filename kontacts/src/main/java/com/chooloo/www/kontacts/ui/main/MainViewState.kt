@@ -5,7 +5,7 @@ import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
+import com.chooloo.www.chooloolib.data.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent

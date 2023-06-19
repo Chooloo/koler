@@ -14,37 +14,65 @@ class SettingsFragment @Inject constructor() : ChoolooSettingsFragment() {
         super.onSetup()
 
         viewState.apply {
-            askForShowBlockedEvent.observe(this@SettingsFragment) {
+            askForDefaultPageEvent.observe(this@SettingsFragment) {
                 it.ifNew?.let {
-                    dialogs.askForBoolean(R.string.hint_show_blocked, viewState::onShowBlocked)
+                    dialogs.askForDefaultPage {
+                        viewState.onDefaultPageResponse(it)
+                        true
+                    }
                 }
             }
 
-            askForDefaultPageEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let { dialogs.askForDefaultPage(viewState::onDefaultPageResponse) }
-            }
-
             askForDialpadTonesEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
-                    dialogs.askForBoolean(R.string.hint_dialpad_tones, viewState::onDialpadTones)
+                it.ifNew?.let { isActivated ->
+                    dialogs.askForBoolean(
+                        R.string.hint_dialpad_tones,
+                        isActivated
+                    ) {
+                        viewState.onDialpadTones(it)
+                        true
+                    }
                 }
             }
 
             askForDialpadVibrateEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
+                it.ifNew?.let { isActivated ->
                     dialogs.askForBoolean(
                         R.string.hint_dialpad_vibrate,
-                        viewState::onDialpadVibrate
-                    )
+                        isActivated
+                    ) {
+                        viewState.onDialpadVibrate(it)
+                        true
+                    }
                 }
             }
 
             askForGroupRecentsEvent.observe(this@SettingsFragment) {
-                it.ifNew?.let {
+                it.ifNew?.let { isActivated ->
                     dialogs.askForBoolean(
                         R.string.hint_group_recents,
-                        viewState::onGroupRecents
-                    )
+                        isActivated
+                    ) {
+                        viewState.onGroupRecents(it)
+                        true
+                    }
+                }
+            }
+
+            clearRecentsEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForValidation(R.string.explain_clear_recents) { bl ->
+                        if (bl) viewState.onClearRecents()
+                    }
+                }
+            }
+
+            askForIncomingCallModeEvent.observe(this@SettingsFragment) {
+                it.ifNew?.let {
+                    dialogs.askForIncomingCallMode {
+                        viewState.onIncomingCallMode(it)
+                        true
+                    }
                 }
             }
         }

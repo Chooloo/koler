@@ -1,7 +1,9 @@
 package com.chooloo.www.chooloolib.notification
 
 import android.app.Notification
+import android.app.Notification.CATEGORY_CALL
 import android.app.Notification.EXTRA_NOTIFICATION_ID
+import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_CANCEL_CURRENT
@@ -16,14 +18,17 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.model.Call
+import com.chooloo.www.chooloolib.data.model.Call.State.DISCONNECTED
+import com.chooloo.www.chooloolib.data.model.Call.State.DISCONNECTING
+import com.chooloo.www.chooloolib.di.module.IoScope
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
 import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
 import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTED
-import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTING
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE
@@ -32,6 +37,8 @@ import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTIO
 import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
 import com.chooloo.www.chooloolib.ui.call.CallActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -42,48 +49,36 @@ class CallNotification @Inject constructor(
     private val colors: ColorsInteractor,
     private val phones: PhonesInteractor,
     private val strings: StringsInteractor,
+    @IoScope private val ioScope: CoroutineScope,
     private val callAudios: CallAudiosInteractor,
+    private val preferences: PreferencesInteractor,
     @ApplicationContext private val context: Context,
     private val notificationManager: NotificationManagerCompat
 ) : CallsInteractor.Listener, CallAudiosInteractor.Listener {
 
     private var _call: Call? = null
 
+    private val _channel
+        get() = if (_call?.isIncoming == true && preferences.incomingCallMode == IncomingCallMode.POP_UP) {
+            _channelImportanceHigh
+        } else {
+            _channelImportanceLow
+        }
 
-    override fun onNoCalls() {
-        detach()
-        cancel()
+    private val _channelImportanceLow by lazy {
+        NotificationChannelCompat.Builder(CHANNEL_ID_PRIORITY_LOW, IMPORTANCE_DEFAULT)
+            .setName(strings.getString(R.string.call_notification_channel_name))
+            .setDescription(strings.getString(R.string.call_notification_channel_description))
+            .build()
+            .also(notificationManager::createNotificationChannel)
     }
 
-    override fun onCallChanged(call: Call) {
-    }
-
-    override fun onMainCallChanged(call: Call) {
-        show(call)
-        _call = call
-    }
-
-
-    override fun onMuteChanged(isMuted: Boolean) {
-        _call?.let(::show)
-    }
-
-    override fun onAudioRouteChanged(audiosRoute: CallAudiosInteractor.AudioRoute) {
-        _call?.let(::show)
-    }
-
-
-    fun attach() {
-        createNotificationChannel()
-        calls.registerListener(this)
-        callAudios.registerListener(this)
-        Thread.currentThread().setUncaughtExceptionHandler { _, _ -> cancel() }
-    }
-
-    fun detach() {
-        calls.unregisterListener(this)
-        callAudios.unregisterListener(this)
-        cancel()
+    private val _channelImportanceHigh by lazy {
+        NotificationChannelCompat.Builder(CHANNEL_ID_PRIORITY_HIGH, IMPORTANCE_HIGH)
+            .setName(strings.getString(R.string.call_notification_channel_name))
+            .setDescription(strings.getString(R.string.call_notification_channel_description))
+            .build()
+            .also(notificationManager::createNotificationChannel)
     }
 
     private val _contentPendingIntent by lazy {
@@ -99,7 +94,7 @@ class CallNotification @Inject constructor(
 
     private val _answerAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_call_24,
+            R.drawable.call,
             strings.getString(R.string.action_answer),
             getCallPendingIntent(ACTION_ANSWER, 0)
         )
@@ -107,7 +102,7 @@ class CallNotification @Inject constructor(
 
     private val _hangupAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_call_end_24,
+            R.drawable.call_end,
             strings.getString(R.string.action_hangup),
             getCallPendingIntent(ACTION_HANGUP, 1)
         )
@@ -115,7 +110,7 @@ class CallNotification @Inject constructor(
 
     private val _muteAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_mic_24,
+            R.drawable.mic,
             strings.getString(R.string.call_action_mute),
             getCallPendingIntent(ACTION_MUTE, 2)
         )
@@ -123,7 +118,7 @@ class CallNotification @Inject constructor(
 
     private val _unmuteAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_mic_off_24,
+            R.drawable.mic_off,
             strings.getString(R.string.call_action_unmute),
             getCallPendingIntent(ACTION_UNMUTE, 3)
         )
@@ -131,7 +126,7 @@ class CallNotification @Inject constructor(
 
     private val _speakerAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_volume_down_24,
+            R.drawable.volume_down,
             strings.getString(R.string.call_action_speaker),
             getCallPendingIntent(ACTION_SPEAKER, 4)
         )
@@ -139,18 +134,31 @@ class CallNotification @Inject constructor(
 
     private val _unspeakerAction by lazy {
         NotificationCompat.Action(
-            R.drawable.round_volume_up_24,
+            R.drawable.volume_up,
             strings.getString(R.string.call_action_speaker_off),
             getCallPendingIntent(ACTION_UNSPEAKER, 5)
         )
     }
 
-    private val _channel by lazy {
-        NotificationChannelCompat.Builder(CHANNEL_ID, IMPORTANCE_HIGH)
-            .setName(strings.getString(R.string.call_notification_channel_name))
-            .setDescription(strings.getString(R.string.call_notification_channel_description))
-            .setLightsEnabled(true)
-            .build()
+
+    override fun onNoCalls() {
+        detach()
+    }
+
+    override fun onCallChanged(call: Call) {
+    }
+
+    override fun onMainCallChanged(call: Call) {
+        _call = call
+        refresh()
+    }
+
+    override fun onMuteChanged(isMuted: Boolean) {
+        refresh()
+    }
+
+    override fun onAudioRouteChanged(audioRoute: CallAudiosInteractor.AudioRoute) {
+        refresh()
     }
 
 
@@ -168,56 +176,70 @@ class CallNotification @Inject constructor(
             FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE
         )
 
+    private suspend fun buildNotification(call: Call, callback: (Notification) -> Unit) {
+        val phoneAccount = phones.lookupAccount(call.number)
+        val builder = NotificationCompat.Builder(context, _channel.id)
+            .setWhen(0)
+            .setOngoing(true)
+            .setColorized(true)
+            .setPriority(PRIORITY)
+            .setOnlyAlertOnce(true)
+            .setCategory(CATEGORY_CALL)
+            .setContentTitle(phoneAccount?.displayString ?: call.number)
+            .setSmallIcon(R.drawable.icon_full_144)
+            .setContentIntent(_contentPendingIntent)
+            .setColor(colors.getAttrColor(R.attr.colorSecondary))
+            .setContentText(strings.getString(call.state.stringRes))
 
-    private fun buildNotification(call: Call, callback: (Notification) -> Unit) {
-        phones.lookupAccount(call.number) {
-            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setWhen(0)
-                .setOngoing(true)
-                .setColorized(true)
-                .setPriority(PRIORITY)
-                .setOnlyAlertOnce(true)
-                .setContentTitle(it?.displayString ?: call.number)
-                .setSmallIcon(R.drawable.icon_full_144)
-                .setContentIntent(_contentPendingIntent)
-                .setColor(colors.getAttrColor(R.attr.colorSecondary))
-                .setContentText(strings.getString(call.state.stringRes))
-            if (call.isIncoming) {
-                builder.addAction(_answerAction)
-            }
-            if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
-                builder.addAction(_hangupAction)
-            }
+        if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
+            builder.addAction(_hangupAction)
+        }
+
+        if (call.isIncoming) {
+            builder.addAction(_answerAction)
+        } else if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
             callAudios.isMuted?.let { isMuted ->
                 if (call.isCapable(CAPABILITY_MUTE)) {
                     builder.addAction(if (isMuted) _unmuteAction else _muteAction)
                 }
             }
+
             callAudios.isSpeakerOn?.let { isSpeakerOn ->
                 builder.addAction(if (isSpeakerOn) _unspeakerAction else _speakerAction)
             }
-            callback.invoke(builder.build())
         }
+
+        callback.invoke(builder.build())
     }
 
 
-    fun show(call: Call) {
-        buildNotification(call) {
-            notificationManager.notify(ID, it)
-        }
+    fun attach() {
+        calls.registerListener(this)
+        callAudios.registerListener(this)
+        Thread.currentThread().setUncaughtExceptionHandler { _, _ -> detach() }
     }
 
-    fun cancel() {
+    fun detach() {
+        calls.unregisterListener(this)
+        callAudios.unregisterListener(this)
         notificationManager.cancel(ID)
     }
 
-    fun createNotificationChannel() {
-        notificationManager.createNotificationChannel(_channel)
+    fun show(call: Call) {
+        ioScope.launch {
+            buildNotification(call) { notificationManager.notify(ID, it) }
+        }
     }
+
+    fun refresh() {
+        _call?.let(::show)
+    }
+
 
     companion object {
         const val ID = 420
-        const val CHANNEL_ID = "call_notification_channel"
-        const val PRIORITY = NotificationCompat.PRIORITY_LOW
+        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
+        const val CHANNEL_ID_PRIORITY_LOW = "cnc_priority_low"
+        const val CHANNEL_ID_PRIORITY_HIGH = "cnc_priority_high"
     }
 }

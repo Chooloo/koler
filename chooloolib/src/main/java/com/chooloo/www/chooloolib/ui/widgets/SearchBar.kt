@@ -24,8 +24,8 @@ class SearchBar : TextInputLayout {
     private var _textInputEditText: TextInputEditText
     private var _onTextChangedListener: ((text: String) -> Unit?)? = null
 
-    private val colorBackground by lazy { context.getAttrColor(R.attr.colorLightBackground) }
-    private val colorForeground by lazy { context.getAttrColor(R.attr.colorLightForeground) }
+    private val colorBackground by lazy { context.getAttrColor(R.attr.colorSecondaryContainer) }
+    private val colorForeground by lazy { context.getAttrColor(R.attr.colorOnSecondaryContainer) }
     private val spacing by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing) }
     private val spacingSmall by lazy { resources.getDimensionPixelSize(R.dimen.default_spacing_small) }
 
@@ -60,10 +60,9 @@ class SearchBar : TextInputLayout {
                 return@InputFilter null
             })
 
-            setTextAppearance(R.style.Chooloo_Text_Subtitle1)
             setPadding(spacing, 0, spacingSmall, 0)
+            setTextAppearance(R.style.Chooloo_Text_Title_Small)
             setHintTextColor(ColorStateList.valueOf(colorForeground))
-            setTextColor(context.getAttrColor(R.attr.colorOnSurface))
 
             addTextChangedListener(
                 afterTextChanged = {},
@@ -74,13 +73,14 @@ class SearchBar : TextInputLayout {
             addView(it)
         }
 
+        elevation = 10f
         isHintEnabled = false
         endIconMode = END_ICON_CLEAR_TEXT
         clipToOutline = true
         background = ContextCompat.getDrawable(context, R.drawable.bubble_background)
-        backgroundTintList = ColorStateList.valueOf(context.getAttrColor(R.attr.colorSurface))
-        endIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_close_24)
-        startIconDrawable = ContextCompat.getDrawable(context, R.drawable.round_search_24)
+        backgroundTintList = ColorStateList.valueOf(colorBackground)
+        endIconDrawable = ContextCompat.getDrawable(context, R.drawable.close)
+        startIconDrawable = ContextCompat.getDrawable(context, R.drawable.search)
 
         setPadding(spacingSmall, 0, 0, 0)
         setEndIconTintList(ColorStateList.valueOf(colorForeground))

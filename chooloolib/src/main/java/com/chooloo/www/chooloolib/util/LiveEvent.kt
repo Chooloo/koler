@@ -1,18 +1,29 @@
 package com.chooloo.www.chooloolib.util
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 
-class DataLiveEvent<T> : MutableLiveData<Event<T?>> {
+open class DataLiveEvent<T> : LiveData<Event<T?>> {
     constructor() : super()
+    constructor(value: T) : this(Event(value))
+    constructor(value: Event<T>) : super(value)
+}
+
+class MutableDataLiveEvent<T> : DataLiveEvent<T> {
+    constructor() : super()
+    constructor(value: T) : this(Event(value))
     constructor(value: Event<T>) : super(value)
 
     fun call(value: T) {
-        this@DataLiveEvent.value = Event(value)
+        this.value = Event(value)
     }
 }
 
-class LiveEvent : MutableLiveData<Event<Int>>() {
+open class LiveEvent : LiveData<Event<Int>>() {
+}
+
+class MutableLiveEvent : LiveEvent() {
     fun call() {
         value = Event(0)
     }
 }
+

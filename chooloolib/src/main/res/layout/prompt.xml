@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/prompt_title"
-        style="@style/Chooloo.Text.Headline3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
         android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing"
+        android:textAppearance="@style/Chooloo.Text.Headline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="This is a title" />
 
     <TextView
         android:id="@+id/prompt_subtitle"
-        style="@style/Chooloo.Text.Subtitle2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing"
+        android:textAppearance="@style/Chooloo.Text.Body"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/prompt_title"
-        app:layout_constraintTop_toBottomOf="@id/prompt_title" />
+        app:layout_constraintTop_toBottomOf="@id/prompt_title"
+        tools:text="This is a subtitle" />
 
-    <com.chooloo.www.chooloolib.ui.widgets.TextButton
-        android:id="@+id/prompt_button_yes"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/button_text_height"
-        android:layout_marginStart="@dimen/default_spacing"
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/prompt_button_no"
+        style="@style/Chooloo.Button.Secondary.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginEnd="@dimen/default_spacing_half"
+        android:layout_marginEnd="@dimen/default_spacing_medium"
         android:layout_marginBottom="@dimen/default_spacing"
-        android:background="@drawable/bubble_background"
-        android:backgroundTint="?colorOnSecondary"
-        android:text="@string/action_yes"
-        android:textColor="?colorSecondary"
+        app:icon="@drawable/close"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/prompt_button_no"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/prompt_button_yes"
         app:layout_constraintTop_toBottomOf="@id/prompt_subtitle" />
 
-    <com.chooloo.www.chooloolib.ui.widgets.TextButton
-        android:id="@+id/prompt_button_no"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/button_text_height"
-        android:layout_marginStart="@dimen/default_spacing_half"
+    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+        android:id="@+id/prompt_button_yes"
+        style="@style/Chooloo.Button.Secondary.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
-        android:layout_marginEnd="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing_big"
         android:layout_marginBottom="@dimen/default_spacing"
-        android:text="@string/action_no"
+        app:activated="true"
+        app:icon="@drawable/ic_check"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/prompt_button_yes"
         app:layout_constraintTop_toBottomOf="@id/prompt_subtitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

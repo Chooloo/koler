@@ -5,67 +5,52 @@
     <!--region text -->
     <style name="Chooloo.Text" parent="android:TextAppearance">
         <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/color_text</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
     </style>
 
-    <style name="Chooloo.Text.Headline2">
-        <item name="android:textSize">@dimen/headline_2</item>
-    </style>
-
-    <style name="Chooloo.Text.Headline3">
-        <item name="android:textSize">@dimen/headline_3</item>
+    <style name="Chooloo.Text.Headline" parent='TextAppearance.Material3.HeadlineMedium'>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
-    <style name="Chooloo.Text.Headline4">
-        <item name="android:textSize">@dimen/headline_4</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+    <style name="Chooloo.Text.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Chooloo.Text.Subtitle1">
-        <item name="android:textSize">@dimen/subtitle_1</item>
+    <style name="Chooloo.Text.Title.Small" parent="TextAppearance.Material3.TitleSmall" />
+
+    <style name="Chooloo.Text.Body" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">@font/google_sans_bold</item>
     </style>
 
-    <style name="Chooloo.Text.Subtitle2">
-        <item name="android:textSize">@dimen/subtitle_2</item>
-        <item name="android:textColor">?colorTextDisabled</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+    <style name="Chooloo.Text.Caption" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">@font/google_sans_bold</item>
+        <item name="android:textColor">?android:textColorHint</item>
     </style>
 
-    <style name="Chooloo.Text.Caption" parent="Widget.Design.TextInputLayout">
-        <item name="android:textSize">@dimen/caption_1</item>
-        <item name="android:textColor">?colorTextDisabled</item>
-    </style>
     <!--endregion-->
 
-    <!--region image view -->
+    <!--region image-->
     <style name="Chooloo.Image" />
 
     <style name="Chooloo.Image.Profile">
-        <item name="android:src">@drawable/round_person_24</item>
+        <item name="android:src">@drawable/person</item>
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>
     </style>
     <!--endregion-->
 
     <!--region bottom dialog -->
-    <style name="Chooloo.BottomSheet" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
-        <item name="android:backgroundDimAmount">0.05</item>
+    <style name="Chooloo.BottomSheet" parent="Theme.Material3.DayNight.BottomSheetDialog">
+        <item name="android:backgroundDimAmount">0.1</item>
         <item name="bottomSheetStyle">@style/Chooloo.BottomDialog.BottomSheetStyle</item>
+        <item name="elevationOverlayEnabled">false</item>
     </style>
-
-    <style name="Chooloo.AlertDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <item name="buttonBarButtonStyle">@style/Chooloo.AlertDialog.Button</item>
-    </style>
-
-    <style name="Chooloo.AlertDialog.Button" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/blue_foreground</item>
-    </style>
-
 
     <style name="Chooloo.BottomDialog" />
 
-    <style name="Chooloo.BottomDialog.BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
+    <style name="Chooloo.BottomDialog.BottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
         <item name="shapeAppearanceOverlay">@style/Chooloo.BottomDialog.ShapeAppearanceOverlay
         </item>
         <item name="behavior_peekHeight">600dp</item>
@@ -81,52 +66,69 @@
 
     <!--region list view -->
     <style name="Chooloo.ListView">
-        <!--        <item name="android:requiresFadingEdge">vertical</item>-->
-        <!--        <item name="android:fadingMode">fade_in_out</item>-->
-        <!--        <item name="android:fadingEdge">vertical</item>-->
         <item name="android:scrollbars">none</item>
         <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
         <item name="android:divider">@android:color/transparent</item>
     </style>
 
     <style name="Chooloo.FastScrollView" parent="Chooloo.ListView">
-        <item name="bubbleColor">?colorSecondary</item>
-        <item name="bubbleTextColor">?colorOnSecondary</item>
-        <item name="handleColor">?colorSecondary</item>
+        <item name="hideScrollbar">false</item>
+        <item name="bubbleColor">?colorSurfaceVariant</item>
+        <item name="bubbleTextColor">?colorOnSurfaceVariant</item>
+        <item name="handleColor">?colorSurfaceVariant</item>
     </style>
     <!--endregion-->
 
-    <!--region call -->
-    <style name="Chooloo.Call" />
-
-    <style name="Chooloo.Call.Layout">
-        <item name="android:fitsSystemWindows">true</item>
+    <!--region button-->
+    <style name="Chooloo.Button">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 
-    <style name="Chooloo.Call.Text">
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
+    <style name="Chooloo.Button.Primary">
+        <item name="android:padding">8dp</item>
+        <item name="android:background">@drawable/bubble_background</item>
+        <item name="android:textColor">?colorOnSecondaryContainer</item>
+        <item name="android:tint">?colorOnSecondaryContainer</item>
+        <item name="android:backgroundTint">?colorSecondaryContainer</item>
     </style>
 
-    <style name="Chooloo.Call.Text.Status">
-        <item name="android:textAppearance">@style/Chooloo.Text.Subtitle1</item>
+    <style name="Chooloo.Button.Primary.Selectable">
+        <item name="android:tint">?colorOnSurfaceVariant</item>
+        <item name="android:textColor">?colorOnSurfaceVariant</item>
+        <item name="android:backgroundTint">?colorSurfaceVariant</item>
     </style>
 
-    <style name="Chooloo.Call.Text.Time">
-        <item name="android:textAppearance">@style/Chooloo.Text.Caption</item>
+    <style name="Chooloo.Button.Primary.Secondary">
+        <item name="android:tint">?colorOnSurface</item>
+        <item name="android:backgroundTint">?colorSurface</item>
     </style>
 
-    <style name="Chooloo.Call.Text.Name">
-        <item name="android:textAppearance">@style/Chooloo.Text.Headline2</item>
-        <item name="android:textStyle">bold</item>
+    <style name="Chooloo.Button.Secondary">
+        <item name="android:padding">8dp</item>
+        <item name="android:tint">?colorOnSurfaceVariant</item>
+        <item name="android:backgroundTint">?colorSurfaceVariant</item>
     </style>
-    <!--endregion-->
 
-    <!--region bottom-->
-    <style name="Chooloo.Bottom" />
+    <style name="Chooloo.Button.Secondary.Icon">
+        <item name="android:background">@drawable/circle_background</item>
+    </style>
 
-    <style name="Chooloo.Bottom.Image">
-        <item name="android:src">@drawable/round_person_24</item>
+    <style name="Chooloo.Button.FAB" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Chooloo.Button.FAB.Primary" parent="Widget.Material3.FloatingActionButton.Large.Primary">
+        <item name="elevation">0dp</item>
+        <item name="tint">?colorOnSecondaryContainer</item>
+        <item name="backgroundTint">?colorSecondaryContainer</item>
+    </style>
+
+    <style name="Chooloo.Button.FAB.Secondary" parent="Widget.Material3.FloatingActionButton.Secondary">
+        <item name="backgroundTint">?colorSecondaryContainer</item>
+        <item name="tint">?colorOnSecondaryContainer</item>
+        <item name="fabCustomSize">60dp</item>
+        <item name="maxImageSize">30dp</item>
     </style>
     <!--endregion-->
 </resources>

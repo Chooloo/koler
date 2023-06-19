@@ -7,16 +7,21 @@ import androidx.annotation.ArrayRes
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
 import androidx.annotation.StringRes
+import com.chooloo.www.chooloolib.data.model.SimAccount
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
 import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
+import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
-import com.chooloo.www.chooloolib.model.SimAccount
+import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor.ThemeMode
 
 interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     interface Listener
 
-    fun askForBoolean(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
+    fun askForBoolean(
+        @StringRes titleRes: Int,
+        isActivated: Boolean,
+        callback: (result: Boolean) -> Boolean
+    )
 
     fun askForValidation(@StringRes titleRes: Int, callback: (result: Boolean) -> Unit)
 
@@ -24,7 +29,8 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
         choices: List<String>,
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int? = null,
-        choiceCallback: (String) -> Unit
+        selectedChoiceIndex: Int? = null,
+        choiceCallback: (String) -> Boolean
     )
 
     fun <T> askForChoice(
@@ -32,7 +38,8 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
         choiceToString: (T) -> String,
         @StringRes titleRes: Int,
         @StringRes subtitleRes: Int? = null,
-        choiceCallback: (T) -> Unit
+        selectedChoice: T? = null,
+        choiceCallback: (T) -> Boolean
     )
 
     fun askForColor(
@@ -43,17 +50,18 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
     )
 
     @RequiresPermission(READ_PHONE_STATE)
-    fun askForSim(callback: (SimAccount?) -> Unit)
-    fun askForDefaultPage(callback: (Page) -> Unit)
-    fun askForThemeMode(callback: (ThemeMode) -> Unit)
-    fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Unit)
+    fun askForSim(callback: (SimAccount?) -> Boolean)
+    fun askForDefaultPage(callback: (Page) -> Boolean)
+    fun askForThemeMode(callback: (ThemeMode) -> Boolean)
+    fun askForIncomingCallMode(callback: (IncomingCallMode) -> Boolean)
+    fun askForRoute(callback: (CallAudiosInteractor.AudioRoute) -> Boolean)
     fun askForPhoneAccountHandle(
         phonesAccountHandles: List<PhoneAccountHandle>,
-        callback: (PhoneAccountHandle) -> Unit
+        callback: (PhoneAccountHandle) -> Boolean
     )
 
     fun askForPhoneAccountSuggestion(
         phoneAccountSuggestions: List<PhoneAccountSuggestion>,
-        callback: (PhoneAccountSuggestion) -> Unit
+        callback: (PhoneAccountSuggestion) -> Boolean
     )
 }

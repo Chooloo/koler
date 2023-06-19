@@ -1,7 +1,10 @@
 package com.chooloo.www.chooloolib.ui.permissions
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
@@ -11,12 +14,14 @@ import com.chooloo.www.chooloolib.ui.base.BaseViewState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class PermissionRequestActivity : BaseActivity<BaseViewState>() {
     override val contentView: View? = null
     override val viewState: BaseViewState by viewModels()
 
-    @Inject lateinit var permissions: PermissionsInteractor
+    @Inject
+    lateinit var permissions: PermissionsInteractor
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +66,12 @@ class PermissionRequestActivity : BaseActivity<BaseViewState>() {
         }
 
         finishWithResult(permissionResults)
+    }
+
+    private fun goToSettings() {
+        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", packageName, null)
+        })
     }
 
     private fun finishWithResult(permissionResult: List<PermissionResult> = listOf()) {

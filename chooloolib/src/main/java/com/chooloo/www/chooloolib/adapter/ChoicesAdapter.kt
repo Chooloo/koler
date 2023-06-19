@@ -1,30 +1,49 @@
 package com.chooloo.www.chooloolib.adapter
 
 import android.annotation.SuppressLint
-import com.chooloo.www.chooloolib.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.chooloo.www.chooloolib.data.model.ListData
+import com.chooloo.www.chooloolib.databinding.ListItemBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.model.ListData
-import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
-import com.google.android.material.internal.ViewUtils
+import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ChoiceItemHolder
+import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import javax.inject.Inject
 
 @SuppressLint("RestrictedApi")
 class ChoicesAdapter @Inject constructor(
     animations: AnimationsInteractor,
-    private val colors: ColorsInteractor,
 ) : ListAdapter<String>(animations) {
+    private var _selectedIndex: Int? = null
+    private var _onChoiceSelectedListener: (String) -> Boolean = { true }
 
-    override fun onBindListItem(listItem: ListItem, item: String) {
-        listItem.apply {
-            setTitleBold(true)
-            setTitleColor(colors.getAttrColor(R.attr.colorOnSecondary))
+    var selectedIndex: Int?
+        get() = _selectedIndex
+        set(value) {
+            _selectedIndex = if (value == -1) null else value
+        }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChoiceItemHolder(
+        ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
+
+    override fun onBindListItem(listItemHolder: ListItemHolder, item: String, position: Int) {
+        listItemHolder.apply {
             titleText = item
-            imageVisibility = false
-            imageSize = ViewUtils.dpToPx(context, 30).toInt()
+            (this as ChoiceItemHolder).setSelected(selectedIndex == position)
+            setOnClickListener {
+                if (_onChoiceSelectedListener.invoke(item)) {
+                    selectedIndex?.let(::notifyItemChanged)
+                    selectedIndex = position
+                    notifyItemChanged(position)
+                }
+            }
         }
     }
 
-    override fun convertDataToListData(data: List<String>) = ListData(data)
+    override fun convertDataToListData(items: List<String>) = ListData(items)
+
+    fun setOnChoiceSelectedListener(onChoiceSelectedListener: (String) -> Boolean) {
+        _onChoiceSelectedListener = onChoiceSelectedListener
+    }
 }

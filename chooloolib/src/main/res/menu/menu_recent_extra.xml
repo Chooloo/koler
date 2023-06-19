@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_recent_delete"
+        android:icon="@drawable/delete"
+        android:title="@string/action_delete_recent" />
+
+    <item
+        android:id="@+id/menu_recent_history"
+        android:icon="@drawable/history"
+        android:title="@string/action_show_history" />
+
+    <item
+        android:id="@+id/menu_recent_whatsapp"
+        android:icon="@drawable/whatsapp"
+        android:title="@string/action_open_in_whatsapp" />
+
+    <item
+        android:id="@+id/menu_recent_block"
+        android:icon="@drawable/block"
+        android:title="@string/action_block_number"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/menu_recent_unblock"
+        android:icon="@drawable/block"
+        android:title="@string/action_unblock_number"
+        android:visible="false" />
+</menu>

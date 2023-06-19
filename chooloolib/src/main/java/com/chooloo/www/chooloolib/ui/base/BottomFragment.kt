@@ -1,21 +1,26 @@
 package com.chooloo.www.chooloolib.ui.base
 
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import com.chooloo.www.chooloolib.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
-open class BottomFragment<FragmentType : BaseFragment<out BaseViewState>>(
+open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
     private val fragment: FragmentType
 ) : BottomSheetDialogFragment(), BaseView<BaseViewState> {
     override val viewState: BaseViewState by viewModels()
 
-    private val binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
+    private val binding by lazy {
+        val contextThemeWrapper = ContextThemeWrapper(activity, activity?.theme)
+        BottomDialogBinding.inflate(layoutInflater.cloneInContext(contextThemeWrapper))
+    }
 
     @Inject lateinit var baseActivity: BaseActivity<*>
 
@@ -53,15 +58,16 @@ open class BottomFragment<FragmentType : BaseFragment<out BaseViewState>>(
             }
         }
 
-        childFragmentManager.beginTransaction()
-            .replace(binding.bottomDialogFragmentPlaceholder.id, fragment).commit()
+        childFragmentManager.commit {
+            replace(binding.bottomDialogFragmentPlaceholder.id, fragment)
+        }
     }
 
     override fun showError(@StringRes stringResId: Int) {
-        baseActivity.viewState.errorEvent.call(stringResId)
+        baseActivity.viewState.onError(stringResId)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
-        baseActivity.viewState.messageEvent.call(stringResId)
+        baseActivity.viewState.onMessage(stringResId)
     }
 }

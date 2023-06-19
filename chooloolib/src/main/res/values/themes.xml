@@ -1,53 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Theme Styles -->
 
-    <style name="ChoolooTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorError">@color/color_error</item>
-        <item name="colorLightBackground">@color/color_light_background</item>
-        <item name="colorLightForeground">@color/color_light_foreground</item>
-        <item name="colorSurface">@color/color_surface</item>
-        <item name="colorPrimary">?android:colorBackground</item>
-        <item name="colorTextDisabled">@color/color_disabled</item>
-        <item name="colorControlHighlight">?colorLightBackground</item>
-        <item name="colorOnBackground">@color/color_on_background</item>
-
+    <style name="ChoolooTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:fontFamily">@font/google_sans_regular</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/google_sans_medium</item>
 
-        <item name="alertDialogTheme">@style/Chooloo.AlertDialog</item>
+        <item name="elevationOverlayEnabled">false</item>
         <item name="bottomSheetDialogTheme">@style/Chooloo.BottomSheet</item>
-    </style>
 
-    <style name="ChoolooTheme.Translucent">
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
 
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="colorSecondaryContainer">@color/secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_secondary_container</item>
 
-    <style name="Accent" />
+        <item name="colorTertiary">@color/tertiary</item>
+        <item name="colorOnTertiary">@color/on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/on_tertiary_container</item>
 
-    <style name="Accent.Blue">
-        <item name="colorSecondary">@color/blue_background</item>
-        <item name="colorOnSecondary">@color/blue_foreground</item>
-    </style>
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
 
-    <style name="Accent.Orange">
-        <item name="colorSecondary">@color/orange_background</item>
-        <item name="colorOnSecondary">@color/orange_foreground</item>
-    </style>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">@color/on_background</item>
 
-    <style name="Accent.Green">
-        <item name="colorSecondary">@color/green_background</item>
-        <item name="colorOnSecondary">@color/green_foreground</item>
-    </style>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
 
-    <style name="Accent.Purple">
-        <item name="colorSecondary">@color/purple_background</item>
-        <item name="colorOnSecondary">@color/purple_foreground</item>
-    </style>
-
-    <style name="Accent.Red">
-        <item name="colorSecondary">@color/red_background</item>
-        <item name="colorOnSecondary">@color/red_foreground</item>
+        <item name="colorBackgroundVariant">@color/background_variant</item>
+        <item name="colorOnBackgroundVariant">@color/on_background_variant</item>
     </style>
 </resources>

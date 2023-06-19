@@ -17,11 +17,11 @@ class QuickContactViewState @Inject constructor(
         intent.data?.let {
             showContactEvent.call(ContentUris.parseId(it))
         } ?: run {
-            finishEvent.call()
+            onFinish()
         }
     }
 
     fun onFragmentFinish() {
-        finishEvent.call()
+        onFinish()
     }
 }

@@ -1,7 +1,11 @@
 package com.chooloo.www.chooloolib.interactor.callaudio
 
 import android.telecom.CallAudioState
-import android.telecom.CallAudioState.*
+import android.telecom.CallAudioState.ROUTE_BLUETOOTH
+import android.telecom.CallAudioState.ROUTE_EARPIECE
+import android.telecom.CallAudioState.ROUTE_SPEAKER
+import android.telecom.CallAudioState.ROUTE_WIRED_HEADSET
+import android.telecom.CallAudioState.ROUTE_WIRED_OR_EARPIECE
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractor

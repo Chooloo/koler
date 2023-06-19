@@ -5,16 +5,17 @@ import android.content.Context
 import android.provider.CallLog
 import androidx.annotation.RequiresPermission
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
+import com.chooloo.www.chooloolib.data.model.RecentAccount
+import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepository
 import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import com.chooloo.www.chooloolib.model.RecentAccount
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class RecentsInteractorImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val recentsRepository: RecentsRepository
 ) : BaseInteractorImpl<RecentsInteractor.Listener>(), RecentsInteractor {
 
     @RequiresPermission(WRITE_CALL_LOG)
@@ -26,23 +27,27 @@ class RecentsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun queryRecent(recentId: Long) =
-        RecentsContentResolver(context, recentId).queryItems().getOrNull(0)
-
-    override fun queryRecent(recentId: Long, callback: (RecentAccount?) -> Unit) {
-        RecentsContentResolver(context, recentId).queryItems {
-            callback.invoke(it.getOrNull(0))
-        }
+    @RequiresPermission(WRITE_CALL_LOG)
+    override fun deleteAllRecents() {
+        context.contentResolver.delete(
+            CallLog.Calls.CONTENT_URI,
+            null,
+            null
+        )
     }
 
+    override fun getRecent(recentId: Long) = recentsRepository.getRecent(recentId)
+
+    override fun getRecents() = recentsRepository.getRecents()
+
     override fun getCallTypeImage(@RecentAccount.CallType callType: Int) = when (callType) {
-        RecentAccount.TYPE_INCOMING -> R.drawable.round_call_received_20
-        RecentAccount.TYPE_OUTGOING -> R.drawable.round_call_made_20
-        RecentAccount.TYPE_MISSED -> R.drawable.round_call_missed_20
-        RecentAccount.TYPE_REJECTED -> R.drawable.round_call_missed_outgoing_20
-        RecentAccount.TYPE_VOICEMAIL -> R.drawable.round_voicemail_20
-        RecentAccount.TYPE_BLOCKED -> R.drawable.round_block_24
-        else -> R.drawable.round_call_made_20
+        RecentAccount.TYPE_INCOMING -> R.drawable.call_received
+        RecentAccount.TYPE_OUTGOING -> R.drawable.call_made
+        RecentAccount.TYPE_MISSED -> R.drawable.call_missed
+        RecentAccount.TYPE_REJECTED -> R.drawable.call_missed_outgoing
+        RecentAccount.TYPE_VOICEMAIL -> R.drawable.voicemail
+        RecentAccount.TYPE_BLOCKED -> R.drawable.block
+        else -> R.drawable.call_made
     }
 
     override fun getLastOutgoingCall(): String = CallLog.Calls.getLastOutgoingCall(context)

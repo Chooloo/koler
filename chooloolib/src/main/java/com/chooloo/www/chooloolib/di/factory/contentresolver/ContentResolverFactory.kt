@@ -1,6 +1,6 @@
 package com.chooloo.www.chooloolib.di.factory.contentresolver
 
-import com.chooloo.www.chooloolib.contentresolver.*
+import com.chooloo.www.chooloolib.data.contentresolver.*
 
 interface ContentResolverFactory {
     fun getPhonesContentResolver(contactId: Long? = null): PhonesContentResolver

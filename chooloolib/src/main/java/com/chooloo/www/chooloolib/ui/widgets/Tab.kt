@@ -19,7 +19,7 @@ import javax.inject.Inject
 @SuppressLint("CustomViewStyleable", "Recycle")
 class Tab : AppCompatTextView {
     private val enabledColor by lazy { context.getAttrColor(R.attr.colorOnSurface) }
-    private val disabledColor by lazy { context.getAttrColor(R.attr.colorLightBackground) }
+    private val disabledColor by lazy { context.getAttrColor(R.attr.colorSurfaceVariant) }
 
     @Inject lateinit var animationsInteractor: AnimationsInteractor
 

@@ -1,15 +1,19 @@
 package com.chooloo.www.chooloolib.ui.dialer
 
+import android.Manifest
 import android.content.ClipboardManager
 import androidx.lifecycle.MutableLiveData
 import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
 import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
+import com.chooloo.www.chooloolib.data.model.ContactAccount
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
 import com.chooloo.www.chooloolib.util.LiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,17 +21,26 @@ import javax.inject.Inject
 class DialerViewState @Inject constructor(
     audios: AudiosInteractor,
     preferences: PreferencesInteractor,
+    clipboardManager: ClipboardManager,
+    permissions: PermissionsInteractor,
     private val recents: RecentsInteractor,
-    private val clipboardManager: ClipboardManager,
-    private val navigations: NavigationsInteractor
+    private val navigations: NavigationsInteractor,
 ) :
-    DialpadViewState(audios, clipboardManager, preferences) {
+    DialpadViewState(permissions, audios, preferences, clipboardManager) {
 
-    val callVoicemailEvent = LiveEvent()
-    val callNumberEvent = DataLiveEvent<String>()
-    val isSuggestionsVisible = MutableLiveData(false)
-    val isDeleteButtonVisible = MutableLiveData<Boolean>()
-    val isAddContactButtonVisible = MutableLiveData<Boolean>()
+    override val requiredPermissions = listOf(Manifest.permission.CALL_PHONE)
+
+    private val _isSuggestionsVisible = MutableLiveData(false)
+    private val _isDeleteButtonVisible = MutableLiveData<Boolean>()
+    private val _isAddContactButtonVisible = MutableLiveData<Boolean>()
+    private val _callVoicemailEvent = MutableLiveEvent()
+    private val _callNumberEvent = MutableDataLiveEvent<String>()
+
+    val isSuggestionsVisible = _isSuggestionsVisible as MutableLiveData<Boolean>
+    val isDeleteButtonVisible = _isDeleteButtonVisible as MutableLiveData<Boolean>
+    val isAddContactButtonVisible = _isAddContactButtonVisible as MutableLiveData<Boolean>
+    val callVoicemailEvent = _callVoicemailEvent as LiveEvent
+    val callNumberEvent = _callNumberEvent as DataLiveEvent<String>
 
 
     override fun onLongKeyClick(char: Char) = when (char) {
@@ -36,7 +49,7 @@ class DialerViewState @Inject constructor(
             true
         }
         '1' -> {
-            callVoicemailEvent.call()
+            _callVoicemailEvent.call()
             true
         }
         else -> super.onLongKeyClick(char)
@@ -50,29 +63,29 @@ class DialerViewState @Inject constructor(
     }
 
     fun onDeleteClick() {
-        text.value?.dropLast(1)?.let(this::onTextChanged)
+        _text.value?.dropLast(1)?.let(this::onTextChanged)
     }
 
     fun onLongDeleteClick(): Boolean {
         onTextChanged("")
-        text.value = ""
+        _text.value = ""
         return true
     }
 
     fun onCallClick() {
         if (text.value?.isEmpty() == true) {
-            text.value = recents.getLastOutgoingCall()
+            _text.value = recents.getLastOutgoingCall()
         } else {
-            text.value?.let(callNumberEvent::call)
-            finishEvent.call()
+            _text.value?.let(_callNumberEvent::call)
+            onFinish()
         }
     }
 
     fun onAddContactClick() {
-        text.value?.let(navigations::addContact)
+        _text.value?.let(navigations::addContact)
     }
 
     fun onSuggestionsChanged(contacts: List<ContactAccount>) {
-        isSuggestionsVisible.value = contacts.isNotEmpty() && text.value?.isNotEmpty() == true
+        isSuggestionsVisible.value = contacts.isNotEmpty() && _text.value?.isNotEmpty() == true
     }
 }

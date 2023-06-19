@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_brief_contact_delete"
+        android:icon="@drawable/delete"
+        android:title="@string/action_delete_contact" />
+
+    <item
+        android:id="@+id/menu_brief_contact_show_history"
+        android:icon="@drawable/history"
+        android:title="@string/action_show_history" />
+
+    <item
+        android:id="@+id/menu_brief_contact_set_favorite"
+        android:icon="@drawable/star"
+        android:title="@string/action_set_favorite"
+        android:visible="false" />
+
+    <item
+        android:id="@+id/menu_brief_contact_unset_favorite"
+        android:icon="@drawable/grade"
+        android:title="@string/action_unset_favorite"
+        android:visible="false" />
+</menu>

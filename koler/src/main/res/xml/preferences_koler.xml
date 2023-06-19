@@ -3,20 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        android:icon="@drawable/round_block_24"
+        android:icon="@drawable/block"
         android:key="@string/pref_key_manage_blocked"
         android:title="@string/pref_title_manage_blocked" />
-
-    <SwitchPreference
-        android:defaultValue="@bool/pref_default_value_show_blocked"
-        android:key="@string/pref_key_show_blocked"
-        android:title="@string/pref_title_show_blocked" />
 
     <ListPreference
         android:defaultValue="@string/pref_value_page_default"
         android:entries="@array/pages"
         android:entryValues="@array/pagesValues"
-        android:icon="@drawable/round_view_carousel_24"
+        android:icon="@drawable/view_carousel"
         android:key="@string/pref_key_default_page"
         app:title="@string/pref_title_default_page" />
 </PreferenceScreen>

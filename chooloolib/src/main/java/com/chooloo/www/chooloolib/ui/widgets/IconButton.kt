@@ -4,39 +4,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
+import android.widget.ImageButton
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import androidx.annotation.IntDef
-import androidx.annotation.RestrictTo
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.content.ContextCompat.getDrawable
-import androidx.core.view.setPadding
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.util.getAttrColor
 
 
 @SuppressLint("CustomViewStyleable", "WrongConstant")
-class IconButton : AppCompatImageButton {
-    @Size
-    private var _size: Int
+class IconButton : ImageButton {
+    @DrawableRes private var _iconDefault: Int? = null
+    @DrawableRes private var _iconChecked: Int? = null
 
-    @DrawableRes
-    private var _iconDefault: Int? = null
+    @ColorInt private val _defaultForegroundTint: Int
+    @ColorInt private val _defaultBackgroundTint: Int
 
-    @DrawableRes
-    private var _iconActivated: Int? = null
-
-    private var _imageTintList: ColorStateList?
-    private var _backgroundTintList: ColorStateList?
-    private val _alterActivated: Boolean
-
-    private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
-    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
-
-    var iconDefault: Int?
-        get() = _iconDefault
-        set(value) {
-            _iconDefault = value
-        }
+    private val _colorBackground by lazy { context.getAttrColor(R.attr.colorSecondaryContainer) }
+    private val _colorForeground by lazy { context.getAttrColor(R.attr.colorOnSecondaryContainer) }
+    private val _colorForegroundDisabled by lazy { context.getAttrColor(R.attr.colorBackgroundVariant) }
 
 
     constructor(context: Context) : this(context, null)
@@ -44,92 +29,54 @@ class IconButton : AppCompatImageButton {
     constructor(
         context: Context,
         attrs: AttributeSet? = null,
-        defStyleRes: Int = 0
+        defStyleRes: Int = R.style.Chooloo_Button_Secondary
     ) : super(context, attrs, defStyleRes) {
-        context.obtainStyledAttributes(attrs, R.styleable.Chooloo_IconButton, defStyleRes, 0).also {
-            _size = it.getInteger(R.styleable.Chooloo_IconButton_size, SIZE_AUTO)
-            _iconDefault = it.getResourceId(R.styleable.Chooloo_IconButton_icon, NO_ID)
-            _iconActivated = it.getResourceId(R.styleable.Chooloo_IconButton_activatedIcon, NO_ID)
-            _alterActivated = it.getBoolean(R.styleable.Chooloo_IconButton_alterActivated, true)
+        var isActivated = false
+        context.obtainStyledAttributes(attrs, R.styleable.Chooloo_IconButton, 0, defStyleRes).also {
+            val iconRes = it.getResourceId(R.styleable.Chooloo_IconButton_icon, NO_ID)
+            val checkedIconRes = it.getResourceId(R.styleable.Chooloo_IconButton_checkedIcon, NO_ID)
+            isActivated = it.getBoolean(R.styleable.Chooloo_IconButton_activated, false)
+
+            _iconDefault = if (iconRes == NO_ID) null else iconRes
+            _iconChecked = if (checkedIconRes == NO_ID) null else checkedIconRes
         }.recycle()
 
-        clipToOutline = true
-        scaleType = ScaleType.FIT_CENTER
-        background = getDrawable(context, R.drawable.bubble_background)
-        imageTintList = imageTintList ?: ColorStateList.valueOf(colorOnSecondary)
-        backgroundTintList = backgroundTintList ?: ColorStateList.valueOf(colorSecondary)
+        _defaultForegroundTint = imageTintList?.defaultColor ?: _colorForeground
+        _defaultBackgroundTint = backgroundTintList?.defaultColor ?: _colorBackground
 
-        _imageTintList = imageTintList
-        _backgroundTintList = backgroundTintList
-
-        if (_iconDefault != NO_ID) {
-            _iconDefault?.let { setImageDrawable(getDrawable(context, it)) }
-        }
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        setSize(_size)
+        setIcon(_iconDefault)
+        refreshColors()
+        setActivated(isActivated)
     }
 
     override fun setActivated(activated: Boolean) {
         super.setActivated(activated)
-        if (_iconActivated != NO_ID) {
-            (if (isActivated) _iconActivated else _iconDefault)?.let { setImageResource(it) }
-        }
-        if (_alterActivated) {
-            imageTintList = if (isActivated) _backgroundTintList else _imageTintList
-            backgroundTintList = if (isActivated) _imageTintList else _backgroundTintList
-        }
+        (if (isActivated) _iconChecked else _iconDefault)?.let(::setIcon)
+        refreshColors()
     }
 
-    override fun setEnabled(enabled: Boolean) {
-        super.setEnabled(enabled)
-        imageAlpha = if (isEnabled) 255 else 40
+    private fun refreshColors() {
+        imageTintList =
+            ColorStateList.valueOf(
+                if (isEnabled) {
+                    if (isActivated) _defaultBackgroundTint else _defaultForegroundTint
+                } else {
+                    _colorForegroundDisabled
+                }
+            )
+        backgroundTintList =
+            ColorStateList.valueOf(if (isActivated) _defaultForegroundTint else _defaultBackgroundTint)
     }
 
-    fun setSize(@Size size: Int) {
-        _size = size
-        when (_size) {
-            SIZE_BIG -> context.resources.getDimensionPixelSize(R.dimen.icon_button_size_big)
-            SIZE_SMALL -> context.resources.getDimensionPixelSize(R.dimen.icon_button_size_small)
-            SIZE_NORMAL -> context.resources.getDimensionPixelSize(R.dimen.icon_button_size_normal)
-            else -> null
-        }?.let {
-            layoutParams = layoutParams.apply {
-                height = it
-                width = it
-            }
-        }
-        setPadding(
-            when (_size) {
-                SIZE_BIG -> context.resources.getDimensionPixelSize(R.dimen.icon_button_padding_big)
-                SIZE_SMALL -> context.resources.getDimensionPixelSize(R.dimen.icon_button_padding_small)
-                else -> context.resources.getDimensionPixelSize(R.dimen.icon_button_padding_normal)
-            }
-        )
+    fun setIcon(@DrawableRes iconRes: Int?) {
+        iconRes?.let(::setImageResource)
     }
 
-    fun setDefaultIcon(iconRes: Int) {
+    fun setDefaultIcon(@DrawableRes iconRes: Int?) {
         _iconDefault = iconRes
-        isActivated = isActivated
     }
 
-
-    @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    @IntDef(
-        SIZE_BIG,
-        SIZE_AUTO,
-        SIZE_SMALL,
-        SIZE_NORMAL
-    )
-    annotation class Size
-
-    companion object {
-        const val SIZE_BIG = 2
-        const val SIZE_AUTO = 0
-        const val SIZE_SMALL = 3
-        const val SIZE_NORMAL = 1
+    fun setCheckedIcon(@DrawableRes iconRes: Int?) {
+        _iconChecked = iconRes
     }
 }

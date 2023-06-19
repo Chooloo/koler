@@ -1,34 +1,35 @@
 package com.chooloo.www.chooloolib.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
+import android.view.LayoutInflater
 import android.view.MenuItem
-import com.chooloo.www.chooloolib.R
+import android.view.ViewGroup
+import com.chooloo.www.chooloolib.data.model.ListData
+import com.chooloo.www.chooloolib.databinding.ListItemBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.model.ListData
-import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
-import com.google.android.material.internal.ViewUtils
+import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
+import com.chooloo.www.chooloolib.ui.widgets.listitemholder.MenuItemHolder
 import javax.inject.Inject
 
 @SuppressLint("RestrictedApi")
 class MenuAdapter @Inject constructor(
-    animationsInteractor: AnimationsInteractor,
-    private val colorsInteractor: ColorsInteractor
+    animationsInteractor: AnimationsInteractor
 ) : ListAdapter<MenuItem>(animationsInteractor) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MenuItemHolder(
+        ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
-    override fun onBindListItem(listItem: ListItem, item: MenuItem) {
-        listItem.apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            setTitleTextAppearance(R.style.Chooloo_Text_Subtitle1)
-            setImageTint(colorsInteractor.getColor(R.color.color_opposite))
-            setTitleColor(colorsInteractor.getColor(R.color.color_opposite))
-
-            paddingTop = 28
-            paddingBottom = 28
-            imageDrawable = item.icon
+    override fun onBindListItem(listItemHolder: ListItemHolder, item: MenuItem, position: Int) {
+        listItemHolder.apply {
+            isClickable = item.isEnabled
             titleText = item.title.toString()
-            imageSize = ViewUtils.dpToPx(context, 30).toInt()
+            if (SDK_INT >= VERSION_CODES.O) {
+                captionText = item.contentDescription?.toString()
+            }
+
+            item.icon?.let(::setImageDrawable)
         }
     }
 

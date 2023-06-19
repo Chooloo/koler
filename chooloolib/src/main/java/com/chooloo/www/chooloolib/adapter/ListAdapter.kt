@@ -1,17 +1,18 @@
 package com.chooloo.www.chooloolib.adapter
 
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chooloo.www.chooloolib.model.ListData
+import com.chooloo.www.chooloolib.data.model.ListData
+import com.chooloo.www.chooloolib.databinding.ListItemBinding
 import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItem
-import com.chooloo.www.chooloolib.ui.widgets.listitem.ListItemHolder
+import com.chooloo.www.chooloolib.ui.widgets.listitemholder.ListItemHolder
 import com.l4digital.fastscroll.FastScroller
 
 abstract class ListAdapter<ItemType>(
     private val animations: AnimationsInteractor
 ) : RecyclerView.Adapter<ListItemHolder>(), FastScroller.SectionIndexer {
-    private var _isCompact: Boolean = false
     private var _titleFilter: String? = null
     private var _data: ListData<ItemType> = ListData()
     private var _onItemClickListener: (item: ItemType) -> Unit = {}
@@ -28,25 +29,22 @@ abstract class ListAdapter<ItemType>(
 
     var items: List<ItemType>
         get() = _data.items
+        @SuppressLint("NotifyDataSetChanged")
         set(value) {
             _data = convertDataToListData(value)
             notifyDataSetChanged()
         }
 
-    var isCompact: Boolean
-        get() = _isCompact
-        set(value) {
-            _isCompact = value
-        }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ListItemHolder(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ListItemHolder(
+        ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun onBindViewHolder(holder: ListItemHolder, position: Int) {
         val dataItem = getItem(position)
-        holder.listItem.apply {
-            isCompact = _isCompact
+        holder.apply {
+            _titleFilter?.let(this::highlightTitleText)
+
             headerText = getHeader(position)
 
             setOnClickListener { _onItemClickListener.invoke(dataItem) }
@@ -57,11 +55,9 @@ abstract class ListAdapter<ItemType>(
                 true
             }
 
-            animations.show(this, false)
+//            animations.show(itemView, false)
 
-            onBindListItem(this, dataItem)
-
-            _titleFilter?.let { highlightTitleText(it) }
+            onBindListItem(this, dataItem, position)
         }
     }
 
@@ -111,5 +107,5 @@ abstract class ListAdapter<ItemType>(
 
     open fun convertDataToListData(items: List<ItemType>) = ListData(items)
 
-    abstract fun onBindListItem(listItem: ListItem, item: ItemType)
+    abstract fun onBindListItem(listItemHolder: ListItemHolder, item: ItemType, position: Int)
 }

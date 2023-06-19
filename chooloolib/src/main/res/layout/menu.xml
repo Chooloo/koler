@@ -2,26 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/default_spacing"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/menu_title"
-        style="@style/Chooloo.Text.Headline3"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
+        android:textAppearance="@style/Chooloo.Text.Headline"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginStart="@dimen/default_spacing"
+        tools:text="Menu"
         android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/menu_subtitle"
-        style="@style/Chooloo.Text.Subtitle2"
+        android:textAppearance="@style/Chooloo.Text.Body"
+        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_spacing"
+        tools:text="This is a menu"
         android:layout_marginTop="@dimen/default_spacing_small"
         android:layout_marginEnd="@dimen/default_spacing_big"
         app:layout_constraintEnd_toEndOf="parent"

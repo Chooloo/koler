@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
+import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import javax.inject.Inject
 
 abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
@@ -14,6 +16,8 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
     val args get() = arguments ?: Bundle()
 
     @Inject lateinit var baseActivity: BaseActivity<*>
+    @Inject lateinit var fragmentFactory: FragmentFactory
+    @Inject lateinit var permissions: PermissionsInteractor
 
 
     override fun onCreateView(
@@ -24,10 +28,9 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        onSetup()
-        viewState.apply {
-            attach()
+        onSetupHook()
 
+        viewState.apply {
             errorEvent.observe(this@BaseFragment) {
                 it.ifNew?.let(this@BaseFragment::showError)
             }
@@ -45,16 +48,21 @@ abstract class BaseFragment<out VM : BaseViewState> : Fragment(), BaseView<VM> {
     }
 
     override fun showError(@StringRes stringResId: Int) {
-        baseActivity.viewState.errorEvent.call(stringResId)
+        baseActivity.viewState.onError(stringResId)
     }
 
     override fun showMessage(@StringRes stringResId: Int) {
-        baseActivity.viewState.messageEvent.call(stringResId)
+        baseActivity.viewState.onMessage(stringResId)
     }
 
     override fun finish() {
         super.finish()
         _onFinishListener.invoke()
+    }
+
+    protected open fun onSetupHook() {
+        onSetup()
+        viewState.attach()
     }
 
     fun setOnFinishListener(onFinishListener: () -> Unit) {

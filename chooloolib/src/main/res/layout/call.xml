@@ -2,9 +2,9 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Chooloo.Call.Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layoutDescription="@xml/call_scene"
     tools:context="com.chooloo.www.chooloolib.ui.call.CallActivity">
 
@@ -28,22 +28,23 @@
     <!-- call timer -->
     <TextView
         android:id="@+id/call_time_text"
-        style="@style/Chooloo.Call.Text.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing"
-        android:visibility="invisible"
+        android:textAppearance="@style/Chooloo.Text.Caption"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="94:34"
+        tools:visibility="visible" />
 
     <!-- call status -->
     <TextView
         android:id="@+id/call_state_text"
-        style="@style/Chooloo.Call.Text.Status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
+        android:textAppearance="@style/Chooloo.Text.Title.Small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_time_text"
@@ -55,35 +56,36 @@
         android:layout_width="@dimen/image_size_big"
         android:layout_height="@dimen/image_size_big"
         app:shapeAppearanceOverlay="@style/Chooloo.Image.Profile"
-        tools:src="@drawable/round_person_24"
+        tools:src="@drawable/person"
         tools:visibility="visible" />
 
     <!-- caller name -->
     <TextView
         android:id="@+id/call_name_text"
-        style="@style/Chooloo.Call.Text.Name"
+        style="@style/Chooloo.Text.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_image"
         tools:text="John Baba" />
 
     <!-- conference manage button -->
-    <com.chooloo.www.chooloolib.ui.widgets.IconButton
+    <Button
         android:id="@+id/call_manage_button"
+        style="@style/Widget.Material3.Button.TonalButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_spacing_big"
-
-        android:src="@drawable/round_people_24"
+        android:src="@drawable/group"
+        android:text="@string/action_manage_calls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_name_text" />
 
     <!-- call actions -->
-    <com.chooloo.www.chooloolib.ui.widgets.CallActions
+    <com.chooloo.www.chooloolib.ui.callactions.CallActions
         android:id="@+id/call_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -91,25 +93,24 @@
     <!-- answer button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_answer_button"
-        android:layout_width="wrap_content"
+        style="@style/Chooloo.Button.Primary"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:size="huge"
-        android:padding="@dimen/icon_button_size_big"
-        android:backgroundTint="@color/green_background"
+        android:backgroundTint="@color/positive"
         android:contentDescription="@string/content_description_answer_button"
-        android:tint="@color/green_foreground"
-        app:icon="@drawable/round_call_24" />
+        android:padding="20dp"
+        android:src="@drawable/call"
+        android:tint="@color/on_positive" />
 
     <!-- hangup button -->
     <com.chooloo.www.chooloolib.ui.widgets.IconButton
         android:id="@+id/call_reject_button"
-        android:layout_width="wrap_content"
-        app:size="huge"
+        style="@style/Chooloo.Button.Primary"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/icon_button_size_big"
-        android:layout_margin="@dimen/default_spacing_big"
-        android:backgroundTint="@color/red_background"
+        android:backgroundTint="@color/negative"
         android:contentDescription="@string/content_description_reject_button"
-        android:tint="@color/red_foreground"
-        app:icon="@drawable/round_call_end_24"/>
+        android:padding="20dp"
+        android:tint="@color/on_negative"
+        app:icon="@drawable/call_end" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

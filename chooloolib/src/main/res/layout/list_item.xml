@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/list_item_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:paddingBottom="@dimen/default_spacing"
+        android:textAppearance="@style/Chooloo.Text.Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Header" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/list_item_main_layout"
+        style="@style/Widget.Material3.CardView.Outlined"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_spacing_small"
+        android:layout_marginEnd="@dimen/default_spacing_small"
+        app:cardCornerRadius="@dimen/corner_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_item_header"
+        app:strokeWidth="0dp"
+        card_view:cardBackgroundColor="@android:color/transparent"
+        card_view:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/list_item_main_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <com.github.abdularis.civ.AvatarImageView
+                android:id="@+id/list_item_image"
+                android:layout_width="@dimen/image_size_medium"
+                android:layout_height="@dimen/image_size_medium"
+                android:layout_marginStart="@dimen/default_spacing_medium"
+                app:avatarBackgroundColor="?colorSurfaceVariant"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:textColor="?colorOnSurfaceVariant"
+                app:textSize="@dimen/caption_1"
+                app:view_state="INITIAL" />
+
+            <TextView
+                android:id="@+id/list_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_spacing_medium"
+                android:textAppearance="@style/Chooloo.Text.Title"
+                app:layout_constraintBottom_toTopOf="@id/list_item_caption"
+                app:layout_constraintStart_toEndOf="@id/list_item_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/list_item_caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textAppearance="@style/Chooloo.Text.Caption"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/list_item_title"
+                app:layout_constraintTop_toBottomOf="@id/list_item_title"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="caption caption"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/list_item_caption_image"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/list_item_caption"
+                app:layout_constraintStart_toEndOf="@id/list_item_caption"
+                app:layout_constraintTop_toTopOf="@id/list_item_caption"
+                app:tint="?android:textColorHint" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.IconButton
+                android:id="@+id/list_item_left_button"
+                style="@style/Chooloo.Button.Secondary.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_spacing_small"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/list_item_right_button"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.chooloo.www.chooloolib.ui.widgets.IconButton
+                android:id="@+id/list_item_right_button"
+                style="@style/Chooloo.Button.Secondary.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/default_spacing_medium"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

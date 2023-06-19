@@ -1,20 +1,30 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext {
+        sdkVersion = 33
+        minSdkVersion = 25
+        hiltVersion = "2.44"
+        kotlinVersion = "1.8.0"
+        coreKtxVersion = "1.9.0"
+        appCompatVersion = "1.6.0"
+    }
 
     repositories {
         google()
         jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url "https://jitpack.io" }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.38.1'
+        classpath "com.android.tools.build:gradle:7.4.0"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.44.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     }
+}
+
+plugins {
+    id 'com.google.dagger.hilt.android' version '2.44' apply false
 }
 
 allprojects {
@@ -22,10 +32,10 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url "https://jitpack.io" }
     }
 }
 
-task clean(type: Delete) {
+tasks.register("clean") {
     delete rootProject.buildDir
 }
