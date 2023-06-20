@@ -12,8 +12,8 @@ import com.chooloo.www.chooloolib.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
-open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
-    private val fragment: FragmentType
+open class BottomFragment(
+    private val fragment: BaseFragment<BaseViewState>? = null
 ) : BottomSheetDialogFragment(), BaseView<BaseViewState> {
     override val viewState: BaseViewState by viewModels()
 
@@ -42,7 +42,7 @@ open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
     }
 
     override fun onSetup() {
-        fragment.setOnFinishListener {
+        fragment?.setOnFinishListener {
             this@BottomFragment.dismiss()
         }
 
@@ -59,7 +59,7 @@ open class BottomFragment<FragmentType : BaseFragment<BaseViewState>>(
         }
 
         childFragmentManager.commit {
-            replace(binding.bottomDialogFragmentPlaceholder.id, fragment)
+            fragment?.let { replace(binding.bottomDialogFragmentPlaceholder.id, it) }
         }
     }
 
