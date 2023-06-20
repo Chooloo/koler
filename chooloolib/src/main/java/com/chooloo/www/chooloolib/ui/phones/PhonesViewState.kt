@@ -11,7 +11,6 @@ import com.chooloo.www.chooloolib.data.repository.phones.PhonesRepository
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.list.ListViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
-import com.chooloo.www.chooloolib.util.LiveEvent
 import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow

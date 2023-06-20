@@ -31,7 +31,7 @@ open class RecentsFragment @Inject constructor() : ListFragment<RecentAccount, R
             ev.ifNew?.let {
                 if (it.groupCount > 1) {
                     prompts.showFragment(
-                        fragmentFactory.getRecentsHistoryFragment(it.number).apply {
+                        fragmentFactory.getRecentsHistoryFragment().apply {
                             arguments = arguments ?: Bundle()
                             requireArguments().putBoolean(ARG_OBSERVE, false)
                         })
