@@ -6,16 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
 import com.chooloo.www.chooloolib.ui.permissioned.PermissionedViewState
 import com.chooloo.www.chooloolib.util.DataLiveEvent
-import com.chooloo.www.chooloolib.util.LiveEvent
 import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 abstract class ListViewState<ItemType>(
     permissions: PermissionsInteractor
 ) : PermissionedViewState(permissions) {
+    private var _isObserve: Boolean = true
     private var _itemsCollectJob: Job? = null
     private var _itemsFlow: Flow<List<ItemType>>? = null
 
@@ -51,9 +50,11 @@ abstract class ListViewState<ItemType>(
 
     protected fun updateItemsFlow() {
         _itemsCollectJob?.cancel()
-        _itemsCollectJob = viewModelScope.launch {
-            _itemsFlow = getItemsFlow(filter.value)
-            _itemsFlow?.collect(this@ListViewState::onItemsChanged)
+        if (_isObserve) {
+            _itemsCollectJob = viewModelScope.launch {
+                _itemsFlow = getItemsFlow(filter.value)
+                _itemsFlow?.collect(this@ListViewState::onItemsChanged)
+            }
         }
     }
 
@@ -74,6 +75,10 @@ abstract class ListViewState<ItemType>(
 
     open fun onItemLongClick(item: ItemType) {
         _itemLongClickedEvent.call(item)
+    }
+
+    open fun onIsObserve(isObserve: Boolean) {
+        _isObserve = isObserve
     }
 
     open fun onItemLeftClick(item: ItemType) {}

@@ -32,6 +32,8 @@ abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : Permission
             isScrollerVisible.observe(this@ListFragment) {
                 binding.itemsScrollView.fastScroller.isVisible = it
             }
+
+            onIsObserve(args.getBoolean(ARG_OBSERVE, true))
         }
 
         adapter.apply {

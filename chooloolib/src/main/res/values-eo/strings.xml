@@ -1,89 +1,38 @@
 <resources>
-
-    <!--region titles-->
     <string name="recents">Lastatempaj</string>
     <string name="contacts">Kontaktoj</string>
-    <!--endregion-->
-
-    <!--region messages-->
     <string name="number_copied_to_clipboard">Numero kopiita al tondejo</string>
-    <!--endregion-->
-
-    <!--region actions-->
     <string name="action_answer">Respondi</string>
     <string name="action_hangup">Finigi</string>
     <string name="action_yes">Jes</string>
     <string name="action_no">Ne</string>
-    <!--endregion-->
-
-    <!--region Koler-->
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
-    <!--endregion-->
-
-    <!--region hints-->
     <string name="hint_search">Serĉi</string>
-    <!--endregion-->
-
-    <!--region urls-->
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
-    <!--endregion-->
-
-    <!--region call actions -->
     <string name="call_action_mute">Silentigi</string>
     <string name="call_action_unmute">Malsilentigi</string>
     <string name="call_action_speaker">Laŭtigi</string>
     <string name="call_action_speaker_off">Ne laŭtigi</string>
-    <!--endregion-->
-
-    <!--region call state-->
     <string name="call_status_dialing">Telefonas…</string>
     <string name="call_status_holding">Telefonado paŭzigita</string>
     <string name="call_status_incoming">Venanta telefonado</string>
     <string name="call_status_disconnected">Telefonado finis</string>
     <string name="call_status_active">Telefonado farata</string>
-    <!--endregion-->
-
-    <!--region pref key-->
-    <string name="pref_key_rate">taksi</string>
-    <string name="pref_key_color">akcenta_koloro</string>
-    <string name="pref_key_animations">animacioj</string>
-    <string name="pref_key_report_bugs">raporti_cimigoj</string>
-    <string name="pref_key_default_page">defaŭlta_paĝo</string>
-    <!--endregion-->
-
-    <!--region pref title-->
     <string name="pref_title_rate">Taksi</string>
     <string name="pref_title_animations">Animacioj</string>
     <string name="pref_title_app_color">Akcenta koloro</string>
     <string name="pref_title_email">Sendi retpoŝtmesaĝon al ni</string>
     <string name="pref_title_report_bugs">Raporti cimigoj</string>
-    <!--endregion-->
-
-    <!--region pref default value-->
-    <!--endregion-->
-
-    <!--region errors-->
     <string name="error_no_results">Sen rezultoj :/</string>
     <string name="error_no_results_phones">Neniu telefonaj numeroj :/</string>
     <string name="error_no_results_contacts">Neniu kontaktoj :/</string>
     <string name="error_no_results_recents">Neniu lastatempaj :/</string>
-
     <string name="error_no_permissions_contacts">Mi bezonas permeson por legi kontaktojn :)</string>
     <string name="error_no_permissions_recents">Mi bezonas permeson por legi alvokan protokolon :)</string>
     <string name="error_no_permissions_phones">Mi bezonas permeson por legi kontaktojn :)</string>
-
-    <!--endregion-->
-
-    <!--region pref color values-->
-    <!--endregion-->
-
-    <!--region pref values-->
-    <!--endregion-->
-
-    <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
@@ -95,18 +44,8 @@
     <string name="dialpad_9_letters">WXYZ</string>
     <string name="dialpad_star_letters" />
     <string name="dialpad_pound_letters" />
-    <!--endregion-->
-
-    <!--region content descriptions -->
     <string name="content_description_answer_button">Responda butono</string>
     <string name="content_description_reject_button">Malakcpeta butono</string>
-    <!--endregion-->
-
-    <!--region notification-->
     <string name="call_notification_channel_name">Telefonada sciigo</string>
     <string name="call_notification_channel_description">Sciigo de farata alvoko, montrata por komforta uzado</string>
-    <!--endregion-->
-
-    <!--region phone type-->
-    <!--endregion-->
 </resources>

@@ -1,0 +1,24 @@
+<i>Koler'in</i> daimi arama arayüzü her şeyi kolaylaştırıyor. Kaydırma hareketlerini ve minimalist tasarımı kullanarak her şeyi daha güzel, kullanımı kolay ve yine de üretken hale getiriyor. Gelen bir aramada, cevaplamadan önce aşağıdakileri yapabilirsiniz:
+
+* Çağrıyı reddetme ve SMS gönderme
+* Belirli bir saniye içinde reddetme
+* Belirli bir saniye içinde yanıtlama
+
+Devam eden bir aramada şunları yapabilirsiniz:
+
+* Belirli bir saniye içinde reddetme
+
+Uygulamanın ana hedefi daha kullanışlı ve pratik olmaktır. Bu bağlamda, kaydırma hareketleri uygulamayı kontrol etmenin ana yoludur ve kullanımı çok daha kolay hale getirir.
+
+<b>Çevirici:</b>
+
+* Arama - Yukarı kaydırın
+* Numara silme - Sola kaydırın
+* Çeviriciyi daraltma - Kişi listesini kaydırın
+
+<b>Gelen Arama:</b>
+
+* Tuş takımını açma - Yukarı kaydırın
+* Reddetme/Sona Erdirme - Sola kaydırın
+* Yanıtlama - Sağa kaydırın
+* SMS gönderme - SMS gönder yer paylaşımını yukarı kaydırın

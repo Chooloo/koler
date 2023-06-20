@@ -27,6 +27,15 @@ class RecentsInteractorImpl @Inject constructor(
         )
     }
 
+    @RequiresPermission(WRITE_CALL_LOG)
+    override fun deleteAllRecents() {
+        context.contentResolver.delete(
+            CallLog.Calls.CONTENT_URI,
+            null,
+            null
+        )
+    }
+
     override fun getRecent(recentId: Long) = recentsRepository.getRecent(recentId)
 
     override fun getRecents() = recentsRepository.getRecents()

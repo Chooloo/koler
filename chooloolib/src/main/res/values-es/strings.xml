@@ -1,49 +1,28 @@
 <resources>
-
     <string name="recents">Recientes</string>
     <string name="contacts">Contactos</string>
-
-    
     <string name="action_answer">Responder</string>
     <string name="action_hangup">Colgar</string>
-    
-    
-    
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
-    
-
-    
     <string name="hint_search">Buscar</string>
-
-
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://github.com/Chooloo/call_manage/blob/master/README.md</string>
-
-
     <string name="call_action_mute">Silenciar</string>
     <string name="call_action_unmute">Activar sonido</string>
     <string name="call_action_speaker">Altavoz</string>
     <string name="call_action_speaker_off">Desconectar altavoz</string>
-
-
     <string name="call_status_dialing">Marcando…</string>
     <string name="call_status_holding">Llamada en espera</string>
     <string name="call_status_incoming">Llamada entrante</string>
     <string name="call_status_disconnected">Llamada terminada</string>
     <string name="call_status_active">Llamada en progreso</string>
-
-
     <string name="pref_title_rate">Calificar</string>
     <string name="pref_title_app_color">Color de acento</string>
     <string name="pref_title_email">Escríbanos un correo electrónico</string>
     <string name="pref_title_report_bugs">Informar de un error</string>
-
-
     <string name="error_no_results">No hay resultados :/</string>
-
-
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
@@ -53,22 +32,15 @@
     <string name="dialpad_7_letters">PQRS</string>
     <string name="dialpad_8_letters">TUV</string>
     <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters"/>
-    <string name="dialpad_pound_letters"/>
-
-
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
     <string name="content_description_answer_button">Botón de respuesta</string>
     <string name="content_description_reject_button">Botón de rechazo</string>
-
-
     <string name="call_notification_channel_name">Notificación de llamada</string>
     <string name="call_notification_channel_description">Notificación de llamada activa, mostrada para un uso cómodo</string>
     <string name="error_no_permissions_phones">Necesito permiso para leer los contactos :)</string>
     <string name="error_no_permissions_recents">Necesito permiso para leer el historial de llamadas :)</string>
     <string name="error_no_permissions_contacts">Necesito permiso para leer los contactos :)</string>
-    <string name="pref_value_page_contacts">Contactos</string>
-    <string name="pref_value_page_recents">Recientes</string>
-    <string name="pref_value_page_default">\@string/pref_value_page_contacts</string>
     <string name="pref_title_theme_mode">Modo del tema</string>
     <string name="pref_title_manage_blocked">Administrar números bloqueados</string>
     <string name="error_no_results_recents">No hay llamadas recientes</string>
@@ -134,5 +106,4 @@
     <string name="error_cant_merge_call">No se puede unir la llamada</string>
     <string name="error_no_number_to_call">No se encontró ningún número :(</string>
     <string name="explain_choose_phone_account">Continuar con la llamada actual usando una cuenta de teléfono específica</string>
-
 </resources>

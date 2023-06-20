@@ -9,7 +9,7 @@ import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
 import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
 import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
 import com.chooloo.www.chooloolib.ui.base.BaseViewState
-import com.chooloo.www.chooloolib.util.DataLiveEvent
+import com.chooloo.www.chooloolib.util.MutableDataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,12 +20,12 @@ class ContactViewState @Inject constructor(
     private val contacts: ContactsInteractor,
     private val navigations: NavigationsInteractor
 ) : BaseViewState() {
-    val callEvent = DataLiveEvent<String>()
+    val callEvent = MutableDataLiveEvent<String>()
     val contactId = MutableLiveData<Long>()
     val contactImage = MutableLiveData<Uri>()
     var isFavorite = MutableLiveData<Boolean>()
     val contactName = MutableLiveData<String>()
-    val showHistoryEvent = DataLiveEvent<String>()
+    val showHistoryEvent = MutableDataLiveEvent<String>()
 
     private var contact: ContactAccount? = null
 

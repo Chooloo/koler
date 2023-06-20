@@ -30,10 +30,11 @@ open class RecentsFragment @Inject constructor() : ListFragment<RecentAccount, R
         viewState.showRecentEvent.observe(this@RecentsFragment) { ev ->
             ev.ifNew?.let {
                 if (it.groupCount > 1) {
-                    prompts.showFragment(fragmentFactory.getRecentsHistoryFragment().apply {
-                        arguments = arguments ?: Bundle()
-                        requireArguments().putBoolean(ARG_OBSERVE, false)
-                    })
+                    prompts.showFragment(
+                        fragmentFactory.getRecentsHistoryFragment().apply {
+                            arguments = arguments ?: Bundle()
+                            requireArguments().putBoolean(ARG_OBSERVE, false)
+                        })
                     recentsHistoryViewState.onItemsChanged(it.groupAccounts)
                 } else {
                     prompts.showFragment(fragmentFactory.getRecentFragment(it.id))

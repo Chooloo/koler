@@ -1,5 +1,4 @@
 <resources>
-
     <!--region titles-->
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
@@ -36,6 +35,7 @@
     <string name="action_block_number">Block Number</string>
     <string name="action_delete_contact">Delete Contact</string>
     <string name="action_delete_recent">Delete Recent</string>
+    <string name="action_clear_recents">Delete All Recent Calls</string>
     <string name="action_set_favorite">Set As Favorite</string>
     <string name="action_unset_favorite">Unset As Favorite</string>
     <string name="action_open_in_whatsapp">Open In Whatsapp</string>
@@ -75,6 +75,7 @@
     <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_clear_recents">All call history will be deleted permanently</string>
     <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
     <!--endregion-->
 
@@ -137,12 +138,6 @@
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
     <!--endregion-->
 
-    <!--region pref summary -->
-    <!--endregion-->
-
-    <!--region pref default value-->
-    <!--endregion-->
-
     <!--region errors-->
     <string name="error_no_results">No Results</string>
     <string name="error_no_results_recents">No Recents</string>
@@ -166,9 +161,6 @@
     <string name="error_cant_merge_call">Can\'t merge call</string>
 
     <string name="error_couldnt_get_number_from_intent">Couldn\'t find number</string>
-    <!--endregion-->
-
-    <!--region pref color values-->
     <!--endregion-->
 
     <!--region pref values-->
@@ -208,9 +200,6 @@
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
     <!--endregion-->
 
-    <!--region phone type-->
-    <!--endregion-->
-
     <!--region audio route-->
     <string name="audio_route_speaker">Speaker</string>
     <string name="audio_route_earpiece">Earpiece</string>
@@ -238,4 +227,5 @@
     <string name="content_description_open_contact">Open Contact</string>
     <string name="content_description_send_sms">Send SMS</string>
     <string name="grant">grant</string>
+    <!--endregion-->
 </resources>
