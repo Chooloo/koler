@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="pref_title_default_page">Zadana stranica</string>
-    <string name="pref_title_ask_sim">Pitaj za SIM</string>
-    <string name="pref_title_dialpad_tones">Zvuk tipki</string>
-    <string name="pref_title_group_recents">Grupiraj slične nedavne stavke</string>
-    <string name="pref_title_dialpad_vibrate">Vibriraj kod tipkanja</string>
-    <string name="content_description_dialer_button">dialer button</string>
-</resources>
