@@ -1,0 +1,231 @@
+<resources>
+    <!--region titles-->
+    <string name="recents">මෑත</string>
+    <string name="contacts">සබඳතා</string>
+    <string name="actions">ක්‍රියාමාර්ග</string>
+    <string name="conference">සම්මන්ත්‍රණය</string>
+    <string name="default_page">පෙරනිමි</string>
+    <string name="settings">සැකසුම්</string>
+    <string name="theme_mode_dark">අඳුරු</string>
+    <string name="theme_mode_light">දීප්ත</string>
+    <string name="theme_mode_system">පද්ධතිය</string>
+    <string name="theme_mode_dynamic">ගතික</string>
+    <string name="in_development">සංවර්ධනය කෙරේ…</string>
+    <string name="pop_up_notification">උත්පතන දැනුම්දීම</string>
+    <string name="full_screen">පූර්ණ තිරය</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">ඔව් හෝ නැහැ?</string>
+    <string name="prompt_are_you_sure">ඔබට විශ්වාසද?</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">අංකය පසුරුපුවරුවට පිටපත් විය</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">ඔව්</string>
+    <string name="action_no">නැහැ</string>
+    <string name="action_answer">පිළිගන්න</string>
+    <string name="action_hangup">තබන්න</string>
+    <string name="action_manage_calls">ඇමතුම් කළමනාකරණය</string>
+    <string name="action_show_history">ඉතිහාසය පෙන්වන්න</string>
+    <string name="action_open_whatsapp">වට්ස්ඇප් අරින්න</string>
+    <string name="action_block_number">අවහිර කරන්න</string>
+    <string name="action_delete_contact">සබඳතාව මකන්න</string>
+    <string name="action_delete_recent">මෑත දෑ මකන්න</string>
+    <string name="action_clear_recents">සියලු මෑත ඇමතුම් මකන්න</string>
+    <string name="action_set_favorite">ප්‍රියතම ලෙස සකසන්න</string>
+    <string name="action_unset_favorite">ප්‍රියතම වෙතින් ඉවතලන්න</string>
+    <string name="action_open_in_whatsapp">වට්ස්ඇප් හි අරින්න</string>
+    <string name="action_unblock_number">අනවහිර කරන්න</string>
+    <string name="action_choose_audio_route">හඬ පථයක් තෝරන්න</string>
+    <string name="action_choose_phone_account">දුරකථන ගිණුම තෝරන්න</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">සොයන්න</string>
+    <string name="hint_theme_mode">තේමා ප්‍රකාරය</string>
+    <string name="hint_sim_account">සිම් ගිණුම</string>
+    <string name="hint_default_page">පෙරනිමි පිටුව</string>
+    <string name="hint_animations">චලන පෙන්වන්න</string>
+    <string name="hint_search_recents">මෑත දෑ සොයන්න</string>
+    <string name="hint_search_contacts">සබඳතා සොයන්න</string>
+    <string name="hint_incoming_call_mode">ඇමතුම් ලැබීමේ ප්‍රකාරය</string>
+    <string name="hint_search_items">මෑත සබඳතා සොයන්න</string>
+    <string name="hint_dialpad_vibrate">අංක එබීමේදී කම්පනය</string>
+    <string name="hint_should_ask_sim">ඇමතුමකට පෙර සිම්පත ගැන විමසන්න</string>
+    <string name="hint_dialpad_tones">අංක එබීමේ නාද සබල වේ/string>
+    <string name="hint_group_recents">තනි පුද්ගලයින්ගේ මෑත දෑ සමූහනය කරන්න</string>
+    <string name="hint_show_blocked">අංක සඳහා අවහිර/අනවහිර විකල්පය පෙන්වන්න (යෙදුම පෙරනිමි විය යුතුය).</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s රඳවා ඇත</string>
+    <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
+    <string name="explain_choose_sim_account">Call with a different sim</string>
+    <string name="explain_choose_incoming_call_mode">Incoming call view mode</string>
+    <string name="explain_choose_audio_route">Route audio to a different source</string>
+    <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
+    <string name="explain_delete_contact">This contact will be deleted permanently</string>
+    <string name="explain_delete_recent">This call log will be deleted permanently</string>
+    <string name="explain_clear_recents">All call history will be deleted permanently</string>
+    <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=si_LK</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_mute">නිහඬ</string>
+    <string name="call_action_unmute">නොනිහඬ</string>
+    <string name="call_action_speaker">විකාශකය</string>
+    <string name="call_action_speaker_off">විකාශකය වසන්න</string>
+    <!--endregion-->
+
+    <string name="call_action_id_add">call_action_add</string>
+    <string name="call_action_id_mute">call_action_mute</string>
+    <string name="call_action_id_hold">call_action_hold</string>
+    <string name="call_action_id_swap">call_action_swap</string>
+    <string name="call_action_id_merge">call_action_merge</string>
+    <string name="call_action_id_keypad">call_action_keypad</string>
+    <string name="call_action_id_speaker">call_action_speaker</string>
+
+    <!--region call state-->
+    <string name="call_status_new">නව ඇමතුමක්</string>
+    <string name="call_status_dialing">අමතමින්…</string>
+    <string name="call_status_holding">ඇමතුම රඳවා ඇත</string>
+    <string name="call_status_connecting">සබැඳෙමින්…</string>
+    <string name="call_status_incoming">ලැබෙන ඇමතුම</string>
+    <string name="call_status_active">ඇමතීම සිදුවෙමින්</string>
+    <string name="call_status_disconnected">ඇමතුම නිමයි</string>
+    <string name="call_status_pulling_call">ඇමතුම අදිමින්…</string>
+    <string name="call_status_unknown">ඇමතුමේ තත්‍වය නොදනී</string>
+    <string name="call_status_disconnecting">විසන්ධි වෙමින්…</string>
+    <string name="call_status_phone_account">දුරකථන ගිණුම තෝරන්න</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_group_recents">group_recents</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <string name="pref_key_incoming_call_mode">incoming_call_mode</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">අගයන්න</string>
+    <string name="pref_title_animations">චලන</string>
+    <string name="pref_title_theme_mode">තේමා ප්‍රකාරය</string>
+    <string name="pref_title_email">අපට ලියන්න</string>
+    <string name="pref_title_report_bugs">දෝෂ වාර්තා</string>
+    <string name="pref_title_manage_blocked">අවහිර කළ අංක කළමනාකරණය</string>
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">ප්‍රතිඵල නැත</string>
+    <string name="error_no_results_recents">මෑත දෑ නැත</string>
+    <string name="error_no_results_contacts">සබඳතා නැත</string>
+    <string name="error_no_results_phones">දුරකථන අංක නැත</string>
+    <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
+    <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
+
+    <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
+    <string name="error_no_permissions_edit_contacts">No permission to change contacts :)</string>
+    <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
+    <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_recents">I need permission to read call log and contacts :)</string>
+    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
+
+    <string name="error_no_number_to_call">කිසිදු අංකයක් හමු නොවිණි :(</string>
+
+    <string name="error_cant_hold_call">ඇමතුම රැඳවීමට නොහැකිය</string>
+    <string name="error_cant_swap_calls">Can\'t swap calls</string>
+    <string name="error_cant_merge_call">Can\'t merge call</string>
+
+    <string name="error_couldnt_get_number_from_intent">අංකය හමු නොවිණි</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">සබඳතා</string>
+    <string name="pref_value_page_recents">මෑත</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">හඬ තැපෑල</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_call">ඇමතුම</string>
+    <string name="content_description_edit">සංස්කරණය</string>
+    <string name="content_description_delete">මකන්න</string>
+    <string name="content_description_sms">කෙටි පණිවිඩය යවන්න</string>
+    <string name="content_description_menu_button">වට්ටෝරු බොත්තම</string>
+    <string name="content_description_answer_button">පිළිගැනීමේ බොත්තම</string>
+    <string name="content_description_reject_button">ප්‍රතික්‍ෂේප බොත්තම</string>
+    <string name="content_description_call_actions_button">ඇමතුම් ක්‍රියාමාර්ග</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">ඇමතුම් දැනුම්දීම</string>
+    <string name="call_notification_channel_description">පහසුවෙන් භාවිතය උදෙසා සක්‍රිය ඇමතුම දැනුම්දීම පෙන්වයි</string>
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">විකාශකය</string>
+    <string name="audio_route_earpiece">ශබ්දවාහිනිය</string>
+    <string name="audio_route_bluetooth">බ්ලූටූත්</string>
+    <string name="audio_route_wired_headset">රැහැන් ඉස්බණුව</string>
+    <string name="audio_route_wired_or_earpiece">රැහැන් හෝ උපකන</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">ප්‍රියතම තරුව</string>
+    <string name="content_description_empty_list_icon">හිස් ලේඛනයේ නිරූපකය</string>
+    <!--endregion-->
+
+    <!--region type label-->
+    <string name="type_label_im">IM</string>
+    <string name="type_label_name">නම</string>
+    <string name="type_label_phone">දුරකථනය</string>
+    <string name="type_label_email">වි-තැපෑල</string>
+    <string name="type_label_custom">අභිරුචි</string>
+    <string name="type_label_whatsapp">වට්ස්ඇප්</string>
+    <string name="type_label_organization">සංවිධානය</string>
+    <string name="action_call">අමතන්න</string>
+    <string name="content_description_call_number">අමතන අංකය</string>
+    <string name="content_description_add_contact">සබඳතාව සුරකින්න</string>
+    <string name="content_description_open_contact">සබඳතාව අරින්න</string>
+    <string name="content_description_send_sms">කෙටි පණිවිඩය යවන්න</string>
+    <string name="grant">ප්‍රදානය</string>
+    <!--endregion-->
+</resources>
