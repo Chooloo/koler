@@ -57,7 +57,7 @@
     <string name="hint_animations">චලන පෙන්වන්න</string>
     <string name="hint_search_recents">මෑත දෑ සොයන්න</string>
     <string name="hint_search_contacts">සබඳතා සොයන්න</string>
-    <string name="hint_incoming_call_mode">ඇමතුම් ලැබීමේ ප්‍රකාරය</string>
+    <string name="hint_incoming_call_mode">ඇමතුම් ලැබෙන ප්‍රකාරය</string>
     <string name="hint_search_items">මෑත සබඳතා සොයන්න</string>
     <string name="hint_dialpad_vibrate">අංක එබීමේදී කම්පනය</string>
     <string name="hint_should_ask_sim">ඇමතුමකට පෙර සිම්පත ගැන විමසන්න</string>
@@ -68,15 +68,15 @@
 
     <!--region warning-->
     <string name="explain_is_on_hold">%s රඳවා ඇත</string>
-    <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
-    <string name="explain_choose_sim_account">Call with a different sim</string>
-    <string name="explain_choose_incoming_call_mode">Incoming call view mode</string>
-    <string name="explain_choose_audio_route">Route audio to a different source</string>
-    <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
-    <string name="explain_delete_contact">This contact will be deleted permanently</string>
-    <string name="explain_delete_recent">This call log will be deleted permanently</string>
-    <string name="explain_clear_recents">All call history will be deleted permanently</string>
-    <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <string name="explain_choose_theme_mode">Koler තේමා ප්‍රකාරය සකසන්න, වෙනස්කම් දැකීමට යෙදුම යළි අරඹන්න</string>
+    <string name="explain_choose_sim_account">වෙනත් සිම්පතකින් අමතන්න</string>
+    <string name="explain_choose_incoming_call_mode">ලැබෙන ඇමතුම් දිස්වන ප්‍රකාරය</string>
+    <string name="explain_choose_audio_route">හඬ වෙනත් මූලාශ්‍රයකට යොමු කරන්න</string>
+    <string name="explain_choose_phone_account">නිශ්චිත දුරකථන ගිණුමක් භාවිතයෙන් වත්මන් ඇමතුම සිදු කරන්න</string>
+    <string name="explain_delete_contact">මෙම සබඳතාව සදහටම මකා දමනු ඇත</string>
+    <string name="explain_delete_recent">මෙම ඇමතුම් සටහන සදහටම මකා දමනු ඇත</string>
+    <string name="explain_clear_recents">සමස්ත ඇමතුම් ඉතිහාසය සදහටම මකා දමනු ඇත</string>
+    <string name="explain_choose_default_page">Koler විවෘත කරන සෑම විටම මෙම පිටුව ඉබේ පෙන්වයි</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -143,22 +143,22 @@
     <string name="error_no_results_recents">මෑත දෑ නැත</string>
     <string name="error_no_results_contacts">සබඳතා නැත</string>
     <string name="error_no_results_phones">දුරකථන අංක නැත</string>
-    <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
-    <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
+    <string name="error_not_default_dialer_blocked">අවහිර කළ අංක බැලීමට koler පෙරනිමි යෙදුම ලෙස සකසන්න</string>
+    <string name="error_not_default_dialer_call">ඇමතුම් ගැනීමට ඔබගේ පෙරනිමි යෙදුම ලෙස koler සකසන්න</string>
 
-    <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
-    <string name="error_no_permissions_edit_contacts">No permission to change contacts :)</string>
-    <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
-    <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_recents">I need permission to read call log and contacts :)</string>
-    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
+    <string name="error_no_permissions_edit_call_log">ඇමතුම් සටහන සංශෝධනයට අවසර නැත :)</string>
+    <string name="error_no_permissions_edit_contacts">සබඳතා සංශෝධනයට අවසර නැත :)</string>
+    <string name="error_no_permissions_make_call">ඇමතුමක් ගැනීමට අවසර නැත :(</string>
+    <string name="error_no_permissions_phones">සබඳතා කියවීමට අවසර වුවමනාය :)</string>
+    <string name="error_no_permissions_recents">ඇමතුම් සටහන කියවීමට හා සබඳතා වෙත අවසර වුවමනාය :)</string>
+    <string name="error_no_permissions_contacts">සබඳතා කියවීමට අවසර වුවමනාය :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">සබඳතා කියවීමට හා ඇමතුම් සටහනට අවසර වුවමනාය :)</string>
 
     <string name="error_no_number_to_call">කිසිදු අංකයක් හමු නොවිණි :(</string>
 
     <string name="error_cant_hold_call">ඇමතුම රැඳවීමට නොහැකිය</string>
-    <string name="error_cant_swap_calls">Can\'t swap calls</string>
-    <string name="error_cant_merge_call">Can\'t merge call</string>
+    <string name="error_cant_swap_calls">ඇමතුම් හුවමාරු නොවේ</string>
+    <string name="error_cant_merge_call">ඇමතුම ඒකාබද්ධ නොවේ</string>
 
     <string name="error_couldnt_get_number_from_intent">අංකය හමු නොවිණි</string>
     <!--endregion-->
@@ -189,7 +189,7 @@
     <string name="content_description_edit">සංස්කරණය</string>
     <string name="content_description_delete">මකන්න</string>
     <string name="content_description_sms">කෙටි පණිවිඩය යවන්න</string>
-    <string name="content_description_menu_button">වට්ටෝරු බොත්තම</string>
+    <string name="content_description_menu_button">වට්ටෝරුවේ බොත්තම</string>
     <string name="content_description_answer_button">පිළිගැනීමේ බොත්තම</string>
     <string name="content_description_reject_button">ප්‍රතික්‍ෂේප බොත්තම</string>
     <string name="content_description_call_actions_button">ඇමතුම් ක්‍රියාමාර්ග</string>
