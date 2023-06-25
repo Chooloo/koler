@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_title_default_page">පෙරනිමි පිටුව</string>
+    <string name="pref_title_ask_sim">සිම්පත ගැන විමසිය යුතුයි</string>
+    <string name="pref_title_dialpad_tones">අංක එබීමේ නාද</string>
+    <string name="pref_title_group_recents">සමාන මෑත දෑ සමූහනය</string>
+    <string name="pref_title_incoming_call_mode">ඇමතුම් ලැබීමේ ප්‍රකාරය</string>
+    <string name="pref_title_dialpad_vibrate">අංක එබීමේදී කම්පනය</string>
+    <string name="content_description_dialer_button">අංකමූණත බොත්තම</string>
+</resources>
