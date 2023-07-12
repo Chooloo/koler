@@ -1,7 +1,7 @@
 <resources>
     <!--region titles-->
     <string name="recents">Gần đây</string>
-    <string name="contacts">Các liên hệ</string>
+    <string name="contacts">Danh bạ</string>
     <string name="actions">Hành động</string>
     <string name="conference">Hội nghị</string>
     <string name="default_page">Mặc định</string>
@@ -9,7 +9,7 @@
     <string name="theme_mode_dark">Tối</string>
     <string name="theme_mode_light">Sáng</string>
     <string name="theme_mode_system">Hệ thống</string>
-    <string name="theme_mode_dynamic">Linh hoạt</string>
+    <string name="theme_mode_dynamic">Linh động</string>
     <string name="in_development">Đang phát triển…</string>
     <string name="pop_up_notification">Thông báo Pop-Up</string>
     <string name="full_screen">Toàn màn hình</string>
@@ -25,23 +25,23 @@
     <!--endregion-->
 
     <!--region actions-->
-    <string name="action_yes">Ừa</string>
+    <string name="action_yes">Có</string>
     <string name="action_no">Không</string>
     <string name="action_answer">Trả lời</string>
     <string name="action_hangup">Cúp máy</string>
     <string name="action_manage_calls">Quản lý cuộc gọi</string>
     <string name="action_show_history">Hiện lịch sử</string>
     <string name="action_open_whatsapp">Mở WhatsApp</string>
-    <string name="action_block_number">Khóa số</string>
+    <string name="action_block_number">Chặn số</string>
     <string name="action_delete_contact">Xóa liên hệ</string>
     <string name="action_delete_recent">Xóa gần đây</string>
     <string name="action_clear_recents">Xóa hết các cuộc gọi gần đây</string>
     <string name="action_set_favorite">Đặt làm yêu thích</string>
-    <string name="action_unset_favorite">Unset As Favorite</string>
-    <string name="action_open_in_whatsapp">Open In Whatsapp</string>
-    <string name="action_unblock_number">Unblock Number</string>
-    <string name="action_choose_audio_route">Choose audio route</string>
-    <string name="action_choose_phone_account">Choose phone account</string>
+    <string name="action_unset_favorite">Bỏ đặt là yêu thích</string>
+    <string name="action_open_in_whatsapp">Mở trong Whatsapp</string>
+    <string name="action_unblock_number">Bỏ chặn số</string>
+    <string name="action_choose_audio_route">Chọn tuyến âm thanh</string>
+    <string name="action_choose_phone_account">Chọn tài khoản điện thoại</string>
     <!--endregion-->
 
     <!--region Koler-->
@@ -50,33 +50,33 @@
     <!--endregion-->
 
     <!--region hints-->
-    <string name="hint_search">Search</string>
-    <string name="hint_theme_mode">Theme Mode</string>
-    <string name="hint_sim_account">Sim Account</string>
-    <string name="hint_default_page">Default Page</string>
-    <string name="hint_animations">Show animations</string>
-    <string name="hint_search_recents">Search Recents</string>
-    <string name="hint_search_contacts">Search Contacts</string>
-    <string name="hint_incoming_call_mode">Incoming Call Mode</string>
-    <string name="hint_search_items">Search contacts &amp; recents</string>
-    <string name="hint_dialpad_vibrate">Vibrate on dialpad clicks</string>
-    <string name="hint_should_ask_sim">Ask for a sim before each call</string>
-    <string name="hint_dialpad_tones">Enabled sound tones on dialpad clicks</string>
-    <string name="hint_group_recents">Group recents strikes from the same person</string>
-    <string name="hint_show_blocked">Show block/unblock option for numbers (requires default dialer).</string>
+    <string name="hint_search">Tìm kiếm</string>
+    <string name="hint_theme_mode">Chế độ chủ đề</string>
+    <string name="hint_sim_account">Tài khoản sim</string>
+    <string name="hint_default_page">Trang chính</string>
+    <string name="hint_animations">Hiển thị hoạt ảnh</string>
+    <string name="hint_search_recents">Tìm kiếm gần đây</string>
+    <string name="hint_search_contacts">Tìm liên hệ</string>
+    <string name="hint_incoming_call_mode">Chế độ cuộc gọi đến</string>
+    <string name="hint_search_items">Tìm liên hệ &amp; gần đây</string>
+    <string name="hint_dialpad_vibrate">Rung trên bàn quay số</string>
+    <string name="hint_should_ask_sim">Hỏi chọn sim trước khi gọi</string>
+    <string name="hint_dialpad_tones">Đã bật tiếng trên bàn quay số</string>
+    <string name="hint_group_recents">Nhóm các cuộc gọi tấn công gần đây từ cùng một người</string>
+    <string name="hint_show_blocked">Hiển thị tùy chọn chặn/bỏ chặn cho các số (yêu cầu trình quay số mặc định).</string>
     <!--endregion-->
 
     <!--region warning-->
-    <string name="explain_is_on_hold">%s is on hold</string>
-    <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
-    <string name="explain_choose_sim_account">Call with a different sim</string>
-    <string name="explain_choose_incoming_call_mode">Incoming call view mode</string>
-    <string name="explain_choose_audio_route">Route audio to a different source</string>
-    <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
-    <string name="explain_delete_contact">This contact will be deleted permanently</string>
-    <string name="explain_delete_recent">This call log will be deleted permanently</string>
-    <string name="explain_clear_recents">All call history will be deleted permanently</string>
-    <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <string name="explain_is_on_hold">%s đang bị giữ</string>
+    <string name="explain_choose_theme_mode">Đặt chế độ chủ đề của Koler, khởi động lại ứng dụng để xem các thay đổi</string>
+    <string name="explain_choose_sim_account">Gọi bằng sim khác</string>
+    <string name="explain_choose_incoming_call_mode">Chế độ xem cuộc gọi đến</string>
+    <string name="explain_choose_audio_route">Định tuyến âm thanh đến một nguồn khác</string>
+    <string name="explain_choose_phone_account">Tiếp tục cuộc gọi hiện tại bằng một tài khoản điện thoại cụ thể</string>
+    <string name="explain_delete_contact">Địa chỉ liên hệ này sẽ bị xóa vĩnh viễn</string>
+    <string name="explain_delete_recent">Nhật ký cuộc gọi này sẽ bị xóa vĩnh viễn</string>
+    <string name="explain_clear_recents">Tất cả lịch sử cuộc gọi sẽ bị xóa vĩnh viễn</string>
+    <string name="explain_choose_default_page">Trang này sẽ được chọn mỗi khi bạn mở lại Koler</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -86,10 +86,10 @@
     <!--endregion-->
 
     <!--region call actions -->
-    <string name="call_action_mute">Mute</string>
-    <string name="call_action_unmute">Unmute</string>
-    <string name="call_action_speaker">Speaker</string>
-    <string name="call_action_speaker_off">Off Speaker</string>
+    <string name="call_action_mute">Tắt tiếng</string>
+    <string name="call_action_unmute">Bật tiếng</string>
+    <string name="call_action_speaker">Loa</string>
+    <string name="call_action_speaker_off">Tắt loa</string>
     <!--endregion-->
 
     <string name="call_action_id_add">call_action_add</string>
@@ -101,17 +101,17 @@
     <string name="call_action_id_speaker">call_action_speaker</string>
 
     <!--region call state-->
-    <string name="call_status_new">New Call</string>
-    <string name="call_status_dialing">Dialing…</string>
-    <string name="call_status_holding">Call On Hold</string>
-    <string name="call_status_connecting">Connecting…</string>
-    <string name="call_status_incoming">Incoming Call</string>
-    <string name="call_status_active">Call In Progress</string>
-    <string name="call_status_disconnected">Call ended</string>
-    <string name="call_status_pulling_call">Pulling Call…</string>
-    <string name="call_status_unknown">Unknown call status</string>
-    <string name="call_status_disconnecting">Call Disconnecting…</string>
-    <string name="call_status_phone_account">Select phone account</string>
+    <string name="call_status_new">Cuộc gọi mới</string>
+    <string name="call_status_dialing">Đang quay số…</string>
+    <string name="call_status_holding">Cuộc gọi chờ</string>
+    <string name="call_status_connecting">Đang kết nối…</string>
+    <string name="call_status_incoming">Cuộc gọi đến</string>
+    <string name="call_status_active">Cuộc gọi đang chờ</string>
+    <string name="call_status_disconnected">Cuộc gọi kết thúc</string>
+    <string name="call_status_pulling_call">Đang kéo cuộc gọi…</string>
+    <string name="call_status_unknown">Trạng thái cuộc gọi không xác định</string>
+    <string name="call_status_disconnecting">Đang ngắt kết nối cuộc gọi…</string>
+    <string name="call_status_phone_account">Chọn tài khoản điện thoại</string>
     <!--endregion-->
 
     <!--region pref key-->
@@ -130,48 +130,48 @@
     <!--endregion-->
 
     <!--region pref title-->
-    <string name="pref_title_rate">Rate</string>
-    <string name="pref_title_animations">Animations</string>
-    <string name="pref_title_theme_mode">Theme Mode</string>
-    <string name="pref_title_email">Email Us</string>
-    <string name="pref_title_report_bugs">Report Bugs</string>
-    <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
+    <string name="pref_title_rate">Đánh giá</string>
+    <string name="pref_title_animations">Hoạt ảnh</string>
+    <string name="pref_title_theme_mode">Chế độ chủ đề</string>
+    <string name="pref_title_email">Gửi e-mail cho chúng tôi</string>
+    <string name="pref_title_report_bugs">Báo cáo lỗi</string>
+    <string name="pref_title_manage_blocked">Quản lý số bị chặn</string>
     <!--endregion-->
 
     <!--region errors-->
-    <string name="error_no_results">No Results</string>
-    <string name="error_no_results_recents">No Recents</string>
-    <string name="error_no_results_contacts">No Contacts</string>
-    <string name="error_no_results_phones">No phone numbers</string>
-    <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
-    <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
+    <string name="error_no_results">Không có kết quả</string>
+    <string name="error_no_results_recents">Không có gần đây</string>
+    <string name="error_no_results_contacts">Không có liên hệ</string>
+    <string name="error_no_results_phones">Không có số điện thoại</string>
+    <string name="error_not_default_dialer_blocked">Đặt Koler làm trình quay số mặc định để xem các số bị chặn</string>
+    <string name="error_not_default_dialer_call">Đặt Koler làm trình quay số mặc định của bạn để thực hiện cuộc gọi</string>
 
-    <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
-    <string name="error_no_permissions_edit_contacts">No permission to change contacts :)</string>
-    <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
-    <string name="error_no_permissions_phones">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_recents">I need permission to read call log and contacts :)</string>
-    <string name="error_no_permissions_contacts">I need permission to read contacts :)</string>
-    <string name="error_no_permissions_contacts_and_call_log">I need permission to read contacts and call log :)</string>
+    <string name="error_no_permissions_edit_call_log">Không có quyền thay đổi nhật ký cuộc gọi :)</string>
+    <string name="error_no_permissions_edit_contacts">Không có quyền thay đổi danh bạ :)</string>
+    <string name="error_no_permissions_make_call">Không có quyền thực hiện cuộc gọi :(</string>
+    <string name="error_no_permissions_phones">Tôi cần quyền để đọc danh bạ :)</string>
+    <string name="error_no_permissions_recents">Tôi cần quyền đọc nhật ký cuộc gọi và danh bạ :)</string>
+    <string name="error_no_permissions_contacts">Tôi cần quyền để đọc danh bạ :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">Tôi cần quyền để đọc danh bạ và nhật ký cuộc gọi :)</string>
 
-    <string name="error_no_number_to_call">No number was found :(</string>
+    <string name="error_no_number_to_call">Không có số nào được tìm thấy :(</string>
 
-    <string name="error_cant_hold_call">Can\'t hold call</string>
-    <string name="error_cant_swap_calls">Can\'t swap calls</string>
-    <string name="error_cant_merge_call">Can\'t merge call</string>
+    <string name="error_cant_hold_call">Có\không thể giữ cuộc gọi</string>
+    <string name="error_cant_swap_calls">Có\không thể trao đổi cuộc gọi</string>
+    <string name="error_cant_merge_call">Có\không thể hợp nhất cuộc gọi</string>
 
-    <string name="error_couldnt_get_number_from_intent">Couldn\'t find number</string>
+    <string name="error_couldnt_get_number_from_intent">Có\không thể tìm thấy số</string>
     <!--endregion-->
 
     <!--region pref values-->
-    <string name="pref_value_page_contacts">contacts</string>
-    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_contacts">danh bạ</string>
+    <string name="pref_value_page_recents">gần đây</string>
     <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
     <!--endregion-->
 
     <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
-    <string name="dialpad_1_letters">Voicemail</string>
+    <string name="dialpad_1_letters">Thư thoại</string>
     <string name="dialpad_2_letters">ABC</string>
     <string name="dialpad_3_letters">DEF</string>
     <string name="dialpad_4_letters">GHI</string>
@@ -185,47 +185,47 @@
     <!--endregion-->
 
     <!--region content descriptions -->
-    <string name="content_description_call">Call</string>
-    <string name="content_description_edit">Edit</string>
-    <string name="content_description_delete">Delete</string>
-    <string name="content_description_sms">Send SMS</string>
-    <string name="content_description_menu_button">Menu Button</string>
-    <string name="content_description_answer_button">Answer Button</string>
-    <string name="content_description_reject_button">Reject Button</string>
-    <string name="content_description_call_actions_button">Call Actions</string>
+    <string name="content_description_call">Gọi</string>
+    <string name="content_description_edit">Chỉnh sửa</string>
+    <string name="content_description_delete">Xóa</string>
+    <string name="content_description_sms">Gửi SMS</string>
+    <string name="content_description_menu_button">Nút thực đơn</string>
+    <string name="content_description_answer_button">Nút trả lời</string>
+    <string name="content_description_reject_button">Nút từ chối</string>
+    <string name="content_description_call_actions_button">Hành động gọi</string>
     <!--endregion-->
 
     <!--region notification-->
-    <string name="call_notification_channel_name">Call Notification</string>
-    <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
+    <string name="call_notification_channel_name">Thông báo cuộc gọi</string>
+    <string name="call_notification_channel_description">Thông báo cuộc gọi đang hoạt động, được hiển thị để sử dụng thoải mái</string>
     <!--endregion-->
 
     <!--region audio route-->
-    <string name="audio_route_speaker">Speaker</string>
-    <string name="audio_route_earpiece">Earpiece</string>
+    <string name="audio_route_speaker">Loa</string>
+    <string name="audio_route_earpiece">Tai nghe</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
-    <string name="audio_route_wired_headset">Wired Headset</string>
-    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
+    <string name="audio_route_wired_headset">Tai nghe có dây</string>
+    <string name="audio_route_wired_or_earpiece">Có dây hoặc Tai nghe</string>
     <!--endregion-->
 
     <!--region content description-->
-    <string name="content_description_favorite_star">Favorite star</string>
-    <string name="content_description_empty_list_icon">Empty list icon</string>
+    <string name="content_description_favorite_star">Ngôi sao yêu thích</string>
+    <string name="content_description_empty_list_icon">Biểu tượng danh sách trống</string>
     <!--endregion-->
 
     <!--region type label-->
     <string name="type_label_im">IM</string>
-    <string name="type_label_name">Name</string>
-    <string name="type_label_phone">Phone</string>
-    <string name="type_label_email">Email</string>
-    <string name="type_label_custom">Custom</string>
+    <string name="type_label_name">Tên</string>
+    <string name="type_label_phone">Điện thoại</string>
+    <string name="type_label_email">E-mail</string>
+    <string name="type_label_custom">Tùy chỉnh</string>
     <string name="type_label_whatsapp">WhatsApp</string>
-    <string name="type_label_organization">Organization</string>
-    <string name="action_call">Call</string>
-    <string name="content_description_call_number">Call Number</string>
-    <string name="content_description_add_contact">Add Contact</string>
-    <string name="content_description_open_contact">Open Contact</string>
-    <string name="content_description_send_sms">Send SMS</string>
-    <string name="grant">grant</string>
+    <string name="type_label_organization">Tổ chức</string>
+    <string name="action_call">Gọi</string>
+    <string name="content_description_call_number">Số điện thoại</string>
+    <string name="content_description_add_contact">Thêm liên hệ</string>
+    <string name="content_description_open_contact">Mở danh bạ</string>
+    <string name="content_description_send_sms">Gửi SMS</string>
+    <string name="grant">cấp quyền</string>
     <!--endregion-->
 </resources>
