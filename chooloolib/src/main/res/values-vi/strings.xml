@@ -1,42 +1,42 @@
 <resources>
     <!--region titles-->
-    <string name="recents">Recents</string>
-    <string name="contacts">Contacts</string>
-    <string name="actions">Actions</string>
-    <string name="conference">Conference</string>
-    <string name="default_page">Default</string>
-    <string name="settings">Settings</string>
-    <string name="theme_mode_dark">Dark</string>
-    <string name="theme_mode_light">Light</string>
-    <string name="theme_mode_system">System</string>
-    <string name="theme_mode_dynamic">Dynamic</string>
-    <string name="in_development">In Development…</string>
-    <string name="pop_up_notification">Pop-Up Notification</string>
-    <string name="full_screen">Full Screen</string>
+    <string name="recents">Gần đây</string>
+    <string name="contacts">Các liên hệ</string>
+    <string name="actions">Hành động</string>
+    <string name="conference">Hội nghị</string>
+    <string name="default_page">Mặc định</string>
+    <string name="settings">Cài đặt</string>
+    <string name="theme_mode_dark">Tối</string>
+    <string name="theme_mode_light">Sáng</string>
+    <string name="theme_mode_system">Hệ thống</string>
+    <string name="theme_mode_dynamic">Linh hoạt</string>
+    <string name="in_development">Đang phát triển…</string>
+    <string name="pop_up_notification">Thông báo Pop-Up</string>
+    <string name="full_screen">Toàn màn hình</string>
     <!--endregion-->
 
     <!--region prompt-->
-    <string name="prompt_yes_or_no">Yes or No?</string>
-    <string name="prompt_are_you_sure">Are you sure?</string>
+    <string name="prompt_yes_or_no">Có hay không?</string>
+    <string name="prompt_are_you_sure">Bạn có chắc?</string>
     <!--endregion-->
 
     <!--region messages-->
-    <string name="number_copied_to_clipboard">Number copied to clipboard</string>
+    <string name="number_copied_to_clipboard">Đã chép số vào clipboard</string>
     <!--endregion-->
 
     <!--region actions-->
-    <string name="action_yes">Yap</string>
-    <string name="action_no">Nope</string>
-    <string name="action_answer">Answer</string>
-    <string name="action_hangup">Hangup</string>
-    <string name="action_manage_calls">Manage Calls</string>
-    <string name="action_show_history">Show History</string>
-    <string name="action_open_whatsapp">Open WhatsApp</string>
-    <string name="action_block_number">Block Number</string>
-    <string name="action_delete_contact">Delete Contact</string>
-    <string name="action_delete_recent">Delete Recent</string>
-    <string name="action_clear_recents">Delete All Recent Calls</string>
-    <string name="action_set_favorite">Set As Favorite</string>
+    <string name="action_yes">Ừa</string>
+    <string name="action_no">Không</string>
+    <string name="action_answer">Trả lời</string>
+    <string name="action_hangup">Cúp máy</string>
+    <string name="action_manage_calls">Quản lý cuộc gọi</string>
+    <string name="action_show_history">Hiện lịch sử</string>
+    <string name="action_open_whatsapp">Mở WhatsApp</string>
+    <string name="action_block_number">Khóa số</string>
+    <string name="action_delete_contact">Xóa liên hệ</string>
+    <string name="action_delete_recent">Xóa gần đây</string>
+    <string name="action_clear_recents">Xóa hết các cuộc gọi gần đây</string>
+    <string name="action_set_favorite">Đặt làm yêu thích</string>
     <string name="action_unset_favorite">Unset As Favorite</string>
     <string name="action_open_in_whatsapp">Open In Whatsapp</string>
     <string name="action_unblock_number">Unblock Number</string>
