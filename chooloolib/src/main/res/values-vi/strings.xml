@@ -37,7 +37,7 @@
     <string name="action_delete_recent">Xóa gần đây</string>
     <string name="action_clear_recents">Xóa hết các cuộc gọi gần đây</string>
     <string name="action_set_favorite">Đặt làm yêu thích</string>
-    <string name="action_unset_favorite">Bỏ đặt là yêu thích</string>
+    <string name="action_unset_favorite">Bỏ yêu thích</string>
     <string name="action_open_in_whatsapp">Mở trong Whatsapp</string>
     <string name="action_unblock_number">Bỏ chặn số</string>
     <string name="action_choose_audio_route">Chọn tuyến âm thanh</string>
