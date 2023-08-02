@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_title_default_page">Noklusējuma skats</string>
+    <string name="pref_title_ask_sim">Vaicāt pēc SIM</string>
+    <string name="pref_title_dialpad_tones">Ciparnīcas skaņas</string>
+    <string name="pref_title_group_recents">Apvienot līdzīgus zvanus</string>
+    <string name="pref_title_incoming_call_mode">Ienākošā zvana veids</string>
+    <string name="pref_title_dialpad_vibrate">Trīcēt pieskaroties ciparnīcai</string>
+    <string name="content_description_dialer_button">zvana poga</string>
+</resources>

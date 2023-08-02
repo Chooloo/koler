@@ -1,0 +1,24 @@
+<i>Koler</i> pastāvīgā zvanu saskarne visu padara vienkāršāku. Tajā ir pieejama pavilkšana un pēc iespējas vienkāršāks izskats, visu padarot skaistāku, saprotamāku, tomēr joprojām ražīgu. Ienākošā zvanā pirms atbildēšanas ir iespējams:
+
+* atteikt zvanu un nosūtīt īsziņu
+* atteikt pēc noteikta laika sekundēs
+* atbildēt pēc noteikta laika sekundēs
+
+Notiekošā zvanā ir iespējams:
+
+* atteikt pēc noteikta laika sekundēs
+
+Lietotnes galvenais mērķis ir būt pēc iespējas saprotamākai un ērtākai, tādēļ pavilkšana ir galvenais lietotnes vadības veids, padarot tās izmantošanu daudz gludāku.
+
+<b>Zvanītājs:</b>
+
+* zvanīt - pavilkt uz augšu
+* izdzēst numuru - pavilkt pa kreisi
+* sakļaut zvanītāju - pavilkt uz kontaktu sarakstu
+
+<b>Ienākošs zvans:</b>
+
+* atvērt tastatūru - pavilkt uz augšu
+* atteikt/izbeigt - pavilkt uz leju
+* atbildēt - pavilkt pa labi
+* nosūtīt īsziņu - pavilkt uz augšu īsziņas nosūtīšanas pārklājumā
