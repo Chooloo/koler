@@ -1,0 +1,231 @@
+<resources>
+    <!--region titles-->
+    <string name="recents">Pēdējie</string>
+    <string name="contacts">Kontakti</string>
+    <string name="actions">Darbības</string>
+    <string name="conference">Sapulce</string>
+    <string name="default_page">Noklusējuma</string>
+    <string name="settings">Iestatījumi</string>
+    <string name="theme_mode_dark">Tumšs</string>
+    <string name="theme_mode_light">Gaišs</string>
+    <string name="theme_mode_system">Sistēmas</string>
+    <string name="theme_mode_dynamic">Mainīgs</string>
+    <string name="in_development">Izstrādē…</string>
+    <string name="pop_up_notification">Uznirstošs paziņojums</string>
+    <string name="full_screen">Pilnekrāns</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Jā vai nē?</string>
+    <string name="prompt_are_you_sure">Vai tiešām?</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Numurs ievietots starpliktuvē</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">Jā</string>
+    <string name="action_no">Nē</string>
+    <string name="action_answer">Atbildēt</string>
+    <string name="action_hangup">Atteikt</string>
+    <string name="action_manage_calls">Pārvaldīt zvanus</string>
+    <string name="action_show_history">Rādīt vēsturi</string>
+    <string name="action_open_whatsapp">Atvērt WhatsApp</string>
+    <string name="action_block_number">Liegt numuru</string>
+    <string name="action_delete_contact">Izdzēst kotaktu</string>
+    <string name="action_delete_recent">Izdzēst pēdējos</string>
+    <string name="action_clear_recents">Izdzēst visus pēdējos zvanus</string>
+    <string name="action_set_favorite">Pievienot izlasē</string>
+    <string name="action_unset_favorite">Noņemt no izlases</string>
+    <string name="action_open_in_whatsapp">Atvērt Whatsapp</string>
+    <string name="action_unblock_number">Atcelt numura liegumu</string>
+    <string name="action_choose_audio_route">Norādīt skaņas pārvirzīšanu</string>
+    <string name="action_choose_phone_account">Izvēlēties tālruņa kontu</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Meklēt</string>
+    <string name="hint_theme_mode">Izskats</string>
+    <string name="hint_sim_account">SIM konts</string>
+    <string name="hint_default_page">Noklusējuma skats</string>
+    <string name="hint_animations">Rādīt animācijas</string>
+    <string name="hint_search_recents">Meklēt pēdējos</string>
+    <string name="hint_search_contacts">Meklēt kontaktus</string>
+    <string name="hint_incoming_call_mode">Ienākoša zvana veids</string>
+    <string name="hint_search_items">Meklēt kontaktus un pēdējos</string>
+    <string name="hint_dialpad_vibrate">Trīcēt pieskaroties ciparnīcai</string>
+    <string name="hint_should_ask_sim">Vaicāt pēc SIM pirms katra zvana</string>
+    <string name="hint_dialpad_tones">Iespējotas ciparnīcas pieskārienu skaņas</string>
+    <string name="hint_group_recents">Apvienot pēdējos zvanus no viena zvanītāja</string>
+    <string name="hint_show_blocked">Rādīt numuru liegšanas/lieguma atcelšanas iespēju (nepieciešams iestatīt kā noklusējuma zvanu lietotni)</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s ir aizturēts</string>
+    <string name="explain_choose_theme_mode">Iestatīt Koler izskatu. Lietotne ir jāpārsāknē, lai redzētu izmaiņas</string>
+    <string name="explain_choose_sim_account">Zvanīt ar citu SIM</string>
+    <string name="explain_choose_incoming_call_mode">Ienākošā zvana skata veids</string>
+    <string name="explain_choose_audio_route">Pārvirzīt skaņu uz citu avotu</string>
+    <string name="explain_choose_phone_account">Turpināt pašreizējo zvanu ar noteiktu tālruņa kontu</string>
+    <string name="explain_delete_contact">Šis kontakts tiks neatgriezeniski izdzēsts</string>
+    <string name="explain_delete_recent">Šis zvana ieraksts tiks neatgriezeniski izdzēsts</string>
+    <string name="explain_clear_recents">Visa zvanu vēsture tiks neatgriezeniski izdzēsta</string>
+    <string name="explain_choose_default_page">Šis skats tiks atlasīts katrā Koler atvēršanas reizē</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_mute">Apklusināt</string>
+    <string name="call_action_unmute">Atcelt apklusināšanu</string>
+    <string name="call_action_speaker">Skaļrunis</string>
+    <string name="call_action_speaker_off">Izslēgt skaļruni</string>
+    <!--endregion-->
+
+    <string name="call_action_id_add">call_action_add</string>
+    <string name="call_action_id_mute">call_action_mute</string>
+    <string name="call_action_id_hold">call_action_hold</string>
+    <string name="call_action_id_swap">call_action_swap</string>
+    <string name="call_action_id_merge">call_action_merge</string>
+    <string name="call_action_id_keypad">call_action_keypad</string>
+    <string name="call_action_id_speaker">call_action_speaker</string>
+
+    <!--region call state-->
+    <string name="call_status_new">Jauns zvans</string>
+    <string name="call_status_dialing">Zvana…</string>
+    <string name="call_status_holding">Zvans ir aizturēts</string>
+    <string name="call_status_connecting">Savienojas…</string>
+    <string name="call_status_incoming">Ienākošs zvans</string>
+    <string name="call_status_active">Notiek zvanīšana</string>
+    <string name="call_status_disconnected">Zvans izbeigts</string>
+    <string name="call_status_pulling_call">Izgūst zvanu…</string>
+    <string name="call_status_unknown">Nezināms zvana stāvoklis</string>
+    <string name="call_status_disconnecting">Zvans atvienojas…</string>
+    <string name="call_status_phone_account">Atlasīt tālruņa kontu</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_group_recents">group_recents</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <string name="pref_key_incoming_call_mode">incoming_call_mode</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Novērtēt</string>
+    <string name="pref_title_animations">Animācijas</string>
+    <string name="pref_title_theme_mode">Izskats</string>
+    <string name="pref_title_email">Nosūtīt mums ziņu e-pastā</string>
+    <string name="pref_title_report_bugs">Ziņot par nepilnībām</string>
+    <string name="pref_title_manage_blocked">Pārvaldīt liegtos numurus</string>
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">Nav iznākuma</string>
+    <string name="error_no_results_recents">Nav pēdējo</string>
+    <string name="error_no_results_contacts">Nav kontaktu</string>
+    <string name="error_no_results_phones">Nav tālruņa numuru</string>
+    <string name="error_not_default_dialer_blocked">Koler ir jāiestata kā noklusējuma zvanu lietotne, lai redzētu liegtos numurus</string>
+    <string name="error_not_default_dialer_call">Koler ir jāiestata kā noklusējuma zvanu lietotne, lai veiktu zvanus</string>
+
+    <string name="error_no_permissions_edit_call_log">Nav atļaujas mainīt zvanu žurnālu :)</string>
+    <string name="error_no_permissions_edit_contacts">Nav atļaujas mainīt kontaktus :)</string>
+    <string name="error_no_permissions_make_call">Nav atļaujas veikt zvanu :(</string>
+    <string name="error_no_permissions_phones">Man ir nepieciešama atļauja lasīt kontaktus :)</string>
+    <string name="error_no_permissions_recents">Man ir nepieciešama atļauja lasīt zvanu žurnālu un kontaktus :)</string>
+    <string name="error_no_permissions_contacts">Man ir nepieciešama atļauja lasīt kontaktus :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">Man ir nepieciešama atļauja lasīt kontaktus un zvanu žurnālu :)</string>
+
+    <string name="error_no_number_to_call">Netika atrasts neviens numurs :(</string>
+
+    <string name="error_cant_hold_call">Nevar aizturēt zvanu</string>
+    <string name="error_cant_swap_calls">Nevar apmainīt zvanus</string>
+    <string name="error_cant_merge_call">Nevar apvienot zvanu</string>
+
+    <string name="error_couldnt_get_number_from_intent">Nevarēja atrast numuru</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Balss pasts</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_call">Zvanīt</string>
+    <string name="content_description_edit">Labot</string>
+    <string name="content_description_delete">Izdzēst</string>
+    <string name="content_description_sms">Nosūtīt īsziņu</string>
+    <string name="content_description_menu_button">Izvēlnes poga</string>
+    <string name="content_description_answer_button">Atbildēšanas poga</string>
+    <string name="content_description_reject_button">Atteikšanas poga</string>
+    <string name="content_description_call_actions_button">Zvana darbības</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Zvana paziņojums</string>
+    <string name="call_notification_channel_description">Notiekoša zvana paziņojums, tiek rādīts ērtai izmantošanai</string>
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Skaļrunis</string>
+    <string name="audio_route_earpiece">Iebūvētā austiņa</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Vadu austiņas</string>
+    <string name="audio_route_wired_or_earpiece">Vadu vai iebūvētā austiņa</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">Izlases zvaigzne</string>
+    <string name="content_description_empty_list_icon">Tukša saraksta ikona</string>
+    <!--endregion-->
+
+    <!--region type label-->
+    <string name="type_label_im">Tūlītēja ziņapmaiņa</string>
+    <string name="type_label_name">Vārds</string>
+    <string name="type_label_phone">Tālrunis</string>
+    <string name="type_label_email">E-pasta adrese</string>
+    <string name="type_label_custom">Pielāgots</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <string name="type_label_organization">Uzņēmums</string>
+    <string name="action_call">Zvanīt</string>
+    <string name="content_description_call_number">Zvanīt numuram</string>
+    <string name="content_description_add_contact">Pievienot kontaktu</string>
+    <string name="content_description_open_contact">Atvērt kontaktu</string>
+    <string name="content_description_send_sms">Nosūtīt īsziņu</string>
+    <string name="grant">piešķirt</string>
+    <!--endregion-->
+</resources>
