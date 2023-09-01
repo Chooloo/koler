@@ -1,4 +1,5 @@
 <resources>
+    <!--region titles-->
     <string name="recents">Récents</string>
     <string name="contacts">Contacts</string>
     <string name="conference">Conférence</string>
@@ -7,19 +8,47 @@
     <string name="theme_mode_dark">Sombre</string>
     <string name="theme_mode_light">Clair</string>
     <string name="theme_mode_system">Système</string>
-    <string name="prompt_yes_or_no">Activer cette option ?</string>
+    <string name="theme_mode_dynamic">Dynamique</string>
+    <string name="in_development">En développement…</string>
+    <string name="pop_up_notification">Notification Pop-Up</string> <!-- Pop-up is english, french hasn't word for this, it's the only good word -->
+    <string name="full_screen">Plein écran</string>
+    <!--endregion-->
+    
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Activer cette option ?</string> <!-- perfect, no change -->
     <string name="prompt_are_you_sure">Confirmer ?</string>
+    <!-- endregion -->
+    
+    <!--region messages-->
     <string name="number_copied_to_clipboard">Numéro copié dans le presse-papiers</string>
-    <string name="action_yes">Yap</string>
-    <string name="action_no">Nope</string>
+    <!--endregion-->
+    
+    <!--region actions-->
+    <string name="action_yes">Oui</string>
+    <string name="action_no">Non</string>
     <string name="action_answer">Répondre</string>
     <string name="action_hangup">Raccrocher</string>
+    <string name="action_manage_calls">Gérer les appels</string>
     <string name="action_show_history">Historique des appels</string>
+    <string name="action_open_whatsapp">Ouvrir WhatsApp</string>
+    <string name="action_open_in_whatsapp">Ouvrir dans Whatsapp</string>
     <string name="action_block_number">Bloquer ce numéro</string>
     <string name="action_unblock_number">Débloquer ce numéro</string>
-    <string name="action_choose_audio_route">Sortie audio</string>
+    <string name="action_delete_contact">Supprimer ce contact</string>
+    <string name="action_delete_recent">Supprimer cette entrée</string> <!-- an entrée is just like "a row" but more like "a data" -->
+    <string name="action_clear_recents">Supprimer tout les appels récents</string>
+    <string name="action_set_favorite">Ajouter aux favoris</string>
+    <string name="action_unset_favorite">Enlever des favoris</string>
+    <string name="action_choose_audio_route">Choisir la sortie audio</string>
+    <string name="action_choose_phone_account">Choisir un compte téléphonique</string>
+    <!-- endregion -->
+    
+    <!--region Koler-->
     <string name="app_name">Koler</string>
     <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+    
+    <!--region hints-->
     <string name="hint_search">Recherche</string>
     <string name="hint_theme_mode">Thème de l\'application</string>
     <string name="hint_sim_account">Compte SIM</string>
@@ -27,25 +56,42 @@
     <string name="hint_animations">Afficher les animations</string>
     <string name="hint_search_recents">Recherche dans les Appels Récents</string>
     <string name="hint_search_contacts">Recherche dans les Contacts</string>
-    <string name="hint_search_items">Rechercher dans les contacts et les appels récents</string>
+    <string name="hint_incoming_call_mode">Mode lors d\'appel entrant</string>
+    <string name="hint_search_items">Rechercher dans les contacts &amp; appels récents</string> <!-- too long on my phone if we choose "[...]contacts et les appels[...]" -->
     <string name="hint_dialpad_vibrate">Vibrer à l\'appui sur le clavier</string>
     <string name="hint_should_ask_sim">Choisir la SIM pour chaque appel</string>
     <string name="hint_dialpad_tones">Jouer un son à l\'appui sur le clavier</string>
+    <string name="hint_group_recents">Grouper les signalements récurrents provenant de la même personne</string>
     <string name="hint_show_blocked">Afficher les options de blocage/déblocage des numéros (doit être le composeur par défaut)</string>
+    <!-- endregion -->
+    
+    <!--region warning-->
     <string name="explain_is_on_hold">%s est en attente</string>
     <string name="explain_choose_theme_mode">Choisissez le thème de Koler. Un redémarrage de l\'application est requis pour appliquer les changements.</string>
-    <string name="explain_choose_sim_account">Choisissez la carte SIM à utiliser lors des appels</string>
+    <string name="explain_choose_sim_account">Choisissez la carte SIM à utiliser lors des appels</string> <!-- choose another SIM account when call ?  -->
+    <string name="explain_choose_incoming_call_mode">Vue lors d'appel entrant</string> <!-- french will understand that is a settings for view mode -->
     <string name="explain_choose_audio_route">Sélectionnez la sortie audio de l\'appel</string>
+    <string name="explain_choose_phone_account">Continuer l'appel en cours en utilisant un compte téléphonique spécifique</string>
     <string name="explain_delete_contact">Ce contact sera définitivement supprimé</string>
-    <string name="explain_delete_recent">Cette entrée du journal d\'appels sera définitivement supprimée</string>
+    <string name="explain_delete_recent">Cette entrée de l\'historique d\'appels sera définitivement supprimée</string>
+    <string name="explain_clear_recents">Toutes les entrées de l\'historique d\'appels seront supprimées définitivement</string>
     <string name="explain_choose_default_page">Cette page sera affichée au démarrage de Koler</string>
+    <!--endregion-->
+    
+    <!--region urls-->
     <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri</string>
+    <!--endregion-->
+    
+    <!--region call actions -->
     <string name="call_action_mute">Couper le micro</string>
     <string name="call_action_unmute">Réactiver le micro</string>
     <string name="call_action_speaker">Haut-Parleur</string>
     <string name="call_action_speaker_off">Désactiver le Haut-Parleur</string>
+    <!--endregion-->
+    
+    <!--region call state-->
     <string name="call_status_new">Nouvel appel</string>
     <string name="call_status_dialing">Numérotation…</string>
     <string name="call_status_holding">Appel en attente</string>
@@ -57,29 +103,45 @@
     <string name="call_status_unknown">Statut d\'appel inconnu</string>
     <string name="call_status_disconnecting">Déconnexion de l\'appel…</string>
     <string name="call_status_phone_account">Sélectionnez le compte téléphonique</string>
+    <!--endregion-->
+    
+    <!--region pref title-->
     <string name="pref_title_rate">Évaluer</string>
     <string name="pref_title_animations">Animations</string>
-    <string name="pref_title_app_color">Couleur d\'accentuation</string>
+    <string name="pref_title_app_color">Couleur de l\'application</string>
     <string name="pref_title_theme_mode">Thème de l\'application</string>
     <string name="pref_title_email">Nous envoyer un e-mail</string>
     <string name="pref_title_report_bugs">Signaler un bug</string>
     <string name="pref_title_manage_blocked">Gérer les numéros bloqués</string>
+    <!--endregion-->
+    
+    <!--region errors-->
     <string name="error_no_results">Aucun résultat</string>
     <string name="error_no_results_recents">Aucun élément récent trouvé</string>
     <string name="error_no_results_contacts">Aucun contact trouvé</string>
     <string name="error_no_results_phones">Aucun numéro de téléphone trouvé</string>
     <string name="error_not_default_dialer_blocked">Définissez Koler comme composeur par défaut pour voir les numéros bloqués</string>
     <string name="error_not_default_dialer_call">Définissez Koler comme composeur par défaut pour passer des appels</string>
-    <string name="error_no_permissions_edit_call_log">Impossible de modifier le journal d\'appels :(</string>
-    <string name="error_no_permissions_make_call">Impossible de passer un appel :(</string>
+    
+    <!-- about permissions, explicit that Koler hasn't permissions -->
+    <string name="error_no_permissions_edit_call_log">L\'application n'a pas la permission de modifier l\'historique des appels :(</string>
+    <string name="error_no_permissions_edit_contacts">L\'application n'a pas la permission de changer les contacts :)</string>
+    <string name="error_no_permissions_make_call">L\'application n'a pas la permission de passer un appel :(</string>
     <string name="error_no_permissions_phones">J\'ai besoin de votre autorisation pour passer des appels :)</string>
-    <string name="error_no_permissions_recents">J\'ai besoin de votre autorisation pour lire le journal d\'appels :)</string>
+    <string name="error_no_permissions_recents">J\'ai besoin de votre autorisation pour lire l\'historique des appels :)</string>
     <string name="error_no_permissions_contacts">J\'ai besoin de votre autorisation pour lire les contacts :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">J\'ai besoin de votre autorisation pour lire les contacts et l\'historique des appels :)</string>
+    
     <string name="error_no_number_to_call">Aucun numéro n\'a été trouvé :(</string>
+    
     <string name="error_cant_hold_call">Mise en attente impossible !</string>
     <string name="error_cant_swap_calls">Impossible de changer d\'appel</string>
     <string name="error_cant_merge_call">Impossible de fusionner les appels</string>
+    
     <string name="error_couldnt_get_number_from_intent">Impossible de trouver le numéro demandé</string>
+    <!--endregion-->
+    
+    <!--region dialpad letters-->
     <string name="dialpad_0_letters">+</string>
     <string name="dialpad_1_letters">Voicemail</string>
     <string name="dialpad_2_letters">ABC</string>
@@ -92,17 +154,34 @@
     <string name="dialpad_9_letters">WXYZ</string>
     <string name="dialpad_star_letters" />
     <string name="dialpad_pound_letters" />
+    <!--endregion-->
+    
+    <!--region content descriptions -->
+    <string name="content_description_call">Appel</string>
+    <string name="content_description_edit">Modifier</string>
+    <string name="content_description_delete">Supprimer</string>
+    <string name="content_description_sms">Envoyer un SMS</string>
     <string name="content_description_menu_button">Bouton de menu</string>
     <string name="content_description_answer_button">Bouton de réponse</string>
     <string name="content_description_reject_button">Bouton de rejet</string>
     <string name="content_description_call_actions_button">Actions d\'appel</string>
+    <!--endregion-->
+    
+    <!--region notification-->
     <string name="call_notification_channel_name">Notification d\'appel</string>
     <string name="call_notification_channel_description">Notification d\'appel en cours, affichée pour un usage confortable et un accès facile aux actions d\'appel</string>
+    <!--endregion-->
+    
+    <!--region audio route-->
     <string name="audio_route_speaker">Haut-Parleur</string>
-    <string name="audio_route_earpiece">Téléphone</string>
+    <string name="audio_route_earpiece">Écouteurs</string> <!-- always in plurial -->
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Casque filaire</string>
-    <string name="audio_route_wired_or_earpiece">Filaire ou Téléphone</string>
+    <string name="audio_route_wired_or_earpiece">Filaire ou Écouteurs</string>
+    <!--endregion-->
+    
+     <!--region content description-->
     <string name="content_description_favorite_star">Étoile de Favoris</string>
     <string name="content_description_empty_list_icon">Icône de liste vide</string>
+    <!--endregion-->
 </resources>
