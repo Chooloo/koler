@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_title_default_page">Pagina implicită</string>
+    <string name="pref_title_ask_sim">Ar trebui să ceară cartela sim</string>
+    <string name="pref_title_dialpad_tones">Tonuri sonore la apăsarea tastaturii telefonice</string>
+    <string name="pref_title_group_recents">Grupați apelurile recente similare</string>
+    <string name="pref_title_incoming_call_mode">Mod apel de intrare</string>
+    <string name="pref_title_dialpad_vibrate">Vibrați la apăsarea tastaturii telefonice</string>
+    <string name="content_description_dialer_button">buton apelare</string>
+</resources>
