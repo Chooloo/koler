@@ -1,0 +1,24 @@
+Interfața de apelare continuă a <i>Koler</i> face totul mai ușor. Aceasta folosește glisări și un design minimalist, făcând totul mai frumos, mai intuitiv, dar totuși productiv. La un apel primit, puteți face următoarele înainte de a răspunde:
+
+* Respingeți și trimiteți apelului un SMS
+* Respinge într-un anumit număr de secunde
+* Răspunde într-un anumit număr de secunde
+
+Într-un apel în curs de desfășurare, puteți:
+
+* Respinge într-un anumit număr de secunde
+
+Principalul obiectiv al aplicației este de a fi mai intuitivă și mai confortabilă. Din acest motiv, glisările sunt principala modalitate de control al aplicației, ceea ce face ca aceasta să fie mult mai ușor de utilizat.
+
+<b>Apelare:</b>
+
+* Apel - Glisați sus
+* Ștergeți număr - Glisați stânga
+* Ascundeți tastatura - Glisați pe lista de contacte
+
+<b>Apel de Intrare:</b>
+
+* Afisați tastatura - Glisați sus
+* Respingeți/Închideți - Glisați stânga
+* Răspundeți - Glisați dreapta
+* Trimiteți SMS - Glisați sus pe stratul de trimitere SMS

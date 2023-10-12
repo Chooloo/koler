@@ -1,0 +1,231 @@
+<resources>
+    <!--region titles-->
+    <string name="recents">Recente</string>
+    <string name="contacts">Contacte</string>
+    <string name="actions">Acțiuni</string>
+    <string name="conference">Conferință</string>
+    <string name="default_page">Implicit</string>
+    <string name="settings">Setări</string>
+    <string name="theme_mode_dark">Întunecat</string>
+    <string name="theme_mode_light">Luminat</string>
+    <string name="theme_mode_system">Sistem</string>
+    <string name="theme_mode_dynamic">Dinamic</string>
+    <string name="in_development">În Dezvoltare…</string>
+    <string name="pop_up_notification">Notificare pop-up</string>
+    <string name="full_screen">Ecran întreg</string>
+    <!--endregion-->
+
+    <!--region prompt-->
+    <string name="prompt_yes_or_no">Da sau Nu?</string>
+    <string name="prompt_are_you_sure">Sunteți sigur?</string>
+    <!--endregion-->
+
+    <!--region messages-->
+    <string name="number_copied_to_clipboard">Număr copiat în clipboard</string>
+    <!--endregion-->
+
+    <!--region actions-->
+    <string name="action_yes">Da</string>
+    <string name="action_no">Nu</string>
+    <string name="action_answer">Răspundeți</string>
+    <string name="action_hangup">Închideți</string>
+    <string name="action_manage_calls">Gestionați apeluri</string>
+    <string name="action_show_history">Afisați istoric</string>
+    <string name="action_open_whatsapp">Deschideți WhatsApp</string>
+    <string name="action_block_number">Blocați număr</string>
+    <string name="action_delete_contact">Ștergeți contact</string>
+    <string name="action_delete_recent">Ștergeți recente</string>
+    <string name="action_clear_recents">Ștergeți toate apelurile recente</string>
+    <string name="action_set_favorite">Setați ca favorit</string>
+    <string name="action_unset_favorite">Nesetați ca favorit</string>
+    <string name="action_open_in_whatsapp">Deschideți în Whatsapp</string>
+    <string name="action_unblock_number">Deblocați număr</string>
+    <string name="action_choose_audio_route">Alegeți ruta audio</string>
+    <string name="action_choose_phone_account">Alegeți contul de apel</string>
+    <!--endregion-->
+
+    <!--region Koler-->
+    <string name="app_name">Koler</string>
+    <string name="support_email">choolookulu@gmail.com</string>
+    <!--endregion-->
+
+    <!--region hints-->
+    <string name="hint_search">Căutați</string>
+    <string name="hint_theme_mode">Mod temă</string>
+    <string name="hint_sim_account">Cartelă Sim</string>
+    <string name="hint_default_page">Pagina implicită</string>
+    <string name="hint_animations">Afisați animațiile</string>
+    <string name="hint_search_recents">Căutați în recente</string>
+    <string name="hint_search_contacts">Căutați în contacte</string>
+    <string name="hint_incoming_call_mode">Mod apel de intrare</string>
+    <string name="hint_search_items">Căutați în contacte și recente</string>
+    <string name="hint_dialpad_vibrate">Vibrați la apăsarea tastaturii telefonice</string>
+    <string name="hint_should_ask_sim">Cereți cartela sim înainte de fiecare apel</string>
+    <string name="hint_dialpad_tones">Activarea tonurilor sonore la apăsarea tastaturii telefonice</string>
+    <string name="hint_group_recents">Grupați apelurile recente de la aceeași persoană</string>
+    <string name="hint_show_blocked">Afișarea opțiunii de blocare/deblocare a numerelor (necesită setarea aplicației ca implicită pentru apeluri).</string>
+    <!--endregion-->
+
+    <!--region warning-->
+    <string name="explain_is_on_hold">%s este în așteptare</string>
+    <string name="explain_choose_theme_mode">Setați modul de temă pentru Koler, reporniți aplicația pentru a vedea schimbările</string>
+    <string name="explain_choose_sim_account">Apelați cu o altă cartelă</string>
+    <string name="explain_choose_incoming_call_mode">Mod afișare apel de intrare</string>
+    <string name="explain_choose_audio_route">Schimbați ruta audio către o altă sursă</string>
+    <string name="explain_choose_phone_account">Continuați apelul curent folosind un cont specific de apelare</string>
+    <string name="explain_delete_contact">Acest contact va fi șters permanent</string>
+    <string name="explain_delete_recent">Acest registru de apel va fi șters permanent</string>
+    <string name="explain_clear_recents">Tot istoricul de apeluri va fi șters permanent</string>
+    <string name="explain_choose_default_page">Această pagină va fi selectată de fiecare dată când deschideți Koler</string>
+    <!--endregion-->
+
+    <!--region urls-->
+    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
+    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
+    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region call actions -->
+    <string name="call_action_mute">Amuțiți</string>
+    <string name="call_action_unmute">Neamuțiți</string>
+    <string name="call_action_speaker">Difuzor</string>
+    <string name="call_action_speaker_off">Opriți Difuzor</string>
+    <!--endregion-->
+
+    <string name="call_action_id_add">call_action_add</string>
+    <string name="call_action_id_mute">call_action_mute</string>
+    <string name="call_action_id_hold">call_action_hold</string>
+    <string name="call_action_id_swap">call_action_swap</string>
+    <string name="call_action_id_merge">call_action_merge</string>
+    <string name="call_action_id_keypad">call_action_keypad</string>
+    <string name="call_action_id_speaker">call_action_speaker</string>
+
+    <!--region call state-->
+    <string name="call_status_new">Apel Nou</string>
+    <string name="call_status_dialing">Apelare…</string>
+    <string name="call_status_holding">Apel în așteptare</string>
+    <string name="call_status_connecting">Conectare…</string>
+    <string name="call_status_incoming">Apel de intrare</string>
+    <string name="call_status_active">Apel în progres</string>
+    <string name="call_status_disconnected">Apel terminat</string>
+    <string name="call_status_pulling_call">Închidere apel…</string>
+    <string name="call_status_unknown">Stare apel necunoscut</string>
+    <string name="call_status_disconnecting">Deconectare apel…</string>
+    <string name="call_status_phone_account">Selectați cont pentru apel</string>
+    <!--endregion-->
+
+    <!--region pref key-->
+    <string name="pref_key_rate">rate</string>
+    <string name="pref_key_ask_sim">ask_sim</string>
+    <string name="pref_key_animations">animations</string>
+    <string name="pref_key_theme_mode">theme_mode</string>
+    <string name="pref_key_report_bugs">report_bugs</string>
+    <string name="pref_key_show_blocked">show_blocked</string>
+    <string name="pref_key_default_page">default_page</string>
+    <string name="pref_key_group_recents">group_recents</string>
+    <string name="pref_key_dialpad_tones">dialpad_tones</string>
+    <string name="pref_key_manage_blocked">manage_blocked</string>
+    <string name="pref_key_dialpad_vibrate">dialpad_vibrate</string>
+    <string name="pref_key_incoming_call_mode">incoming_call_mode</string>
+    <!--endregion-->
+
+    <!--region pref title-->
+    <string name="pref_title_rate">Recenzie</string>
+    <string name="pref_title_animations">Animații</string>
+    <string name="pref_title_theme_mode">Mod Temă</string>
+    <string name="pref_title_email">Trimiteți E-mail</string>
+    <string name="pref_title_report_bugs">Raportați Probleme</string>
+    <string name="pref_title_manage_blocked">Gestionați numerele blocate</string>
+    <!--endregion-->
+
+    <!--region errors-->
+    <string name="error_no_results">Fără rezultate</string>
+    <string name="error_no_results_recents">Fără recente</string>
+    <string name="error_no_results_contacts">Fără contacte</string>
+    <string name="error_no_results_phones">Fără numere de telefon</string>
+    <string name="error_not_default_dialer_blocked">Setați koler ca și aplicația implicită de apeluri pentru a vedea numerele blocate</string>
+    <string name="error_not_default_dialer_call">Setați koler ca și aplicația implicită de apeluri pentru a iniția apeluri</string>
+
+    <string name="error_no_permissions_edit_call_log">Fără permisiunea de a modifica registrul apelurilor :)</string>
+    <string name="error_no_permissions_edit_contacts">Fără permisiunea de a modifica contacte :)</string>
+    <string name="error_no_permissions_make_call">Fără permisiunea de a iniția un apel :(</string>
+    <string name="error_no_permissions_phones">Am nevoie de permisiunea de a citi contactele :)</string>
+    <string name="error_no_permissions_recents">Am nevoie de permisiunea de a citi registrul apelurilor și contactele :)</string>
+    <string name="error_no_permissions_contacts">Am nevoie de permisiunea de a citi contacte :)</string>
+    <string name="error_no_permissions_contacts_and_call_log">Am nevoie de permisiunea de a citi contactele și registrul apelurilor :)</string>
+
+    <string name="error_no_number_to_call">Niciun număr nu a fost găsit :(</string>
+
+    <string name="error_cant_hold_call">Apelul nu poate fi pus în așteptare</string>
+    <string name="error_cant_swap_calls">Apelul nu poate fi schimbat</string>
+    <string name="error_cant_merge_call">Apelul nu poate fi unit</string>
+
+    <string name="error_couldnt_get_number_from_intent">Numărul nu a putut fi găsit</string>
+    <!--endregion-->
+
+    <!--region pref values-->
+    <string name="pref_value_page_contacts">contacts</string>
+    <string name="pref_value_page_recents">recents</string>
+    <string name="pref_value_page_default">@string/pref_value_page_contacts</string>
+    <!--endregion-->
+
+    <!--region dialpad letters-->
+    <string name="dialpad_0_letters">+</string>
+    <string name="dialpad_1_letters">Mesagerie Vocală</string>
+    <string name="dialpad_2_letters">ABC</string>
+    <string name="dialpad_3_letters">DEF</string>
+    <string name="dialpad_4_letters">GHI</string>
+    <string name="dialpad_5_letters">JKL</string>
+    <string name="dialpad_6_letters">MNO</string>
+    <string name="dialpad_7_letters">PQRS</string>
+    <string name="dialpad_8_letters">TUV</string>
+    <string name="dialpad_9_letters">WXYZ</string>
+    <string name="dialpad_star_letters" />
+    <string name="dialpad_pound_letters" />
+    <!--endregion-->
+
+    <!--region content descriptions -->
+    <string name="content_description_call">Apelați</string>
+    <string name="content_description_edit">Editați</string>
+    <string name="content_description_delete">Ștergeți</string>
+    <string name="content_description_sms">Trimiteți SMS</string>
+    <string name="content_description_menu_button">Buton Meniu</string>
+    <string name="content_description_answer_button">Buton Acceptare</string>
+    <string name="content_description_reject_button">Buton Respingere</string>
+    <string name="content_description_call_actions_button">Acțiuni Apel</string>
+    <!--endregion-->
+
+    <!--region notification-->
+    <string name="call_notification_channel_name">Notificare Apel</string>
+    <string name="call_notification_channel_description">Notificare apel activ, afișată pentru utilizare comfortabilă</string>
+    <!--endregion-->
+
+    <!--region audio route-->
+    <string name="audio_route_speaker">Difuzor</string>
+    <string name="audio_route_earpiece">Cască de o ureche</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Căști cu fir</string>
+    <string name="audio_route_wired_or_earpiece">Cu fir sau cască de o ureche</string>
+    <!--endregion-->
+
+    <!--region content description-->
+    <string name="content_description_favorite_star">Stea favorite</string>
+    <string name="content_description_empty_list_icon">Iconiță listă goală</string>
+    <!--endregion-->
+
+    <!--region type label-->
+    <string name="type_label_im">IM</string>
+    <string name="type_label_name">Nume</string>
+    <string name="type_label_phone">Telefon</string>
+    <string name="type_label_email">Email</string>
+    <string name="type_label_custom">Personalizat</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <string name="type_label_organization">Organizație</string>
+    <string name="action_call">Apelați</string>
+    <string name="content_description_call_number">Apelați Număr</string>
+    <string name="content_description_add_contact">Adăugați Contact</string>
+    <string name="content_description_open_contact">Deschideți Contact</string>
+    <string name="content_description_send_sms">Trimiteți SMS</string>
+    <string name="grant">permiteți</string>
+    <!--endregion-->
+</resources>
