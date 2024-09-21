@@ -5,89 +5,87 @@ import android.app.UiModeManager
 import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.Context.VIBRATOR_MANAGER_SERVICE
+import android.content.SharedPreferences
 import android.media.AudioManager
+import android.os.Build
 import android.os.PowerManager
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.telecom.TelecomManager
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.NotificationManagerCompat
-import com.chooloo.www.chooloolib.data.repository.calls.CallsRepository
-import com.chooloo.www.chooloolib.data.repository.calls.CallsRepositoryImpl
-import com.chooloo.www.chooloolib.data.repository.contacts.ContactsRepository
-import com.chooloo.www.chooloolib.data.repository.contacts.ContactsRepositoryImpl
-import com.chooloo.www.chooloolib.data.repository.phones.PhonesRepository
-import com.chooloo.www.chooloolib.data.repository.phones.PhonesRepositoryImpl
-import com.chooloo.www.chooloolib.data.repository.rawcontacts.RawContactsRepository
-import com.chooloo.www.chooloolib.data.repository.rawcontacts.RawContactsRepositoryImpl
-import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepository
-import com.chooloo.www.chooloolib.data.repository.recents.RecentsRepositoryImpl
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
 import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactoryImpl
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactoryImpl
-import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractorImpl
-import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractor
-import com.chooloo.www.chooloolib.interactor.blocked.BlockedInteractorImpl
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractorImpl
-import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
-import com.chooloo.www.chooloolib.interactor.calls.CallsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
-import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractor
-import com.chooloo.www.chooloolib.interactor.drawable.DrawablesInteractorImpl
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractorImpl
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractorImpl
-import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
-import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractorImpl
-import com.chooloo.www.chooloolib.interactor.rawcontacts.RawContactsInteractor
-import com.chooloo.www.chooloolib.interactor.rawcontacts.RawContactsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
-import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
-import com.chooloo.www.chooloolib.interactor.sim.SimsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractorImpl
-import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractor
-import com.chooloo.www.chooloolib.interactor.telecom.TelecomInteractorImpl
-import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractor
-import com.chooloo.www.chooloolib.interactor.theme.ThemesInteractorImpl
-import com.chooloo.www.chooloolib.util.PreferencesManager
+import com.chooloo.www.chooloolib.domain.repository.audio.AudioRepository
+import com.chooloo.www.chooloolib.domain.repository.audio.AudioRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.blocked.BlockedRepository
+import com.chooloo.www.chooloolib.domain.repository.blocked.BlockedRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.call.CallRepository
+import com.chooloo.www.chooloolib.domain.repository.call.CallRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.clipboard.ClipboardRepository
+import com.chooloo.www.chooloolib.domain.repository.clipboard.ClipboardRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.color.ColorRepository
+import com.chooloo.www.chooloolib.domain.repository.color.ColorRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.contact.ContactRepository
+import com.chooloo.www.chooloolib.domain.repository.contact.ContactRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.navigation.NavigationRepository
+import com.chooloo.www.chooloolib.domain.repository.navigation.NavigationRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.notification.NotificationRepository
+import com.chooloo.www.chooloolib.domain.repository.notification.NotificationRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.permission.PermissionRepository
+import com.chooloo.www.chooloolib.domain.repository.permission.PermissionRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
+import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository
+import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.proximity.ProximityRepository
+import com.chooloo.www.chooloolib.domain.repository.proximity.ProximityRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.rawcontact.RawContactRepository
+import com.chooloo.www.chooloolib.domain.repository.rawcontact.RawContactRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.recent.RecentRepository
+import com.chooloo.www.chooloolib.domain.repository.recent.RecentRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.sim.SimRepository
+import com.chooloo.www.chooloolib.domain.repository.sim.SimRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.telecom.TelecomRepository
+import com.chooloo.www.chooloolib.domain.repository.telecom.TelecomRepositoryImpl
+import com.chooloo.www.chooloolib.domain.repository.theme.ThemeRepository
+import com.chooloo.www.chooloolib.domain.repository.theme.ThemeRepositoryImpl
+import com.chooloo.www.chooloolib.domain.service.CallService
+import com.chooloo.www.chooloolib.utils.PreferencesManager
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.reactivex.disposables.CompositeDisposable
+import javax.annotation.Nullable
 
+@Module
 @InstallIn(SingletonComponent::class)
-@Module(includes = [ApplicationModule.BindsModule::class])
-class ApplicationModule {
-    @Provides
-    fun provideDisposables(): CompositeDisposable = CompositeDisposable()
+object ApplicationProvidesModule {
+    private const val SHARED_PREFERENCES_NAME = "chooloo_preferences"
 
     @Provides
     fun provideVibrator(@ApplicationContext context: Context): Vibrator =
-        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            (context.getSystemService(VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
 
     @Provides
     fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =
         context.contentResolver
-    //region manager
+
+    @Provides
+    @Nullable
+    fun provideCallService(): CallService? =
+        CallService.sInstance
 
     @Provides
     fun provideUiManager(@ApplicationContext context: Context): UiModeManager =
@@ -118,6 +116,10 @@ class ApplicationModule {
         context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+
+    @Provides
     fun provideInputMethodManager(@ApplicationContext context: Context): InputMethodManager =
         context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
@@ -132,100 +134,62 @@ class ApplicationModule {
     @Provides
     fun provideNotificationManager(@ApplicationContext context: Context): NotificationManagerCompat =
         NotificationManagerCompat.from(context)
+}
 
-    //endregion
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class ApplicationBindsModule {
+    @Binds
+    abstract fun bindSimRepository(impl: SimRepositoryImpl): SimRepository
 
-    @Module
-    @InstallIn(SingletonComponent::class)
-    interface BindsModule {
-        //region repository
+    @Binds
+    abstract fun bindCallRepository(impl: CallRepositoryImpl): CallRepository
 
-        @Binds
-        fun bindCallsRepository(callsRepositoryImpl: CallsRepositoryImpl): CallsRepository
+    @Binds
+    abstract fun bindThemeRepository(impl: ThemeRepositoryImpl): ThemeRepository
 
-        @Binds
-        fun bindPhonesRepository(phonesRepositoryImpl: PhonesRepositoryImpl): PhonesRepository
+    @Binds
+    abstract fun bindColorRepository(impl: ColorRepositoryImpl): ColorRepository
 
-        @Binds
-        fun bindRecentsRepository(recentsRepositoryImpl: RecentsRepositoryImpl): RecentsRepository
+    @Binds
+    abstract fun bindPhoneRepository(impl: PhoneRepositoryImpl): PhoneRepository
 
-        @Binds
-        fun bindContactsRepository(contactsRepositoryImpl: ContactsRepositoryImpl): ContactsRepository
+    @Binds
+    abstract fun bindAudioRepository(impl: AudioRepositoryImpl): AudioRepository
 
-        @Binds
-        fun bindRawContactsRepoistory(rawContactsRepositoryImpl: RawContactsRepositoryImpl): RawContactsRepository
+    @Binds
+    abstract fun bindRecentRepository(impl: RecentRepositoryImpl): RecentRepository
 
-        //endregion
+    @Binds
+    abstract fun bindTelecomRepository(impl: TelecomRepositoryImpl): TelecomRepository
 
-        //region factory
+    @Binds
+    abstract fun bindBlockedRepository(impl: BlockedRepositoryImpl): BlockedRepository
 
-        @Binds
-        fun bindFragmentFactory(fragmentFactoryImpl: FragmentFactoryImpl): FragmentFactory
+    @Binds
+    abstract fun bindContactRepository(impl: ContactRepositoryImpl): ContactRepository
 
-        @Binds
-        fun bindContentResolverFactory(contentResolverFactoryImpl: ContentResolverFactoryImpl): ContentResolverFactory
+    @Binds
+    abstract fun bindProximityRepository(impl: ProximityRepositoryImpl): ProximityRepository
 
-        //endregion
+    @Binds
+    abstract fun bindClipboardRepository(impl: ClipboardRepositoryImpl): ClipboardRepository
 
-        //region interactor
+    @Binds
+    abstract fun bindPermissionRepository(impl: PermissionRepositoryImpl): PermissionRepository
 
-        @Binds
-        fun bindSimsInteractor(simsInteractorImpl: SimsInteractorImpl): SimsInteractor
+    @Binds
+    abstract fun bindNavigationRepository(impl: NavigationRepositoryImpl): NavigationRepository
 
-        @Binds
-        fun bindThemesInteractor(themesInteractor: ThemesInteractorImpl): ThemesInteractor
+    @Binds
+    abstract fun bindPreferenceRepository(impl: PreferenceRepositoryImpl): PreferenceRepository
 
-        @Binds
-        fun bindCallsInteractor(callsInteractorImpl: CallsInteractorImpl): CallsInteractor
+    @Binds
+    abstract fun bindRawContactRepository(impl: RawContactRepositoryImpl): RawContactRepository
 
-        @Binds
-        fun bindColorsInteractor(colorsInteractorImpl: ColorsInteractorImpl): ColorsInteractor
+    @Binds
+    abstract fun bindNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
 
-        @Binds
-        fun bindAudiosInteractor(audiosInteractorImpl: AudiosInteractorImpl): AudiosInteractor
-
-        @Binds
-        fun bindPhonesInteractor(phonesInteractorImpl: PhonesInteractorImpl): PhonesInteractor
-
-        @Binds
-        fun bindStringsInteractor(stringsInteractorImpl: StringsInteractorImpl): StringsInteractor
-
-        @Binds
-        fun bindBlockedInteractor(blockedInteractorImpl: BlockedInteractorImpl): BlockedInteractor
-
-        @Binds
-        fun bindTelecomInteractor(telecomInteractorImpl: TelecomInteractorImpl): TelecomInteractor
-
-        @Binds
-        fun bindRecentsInteractor(recentsInteractorImpl: RecentsInteractorImpl): RecentsInteractor
-
-        @Binds
-        fun bindContactsInteractor(contactsInteractorImpl: ContactsInteractorImpl): ContactsInteractor
-
-        @Binds
-        fun bindDrawablesInteractor(drawablesInteractorImpl: DrawablesInteractorImpl): DrawablesInteractor
-
-        @Binds
-        fun bindAnimationsInteractor(animationsInteractorImpl: AnimationsInteractorImpl): AnimationsInteractor
-
-        @Binds
-        fun bindCallAudiosInteractor(callAudiosInteractorImpl: CallAudiosInteractorImpl): CallAudiosInteractor
-
-        @Binds
-        fun bindRawContactsInteractor(rawContactsInteractorImpl: RawContactsInteractorImpl): RawContactsInteractor
-
-        @Binds
-        fun bindProximitiesInteractor(proximitiesInteractorImpl: ProximitiesInteractorImpl): ProximitiesInteractor
-
-        @Binds
-        fun bindPermissionsInteractor(permissionsInteractorImpl: PermissionsInteractorImpl): PermissionsInteractor
-
-        @Binds
-        fun bindPreferencesInteractor(preferencesInteractorImpl: PreferencesInteractorImpl): PreferencesInteractor
-
-        @Binds
-        fun bindNavigationsInteractor(navigationsInteractorImpl: NavigationsInteractorImpl): NavigationsInteractor
-
-        //endregion
-    }
+    @Binds
+    abstract fun bindContentResolverFactory(contentResolverFactoryImpl: ContentResolverFactoryImpl): ContentResolverFactory
 }

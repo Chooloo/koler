@@ -10,11 +10,10 @@
     <!--endregion-->
 
     <!--region default spacings-->
-    <dimen name="default_spacing">18dp</dimen>
-    <dimen name="default_spacing_big">28dp</dimen>
-    <dimen name="default_spacing_small">6dp</dimen>
-    <dimen name="default_spacing_medium">14dp</dimen>
-    <dimen name="default_spacing_small_plus">8dp</dimen>
+    <dimen name="spacing">18dp</dimen>
+    <dimen name="spacing_tiny">8dp</dimen>
+    <dimen name="spacing_big">32dp</dimen>
+    <dimen name="spacing_small">14dp</dimen>
     <!--endregion-->
 
     <!--region image size-->

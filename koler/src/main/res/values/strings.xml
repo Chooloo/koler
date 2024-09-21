@@ -6,5 +6,5 @@
     <string name="pref_title_group_recents">Group similar recents</string>
     <string name="pref_title_incoming_call_mode">Incoming Call Mode</string>
     <string name="pref_title_dialpad_vibrate">Vibrate on dialpad clicks</string>
-    <string name="content_description_dialer_button">dialer button</string>
+    <string name="cd_dialer_button">dialer button</string>
 </resources>

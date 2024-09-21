@@ -1,5 +1,7 @@
 <resources>
+
     <!--region titles-->
+    <string name="dialer">Dialer</string>
     <string name="recents">Recents</string>
     <string name="contacts">Contacts</string>
     <string name="actions">Actions</string>
@@ -65,6 +67,7 @@
     <string name="hint_dialpad_tones">Enabled sound tones on dialpad clicks</string>
     <string name="hint_group_recents">Group recents strikes from the same person</string>
     <string name="hint_show_blocked">Show block/unblock option for numbers (requires default dialer).</string>
+    <string name="hint_dialpad_field">Type a number</string>
     <!--endregion-->
 
     <!--region warning-->
@@ -87,10 +90,16 @@
     <!--endregion-->
 
     <!--region call actions -->
+    <string name="call_action_swap">Swap</string>
+    <string name="call_action_hold">Hold</string>
     <string name="call_action_mute">Mute</string>
+    <string name="call_action_merge">Merge</string>
+    <string name="call_action_resume">Hold</string>
+    <string name="call_action_keypad">Keypad</string>
     <string name="call_action_unmute">Unmute</string>
     <string name="call_action_speaker">Speaker</string>
-    <string name="call_action_speaker_off">Off Speaker</string>
+    <string name="call_action_add_call">Add Call</string>
+    <string name="call_action_speaker_off">Speaker Off</string>
     <!--endregion-->
 
     <string name="call_action_id_add">call_action_add</string>
@@ -102,17 +111,21 @@
     <string name="call_action_id_speaker">call_action_speaker</string>
 
     <!--region call state-->
-    <string name="call_status_new">New Call</string>
-    <string name="call_status_dialing">Dialing…</string>
-    <string name="call_status_holding">Call On Hold</string>
-    <string name="call_status_connecting">Connecting…</string>
-    <string name="call_status_incoming">Incoming Call</string>
-    <string name="call_status_active">Call In Progress</string>
-    <string name="call_status_disconnected">Call ended</string>
-    <string name="call_status_pulling_call">Pulling Call…</string>
-    <string name="call_status_unknown">Unknown call status</string>
-    <string name="call_status_disconnecting">Call Disconnecting…</string>
-    <string name="call_status_phone_account">Select phone account</string>
+    <string name="call_state_new">New Call</string>
+    <string name="call_state_idle">Call Idle</string>
+    <string name="call_state_dialing">Dialing…</string>
+    <string name="call_state_holding">Call On Hold</string>
+    <string name="call_state_connecting">Connecting…</string>
+    <string name="call_state_incoming">Incoming Call</string>
+    <string name="call_state_active">Call In Progress</string>
+    <string name="call_state_disconnected">Call ended</string>
+    <string name="call_state_call_waiting">Call Waiting</string>
+    <string name="call_state_pulling_call">Pulling Call…</string>
+    <string name="call_state_unknown">Unknown call status</string>
+    <string name="call_state_conferenced">Call Conferenced</string>
+    <string name="call_state_redialing">Call Redialing</string>
+    <string name="call_state_disconnecting">Call Disconnecting…</string>
+    <string name="call_state_phone_account">Select phone account</string>
     <!--endregion-->
 
     <!--region pref key-->
@@ -139,11 +152,20 @@
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
     <!--endregion-->
 
+    <!--region loading-->
+    <string name="loading_calls">Loading calls…</string>
+    <string name="loading_phones">Loading phones…</string>
+    <string name="loading_accounts">Loading accounts…</string>
+    <string name="loading_contacts">Loading contacts…</string>
+    <string name="loading_recents">Loading recent calls…</string>
+    <!--endregion-->
+
     <!--region errors-->
-    <string name="error_no_results">No Results</string>
-    <string name="error_no_results_recents">No Recents</string>
-    <string name="error_no_results_contacts">No Contacts</string>
-    <string name="error_no_results_phones">No phone numbers</string>
+    <string name="no_results">No Results</string>
+    <string name="no_results_recents">No Recents</string>
+    <string name="no_results_calls">No calls found</string>
+    <string name="no_results_contacts">No Contacts</string>
+    <string name="no_results_phones">No phone numbers</string>
     <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
     <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
 
@@ -162,6 +184,9 @@
     <string name="error_cant_merge_call">Can\'t merge call</string>
 
     <string name="error_couldnt_get_number_from_intent">Couldn\'t find number</string>
+    <!--endregion-->
+
+    <!--region pref color values-->
     <!--endregion-->
 
     <!--region pref values-->
@@ -186,19 +211,25 @@
     <!--endregion-->
 
     <!--region content descriptions -->
-    <string name="content_description_call">Call</string>
-    <string name="content_description_edit">Edit</string>
-    <string name="content_description_delete">Delete</string>
-    <string name="content_description_sms">Send SMS</string>
-    <string name="content_description_menu_button">Menu Button</string>
-    <string name="content_description_answer_button">Answer Button</string>
-    <string name="content_description_reject_button">Reject Button</string>
-    <string name="content_description_call_actions_button">Call Actions</string>
+    <string name="cd_call">Call</string>
+    <string name="cd_edit">Edit</string>
+    <string name="cd_sms">Send SMS</string>
+    <string name="cd_delete">Delete</string>
+    <string name="cd_backspace">Backspace</string>
+    <string name="cd_show_menu">Show Menu</string>
+    <string name="cd_split_call">Split Call</string>
+    <string name="cd_accept_call">Accept Call</string>
+    <string name="cd_hangup_call">Hangup Call</string>
+    <string name="cd_manage_call">Manage Call</string>
+    <string name="cd_call_actions_button">Call Actions</string>
     <!--endregion-->
 
     <!--region notification-->
     <string name="call_notification_channel_name">Call Notification</string>
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
+    <!--endregion-->
+
+    <!--region phone type-->
     <!--endregion-->
 
     <!--region audio route-->
@@ -210,8 +241,8 @@
     <!--endregion-->
 
     <!--region content description-->
-    <string name="content_description_favorite_star">Favorite star</string>
-    <string name="content_description_empty_list_icon">Empty list icon</string>
+    <string name="cd_favorite_star">Favorite star</string>
+    <string name="cd_empty_list_icon">Empty list icon</string>
     <!--endregion-->
 
     <!--region type label-->
@@ -223,10 +254,48 @@
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organization</string>
     <string name="action_call">Call</string>
-    <string name="content_description_call_number">Call Number</string>
-    <string name="content_description_add_contact">Add Contact</string>
-    <string name="content_description_open_contact">Open Contact</string>
-    <string name="content_description_send_sms">Send SMS</string>
+    <string name="cd_call_number">Call Number</string>
+    <string name="cd_add_contact">Add Contact</string>
+    <string name="cd_open_contact">Open Contact</string>
+    <string name="cd_send_sms">Send SMS</string>
     <string name="grant">grant</string>
-    <!--endregion-->
+    <string name="add_person_cd">Add Person</string>
+    <string name="call_cd">Call</string>
+    <string name="backspace_cd">Backspace</string>
+    <string name="error_contact_not_found">Contact not found</string>
+    <string name="error_contact_not_provided">Contact not provided</string>
+    <string name="error_contact_number_not_found">Contact number not found</string>
+    <string name="error_contact_deletion_failed">Contact deletion failed</string>
+    <string name="error_contact_favorite_change_failed">Contact favorite change failed</string>
+    <string name="error_unknown_account_type">Unknown account type</string>
+    <string name="error_recent_not_found">Recent not found</string>
+    <string name="error_recent_number_not_found">Recent number not found</string>
+    <string name="error_recent_contact_not_found">Recent contact not found</string>
+    <string name="contact_unknown_name">Unknown</string>
+    <string name="cd_contact">Contact</string>
+    <string name="cd_account_icon">Account type icon</string>
+    <string name="cd_accounts">Accounts</string>
+    <string name="accounts">Accounts</string>
+    <string name="phones">Phones</string>
+    <string name="action_block_contact">Block contact</string>
+    <string name="action_unblock_contact">Unblock contact</string>
+    <string name="cd_history">history</string>
+    <string name="cd_block">block</string>
+    <string name="error_contact_block_change_failed">Failed to change contact block status</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="action_open_contact">Open Contact</string>
+    <string name="action_menu">Menu</string>
+    <string name="action_sms">Message</string>
+    <string name="action_edit">Edit</string>
+    <string name="error_recent_not_provided">Recent call not found</string>
+    <string name="error_caller_not_found">Caller not found</string>
+    <string name="error_caller_not_provided">Caller not provided</string>
+    <string name="caller_unknown">Unknown</string>
+    <string name="error_call_failed_sim">Call failed duo to sim error</string>
+    <string name="error_call_service_unknown">Call failed duo to unknown service</string>
+    <string name="pref_title_default_page">Default Page</string>
+    <string name="pref_title_group_recents">Group recents</string>
+    <string name="pref_title_dialpad_tones">Play dialpad tones</string>
+    <string name="pref_title_incoming_call_mode">Incoming call mode</string>
+    <string name="pref_title_dialpad_vibrate">Vibrate on dialpad keys</string>
 </resources>

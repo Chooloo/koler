@@ -1,0 +1,128 @@
+{
+  tabs: {
+    height: 'wrap',
+    width: 'parent',
+    top: ['parent', 'top', 18],
+    start: ['parent', 'start', 18]
+  },
+  menu_btn: {
+    width: 'wrap',
+    height: 'wrap',
+    top: ['tabs', 'top', 0],
+    end: ['parent', 'end', 18],
+    bottom: ['tabs', 'bottom', 0],
+  },
+  search_bar: {
+    height: 'wrap',
+    width: 'parent',
+    end: ['parent', 'end', 18],
+    top: ['tabs', 'bottom', 18],
+    start: ['parent', 'start', 18]
+  },
+  pager: {
+    width: 'parent',
+    height: 'spread',
+    translationZ: -1,
+    end: ['parent', 'end', 0],
+    start: ['parent', 'start', 0],
+    top: ['search_bar', 'bottom', 14],
+    bottom: ['parent', 'bottom', 0]
+  },
+  dialer_btn: {
+    width: 'wrap',
+    height: 'wrap',
+    end: ['parent', 'end', 32],
+    bottom: ['parent', 'bottom', 32]
+  }
+}
+//{
+//  ConstraintSets: {
+//    start: {
+//      menu_btn: {
+//        width: 'wrap',
+//        height: 'wrap',
+//        top: ['parent', 'top', 18],
+//        end: ['parent', 'top', 18]
+//      },
+//      tabs: {
+//        height: 'wrap',
+//        width: 'parent',
+//        top: ['parent', 'top', 90],
+//        start: ['parent', 'start', 18]
+//      },
+//      search_bar: {
+//        height: 'wrap',
+//        width: 'parent',
+//        end: ['parent', 'end', 18],
+//        top: ['tabs', 'bottom', 18],
+//        start: ['parent', 'start', 18]
+//      },
+//      pager: {
+//        width: 'parent',
+//        height: 'spread',
+//        translationZ: -1,
+//        end: ['parent', 'end', 0],
+//        start: ['parent', 'start', 0],
+//        top: ['search_bar', 'bottom', 14],
+//        bottom: ['parent', 'bottom', 0]
+//      },
+//      dialer_btn: {
+//        width: 'wrap',
+//        height: 'wrap',
+//        end: ['parent', 'end', 32],
+//        bottom: ['parent', 'bottom', 32]
+//      }
+//    },
+//    end: {
+//      menu_btn: {
+//        width: 'wrap',
+//        height: 'wrap',
+//        end: ['parent', 'end', 14],
+//        top: ['parent', 'top', 18]
+//      },
+//      tabs: {
+//        scaleX: 0.7,
+//        scaleY: 0.7,
+//        width: 'wrap',
+//        height: 'wrap',
+//        translationY: 20,
+//        top: ['menu_btn', 'top', 0],
+//        start: ['parent', 'start', 18],
+//        bottom: ['menu_btn', 'bottom', 0]
+//      },
+//      search_bar: {
+//        height: 35,
+//        width: 'parent',
+//        end: ['parent', 'end', 18],
+//        top: ['tabs', 'bottom', 5],
+//        start: ['parent', 'start', 18]
+//      },
+//      pager: {
+//        width: 'parent',
+//        height: 'spread',
+//        translationZ: -1,
+//        end: ['parent', 'end', 0],
+//        start: ['parent', 'start', 0],
+//        bottom: ['parent', 'bottom', 0],
+//        top: ['search_bar', 'bottom', 0]
+//      },
+//      dialer_btn: {
+//        width: 'wrap',
+//        height: 'wrap',
+//        end: ['parent', 'end', 14],
+//        bottom: ['parent', 'bottom', 14]
+//      }
+//    }
+//  },
+//  Transitions: {
+//    default: {
+//      to: 'end',
+//      from: 'start',
+//      onSwipe: {
+//        side: 'top',
+//        anchor: 'pager',
+//        direction: 'up'
+//      }
+//    }
+//  }
+//}

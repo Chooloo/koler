@@ -21,6 +21,7 @@ class MainViewState @Inject constructor(
     val searchText = MutableLiveData<String?>()
     val isSearching = MutableLiveData(false)
     val searchHintRes = MutableLiveData(R.string.hint_search_contacts)
+
     val showMenuEvent = MutableLiveEvent()
     val showContactEvent = MutableDataLiveEvent<Uri>()
 

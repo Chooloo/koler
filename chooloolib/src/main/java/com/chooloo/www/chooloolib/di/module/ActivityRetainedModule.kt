@@ -4,10 +4,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 
+@Module
 @InstallIn(ActivityRetainedComponent::class)
-@Module(includes = [ActivityRetainedModule.BindsModule::class])
-class ActivityRetainedModule {
-    @Module
-    @InstallIn(ActivityRetainedComponent::class)
-    interface BindsModule
-}
+object ActivityRetainedProvidesModule
+
+@Module
+@InstallIn(ActivityRetainedComponent::class)
+abstract class ActivityRetainedBindsModule

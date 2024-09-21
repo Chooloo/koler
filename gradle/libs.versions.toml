@@ -1,0 +1,101 @@
+[versions]
+accompanist = '0.35.0-alpha'
+activity-compose = '1.8.2'
+app-compat = '1.6.1'
+coil-compose = '2.4.0'
+compose = '1.6.5'
+compose-bom = '2024.04.00'
+compose-hilt-navigation = '1.2.0'
+compose-material3 = '1.2.1'
+constraint-layout = '1.0.1'
+gradle = '8.3.1'
+foojay-resolver = '0.8.0'
+hilt = '2.51'
+androidx-hilt-compiler = '1.2.0'
+junit = '4.13.2'
+kotlin = '1.9.22'
+kotlinx-coroutines = '1.7.3'
+ksp = '1.9.0-1.0.13'
+ktx-activity = '1.8.2'
+ktx-core = '1.12.0'
+ktx-fragment = '1.6.2'
+ktx-lifecycle = '2.7.0'
+ktx-navigation = '2.7.7'
+ktx-navigation-fragment = '2.7.7'
+ktx-preference = '1.2.1'
+lifecycle = '2.7.0'
+material = '1.11.0'
+min-sdk = '25'
+picasso = '2.5.2'
+room-testing = '2.6.1'
+rxandroid = '2.0.1'
+rxjava = '2.2.9'
+sdk = '34'
+storio-content-resolver = '3.0.0'
+test-espresso-core = '3.5.1'
+test-junit = '1.1.5'
+test-runner = '1.5.2'
+test-ui-junit4 = '1.6.4'
+material3-android = "1.2.1"
+
+[libraries]
+accompanist = { module = 'com.google.accompanist:accompanist-permissions', version.ref = 'accompanist' }
+activity-compose = { module = 'androidx.activity:activity-compose', version.ref = 'activity-compose' }
+androidx-hilt-compiler = { module = 'androidx.hilt:hilt-compiler', version.ref = 'androidx-hilt-compiler' }
+app-compat = { module = 'androidx.appcompat:appcompat', version.ref = 'app-compat' }
+coil-compose = { module = 'io.coil-kt:coil-compose', version.ref = 'coil-compose' }
+compose-bom = { module = 'androidx.compose:compose-bom', version.ref = 'compose-bom' }
+compose-material-icons-core = { module = 'androidx.compose.material:material-icons-core', version.ref = 'compose' }
+compose-material-icons-extended = { module = 'androidx.compose.material:material-icons-extended', version.ref = 'compose' }
+compose-material3 = { module = 'androidx.compose.material3:material3', version.ref = 'compose-material3' }
+compose-material3-window = { module = 'androidx.compose.material3:material3-window-size-class', version.ref = 'compose-material3' }
+compose-runtime-livedata = { module = 'androidx.compose.runtime:runtime-livedata', version.ref = 'compose' }
+compose-runtime-rxjava2 = { module = 'androidx.compose.runtime:runtime-rxjava2', version.ref = 'compose' }
+compose-ui-graphics = { module = 'androidx.compose.ui:ui-graphics', version.ref = 'compose' }
+compose-ui-test-manifest = { module = 'androidx.compose.ui:ui-test-manifest', version.ref = 'compose' }
+compose-ui-tooling = { module = 'androidx.compose.ui:ui-tooling', version.ref = 'compose' }
+compose-ui-tooling-preview = { module = 'androidx.compose.ui:ui-tooling-preview', version.ref = 'compose' }
+constraint-layout-compose = { module = 'androidx.constraintlayout:constraintlayout-compose', version.ref = 'constraint-layout' }
+dagger-hilt-compiler = { module = 'com.google.dagger:hilt-android-compiler', version.ref = 'hilt' }
+hilt-compiler = { module = 'com.google.dagger:hilt-compiler', version.ref = 'hilt' }
+hilt-navigation-compose = { module = 'androidx.hilt:hilt-navigation-compose', version.ref = 'compose-hilt-navigation' }
+junit = { module = 'junit:junit', version.ref = 'junit' }
+kotlin-gradle-plugin = { module = 'org.jetbrains.kotlin:kotlin-gradle-plugin', version.ref = 'kotlin' }
+kotlinx-coroutines-android = { module = 'org.jetbrains.kotlinx:kotlinx-coroutines-android', version.ref = 'kotlinx-coroutines' }
+kotlinx-coroutines-core = { module = 'org.jetbrains.kotlinx:kotlinx-coroutines-core', version.ref = 'kotlinx-coroutines' }
+ktx-activity = { module = 'androidx.activity:activity-ktx', version.ref = 'ktx-activity' }
+ktx-core = { module = 'androidx.core:core-ktx', version.ref = 'ktx-core' }
+ktx-fragment = { module = 'androidx.fragment:fragment-ktx', version.ref = 'ktx-fragment' }
+ktx-lifecycle = { module = 'androidx.lifecycle:lifecycle-viewmodel-ktx', version.ref = 'ktx-lifecycle' }
+ktx-navigation = { module = 'androidx.navigation:navigation-ui-ktx', version.ref = 'ktx-navigation' }
+ktx-navigation-fragment = { module = 'androidx.navigation:navigation-fragment-ktx', version.ref = 'ktx-navigation-fragment' }
+ktx-preference = { module = 'androidx.preference:preference-ktx', version.ref = 'ktx-preference' }
+lifecycle-runtime-compose = { module = 'androidx.lifecycle:lifecycle-runtime-compose', version.ref = 'lifecycle' }
+lifecycle-viewmodel-compose = { module = 'androidx.lifecycle:lifecycle-viewmodel-compose', version.ref = 'lifecycle' }
+material = { module = 'com.google.android.material:material', version.ref = 'material' }
+picasso = { module = 'com.squareup.picasso:picasso', version.ref = 'picasso' }
+preference = { module = 'androidx.preference:preference', version.ref = 'ktx-preference' }
+room-testing = { module = 'androidx.room:room-testing', version.ref = 'room-testing' }
+rxandroid = { module = 'io.reactivex.rxjava2:rxandroid', version.ref = 'rxandroid' }
+rxjava = { module = 'io.reactivex.rxjava2:rxjava', version.ref = 'rxjava' }
+storio-content-resolver = { module = 'com.pushtorefresh.storio3:content-resolver', version.ref = 'storio-content-resolver' }
+test-junit = { module = 'androidx.test.ext:junit', version.ref = 'test-junit' }
+test-runner = { module = 'androidx.test:runner', version.ref = 'test-runner' }
+test-ui-junit4 = { module = 'androidx.compose.ui:ui-test-junit4', version.ref = 'test-ui-junit4' }
+test-espresso-core = { module = 'androidx.test.espresso:espresso-core', version.ref = 'test-espresso-core' }
+hilt-gradle = { module = 'com.google.dagger:hilt-android-gradle-plugin', version.ref = 'hilt' }
+dagger-hilt = { module = 'com.google.dagger:hilt-android', version.ref = 'hilt' }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3-android" }
+
+[plugins]
+ksp = { id = 'com.google.devtools.ksp', version.ref = 'ksp' }
+hilt = { id = 'com.google.dagger.hilt.android', version.ref = 'hilt' }
+android-library = { id = 'com.android.library', version.ref = 'gradle' }
+android-application = { id = 'com.android.application', version.ref = 'gradle' }
+foojay-resolver = { id = 'org.gradle.toolchains.foojay-resolver-convention', version.ref = 'foojay-resolver' }
+
+[bundles]
+hilt = ['hilt-navigation-compose', 'dagger-hilt']
+coroutines = ['kotlinx-coroutines-android', 'kotlinx-coroutines-core']
+ktx = ['ktx-navigation-fragment', 'ktx-lifecycle', 'ktx-navigation', 'ktx-preference', 'ktx-activity', 'ktx-core', 'ktx-fragment']
+compose = ['compose-material3', 'compose-material-icons-core', 'compose-material-icons-extended', 'compose-material3-window', 'compose-runtime-livedata', 'compose-runtime-rxjava2', 'compose-ui-graphics', 'compose-ui-tooling', 'compose-ui-tooling-preview', 'coil-compose', 'activity-compose', 'constraint-layout-compose', 'lifecycle-runtime-compose', 'lifecycle-viewmodel-compose']

@@ -1,29 +1,56 @@
 package com.chooloo.www.chooloolib.di.factory.contentresolver
 
 import android.content.ContentResolver
-import com.chooloo.www.chooloolib.data.contentresolver.*
-import com.chooloo.www.chooloolib.di.module.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
+import com.chooloo.www.chooloolib.domain.contentresolver.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ContentResolverFactoryImpl @Inject constructor(
-    private val contentResolver: ContentResolver,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val contentResolver: ContentResolver
 ) : ContentResolverFactory {
-    override fun getRecentsContentResolver(recentId: Long?) =
-        RecentsContentResolver(recentId, contentResolver, ioDispatcher)
+    override fun getRecentsContentResolver(
+        recentId: Long?,
+        filter: String?
+    ) = RecentsContentResolver(
+        filter = filter,
+        recentId = recentId,
+        contentResolver = contentResolver,
+    )
 
-    override fun getPhonesContentResolver(contactId: Long?) =
-        PhonesContentResolver(contactId, contentResolver, ioDispatcher)
+    override fun getPhonesContentResolver(
+        filter: String?,
+        contactId: Long?
+    ) = PhonesContentResolver(
+        filter = filter,
+        contactId = contactId,
+        contentResolver = contentResolver
+    )
 
-    override fun getContactsContentResolver(contactId: Long?) =
-        ContactsContentResolver(contactId, contentResolver, ioDispatcher)
+    override fun getContactsContentResolver(
+        filter: String?,
+        contactId: Long?
+    ) = ContactsContentResolver(
+        filter = filter,
+        contactId = contactId,
+        contentResolver = contentResolver
+    )
 
-    override fun getRawContactsContentResolver(contactId: Long) =
-        RawContactsContentResolver(contactId, contentResolver, ioDispatcher)
+    override fun getRawContactsContentResolver(
+        contactId: Long,
+        filter: String?
+    ) = RawContactsContentResolver(
+        filter = filter,
+        contactId = contactId,
+        contentResolver = contentResolver
+    )
 
-    override fun getPhoneLookupContentResolver(number: String?) =
-        PhoneLookupContentResolver(number, contentResolver, ioDispatcher)
+    override fun getPhoneLookupContentResolver(
+        number: String?,
+        filter: String?
+    ) = PhoneLookupContentResolver(
+        filter = filter,
+        number = number,
+        contentResolver = contentResolver
+    )
 }

@@ -2,16 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.MODIFY_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application>
         <activity
-            android:name=".ui.call.CallActivity"
+            android:name=".ui.activity.CallActivity"
             android:configChanges="screenSize|keyboardHidden"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -23,19 +28,13 @@
             <!--                <category android:name="android.intent.category.LAUNCHER" />-->
             <!--            </intent-filter>-->
         </activity>
-        <activity
-            android:name=".ui.permissions.PermissionRequestActivity"
-            android:screenOrientation="unspecified" />
-        <activity
-            android:name=".ui.permissions.DefaultDialerRequestActivity"
-            android:screenOrientation="unspecified" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <service
-            android:name="com.chooloo.www.chooloolib.api.service.CallService"
+            android:name="com.chooloo.www.chooloolib.domain.service.CallService"
             android:exported="true"
             android:foregroundServiceType="phoneCall"
             android:permission="android.permission.BIND_INCALL_SERVICE">
@@ -49,6 +48,6 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".receiver.CallBroadcastReceiver" />
+        <receiver android:name=".domain.receiver.CallBroadcastReceiver" />
     </application>
 </manifest>
