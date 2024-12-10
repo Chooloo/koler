@@ -22,16 +22,15 @@ fun RecentsView(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = filter) {
-        viewModel.onFilterChanged(filter)
-    }
-
     Permissioned(
         permissions = listOf(
             Manifest.permission.READ_CALL_LOG,
             Manifest.permission.WRITE_CALL_LOG
         )
     ) {
+        LaunchedEffect(key1 = filter) {
+            viewModel.onFilterChanged(filter)
+        }
         RecentsList(
             modifier = modifier,
             items = uiState.items,

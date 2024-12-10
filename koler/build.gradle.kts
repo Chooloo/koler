@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.foojay.resolver)
     alias(libs.plugins.android.application)
     kotlin("android")
     kotlin("kapt")
@@ -86,4 +85,5 @@ dependencies {
     implementation(libs.preference)
     implementation(libs.accompanist)
     implementation(libs.storio.content.resolver)
+    implementation(libs.accompanist.pager.indicators)
 }

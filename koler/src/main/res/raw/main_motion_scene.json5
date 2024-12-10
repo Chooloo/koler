@@ -2,8 +2,8 @@
   tabs: {
     height: 'wrap',
     width: 'parent',
-    top: ['parent', 'top', 18],
-    start: ['parent', 'start', 18]
+    top: ['parent', 'top', 8],
+    start: ['parent', 'start', 8],
   },
   menu_btn: {
     width: 'wrap',
@@ -14,25 +14,19 @@
   },
   search_bar: {
     height: 'wrap',
-    width: 'parent',
+    width: 'spread',
     end: ['parent', 'end', 18],
-    top: ['tabs', 'bottom', 18],
+    top: ['tabs', 'bottom', 6],
     start: ['parent', 'start', 18]
   },
   pager: {
-    width: 'parent',
+    width: 'spread',
     height: 'spread',
     translationZ: -1,
-    end: ['parent', 'end', 0],
-    start: ['parent', 'start', 0],
-    top: ['search_bar', 'bottom', 14],
+    end: ['parent', 'end', 6],
+    start: ['parent', 'start', 6],
+    top: ['search_bar', 'bottom', 6],
     bottom: ['parent', 'bottom', 0]
-  },
-  dialer_btn: {
-    width: 'wrap',
-    height: 'wrap',
-    end: ['parent', 'end', 32],
-    bottom: ['parent', 'bottom', 32]
   }
 }
 //{

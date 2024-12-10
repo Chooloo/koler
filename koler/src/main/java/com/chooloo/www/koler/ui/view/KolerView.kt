@@ -4,7 +4,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
@@ -22,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.ExperimentalMotionApi
@@ -39,7 +42,6 @@ import com.chooloo.www.chooloolib.ui.viewmodel.preferences.ChoolooPreferencesVie
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.viewmodel.main.MainViewModelImpl
 import kotlinx.coroutines.launch
-import androidx.compose.foundation.pager.HorizontalPager as HorizontalPager1
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMotionApi::class)
 @Composable
@@ -107,9 +109,11 @@ fun KolerView(
         constraintSet = ConstraintSet(motionScene)
     ) {
         Tabs(
-            modifier = Modifier.padding(
-                PaddingValues(dimensionResource(id = com.chooloo.www.chooloolib.R.dimen.spacing))
-            ),
+            modifier = Modifier
+                .layoutId("tabs")
+                .padding(
+                    PaddingValues(dimensionResource(id = com.chooloo.www.chooloolib.R.dimen.spacing))
+                ),
             headers = tabsHeaders,
             selectedTabIndex = pagerState.currentPage,
             onTabClick = { index, _ ->
@@ -127,7 +131,7 @@ fun KolerView(
         }
 
         AnimatedVisibility(
-            visible = pagerState.currentPage > 0,
+            visible = pagerState.currentPage != 0,
             modifier = Modifier.layoutId("search_bar")
         ) {
             SearchBar(
@@ -138,7 +142,7 @@ fun KolerView(
             )
         }
 
-        HorizontalPager1(
+        HorizontalPager(
             state = pagerState,
             modifier = Modifier
                 .fillMaxSize()

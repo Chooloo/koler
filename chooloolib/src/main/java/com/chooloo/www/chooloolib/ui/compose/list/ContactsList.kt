@@ -29,7 +29,7 @@ fun ContactsList(
         items = finalItems,
         modifier = modifier,
         loadingState = loadingState,
-        key = { item -> item.id.toString() },
+         key = { item -> item.id.toString() },
         loadingTitle = R.string.loading_contacts,
         emptyTitle = R.string.no_results_contacts,
         emptyImage = {
@@ -42,7 +42,7 @@ fun ContactsList(
             if (withFavorites and (finalItems.indexOf(item) < favItems.count())) {
                 "★"
             } else {
-                item.name?.get(0).toString() ?: ""
+                item.name?.get(0).toString()
             }
         },
         item = { item ->

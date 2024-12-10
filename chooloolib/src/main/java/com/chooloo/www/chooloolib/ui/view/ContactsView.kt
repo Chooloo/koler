@@ -22,9 +22,6 @@ fun ContactsView(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = filter) {
-        viewModel.onFilterChanged(filter)
-    }
 
     Permissioned(
         permissions = listOf(
@@ -32,6 +29,9 @@ fun ContactsView(
             Manifest.permission.WRITE_CONTACTS
         )
     ) {
+        LaunchedEffect(key1 = filter) {
+            viewModel.onFilterChanged(filter)
+        }
         ContactsList(
             modifier = modifier,
             items = uiState.items,

@@ -1,14 +1,7 @@
-toolchainManagement {
-    jvm {
-        javaRepositories {
-            repository("foojay") {
-                resolverClass.set(org.gradle.toolchains.foojay.FoojayToolchainResolver::class.java)
-            }
-        }
-    }
-}
-
 pluginManagement {
+    plugins {
+        id("org.gradle.toolchains.foojay-resolver-convention") version ("0.8.0")
+    }
     repositories {
         mavenCentral()
         jcenter()
