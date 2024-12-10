@@ -9,6 +9,7 @@ import com.chooloo.www.chooloolib.ui.compose.list.base.List
 import com.chooloo.www.chooloolib.ui.compose.list.item.ListItem
 import com.chooloo.www.chooloolib.ui.compose.list.item.preference.ChoicePreferenceListItem
 import com.chooloo.www.chooloolib.ui.compose.list.item.preference.SwitchPreferenceListItem
+import com.chooloo.www.chooloolib.utils.beautify
 
 @Composable
 fun KolerPreferences(
@@ -39,7 +40,17 @@ fun KolerPreferences(
                     subtitle = defaultPage?.name ?: "Not Selected",
                     title = context.getString(preference.titleRes),
                 ) { item, selected, onClick ->
-                    ListItem(title = item.name, selected = selected, onClick = onClick)
+                    ListItem(title = item.name.beautify(), selected = selected, onClick = onClick)
+                }
+
+                ChoolooPreference.INCOMING_CALL_MODE -> ChoicePreferenceListItem(
+                    selectedValue = incomingCallMode,
+                    values = IncomingCallMode.entries,
+                    onValueSelected = onSelectedIncomingCallMode,
+                    subtitle = incomingCallMode?.name ?: "Not Selected",
+                    title = context.getString(preference.titleRes),
+                ) { item, selected, onClick ->
+                    ListItem(title = item.name.beautify(), selected = selected, onClick = onClick)
                 }
 
                 ChoolooPreference.GROUP_RECENTS_ENABLED -> SwitchPreferenceListItem(
@@ -54,15 +65,6 @@ fun KolerPreferences(
                     title = context.getString(preference.titleRes),
                 )
 
-                ChoolooPreference.INCOMING_CALL_MODE -> ChoicePreferenceListItem(
-                    selectedValue = incomingCallMode,
-                    values = IncomingCallMode.entries,
-                    onValueSelected = onSelectedIncomingCallMode,
-                    subtitle = incomingCallMode?.name ?: "Not Selected",
-                    title = context.getString(preference.titleRes),
-                ) { item, selected, onClick ->
-                    ListItem(title = item.name, selected = selected, onClick = onClick)
-                }
 
                 ChoolooPreference.DIALPAD_VIBRATE_ENABLED -> SwitchPreferenceListItem(
                     value = isDialpadVibrateEnabled,

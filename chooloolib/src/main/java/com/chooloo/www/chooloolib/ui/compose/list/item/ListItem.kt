@@ -88,7 +88,7 @@ fun ListItem(
                 )
                 subtitle?.let {
                     Row {
-                        Text(text = subtitle, style = typography.labelLarge)
+                        Text(text = subtitle, style = typography.bodyMedium)
                         extraSubtitleContainer?.let { it() }
                     }
                 }
@@ -113,7 +113,7 @@ private fun ListItemPreview() {
     MaterialTheme {
         ListItem(
             title = "This is title",
-//            subtitle = "This is subtitle",
+            subtitle = "This is subtitle",
             startContainer = {
                 Icons.Rounded.Call
             },

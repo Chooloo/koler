@@ -37,11 +37,7 @@ fun <ItemType> ChoicePreferenceListItem(
             items = values,
             loadingState = loadingState,
             item = {
-                item(
-                    item = it,
-                    selected = it == selectedValue,
-                    onClick = { onValueSelected(it) }
-                )
+                item(it, it == selectedValue) { onValueSelected(it) }
             }
         )
     }

@@ -29,7 +29,7 @@ fun <ItemType> ListColumn(
     LazyColumn(modifier = modifier) {
         items(
             items = items,
-            key = keyBuilder?.let { it::invoke } ?: {},
+            key = keyBuilder?.let { it::invoke },
             itemContent = {
                 val index = items.indexOf(it)
                 val header = headersToIndex[index]
