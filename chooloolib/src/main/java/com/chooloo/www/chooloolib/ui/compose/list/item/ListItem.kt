@@ -2,10 +2,12 @@ package com.chooloo.www.chooloolib.ui.compose.list.item
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
@@ -65,7 +67,10 @@ fun ListItem(
                 )
         ) {
             startContainer?.let { it() }
-            Column {
+            Column(
+                modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.Center
+            ) {
                 Text(
                     style = typography.titleMedium,
                     text = highlightText?.let {
@@ -90,7 +95,9 @@ fun ListItem(
             }
             endContainer?.let {
                 Box(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     it()
@@ -104,10 +111,15 @@ fun ListItem(
 @Composable
 private fun ListItemPreview() {
     MaterialTheme {
-        ListItem(title = "This is title", subtitle = "This is subtitle", startContainer = {
-            Icons.Rounded.Call
-        }, endContainer = {
-            Switch(checked = false, onCheckedChange = {})
-        })
+        ListItem(
+            title = "This is title",
+//            subtitle = "This is subtitle",
+            startContainer = {
+                Icons.Rounded.Call
+            },
+            endContainer = {
+                Switch(checked = false, onCheckedChange = {})
+            }
+        )
     }
 }

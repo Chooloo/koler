@@ -13,7 +13,7 @@ fun KolerPreferencesView(viewModel: ChoolooPreferencesViewModelImpl = hiltViewMo
 
     KolerPreferences(
         defaultPage = uiState.defaultPage,
-        incomingCallModel = uiState.incomingCallModel,
+        incomingCallMode = uiState.incomingCallModel,
         isGroupRecentsEnabled = uiState.isGroupRecentsEnabled,
         isDialpadTonesEnabled = uiState.isDialpadTonesEnabled,
         isDialpadVibrateEnabled = uiState.isDialpadVibrateEnabled,

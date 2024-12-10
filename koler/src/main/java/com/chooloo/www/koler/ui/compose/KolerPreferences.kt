@@ -16,7 +16,7 @@ fun KolerPreferences(
     isGroupRecentsEnabled: Boolean?,
     isDialpadTonesEnabled: Boolean?,
     isDialpadVibrateEnabled: Boolean?,
-    incomingCallModel: IncomingCallMode?,
+    incomingCallMode: IncomingCallMode?,
     onSelectedDefaultPage: (Page) -> Unit = {},
     onToggledGroupRecents: (Boolean) -> Unit = {},
     onToggledDialpadTones: (Boolean) -> Unit = {},
@@ -36,11 +36,11 @@ fun KolerPreferences(
                     values = Page.entries,
                     selectedValue = defaultPage,
                     onValueSelected = onSelectedDefaultPage,
+                    subtitle = defaultPage?.name ?: "Not Selected",
                     title = context.getString(preference.titleRes),
                 ) { item, selected, onClick ->
                     ListItem(title = item.name, selected = selected, onClick = onClick)
                 }
-
 
                 ChoolooPreference.GROUP_RECENTS_ENABLED -> SwitchPreferenceListItem(
                     value = isGroupRecentsEnabled,
@@ -55,9 +55,10 @@ fun KolerPreferences(
                 )
 
                 ChoolooPreference.INCOMING_CALL_MODE -> ChoicePreferenceListItem(
-                    selectedValue = incomingCallModel,
+                    selectedValue = incomingCallMode,
                     values = IncomingCallMode.entries,
                     onValueSelected = onSelectedIncomingCallMode,
+                    subtitle = incomingCallMode?.name ?: "Not Selected",
                     title = context.getString(preference.titleRes),
                 ) { item, selected, onClick ->
                     ListItem(title = item.name, selected = selected, onClick = onClick)

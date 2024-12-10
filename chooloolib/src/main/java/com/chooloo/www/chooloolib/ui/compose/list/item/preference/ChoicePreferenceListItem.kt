@@ -22,6 +22,7 @@ fun <ItemType> ChoicePreferenceListItem(
     val choicesVisible = remember { mutableStateOf(false) }
 
     ListItem(
+        clickable = true,
         title = title,
         enabled = enabled,
         subtitle = subtitle,
