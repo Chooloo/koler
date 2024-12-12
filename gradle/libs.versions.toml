@@ -1,5 +1,4 @@
 [versions]
-accompanist = '0.35.0-alpha'
 activity-compose = '1.9.3'
 app-compat = '1.7.0'
 coil-compose = '2.4.0'
@@ -38,10 +37,11 @@ test-junit = '1.1.5'
 test-runner = '1.5.2'
 test-ui-junit4 = '1.6.4'
 material3-android = "1.2.1"
+accompanist-permissions = '0.35.0-alpha'
+accompanist-drawable-painter = '0.30.1'
 accompanist-pager-indicators = '0.30.1'
 
 [libraries]
-accompanist = { module = 'com.google.accompanist:accompanist-permissions', version.ref = 'accompanist' }
 activity-compose = { module = 'androidx.activity:activity-compose', version.ref = 'activity-compose' }
 androidx-hilt-compiler = { module = 'androidx.hilt:hilt-compiler', version.ref = 'androidx-hilt-compiler' }
 app-compat = { module = 'androidx.appcompat:appcompat', version.ref = 'app-compat' }
@@ -90,6 +90,8 @@ hilt-gradle = { module = 'com.google.dagger:hilt-android-gradle-plugin', version
 dagger-hilt = { module = 'com.google.dagger:hilt-android', version.ref = 'hilt' }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3-android" }
 accompanist-pager-indicators = { module = 'com.google.accompanist:accompanist-pager-indicators', version.ref = 'accompanist-pager-indicators' }
+accompanist-permissions = { module = 'com.google.accompanist:accompanist-permissions', version.ref = 'accompanist-permissions' }
+accompanist-drawable-painter = { module = 'com.google.accompanist:accompanist-drawablepainter', version.ref = 'accompanist-drawable-painter' }
 
 [plugins]
 ksp = { id = 'com.google.devtools.ksp', version.ref = 'ksp' }
@@ -103,3 +105,4 @@ hilt = ['hilt-navigation-compose', 'dagger-hilt']
 coroutines = ['kotlinx-coroutines-android', 'kotlinx-coroutines-core']
 ktx = ['ktx-navigation-fragment', 'ktx-lifecycle', 'ktx-navigation', 'ktx-preference', 'ktx-activity', 'ktx-core', 'ktx-fragment']
 compose = ['compose-foundation', 'compose-material3', 'compose-material-icons-core', 'compose-material-icons-extended', 'compose-material3-window', 'compose-runtime-livedata', 'compose-runtime-rxjava2', 'compose-ui-graphics', 'compose-ui-tooling', 'compose-ui-tooling-preview', 'coil-compose', 'activity-compose', 'constraint-layout-compose', 'lifecycle-runtime-compose', 'lifecycle-viewmodel-compose']
+accompanist = ['accompanist-pager-indicators', 'accompanist-permissions', 'accompanist-drawable-painter']

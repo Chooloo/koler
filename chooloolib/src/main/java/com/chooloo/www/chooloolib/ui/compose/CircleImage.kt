@@ -17,17 +17,17 @@ import com.chooloo.www.chooloolib.R
 
 @Composable
 fun CircleImage(
-    painter: Painter, colorFilter: ColorFilter? = null
+    modifier: Modifier = Modifier,
+    painter: Painter,
+    colorFilter: ColorFilter? = null
 ) {
     Image(
         painter = painter,
         contentDescription = null,
         colorFilter = colorFilter,
-        modifier = Modifier
+        modifier = modifier
             .aspectRatio(1f)
             .clip(shape = CircleShape)
             .background(MaterialTheme.colorScheme.surfaceVariant)
-            .width(dimensionResource(id = R.dimen.image_size_medium))
-            .height(dimensionResource(id = R.dimen.image_size_medium))
     )
 }
