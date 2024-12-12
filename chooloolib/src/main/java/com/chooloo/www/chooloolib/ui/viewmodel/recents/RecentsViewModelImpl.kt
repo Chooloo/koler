@@ -19,11 +19,12 @@ class RecentsViewModelImpl @Inject constructor(
     private val recentRepository: RecentRepository,
     @ApplicationContext private val context: Context
 ) : RecordsListViewModelImpl<RecentData, RecentRecord>(), RecentsViewModel {
-    override suspend fun enrichItem(item: RecentData) {
+    override suspend fun enrichItem(item: RecentData): RecentData {
         phoneRepository.lookupAccount(item.number)?.let {
             item.name = it.name ?: item.name ?: item.number
             item.typeLabel = Phone.getTypeLabel(context.resources, it.type, it.label).toString()
         }
+        return item
     }
 
     override suspend fun convertRecordToItem(record: RecentRecord) = RecentData(

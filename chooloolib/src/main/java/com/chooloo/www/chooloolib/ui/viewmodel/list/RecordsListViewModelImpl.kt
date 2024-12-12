@@ -52,12 +52,12 @@ abstract class RecordsListViewModelImpl<ItemType, RecordType> :
                 )
             }
         }
-        viewModelScope.launch {
-            _uiState.update {
-                it.items.forEach { item -> enrichItem(item) }
-                it
-            }
-        }
+
+//        viewModelScope.launch {
+//            _uiState.update {
+//                it.copy(items = it.items.map { enrichItem(it) })
+//            }
+//        }
     }
 
     override suspend fun onFilterChanged(filter: String?) {
@@ -65,7 +65,7 @@ abstract class RecordsListViewModelImpl<ItemType, RecordType> :
         updateItemsFlow()
     }
 
-    override suspend fun enrichItem(item: ItemType) {}
+    override suspend fun enrichItem(item: ItemType): ItemType = item
 
     abstract override suspend fun convertRecordToItem(record: RecordType): ItemType
 

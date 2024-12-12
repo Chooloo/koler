@@ -15,7 +15,7 @@ interface RecordsListViewModel<ItemType, RecordType> : BaseViewModel {
 
     val uiState: StateFlow<UiState<ItemType>>
 
-    suspend fun enrichItem(item: ItemType) {}
     suspend fun onFilterChanged(filter: String?)
+    suspend fun enrichItem(item: ItemType): ItemType = item
     suspend fun convertRecordToItem(record: RecordType): ItemType
 }
