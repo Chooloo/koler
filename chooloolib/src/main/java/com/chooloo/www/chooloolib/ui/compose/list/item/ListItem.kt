@@ -66,7 +66,10 @@ fun ListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(dimensionResource(R.dimen.spacing_small)),
+                .padding(
+                    vertical = dimensionResource(R.dimen.spacing_tiny),
+                    horizontal = dimensionResource(R.dimen.spacing_small)
+                ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             startContainer?.let { it() }
