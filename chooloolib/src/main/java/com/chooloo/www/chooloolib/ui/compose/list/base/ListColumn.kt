@@ -1,7 +1,6 @@
 package com.chooloo.www.chooloolib.ui.compose.list.base
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.chooloo.www.chooloolib.ui.compose.list.item.HeaderListItem
@@ -27,20 +26,17 @@ fun <ItemType> ListColumn(
     }
 
     LazyColumn(modifier = modifier) {
-        items(
-            items = items,
-            key = keyBuilder?.let { it::invoke },
-            itemContent = {
-                val index = items.indexOf(it)
-                val header = headersToIndex[index]
-
-                header?.let {
-                    this@LazyColumn.item(key = header) {
-                        HeaderListItem(header = header)
-                    }
+        items.mapIndexed { index, item ->
+            val header = headersToIndex.getOrDefault(index, null)
+            header?.let {
+                item(key = header) {
+                    HeaderListItem(header = header)
                 }
-                itemBuilder(it)
             }
-        )
+
+            item(key = keyBuilder?.invoke(item)) {
+                itemBuilder(item)
+            }
+        }
     }
 }

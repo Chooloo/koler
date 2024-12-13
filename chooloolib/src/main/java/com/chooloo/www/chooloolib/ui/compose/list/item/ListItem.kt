@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Person
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -89,7 +91,11 @@ fun ListItem(
                 )
                 subtitle?.let {
                     Row {
-                        Text(text = subtitle, style = typography.bodyMedium)
+                        Text(
+                            text = subtitle,
+                            style = typography.bodySmall,
+                            color = colorResource(R.color.cardview_dark_background),
+                        )
                         extraSubtitleContainer?.let { it() }
                     }
                 }

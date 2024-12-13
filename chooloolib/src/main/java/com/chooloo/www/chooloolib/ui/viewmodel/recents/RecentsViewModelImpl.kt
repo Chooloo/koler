@@ -30,6 +30,7 @@ class RecentsViewModelImpl @Inject constructor(
     override suspend fun convertRecordToItem(record: RecentRecord) = RecentData(
         id = record.id,
         date = record.date,
+        type = record.type,
         number = record.number,
         duration = record.duration,
         groupAccounts = record.groupAccounts,

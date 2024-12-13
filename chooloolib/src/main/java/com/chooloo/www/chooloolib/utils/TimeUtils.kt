@@ -5,7 +5,9 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 private const val SECOND_MILLIS = 1000
 private const val MINUTE_MILLIS = 60 * SECOND_MILLIS
@@ -33,7 +35,12 @@ fun getRelativeDateString(date: Date?): String {
     return when {
         DateUtils.isToday(time - DateUtils.DAY_IN_MILLIS) -> "Tomorrow"
         DateUtils.isToday(time + DateUtils.DAY_IN_MILLIS) -> "Yesterday"
-        else -> DateUtils.getRelativeTimeSpanString(time, now, DateUtils.DAY_IN_MILLIS).toString()
+        else -> DateUtils.getRelativeTimeSpanString(
+            time,
+            now,
+            DateUtils.DAY_IN_MILLIS,
+            DateUtils.FORMAT_ABBREV_RELATIVE
+        ).toString()
     }
 }
 
