@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
@@ -14,6 +15,7 @@ import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun PhonesList(
+    modifier: Modifier = Modifier,
     items: List<PhoneData>,
     onItemClick: (item: PhoneData) -> Unit = {},
     onItemLongClick: (item: PhoneData) -> Unit = {},
@@ -21,6 +23,7 @@ fun PhonesList(
     loadingState: LoadingState = LoadingState.IDLE,
 ) {
     List(
+        modifier = modifier,
         items = items.distinctBy { it.number },
         loadingState = loadingState,
         loadingTitle = R.string.loading_phones,

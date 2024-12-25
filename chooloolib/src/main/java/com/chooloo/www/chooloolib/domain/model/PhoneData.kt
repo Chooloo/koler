@@ -5,6 +5,6 @@ import android.provider.ContactsContract
 data class PhoneData(
     val number: String,
     val label: String? = null,
-    val normalizedNumber: String?,
+    val normalizedNumber: String? = null,
     val type: Int = ContactsContract.CommonDataKinds.Phone.TYPE_OTHER
 )

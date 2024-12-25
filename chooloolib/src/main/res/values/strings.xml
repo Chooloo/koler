@@ -213,7 +213,7 @@
     <!--region content descriptions -->
     <string name="cd_call">Call</string>
     <string name="cd_edit">Edit</string>
-    <string name="cd_sms">Send SMS</string>
+    <string name="cd_sms">SMS</string>
     <string name="cd_delete">Delete</string>
     <string name="cd_backspace">Backspace</string>
     <string name="cd_show_menu">Show Menu</string>
@@ -257,7 +257,7 @@
     <string name="cd_call_number">Call Number</string>
     <string name="cd_add_contact">Add Contact</string>
     <string name="cd_open_contact">Open Contact</string>
-    <string name="cd_send_sms">Send SMS</string>
+    <string name="cd_send_sms">SMS</string>
     <string name="grant">grant</string>
     <string name="add_person_cd">Add Person</string>
     <string name="call_cd">Call</string>

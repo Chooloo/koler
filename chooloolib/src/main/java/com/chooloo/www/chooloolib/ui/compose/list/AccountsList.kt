@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
@@ -15,12 +16,14 @@ import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun AccountsList(
+    modifier: Modifier = Modifier,
     items: List<AccountData>,
     onItemClick: (AccountData) -> Unit = {},
     onItemLongClick: (AccountData) -> Unit = {},
     loadingState: LoadingState = LoadingState.IDLE
 ) {
     List(
+        modifier = modifier,
         items = items,
         loadingState = loadingState,
         emptyTitle = R.string.no_results_contacts,

@@ -60,7 +60,7 @@ fun CallerView(
         number = uiState.number,
         phones = phonesUiState.items,
         isBlocked = uiState.isBlocked,
-        accountDatas = accountsUiState.items,
+        accounts = accountsUiState.items,
         loadingState = uiState.loadingState,
         imagePainter = null,// TODO add image
         onPhoneClick = phonesViewModel::onItemClick,

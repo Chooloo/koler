@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -150,6 +151,7 @@ fun KolerView(
         ) { page ->
             when (page) {
                 0 -> DialerView()
+
                 1 -> ContactsView(
                     filter = uiState.searchText,
                     modifier = Modifier.fillMaxSize(),
