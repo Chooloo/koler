@@ -7,12 +7,10 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission
-        android:name="android.permission.MODIFY_PHONE_STATE"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application>
         <activity

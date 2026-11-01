@@ -1,69 +1,40 @@
 plugins {
-    alias(libs.plugins.hilt)
     alias(libs.plugins.android.library)
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 kotlin {
-    jvmToolchain(19)
-}
-
-hilt {
-    enableAggregatingTask = true
+    jvmToolchain(libs.versions.jvm.toolchain.get().toInt())
 }
 
 android {
     namespace = "com.chooloo.www.chooloolib"
-    compileSdk = libs.versions.sdk.get().toInt()
-
-    lint {
-        targetSdk = libs.versions.sdk.get().toInt()
-    }
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.min.sdk.get().toInt()
     }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
     buildFeatures {
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
-    kapt(libs.hilt.compiler)
-    kapt(libs.dagger.hilt.compiler)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.hilt.compiler)
+
+    api(platform(libs.compose.bom))
+    api(libs.bundles.compose)
+    api(libs.core.ktx)
+    implementation(libs.hilt.android)
+    api(libs.coroutines.android)
+    implementation(libs.datastore.preferences)
+
+    debugApi(libs.compose.ui.tooling)
 
     testImplementation(libs.junit)
-
-    androidTestImplementation(libs.test.runner)
-    androidTestImplementation(libs.test.junit)
-    androidTestImplementation(libs.test.ui.junit4)
-    androidTestImplementation(libs.test.espresso.core)
-
-    implementation(libs.androidx.material3.android)
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.ktx)
-    implementation(libs.bundles.hilt)
-    implementation(libs.bundles.compose)
-    implementation(libs.bundles.coroutines)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
 }

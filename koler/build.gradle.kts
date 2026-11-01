@@ -1,76 +1,46 @@
 plugins {
-    alias(libs.plugins.hilt)
     alias(libs.plugins.android.application)
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 kotlin {
-    jvmToolchain(19)
-}
-
-hilt {
-    enableAggregatingTask = true
+    jvmToolchain(libs.versions.jvm.toolchain.get().toInt())
 }
 
 android {
     namespace = "com.chooloo.www.koler"
-    compileSdk = libs.versions.sdk.get().toInt()
+    compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
+        applicationId = "com.chooloo.www.koler"
+        minSdk = libs.versions.min.sdk.get().toInt()
+        targetSdk = libs.versions.target.sdk.get().toInt()
         versionCode = 82
         versionName = "v1.6.1"
-        applicationId = "com.chooloo.www.koler"
-        targetSdk = libs.versions.sdk.get().toInt()
-        minSdk = libs.versions.min.sdk.get().toInt()
     }
 
     buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
-                "proguard-rules.pro"
-            )
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
     buildFeatures {
         compose = true
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.10"
-    }
-
-    lint {
-        checkReleaseBuilds = false
-    }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
-    kapt(libs.hilt.compiler)
-    kapt(libs.dagger.hilt.compiler)
-    kapt(libs.androidx.hilt.compiler)
-
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.test.manifest)
-
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.test.runner)
-    androidTestImplementation(libs.test.junit)
-    androidTestImplementation(libs.test.ui.junit4)
-    androidTestImplementation(libs.test.espresso.core)
+    ksp(libs.hilt.compiler)
 
     implementation(project(":chooloolib"))
-    implementation(platform(libs.compose.bom))
-    implementation(libs.bundles.ktx)
-    implementation(libs.bundles.hilt)
-    implementation(libs.bundles.compose)
-    implementation(libs.bundles.coroutines)
+    implementation(libs.hilt.android)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
 }

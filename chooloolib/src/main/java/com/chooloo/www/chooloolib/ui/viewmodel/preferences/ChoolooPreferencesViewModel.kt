@@ -32,7 +32,7 @@ class ChoolooPreferencesViewModel @Inject constructor(
         val incomingCallModel: IncomingCallMode? = null
     )
 
-    val uiState: StateFlow<UiState> = combine(
+    val uiState: StateFlow<UiState> = combine<Any, UiState>(
         preferenceRepository.defaultPage,
         preferenceRepository.themeMode,
         preferenceRepository.isAnimationsEnabled,

@@ -32,24 +32,8 @@ class CallActivity : BaseActivity() {
     }
 
     private fun setExcludeFromRecents(exclude: Boolean) {
-        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-        val tasks = am.appTasks
-        val taskId = taskId
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            activityManager.appTasks.firstOrNull { it.taskInfo.taskId == taskId }
-                ?.setExcludeFromRecents(exclude)
-        } else {
-            for (i in tasks.indices) {
-                val task = tasks[i]
-                @Suppress("DEPRECATION")
-                if (task.taskInfo.id == taskId) {
-                    try {
-                        task.setExcludeFromRecents(exclude)
-                    } catch (_: RuntimeException) {
-                    }
-                }
-            }
-        }
+        activityManager.appTasks.firstOrNull { it.taskInfo?.taskId == taskId }
+            ?.setExcludeFromRecents(exclude)
     }
 
     companion object {

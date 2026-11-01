@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.rememberAsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.ContactData
 import com.chooloo.www.chooloolib.ui.compose.CircleImage

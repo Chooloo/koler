@@ -1,23 +1,25 @@
 pluginManagement {
-    plugins {
-        id("org.gradle.toolchains.foojay-resolver-convention") version ("0.8.0")
-    }
     repositories {
+        google()
         mavenCentral()
         gradlePluginPortal()
-        google()
     }
 }
 
-@Suppress("UnstableApiUsage")
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
     }
 }
 
-include(":koler")
+rootProject.name = "koler"
+
 include(":chooloolib")
+include(":koler")
 include(":kontacts")
