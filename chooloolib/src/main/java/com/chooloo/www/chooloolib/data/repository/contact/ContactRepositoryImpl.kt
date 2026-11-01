@@ -20,10 +20,10 @@ import com.chooloo.www.chooloolib.domain.repository.contact.ContactRepository
 import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
 import com.chooloo.www.chooloolib.utils.annotation.RequiresDefaultDialer
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 @Singleton
 class ContactRepositoryImpl @Inject constructor(

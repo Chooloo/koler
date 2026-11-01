@@ -4,9 +4,9 @@ import com.chooloo.www.chooloolib.data.contentresolver.ContentResolverFactory
 import com.chooloo.www.chooloolib.domain.model.record.PhoneLookupRecord
 import com.chooloo.www.chooloolib.domain.model.record.PhoneRecord
 import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class PhoneRepositoryImpl @Inject constructor(

@@ -15,10 +15,10 @@ import com.chooloo.www.chooloolib.data.contentresolver.ContentResolverFactory
 import com.chooloo.www.chooloolib.domain.model.record.RecentRecord
 import com.chooloo.www.chooloolib.domain.repository.recent.RecentRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 @Singleton
 class RecentRepositoryImpl @Inject constructor(

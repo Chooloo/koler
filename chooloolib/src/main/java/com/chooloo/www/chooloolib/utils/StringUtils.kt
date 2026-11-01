@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.utils
 
 import java.util.Locale
 
-
 fun String.initials() =
     split(' ').mapNotNull { it.firstOrNull()?.toString() }.reduce { acc, s -> acc + s }
 

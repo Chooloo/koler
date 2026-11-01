@@ -10,7 +10,6 @@ import android.telecom.PhoneAccount
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
-import com.chooloo.www.chooloolib.domain.model.CallData
 import com.chooloo.www.chooloolib.domain.repository.telecom.TelecomRepository
 import com.chooloo.www.chooloolib.utils.PhoneNumberUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -58,14 +57,6 @@ class TelecomRepositoryImpl @Inject constructor(
     override suspend fun callVoicemail() {
         telecomManager.placeCall(Uri.fromParts(PhoneAccount.SCHEME_VOICEMAIL, "", null), Bundle())
     }
-
-    override suspend fun isCallEmergency(call: CallData) =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            telephonyManager.isEmergencyNumber(call.number ?: "")
-        } else {
-            @Suppress("DEPRECATION")
-            android.telephony.PhoneNumberUtils.isEmergencyNumber(call.number ?: "")
-        }
 
     @RequiresPermission(allOf = [Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE])
     override suspend fun callNumber(number: String) {

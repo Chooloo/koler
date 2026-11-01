@@ -14,7 +14,7 @@ import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.repository.navigation.NavigationRepository
-import com.chooloo.www.chooloolib.ui.activity.BaseActivity
+import com.chooloo.www.chooloolib.ui.common.BaseActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

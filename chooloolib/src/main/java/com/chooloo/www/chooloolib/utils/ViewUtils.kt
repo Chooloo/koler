@@ -8,7 +8,7 @@ import android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
 import android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
 import android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
 import android.widget.Toast
-import com.chooloo.www.chooloolib.ui.viewmodel.base.BaseViewModel
+import com.chooloo.www.chooloolib.ui.common.BaseViewModel
 
 fun toast(context: Context, stringRes: Int?) {
     stringRes?.let {

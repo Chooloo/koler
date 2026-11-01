@@ -1,6 +1,6 @@
 package com.chooloo.www.chooloolib.domain.repository.navigation
 
-import com.chooloo.www.chooloolib.ui.activity.BaseActivity
+import com.chooloo.www.chooloolib.ui.common.BaseActivity
 
 interface NavigationRepository {
     suspend fun goToDonate()

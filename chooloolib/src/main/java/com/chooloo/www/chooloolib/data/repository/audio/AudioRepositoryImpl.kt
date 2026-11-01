@@ -12,10 +12,10 @@ import android.os.VibrationEffect.DEFAULT_AMPLITUDE
 import android.os.Vibrator
 import com.chooloo.www.chooloolib.domain.repository.audio.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.audio.AudioRepository.AudioMode
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Singleton
 class AudioRepositoryImpl @Inject constructor(

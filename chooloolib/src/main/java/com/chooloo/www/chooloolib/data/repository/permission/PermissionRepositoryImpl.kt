@@ -8,12 +8,12 @@ import android.telecom.TelecomManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.chooloo.www.chooloolib.domain.repository.permission.PermissionRepository
-import com.chooloo.www.chooloolib.ui.activity.DefaultDialerRequestActivity
+import com.chooloo.www.chooloolib.ui.common.DefaultDialerRequestActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Singleton
 class PermissionRepositoryImpl @Inject constructor(

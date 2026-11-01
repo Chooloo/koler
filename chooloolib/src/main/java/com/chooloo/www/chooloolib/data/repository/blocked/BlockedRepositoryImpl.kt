@@ -9,9 +9,9 @@ import com.chooloo.www.chooloolib.domain.model.record.BlockedNumberRecord
 import com.chooloo.www.chooloolib.domain.repository.blocked.BlockedRepository
 import com.chooloo.www.chooloolib.utils.annotation.RequiresDefaultDialer
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class BlockedRepositoryImpl @Inject constructor(

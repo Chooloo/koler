@@ -6,20 +6,20 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.di.module.IoScope
+import com.chooloo.www.chooloolib.di.IoScope
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
 import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository
 import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository.Companion.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository.Companion.Page
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.stateIn
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class PreferenceRepositoryImpl @Inject constructor(

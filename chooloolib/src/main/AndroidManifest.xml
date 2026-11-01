@@ -7,42 +7,15 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application>
         <activity
-            android:name=".ui.activity.CallActivity"
-            android:configChanges="screenSize|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:noHistory="true"
-            android:screenOrientation="unspecified"
-            android:showOnLockScreen="true" />
-
-        <activity
-            android:name=".ui.activity.DefaultDialerRequestActivity"
+            android:name=".ui.common.DefaultDialerRequestActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <service
-            android:name="com.chooloo.www.chooloolib.data.service.CallService"
-            android:exported="true"
-            android:foregroundServiceType="phoneCall"
-            android:permission="android.permission.BIND_INCALL_SERVICE">
-
-            <meta-data
-                android:name="android.telecom.IN_CALL_SERVICE_UI"
-                android:value="true" />
-
-            <intent-filter>
-                <action android:name="android.telecom.InCallService" />
-            </intent-filter>
-        </service>
-
-        <receiver android:name=".data.receiver.CallBroadcastReceiver" />
     </application>
 </manifest>
