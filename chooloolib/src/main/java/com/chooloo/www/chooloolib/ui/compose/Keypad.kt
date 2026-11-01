@@ -9,9 +9,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 val DIALPAD_KEYS = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#")
 
@@ -23,11 +22,11 @@ fun Keypad(
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = modifier.wrapContentWidth(),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_small)),
-        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_small)),
+        verticalArrangement = Arrangement.spacedBy(Spacing.Medium),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.Medium),
         contentPadding = PaddingValues(
-            vertical = dimensionResource(id = R.dimen.spacing),
-            horizontal = dimensionResource(id = R.dimen.spacing_big)
+            vertical = Spacing.Medium,
+            horizontal = Spacing.ExtraLarge
         ),
         content = {
             items(12) { index ->

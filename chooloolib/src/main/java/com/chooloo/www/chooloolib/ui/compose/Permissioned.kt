@@ -1,47 +1,119 @@
 package com.chooloo.www.chooloolib.ui.compose
 
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun Permissioned(
     permissions: List<String>,
     onIsGrantedChange: (isGranted: Boolean) -> Unit = {},
     content: @Composable () -> Unit
 ) {
-    val permissionsState = rememberMultiplePermissionsState(permissions)
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(key1 = permissionsState.allPermissionsGranted) {
-        onIsGrantedChange(permissionsState.allPermissionsGranted)
+    fun getMissingPermissions(): List<String> =
+        permissions.filter {
+            ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED
+        }
+
+    var missingPermissions by remember(permissions) {
+        mutableStateOf(getMissingPermissions())
     }
 
-    if (permissionsState.allPermissionsGranted) {
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        missingPermissions = getMissingPermissions()
+    }
+
+    DisposableEffect(lifecycleOwner, permissions) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                missingPermissions = getMissingPermissions()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    val allGranted = missingPermissions.isEmpty()
+
+    LaunchedEffect(key1 = allGranted) {
+        onIsGrantedChange(allGranted)
+    }
+
+    if (allGranted) {
         content()
     } else {
-        val missingPermissions = permissionsState.permissions.filter { !it.status.isGranted }
-        Column {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(Spacing.ExtraLarge),
+            verticalArrangement = Arrangement.spacedBy(
+                Spacing.Medium,
+                Alignment.CenterVertically
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             if (missingPermissions.size == 1) {
-                Text("I need ${missingPermissions[0].permission} permissions :)")
+                Text(
+                    text = stringResource(
+                        R.string.permission_request_single,
+                        missingPermissions[0].substringAfterLast('.')
+                    ),
+                    style = typography.bodyLarge
+                )
             } else {
-                Text("I need to following permissions pls :)")
-                missingPermissions.map {
-                    Text(it.permission)
+                Text(
+                    text = stringResource(R.string.permission_request_multiple),
+                    style = typography.bodyLarge
+                )
+                missingPermissions.forEach { perm ->
+                    Text(
+                        text = perm.substringAfterLast('.'),
+                        style = typography.bodyMedium
+                    )
                 }
             }
 
-            Button(onClick = { permissionsState.launchMultiplePermissionRequest() }) {
-                if (missingPermissions.size == 1) {
-                    Text("Request Permission")
-                } else {
-                    Text("Request Permissions")
-                }
+            Button(onClick = { launcher.launch(missingPermissions.toTypedArray()) }) {
+                Text(
+                    stringResource(
+                        if (missingPermissions.size == 1) {
+                            R.string.action_request_permission
+                        } else {
+                            R.string.action_request_permissions
+                        }
+                    )
+                )
             }
         }
     }

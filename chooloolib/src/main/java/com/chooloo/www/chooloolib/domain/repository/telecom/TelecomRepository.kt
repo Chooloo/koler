@@ -2,10 +2,8 @@ package com.chooloo.www.chooloolib.domain.repository.telecom
 
 import android.net.Uri
 import com.chooloo.www.chooloolib.domain.model.CallData
-import com.chooloo.www.chooloolib.domain.model.record.SimRecord
-import com.chooloo.www.chooloolib.domain.repository.base.BaseRepository
 
-interface TelecomRepository : BaseRepository {
+interface TelecomRepository {
     suspend fun getCallUri(number: String): Uri
     suspend fun handleMmi(code: String): Boolean
     suspend fun handleSecretCode(code: String): Boolean
@@ -13,5 +11,5 @@ interface TelecomRepository : BaseRepository {
 
     suspend fun callVoicemail()
     suspend fun isCallEmergency(call: CallData): Boolean
-    suspend fun callNumber(number: String, simRecord: SimRecord? = null)
+    suspend fun callNumber(number: String)
 }

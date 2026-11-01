@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.android.application)
     kotlin("android")
@@ -19,8 +18,8 @@ android {
     compileSdk = libs.versions.sdk.get().toInt()
 
     defaultConfig {
-        versionCode = 81
-        versionName = "v1.6.0"
+        versionCode = 82
+        versionName = "v1.6.1"
         applicationId = "com.chooloo.www.koler"
         targetSdk = libs.versions.sdk.get().toInt()
         minSdk = libs.versions.min.sdk.get().toInt()
@@ -62,14 +61,11 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     testImplementation(libs.junit)
-    testImplementation(libs.room.testing)
 
     androidTestImplementation(libs.test.runner)
     androidTestImplementation(libs.test.junit)
     androidTestImplementation(libs.test.ui.junit4)
     androidTestImplementation(libs.test.espresso.core)
-
-    annotationProcessor(libs.dagger.hilt.compiler)
 
     implementation(project(":chooloolib"))
     implementation(platform(libs.compose.bom))
@@ -77,12 +73,4 @@ dependencies {
     implementation(libs.bundles.hilt)
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
-    implementation(libs.bundles.accompanist)
-    implementation(libs.rxjava)
-    implementation(libs.picasso)
-    implementation(libs.material)
-    implementation(libs.rxandroid)
-    implementation(libs.app.compat)
-    implementation(libs.preference)
-    implementation(libs.storio.content.resolver)
 }

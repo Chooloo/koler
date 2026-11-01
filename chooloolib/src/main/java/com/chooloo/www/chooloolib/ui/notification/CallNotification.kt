@@ -1,5 +1,7 @@
 package com.chooloo.www.chooloolib.ui.notification
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.Notification.CATEGORY_CALL
 import android.app.Notification.EXTRA_NOTIFICATION_ID
@@ -18,23 +20,22 @@ import android.os.Build
 import android.telecom.Call.Details.CAPABILITY_MUTE
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
+import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.data.receiver.CallBroadcastReceiver
+import com.chooloo.www.chooloolib.data.receiver.CallBroadcastReceiver.Companion.ACTION_DECLINE
+import com.chooloo.www.chooloolib.data.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE_OFF
+import com.chooloo.www.chooloolib.data.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE_ON
+import com.chooloo.www.chooloolib.data.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER_OFF
+import com.chooloo.www.chooloolib.data.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER_ON
 import com.chooloo.www.chooloolib.di.module.IoScope
 import com.chooloo.www.chooloolib.domain.model.CallData
 import com.chooloo.www.chooloolib.domain.model.CallState
-import com.chooloo.www.chooloolib.domain.receiver.CallBroadcastReceiver
-import com.chooloo.www.chooloolib.domain.receiver.CallBroadcastReceiver.Companion.ACTION_DECLINE
-import com.chooloo.www.chooloolib.domain.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE_OFF
-import com.chooloo.www.chooloolib.domain.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE_ON
-import com.chooloo.www.chooloolib.domain.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER_OFF
-import com.chooloo.www.chooloolib.domain.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER_ON
 import com.chooloo.www.chooloolib.domain.repository.call.CallRepository
-import com.chooloo.www.chooloolib.domain.repository.color.ColorRepository
-import com.chooloo.www.chooloolib.domain.repository.notification.NotificationRepository
-import com.chooloo.www.chooloolib.domain.repository.notification.NotificationRepository.Companion.Priority
 import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository
 import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository.Companion.IncomingCallMode
@@ -49,12 +50,11 @@ import javax.inject.Singleton
 @RequiresApi(Build.VERSION_CODES.O)
 class CallNotification @Inject constructor(
     private val callRepository: CallRepository,
-    private val colorRepository: ColorRepository,
     private val phoneRepository: PhoneRepository,
     @IoScope private val ioScope: CoroutineScope,
     @ApplicationContext private val context: Context,
     private val preferenceRepository: PreferenceRepository,
-    private val notificationRepository: NotificationRepository,
+    private val notificationManager: NotificationManagerCompat,
 ) {
     private var _callData: CallData? = null
 
@@ -66,7 +66,7 @@ class CallNotification @Inject constructor(
         }
 
     private val _channelImportanceLow by lazy {
-        notificationRepository.createNotificationChannel(
+        createNotificationChannel(
             id = CHANNEL_ID_PRIORITY_LOW,
             importance = IMPORTANCE_DEFAULT,
             name = getString(R.string.call_notification_channel_name),
@@ -75,7 +75,7 @@ class CallNotification @Inject constructor(
     }
 
     private val _channelImportanceHigh by lazy {
-        notificationRepository.createNotificationChannel(
+        createNotificationChannel(
             id = CHANNEL_ID_PRIORITY_HIGH,
             importance = IMPORTANCE_HIGH,
             name = getString(R.string.call_notification_channel_name),
@@ -96,7 +96,6 @@ class CallNotification @Inject constructor(
 
     private val _actionAnswer by lazy {
         NotificationCompat.Action(
-//            IconCompat.createFromIcon(Icon(Icons.AutoMirrored.Outlined.CallMade)),
             IconCompat.createFromIcon(
                 context,
                 Icon.createWithResource(context, R.drawable.view_carousel)
@@ -108,7 +107,6 @@ class CallNotification @Inject constructor(
 
     private val _actionDecline by lazy {
         NotificationCompat.Action(
-//            IconCompat.createFromIcon(Icon(Icons.Outlined.CallEnd)),
             IconCompat.createFromIcon(
                 context,
                 Icon.createWithResource(context, R.drawable.view_carousel)
@@ -120,7 +118,6 @@ class CallNotification @Inject constructor(
 
     private val _actionMuteOn by lazy {
         NotificationCompat.Action(
-//            IconCompat.createFromIcon(Icon(Icons.Outlined.Mic)),
             IconCompat.createFromIcon(
                 context,
                 Icon.createWithResource(context, R.drawable.view_carousel)
@@ -132,7 +129,6 @@ class CallNotification @Inject constructor(
 
     private val _actionMuteOff by lazy {
         NotificationCompat.Action(
-//            IconCompat.createFromIcon(Icon(Icons.Outlined.MicOff)),
             IconCompat.createFromIcon(
                 context,
                 Icon.createWithResource(context, R.drawable.view_carousel)
@@ -144,7 +140,6 @@ class CallNotification @Inject constructor(
 
     private val _actionSpeakerOn by lazy {
         NotificationCompat.Action(
-//            IconCompat.createFromIcon(Icon.(Icons.AutoMirrored.Outlined.VolumeDown)),
             IconCompat.createFromIcon(
                 context,
                 Icon.createWithResource(context, R.drawable.view_carousel)
@@ -156,7 +151,6 @@ class CallNotification @Inject constructor(
 
     private val _actionSpeakerOff by lazy {
         NotificationCompat.Action(
-//            IconCompat.createFromIcon(Icon(Icons.AutoMirrored.Outlined.VolumeUp)),
             IconCompat.createFromIcon(
                 context,
                 Icon.createWithResource(context, R.drawable.view_carousel)
@@ -165,6 +159,17 @@ class CallNotification @Inject constructor(
             getCallPendingIntent(ACTION_SPEAKER_OFF, 5)
         )
     }
+
+    private fun createNotificationChannel(
+        id: String,
+        name: String,
+        importance: Int,
+        description: String
+    ) = NotificationChannelCompat.Builder(id, importance)
+        .setName(name)
+        .setDescription(description)
+        .build()
+        .also(notificationManager::createNotificationChannel)
 
     private fun getCallIntent(callAction: String) =
         Intent(context, CallBroadcastReceiver::class.java).apply {
@@ -191,35 +196,38 @@ class CallNotification @Inject constructor(
         if (callData.state == CallState.INCOMING) {
             actions.add(_actionAnswer)
         } else if (callData.state !in arrayOf(CallState.DISCONNECTED, CallState.DISCONNECTING)) {
-            callRepository.isMuteActive.value?.let { isMuted ->
-                if (callData.isCapable(CAPABILITY_MUTE)) {
-                    actions.add(if (isMuted) _actionMuteOff else _actionMuteOn)
-                }
+            val isMuted = callRepository.isMuteActive.value
+            if (callData.isCapable(CAPABILITY_MUTE)) {
+                actions.add(if (isMuted) _actionMuteOff else _actionMuteOn)
             }
 
-            callRepository.isSpeakerActive.value?.let { isSpeakerOn ->
-                actions.add(if (isSpeakerOn) _actionSpeakerOff else _actionSpeakerOn)
-            }
+            val isSpeakerOn = callRepository.isSpeakerActive.value
+            actions.add(if (isSpeakerOn) _actionSpeakerOff else _actionSpeakerOn)
         }
 
-        return notificationRepository.createNotification(
-            isOngoing = true,
-            actions = actions,
-            priority = Priority.HIGH,
-            category = CATEGORY_CALL,
-            contentIntent = _contentPendingIntent,
-            color = colorRepository.getAttrColor(R.attr.colorSecondary),
-            contentTitle = phoneAccount?.displayString ?: callData.number,
-            contentText = ContextCompat.getString(context, callData.state.stringRes)
-        )
+        val builder = NotificationCompat.Builder(context, _channel.id)
+            .setWhen(0)
+            .setColorized(true)
+            .setOngoing(true)
+            .setCategory(CATEGORY_CALL)
+            .setOnlyAlertOnce(true)
+            .setSmallIcon(R.drawable.view_carousel)
+            .setPriority(PRIORITY)
+            .setContentIntent(_contentPendingIntent)
+            .setContentTitle(phoneAccount?.displayString ?: callData.number)
+            .setContentText(ContextCompat.getString(context, callData.state.stringRes))
+
+        actions.forEach(builder::addAction)
+        return builder.build()
     }
 
     private fun getString(@StringRes res: Int) =
         context.getString(res)
 
+    @SuppressLint("MissingPermission")
     private suspend fun show(callData: CallData) {
         val notification = buildNotification(callData)
-        notificationRepository.showNotification(ID, notification)
+        notificationManager.notify(ID, notification)
     }
 
     private suspend fun refresh() {
@@ -252,9 +260,8 @@ class CallNotification @Inject constructor(
     }
 
     fun detach() {
-        notificationRepository.cancelNotification(ID)
+        notificationManager.cancel(ID)
     }
-
 
     companion object {
         const val ID = 420

@@ -37,7 +37,10 @@ fun <ItemType> ChoicePreferenceListItem(
             items = values,
             loadingState = loadingState,
             item = {
-                item(it, it == selectedValue) { onValueSelected(it) }
+                item(it, it == selectedValue) {
+                    onValueSelected(it)
+                    choicesVisible.value = false
+                }
             }
         )
     }

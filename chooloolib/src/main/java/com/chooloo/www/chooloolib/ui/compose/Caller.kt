@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.Call
@@ -21,19 +22,20 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.AsyncImagePainter
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.AccountData
 import com.chooloo.www.chooloolib.domain.model.PhoneData
 import com.chooloo.www.chooloolib.ui.compose.list.AccountsList
 import com.chooloo.www.chooloolib.ui.compose.list.PhonesList
 import com.chooloo.www.chooloolib.ui.compose.list.item.ListItem
+import com.chooloo.www.chooloolib.ui.theme.AvatarSize
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 import com.chooloo.www.chooloolib.utils.LoadingState
-
 
 @Composable
 fun Caller(
@@ -41,7 +43,7 @@ fun Caller(
     number: String? = null,
     isBlocked: Boolean? = null,
     phones: List<PhoneData> = listOf(),
-    imagePainter: AsyncImagePainter? = null,
+    imagePainter: Painter? = null,
     accounts: List<AccountData> = listOf(),
     loadingState: LoadingState = LoadingState.IDLE,
     phonesLoadingState: LoadingState = LoadingState.IDLE,
@@ -69,9 +71,16 @@ fun Caller(
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.spacing))
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.Medium),
+            modifier = Modifier.padding(horizontal = Spacing.Medium)
         ) {
-            imagePainter?.let { CircleImage(painter = imagePainter) }
+            imagePainter?.let {
+                CircleImage(
+                    painter = it,
+                    modifier = Modifier.size(AvatarSize.Medium)
+                )
+            }
             Column {
                 Text(
                     text = name ?: number ?: stringResource(R.string.caller_unknown),
@@ -88,26 +97,26 @@ fun Caller(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    vertical = dimensionResource(R.dimen.spacing),
-                    horizontal = dimensionResource(R.dimen.spacing_big)
+                    vertical = Spacing.Medium,
+                    horizontal = Spacing.ExtraLarge
                 )
         ) {
             ExtendedFloatingActionButton(
-                modifier = Modifier.clickable(onCallClick != null) { onCallClick?.let { it() } },
+                modifier = Modifier.clickable(onCallClick != null) { onCallClick?.invoke() },
                 onClick = onCallClick ?: {},
                 icon = { Icon(Icons.Rounded.Call, stringResource(id = R.string.cd_call)) },
                 text = { Text(stringResource(R.string.action_call)) }
             )
 
             ExtendedFloatingActionButton(
-                modifier = Modifier.clickable(onSmsClick != null) { onSmsClick?.let { it() } },
+                modifier = Modifier.clickable(onSmsClick != null) { onSmsClick?.invoke() },
                 onClick = onSmsClick ?: {},
                 icon = { Icon(Icons.Rounded.Sms, stringResource(id = R.string.cd_sms)) },
                 text = { Text(stringResource(R.string.cd_sms)) }
             )
 
             ExtendedFloatingActionButton(
-                modifier = Modifier.clickable(onEditContactClick != null) { onEditContactClick?.let { it() } },
+                modifier = Modifier.clickable(onEditContactClick != null) { onEditContactClick?.invoke() },
                 onClick = onEditContactClick ?: {},
                 icon = { Icon(Icons.Rounded.Edit, stringResource(R.string.cd_edit)) },
                 text = { Text(stringResource(R.string.cd_edit)) }
@@ -117,15 +126,15 @@ fun Caller(
         if (phones.isNotEmpty()) {
             Text(
                 modifier = Modifier.padding(
-                    top = dimensionResource(R.dimen.spacing),
-                    start = dimensionResource(R.dimen.spacing),
-                    bottom = dimensionResource(R.dimen.spacing_small)
+                    top = Spacing.Medium,
+                    start = Spacing.Medium,
+                    bottom = Spacing.Small
                 ),
                 text = stringResource(id = R.string.phones),
                 style = typography.labelSmall
             )
             PhonesList(
-                modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.spacing_small)),
+                modifier = Modifier.padding(horizontal = Spacing.Medium),
                 items = phones,
                 onItemActionClick = onPhoneClick,
                 loadingState = phonesLoadingState
@@ -135,15 +144,15 @@ fun Caller(
         if (accounts.isNotEmpty()) {
             Text(
                 modifier = Modifier.padding(
-                    top = dimensionResource(R.dimen.spacing),
-                    start = dimensionResource(R.dimen.spacing),
-                    bottom = dimensionResource(R.dimen.spacing_small)
+                    top = Spacing.Medium,
+                    start = Spacing.Medium,
+                    bottom = Spacing.Small
                 ),
                 style = typography.labelSmall,
                 text = stringResource(id = R.string.accounts),
             )
             AccountsList(
-                modifier = Modifier.padding(horizontal = dimensionResource(R.dimen.spacing_small)),
+                modifier = Modifier.padding(horizontal = Spacing.Medium),
                 items = accounts,
                 onItemClick = onAccountClick,
                 loadingState = accountsLoadingState,
@@ -178,25 +187,29 @@ fun Caller(
             }
 
             onSetContactFavoriteClick?.let {
-                ListItem(onClick = { it(!isContactFavorite) },
+                ListItem(
+                    onClick = { it(!isContactFavorite) },
                     title = stringResource(id = if (isContactFavorite) R.string.action_unset_favorite else R.string.action_set_favorite),
                     startContainer = {
                         Icon(
                             imageVector = if (isContactFavorite) Icons.Rounded.StarBorder else Icons.Rounded.Star,
                             contentDescription = stringResource(R.string.cd_favorite_star)
                         )
-                    })
+                    }
+                )
             }
 
             if (onSetBlockedClick != null && isBlocked != null) {
-                ListItem(onClick = { onSetBlockedClick(!isBlocked) },
+                ListItem(
+                    onClick = { onSetBlockedClick(!isBlocked) },
                     title = stringResource(id = if (isBlocked) R.string.action_unblock_contact else R.string.action_block_contact),
                     startContainer = {
                         Icon(
                             imageVector = Icons.Rounded.Block,
                             contentDescription = stringResource(R.string.cd_block)
                         )
-                    })
+                    }
+                )
             }
 
             onDeleteContactClick?.let {

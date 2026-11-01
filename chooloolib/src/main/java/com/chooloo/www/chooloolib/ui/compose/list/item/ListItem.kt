@@ -5,19 +5,12 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
-import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -28,14 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.ui.compose.CircleImage
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -53,12 +43,28 @@ fun ListItem(
     startContainer: @Composable (() -> Unit)? = null,
     extraSubtitleContainer: @Composable (() -> Unit)? = null,
 ) {
+    val annotatedTitle: AnnotatedString = buildAnnotatedString {
+        append(title)
+        if (!highlightText.isNullOrEmpty()) {
+            val startIndex = title.indexOf(highlightText, ignoreCase = true)
+            if (startIndex >= 0) {
+                addStyle(
+                    start = startIndex,
+                    end = startIndex + highlightText.length,
+                    style = SpanStyle(color = MaterialTheme.colorScheme.primary),
+                )
+            }
+        }
+    }
+
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        shape = RoundedCornerShape(corner = CornerSize(dimensionResource(id = R.dimen.corner_radius))),
+        colors = CardDefaults.cardColors(
+            containerColor = if (selected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
+        ),
+        shape = MaterialTheme.shapes.large,
         modifier = modifier
             .combinedClickable(
-                enabled = clickable,
+                enabled = clickable && enabled,
                 onClick = onClick::invoke,
                 onLongClick = onLongClick::invoke
             )
@@ -67,37 +73,26 @@ fun ListItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    vertical = dimensionResource(R.dimen.spacing_tiny),
-                    horizontal = dimensionResource(R.dimen.spacing_small)
+                    vertical = Spacing.Small,
+                    horizontal = Spacing.Medium
                 ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             startContainer?.let { it() }
             Column(
-                modifier = modifier.fillMaxHeight(),
+                modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     style = typography.titleMedium,
-                    text = highlightText?.let {
-                        title.indexOf(it).run {
-                            buildAnnotatedString {
-                                append(title)
-                                addStyle(
-                                    start = this@run,
-                                    end = this@run + it.length,
-                                    style = SpanStyle(color = MaterialTheme.colorScheme.onPrimary),
-                                )
-                            }.text
-                        }
-                    } ?: title
+                    text = annotatedTitle
                 )
                 subtitle?.let {
                     Row {
                         Text(
                             text = subtitle,
                             style = typography.bodySmall,
-                            color = colorResource(R.color.cardview_dark_background),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         extraSubtitleContainer?.let { it() }
                     }

@@ -22,19 +22,16 @@
             android:exported="true"
             android:noHistory="true"
             android:screenOrientation="unspecified"
-            android:showOnLockScreen="true">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-        </activity>
+            android:showOnLockScreen="true" />
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <activity
+            android:name=".ui.activity.DefaultDialerRequestActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
-            android:name="com.chooloo.www.chooloolib.domain.service.CallService"
+            android:name="com.chooloo.www.chooloolib.data.service.CallService"
             android:exported="true"
             android:foregroundServiceType="phoneCall"
             android:permission="android.permission.BIND_INCALL_SERVICE">
@@ -48,6 +45,6 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".domain.receiver.CallBroadcastReceiver" />
+        <receiver android:name=".data.receiver.CallBroadcastReceiver" />
     </application>
 </manifest>

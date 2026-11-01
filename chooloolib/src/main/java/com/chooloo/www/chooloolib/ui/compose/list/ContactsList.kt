@@ -22,14 +22,14 @@ fun ContactsList(
     onItemLongClick: (ContactData) -> Unit = {},
     loadingState: LoadingState = LoadingState.IDLE
 ) {
-    val favItems = items.filter { it.isFavorite } + items
+    val favItems = items.filter { it.isFavorite }
     val finalItems = if (withFavorites) favItems + items else items
 
     List(
         items = finalItems,
         modifier = modifier,
         loadingState = loadingState,
-         key = { item -> item.id.toString() },
+        key = { item -> item.id.toString() },
         loadingTitle = R.string.loading_contacts,
         emptyTitle = R.string.no_results_contacts,
         emptyImage = {
@@ -39,10 +39,10 @@ fun ContactsList(
             )
         },
         header = { item ->
-            if (withFavorites and (finalItems.indexOf(item) < favItems.count())) {
+            if (withFavorites && finalItems.indexOf(item) < favItems.size) {
                 "★"
             } else {
-                item.name?.get(0).toString()
+                item.name?.firstOrNull()?.uppercase() ?: "#"
             }
         },
         item = { item ->
@@ -62,7 +62,7 @@ fun ContactsListPreview() {
         loadingState = LoadingState.SUCCESS,
         items = listOf(
             ContactData(id = 0, name = "Nahum Test"),
-            ContactData(name = "test", id = 0)
+            ContactData(name = "test", id = 1)
         ),
     )
 }
@@ -74,7 +74,7 @@ fun LoadingContactsListPreview() {
         loadingState = LoadingState.LOADING,
         items = listOf(
             ContactData(id = 0, name = "Nahum Test"),
-            ContactData(name = "test", id = 0)
+            ContactData(name = "test", id = 1)
         ),
     )
 }

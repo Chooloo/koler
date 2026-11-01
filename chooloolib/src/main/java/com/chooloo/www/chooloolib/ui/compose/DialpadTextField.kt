@@ -6,10 +6,10 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -23,12 +23,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.chooloo.www.chooloolib.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +53,7 @@ fun DialpadTextField(
         maxLines = 1,
         value = text ?: "",
         placeholder = { hintText?.let { Text(it) } },
-        shape = RoundedCornerShape(dimensionResource(R.dimen.corner_radius)),
+        shape = MaterialTheme.shapes.large,
         textStyle = typography.headlineLarge.copy(textAlign = TextAlign.Center),
         onValueChange = { value ->
             onTextChange(value.map(::validateChar).joinToString(""))

@@ -1,10 +1,11 @@
 package com.chooloo.www.chooloolib.ui.compose.list
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.History
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.RecentData
@@ -26,10 +27,15 @@ fun RecentsList(
     List(
         modifier = modifier,
         loadingState = loadingState,
-        emptyImage = { Icons.Rounded.History },
+        emptyImage = {
+            Icon(
+                Icons.Rounded.History,
+                stringResource(id = R.string.cd_history)
+            )
+        },
         loadingTitle = R.string.loading_recents,
         emptyTitle = R.string.no_results_recents,
-        items = if (groupSimilar) items else RecentData.group(items),
+        items = if (groupSimilar) RecentData.group(items) else items,
         key = { item -> item.id.toString() },
         header = { item -> getRelativeDateString(item.date) },
         item = { item ->
@@ -53,7 +59,7 @@ fun RecentsListPreview() {
                 date = Date(1234),
             ),
             RecentData(
-                id = 0,
+                id = 1,
                 number = "1234",
                 date = Date(1234),
             ),
@@ -73,7 +79,7 @@ fun LoadingRecentsListPreview() {
                 date = Date(1234),
             ),
             RecentData(
-                id = 0,
+                id = 1,
                 number = "1234",
                 date = Date(1234),
             ),

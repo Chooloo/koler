@@ -8,7 +8,10 @@ data class RawContactRecord(
     val id: Long,
     val data: String?,
     val contactId: Long,
-    val type: RawContactType
+    val type: RawContactType,
+    val label: String? = null,
+    val accountName: String? = null,
+    val accountType: String? = null,
 ) {
     enum class RawContactType(
         val contentType: String,
@@ -24,7 +27,7 @@ data class RawContactRecord(
 
         companion object {
             fun fromContentType(contentType: String) =
-                entries.associateBy(RawContactType::contentType).getOrDefault(contentType, PHONE)
+                entries.associateBy(RawContactType::contentType).getOrDefault(contentType, CUSTOM)
         }
     }
 }

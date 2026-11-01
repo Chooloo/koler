@@ -15,15 +15,19 @@ fun SwitchPreferenceListItem(
     onValueChange: (Boolean) -> Unit,
     startContainer: @Composable (() -> Unit)? = null,
 ) {
+    val isChecked = value ?: false
+
     ListItem(
         title = title,
+        enabled = enabled,
         modifier = modifier,
         subtitle = subtitle,
+        onClick = { onValueChange(!isChecked) },
         startContainer = startContainer,
         endContainer = {
             Switch(
                 enabled = enabled,
-                checked = value ?: false,
+                checked = isChecked,
                 onCheckedChange = onValueChange
             )
         }

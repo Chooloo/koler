@@ -1,33 +1,45 @@
 package com.chooloo.www.chooloolib.ui.view
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.rememberAsyncImagePainter
 import com.chooloo.www.chooloolib.ui.compose.BottomSheet
 import com.chooloo.www.chooloolib.ui.compose.Caller
-import com.chooloo.www.chooloolib.ui.viewmodel.accounts.AccountsListViewModelImpl
-import com.chooloo.www.chooloolib.ui.viewmodel.caller.CallerViewModelImpl
-import com.chooloo.www.chooloolib.ui.viewmodel.phones.PhonesListViewModelImpl
+import com.chooloo.www.chooloolib.ui.viewmodel.accounts.AccountsListViewModel
+import com.chooloo.www.chooloolib.ui.viewmodel.caller.CallerViewModel
+import com.chooloo.www.chooloolib.ui.viewmodel.phones.PhonesListViewModel
 import com.chooloo.www.chooloolib.utils.showVMError
 
 @Composable
 fun CallerView(
     recentId: Long? = null,
     contactId: Long? = null,
-    callerViewModel: CallerViewModelImpl = hiltViewModel(),
-    phonesViewModel: PhonesListViewModelImpl = hiltViewModel(),
-    accountsViewModel: AccountsListViewModelImpl = hiltViewModel()
+    callerViewModel: CallerViewModel = hiltViewModel(),
+    phonesViewModel: PhonesListViewModel = hiltViewModel(),
+    accountsViewModel: AccountsListViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val uiState by callerViewModel.uiState.collectAsState()
-    val phonesUiState by phonesViewModel.uiState.collectAsState()
-    val accountsUiState by accountsViewModel.uiState.collectAsState()
-    val callerError by callerViewModel.errorFlow.collectAsState(null)
-    val phonesError by phonesViewModel.errorFlow.collectAsState(null)
-    val accountsError by accountsViewModel.errorFlow.collectAsState(null)
+    val uiState by callerViewModel.uiState.collectAsStateWithLifecycle()
+    val phonesUiState by phonesViewModel.uiState.collectAsStateWithLifecycle()
+    val accountsUiState by accountsViewModel.uiState.collectAsStateWithLifecycle()
+
+    val defaultPainter = rememberVectorPainter(Icons.Rounded.Person)
+    val avatarPainter = if (uiState.contactData?.imageUri != null) {
+        rememberAsyncImagePainter(
+            model = uiState.contactData?.imageUri,
+            error = defaultPainter,
+            placeholder = defaultPainter
+        )
+    } else {
+        defaultPainter
+    }
 
     LaunchedEffect(key1 = recentId) {
         recentId?.let(callerViewModel::onRecentId)
@@ -37,15 +49,23 @@ fun CallerView(
         contactId?.let(callerViewModel::onContactId)
     }
 
-    LaunchedEffect(true) {
+    LaunchedEffect(key1 = uiState.contactData?.id) {
         uiState.contactData?.id?.let {
             phonesViewModel.onContactId(it)
             accountsViewModel.onContactId(it)
         }
+    }
 
-        callerError?.let { showVMError(context, it) }
-        phonesError?.let { showVMError(context, it) }
-        accountsError?.let { showVMError(context, it) }
+    LaunchedEffect(callerViewModel, phonesViewModel, accountsViewModel) {
+        callerViewModel.errorFlow.collect { showVMError(context, it) }
+    }
+
+    LaunchedEffect(phonesViewModel) {
+        phonesViewModel.errorFlow.collect { showVMError(context, it) }
+    }
+
+    LaunchedEffect(accountsViewModel) {
+        accountsViewModel.errorFlow.collect { showVMError(context, it) }
     }
 
     BottomSheet(
@@ -62,7 +82,7 @@ fun CallerView(
         isBlocked = uiState.isBlocked,
         accounts = accountsUiState.items,
         loadingState = uiState.loadingState,
-        imagePainter = null,// TODO add image
+        imagePainter = avatarPainter,
         onPhoneClick = phonesViewModel::onItemClick,
         onAccountClick = accountsViewModel::onItemClick,
         phonesLoadingState = phonesUiState.loadingState,

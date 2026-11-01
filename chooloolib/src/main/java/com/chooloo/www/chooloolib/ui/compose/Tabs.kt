@@ -5,9 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
 fun Tabs(
@@ -19,7 +18,7 @@ fun Tabs(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacing_tiny))
+        horizontalArrangement = Arrangement.spacedBy(Spacing.Small)
     ) {
         headers.forEachIndexed { index, tab ->
             Tab(

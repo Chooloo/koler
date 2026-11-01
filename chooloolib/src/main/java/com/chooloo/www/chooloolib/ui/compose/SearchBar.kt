@@ -4,14 +4,14 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -23,13 +23,11 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
@@ -41,7 +39,7 @@ fun SearchBar(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val isFocused = remember { mutableStateOf(false) }
-    val shouldShowClearIcon = isFocused.value && text?.isNotEmpty() == true
+    val shouldShowClearIcon = isFocused.value && !text.isNullOrEmpty()
     val leadingIconVector =
         if (isFocused.value) Icons.AutoMirrored.Filled.ArrowBack else Icons.Rounded.Search
 
@@ -67,16 +65,16 @@ fun SearchBar(
         isFocused.value = focused
     }
 
-
     TextField(
         value = text ?: "",
+        singleLine = true,
         onValueChange = ::onValueChange,
-        shape = RoundedCornerShape(dimensionResource(R.dimen.corner_radius)),
-        placeholder = { hintStringRes?.let { stringResource(it) } },
+        shape = MaterialTheme.shapes.large,
+        placeholder = { hintStringRes?.let { Text(text = stringResource(it)) } },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         leadingIcon = {
             Icon(
-                contentDescription = "",
+                contentDescription = null,
                 imageVector = leadingIconVector,
                 modifier = Modifier.clickable(onClick = ::onLeadingIconClick)
             )
@@ -84,7 +82,7 @@ fun SearchBar(
         trailingIcon = {
             if (shouldShowClearIcon) {
                 Icon(
-                    contentDescription = "",
+                    contentDescription = null,
                     imageVector = Icons.Rounded.Clear,
                     modifier = Modifier.clickable(onClick = ::onClearClick)
                 )

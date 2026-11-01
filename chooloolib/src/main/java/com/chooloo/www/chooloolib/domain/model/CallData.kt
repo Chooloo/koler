@@ -15,37 +15,36 @@ import android.telecom.DisconnectCause
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import androidx.annotation.RequiresApi
-import com.chooloo.www.chooloolib.domain.model.ICallData.CallException
 
 class CallData(
-    override val call: Call
-) : ICallData {
-    override val handle: Uri?
+    val call: Call
+) {
+    val handle: Uri?
         get() = call.details.handle
 
-    override val extras: Bundle
+    val extras: Bundle
         get() = call.details.extras ?: Bundle()
 
-    override val canMute: Boolean
+    val canMute: Boolean
         get() = isCapable(CAPABILITY_MUTE)
 
-    override val canHold: Boolean
+    val canHold: Boolean
         get() = isCapable(CAPABILITY_HOLD)
 
-    override val canSwap: Boolean
+    val canSwap: Boolean
         get() = isCapable(CAPABILITY_SWAP_CONFERENCE)
 
-    override val parentCall: ICallData?
+    val parentCall: CallData?
         get() = call.parent?.let(::CallData)
 
-    override val isHolding: Boolean
+    val isHolding: Boolean
         get() = state == CallState.HOLDING
 
-    override val isDialing: Boolean
+    val isDialing: Boolean
         get() = state in arrayOf(CallState.DIALING, CallState.REDIALING)
 
     @Suppress("DEPRECATION")
-    override val state: CallState
+    val state: CallState
         get() = parentCall?.run {
             CallState.CONFERENCED
         } ?: CallState.fromTelecomState(
@@ -56,71 +55,71 @@ class CallData(
             }
         )
 
-    override val subject: String?
+    val subject: String?
         get() = if (extras.containsKey(Connection.EXTRA_CALL_SUBJECT)) {
             extras.getString(Connection.EXTRA_CALL_SUBJECT)
         } else {
             null
         }
 
-    override val number: String?
+    val number: String?
         get() = if (call.details.gatewayInfo != null) {
             call.details.gatewayInfo.originalAddress.schemeSpecificPart
         } else {
             handle?.schemeSpecificPart
         }
 
-    override val isConference: Boolean
+    val isConference: Boolean
         get() = call.details.hasProperty(Details.PROPERTY_CONFERENCE)
 
-    override val isEnterprise: Boolean
+    val isEnterprise: Boolean
         get() = call.details.hasProperty(Details.PROPERTY_ENTERPRISE_CALL)
 
-    override val connectMillis: Long
+    val connectMillis: Long
         get() = call.details.connectTimeMillis
 
-    override val durationMillis: Long
-        get() = System.currentTimeMillis() - connectMillis
+    val durationMillis: Long
+        get() = if (connectMillis > 0) System.currentTimeMillis() - connectMillis else 0L
 
-    override val callerDisplayName: String
+    val callerDisplayName: String?
         get() = call.details.callerDisplayName
 
-    override val textResponses: List<String>
+    val textResponses: List<String>
         get() = call.cannedTextResponses
 
-    override val childrenCalls: List<ICallData>
+    val childrenCalls: List<CallData>
         get() = call.children.map(::CallData)
 
-    override val conferenceableCalls: List<ICallData>
+    val conferenceableCalls: List<CallData>
         get() = call.conferenceableCalls.map(::CallData)
 
     @Suppress("DEPRECATION")
-    override val suggestedPhoneAccounts: List<PhoneAccountSuggestion>
+    val suggestedPhoneAccounts: List<PhoneAccountSuggestion>
         @RequiresApi(Build.VERSION_CODES.Q) get() = (
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    call.details.intentExtras.getParcelableArrayList(
+                    call.details.intentExtras?.getParcelableArrayList(
                         EXTRA_SUGGESTED_PHONE_ACCOUNTS,
                         PhoneAccountSuggestion::class.java
                     )
-                else call.details.intentExtras.getParcelableArrayList(
+                else call.details.intentExtras?.getParcelableArrayList(
                     EXTRA_SUGGESTED_PHONE_ACCOUNTS
                 )
                 ) ?: emptyList()
 
     @Suppress("DEPRECATION")
-    override val availablePhoneAccounts: List<PhoneAccountHandle>
+    val availablePhoneAccounts: List<PhoneAccountHandle>
         get() = (
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                    call.details.intentExtras.getParcelableArrayList(
+                    call.details.intentExtras?.getParcelableArrayList(
                         AVAILABLE_PHONE_ACCOUNTS,
                         PhoneAccountHandle::class.java
                     )
                 else
-                    call.details.intentExtras.getParcelableArrayList(AVAILABLE_PHONE_ACCOUNTS)
+                    call.details.intentExtras?.getParcelableArrayList(AVAILABLE_PHONE_ACCOUNTS)
                 )
             ?: emptyList()
 
-    override val isConnectingOrConnected: Boolean
+    val isConnectingOrConnected: Boolean
         get() = state in arrayOf(
             CallState.ACTIVE,
             CallState.HOLDING,
@@ -128,18 +127,17 @@ class CallData(
             CallState.CONNECTING,
             CallState.DIALING,
             CallState.REDIALING,
-            CallState.HOLDING,
             CallState.CONFERENCED
         )
 
-    override val disconnectCause: DisconnectCause
+    val disconnectCause: DisconnectCause
         get() = if (state in arrayOf(CallState.DISCONNECTED, CallState.IDLE)) {
             call.details.disconnectCause
         } else {
             DisconnectCause(DisconnectCause.UNKNOWN)
         }
 
-    override val hasValidAccounts: Boolean
+    val hasValidAccounts: Boolean
         get() {
             @Suppress("DEPRECATION")
             val phoneAccountHandles =
@@ -150,10 +148,10 @@ class CallData(
                     )
                 else
                     extras.getParcelableArrayList(AVAILABLE_PHONE_ACCOUNTS)
-            return !(call.details.accountHandle == null && phoneAccountHandles == null || phoneAccountHandles!!.isEmpty())
+            return !(call.details.accountHandle == null && phoneAccountHandles.isNullOrEmpty())
         }
 
-    override val hasStarted: Boolean
+    val hasStarted: Boolean
         get() = state !in arrayOf(
             CallState.NEW,
             CallState.DIALING,
@@ -162,29 +160,16 @@ class CallData(
             CallState.SELECT_PHONE_ACCOUNT
         )
 
-    override fun isCapable(capability: Int) = (call.details.callCapabilities and capability) != 0
+    fun isCapable(capability: Int) = (call.details.callCapabilities and capability) != 0
 
-    /**
-     * @throws CallException.CantHoldCallException
-     */
-    override fun hold() {
+    fun hold() {
         if (!isCapable(Details.CAPABILITY_HOLD)) {
             throw CallException.CantHoldCallException()
         }
         call.hold()
     }
 
-    /**
-     * Merge the call
-     * If there are conferenceable calls,
-     * make the first conferenceable call (probably the first call in this session)
-     * conference the new call (which will add the new call to existing conference if exist)
-     * Otherwise, if call is capable of "merge conference", do it
-     * Otherwise, throw an exception saying call cant be merge
-     *
-     * @throws CallException.CantMergeCallException
-     */
-    override fun mergeConference() {
+    fun mergeConference() {
         val conferenceableCalls = call.conferenceableCalls
         when {
             conferenceableCalls.isNotEmpty() -> conferenceableCalls[0].conference(call)
@@ -193,15 +178,15 @@ class CallData(
         }
     }
 
-    override fun unhold() {
+    fun unhold() {
         call.unhold()
     }
 
-    override fun accept() {
+    fun accept() {
         call.answer(call.details.videoState)
     }
 
-    override fun decline(message: String?) {
+    fun decline(message: String? = null) {
         if (state == CallState.INCOMING) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 call.reject(Call.REJECT_REASON_DECLINED)
@@ -213,39 +198,37 @@ class CallData(
         }
     }
 
-    /**
-     * Usually not capable
-     * Swaps between foreground call and backend call
-     *
-     * @throws CallException.CantSwapCallException
-     */
-    override fun swapConference() {
+    fun swapConference() {
         if (!isCapable(Connection.CAPABILITY_SWAP_CONFERENCE)) {
             throw CallException.CantSwapCallException()
         }
         call.swapConference()
     }
 
-    /**
-     * @throws CallException.CantLeaveConferenceException
-     */
-    override fun leaveConference() {
+    fun leaveConference() {
         if (!isCapable(Connection.CAPABILITY_SEPARATE_FROM_CONFERENCE)) {
             throw CallException.CantLeaveConferenceException()
         }
         call.splitFromConference()
     }
 
-    override fun conference(call: ICallData) {
-        this.call.conference(call.call)
+    fun conference(otherCall: CallData) {
+        this.call.conference(otherCall.call)
     }
 
-    override fun playKey(c: Char) {
+    fun playKey(c: Char) {
         call.playDtmfTone(c)
         call.stopDtmfTone()
     }
 
-    override fun selectAccount(accountHandle: PhoneAccountHandle) {
+    fun selectAccount(accountHandle: PhoneAccountHandle) {
         call.phoneAccountSelected(accountHandle, false)
+    }
+
+    sealed class CallException : Exception() {
+        class CantHoldCallException : CallException()
+        class CantSwapCallException : CallException()
+        class CantMergeCallException : CallException()
+        class CantLeaveConferenceException : CallException()
     }
 }

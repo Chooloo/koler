@@ -1,9 +1,8 @@
 package com.chooloo.www.chooloolib.domain.repository.navigation
 
-import com.chooloo.www.chooloolib.domain.repository.base.BaseRepository
 import com.chooloo.www.chooloolib.ui.activity.BaseActivity
 
-interface NavigationRepository : BaseRepository {
+interface NavigationRepository {
     suspend fun goToDonate()
     suspend fun goToRateApp()
     suspend fun goToAppGithub()

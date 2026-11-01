@@ -1,27 +1,46 @@
 package com.chooloo.www.chooloolib.ui.view
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.rememberAsyncImagePainter
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.compose.BottomSheet
 import com.chooloo.www.chooloolib.ui.compose.Call
 import com.chooloo.www.chooloolib.ui.compose.Dialpad
 import com.chooloo.www.chooloolib.ui.compose.DialpadTextField
 import com.chooloo.www.chooloolib.ui.compose.Keypad
-import com.chooloo.www.chooloolib.ui.viewmodel.call.CallViewModelImpl
-import com.chooloo.www.chooloolib.ui.viewmodel.dialpad.DialpadViewModelImpl
-import com.chooloo.www.chooloolib.ui.viewmodel.keypad.KeypadViewModelImpl
+import com.chooloo.www.chooloolib.ui.compose.list.CallsList
+import com.chooloo.www.chooloolib.ui.viewmodel.call.CallViewModel
+import com.chooloo.www.chooloolib.ui.viewmodel.dialpad.DialpadViewModel
+import com.chooloo.www.chooloolib.ui.viewmodel.keypad.KeypadViewModel
 
 @Composable
 fun CallView(
-    callViewModel: CallViewModelImpl = hiltViewModel(),
-    keypadViewModel: KeypadViewModelImpl = hiltViewModel(),
-    dialpadViewModel: DialpadViewModelImpl = hiltViewModel()
+    callViewModel: CallViewModel = hiltViewModel(),
+    keypadViewModel: KeypadViewModel = hiltViewModel(),
+    dialpadViewModel: DialpadViewModel = hiltViewModel()
 ) {
-    val uiState by callViewModel.uiState.collectAsState()
-    val keypadUiState by keypadViewModel.uiState.collectAsState()
-    val dialpadUiState by dialpadViewModel.uiState.collectAsState()
+    val uiState by callViewModel.uiState.collectAsStateWithLifecycle()
+    val keypadUiState by keypadViewModel.uiState.collectAsStateWithLifecycle()
+    val dialpadUiState by dialpadViewModel.uiState.collectAsStateWithLifecycle()
+
+    val defaultPainter = rememberVectorPainter(Icons.Rounded.Person)
+    val callerPainter = if (uiState.callerData.imageUri != null) {
+        rememberAsyncImagePainter(
+            model = uiState.callerData.imageUri,
+            error = defaultPainter,
+            placeholder = defaultPainter
+        )
+    } else {
+        defaultPainter
+    }
 
     BottomSheet(visible = uiState.isDialpadOpen, onDismiss = callViewModel::onDismissDialpad) {
         Dialpad(
@@ -34,19 +53,34 @@ fun CallView(
     }
 
     BottomSheet(visible = uiState.isKeypadOpen, onDismiss = callViewModel::onDismissKeypad) {
-        DialpadTextField(text = keypadUiState.value)
-        Keypad(
-            onKeyClick = {
-                callViewModel.onKeypadClick(it)
-                keypadViewModel.onValueClick(it.toString())
-            }
+        Column {
+            DialpadTextField(text = keypadUiState.value)
+            Keypad(
+                onKeyClick = {
+                    callViewModel.onKeypadClick(it)
+                    keypadViewModel.onValueClick(it.toString())
+                }
+            )
+        }
+    }
+
+    BottomSheet(visible = uiState.isManageOpen, onDismiss = callViewModel::onDismissManage) {
+        CallsList(
+            items = uiState.calls,
+            onHangupCallClick = { it.decline() },
+            onSeparateCallClick = { try { it.leaveConference() } catch (_: Exception) {} }
         )
     }
 
     Call(
-        callerName = "",
+        callerName = uiState.callerData.name ?: stringResource(R.string.caller_unknown),
+        stateText = uiState.call?.state?.stringRes?.let { stringResource(it) },
+        elapsedSeconds = uiState.elapsedSeconds,
+        callerImagePainter = callerPainter,
         callsState = uiState.callsState,
         visibleCallActions = uiState.visibleActions,
+        enabledCallActions = uiState.enabledActions,
+        activatedCallActions = uiState.activatedActions,
         onCallActionClick = callViewModel::onCallActionClick
     )
 }

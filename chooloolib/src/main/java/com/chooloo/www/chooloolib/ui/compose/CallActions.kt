@@ -13,8 +13,6 @@ import androidx.compose.material.icons.rounded.MicOff
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.SwapCalls
-import androidx.compose.material.icons.rounded.VolumeDown
-import androidx.compose.material.icons.rounded.VolumeUp
 import androidx.compose.runtime.Composable
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.CallActionData
@@ -52,7 +50,7 @@ fun CallActions(
             isActivated = action in activatedActions
         )
 
-        CallActionType.MUTE_ON -> CallActionData(
+        CallActionType.MUTE_ON, CallActionType.MUTE_OFF -> CallActionData(
             icon = Icons.Rounded.MicOff,
             action = CallActionType.MUTE_ON,
             text = R.string.call_action_mute,
@@ -63,7 +61,7 @@ fun CallActions(
             activatedText = R.string.call_action_unmute,
         )
 
-        CallActionType.HOLD_ON -> CallActionData(
+        CallActionType.HOLD_ON, CallActionType.HOLD_OFF -> CallActionData(
             icon = Icons.Rounded.Pause,
             action = CallActionType.HOLD_ON,
             text = R.string.call_action_hold,
@@ -72,17 +70,6 @@ fun CallActions(
             activatedIcon = Icons.Rounded.PlayArrow,
             isActivated = action in activatedActions,
             activatedText = R.string.call_action_resume,
-        )
-
-        CallActionType.MUTE_OFF -> CallActionData(
-            icon = Icons.Rounded.MicOff,
-            action = CallActionType.MUTE_ON,
-            text = R.string.call_action_mute,
-            activatedIcon = Icons.Rounded.Mic,
-            isEnabled = action in enabledActions,
-            counterAction = CallActionType.MUTE_OFF,
-            isActivated = action in activatedActions,
-            activatedText = R.string.call_action_unmute,
         )
 
         CallActionType.ADD_CALL -> CallActionData(
@@ -93,34 +80,12 @@ fun CallActions(
             isActivated = action in activatedActions
         )
 
-        CallActionType.HOLD_OFF -> CallActionData(
-            icon = Icons.Rounded.Pause,
-            action = CallActionType.HOLD_ON,
-            text = R.string.call_action_hold,
-            isEnabled = action in enabledActions,
-            counterAction = CallActionType.HOLD_OFF,
-            activatedIcon = Icons.Rounded.PlayArrow,
-            isActivated = action in activatedActions,
-            activatedText = R.string.call_action_resume,
-        )
-
-        CallActionType.SPEAKER_ON -> CallActionData(
+        CallActionType.SPEAKER_ON, CallActionType.SPEAKER_OFF -> CallActionData(
             action = CallActionType.SPEAKER_ON,
             isEnabled = action in enabledActions,
             icon = Icons.AutoMirrored.Rounded.VolumeDown,
             activatedIcon = Icons.AutoMirrored.Rounded.VolumeUp,
-            text = R.string.call_action_speaker_off,
-            isActivated = action in activatedActions,
-            counterAction = CallActionType.SPEAKER_OFF,
-            activatedText = R.string.call_action_speaker_off,
-        )
-
-        CallActionType.SPEAKER_OFF -> CallActionData(
-            icon = Icons.AutoMirrored.Rounded.VolumeDown,
-            action = CallActionType.SPEAKER_ON,
-            isEnabled = action in enabledActions,
-            activatedIcon = Icons.AutoMirrored.Rounded.VolumeUp,
-            text = R.string.call_action_speaker_off,
+            text = R.string.call_action_speaker,
             isActivated = action in activatedActions,
             counterAction = CallActionType.SPEAKER_OFF,
             activatedText = R.string.call_action_speaker_off,
@@ -137,7 +102,15 @@ fun CallActions(
         visibleActions.forEach { action ->
             item(key = action) {
                 getActionData(action)?.let { actionData ->
-                    CallAction(callActionData = actionData, onClick = { onActionClick(action) })
+                    val targetAction = if (actionData.isActivated && actionData.counterAction != null) {
+                        actionData.counterAction
+                    } else {
+                        actionData.action
+                    }
+                    CallAction(
+                        callActionData = actionData,
+                        onClick = { onActionClick(targetAction) }
+                    )
                 }
             }
         }

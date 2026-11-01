@@ -1,12 +1,13 @@
 package com.chooloo.www.chooloolib.utils
 
 import android.app.Activity
+import android.app.KeyguardManager
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.util.TypedValue
+import android.os.Build
+import android.view.WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+import android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+import android.view.WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
 import android.widget.Toast
-import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
 import com.chooloo.www.chooloolib.ui.viewmodel.base.BaseViewModel
 
 fun toast(context: Context, stringRes: Int?) {
@@ -19,28 +20,24 @@ fun showVMError(context: Context, error: BaseViewModel.VMError) {
     toast(context, error.strRes)
 }
 
-fun Context.getSizeInDp(px: Int) = (px * resources.displayMetrics.density + 0.5f).toInt()
-
-fun Activity.getWindowColor(): Int {
-    val typedValue = TypedValue()
-    theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true)
-    return if (typedValue.type in TypedValue.TYPE_FIRST_COLOR_INT..TypedValue.TYPE_LAST_COLOR_INT) {
-        typedValue.data
-    } else -1
+fun Activity.disableKeyboard() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        keyguardManager.requestDismissKeyguard(this, null)
+    } else {
+        @Suppress("DEPRECATION")
+        window.addFlags(FLAG_DISMISS_KEYGUARD)
+    }
 }
 
-fun Context.getSelectableItemBackgroundDrawable(): Drawable? {
-    val typedValue = TypedValue()
-    theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
-    return ContextCompat.getDrawable(this, typedValue.resourceId)
+fun Activity.showWhenLocked() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        setTurnScreenOn(true)
+        setShowWhenLocked(true)
+        keyguardManager.requestDismissKeyguard(this, null)
+    } else {
+        @Suppress("DEPRECATION")
+        window.addFlags(FLAG_SHOW_WHEN_LOCKED or FLAG_TURN_SCREEN_ON or FLAG_DISMISS_KEYGUARD)
+    }
 }
-
-fun Context.getSelectableItemBackgroundBorderlessDrawable(): Drawable? {
-    val typedValue = TypedValue()
-    theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, typedValue, true)
-    return ContextCompat.getDrawable(this, typedValue.resourceId)
-}
-
-@ColorInt
-fun Context.getAttrColor(attrRes: Int): Int =
-    TypedValue().also { theme.resolveAttribute(attrRes, it, true) }.data

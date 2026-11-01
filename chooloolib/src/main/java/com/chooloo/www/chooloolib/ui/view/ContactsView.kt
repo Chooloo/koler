@@ -3,25 +3,25 @@ package com.chooloo.www.chooloolib.ui.view
 import android.Manifest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.domain.model.ContactData
 import com.chooloo.www.chooloolib.ui.compose.Permissioned
 import com.chooloo.www.chooloolib.ui.compose.list.ContactsList
-import com.chooloo.www.chooloolib.ui.viewmodel.contacts.ContactsViewModelImpl
+import com.chooloo.www.chooloolib.ui.viewmodel.contacts.ContactsViewModel
 
 @Composable
 fun ContactsView(
     modifier: Modifier = Modifier,
     filter: String,
+    withFavorites: Boolean = true,
     onItemClick: (ContactData) -> Unit = {},
     onItemLongClick: (ContactData) -> Unit = {},
-    viewModel: ContactsViewModelImpl = hiltViewModel()
+    viewModel: ContactsViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Permissioned(
         permissions = listOf(
@@ -35,6 +35,7 @@ fun ContactsView(
         ContactsList(
             modifier = modifier,
             items = uiState.items,
+            withFavorites = withFavorites && filter.isEmpty(),
             onItemClick = onItemClick,
             onItemLongClick = onItemLongClick,
             loadingState = uiState.loadingState,

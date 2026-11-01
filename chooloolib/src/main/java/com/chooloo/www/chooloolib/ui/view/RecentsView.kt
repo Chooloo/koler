@@ -3,14 +3,14 @@ package com.chooloo.www.chooloolib.ui.view
 import android.Manifest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.domain.model.RecentData
 import com.chooloo.www.chooloolib.ui.compose.Permissioned
 import com.chooloo.www.chooloolib.ui.compose.list.RecentsList
-import com.chooloo.www.chooloolib.ui.viewmodel.recents.RecentsViewModelImpl
+import com.chooloo.www.chooloolib.ui.viewmodel.recents.RecentsViewModel
 
 @Composable
 fun RecentsView(
@@ -18,9 +18,10 @@ fun RecentsView(
     filter: String? = null,
     onItemClick: (RecentData) -> Unit = {},
     onItemLongClick: (RecentData) -> Unit = {},
-    viewModel: RecentsViewModelImpl = hiltViewModel()
+    viewModel: RecentsViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val isGroupRecentsEnabled by viewModel.isGroupRecentsEnabled.collectAsStateWithLifecycle()
 
     Permissioned(
         permissions = listOf(
@@ -34,6 +35,7 @@ fun RecentsView(
         RecentsList(
             modifier = modifier,
             items = uiState.items,
+            groupSimilar = isGroupRecentsEnabled && filter.isNullOrEmpty(),
             onItemClick = onItemClick,
             onItemLongClick = onItemLongClick,
             loadingState = uiState.loadingState,

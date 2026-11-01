@@ -5,5 +5,8 @@ import com.chooloo.www.chooloolib.domain.model.record.RawContactRecord
 data class AccountData(
     val contactId: Long,
     val data: String? = null,
+    val label: String? = null,
+    val accountName: String? = null,
+    val accountType: String? = null,
     val type: RawContactRecord.RawContactType = RawContactRecord.RawContactType.CUSTOM
 )

@@ -1,21 +1,21 @@
 package com.chooloo.www.chooloolib.ui.compose.list.item
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.ContactData
 import com.chooloo.www.chooloolib.ui.compose.CircleImage
+import com.chooloo.www.chooloolib.ui.theme.AvatarSize
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
 fun ContactListItem(
@@ -25,6 +25,17 @@ fun ContactListItem(
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {}
 ) {
+    val defaultPainter = rememberVectorPainter(Icons.Rounded.Person)
+    val avatarPainter = if (contactData.imageUri != null) {
+        rememberAsyncImagePainter(
+            model = contactData.imageUri,
+            error = defaultPainter,
+            placeholder = defaultPainter
+        )
+    } else {
+        defaultPainter
+    }
+
     ListItem(
         modifier = modifier,
         subtitle = contactData.number,
@@ -34,18 +45,11 @@ fun ContactListItem(
         onLongClick = onLongClick,
         startContainer = {
             Box(
-                modifier = Modifier.padding(
-                    start = 0.dp,
-                    top = 0.dp,
-                    end = dimensionResource(R.dimen.spacing_small),
-                    bottom = 0.dp
-                )
+                modifier = Modifier.padding(end = Spacing.Medium)
             ) {
                 CircleImage(
-                    modifier = Modifier
-                        .width(dimensionResource(id = R.dimen.image_size_medium))
-                        .height(dimensionResource(id = R.dimen.image_size_medium)),
-                    painter = rememberVectorPainter(Icons.Rounded.Person)
+                    modifier = Modifier.size(AvatarSize.Medium),
+                    painter = avatarPainter
                 )
             }
         }

@@ -1,10 +1,9 @@
 package com.chooloo.www.chooloolib.domain.repository.contact
 
 import com.chooloo.www.chooloolib.domain.model.record.ContactRecord
-import com.chooloo.www.chooloolib.domain.repository.base.BaseRepository
 import kotlinx.coroutines.flow.Flow
 
-interface ContactRepository : BaseRepository {
+interface ContactRepository {
     suspend fun getContact(contactId: Long): ContactRecord?
     fun getContactFlow(contactId: Long): Flow<ContactRecord?>
     suspend fun getContacts(filter: String? = null): List<ContactRecord>

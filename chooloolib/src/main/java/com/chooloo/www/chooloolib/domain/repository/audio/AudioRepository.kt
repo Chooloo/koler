@@ -1,16 +1,14 @@
 package com.chooloo.www.chooloolib.domain.repository.audio
 
 import android.media.AudioManager
-import com.chooloo.www.chooloolib.domain.repository.base.BaseRepository
 
-interface AudioRepository : BaseRepository {
+interface AudioRepository {
     suspend fun toggleMute(on: Boolean)
     suspend fun toggleSpeaker(on: Boolean)
     suspend fun setAudioMode(audioMode: AudioMode)
 
     suspend fun playTone(tone: Int)
     suspend fun playToneByChar(char: Char)
-    suspend fun playToneByKey(keyCode: Int)
     suspend fun playTone(tone: Int, durationMs: Int)
 
     suspend fun vibrate(millis: Long = 10)

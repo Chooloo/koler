@@ -9,11 +9,10 @@ import androidx.compose.material.icons.rounded.CallEnd
 import androidx.compose.material.icons.rounded.QuestionMark
 import androidx.compose.material.icons.rounded.Voicemail
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.RecentData
 import com.chooloo.www.chooloolib.domain.model.record.RecentRecord.Companion.TYPE_BLOCKED
 import com.chooloo.www.chooloolib.domain.model.record.RecentRecord.Companion.TYPE_INCOMING
@@ -21,6 +20,7 @@ import com.chooloo.www.chooloolib.domain.model.record.RecentRecord.Companion.TYP
 import com.chooloo.www.chooloolib.domain.model.record.RecentRecord.Companion.TYPE_OUTGOING
 import com.chooloo.www.chooloolib.domain.model.record.RecentRecord.Companion.TYPE_REJECTED
 import com.chooloo.www.chooloolib.domain.model.record.RecentRecord.Companion.TYPE_VOICEMAIL
+import com.chooloo.www.chooloolib.ui.theme.ChoolooTheme
 import com.chooloo.www.chooloolib.utils.getHoursString
 
 @Composable
@@ -55,13 +55,9 @@ fun RecentListItem(
     }
 
     val callTypeIconTint = when (recentData.type) {
-        TYPE_MISSED -> colorResource(R.color.negative)
-        TYPE_BLOCKED -> colorResource(R.color.negative)
-        TYPE_REJECTED -> colorResource(R.color.negative)
-        TYPE_OUTGOING -> colorResource(R.color.positive)
-        TYPE_INCOMING -> colorResource(R.color.positive)
-        TYPE_VOICEMAIL -> colorResource(R.color.positive)
-        else -> colorResource(R.color.primary)
+        TYPE_MISSED, TYPE_BLOCKED, TYPE_REJECTED -> ChoolooTheme.extendedColors.negative
+        TYPE_OUTGOING, TYPE_INCOMING, TYPE_VOICEMAIL -> ChoolooTheme.extendedColors.positive
+        else -> MaterialTheme.colorScheme.primary
     }
     
     ListItem(

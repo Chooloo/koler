@@ -13,6 +13,11 @@ data class RecentRecord(
     @CallType val type: Int,
     val duration: Long = 0,
     val cachedName: String? = null,
+    val cachedPhotoUri: String? = null,
+    val cachedNumberLabel: String? = null,
+    val geocodedLocation: String? = null,
+    val cachedNumberType: Int? = null,
+    val numberPresentation: Int = CallLog.Calls.PRESENTATION_ALLOWED,
     val groupAccounts: List<RecentData> = listOf()
 ) : Serializable {
     @Retention(AnnotationRetention.SOURCE)

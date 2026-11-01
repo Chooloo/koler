@@ -3,21 +3,16 @@ package com.chooloo.www.chooloolib.ui.compose.list.item
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.utils.getAttrColor
-
+import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
 fun HeaderListItem(
@@ -27,20 +22,21 @@ fun HeaderListItem(
     Box(
         modifier = modifier
             .padding(
-                end = dimensionResource(R.dimen.spacing),
-                top = dimensionResource(R.dimen.spacing_small),
-                bottom = dimensionResource(R.dimen.spacing_tiny),
-                start = dimensionResource(R.dimen.spacing_tiny),
+                end = Spacing.Medium,
+                top = Spacing.Medium,
+                bottom = Spacing.Small,
+                start = Spacing.Small,
             )
-            .clip(RoundedCornerShape(dimensionResource(R.dimen.corner_radius)))
-            .background(Color(LocalContext.current.getAttrColor(R.attr.colorSurfaceContainerHigh)))
+            .clip(MaterialTheme.shapes.large)
+            .background(colorScheme.surfaceContainerHigh)
     ) {
         Text(
             text = header,
+            color = colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.Bold,
             style = typography.labelSmall,
             modifier = Modifier
-                .padding(horizontal = dimensionResource(R.dimen.spacing_tiny), vertical = 4.dp)
+                .padding(horizontal = Spacing.Small, vertical = Spacing.ExtraSmall)
         )
     }
 }

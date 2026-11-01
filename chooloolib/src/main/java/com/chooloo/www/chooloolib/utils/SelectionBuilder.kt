@@ -1,19 +1,28 @@
 package com.chooloo.www.chooloolib.utils
 
-open class SelectionBuilder {
+class SelectionBuilder {
     private val selections = arrayListOf<String>()
+    private val args = arrayListOf<String>()
 
-    fun addSelection(key: String, value: Any?) = this.also {
-        value?.let { selections.add("$key = $value") }
+    fun addSelection(key: String, value: Any?) = apply {
+        value?.let {
+            selections.add("$key = ?")
+            args.add(it.toString())
+        }
     }
 
-    fun addNotNull(key: String) = this.also {
+    fun addNotNull(key: String) = apply {
         selections.add("$key IS NOT NULL")
     }
 
-    fun addString(string: String) = this.also {
-        selections.add(string)
+    fun addRaw(clause: String, vararg clauseArgs: String) = apply {
+        if (clause.isNotEmpty()) {
+            selections.add(clause)
+            args.addAll(clauseArgs)
+        }
     }
 
-    fun build() = selections.joinToString(" AND ")
+    fun build(): String? = selections.takeIf { it.isNotEmpty() }?.joinToString(" AND ")
+
+    fun buildArgs(): Array<String>? = args.takeIf { it.isNotEmpty() }?.toTypedArray()
 }

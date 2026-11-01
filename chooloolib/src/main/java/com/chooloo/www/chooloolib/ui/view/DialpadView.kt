@@ -2,18 +2,26 @@ package com.chooloo.www.chooloolib.ui.view
 
 import android.Manifest
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.ui.compose.Dialpad
 import com.chooloo.www.chooloolib.ui.compose.Permissioned
-import com.chooloo.www.chooloolib.ui.viewmodel.dialpad.DialpadViewModelImpl
+import com.chooloo.www.chooloolib.ui.viewmodel.dialpad.DialpadViewModel
 
 @Composable
 fun DialerView(
-    dialpadViewModel: DialpadViewModelImpl = hiltViewModel()
+    initialNumber: String? = null,
+    dialpadViewModel: DialpadViewModel = hiltViewModel()
 ) {
-    val uiState by dialpadViewModel.uiState.collectAsState()
+    val uiState by dialpadViewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = initialNumber) {
+        if (!initialNumber.isNullOrEmpty()) {
+            dialpadViewModel.setNumber(initialNumber)
+        }
+    }
 
     Permissioned(
         permissions = listOf(Manifest.permission.CALL_PHONE)
