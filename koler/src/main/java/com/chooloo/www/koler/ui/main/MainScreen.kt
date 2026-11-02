@@ -36,8 +36,9 @@ fun MainScreen(
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
+    val initialPage = uiState.initialPage ?: return
     val pagerState = rememberPagerState(
-        initialPage = uiState.initialPage.ordinal,
+        initialPage = initialPage.ordinal,
         pageCount = { 3 }
     )
     val tabsHeaders = listOf(

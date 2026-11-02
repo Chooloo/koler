@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -136,7 +137,7 @@ class CallViewModel @Inject constructor(
         uiState.value.call?.id?.let { callRepository.playDtmf(it, key) }
         localState.update { it.copy(keypadValue = it.keypadValue + key) }
         viewModelScope.launch {
-            if (preferenceRepository.isDialpadVibrateEnabled.value) audioRepository.vibrate()
+            if (preferenceRepository.settings.first().isDialpadVibrateEnabled) audioRepository.vibrate()
         }
     }
 

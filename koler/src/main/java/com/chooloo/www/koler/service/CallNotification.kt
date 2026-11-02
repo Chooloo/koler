@@ -11,7 +11,7 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.di.IoScope
+import com.chooloo.www.chooloolib.di.ApplicationScope
 import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 @Singleton
 class CallNotification @Inject constructor(
     @ApplicationContext private val context: Context,
-    @IoScope private val ioScope: CoroutineScope,
+    @ApplicationScope private val applicationScope: CoroutineScope,
     private val callRepository: CallRepository,
     private val phoneRepository: PhoneRepository,
     private val preferenceRepository: PreferenceRepository,
@@ -46,11 +46,12 @@ class CallNotification @Inject constructor(
     fun attach() {
         createChannels()
         job?.cancel()
-        job = ioScope.launch {
-            combine(callRepository.calls, callRepository.audio) { calls, audio -> primaryCall(calls) to audio }
-                .collectLatest { (call, audio) ->
-                    if (call == null) notificationManager.cancel(ID) else show(call, audio)
-                }
+        job = applicationScope.launch {
+            combine(callRepository.calls, callRepository.audio, preferenceRepository.settings) { calls, audio, settings ->
+                Triple(primaryCall(calls), audio, settings.incomingCallMode)
+            }.collectLatest { (call, audio, incomingCallMode) ->
+                if (call == null) notificationManager.cancel(ID) else show(call, audio, incomingCallMode)
+            }
         }
     }
 
@@ -61,11 +62,11 @@ class CallNotification @Inject constructor(
     }
 
     @SuppressLint("MissingPermission")
-    private suspend fun show(call: Call, audio: CallAudio) {
+    private suspend fun show(call: Call, audio: CallAudio, incomingCallMode: IncomingCallMode) {
         val title = call.number?.let { phoneRepository.lookup(it)?.name } ?: call.number
             ?: context.getString(R.string.caller_unknown)
         val isIncoming = call.state == CallState.INCOMING
-        val isPopUp = preferenceRepository.incomingCallMode.value == IncomingCallMode.POP_UP
+        val isPopUp = incomingCallMode == IncomingCallMode.POP_UP
         val channelId = if (isIncoming && isPopUp) CHANNEL_ID_PRIORITY_HIGH else CHANNEL_ID_PRIORITY_LOW
 
         val builder = NotificationCompat.Builder(context, channelId)

@@ -1,7 +1,6 @@
 package com.chooloo.www.chooloolib.ui.preferences
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -17,16 +16,16 @@ fun PreferencesScreen(
     viewModel: PreferencesViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val settings = viewModel.settings.collectAsStateWithLifecycle().value ?: return
 
     Preferences(
-        defaultPage = uiState.defaultPage,
-        themeMode = uiState.themeMode,
-        isAnimationsEnabled = uiState.isAnimationsEnabled,
-        incomingCallMode = uiState.incomingCallMode,
-        isGroupRecentsEnabled = uiState.isGroupRecentsEnabled,
-        isDialpadTonesEnabled = uiState.isDialpadTonesEnabled,
-        isDialpadVibrateEnabled = uiState.isDialpadVibrateEnabled,
+        defaultPage = settings.defaultPage,
+        themeMode = settings.themeMode,
+        isAnimationsEnabled = settings.isAnimationsEnabled,
+        incomingCallMode = settings.incomingCallMode,
+        isGroupRecentsEnabled = settings.isGroupRecentsEnabled,
+        isDialpadTonesEnabled = settings.isDialpadTonesEnabled,
+        isDialpadVibrateEnabled = settings.isDialpadVibrateEnabled,
         showDialerPreferences = showDialerPreferences,
         onDefaultPage = viewModel::onDefaultPage,
         onThemeMode = viewModel::onThemeMode,

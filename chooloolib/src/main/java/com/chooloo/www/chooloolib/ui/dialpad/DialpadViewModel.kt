@@ -11,6 +11,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
@@ -52,8 +53,9 @@ class DialpadViewModel @Inject constructor(
 
     fun onKeyClick(key: Char) {
         viewModelScope.launch {
-            if (preferenceRepository.isDialpadTonesEnabled.value) audioRepository.playDtmfTone(key)
-            if (preferenceRepository.isDialpadVibrateEnabled.value) audioRepository.vibrate()
+            val settings = preferenceRepository.settings.first()
+            if (settings.isDialpadTonesEnabled) audioRepository.playDtmfTone(key)
+            if (settings.isDialpadVibrateEnabled) audioRepository.vibrate()
         }
         val value = _uiState.updateAndGet { it.copy(value = it.value + key) }.value
         viewModelScope.launch { telecomRepository.handleSecretCode(value) }

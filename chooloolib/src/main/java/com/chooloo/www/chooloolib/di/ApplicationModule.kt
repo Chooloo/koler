@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.di
 
 import android.content.ContentResolver
 import android.content.Context
-import android.content.SharedPreferences
 import android.media.AudioManager
 import android.os.Build
 import android.os.Vibrator
@@ -10,6 +9,11 @@ import android.os.VibratorManager
 import android.telecom.TelecomManager
 import android.telephony.TelephonyManager
 import androidx.core.app.NotificationManagerCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.SharedPreferencesMigration
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import com.chooloo.www.chooloolib.data.repository.AudioRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.BlockedRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.ContactAccountRepositoryImpl
@@ -66,8 +70,14 @@ object SystemServiceModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        context.getSharedPreferences("chooloo_preferences", Context.MODE_PRIVATE)
+    fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create(
+            migrations = listOf(SharedPreferencesMigration(context, LEGACY_PREFERENCES_NAME)),
+            produceFile = { context.preferencesDataStoreFile(PREFERENCES_NAME) }
+        )
+
+    private const val PREFERENCES_NAME = "settings"
+    private const val LEGACY_PREFERENCES_NAME = "chooloo_preferences"
 }
 
 @Module

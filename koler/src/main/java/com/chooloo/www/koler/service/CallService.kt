@@ -6,18 +6,23 @@ import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
 import android.telecom.TelecomManager
+import com.chooloo.www.chooloolib.di.ApplicationScope
 import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.koler.data.CallRepositoryImpl
 import com.chooloo.www.koler.ui.call.CallActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CallService : InCallService() {
     @Inject lateinit var callRepository: CallRepositoryImpl
     @Inject lateinit var callNotification: CallNotification
     @Inject lateinit var preferenceRepository: PreferenceRepository
+    @Inject @ApplicationScope lateinit var applicationScope: CoroutineScope
 
     override fun onCreate() {
         super.onCreate()
@@ -66,11 +71,13 @@ class CallService : InCallService() {
     }
 
     private fun showCallUi(showDialpad: Boolean) {
-        if (preferenceRepository.incomingCallMode.value != IncomingCallMode.FULL_SCREEN) return
-        startActivity(
-            Intent(this, CallActivity::class.java)
-                .putExtra(CallActivity.EXTRA_SHOW_DIALPAD, showDialpad)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION)
-        )
+        applicationScope.launch {
+            if (preferenceRepository.settings.first().incomingCallMode != IncomingCallMode.FULL_SCREEN) return@launch
+            startActivity(
+                Intent(this@CallService, CallActivity::class.java)
+                    .putExtra(CallActivity.EXTRA_SHOW_DIALPAD, showDialpad)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION)
+            )
+        }
     }
 }

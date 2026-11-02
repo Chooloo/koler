@@ -2,23 +2,18 @@ package com.chooloo.www.chooloolib.domain.repository
 
 import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
+import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface PreferenceRepository {
-    val defaultPage: StateFlow<Page>
-    val themeMode: StateFlow<ThemeMode>
-    val isAnimationsEnabled: StateFlow<Boolean>
-    val isGroupRecentsEnabled: StateFlow<Boolean>
-    val isDialpadTonesEnabled: StateFlow<Boolean>
-    val isDialpadVibrateEnabled: StateFlow<Boolean>
-    val incomingCallMode: StateFlow<IncomingCallMode>
+    val settings: Flow<Settings>
 
-    fun setDefaultPage(page: Page)
-    fun setThemeMode(themeMode: ThemeMode)
-    fun setIsAnimationsEnabled(isEnabled: Boolean)
-    fun setIsGroupRecentsEnabled(isEnabled: Boolean)
-    fun setIsDialpadTonesEnabled(isEnabled: Boolean)
-    fun setIsDialpadVibrateEnabled(isEnabled: Boolean)
-    fun setIncomingCallMode(incomingCallMode: IncomingCallMode)
+    suspend fun setDefaultPage(page: Page)
+    suspend fun setThemeMode(themeMode: ThemeMode)
+    suspend fun setIncomingCallMode(incomingCallMode: IncomingCallMode)
+    suspend fun setIsAnimationsEnabled(isEnabled: Boolean)
+    suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean)
+    suspend fun setIsDialpadTonesEnabled(isEnabled: Boolean)
+    suspend fun setIsDialpadVibrateEnabled(isEnabled: Boolean)
 }
