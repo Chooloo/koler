@@ -6,32 +6,25 @@ import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
 import android.telecom.TelecomManager
-import com.chooloo.www.chooloolib.di.ApplicationScope
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
-import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.koler.data.CallRepositoryImpl
+import com.chooloo.www.koler.data.telecomState
 import com.chooloo.www.koler.ui.call.CallActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CallService : InCallService() {
     @Inject lateinit var callRepository: CallRepositoryImpl
     @Inject lateinit var callNotification: CallNotification
-    @Inject lateinit var preferenceRepository: PreferenceRepository
-    @Inject @ApplicationScope lateinit var applicationScope: CoroutineScope
 
     override fun onCreate() {
         super.onCreate()
         callRepository.onServiceCreated(this)
-        callNotification.attach()
+        callNotification.attach(this)
     }
 
     override fun onDestroy() {
-        callNotification.detach()
+        callNotification.detach(this)
         callRepository.onServiceDestroyed(this)
         super.onDestroy()
     }
@@ -47,7 +40,7 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         callRepository.onCallAdded(call)
-        showCallUi(showDialpad = false)
+        if (call.telecomState != Call.STATE_RINGING) showCallUi(showDialpad = false)
     }
 
     override fun onCallRemoved(call: Call) {
@@ -71,13 +64,10 @@ class CallService : InCallService() {
     }
 
     private fun showCallUi(showDialpad: Boolean) {
-        applicationScope.launch {
-            if (preferenceRepository.settings.first().incomingCallMode != IncomingCallMode.FULL_SCREEN) return@launch
-            startActivity(
-                Intent(this@CallService, CallActivity::class.java)
-                    .putExtra(CallActivity.EXTRA_SHOW_DIALPAD, showDialpad)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION)
-            )
-        }
+        startActivity(
+            Intent(this, CallActivity::class.java)
+                .putExtra(CallActivity.EXTRA_SHOW_DIALPAD, showDialpad)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 }

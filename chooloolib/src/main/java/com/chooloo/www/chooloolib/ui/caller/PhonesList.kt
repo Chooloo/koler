@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.ui.components.list.List
-import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun PhonesList(
@@ -19,13 +18,10 @@ fun PhonesList(
     onItemClick: (item: Phone) -> Unit = {},
     onItemLongClick: (item: Phone) -> Unit = {},
     onItemActionClick: (item: Phone) -> Unit = {},
-    loadingState: LoadingState = LoadingState.IDLE,
 ) {
     List(
         modifier = modifier,
         items = items.distinctBy { it.number },
-        loadingState = loadingState,
-        loadingTitle = R.string.loading_phones,
         emptyTitle = R.string.no_results_phones,
         emptyImage = {
             Icon(
@@ -33,7 +29,7 @@ fun PhonesList(
                 stringResource(id = R.string.cd_call)
             )
         },
-        key = { item -> item.hashCode().toString() },
+        key = { item -> item.id.toString() },
         item = { item ->
             PhoneListItem(
                 phone = item,
@@ -52,26 +48,5 @@ fun PhonesListPreview() {
         items = listOf(
             Phone(id = 0, contactId = 0, number = "123123"),
         ),
-        loadingState = LoadingState.SUCCESS
-    )
-}
-
-@Preview
-@Composable
-fun LoadingPhonesListPreview() {
-    PhonesList(
-        items = listOf(
-            Phone(id = 0, contactId = 0, number = "123123"),
-        ),
-        loadingState = LoadingState.LOADING
-    )
-}
-
-@Preview
-@Composable
-fun EmptyPhonesListPreview() {
-    PhonesList(
-        items = emptyList(),
-        loadingState = LoadingState.IDLE,
     )
 }

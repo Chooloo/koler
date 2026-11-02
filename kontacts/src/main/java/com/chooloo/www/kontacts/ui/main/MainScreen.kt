@@ -18,6 +18,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.caller.CallerScreen
+import com.chooloo.www.chooloolib.ui.caller.CallerTarget
 import com.chooloo.www.chooloolib.ui.common.createContact
 import com.chooloo.www.chooloolib.ui.components.AppBarHeader
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
@@ -48,7 +49,7 @@ fun MainScreen(
         visible = uiState.selectedContactId != null,
         onDismiss = mainViewModel::onDismissSelectedContact
     ) {
-        CallerScreen(contactId = uiState.selectedContactId)
+        uiState.selectedContactId?.let { CallerScreen(CallerTarget.ContactTarget(it)) }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {

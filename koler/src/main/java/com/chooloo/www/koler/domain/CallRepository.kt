@@ -16,6 +16,7 @@ interface CallRepository {
     fun merge(callId: String)
     fun separate(callId: String)
     fun playDtmf(callId: String, key: Char)
+    fun selectPhoneAccount(callId: String, accountId: String)
     fun setMuted(isMuted: Boolean)
     fun setAudioRoute(route: AudioRoute)
 }

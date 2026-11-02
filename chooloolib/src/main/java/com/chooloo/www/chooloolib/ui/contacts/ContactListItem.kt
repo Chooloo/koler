@@ -22,7 +22,6 @@ import com.chooloo.www.chooloolib.ui.theme.Spacing
 fun ContactListItem(
     modifier: Modifier = Modifier,
     contact: Contact,
-    highlightText: String? = null,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {}
 ) {
@@ -40,7 +39,6 @@ fun ContactListItem(
     ListItem(
         modifier = modifier,
         subtitle = contact.number,
-        highlightText = highlightText,
         title = contact.name ?: stringResource(id = R.string.contact_unknown_name),
         onClick = onClick,
         onLongClick = onLongClick,

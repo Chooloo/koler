@@ -16,6 +16,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.caller.CallerScreen
+import com.chooloo.www.chooloolib.ui.caller.CallerTarget
 import com.chooloo.www.chooloolib.ui.common.copyToClipboard
 import com.chooloo.www.chooloolib.ui.components.AppBarHeader
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
@@ -76,7 +77,7 @@ fun MainScreen(
                     onItemClick = mainViewModel::onRecentGroupClick
                 )
             } else {
-                CallerScreen(recentId = group.latest.id)
+                CallerScreen(CallerTarget.RecentTarget(group.latest.id))
             }
         }
     }
@@ -85,7 +86,7 @@ fun MainScreen(
         visible = uiState.selectedContact != null,
         onDismiss = mainViewModel::onDismissSelectedContact
     ) {
-        CallerScreen(contactId = uiState.selectedContact?.id)
+        uiState.selectedContact?.let { CallerScreen(CallerTarget.ContactTarget(it.id)) }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -95,7 +96,7 @@ fun MainScreen(
             isSearchVisible = pagerState.currentPage != 0,
             searchText = uiState.searchText,
             searchHintRes = if (pagerState.currentPage == 1) R.string.hint_search_contacts else R.string.hint_search_recents,
-            onTabClick = { index, _ ->
+            onTabClick = { index ->
                 coroutineScope.launch {
                     pagerState.animateScrollToPage(index)
                 }

@@ -41,6 +41,7 @@ fun Dialpad(
     onDeleteLongClick: () -> Unit = {},
     onAddContactClick: () -> Unit = {},
     onKeyClick: (key: Char) -> Unit = {},
+    onKeyLongClick: ((key: Char) -> Unit)? = null,
 ) {
     val viewConfiguration = LocalViewConfiguration.current
     val deleteInteractionSource = remember { MutableInteractionSource() }
@@ -72,7 +73,7 @@ fun Dialpad(
     ) {
         DialpadTextField(text = value)
 
-        Keypad(onKeyClick = onKeyClick)
+        Keypad(onKeyClick = onKeyClick, onKeyLongClick = onKeyLongClick)
 
         Row(
             modifier = Modifier

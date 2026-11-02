@@ -1,8 +1,8 @@
 package com.chooloo.www.kontacts.ui.main
 
 import android.content.Intent
+import androidx.lifecycle.ViewModel
 import com.chooloo.www.chooloolib.domain.model.Contact
-import com.chooloo.www.chooloolib.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : BaseViewModel() {
+class MainViewModel @Inject constructor() : ViewModel() {
     data class UiState(
         val searchText: String = "",
         val isMenuVisible: Boolean = false,

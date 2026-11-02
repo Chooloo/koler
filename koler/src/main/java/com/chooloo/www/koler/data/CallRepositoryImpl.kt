@@ -4,6 +4,8 @@ import android.os.Build
 import android.telecom.Call as TelecomCall
 import android.telecom.CallAudioState
 import android.telecom.InCallService
+import android.telecom.PhoneAccountHandle
+import android.telecom.TelecomManager
 import android.util.Log
 import com.chooloo.www.koler.domain.AudioRoute
 import com.chooloo.www.koler.domain.Call
@@ -17,7 +19,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Singleton
-class CallRepositoryImpl @Inject constructor() : CallRepository {
+class CallRepositoryImpl @Inject constructor(
+    private val telecomManager: TelecomManager,
+) : CallRepository {
     private var service: InCallService? = null
     private var nextCallId = 0
     private val telecomCalls = LinkedHashMap<String, TelecomCall>()
@@ -110,6 +114,12 @@ class CallRepositoryImpl @Inject constructor() : CallRepository {
         stopDtmfTone()
     }
 
+    override fun selectPhoneAccount(callId: String, accountId: String) = withCall(callId) {
+        val handle = availablePhoneAccounts.firstOrNull { it.accountId == accountId }
+            ?: error("Phone account $accountId is not available for call $callId")
+        phoneAccountSelected(handle, false)
+    }
+
     override fun setMuted(isMuted: Boolean) {
         requireService().setMuted(isMuted)
     }
@@ -119,8 +129,11 @@ class CallRepositoryImpl @Inject constructor() : CallRepository {
     }
 
     private fun publishCalls() {
-        _calls.value = telecomCalls.map { (id, call) -> call.toDomain(id) }
+        _calls.value = telecomCalls.map { (id, call) -> call.toDomain(id, ::accountLabel) }
     }
+
+    private fun accountLabel(handle: PhoneAccountHandle): String? =
+        telecomManager.getPhoneAccount(handle)?.label?.toString()
 
     private fun requireService() = checkNotNull(service) { "No in-call service is bound" }
 

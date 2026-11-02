@@ -14,8 +14,8 @@ import com.chooloo.www.chooloolib.domain.model.Recent
 import com.chooloo.www.chooloolib.domain.model.RecentGroup
 import com.chooloo.www.chooloolib.domain.model.groupedByNumberAndDay
 import com.chooloo.www.chooloolib.domain.model.ungrouped
+import com.chooloo.www.chooloolib.ui.common.LoadingState
 import com.chooloo.www.chooloolib.ui.components.list.List
-import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun RecentsList(
@@ -24,7 +24,7 @@ fun RecentsList(
     groupSimilar: Boolean = false,
     onItemClick: (item: RecentGroup) -> Unit = {},
     onItemLongClick: (item: RecentGroup) -> Unit = {},
-    loadingState: LoadingState = LoadingState.IDLE,
+    loadingState: LoadingState = LoadingState.SUCCESS,
 ) {
     val groups = remember(items, groupSimilar) {
         if (groupSimilar) items.groupedByNumberAndDay() else items.ungrouped()
@@ -66,16 +66,4 @@ private val previewRecents = listOf(
 @Composable
 fun RecentsListPreview() {
     RecentsList(items = previewRecents, loadingState = LoadingState.SUCCESS)
-}
-
-@Preview
-@Composable
-fun LoadingRecentsListPreview() {
-    RecentsList(items = previewRecents, loadingState = LoadingState.LOADING)
-}
-
-@Preview
-@Composable
-fun EmptyRecentsListPreview() {
-    RecentsList(items = emptyList(), loadingState = LoadingState.IDLE)
 }

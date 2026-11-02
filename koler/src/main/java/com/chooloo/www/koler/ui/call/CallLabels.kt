@@ -1,8 +1,11 @@
 package com.chooloo.www.koler.ui.call
 
+import android.content.Context
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.koler.domain.AudioRoute
+import com.chooloo.www.koler.domain.Call
 import com.chooloo.www.koler.domain.CallState
 
 @get:StringRes
@@ -29,3 +32,8 @@ val AudioRoute.labelRes: Int
         AudioRoute.WIRED_HEADSET -> R.string.audio_route_wired_headset
         AudioRoute.WIRED_OR_EARPIECE -> R.string.audio_route_wired_or_earpiece
     }
+
+fun Call.title(context: Context, caller: PhoneLookup?): String = when {
+    isConference -> context.getString(R.string.conference)
+    else -> caller?.name ?: displayName ?: number ?: context.getString(R.string.caller_unknown)
+}

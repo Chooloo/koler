@@ -13,7 +13,7 @@ fun Tabs(
     modifier: Modifier = Modifier,
     headers: List<String>,
     selectedTabIndex: Int? = null,
-    onTabClick: (index: Int, header: String) -> Unit = { _, _ -> }
+    onTabClick: (index: Int) -> Unit = {}
 ) {
     Row(
         modifier = modifier,
@@ -24,7 +24,7 @@ fun Tabs(
             Tab(
                 text = tab,
                 isSelected = index == selectedTabIndex,
-                onClickListener = { onTabClick(index, tab) }
+                onClick = { onTabClick(index) }
             )
         }
     }

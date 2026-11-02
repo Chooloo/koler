@@ -52,9 +52,7 @@ class CallViewModel @Inject constructor(
         val callsState: CallsState = CallsState.NO_CALLS,
         val elapsedSeconds: Long? = null,
         val audio: CallAudio = CallAudio(),
-        val visibleActions: List<CallActionType> = emptyList(),
-        val enabledActions: List<CallActionType> = emptyList(),
-        val activatedActions: List<CallActionType> = emptyList(),
+        val actions: List<CallAction> = emptyList(),
         val keypadValue: String = "",
         val sheet: Sheet? = null,
     )
@@ -101,34 +99,31 @@ class CallViewModel @Inject constructor(
             callsState = state,
             elapsedSeconds = elapsed,
             audio = audio,
-            visibleActions = visibleActions(state),
-            enabledActions = enabledActions(call),
-            activatedActions = activatedActions(call, audio),
+            actions = actions(state, call, audio),
             keypadValue = local.keypadValue,
             sheet = local.sheet,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
-    fun onCallActionClick(action: CallActionType) {
-        val callId = uiState.value.call?.id
-        when (action) {
+    fun onCallActionClick(type: CallActionType) {
+        val state = uiState.value
+        val callId = state.call?.id
+        when (type) {
             CallActionType.ACCEPT -> callId?.let(callRepository::answer)
             CallActionType.DENY -> callId?.let(callRepository::decline)
-            CallActionType.HOLD_ON -> callId?.let(callRepository::hold)
-            CallActionType.HOLD_OFF -> callId?.let(callRepository::unhold)
             CallActionType.SWAP -> callId?.let(callRepository::swap)
             CallActionType.MERGE -> callId?.let(callRepository::merge)
-            CallActionType.MUTE_ON -> callRepository.setMuted(true)
-            CallActionType.MUTE_OFF -> callRepository.setMuted(false)
+            CallActionType.HOLD -> callId?.let {
+                if (state.call?.state == CallState.HOLDING) callRepository.unhold(it) else callRepository.hold(it)
+            }
+            CallActionType.MUTE -> callRepository.setMuted(!state.audio.isMuted)
             CallActionType.MANAGE -> showSheet(Sheet.MANAGE)
             CallActionType.KEYPAD -> showSheet(Sheet.KEYPAD)
             CallActionType.ADD_CALL -> showSheet(Sheet.ADD_CALL)
-            CallActionType.SPEAKER_ON, CallActionType.SPEAKER_OFF -> {
-                if (AudioRoute.BLUETOOTH in uiState.value.audio.supportedRoutes) {
-                    showSheet(Sheet.AUDIO_ROUTE)
-                } else {
-                    callRepository.setSpeaker(action == CallActionType.SPEAKER_ON)
-                }
+            CallActionType.SPEAKER -> if (AudioRoute.BLUETOOTH in state.audio.supportedRoutes) {
+                showSheet(Sheet.AUDIO_ROUTE)
+            } else {
+                callRepository.setSpeaker(state.audio.route != AudioRoute.SPEAKER)
             }
         }
     }
@@ -139,6 +134,14 @@ class CallViewModel @Inject constructor(
         viewModelScope.launch {
             if (preferenceRepository.settings.first().isDialpadVibrateEnabled) audioRepository.vibrate()
         }
+    }
+
+    fun onPhoneAccountSelected(account: Call.PhoneAccount) {
+        uiState.value.call?.id?.let { callRepository.selectPhoneAccount(it, account.id) }
+    }
+
+    fun onPhoneAccountDismiss() {
+        uiState.value.call?.id?.let(callRepository::decline)
     }
 
     fun onAudioRouteSelected(route: AudioRoute) {
@@ -156,38 +159,21 @@ class CallViewModel @Inject constructor(
 
     private fun showSheet(sheet: Sheet) = localState.update { it.copy(sheet = sheet) }
 
-    private fun visibleActions(state: CallsState) =
-        if (state == CallsState.ACTIVE_MULTI) {
+    private fun actions(state: CallsState, call: Call?, audio: CallAudio): List<CallAction> {
+        if (call == null) return emptyList()
+        val common = listOf(
+            CallAction(CallActionType.KEYPAD, isEnabled = true),
+            CallAction(CallActionType.MUTE, isEnabled = call.can(Call.Capability.MUTE), isActive = audio.isMuted),
+            CallAction(CallActionType.HOLD, isEnabled = call.can(Call.Capability.HOLD), isActive = call.state == CallState.HOLDING),
+            CallAction(CallActionType.ADD_CALL, isEnabled = true),
+        )
+        return if (state == CallsState.ACTIVE_MULTI) {
             listOf(
-                CallActionType.SWAP,
-                CallActionType.MERGE,
-                CallActionType.KEYPAD,
-                CallActionType.MUTE_ON,
-                CallActionType.HOLD_ON,
-                CallActionType.ADD_CALL,
-            )
+                CallAction(CallActionType.SWAP, isEnabled = call.can(Call.Capability.SWAP)),
+                CallAction(CallActionType.MERGE, isEnabled = call.can(Call.Capability.MERGE)),
+            ) + common
         } else {
-            listOf(
-                CallActionType.KEYPAD,
-                CallActionType.MUTE_ON,
-                CallActionType.HOLD_ON,
-                CallActionType.ADD_CALL,
-                CallActionType.SPEAKER_ON,
-            )
+            common + CallAction(CallActionType.SPEAKER, isEnabled = true, isActive = audio.route == AudioRoute.SPEAKER)
         }
-
-    private fun enabledActions(call: Call?) = buildList {
-        if (call == null) return@buildList
-        addAll(listOf(CallActionType.KEYPAD, CallActionType.ADD_CALL, CallActionType.SPEAKER_ON, CallActionType.SPEAKER_OFF))
-        if (call.can(Call.Capability.MUTE)) addAll(listOf(CallActionType.MUTE_ON, CallActionType.MUTE_OFF))
-        if (call.can(Call.Capability.HOLD)) addAll(listOf(CallActionType.HOLD_ON, CallActionType.HOLD_OFF))
-        if (call.can(Call.Capability.SWAP)) add(CallActionType.SWAP)
-        if (call.can(Call.Capability.MERGE)) add(CallActionType.MERGE)
-    }
-
-    private fun activatedActions(call: Call?, audio: CallAudio) = buildList {
-        if (audio.isMuted) addAll(listOf(CallActionType.MUTE_ON, CallActionType.MUTE_OFF))
-        if (call?.state == CallState.HOLDING) addAll(listOf(CallActionType.HOLD_ON, CallActionType.HOLD_OFF))
-        if (audio.route == AudioRoute.SPEAKER) addAll(listOf(CallActionType.SPEAKER_ON, CallActionType.SPEAKER_OFF))
     }
 }

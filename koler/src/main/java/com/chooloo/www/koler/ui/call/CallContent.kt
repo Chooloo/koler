@@ -37,10 +37,8 @@ fun CallContent(
     elapsedSeconds: Long? = null,
     callerImagePainter: Painter? = null,
     callsState: CallsState = CallsState.NO_CALLS,
-    visibleCallActions: List<CallActionType> = listOf(),
-    enabledCallActions: List<CallActionType> = listOf(),
-    activatedCallActions: List<CallActionType> = listOf(),
-    onCallActionClick: (action: CallActionType) -> Unit = {},
+    actions: List<CallAction> = listOf(),
+    onActionClick: (CallActionType) -> Unit = {},
 ) {
     Column(
         modifier = Modifier
@@ -84,12 +82,7 @@ fun CallContent(
         }
 
         if (callsState in listOf(CallsState.ACTIVE, CallsState.ACTIVE_MULTI)) {
-            CallActions(
-                onActionClick = onCallActionClick,
-                visibleActions = visibleCallActions,
-                enabledActions = enabledCallActions,
-                activatedActions = activatedCallActions,
-            )
+            CallActions(actions = actions, onActionClick = { onActionClick(it.type) })
         } else {
             Spacer(modifier = Modifier.height(Spacing.Medium))
         }
@@ -103,7 +96,7 @@ fun CallContent(
         ) {
             if (callsState in listOf(CallsState.INCOMING, CallsState.EXTRA_INCOMING)) {
                 FloatingActionButton(
-                    onClick = { onCallActionClick(CallActionType.ACCEPT) },
+                    onClick = { onActionClick(CallActionType.ACCEPT) },
                     containerColor = MaterialTheme.colorScheme.primaryContainer
                 ) {
                     Icon(
@@ -114,7 +107,7 @@ fun CallContent(
             }
 
             if (callsState == CallsState.ACTIVE_MULTI) {
-                FloatingActionButton(onClick = { onCallActionClick(CallActionType.MANAGE) }) {
+                FloatingActionButton(onClick = { onActionClick(CallActionType.MANAGE) }) {
                     Icon(
                         imageVector = Icons.Rounded.PeopleAlt,
                         contentDescription = stringResource(R.string.cd_manage_call)
@@ -124,7 +117,7 @@ fun CallContent(
 
             if (callsState !in listOf(CallsState.DISCONNECTED, CallsState.NO_CALLS)) {
                 FloatingActionButton(
-                    onClick = { onCallActionClick(CallActionType.DENY) },
+                    onClick = { onActionClick(CallActionType.DENY) },
                     containerColor = MaterialTheme.colorScheme.errorContainer
                 ) {
                     Icon(

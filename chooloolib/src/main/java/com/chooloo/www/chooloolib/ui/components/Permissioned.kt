@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +30,6 @@ import com.chooloo.www.chooloolib.ui.theme.Spacing
 @Composable
 fun Permissioned(
     permissions: List<String>,
-    onIsGrantedChange: (isGranted: Boolean) -> Unit = {},
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
@@ -65,10 +63,6 @@ fun Permissioned(
     }
 
     val allGranted = missingPermissions.isEmpty()
-
-    LaunchedEffect(key1 = allGranted) {
-        onIsGrantedChange(allGranted)
-    }
 
     if (allGranted) {
         content()

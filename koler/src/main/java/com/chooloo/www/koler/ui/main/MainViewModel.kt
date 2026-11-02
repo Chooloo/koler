@@ -2,12 +2,12 @@ package com.chooloo.www.koler.ui.main
 
 import android.content.Intent
 import android.net.Uri
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.RecentGroup
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
-import com.chooloo.www.chooloolib.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MainViewModel @Inject constructor(
     preferenceRepository: PreferenceRepository
-) : BaseViewModel() {
+) : ViewModel() {
     data class UiState(
         val searchText: String = "",
         val dialNumber: String? = null,

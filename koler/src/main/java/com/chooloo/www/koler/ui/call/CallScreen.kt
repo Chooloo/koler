@@ -12,24 +12,21 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.rememberAsyncImagePainter
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.ui.common.createContact
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.components.DialpadTextField
 import com.chooloo.www.chooloolib.ui.components.Keypad
 import com.chooloo.www.chooloolib.ui.components.list.List
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
-import com.chooloo.www.chooloolib.ui.dialpad.Dialpad
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewModel
+import com.chooloo.www.chooloolib.ui.dialpad.DialpadScreen
+import com.chooloo.www.koler.domain.CallsState
 import com.chooloo.www.koler.ui.call.CallViewModel.Sheet
 
 @Composable
 fun CallScreen(
     callViewModel: CallViewModel = hiltViewModel(),
-    dialpadViewModel: DialpadViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     val uiState by callViewModel.uiState.collectAsStateWithLifecycle()
-    val dialpadUiState by dialpadViewModel.uiState.collectAsStateWithLifecycle()
     val call = uiState.call
     val caller = uiState.caller
 
@@ -41,13 +38,7 @@ fun CallScreen(
     }
 
     BottomSheet(visible = uiState.sheet == Sheet.ADD_CALL, onDismiss = callViewModel::onSheetDismiss) {
-        Dialpad(
-            value = dialpadUiState.value,
-            onCallClick = dialpadViewModel::onCallClick,
-            onDeleteClick = dialpadViewModel::onDeleteClick,
-            onAddContactClick = { context.createContact(dialpadUiState.value) },
-            onKeyClick = dialpadViewModel::onKeyClick,
-        )
+        DialpadScreen()
     }
 
     BottomSheet(visible = uiState.sheet == Sheet.KEYPAD, onDismiss = callViewModel::onSheetDismiss) {
@@ -79,18 +70,26 @@ fun CallScreen(
         )
     }
 
+    BottomSheet(
+        visible = uiState.callsState == CallsState.WAITING_FOR_ACCOUNT,
+        onDismiss = callViewModel::onPhoneAccountDismiss
+    ) {
+        List(
+            items = call?.phoneAccounts.orEmpty(),
+            key = { it.id },
+            item = { account ->
+                ListItem(title = account.label, onClick = { callViewModel.onPhoneAccountSelected(account) })
+            }
+        )
+    }
+
     CallContent(
-        callerName = when {
-            call?.isConference == true -> stringResource(R.string.conference)
-            else -> caller?.name ?: call?.displayName ?: call?.number ?: stringResource(R.string.caller_unknown)
-        },
+        callerName = call?.title(context, caller) ?: stringResource(R.string.caller_unknown),
         stateText = call?.state?.let { stringResource(it.labelRes) },
         elapsedSeconds = uiState.elapsedSeconds,
         callerImagePainter = callerPainter,
         callsState = uiState.callsState,
-        visibleCallActions = uiState.visibleActions,
-        enabledCallActions = uiState.enabledActions,
-        activatedCallActions = uiState.activatedActions,
-        onCallActionClick = callViewModel::onCallActionClick
+        actions = uiState.actions,
+        onActionClick = callViewModel::onCallActionClick
     )
 }

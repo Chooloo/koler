@@ -69,31 +69,25 @@ fun Preferences(
                     title = title,
                     values = ThemeMode.entries,
                     selectedValue = themeMode,
-                    subtitle = stringResource(themeMode.titleRes),
+                    label = { stringResource(it.titleRes) },
                     onValueSelected = onThemeMode,
-                ) { item, selected, onClick ->
-                    ListItem(title = stringResource(item.titleRes), selected = selected, onClick = onClick)
-                }
+                )
 
                 PreferenceItem.DEFAULT_PAGE -> ChoicePreferenceListItem(
                     title = title,
                     values = Page.entries,
                     selectedValue = defaultPage,
-                    subtitle = stringResource(defaultPage.titleRes),
+                    label = { stringResource(it.titleRes) },
                     onValueSelected = onDefaultPage,
-                ) { item, selected, onClick ->
-                    ListItem(title = stringResource(item.titleRes), selected = selected, onClick = onClick)
-                }
+                )
 
                 PreferenceItem.INCOMING_CALL_MODE -> ChoicePreferenceListItem(
                     title = title,
                     values = IncomingCallMode.entries,
                     selectedValue = incomingCallMode,
-                    subtitle = stringResource(incomingCallMode.titleRes),
+                    label = { stringResource(it.titleRes) },
                     onValueSelected = onIncomingCallMode,
-                ) { item, selected, onClick ->
-                    ListItem(title = stringResource(item.titleRes), selected = selected, onClick = onClick)
-                }
+                )
 
                 PreferenceItem.ANIMATIONS_ENABLED ->
                     SwitchPreferenceListItem(title = title, value = isAnimationsEnabled, onValueChange = onIsAnimationsEnabled)

@@ -3,8 +3,6 @@
     <string name="recents">Nedavno</string>
     <string name="contacts">Kontakti</string>
     <string name="number_copied_to_clipboard">Broj kopiran u međuspremnik</string>
-    <string name="action_answer">Prihvati</string>
-    <string name="action_hangup">Odbij</string>
     <string name="hint_search">Traži</string>
     <string name="call_action_mute">Isključi zvuk</string>
     <string name="call_action_unmute">Uključi zvuk</string>

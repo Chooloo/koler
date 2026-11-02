@@ -19,7 +19,6 @@ fun ContactsScreen(
     onItemLongClick: (Contact) -> Unit = {},
     viewModel: ContactsViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Permissioned(
         permissions = listOf(
@@ -27,6 +26,7 @@ fun ContactsScreen(
             Manifest.permission.WRITE_CONTACTS
         )
     ) {
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         LaunchedEffect(key1 = filter) {
             viewModel.onFilterChanged(filter)
         }

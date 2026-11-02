@@ -4,7 +4,6 @@
     <!--region App & Config (non-translatable)-->
     <string name="app_name" translatable="false">Koler</string>
     <string name="support_email" translatable="false">choolookulu@gmail.com</string>
-    <string name="app_source_url" translatable="false">https://github.com/Chooloo/call_manage</string>
     <string name="app_bug_reporting_url" translatable="false">https://github.com/Chooloo/call_manage/issues</string>
     <string name="donation_link" translatable="false">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
     <!--endregion-->
@@ -19,11 +18,10 @@
     <string name="phones">Phones</string>
     <string name="accounts">Accounts</string>
     <string name="conference">Conference</string>
-    <string name="settings">Settings</string>
     <string name="caller_unknown">Unknown</string>
     <string name="caller_restricted">Restricted</string>
     <string name="caller_payphone">Payphone</string>
-    <string name="caller_private">Private Number</string>
+    <string name="error_no_app_found">No app can handle this action</string>
     <string name="contact_unknown_name">Unknown</string>
     <!--endregion-->
 
@@ -38,8 +36,6 @@
 
     <!--region Actions-->
     <string name="action_call">Call</string>
-    <string name="action_answer">Answer</string>
-    <string name="action_hangup">Hangup</string>
     <string name="action_show_history">Show History</string>
     <string name="action_delete_contact">Delete Contact</string>
     <string name="action_clear_recents">Delete All Recent Calls</string>
@@ -64,19 +60,14 @@
     <!--endregion-->
 
     <!--region Call States-->
-    <string name="call_state_new">New Call</string>
-    <string name="call_state_idle">Call Idle</string>
     <string name="call_state_dialing">Dialing…</string>
     <string name="call_state_holding">Call On Hold</string>
     <string name="call_state_connecting">Connecting…</string>
     <string name="call_state_incoming">Incoming Call</string>
     <string name="call_state_active">Call In Progress</string>
     <string name="call_state_disconnected">Call ended</string>
-    <string name="call_state_call_waiting">Call Waiting</string>
-    <string name="call_state_pulling_call">Pulling Call…</string>
     <string name="call_state_unknown">Unknown call status</string>
     <string name="call_state_conferenced">Call Conferenced</string>
-    <string name="call_state_redialing">Call Redialing</string>
     <string name="call_state_disconnecting">Call Disconnecting…</string>
     <string name="call_state_phone_account">Select phone account</string>
     <!--endregion-->
@@ -124,9 +115,6 @@
 
     <!--region Loading & Empty States-->
     <string name="loading">Loading…</string>
-    <string name="loading_calls">Loading calls…</string>
-    <string name="loading_phones">Loading phones…</string>
-    <string name="loading_accounts">Loading accounts…</string>
     <string name="loading_contacts">Loading contacts…</string>
     <string name="loading_recents">Loading recent calls…</string>
     <string name="no_results_recents">No Recents</string>
@@ -136,17 +124,11 @@
     <!--endregion-->
 
     <!--region Errors-->
-    <string name="error_call_failed_sim">Call failed due to SIM error</string>
-    <string name="error_call_service_unknown">Call failed due to unknown service</string>
     <string name="error_caller_not_found">Caller not found</string>
-    <string name="error_caller_not_provided">Caller not provided</string>
-    <string name="error_contact_not_found">Contact not found</string>
     <string name="error_contact_number_not_found">Contact number not found</string>
     <string name="error_contact_deletion_failed">Contact deletion failed</string>
     <string name="error_contact_favorite_change_failed">Contact favorite change failed</string>
     <string name="error_contact_block_change_failed">Failed to change contact block status</string>
-    <string name="error_recent_not_found">Recent not found</string>
-    <string name="error_unknown_account_type">Unknown account type</string>
     <!--endregion-->
 
     <!--region Notifications-->

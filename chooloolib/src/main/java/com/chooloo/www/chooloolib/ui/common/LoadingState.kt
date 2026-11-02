@@ -1,7 +1,6 @@
-package com.chooloo.www.chooloolib.utils
+package com.chooloo.www.chooloolib.ui.common
 
 enum class LoadingState {
-    IDLE,
     LOADING,
     SUCCESS,
     FAILED

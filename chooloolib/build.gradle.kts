@@ -20,6 +20,10 @@ android {
     buildFeatures {
         compose = true
     }
+
+    lint {
+        warning += "MissingTranslation"
+    }
 }
 
 dependencies {

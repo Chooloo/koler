@@ -1,163 +1,189 @@
 package com.chooloo.www.chooloolib.ui.caller
 
 import android.util.Log
+import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Contact
-import com.chooloo.www.chooloolib.domain.model.Recent
+import com.chooloo.www.chooloolib.domain.model.ContactAccount
+import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.domain.repository.BlockedRepository
+import com.chooloo.www.chooloolib.domain.repository.ContactAccountRepository
 import com.chooloo.www.chooloolib.domain.repository.ContactRepository
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import com.chooloo.www.chooloolib.domain.repository.TelecomRepository
-import com.chooloo.www.chooloolib.ui.common.BaseViewModel
-import com.chooloo.www.chooloolib.utils.LoadingState
+import com.chooloo.www.chooloolib.ui.common.LoadingState
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-class CallerViewModel @Inject constructor(
+sealed interface CallerTarget {
+    data class ContactTarget(val contactId: Long) : CallerTarget
+    data class RecentTarget(val recentId: Long) : CallerTarget
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+@HiltViewModel(assistedFactory = CallerViewModel.Factory::class)
+class CallerViewModel @AssistedInject constructor(
+    @Assisted target: CallerTarget,
     private val phoneRepository: PhoneRepository,
     private val recentRepository: RecentRepository,
     private val blockedRepository: BlockedRepository,
     private val contactRepository: ContactRepository,
     private val telecomRepository: TelecomRepository,
-) : BaseViewModel() {
+    private val contactAccountRepository: ContactAccountRepository,
+) : ViewModel() {
+    @AssistedFactory
+    interface Factory {
+        fun create(target: CallerTarget): CallerViewModel
+    }
+
     data class UiState(
+        val loadingState: LoadingState = LoadingState.LOADING,
         val name: String? = null,
         val number: String? = null,
         val contact: Contact? = null,
+        val phones: List<Phone> = emptyList(),
+        val accounts: List<ContactAccount> = emptyList(),
         val isBlocked: Boolean? = null,
-        val isDeleted: Boolean = false,
         val isHistoryVisible: Boolean = false,
-        val loadingState: LoadingState = LoadingState.IDLE,
+        @StringRes val message: Int? = null,
     ) {
         val hasNumber: Boolean get() = !number.isNullOrEmpty()
     }
 
-    private var _loadJob: Job? = null
-    private val _uiState = MutableStateFlow(UiState())
+    private data class Caller(val name: String?, val number: String?, val contact: Contact?)
 
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+    private data class Details(val phones: List<Phone> = emptyList(), val accounts: List<ContactAccount> = emptyList())
 
-    fun onContactId(contactId: Long) {
-        load {
-            contactRepository.contact(contactId)
-                .catch { onLoadFailed(it, Errors.ContactNotFound()) }
-                .collect { contact ->
-                    if (contact == null) {
-                        onLoadFailed(null, Errors.ContactNotFound())
-                    } else {
-                        showCaller(name = contact.name, number = contact.number, contact = contact)
+    private data class LocalState(val isHistoryVisible: Boolean = false, @StringRes val message: Int? = null)
+
+    private sealed interface Load {
+        data object Failed : Load
+        data class Found(val caller: Caller) : Load
+    }
+
+    private val localState = MutableStateFlow(LocalState())
+    private val blockedRefresh = MutableStateFlow(0)
+
+    private val load: Flow<Load> = callerOf(target)
+        .map { caller -> caller?.let { Load.Found(it) } ?: Load.Failed }
+        .catch { error ->
+            Log.e(TAG, "Failed loading caller", error)
+            emit(Load.Failed)
+        }
+
+    private val caller = load.map { (it as? Load.Found)?.caller }
+
+    private val details: Flow<Details> = caller.map { it?.contact?.id }
+        .distinctUntilChanged()
+        .flatMapLatest { contactId ->
+            if (contactId == null) {
+                flowOf(Details())
+            } else {
+                combine(phoneRepository.phones(contactId), contactAccountRepository.accounts(contactId), ::Details)
+                    .catch { error ->
+                        Log.e(TAG, "Failed loading caller details", error)
+                        emit(Details())
                     }
-                }
-        }
-    }
-
-    fun onRecentId(recentId: Long) {
-        load {
-            recentRepository.recent(recentId)
-                .catch { onLoadFailed(it, Errors.RecentNotFound()) }
-                .collect { recent ->
-                    if (recent == null) {
-                        onLoadFailed(null, Errors.RecentNotFound())
-                    } else {
-                        showRecent(recent)
-                    }
-                }
-        }
-    }
-
-    fun onCallClick() {
-        _uiState.value.number?.let { viewModelScope.launch { telecomRepository.callNumber(it) } }
-    }
-
-    fun onDeleteClick() {
-        val contact = _uiState.value.contact ?: return
-        viewModelScope.launch {
-            runCatching { contactRepository.deleteContact(contact.id) }
-                .onSuccess { _uiState.update { it.copy(isDeleted = true) } }
-                .onFailure { onActionFailed(it, Errors.ContactDeletionFailed()) }
-        }
-    }
-
-    fun onToggleBlocked(isBlocked: Boolean) {
-        val number = _uiState.value.number ?: return
-        viewModelScope.launch {
-            runCatching {
-                if (isBlocked) blockedRepository.block(number) else blockedRepository.unblock(number)
-                blockedRepository.isBlocked(number)
             }
-                .onSuccess { blocked -> _uiState.update { it.copy(isBlocked = blocked) } }
-                .onFailure { onActionFailed(it, Errors.ContactBlockChangeFailed()) }
+        }
+
+    private val isBlocked: Flow<Boolean?> = combine(caller.map { it?.number }.distinctUntilChanged(), blockedRefresh) { number, _ -> number }
+        .mapLatest { number ->
+            val blockable = number?.takeIf { it.isNotEmpty() && telecomRepository.isDefaultDialer() } ?: return@mapLatest null
+            runCatching { blockedRepository.isBlocked(blockable) }
+                .onFailure { Log.e(TAG, "Failed reading blocked state", it) }
+                .getOrNull()
+        }
+
+    val uiState: StateFlow<UiState> = combine(load, details, isBlocked, localState) { load, details, isBlocked, local ->
+        val caller = (load as? Load.Found)?.caller
+        UiState(
+            loadingState = when (load) {
+                Load.Failed -> LoadingState.FAILED
+                is Load.Found -> LoadingState.SUCCESS
+            },
+            name = caller?.name,
+            number = caller?.number,
+            contact = caller?.contact,
+            phones = details.phones,
+            accounts = details.accounts,
+            isBlocked = isBlocked,
+            isHistoryVisible = local.isHistoryVisible,
+            message = local.message,
+        )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
+
+    fun onCallClick() = launch(R.string.error_contact_number_not_found) {
+        uiState.value.number?.let { telecomRepository.callNumber(it) }
+    }
+
+    fun onPhoneClick(phone: Phone) = launch(R.string.error_contact_number_not_found) {
+        telecomRepository.callNumber(phone.number)
+    }
+
+    fun onDeleteClick() = launch(R.string.error_contact_deletion_failed) {
+        uiState.value.contact?.let { contactRepository.deleteContact(it.id) }
+    }
+
+    fun onToggleFavorite(isFavorite: Boolean) = launch(R.string.error_contact_favorite_change_failed) {
+        uiState.value.contact?.let { contactRepository.setFavorite(it.id, isFavorite) }
+    }
+
+    fun onToggleBlocked(isBlocked: Boolean) = launch(R.string.error_contact_block_change_failed) {
+        val number = uiState.value.number ?: return@launch
+        if (isBlocked) blockedRepository.block(number) else blockedRepository.unblock(number)
+        blockedRefresh.update { it + 1 }
+    }
+
+    fun onHistoryShow() = localState.update { it.copy(isHistoryVisible = true) }
+
+    fun onHistoryDismiss() = localState.update { it.copy(isHistoryVisible = false) }
+
+    fun onMessageShown() = localState.update { it.copy(message = null) }
+
+    private fun callerOf(target: CallerTarget): Flow<Caller?> = when (target) {
+        is CallerTarget.ContactTarget -> contactCaller(target.contactId)
+        is CallerTarget.RecentTarget -> recentRepository.recent(target.recentId).flatMapLatest { recent ->
+            when {
+                recent == null -> flowOf(null)
+                else -> phoneRepository.lookup(recent.number)?.contactId?.let(::contactCaller)
+                    ?: flowOf(Caller(name = recent.name, number = recent.number, contact = null))
+            }
         }
     }
 
-    fun onToggleFavorite(isFavorite: Boolean) {
-        val contact = _uiState.value.contact ?: return
+    private fun contactCaller(contactId: Long): Flow<Caller?> =
+        contactRepository.contact(contactId).map { contact ->
+            contact?.let { Caller(name = it.name, number = it.number, contact = it) }
+        }
+
+    private fun launch(@StringRes errorMessage: Int, action: suspend () -> Unit) {
         viewModelScope.launch {
-            runCatching { contactRepository.setFavorite(contact.id, isFavorite) }
-                .onFailure { onActionFailed(it, Errors.ContactFavChangeFailed()) }
+            runCatching { action() }.onFailure { error ->
+                Log.e(TAG, "Caller action failed", error)
+                localState.update { it.copy(message = errorMessage) }
+            }
         }
-    }
-
-    fun onHistoryShow() {
-        _uiState.update { it.copy(isHistoryVisible = true) }
-    }
-
-    fun onHistoryDismiss() {
-        _uiState.update { it.copy(isHistoryVisible = false) }
-    }
-
-    private fun load(block: suspend () -> Unit) {
-        _loadJob?.cancel()
-        _uiState.update { UiState(loadingState = LoadingState.LOADING) }
-        _loadJob = viewModelScope.launch { block() }
-    }
-
-    private suspend fun showRecent(recent: Recent) {
-        val contactId = phoneRepository.lookup(recent.number)?.contactId
-        if (contactId != null) {
-            onContactId(contactId)
-        } else {
-            showCaller(name = recent.name, number = recent.number, contact = null)
-        }
-    }
-
-    private suspend fun showCaller(name: String?, number: String?, contact: Contact?) {
-        _uiState.update {
-            it.copy(name = name, number = number, contact = contact, loadingState = LoadingState.SUCCESS)
-        }
-        if (!number.isNullOrEmpty() && telecomRepository.isDefaultDialer()) {
-            val isBlocked = blockedRepository.isBlocked(number)
-            _uiState.update { it.copy(isBlocked = isBlocked) }
-        }
-    }
-
-    private fun onLoadFailed(error: Throwable?, vmError: VMError) {
-        error?.let { Log.e(TAG, "Failed loading caller", it) }
-        _uiState.update { it.copy(loadingState = LoadingState.FAILED) }
-        onError(vmError)
-    }
-
-    private fun onActionFailed(error: Throwable, vmError: VMError) {
-        Log.e(TAG, "Caller action failed", error)
-        onError(vmError)
-    }
-
-    sealed class Errors {
-        class RecentNotFound : VMError(R.string.error_recent_not_found)
-        class ContactNotFound : VMError(R.string.error_contact_not_found)
-        class ContactDeletionFailed : VMError(R.string.error_contact_deletion_failed)
-        class ContactBlockChangeFailed : VMError(R.string.error_contact_block_change_failed)
-        class ContactFavChangeFailed : VMError(R.string.error_contact_favorite_change_failed)
     }
 
     private companion object {

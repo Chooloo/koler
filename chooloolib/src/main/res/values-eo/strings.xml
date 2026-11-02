@@ -3,8 +3,6 @@
     <string name="recents">Lastatempaj</string>
     <string name="contacts">Kontaktoj</string>
     <string name="number_copied_to_clipboard">Numero kopiita al tondejo</string>
-    <string name="action_answer">Respondi</string>
-    <string name="action_hangup">Finigi</string>
     <string name="hint_search">Serĉi</string>
     <string name="call_action_mute">Silentigi</string>
     <string name="call_action_unmute">Malsilentigi</string>

@@ -2,6 +2,7 @@ package com.chooloo.www.koler.ui.call
 
 import android.app.ActivityManager
 import android.app.KeyguardManager
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +19,8 @@ class CallActivity : BaseActivity() {
 
     private val callViewModel: CallViewModel by viewModels()
 
-    override fun onSetup() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setExcludeFromRecents(false)
         showWhenLocked()
         if (intent.getBooleanExtra(EXTRA_SHOW_DIALPAD, false)) callViewModel.onShowKeypad()

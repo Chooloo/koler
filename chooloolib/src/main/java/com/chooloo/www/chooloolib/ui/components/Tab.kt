@@ -16,13 +16,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.lerp
 import androidx.compose.ui.tooling.preview.Preview
-import java.util.Locale
 
 @Composable
 fun Tab(
     text: String,
     isSelected: Boolean = false,
-    onClickListener: () -> Unit = {}
+    onClick: () -> Unit = {}
 ) {
     val textStyleIdle = typography.titleSmall
     val textStyleSelected = typography.titleLarge.copy(fontWeight = FontWeight.Bold)
@@ -44,8 +43,8 @@ fun Tab(
     Text(
         color = textColor,
         style = textStyle,
-        modifier = Modifier.clickable(onClick = onClickListener),
-        text = text.replaceFirstChar { it.uppercase(Locale.ROOT) },
+        modifier = Modifier.clickable(onClick = onClick),
+        text = text,
     )
 }
 

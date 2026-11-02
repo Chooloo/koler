@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.ui.preferences
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.R
@@ -16,6 +17,8 @@ fun PreferencesScreen(
     viewModel: PreferencesViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
+    val bugReportUrl = stringResource(R.string.app_bug_reporting_url)
+    val donationUrl = stringResource(R.string.donation_link)
     val settings = viewModel.settings.collectAsStateWithLifecycle().value ?: return
 
     Preferences(
@@ -38,7 +41,7 @@ fun PreferencesScreen(
         onClearRecentsClick = viewModel::onClearRecentsClick,
         onRateClick = context::openStoreListing,
         onEmailClick = context::sendSupportEmail,
-        onReportBugsClick = { context.openUrl(context.getString(R.string.app_bug_reporting_url)) },
-        onDonateClick = { context.openUrl(context.getString(R.string.donation_link)) },
+        onReportBugsClick = { context.openUrl(bugReportUrl) },
+        onDonateClick = { context.openUrl(donationUrl) },
     )
 }

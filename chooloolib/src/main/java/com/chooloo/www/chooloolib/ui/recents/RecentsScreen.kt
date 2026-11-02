@@ -18,15 +18,14 @@ fun RecentsScreen(
     onItemLongClick: (RecentGroup) -> Unit = {},
     viewModel: RecentsViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val isGroupRecentsEnabled by viewModel.isGroupRecentsEnabled.collectAsStateWithLifecycle()
-
     Permissioned(
         permissions = listOf(
             Manifest.permission.READ_CALL_LOG,
             Manifest.permission.WRITE_CALL_LOG
         )
     ) {
+        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+        val isGroupRecentsEnabled by viewModel.isGroupRecentsEnabled.collectAsStateWithLifecycle()
         LaunchedEffect(key1 = filter) {
             viewModel.onFilterChanged(filter)
         }

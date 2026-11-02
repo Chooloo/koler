@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import com.chooloo.www.chooloolib.R
 
-val GoogleSansFontFamily = FontFamily(
+private val GoogleSansFontFamily = FontFamily(
     Font(R.font.google_sans_regular, FontWeight.Normal),
     Font(R.font.google_sans_italic, FontWeight.Normal, FontStyle.Italic),
     Font(R.font.google_sans_medium, FontWeight.Medium),

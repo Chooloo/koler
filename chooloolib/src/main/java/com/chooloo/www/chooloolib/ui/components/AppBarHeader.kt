@@ -14,7 +14,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.theme.Spacing
@@ -26,10 +25,9 @@ fun AppBarHeader(
     isSearchVisible: Boolean = true,
     searchText: String = "",
     @StringRes searchHintRes: Int = R.string.hint_search,
-    onTabClick: (index: Int, header: String) -> Unit = { _, _ -> },
+    onTabClick: (index: Int) -> Unit = {},
     onMenuClick: () -> Unit = {},
-    onSearchTextChange: (String) -> Unit = {},
-    onSearchFocusChange: (Boolean) -> Unit = {}
+    onSearchTextChange: (String) -> Unit = {}
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -69,7 +67,6 @@ fun AppBarHeader(
                 text = searchText,
                 hintStringRes = searchHintRes,
                 onTextChange = onSearchTextChange,
-                modifier = Modifier.onFocusChanged { onSearchFocusChange(it.isFocused) }
             )
         }
     }

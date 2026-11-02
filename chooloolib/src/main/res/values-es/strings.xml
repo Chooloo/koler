@@ -2,8 +2,6 @@
 <resources>
     <string name="recents">Recientes</string>
     <string name="contacts">Contactos</string>
-    <string name="action_answer">Responder</string>
-    <string name="action_hangup">Colgar</string>
     <string name="hint_search">Buscar</string>
     <string name="call_action_mute">Silenciar</string>
     <string name="call_action_unmute">Activar sonido</string>
@@ -29,10 +27,8 @@
     <string name="audio_route_speaker">Altavoz</string>
     <string name="cd_show_menu">Botón de menú</string>
     <string name="conference">Reunión</string>
-    <string name="call_state_new">Nueva llamada</string>
     <string name="call_state_connecting">Conectando…</string>
     <string name="call_state_unknown">Estado de la llamada desconocido</string>
-    <string name="settings">Ajustes</string>
     <string name="theme_mode_dark">Oscuro</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_system">Sistema</string>

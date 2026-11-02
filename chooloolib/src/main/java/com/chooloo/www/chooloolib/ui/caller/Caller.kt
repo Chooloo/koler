@@ -30,13 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.ContactAccount
 import com.chooloo.www.chooloolib.domain.model.Phone
+import com.chooloo.www.chooloolib.ui.common.LoadingState
 import com.chooloo.www.chooloolib.ui.components.CircleImage
 import com.chooloo.www.chooloolib.ui.components.Empty
 import com.chooloo.www.chooloolib.ui.components.Loading
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.ui.theme.AvatarSize
 import com.chooloo.www.chooloolib.ui.theme.Spacing
-import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun Caller(
@@ -46,9 +46,7 @@ fun Caller(
     phones: List<Phone> = listOf(),
     imagePainter: Painter? = null,
     accounts: List<ContactAccount> = listOf(),
-    loadingState: LoadingState = LoadingState.IDLE,
-    phonesLoadingState: LoadingState = LoadingState.IDLE,
-    accountsLoadingState: LoadingState = LoadingState.IDLE,
+    loadingState: LoadingState,
     onSmsClick: (() -> Unit)? = null,
     onCallClick: (() -> Unit)? = null,
     onHistoryClick: (() -> Unit)? = null,
@@ -62,13 +60,10 @@ fun Caller(
     onDeleteContactClick: (() -> Unit)? = null,
     onSetContactFavoriteClick: ((Boolean) -> Unit)? = null,
 ) {
-    if (loadingState != LoadingState.SUCCESS) {
-        when (loadingState) {
-            LoadingState.LOADING -> Loading()
-            LoadingState.FAILED -> Empty(titleRes = R.string.error_caller_not_found)
-            else -> Empty(titleRes = R.string.error_caller_not_provided)
-        }
-        return
+    when (loadingState) {
+        LoadingState.LOADING -> return Loading()
+        LoadingState.FAILED -> return Empty(titleRes = R.string.error_caller_not_found)
+        LoadingState.SUCCESS -> Unit
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -140,7 +135,6 @@ fun Caller(
                 items = phones,
                 onItemActionClick = onPhoneClick,
                 onItemLongClick = onPhoneLongClick,
-                loadingState = phonesLoadingState
             )
         }
 
@@ -158,7 +152,6 @@ fun Caller(
                 modifier = Modifier.padding(horizontal = Spacing.Medium),
                 items = accounts,
                 onItemClick = onAccountClick,
-                loadingState = accountsLoadingState,
             )
         }
 

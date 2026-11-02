@@ -16,6 +16,7 @@ private val PRIMARY_CALL_PRIORITY = listOf(
     CallState.INCOMING,
     CallState.DIALING,
     CallState.CONNECTING,
+    CallState.SELECT_PHONE_ACCOUNT,
     CallState.ACTIVE,
     CallState.DISCONNECTING,
     CallState.DISCONNECTED,

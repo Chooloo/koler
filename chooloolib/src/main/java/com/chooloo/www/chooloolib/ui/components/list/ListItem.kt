@@ -21,9 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
@@ -35,28 +32,11 @@ fun ListItem(
     subtitle: String? = null,
     enabled: Boolean = true,
     selected: Boolean = false,
-    clickable: Boolean = true,
-    highlightText: String? = null,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {},
     endContainer: @Composable (() -> Unit)? = null,
     startContainer: @Composable (() -> Unit)? = null,
-    extraSubtitleContainer: @Composable (() -> Unit)? = null,
 ) {
-    val annotatedTitle: AnnotatedString = buildAnnotatedString {
-        append(title)
-        if (!highlightText.isNullOrEmpty()) {
-            val startIndex = title.indexOf(highlightText, ignoreCase = true)
-            if (startIndex >= 0) {
-                addStyle(
-                    start = startIndex,
-                    end = startIndex + highlightText.length,
-                    style = SpanStyle(color = MaterialTheme.colorScheme.primary),
-                )
-            }
-        }
-    }
-
     Card(
         colors = CardDefaults.cardColors(
             containerColor = if (selected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
@@ -64,9 +44,9 @@ fun ListItem(
         shape = MaterialTheme.shapes.large,
         modifier = modifier
             .combinedClickable(
-                enabled = clickable && enabled,
-                onClick = onClick::invoke,
-                onLongClick = onLongClick::invoke
+                enabled = enabled,
+                onClick = onClick,
+                onLongClick = onLongClick
             )
     ) {
         Row(
@@ -83,19 +63,9 @@ fun ListItem(
                 modifier = Modifier.fillMaxHeight(),
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    style = typography.titleMedium,
-                    text = annotatedTitle
-                )
+                Text(text = title, style = typography.titleMedium)
                 subtitle?.let {
-                    Row {
-                        Text(
-                            text = subtitle,
-                            style = typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        extraSubtitleContainer?.let { it() }
-                    }
+                    Text(text = it, style = typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             endContainer?.let {

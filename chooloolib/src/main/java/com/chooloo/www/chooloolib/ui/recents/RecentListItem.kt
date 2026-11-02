@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Recent
@@ -27,14 +28,13 @@ import com.chooloo.www.chooloolib.ui.theme.ChoolooTheme
 fun RecentListItem(
     modifier: Modifier = Modifier,
     group: RecentGroup,
-    highlightText: String? = null,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val recent = group.latest
     val typeLabel = recent.numberType?.let {
-        Phone.getTypeLabel(context.resources, it, recent.numberLabel).toString()
+        Phone.getTypeLabel(LocalResources.current, it, recent.numberLabel).toString()
     }
     val subtitle = listOfNotNull(
         DateUtils.formatDateTime(context, recent.dateMillis, DateUtils.FORMAT_SHOW_TIME),
@@ -64,7 +64,6 @@ fun RecentListItem(
         title = recent.name
             ?: recent.presentation.fallbackNameRes?.let { stringResource(it) }
             ?: recent.number.ifEmpty { stringResource(R.string.caller_unknown) },
-        highlightText = highlightText,
         onClick = onClick,
         onLongClick = onLongClick,
         endContainer = {

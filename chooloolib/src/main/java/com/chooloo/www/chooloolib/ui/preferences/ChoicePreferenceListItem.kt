@@ -1,46 +1,38 @@
 package com.chooloo.www.chooloolib.ui.preferences
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.components.list.List
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
-import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
-fun <ItemType> ChoicePreferenceListItem(
+fun <T> ChoicePreferenceListItem(
     title: String,
-    values: List<ItemType>,
-    selectedValue: ItemType?,
-    enabled: Boolean = true,
-    subtitle: String? = null,
-    onValueSelected: (ItemType) -> Unit,
-    loadingState: LoadingState = LoadingState.IDLE,
-    item: @Composable (item: ItemType, selected: Boolean, onClick: () -> Unit) -> Unit = { _, _, _ -> }
+    values: List<T>,
+    selectedValue: T,
+    label: @Composable (T) -> String,
+    onValueSelected: (T) -> Unit,
 ) {
-    val choicesVisible = remember { mutableStateOf(false) }
+    var isChoosing by remember { mutableStateOf(false) }
 
-    ListItem(
-        clickable = true,
-        title = title,
-        enabled = enabled,
-        subtitle = subtitle,
-        onClick = { choicesVisible.value = true }
-    )
+    ListItem(title = title, subtitle = label(selectedValue), onClick = { isChoosing = true })
 
-    BottomSheet(
-        visible = choicesVisible.value,
-        onDismiss = { choicesVisible.value = false }
-    ) {
+    BottomSheet(visible = isChoosing, onDismiss = { isChoosing = false }) {
         List(
             items = values,
-            loadingState = loadingState,
-            item = {
-                item(it, it == selectedValue) {
-                    onValueSelected(it)
-                    choicesVisible.value = false
-                }
+            item = { value ->
+                ListItem(
+                    title = label(value),
+                    selected = value == selectedValue,
+                    onClick = {
+                        onValueSelected(value)
+                        isChoosing = false
+                    }
+                )
             }
         )
     }

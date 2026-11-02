@@ -1,10 +1,11 @@
 package com.chooloo.www.chooloolib.ui.theme
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -53,10 +54,6 @@ fun ChoolooTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as? Activity)?.window ?: return@SideEffect
-            @Suppress("DEPRECATION")
-            window.statusBarColor = Color.TRANSPARENT
-            @Suppress("DEPRECATION")
-            window.navigationBarColor = Color.TRANSPARENT
             WindowCompat.getInsetsController(window, view).apply {
                 isAppearanceLightStatusBars = !darkTheme
                 isAppearanceLightNavigationBars = !darkTheme
@@ -70,11 +67,11 @@ fun ChoolooTheme(
             typography = ChoolooTypography,
             shapes = ChoolooShapes
         ) {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colorScheme.background,
-                content = content
-            )
+            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Box(modifier = Modifier.safeDrawingPadding()) {
+                    content()
+                }
+            }
         }
     }
 }

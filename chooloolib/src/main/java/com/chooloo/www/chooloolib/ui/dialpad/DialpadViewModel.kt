@@ -1,11 +1,11 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.domain.repository.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import com.chooloo.www.chooloolib.domain.repository.TelecomRepository
-import com.chooloo.www.chooloolib.ui.common.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,7 @@ class DialpadViewModel @Inject constructor(
     private val recentRepository: RecentRepository,
     private val telecomRepository: TelecomRepository,
     private val preferenceRepository: PreferenceRepository,
-) : BaseViewModel() {
+) : ViewModel() {
     data class UiState(val value: String = "")
 
     private val _uiState = MutableStateFlow(UiState())

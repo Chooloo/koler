@@ -7,7 +7,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 
@@ -15,17 +15,15 @@ import com.chooloo.www.chooloolib.ui.components.list.ListItem
 fun PhoneListItem(
     modifier: Modifier = Modifier,
     phone: Phone,
-    highlightText: String? = null,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {},
     onOpenClick: () -> Unit = {}
 ) {
-    val resources = LocalContext.current.resources
+    val resources = LocalResources.current
 
     ListItem(
         modifier = modifier,
         title = phone.number,
-        highlightText = highlightText,
         subtitle = PhoneContract.getTypeLabel(resources, phone.type, phone.label).toString(),
         onClick = onClick,
         onLongClick = onLongClick,

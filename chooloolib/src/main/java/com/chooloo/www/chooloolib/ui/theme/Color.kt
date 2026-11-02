@@ -59,23 +59,17 @@ val DarkColorScheme = darkColorScheme(
 @Immutable
 data class ExtendedColors(
     val positive: Color,
-    val onPositive: Color,
     val negative: Color,
-    val onNegative: Color,
 )
 
 val LightExtendedColors = ExtendedColors(
     positive = Color(0xFF7BD46B),
-    onPositive = Color(0xFF215218),
     negative = Color(0xFFFF6961),
-    onNegative = Color(0xFFA30800),
 )
 
 val DarkExtendedColors = ExtendedColors(
     positive = Color(0xFF378A28),
-    onPositive = Color(0xFF7CD46C),
     negative = Color(0xFFD40A00),
-    onNegative = Color(0xFFFF9E99),
 )
 
 val LocalExtendedColors = staticCompositionLocalOf { LightExtendedColors }

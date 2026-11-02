@@ -34,6 +34,7 @@ fun DialpadScreen(
             onAddContactClick = { context.createContact(uiState.value) },
             onDeleteLongClick = dialpadViewModel::onDeleteLongClick,
             onKeyClick = dialpadViewModel::onKeyClick,
+            onKeyLongClick = dialpadViewModel::onKeyLongClick,
         )
     }
 }

@@ -4,12 +4,14 @@ import android.os.Build
 import android.telecom.Call as TelecomCall
 import android.telecom.Call.Details
 import android.telecom.CallAudioState
+import android.telecom.PhoneAccountHandle
+import androidx.core.os.BundleCompat
 import com.chooloo.www.koler.domain.AudioRoute
 import com.chooloo.www.koler.domain.Call
 import com.chooloo.www.koler.domain.CallAudio
 import com.chooloo.www.koler.domain.CallState
 
-fun TelecomCall.toDomain(id: String) = Call(
+fun TelecomCall.toDomain(id: String, accountLabel: (PhoneAccountHandle) -> String?) = Call(
     id = id,
     state = if (parent != null) CallState.CONFERENCED else callStateOf(telecomState),
     number = details.gatewayInfo?.originalAddress?.schemeSpecificPart ?: details.handle?.schemeSpecificPart,
@@ -25,7 +27,20 @@ fun TelecomCall.toDomain(id: String) = Call(
             add(Call.Capability.MERGE)
         }
     },
+    phoneAccounts = if (telecomState == TelecomCall.STATE_SELECT_PHONE_ACCOUNT) {
+        availablePhoneAccounts.map { Call.PhoneAccount(it.accountId, accountLabel(it) ?: it.id) }
+    } else {
+        emptyList()
+    },
 )
+
+val TelecomCall.availablePhoneAccounts: List<PhoneAccountHandle>
+    get() = details.intentExtras
+        ?.let { BundleCompat.getParcelableArrayList(it, TelecomCall.AVAILABLE_PHONE_ACCOUNTS, PhoneAccountHandle::class.java) }
+        .orEmpty()
+
+val PhoneAccountHandle.accountId: String
+    get() = "${componentName.flattenToString()}/$id"
 
 val TelecomCall.telecomState: Int
     @Suppress("DEPRECATION")

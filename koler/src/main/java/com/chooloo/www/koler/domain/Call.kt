@@ -8,7 +8,10 @@ data class Call(
     val isConference: Boolean = false,
     val connectTimeMillis: Long = 0,
     val capabilities: Set<Capability> = emptySet(),
+    val phoneAccounts: List<PhoneAccount> = emptyList(),
 ) {
+    data class PhoneAccount(val id: String, val label: String)
+
     enum class Capability { MUTE, HOLD, SWAP, MERGE, SEPARATE }
 
     val hasStarted: Boolean

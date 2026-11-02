@@ -3,6 +3,7 @@ package com.chooloo.www.chooloolib.ui.common
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -14,8 +15,8 @@ abstract class BaseActivity : ComponentActivity() {
     @Inject lateinit var preferenceRepository: PreferenceRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        onSetup()
     }
 
     protected fun setChoolooContent(content: @Composable () -> Unit) {
@@ -24,6 +25,4 @@ abstract class BaseActivity : ComponentActivity() {
             settings?.let { ChoolooTheme(themeMode = it.themeMode, content = content) }
         }
     }
-
-    abstract fun onSetup()
 }
