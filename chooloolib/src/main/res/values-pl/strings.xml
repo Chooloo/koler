@@ -7,8 +7,6 @@
     <string name="theme_mode_light">Jasny</string>
     <string name="theme_mode_system">Systemowy</string>
     <string name="number_copied_to_clipboard">Numer skopiowany do schowka</string>
-    <string name="action_show_history">Pokaż Historię</string>
-    <string name="hint_search">Szukaj</string>
     <string name="hint_search_recents">Szukaj Ostatnie</string>
     <string name="hint_search_contacts">Szukaj Kontakty</string>
     <string name="call_action_mute">Wycisz</string>
@@ -32,8 +30,6 @@
     <string name="pref_title_manage_blocked">Zarządzaj Zablokowanymi Numerami</string>
     <string name="no_results_recents">Brak ostatnich połączeń</string>
     <string name="no_results_contacts">Brak kontaktów</string>
-    <string name="no_results_phones">Brak numerów telefonu</string>
-    <string name="cd_show_menu">Przycisk Menu</string>
     <string name="cd_accept_call">Przycisk do Odebrania</string>
     <string name="cd_hangup_call">Przycisk do Odrzucenia</string>
     <string name="call_notification_channel_name">Powiadomienia Połączeń</string>
@@ -44,4 +40,5 @@
     <string name="audio_route_wired_headset">Słuchawki przewodowe</string>
     <string name="audio_route_wired_or_earpiece">Przewodowy lub słuchawka</string>
     <string name="cd_favorite_star">Ulubione</string>
+    <string name="settings">Ustawienia</string>
 </resources>

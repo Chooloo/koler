@@ -2,7 +2,6 @@
 <resources>
     <string name="recents">Recientes</string>
     <string name="contacts">Contactos</string>
-    <string name="hint_search">Buscar</string>
     <string name="call_action_mute">Silenciar</string>
     <string name="call_action_unmute">Activar sonido</string>
     <string name="call_action_speaker">Altavoz</string>
@@ -23,9 +22,7 @@
     <string name="pref_title_manage_blocked">Administrar números bloqueados</string>
     <string name="no_results_recents">No hay llamadas recientes</string>
     <string name="no_results_contacts">No hay contactos</string>
-    <string name="no_results_phones">No hay números de teléfono</string>
     <string name="audio_route_speaker">Altavoz</string>
-    <string name="cd_show_menu">Botón de menú</string>
     <string name="conference">Reunión</string>
     <string name="call_state_connecting">Conectando…</string>
     <string name="call_state_unknown">Estado de la llamada desconocido</string>
@@ -33,7 +30,6 @@
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_system">Sistema</string>
     <string name="number_copied_to_clipboard">Número copiado al portapapeles</string>
-    <string name="action_show_history">Mostrar historial</string>
     <string name="call_state_disconnecting">Finalizando llamada…</string>
     <string name="call_state_phone_account">Seleccionar cuenta de teléfono</string>
     <string name="audio_route_earpiece">Auricular</string>
@@ -44,4 +40,5 @@
     <string name="pref_title_animations">Animaciones</string>
     <string name="hint_search_recents">Buscar llamadas recientes</string>
     <string name="hint_search_contacts">Buscar contactos</string>
+    <string name="settings">Ajustes</string>
 </resources>

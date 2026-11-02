@@ -5,6 +5,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.provider.CallLog.Calls
+import android.telephony.PhoneNumberUtils
 import com.chooloo.www.chooloolib.data.source.ContentQuery
 import com.chooloo.www.chooloolib.data.source.int
 import com.chooloo.www.chooloolib.data.source.long
@@ -12,20 +13,26 @@ import com.chooloo.www.chooloolib.data.source.observeAll
 import com.chooloo.www.chooloolib.data.source.string
 import com.chooloo.www.chooloolib.di.IoDispatcher
 import com.chooloo.www.chooloolib.domain.model.Recent
+import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
 class RecentRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val contentResolver: ContentResolver,
+    private val phoneRepository: PhoneRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : RecentRepository {
     override fun recents(filter: String?): Flow<List<Recent>> {
@@ -39,7 +46,7 @@ class RecentRepositoryImpl @Inject constructor(
                 sortOrder = "${Calls.DATE} DESC",
             ),
             ::toRecent
-        ).flowOn(ioDispatcher)
+        ).mapLatest(::withContactDetails).flowOn(ioDispatcher)
     }
 
     override fun recent(recentId: Long): Flow<Recent?> =
@@ -53,6 +60,23 @@ class RecentRepositoryImpl @Inject constructor(
             ::toRecent
         ).map { it.firstOrNull() }.flowOn(ioDispatcher)
 
+    override fun recentsOfNumbers(numbers: List<String>): Flow<List<Recent>> {
+        val suffixes = numbers.map { number -> number.filter(Char::isDigit).takeLast(MATCH_DIGITS) }.filter { it.isNotEmpty() }
+        if (suffixes.isEmpty()) return flowOf(emptyList())
+        return contentResolver.observeAll(
+            ContentQuery(
+                uri = Calls.CONTENT_URI,
+                projection = PROJECTION,
+                selection = suffixes.joinToString(" OR ") { "${Calls.NUMBER} LIKE ?" },
+                selectionArgs = suffixes.map { "%$it" }.toTypedArray(),
+                sortOrder = "${Calls.DATE} DESC",
+            ),
+            ::toRecent
+        )
+            .map { recents -> recents.filter { recent -> numbers.any { PhoneNumberUtils.compare(context, it, recent.number) } } }
+            .flowOn(ioDispatcher)
+    }
+
     override suspend fun lastOutgoingNumber(): String? = withContext(ioDispatcher) {
         Calls.getLastOutgoingCall(context)?.takeIf { it.isNotEmpty() }
     }
@@ -65,6 +89,22 @@ class RecentRepositoryImpl @Inject constructor(
     override suspend fun deleteAllRecents() = withContext(ioDispatcher) {
         contentResolver.delete(Calls.CONTENT_URI, null, null)
         Unit
+    }
+
+    private suspend fun withContactDetails(recents: List<Recent>): List<Recent> {
+        val lookups = recents.filter { it.name == null && it.number.isNotEmpty() }
+            .map { it.number }
+            .distinct()
+            .associateWith { phoneRepository.lookup(it) }
+        return recents.map { recent ->
+            val lookup = lookups[recent.number] ?: return@map recent
+            recent.copy(
+                name = lookup.name,
+                photoUri = lookup.photoUri ?: recent.photoUri,
+                numberType = lookup.type,
+                numberLabel = lookup.label,
+            )
+        }
     }
 
     private fun toRecent(cursor: Cursor) = Recent(
@@ -98,6 +138,7 @@ class RecentRepositoryImpl @Inject constructor(
     }
 
     private companion object {
+        const val MATCH_DIGITS = 7
         val PROJECTION = arrayOf(
             Calls._ID,
             Calls.NUMBER,

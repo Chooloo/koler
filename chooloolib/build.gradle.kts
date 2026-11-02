@@ -25,6 +25,10 @@ android {
         enable = true
     }
 
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     lint {
         warning += "MissingTranslation"
     }

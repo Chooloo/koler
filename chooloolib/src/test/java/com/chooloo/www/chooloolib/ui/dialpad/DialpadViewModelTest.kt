@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.testing.FakeAudioRepository
 import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
@@ -63,6 +64,19 @@ class DialpadViewModelTest {
         viewModel.onCallClick()
 
         assertEquals(listOf("123"), telecom.calledNumbers)
+    }
+
+    @Test
+    fun `failed call reports an error message`() {
+        val viewModel = viewModel()
+        telecom.callError = SecurityException()
+        viewModel.setNumber("123")
+
+        viewModel.onCallClick()
+        assertEquals(R.string.error_call_failed, viewModel.uiState.value.message)
+
+        viewModel.onMessageShown()
+        assertEquals(null, viewModel.uiState.value.message)
     }
 
     @Test

@@ -1,39 +1,75 @@
 package com.chooloo.www.kontacts.ui.main
 
 import android.content.Intent
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.chooloo.www.chooloolib.domain.model.Contact
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
     data class UiState(
+        val isSearching: Boolean = false,
         val searchText: String = "",
-        val isMenuVisible: Boolean = false,
         val selectedContactId: Long? = null,
+        val isSettingsOpen: Boolean = false,
     )
 
-    private val _uiState = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+    private val selectedContactId = MutableStateFlow<Long?>(null)
+    private val isSettingsOpen = MutableStateFlow(false)
+
+    val uiState: StateFlow<UiState> = combine(
+        savedStateHandle.getStateFlow(KEY_SEARCHING, false),
+        savedStateHandle.getStateFlow(KEY_SEARCH_TEXT, ""),
+        selectedContactId,
+        isSettingsOpen,
+        ::UiState,
+    ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
     fun onViewIntent(intent: Intent) {
-        val uri = intent.data?.takeIf { intent.action == Intent.ACTION_VIEW } ?: return
-        val contactId = uri.lastPathSegment?.toLongOrNull() ?: return
-        _uiState.update { it.copy(selectedContactId = contactId) }
+        if (intent.action != Intent.ACTION_VIEW) return
+        selectedContactId.value = intent.data?.lastPathSegment?.toLongOrNull() ?: return
     }
 
-    fun onMenuButtonClick() = _uiState.update { it.copy(isMenuVisible = true) }
+    fun onSearchOpen() {
+        savedStateHandle[KEY_SEARCHING] = true
+    }
 
-    fun onDismissMenu() = _uiState.update { it.copy(isMenuVisible = false) }
+    fun onSearchClose() {
+        savedStateHandle[KEY_SEARCHING] = false
+        savedStateHandle[KEY_SEARCH_TEXT] = ""
+    }
 
-    fun onSearchTextChange(searchText: String) = _uiState.update { it.copy(searchText = searchText) }
+    fun onSearchTextChange(text: String) {
+        savedStateHandle[KEY_SEARCH_TEXT] = text
+    }
 
-    fun onContactClick(contact: Contact) = _uiState.update { it.copy(selectedContactId = contact.id) }
+    fun onContactSelected(contactId: Long) {
+        selectedContactId.value = contactId
+    }
 
-    fun onDismissSelectedContact() = _uiState.update { it.copy(selectedContactId = null) }
+    fun onContactDismiss() {
+        selectedContactId.value = null
+    }
+
+    fun onSettingsOpen() {
+        isSettingsOpen.value = true
+    }
+
+    fun onSettingsClose() {
+        isSettingsOpen.value = false
+    }
+
+    private companion object {
+        const val KEY_SEARCHING = "searching"
+        const val KEY_SEARCH_TEXT = "search_text"
+    }
 }

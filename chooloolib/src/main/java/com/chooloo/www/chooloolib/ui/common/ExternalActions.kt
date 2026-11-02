@@ -31,6 +31,8 @@ fun Context.sendSupportEmail() = launch(
         .putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
 )
 
+fun Context.sendEmail(address: String) = launch(Intent(Intent.ACTION_SENDTO, "mailto:$address".toUri()))
+
 fun Context.openSms(number: String) =
     launch(Intent(Intent.ACTION_SENDTO, "smsto:${PhoneNumberUtils.normalizeNumber(number)}".toUri()))
 

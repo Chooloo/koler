@@ -6,10 +6,7 @@
     <string name="theme_mode_dark">Тёмная</string>
     <string name="theme_mode_light">Светлая</string>
     <string name="theme_mode_system">Системная</string>
-    <string name="theme_mode_dynamic">Динамическая</string>
     <string name="number_copied_to_clipboard">Номер скопирован</string>
-    <string name="action_show_history">Показать историю</string>
-    <string name="hint_search">Поиск</string>
     <string name="hint_search_recents">Поиск в недавних</string>
     <string name="hint_search_contacts">Поиск в контактах</string>
     <string name="call_action_mute">Отключить микрофон</string>
@@ -33,12 +30,7 @@
     <string name="pref_title_manage_blocked">Управление заблокированными номерами</string>
     <string name="no_results_recents">Нет недавних</string>
     <string name="no_results_contacts">Нет контактов</string>
-    <string name="no_results_phones">Нет номеров телефонов</string>
     <string name="cd_call">Телефонный вызов</string>
-    <string name="cd_edit">Редактировать</string>
-    <string name="cd_delete">Удалить</string>
-    <string name="cd_sms">Отправить SMS</string>
-    <string name="cd_show_menu">Кнопка меню</string>
     <string name="cd_accept_call">Кнопка ответить</string>
     <string name="cd_hangup_call">Кнопка отклонить</string>
     <string name="call_notification_channel_name">Уведомление о вызове</string>
@@ -58,4 +50,5 @@
     <string name="type_label_organization">Организация</string>
     <string name="action_call">Позвонить</string>
     <string name="cd_add_contact">Добавить контакт</string>
+    <string name="settings">Настройки</string>
 </resources>

@@ -7,7 +7,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.common.createContact
+import com.chooloo.www.chooloolib.ui.components.MessageToast
 import com.chooloo.www.chooloolib.ui.components.Permissioned
 
 @Composable
@@ -24,8 +26,11 @@ fun DialpadScreen(
         }
     }
 
+    MessageToast(message = uiState.message, onShown = dialpadViewModel::onMessageShown)
+
     Permissioned(
-        permissions = listOf(Manifest.permission.CALL_PHONE)
+        permissions = listOf(Manifest.permission.CALL_PHONE),
+        rationaleRes = R.string.permission_rationale_phone,
     ) {
         Dialpad(
             value = uiState.value,

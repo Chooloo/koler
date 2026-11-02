@@ -72,7 +72,6 @@ class PreferenceRepositoryImpl @Inject constructor(
             ThemeMode.SYSTEM to "system",
             ThemeMode.LIGHT to "light",
             ThemeMode.DARK to "dark",
-            ThemeMode.DYNAMIC to "dynamic",
         )
         val INCOMING_CALL_MODE_KEYS = mapOf(
             IncomingCallMode.FULL_SCREEN to "full_screen",

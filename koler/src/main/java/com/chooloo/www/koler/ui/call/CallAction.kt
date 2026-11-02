@@ -1,6 +1,6 @@
 package com.chooloo.www.koler.ui.call
 
-enum class CallActionType { KEYPAD, MUTE, HOLD, ADD_CALL, SPEAKER, SWAP, MERGE, ACCEPT, DENY, MANAGE }
+enum class CallActionType { KEYPAD, MUTE, HOLD, ADD_CALL, SPEAKER, SWAP, MERGE }
 
 data class CallAction(
     val type: CallActionType,

@@ -6,13 +6,7 @@
     <string name="theme_mode_dark">Dunkel</string>
     <string name="theme_mode_light">Hell</string>
     <string name="theme_mode_system">System</string>
-    <string name="theme_mode_dynamic">Dynamisch</string>
     <string name="number_copied_to_clipboard">Nummer in Zwischenablage kopiert</string>
-    <string name="action_show_history">Anrufhistorie anzeigen</string>
-    <string name="action_delete_contact">Kontakt löschen</string>
-    <string name="action_set_favorite">Als Favorit markieren</string>
-    <string name="action_unset_favorite">Favorit entfernen</string>
-    <string name="hint_search">Suche</string>
     <string name="hint_search_recents">Anrufliste durchsuchen</string>
     <string name="hint_search_contacts">Kontakte durchsuchen</string>
     <string name="call_action_mute">Stumm</string>
@@ -36,12 +30,7 @@
     <string name="pref_title_manage_blocked">Blockierte Nummern verwalten</string>
     <string name="no_results_recents">Keine kürzlichen Anrufe</string>
     <string name="no_results_contacts">Keine Kontakte</string>
-    <string name="no_results_phones">Keine Telefonnummern</string>
     <string name="cd_call">Anruf</string>
-    <string name="cd_edit">Bearbeiten</string>
-    <string name="cd_delete">Löschen</string>
-    <string name="cd_sms">SMS senden</string>
-    <string name="cd_show_menu">Menü-Button</string>
     <string name="cd_accept_call">Annehmen-Knopf</string>
     <string name="cd_hangup_call">Ablehen-Knopf</string>
     <string name="call_notification_channel_name">Anruf-Benachrichtigung</string>
@@ -61,4 +50,5 @@
     <string name="type_label_organization">Organisation</string>
     <string name="action_call">Anrufen</string>
     <string name="cd_add_contact">Kontakt hinzufügen</string>
+    <string name="settings">Einstellungen</string>
 </resources>

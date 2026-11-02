@@ -86,10 +86,10 @@ class CallViewModel @Inject constructor(
     val uiState: StateFlow<UiState> = combine(
         callRepository.calls,
         callRepository.audio,
-        callRepository.hasPendingOutgoing,
+        combine(callRepository.hasPendingOutgoing, callRepository.canAddCall, ::Pair),
         combine(caller, elapsedSeconds, ::Pair),
         localState,
-    ) { calls, audio, hasPendingOutgoing, (caller, elapsed), local ->
+    ) { calls, audio, (hasPendingOutgoing, canAddCall), (caller, elapsed), local ->
         val call = primaryCall(calls)
         val state = callsState(calls, hasPendingOutgoing)
         UiState(
@@ -99,7 +99,7 @@ class CallViewModel @Inject constructor(
             callsState = state,
             elapsedSeconds = elapsed,
             audio = audio,
-            actions = actions(state, call, audio),
+            actions = actions(state, call, audio, canAddCall),
             keypadValue = local.keypadValue,
             sheet = local.sheet,
         )
@@ -109,15 +109,12 @@ class CallViewModel @Inject constructor(
         val state = uiState.value
         val callId = state.call?.id
         when (type) {
-            CallActionType.ACCEPT -> callId?.let(callRepository::answer)
-            CallActionType.DENY -> callId?.let(callRepository::decline)
             CallActionType.SWAP -> callId?.let(callRepository::swap)
             CallActionType.MERGE -> callId?.let(callRepository::merge)
             CallActionType.HOLD -> callId?.let {
                 if (state.call?.state == CallState.HOLDING) callRepository.unhold(it) else callRepository.hold(it)
             }
             CallActionType.MUTE -> callRepository.setMuted(!state.audio.isMuted)
-            CallActionType.MANAGE -> showSheet(Sheet.MANAGE)
             CallActionType.KEYPAD -> showSheet(Sheet.KEYPAD)
             CallActionType.ADD_CALL -> showSheet(Sheet.ADD_CALL)
             CallActionType.SPEAKER -> if (AudioRoute.BLUETOOTH in state.audio.supportedRoutes) {
@@ -127,6 +124,16 @@ class CallViewModel @Inject constructor(
             }
         }
     }
+
+    fun onAccept() {
+        uiState.value.call?.id?.let(callRepository::answer)
+    }
+
+    fun onHangup() {
+        uiState.value.call?.id?.let(callRepository::decline)
+    }
+
+    fun onManage() = showSheet(Sheet.MANAGE)
 
     fun onKeypadKeyClick(key: Char) {
         uiState.value.call?.id?.let { callRepository.playDtmf(it, key) }
@@ -159,13 +166,13 @@ class CallViewModel @Inject constructor(
 
     private fun showSheet(sheet: Sheet) = localState.update { it.copy(sheet = sheet) }
 
-    private fun actions(state: CallsState, call: Call?, audio: CallAudio): List<CallAction> {
+    private fun actions(state: CallsState, call: Call?, audio: CallAudio, canAddCall: Boolean): List<CallAction> {
         if (call == null) return emptyList()
         val common = listOf(
             CallAction(CallActionType.KEYPAD, isEnabled = true),
             CallAction(CallActionType.MUTE, isEnabled = call.can(Call.Capability.MUTE), isActive = audio.isMuted),
             CallAction(CallActionType.HOLD, isEnabled = call.can(Call.Capability.HOLD), isActive = call.state == CallState.HOLDING),
-            CallAction(CallActionType.ADD_CALL, isEnabled = true),
+            CallAction(CallActionType.ADD_CALL, isEnabled = canAddCall),
         )
         return if (state == CallsState.ACTIVE_MULTI) {
             listOf(

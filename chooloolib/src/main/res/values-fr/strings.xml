@@ -7,8 +7,6 @@
     <string name="theme_mode_light">Clair</string>
     <string name="theme_mode_system">Système</string>
     <string name="number_copied_to_clipboard">Numéro copié dans le presse-papiers</string>
-    <string name="action_show_history">Historique des appels</string>
-    <string name="hint_search">Recherche</string>
     <string name="hint_search_recents">Recherche dans les Appels Récents</string>
     <string name="hint_search_contacts">Recherche dans les Contacts</string>
     <string name="call_action_mute">Couper le micro</string>
@@ -32,8 +30,6 @@
     <string name="pref_title_manage_blocked">Gérer les numéros bloqués</string>
     <string name="no_results_recents">Aucun élément récent trouvé</string>
     <string name="no_results_contacts">Aucun contact trouvé</string>
-    <string name="no_results_phones">Aucun numéro de téléphone trouvé</string>
-    <string name="cd_show_menu">Bouton de menu</string>
     <string name="cd_accept_call">Bouton de réponse</string>
     <string name="cd_hangup_call">Bouton de rejet</string>
     <string name="call_notification_channel_name">Notification d\'appel</string>
@@ -44,4 +40,5 @@
     <string name="audio_route_wired_headset">Casque filaire</string>
     <string name="audio_route_wired_or_earpiece">Filaire ou Téléphone</string>
     <string name="cd_favorite_star">Étoile de Favoris</string>
+    <string name="settings">Paramètres</string>
 </resources>

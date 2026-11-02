@@ -3,7 +3,6 @@
     <string name="recents">Lastatempaj</string>
     <string name="contacts">Kontaktoj</string>
     <string name="number_copied_to_clipboard">Numero kopiita al tondejo</string>
-    <string name="hint_search">Serĉi</string>
     <string name="call_action_mute">Silentigi</string>
     <string name="call_action_unmute">Malsilentigi</string>
     <string name="call_action_speaker">Laŭtigi</string>
@@ -17,7 +16,6 @@
     <string name="pref_title_animations">Animacioj</string>
     <string name="pref_title_email">Sendi retpoŝtmesaĝon al ni</string>
     <string name="pref_title_report_bugs">Raporti cimigoj</string>
-    <string name="no_results_phones">Neniu telefonaj numeroj :/</string>
     <string name="no_results_contacts">Neniu kontaktoj :/</string>
     <string name="no_results_recents">Neniu lastatempaj :/</string>
     <string name="cd_accept_call">Responda butono</string>

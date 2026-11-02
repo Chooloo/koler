@@ -7,8 +7,6 @@
     <string name="theme_mode_light">白色模式</string>
     <string name="theme_mode_system">系统</string>
     <string name="number_copied_to_clipboard">号码已复制到剪贴板</string>
-    <string name="action_show_history">显示历史通话</string>
-    <string name="hint_search">搜索</string>
     <string name="hint_search_recents">搜索最近通话</string>
     <string name="hint_search_contacts">搜索联系人</string>
     <string name="call_action_mute">静音</string>
@@ -28,4 +26,5 @@
     <string name="pref_title_animations">动效</string>
     <string name="pref_title_theme_mode">主题模式</string>
     <string name="cd_favorite_star">星标</string>
+    <string name="settings">设置</string>
 </resources>

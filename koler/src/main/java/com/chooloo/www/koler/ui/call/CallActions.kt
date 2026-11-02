@@ -2,10 +2,9 @@ package com.chooloo.www.koler.ui.call
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.CallMerge
 import androidx.compose.material.icons.automirrored.rounded.VolumeDown
@@ -17,52 +16,43 @@ import androidx.compose.material.icons.rounded.MicOff
 import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.SwapCalls
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.ui.components.RoundAction
+import com.chooloo.www.chooloolib.ui.theme.Sizes
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
 fun CallActions(
     actions: List<CallAction>,
-    onActionClick: (CallAction) -> Unit = {},
+    onActionClick: (CallActionType) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    LazyVerticalGrid(columns = GridCells.Fixed(3)) {
-        items(actions, key = { it.type }) { action ->
-            CallActionButton(action = action, onClick = { onActionClick(action) })
-        }
-    }
-}
-
-@Composable
-private fun CallActionButton(action: CallAction, onClick: () -> Unit) {
-    val (icon, textRes) = action.appearance()
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Spacing.Small),
-        modifier = Modifier.padding(Spacing.Medium)
+        verticalArrangement = Arrangement.spacedBy(Spacing.Large),
+        modifier = modifier.fillMaxWidth(),
     ) {
-        FilledTonalIconButton(
-            onClick = onClick,
-            enabled = action.isEnabled,
-            colors = if (action.isActive) {
-                IconButtonDefaults.filledIconButtonColors()
-            } else {
-                IconButtonDefaults.filledTonalIconButtonColors()
+        actions.chunked(ACTIONS_PER_ROW).forEach { row ->
+            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.Medium)) {
+                row.forEach { action ->
+                    val (icon, labelRes) = action.appearance()
+                    RoundAction(
+                        icon = icon,
+                        label = stringResource(labelRes),
+                        onClick = { onActionClick(action.type) },
+                        isHighlighted = action.isActive,
+                        enabled = action.isEnabled,
+                        size = Sizes.ButtonLarge,
+                        modifier = Modifier.width(ACTION_WIDTH),
+                    )
+                }
             }
-        ) {
-            Icon(imageVector = icon, contentDescription = stringResource(textRes))
         }
-        Text(text = stringResource(textRes), style = MaterialTheme.typography.labelSmall)
     }
 }
 
@@ -74,5 +64,7 @@ private fun CallAction.appearance(): Pair<ImageVector, Int> = when (type) {
     CallActionType.MUTE -> if (isActive) Icons.Rounded.Mic to R.string.call_action_unmute else Icons.Rounded.MicOff to R.string.call_action_mute
     CallActionType.HOLD -> if (isActive) Icons.Rounded.PlayArrow to R.string.call_action_resume else Icons.Rounded.Pause to R.string.call_action_hold
     CallActionType.SPEAKER -> if (isActive) Icons.AutoMirrored.Rounded.VolumeUp to R.string.call_action_speaker_off else Icons.AutoMirrored.Rounded.VolumeDown to R.string.call_action_speaker
-    CallActionType.ACCEPT, CallActionType.DENY, CallActionType.MANAGE -> error("$type is not a grid action")
 }
+
+private const val ACTIONS_PER_ROW = 3
+private val ACTION_WIDTH = Sizes.ButtonLarge + Spacing.Large

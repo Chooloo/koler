@@ -1,5 +1,6 @@
 package com.chooloo.www.kontacts.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
@@ -13,7 +14,12 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) mainViewModel.onViewIntent(intent)
         setChoolooContent {
-            MainScreen(mainViewModel = mainViewModel)
+            MainScreen(viewModel = mainViewModel)
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        mainViewModel.onViewIntent(intent)
     }
 }

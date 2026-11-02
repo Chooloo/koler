@@ -1,7 +1,10 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
+import android.util.Log
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.repository.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
@@ -23,7 +26,7 @@ class DialpadViewModel @Inject constructor(
     private val telecomRepository: TelecomRepository,
     private val preferenceRepository: PreferenceRepository,
 ) : ViewModel() {
-    data class UiState(val value: String = "")
+    data class UiState(val value: String = "", @StringRes val message: Int? = null)
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -34,7 +37,7 @@ class DialpadViewModel @Inject constructor(
 
     fun onCallClick() {
         val value = _uiState.value.value
-        viewModelScope.launch {
+        launchCatching {
             if (value.isNotEmpty()) {
                 telecomRepository.callNumber(value)
             } else {
@@ -64,9 +67,26 @@ class DialpadViewModel @Inject constructor(
     fun onKeyLongClick(key: Char) {
         when (key) {
             '0' -> _uiState.update { it.copy(value = it.value + '+') }
-            '1' -> viewModelScope.launch { telecomRepository.callVoicemail() }
+            '1' -> launchCatching { telecomRepository.callVoicemail() }
+        }
+    }
+
+    fun onMessageShown() {
+        _uiState.update { it.copy(message = null) }
+    }
+
+    private fun launchCatching(action: suspend () -> Unit) {
+        viewModelScope.launch {
+            runCatching { action() }.onFailure { error ->
+                Log.e(TAG, "Call failed", error)
+                _uiState.update { it.copy(message = R.string.error_call_failed) }
+            }
         }
     }
 
     private fun isDialable(char: Char) = char.isDigit() || char in "+#*"
+
+    private companion object {
+        const val TAG = "DialpadViewModel"
+    }
 }

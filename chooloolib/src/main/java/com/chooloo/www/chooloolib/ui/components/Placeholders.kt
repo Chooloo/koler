@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -51,5 +50,5 @@ private fun CenteredColumn(modifier: Modifier, content: @Composable ColumnScope.
 
 @Composable
 private fun PlaceholderText(@StringRes titleRes: Int) {
-    Text(text = stringResource(titleRes), style = typography.bodyLarge, color = colorScheme.onSurfaceVariant)
+    Text(text = stringResource(titleRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
 }

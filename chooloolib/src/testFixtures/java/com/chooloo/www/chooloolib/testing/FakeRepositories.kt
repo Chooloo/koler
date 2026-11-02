@@ -34,10 +34,12 @@ class FakeTelecomRepository(private val defaultDialer: Boolean = true) : Telecom
     val calledNumbers = mutableListOf<String>()
     val secretCodes = mutableListOf<String>()
     var voicemailCalls = 0
+    var callError: Exception? = null
 
     override fun isDefaultDialer() = defaultDialer
 
     override suspend fun callNumber(number: String) {
+        callError?.let { throw it }
         calledNumbers += number
     }
 
@@ -61,6 +63,8 @@ class FakeRecentRepository(var lastOutgoingNumber: String? = null) : RecentRepos
     override fun recents(filter: String?): Flow<List<Recent>> = flowOf(emptyList())
 
     override fun recent(recentId: Long): Flow<Recent?> = flowOf(null)
+
+    override fun recentsOfNumbers(numbers: List<String>): Flow<List<Recent>> = flowOf(emptyList())
 
     override suspend fun lastOutgoingNumber() = lastOutgoingNumber
 

@@ -7,8 +7,6 @@
     <string name="theme_mode_light">Світла</string>
     <string name="theme_mode_system">Системна</string>
     <string name="number_copied_to_clipboard">Скопійований номер</string>
-    <string name="action_show_history">Показати історію</string>
-    <string name="hint_search">Пошук</string>
     <string name="hint_search_recents">Шукати нещодавні</string>
     <string name="hint_search_contacts">Шукати контакти</string>
     <string name="call_action_mute">Вимкнути мікрофон</string>
@@ -32,8 +30,6 @@
     <string name="pref_title_manage_blocked">Керувати заблокованими номерами</string>
     <string name="no_results_recents">Немає нещодавніх</string>
     <string name="no_results_contacts">Немає контактів</string>
-    <string name="no_results_phones">Немає номерів телефону</string>
-    <string name="cd_show_menu">Кнопка Меню</string>
     <string name="cd_accept_call">Кнопка Відповісти</string>
     <string name="cd_hangup_call">Кнопка Відхилити</string>
     <string name="call_notification_channel_name">Сповіщення виклику</string>
@@ -51,4 +47,5 @@
     <string name="type_label_custom">Інше</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Організація</string>
+    <string name="settings">Налаштування</string>
 </resources>

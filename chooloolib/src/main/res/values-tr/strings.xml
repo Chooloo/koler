@@ -7,8 +7,6 @@
     <string name="theme_mode_light">Açık</string>
     <string name="theme_mode_system">Sistem</string>
     <string name="number_copied_to_clipboard">Numara panoya kopyalandı</string>
-    <string name="action_show_history">Geçmişi Göster</string>
-    <string name="hint_search">Arama</string>
     <string name="hint_search_recents">Son aramaları ara</string>
     <string name="hint_search_contacts">Kişileri ara</string>
     <string name="call_action_mute">Sustur</string>
@@ -32,8 +30,6 @@
     <string name="pref_title_manage_blocked">Engellenen numaraları yönet</string>
     <string name="no_results_recents">Son arama yok</string>
     <string name="no_results_contacts">Kişi yok</string>
-    <string name="no_results_phones">Telefon numarası yok</string>
-    <string name="cd_show_menu">Menü Tuşu</string>
     <string name="cd_accept_call">Cevaplama Tuşu</string>
     <string name="cd_hangup_call">Reddetme Tuşu</string>
     <string name="call_notification_channel_name">Arama Bildirimi</string>
@@ -51,4 +47,5 @@
     <string name="type_label_custom">Özel</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Kuruluş</string>
+    <string name="settings">Ayarlar</string>
 </resources>

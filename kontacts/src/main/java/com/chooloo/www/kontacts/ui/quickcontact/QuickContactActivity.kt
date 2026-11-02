@@ -13,8 +13,8 @@ class QuickContactActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         val contactId = intent.data?.lastPathSegment?.toLongOrNull() ?: return finish()
         setChoolooContent {
-            BottomSheet(onDismiss = ::finish) {
-                CallerScreen(CallerTarget.ContactTarget(contactId))
+            BottomSheet(visible = true, onDismiss = ::finish) {
+                CallerScreen(target = CallerTarget.ContactTarget(contactId), onDismiss = ::finish)
             }
         }
     }

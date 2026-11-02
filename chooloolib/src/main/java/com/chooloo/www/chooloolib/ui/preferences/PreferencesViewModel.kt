@@ -3,6 +3,7 @@ package com.chooloo.www.chooloolib.ui.preferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.Settings
@@ -11,8 +12,10 @@ import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -23,6 +26,9 @@ class PreferencesViewModel @Inject constructor(
 ) : ViewModel() {
     val settings: StateFlow<Settings?> =
         preferenceRepository.settings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    private val _message = MutableStateFlow<Int?>(null)
+    val message: StateFlow<Int?> = _message.asStateFlow()
 
     fun onDefaultPage(page: Page) = update { setDefaultPage(page) }
 
@@ -41,8 +47,15 @@ class PreferencesViewModel @Inject constructor(
     fun onClearRecentsClick() {
         viewModelScope.launch {
             runCatching { recentRepository.deleteAllRecents() }
-                .onFailure { Log.e(TAG, "Failed clearing recents", it) }
+                .onFailure {
+                    Log.e(TAG, "Failed clearing recents", it)
+                    _message.value = R.string.error_clear_recents_failed
+                }
         }
+    }
+
+    fun onMessageShown() {
+        _message.value = null
     }
 
     private fun update(change: suspend PreferenceRepository.() -> Unit) {

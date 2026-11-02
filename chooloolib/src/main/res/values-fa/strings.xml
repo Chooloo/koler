@@ -7,8 +7,6 @@
     <string name="theme_mode_light">روشن</string>
     <string name="theme_mode_system">دستگاه</string>
     <string name="number_copied_to_clipboard">از شماره رونوشت گرفته شد</string>
-    <string name="action_show_history">نمایش تاریخچه</string>
-    <string name="hint_search">جستجو</string>
     <string name="hint_search_recents">جستجو در گزارش ها</string>
     <string name="hint_search_contacts">جستجو در مخاطبین</string>
     <string name="call_action_mute">بی صدا</string>
@@ -32,8 +30,6 @@
     <string name="pref_title_manage_blocked">مدیریت شماره های مسدودشده</string>
     <string name="no_results_recents">گزارشی موجود نیست</string>
     <string name="no_results_contacts">مخاطبی موحود نیست</string>
-    <string name="no_results_phones">شماره ای نیست</string>
-    <string name="cd_show_menu">دکمه فهرست</string>
     <string name="cd_accept_call">دکمه پاسخگویی تماس</string>
     <string name="cd_hangup_call">دکمه رد تماس</string>
     <string name="call_notification_channel_name">اعلان تماس</string>
@@ -44,4 +40,5 @@
     <string name="audio_route_wired_headset">هدست سیمی</string>
     <string name="audio_route_wired_or_earpiece">سیمی یا گوشی</string>
     <string name="cd_favorite_star">ستاره موردعلاقه</string>
+    <string name="settings">تنظیمات</string>
 </resources>

@@ -1,100 +1,42 @@
 package com.chooloo.www.chooloolib.ui.components.list
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Call
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ListItem as MaterialListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import com.chooloo.www.chooloolib.ui.theme.Spacing
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextOverflow
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ListItem(
-    modifier: Modifier = Modifier,
     title: String,
+    modifier: Modifier = Modifier,
     subtitle: String? = null,
-    enabled: Boolean = true,
-    selected: Boolean = false,
-    onClick: () -> Unit = {},
-    onLongClick: () -> Unit = {},
-    endContainer: @Composable (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
+    onLongClick: (() -> Unit)? = null,
     startContainer: @Composable (() -> Unit)? = null,
+    endContainer: @Composable (() -> Unit)? = null,
 ) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = if (selected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
-        ),
-        shape = MaterialTheme.shapes.large,
-        modifier = modifier
-            .combinedClickable(
-                enabled = enabled,
-                onClick = onClick,
-                onLongClick = onLongClick
-            )
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = Spacing.Small,
-                    horizontal = Spacing.Medium
-                ),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            startContainer?.let { it() }
-            Column(
-                modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(text = title, style = typography.titleMedium)
-                subtitle?.let {
-                    Text(text = it, style = typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    MaterialListItem(
+        headlineContent = { Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+        supportingContent = subtitle?.let { { Text(text = it, maxLines = 1, overflow = TextOverflow.Ellipsis) } },
+        leadingContent = startContainer,
+        trailingContent = endContainer,
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+        modifier = Modifier
+            .clip(MaterialTheme.shapes.extraLarge)
+            .then(modifier)
+            .then(
+                if (onClick != null) {
+                    Modifier.combinedClickable(role = Role.Button, onClick = onClick, onLongClick = onLongClick)
+                } else {
+                    Modifier
                 }
-            }
-            endContainer?.let {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxHeight(),
-                    contentAlignment = Alignment.CenterEnd
-                ) {
-                    it()
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun ListItemPreview() {
-    MaterialTheme {
-        ListItem(
-            title = "This is title",
-            subtitle = "This is subtitle",
-            startContainer = {
-                Icons.Rounded.Call
-            },
-            endContainer = {
-                Switch(checked = false, onCheckedChange = {})
-            }
-        )
-    }
+            ),
+    )
 }
