@@ -8,17 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.ContactData
+import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.ui.components.list.List
 import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun ContactsList(
     modifier: Modifier = Modifier,
-    items: List<ContactData>,
+    items: List<Contact>,
     withFavorites: Boolean = false,
-    onItemClick: (ContactData) -> Unit = {},
-    onItemLongClick: (ContactData) -> Unit = {},
+    onItemClick: (Contact) -> Unit = {},
+    onItemLongClick: (Contact) -> Unit = {},
     loadingState: LoadingState = LoadingState.IDLE
 ) {
     val favItems = items.filter { it.isFavorite }
@@ -46,7 +46,7 @@ fun ContactsList(
         },
         item = { item ->
             ContactListItem(
-                contactData = item,
+                contact = item,
                 onClick = { onItemClick(item) },
                 onLongClick = { onItemLongClick(item) }
             )
@@ -60,8 +60,8 @@ fun ContactsListPreview() {
     ContactsList(
         loadingState = LoadingState.SUCCESS,
         items = listOf(
-            ContactData(id = 0, name = "Nahum Test"),
-            ContactData(name = "test", id = 1)
+            Contact(id = 0, name = "Nahum Test"),
+            Contact(name = "test", id = 1)
         ),
     )
 }
@@ -72,8 +72,8 @@ fun LoadingContactsListPreview() {
     ContactsList(
         loadingState = LoadingState.LOADING,
         items = listOf(
-            ContactData(id = 0, name = "Nahum Test"),
-            ContactData(name = "test", id = 1)
+            Contact(id = 0, name = "Nahum Test"),
+            Contact(name = "test", id = 1)
         ),
     )
 }

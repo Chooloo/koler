@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.record.ContactRecord
+import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.ui.components.Empty
 import com.chooloo.www.chooloolib.ui.components.Loading
 import com.chooloo.www.chooloolib.utils.LoadingState
@@ -50,13 +50,13 @@ fun <ItemType> List(
 @Composable
 fun ListPreview() {
     List(
-        items = listOf(ContactRecord(0, "Nahum Test", starred = false), ContactRecord()),
+        items = listOf(Contact(0, "Nahum Test"), Contact(1, "Test")),
         loadingState = LoadingState.SUCCESS,
         emptyImage = { Icons.Default.Person },
         emptyTitle = R.string.no_results_contacts,
         item = { contact ->
             ListItem(
-                title = contact.name ?: "Unknown", subtitle = contact.starred.toString()
+                title = contact.name ?: "Unknown", subtitle = contact.isFavorite.toString()
             )
         })
 }
@@ -65,13 +65,13 @@ fun ListPreview() {
 @Composable
 fun LoadingListPreview() {
     List(
-        items = listOf(ContactRecord(0, "Nahum Test", starred = false), ContactRecord()),
+        items = listOf(Contact(0, "Nahum Test"), Contact(1, "Test")),
         loadingState = LoadingState.LOADING,
         emptyImage = { Icons.Default.Person },
         emptyTitle = R.string.no_results_contacts,
         item = { contact ->
             ListItem(
-                title = contact.name ?: "Unknown", subtitle = contact.starred.toString()
+                title = contact.name ?: "Unknown", subtitle = contact.isFavorite.toString()
             )
         })
 }
@@ -80,13 +80,13 @@ fun LoadingListPreview() {
 @Composable
 fun EmptyListPreview() {
     List(
-        items = emptyList<ContactRecord>(),
+        items = emptyList<Contact>(),
         loadingState = LoadingState.IDLE,
         emptyImage = { Icons.Default.Person },
         emptyTitle = R.string.no_results_contacts,
         item = { contact ->
             ListItem(
-                title = contact.name ?: "Unknown", subtitle = contact.starred.toString()
+                title = contact.name ?: "Unknown", subtitle = contact.isFavorite.toString()
             )
         })
 }

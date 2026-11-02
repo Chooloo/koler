@@ -7,15 +7,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.chooloo.www.chooloolib.domain.model.RecentData
+import com.chooloo.www.chooloolib.domain.model.RecentGroup
 import com.chooloo.www.chooloolib.ui.components.Permissioned
 
 @Composable
 fun RecentsScreen(
     modifier: Modifier = Modifier,
     filter: String? = null,
-    onItemClick: (RecentData) -> Unit = {},
-    onItemLongClick: (RecentData) -> Unit = {},
+    onItemClick: (RecentGroup) -> Unit = {},
+    onItemLongClick: (RecentGroup) -> Unit = {},
     viewModel: RecentsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

@@ -1,10 +1,9 @@
 package com.chooloo.www.koler.ui.call
 
-import android.telecom.Call
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.CallSplit
-import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material.icons.rounded.Call as CallIcon
 import androidx.compose.material.icons.rounded.CallEnd
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,39 +13,39 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.components.list.List
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.utils.LoadingState
-import com.chooloo.www.koler.domain.CallData
+import com.chooloo.www.koler.domain.Call
 
 @Composable
 fun CallsList(
-    items: List<CallData>,
-    onItemClick: (CallData) -> Unit = {},
-    onItemLongClick: (CallData) -> Unit = {},
+    items: List<Call>,
+    onItemClick: (Call) -> Unit = {},
+    onItemLongClick: (Call) -> Unit = {},
     loadingState: LoadingState = LoadingState.IDLE,
-    onHangupCallClick: (callData: CallData) -> Unit = {},
-    onSeparateCallClick: (callData: CallData) -> Unit = {},
+    onHangupCallClick: (callData: Call) -> Unit = {},
+    onSeparateCallClick: (callData: Call) -> Unit = {},
 ) {
     List(
         items = items,
         loadingState = loadingState,
         emptyTitle = R.string.no_results_calls,
         loadingTitle = R.string.loading_calls,
-        key = { item -> item.call.details.toString() },
+        key = { item -> item.id },
         emptyImage = {
-            Icon(Icons.Rounded.Call, stringResource(R.string.cd_call))
+            Icon(Icons.Rounded.CallIcon, stringResource(R.string.cd_call))
         },
         item = { item ->
             ListItem(
-                title = item.callerDisplayName?.takeIf { it.isNotEmpty() }
+                title = item.displayName
                     ?: item.number
                     ?: stringResource(R.string.caller_unknown),
-                subtitle = stringResource(item.state.stringRes),
+                subtitle = stringResource(item.state.labelRes),
                 onClick = { onItemClick(item) },
                 onLongClick = { onItemLongClick(item) },
                 endContainer = {
                     Row {
                         IconButton(
                             onClick = { onSeparateCallClick(item) },
-                            enabled = item.isCapable(Call.Details.CAPABILITY_SEPARATE_FROM_CONFERENCE)
+                            enabled = item.can(Call.Capability.SEPARATE)
                         ) {
                             Icon(
                                 Icons.AutoMirrored.Rounded.CallSplit,

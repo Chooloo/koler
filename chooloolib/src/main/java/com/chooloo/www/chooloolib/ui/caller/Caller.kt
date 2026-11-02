@@ -28,8 +28,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.AccountData
-import com.chooloo.www.chooloolib.domain.model.PhoneData
+import com.chooloo.www.chooloolib.domain.model.ContactAccount
+import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.ui.components.CircleImage
 import com.chooloo.www.chooloolib.ui.components.Empty
 import com.chooloo.www.chooloolib.ui.components.Loading
@@ -43,17 +43,18 @@ fun Caller(
     name: String? = null,
     number: String? = null,
     isBlocked: Boolean? = null,
-    phones: List<PhoneData> = listOf(),
+    phones: List<Phone> = listOf(),
     imagePainter: Painter? = null,
-    accounts: List<AccountData> = listOf(),
+    accounts: List<ContactAccount> = listOf(),
     loadingState: LoadingState = LoadingState.IDLE,
     phonesLoadingState: LoadingState = LoadingState.IDLE,
     accountsLoadingState: LoadingState = LoadingState.IDLE,
     onSmsClick: (() -> Unit)? = null,
     onCallClick: (() -> Unit)? = null,
     onHistoryClick: (() -> Unit)? = null,
-    onPhoneClick: (PhoneData) -> Unit = {},
-    onAccountClick: (AccountData) -> Unit = {},
+    onPhoneClick: (Phone) -> Unit = {},
+    onPhoneLongClick: (Phone) -> Unit = {},
+    onAccountClick: (ContactAccount) -> Unit = {},
     onSetBlockedClick: ((Boolean) -> Unit)? = null,
     isContactFavorite: Boolean = false,
     onEditContactClick: (() -> Unit)? = null,
@@ -138,6 +139,7 @@ fun Caller(
                 modifier = Modifier.padding(horizontal = Spacing.Medium),
                 items = phones,
                 onItemActionClick = onPhoneClick,
+                onItemLongClick = onPhoneLongClick,
                 loadingState = phonesLoadingState
             )
         }
@@ -237,12 +239,12 @@ fun CallerPreview() {
         name = "Nahum Menahem",
         loadingState = LoadingState.SUCCESS,
         phones = listOf(
-            PhoneData(number = "111", label = "one"),
-            PhoneData(number = "222", label = "Two")
+            Phone(id = 0, contactId = 1, number = "111", label = "one"),
+            Phone(id = 1, contactId = 1, number = "222", label = "Two")
         ),
         accounts = listOf(
-            AccountData(contactId = 1),
-            AccountData(contactId = 2)
+            ContactAccount(id = 0, contactId = 1, type = ContactAccount.Type.EMAIL),
+            ContactAccount(id = 1, contactId = 1, type = ContactAccount.Type.WHATSAPP)
         )
     )
 }

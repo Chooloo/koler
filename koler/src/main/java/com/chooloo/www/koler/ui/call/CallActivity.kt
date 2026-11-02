@@ -1,40 +1,63 @@
 package com.chooloo.www.koler.ui.call
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.app.KeyguardManager
+import androidx.activity.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
-import com.chooloo.www.chooloolib.utils.showWhenLocked
-import com.chooloo.www.koler.service.CallService
+import com.chooloo.www.koler.domain.CallRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-@SuppressLint("ClickableViewAccessibility")
 class CallActivity : BaseActivity() {
-    @set:Inject var callService: CallService? = null
+    @Inject lateinit var callRepository: CallRepository
+
+    private val callViewModel: CallViewModel by viewModels()
 
     override fun onSetup() {
         setExcludeFromRecents(false)
-        callService?.bindActivity(this)
         showWhenLocked()
-
+        if (intent.getBooleanExtra(EXTRA_SHOW_DIALPAD, false)) callViewModel.onShowKeypad()
+        finishWhenCallsEnd()
         setChoolooContent {
-            CallScreen()
+            CallScreen(callViewModel = callViewModel)
         }
     }
 
     override fun onDestroy() {
         setExcludeFromRecents(true)
-        callService?.unbindActivity(this)
         super.onDestroy()
     }
 
+    override fun finish() {
+        finishAndRemoveTask()
+    }
+
+    private fun finishWhenCallsEnd() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                callRepository.calls.collect { if (it.isEmpty()) finish() }
+            }
+        }
+    }
+
+    private fun showWhenLocked() {
+        setShowWhenLocked(true)
+        setTurnScreenOn(true)
+        getSystemService(KeyguardManager::class.java).requestDismissKeyguard(this, null)
+    }
+
     private fun setExcludeFromRecents(exclude: Boolean) {
-        getSystemService(ActivityManager::class.java).appTasks.firstOrNull { it.taskInfo?.taskId == taskId }
+        getSystemService(ActivityManager::class.java).appTasks
+            .firstOrNull { it.taskInfo?.taskId == taskId }
             ?.setExcludeFromRecents(exclude)
     }
 
     companion object {
-        const val SHOW_DIALPAD_EXTRA = "show_dialpad"
+        const val EXTRA_SHOW_DIALPAD = "show_dialpad"
     }
 }

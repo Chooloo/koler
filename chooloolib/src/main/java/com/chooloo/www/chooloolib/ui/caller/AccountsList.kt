@@ -8,17 +8,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.AccountData
-import com.chooloo.www.chooloolib.domain.model.record.RawContactRecord.RawContactType
+import com.chooloo.www.chooloolib.domain.model.ContactAccount
 import com.chooloo.www.chooloolib.ui.components.list.List
 import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun AccountsList(
     modifier: Modifier = Modifier,
-    items: List<AccountData>,
-    onItemClick: (AccountData) -> Unit = {},
-    onItemLongClick: (AccountData) -> Unit = {},
+    items: List<ContactAccount>,
+    onItemClick: (ContactAccount) -> Unit = {},
+    onItemLongClick: (ContactAccount) -> Unit = {},
     loadingState: LoadingState = LoadingState.IDLE
 ) {
     List(
@@ -33,7 +32,7 @@ fun AccountsList(
         },
         item = { item ->
             AccountListItem(
-                accountData = item,
+                account = item,
                 onClick = { onItemClick(item) },
                 onLongClick = { onItemLongClick(item) }
             )
@@ -47,14 +46,8 @@ fun AccountsListPreview() {
     AccountsList(
         loadingState = LoadingState.SUCCESS,
         items = listOf(
-            AccountData(
-                contactId = 0,
-                type = RawContactType.EMAIL
-            ),
-            AccountData(
-                contactId = 0,
-                type = RawContactType.EMAIL
-            )
+            ContactAccount(id = 0, contactId = 0, type = ContactAccount.Type.EMAIL),
+            ContactAccount(id = 0, contactId = 0, type = ContactAccount.Type.EMAIL)
         )
     )
 }
@@ -65,14 +58,8 @@ fun LoadingAccountsListPreview() {
     AccountsList(
         loadingState = LoadingState.LOADING,
         items = listOf(
-            AccountData(
-                contactId = 0,
-                type = RawContactType.EMAIL
-            ),
-            AccountData(
-                contactId = 0,
-                type = RawContactType.EMAIL
-            )
+            ContactAccount(id = 0, contactId = 0, type = ContactAccount.Type.EMAIL),
+            ContactAccount(id = 0, contactId = 0, type = ContactAccount.Type.EMAIL)
         )
     )
 }

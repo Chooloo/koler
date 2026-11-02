@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import coil3.compose.rememberAsyncImagePainter
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.ContactData
+import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.ui.components.CircleImage
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.ui.theme.AvatarSize
@@ -21,15 +21,15 @@ import com.chooloo.www.chooloolib.ui.theme.Spacing
 @Composable
 fun ContactListItem(
     modifier: Modifier = Modifier,
-    contactData: ContactData,
+    contact: Contact,
     highlightText: String? = null,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {}
 ) {
     val defaultPainter = rememberVectorPainter(Icons.Rounded.Person)
-    val avatarPainter = if (contactData.imageUri != null) {
+    val avatarPainter = if (contact.photoUri != null) {
         rememberAsyncImagePainter(
-            model = contactData.imageUri,
+            model = contact.photoUri,
             error = defaultPainter,
             placeholder = defaultPainter
         )
@@ -39,9 +39,9 @@ fun ContactListItem(
 
     ListItem(
         modifier = modifier,
-        subtitle = contactData.number,
+        subtitle = contact.number,
         highlightText = highlightText,
-        title = contactData.name ?: stringResource(id = R.string.contact_unknown_name),
+        title = contact.name ?: stringResource(id = R.string.contact_unknown_name),
         onClick = onClick,
         onLongClick = onLongClick,
         startContainer = {
@@ -61,6 +61,6 @@ fun ContactListItem(
 @Composable
 fun ContactListItemPreview() {
     ContactListItem(
-        contactData = ContactData(id = 0, name = "Nisim Kaka", number = "420")
+        contact = Contact(id = 0, name = "Nisim Kaka", number = "420")
     )
 }

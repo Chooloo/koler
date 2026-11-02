@@ -3,28 +3,25 @@ package com.chooloo.www.koler.service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.chooloo.www.chooloolib.di.IoScope
 import com.chooloo.www.koler.domain.CallRepository
+import com.chooloo.www.koler.domain.primaryCall
+import com.chooloo.www.koler.domain.setSpeaker
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CallBroadcastReceiver : BroadcastReceiver() {
     @Inject lateinit var callRepository: CallRepository
-    @Inject @IoScope lateinit var ioScope: CoroutineScope
 
     override fun onReceive(context: Context, intent: Intent) {
-        ioScope.launch {
-            when (intent.action) {
-                ACTION_ANSWER -> callRepository.answerMainCall()
-                ACTION_DECLINE -> callRepository.declineMainCall()
-                ACTION_MUTE_ON -> callRepository.toggleMute(true)
-                ACTION_MUTE_OFF -> callRepository.toggleMute(false)
-                ACTION_SPEAKER_ON -> callRepository.toggleSpeaker(true)
-                ACTION_SPEAKER_OFF -> callRepository.toggleSpeaker(false)
-            }
+        val primaryCallId = primaryCall(callRepository.calls.value)?.id
+        when (intent.action) {
+            ACTION_ANSWER -> primaryCallId?.let(callRepository::answer)
+            ACTION_DECLINE -> primaryCallId?.let(callRepository::decline)
+            ACTION_MUTE_ON -> callRepository.setMuted(true)
+            ACTION_MUTE_OFF -> callRepository.setMuted(false)
+            ACTION_SPEAKER_ON -> callRepository.setSpeaker(true)
+            ACTION_SPEAKER_OFF -> callRepository.setSpeaker(false)
         }
     }
 

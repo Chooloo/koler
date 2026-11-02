@@ -1,156 +1,139 @@
 package com.chooloo.www.koler.data
 
-import android.content.Context
-import android.net.Uri
-import android.telecom.PhoneAccountHandle
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.di.IoScope
-import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
+import android.os.Build
+import android.telecom.Call as TelecomCall
+import android.telecom.CallAudioState
+import android.telecom.InCallService
+import android.util.Log
 import com.chooloo.www.koler.domain.AudioRoute
-import com.chooloo.www.koler.domain.CallData
+import com.chooloo.www.koler.domain.Call
+import com.chooloo.www.koler.domain.CallAudio
 import com.chooloo.www.koler.domain.CallRepository
-import com.chooloo.www.koler.domain.CallRepository.CallsState
-import com.chooloo.www.koler.domain.CallState
-import com.chooloo.www.koler.domain.CallerData
-import com.chooloo.www.koler.service.CallService
-import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.IdentityHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.asStateFlow
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
-class CallRepositoryImpl @Inject constructor(
-    private val phoneRepository: PhoneRepository,
-    @IoScope private val ioScope: CoroutineScope,
-    @ApplicationContext private val context: Context,
-) : CallRepository {
-    private val serviceFlow = CallService.sInstanceFlow
-
-    private fun isCallsHaveStates(calls: List<CallData>, callStates: List<CallState>) =
-        calls.isNotEmpty() && calls.map { it.state }.all { it in callStates }
-
-    override val calls: StateFlow<List<CallData>> =
-        serviceFlow.flatMapLatest { it?.calls ?: flowOf(emptyList()) }
-            .stateIn(ioScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
-    override val mainCall: StateFlow<CallData?> =
-        calls.map { it.firstOrNull() }
-            .stateIn(ioScope, SharingStarted.WhileSubscribed(5000), null)
-
-    override val canAddCall: StateFlow<Boolean> =
-        serviceFlow.flatMapLatest { it?.canAddCall ?: flowOf(false) }
-            .stateIn(ioScope, SharingStarted.WhileSubscribed(5000), false)
-
-    override val isMuteActive: StateFlow<Boolean> =
-        serviceFlow.flatMapLatest { service ->
-            service?.callAudioState?.map { it?.isMuted ?: false } ?: flowOf(false)
-        }.stateIn(ioScope, SharingStarted.WhileSubscribed(5000), false)
-
-    override val audioRoute: StateFlow<AudioRoute?> =
-        serviceFlow.flatMapLatest { service ->
-            service?.callAudioState?.map { AudioRoute.fromRoute(it?.route) } ?: flowOf(null)
-        }.stateIn(ioScope, SharingStarted.WhileSubscribed(5000), null)
-
-    override val isSpeakerActive: StateFlow<Boolean> =
-        audioRoute.map { it == AudioRoute.SPEAKER }
-            .stateIn(ioScope, SharingStarted.WhileSubscribed(5000), false)
-
-    override val bringToForegroundEvent: Flow<Boolean> =
-        serviceFlow.flatMapLatest { it?.bringToForegroundEvent ?: emptyFlow() }
-
-    override val supportedAudioRoutes: StateFlow<List<AudioRoute>> =
-        serviceFlow.flatMapLatest { service ->
-            service?.callAudioState?.map { state ->
-                AudioRoute.entries.filter {
-                    state?.supportedRouteMask?.let(it.route::and) == it.route
-                }
-            } ?: flowOf(emptyList())
-        }.stateIn(ioScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
-    override val pendingAccountHandle: StateFlow<PhoneAccountHandle?> =
-        serviceFlow.flatMapLatest { it?.pendingAccountHandle ?: flowOf(null) }
-            .stateIn(ioScope, SharingStarted.WhileSubscribed(5000), null)
-
-    override suspend fun answerMainCall() {
-        mainCall.value?.accept()
+class CallRepositoryImpl @Inject constructor() : CallRepository {
+    private var service: InCallService? = null
+    private var nextCallId = 0
+    private val telecomCalls = LinkedHashMap<String, TelecomCall>()
+    private val callIds = IdentityHashMap<TelecomCall, String>()
+    private val callCallback = object : TelecomCall.Callback() {
+        override fun onStateChanged(call: TelecomCall, state: Int) = publishCalls()
+        override fun onParentChanged(call: TelecomCall, parent: TelecomCall?) = publishCalls()
+        override fun onChildrenChanged(call: TelecomCall, children: List<TelecomCall>) = publishCalls()
+        override fun onDetailsChanged(call: TelecomCall, details: TelecomCall.Details) = publishCalls()
+        override fun onConferenceableCallsChanged(call: TelecomCall, calls: List<TelecomCall>) = publishCalls()
     }
 
-    override suspend fun declineMainCall() {
-        mainCall.value?.decline()
+    private val _calls = MutableStateFlow<List<Call>>(emptyList())
+    private val _audio = MutableStateFlow(CallAudio())
+    private val _canAddCall = MutableStateFlow(false)
+    private val _hasPendingOutgoing = MutableStateFlow(false)
+
+    override val calls: StateFlow<List<Call>> = _calls.asStateFlow()
+    override val audio: StateFlow<CallAudio> = _audio.asStateFlow()
+    override val canAddCall: StateFlow<Boolean> = _canAddCall.asStateFlow()
+    override val hasPendingOutgoing: StateFlow<Boolean> = _hasPendingOutgoing.asStateFlow()
+
+    fun onServiceCreated(service: InCallService) {
+        this.service = service
     }
 
-    override suspend fun getCallCallerData(call: CallData): CallerData {
-        val account = phoneRepository.lookupAccount(call.number)
-        return CallerData(
-            name = if (call.isConference) context.getString(R.string.conference) else account?.displayString
-                ?: call.number ?: context.getString(R.string.caller_unknown),
-            imageUri = if (account?.photoUri != null) Uri.parse(account.photoUri) else null
-        )
+    fun onServiceDestroyed(service: InCallService) {
+        if (this.service !== service) return
+        this.service = null
+        callIds.keys.forEach { it.unregisterCallback(callCallback) }
+        telecomCalls.clear()
+        callIds.clear()
+        _calls.value = emptyList()
+        _audio.value = CallAudio()
+        _canAddCall.value = false
+        _hasPendingOutgoing.value = false
     }
 
-    override suspend fun toggleMute(on: Boolean) {
-        CallService.sInstance?.setMuted(on)
+    fun onCallAdded(call: TelecomCall) {
+        val id = "call-${nextCallId++}"
+        callIds[call] = id
+        telecomCalls[id] = call
+        call.registerCallback(callCallback)
+        _hasPendingOutgoing.value = false
+        publishCalls()
     }
 
-    override suspend fun toggleSpeaker(on: Boolean) {
-        if (on) {
-            setAudioRoute(AudioRoute.SPEAKER)
-        } else if (audioRoute.value != AudioRoute.BLUETOOTH) {
-            setAudioRoute(AudioRoute.WIRED_OR_EARPIECE)
+    fun onCallRemoved(call: TelecomCall) {
+        call.unregisterCallback(callCallback)
+        callIds.remove(call)?.let(telecomCalls::remove)
+        publishCalls()
+    }
+
+    fun onPendingOutgoing() {
+        _hasPendingOutgoing.value = true
+    }
+
+    fun onCanAddCallChanged(canAddCall: Boolean) {
+        _canAddCall.value = canAddCall
+    }
+
+    fun onAudioStateChanged(audioState: CallAudioState) {
+        _audio.value = audioState.toDomain()
+    }
+
+    override fun answer(callId: String) = withCall(callId) { answer(details.videoState) }
+
+    override fun decline(callId: String) = withCall(callId) {
+        when {
+            telecomState != TelecomCall.STATE_RINGING -> disconnect()
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> reject(TelecomCall.REJECT_REASON_DECLINED)
+            else -> reject(false, null)
         }
     }
 
-    override suspend fun setAudioRoute(audioRoute: AudioRoute) {
-        CallService.sInstance?.setAudioRoute(audioRoute.route)
+    override fun hold(callId: String) = withCall(callId) { hold() }
+
+    override fun unhold(callId: String) = withCall(callId) { unhold() }
+
+    override fun swap(callId: String) = withCall(callId) { swapConference() }
+
+    override fun merge(callId: String) = withCall(callId) {
+        conferenceableCalls.firstOrNull()?.conference(this) ?: mergeConference()
     }
 
-    override suspend fun filterPrimaryCall(calls: List<CallData>) =
-        filterStateCall(calls, CallState.INCOMING) ?: filterStateCall(calls, CallState.DIALING)
-        ?: filterStateCall(calls, CallState.REDIALING) ?: filterStateCall(
-            calls, CallState.CONNECTING
-        ) ?: filterStateCall(calls, CallState.ACTIVE) ?: filterStateCall(
-            calls, CallState.DISCONNECTING
-        ) ?: filterStateCall(calls, CallState.DISCONNECTED) ?: filterStateCall(
-            calls, CallState.HOLDING
-        )
+    override fun separate(callId: String) = withCall(callId) { splitFromConference() }
 
-    override suspend fun filterStateCall(calls: List<CallData>, state: CallState) =
-        calls.firstOrNull { it.state == state }
+    override fun playDtmf(callId: String, key: Char) = withCall(callId) {
+        playDtmfTone(key)
+        stopDtmfTone()
+    }
 
-    override suspend fun getCallsState(
-        calls: List<CallData>, pendingAccountHandle: PhoneAccountHandle?
-    ) = if (calls.isEmpty()) {
-        if (pendingAccountHandle != null) CallsState.OUTGOING else CallsState.NO_CALLS
-    } else if (calls.any { it.state in listOf(CallState.INCOMING, CallState.CALL_WAITING) }) {
-        if (calls.any { it.state == CallState.ACTIVE }) {
-            CallsState.EXTRA_INCOMING
-        } else {
-            CallsState.INCOMING
+    override fun setMuted(isMuted: Boolean) {
+        requireService().setMuted(isMuted)
+    }
+
+    override fun setAudioRoute(route: AudioRoute) {
+        requireService().setAudioRoute(route.telecomRoute)
+    }
+
+    private fun publishCalls() {
+        _calls.value = telecomCalls.map { (id, call) -> call.toDomain(id) }
+    }
+
+    private fun requireService() = checkNotNull(service) { "No in-call service is bound" }
+
+    private inline fun withCall(callId: String, action: TelecomCall.() -> Unit) {
+        val call = telecomCalls[callId]
+        if (call == null) {
+            Log.w(TAG, "Ignoring action on removed call $callId")
+            return
         }
-    } else if (isCallsHaveStates(calls, listOf(CallState.SELECT_PHONE_ACCOUNT))) {
-        CallsState.WAITING_FOR_ACCOUNT
-    } else if (isCallsHaveStates(calls, listOf(CallState.CONNECTING))) {
-        CallsState.PENDING_OUTGOING
-    } else if (isCallsHaveStates(calls, listOf(CallState.DIALING, CallState.REDIALING))) {
-        CallsState.OUTGOING
-    } else if (isCallsHaveStates(
-            calls, listOf(CallState.ACTIVE, CallState.HOLDING, CallState.DISCONNECTING, CallState.CONFERENCED)
-        )
-    ) {
-        if (calls.size > 1) CallsState.ACTIVE_MULTI else CallsState.ACTIVE
-    } else if (isCallsHaveStates(calls, listOf(CallState.DISCONNECTED))) {
-        CallsState.DISCONNECTED
-    } else {
-        CallsState.ACTIVE
+        call.action()
+    }
+
+    private companion object {
+        const val TAG = "CallRepository"
     }
 }

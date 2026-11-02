@@ -8,19 +8,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.AccountData
-import com.chooloo.www.chooloolib.domain.model.record.RawContactRecord
+import com.chooloo.www.chooloolib.domain.model.ContactAccount
+import com.chooloo.www.chooloolib.ui.common.titleRes
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 
 @Composable
 fun AccountListItem(
     modifier: Modifier = Modifier,
-    accountData: AccountData,
+    account: ContactAccount,
     onClick: () -> Unit = {},
     onLongClick: () -> Unit = {},
 ) {
-    val icon = when (accountData.type) {
-        RawContactRecord.RawContactType.WHATSAPP -> Icons.Rounded.Whatsapp
+    val icon = when (account.type) {
+        ContactAccount.Type.WHATSAPP -> Icons.Rounded.Whatsapp
         else -> Icons.Rounded.SwitchAccount
     }
 
@@ -28,7 +28,7 @@ fun AccountListItem(
         onClick = onClick,
         modifier = modifier,
         onLongClick = onLongClick,
-        title = stringResource(accountData.type.titleStringRes),
+        title = stringResource(account.type.titleRes),
         startContainer = { Icon(icon, stringResource(id = R.string.cd_account_icon)) },
     )
 }

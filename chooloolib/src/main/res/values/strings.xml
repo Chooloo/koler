@@ -10,19 +10,6 @@
     <!--endregion-->
 
     <!--region Preference Keys (non-translatable)-->
-    <string name="pref_key_rate" translatable="false">rate</string>
-    <string name="pref_key_email" translatable="false">email</string>
-    <string name="pref_key_donate" translatable="false">donate</string>
-    <string name="pref_key_animations" translatable="false">animations</string>
-    <string name="pref_key_theme_mode" translatable="false">theme_mode</string>
-    <string name="pref_key_report_bugs" translatable="false">report_bugs</string>
-    <string name="pref_key_default_page" translatable="false">default_page</string>
-    <string name="pref_key_group_recents" translatable="false">group_recents</string>
-    <string name="pref_key_clear_recents" translatable="false">clear_recents</string>
-    <string name="pref_key_dialpad_tones" translatable="false">dialpad_tones</string>
-    <string name="pref_key_manage_blocked" translatable="false">manage_blocked</string>
-    <string name="pref_key_dialpad_vibrate" translatable="false">dialpad_vibrate</string>
-    <string name="pref_key_incoming_call_mode" translatable="false">incoming_call_mode</string>
     <!--endregion-->
 
     <!--region Titles & Sections-->
@@ -34,6 +21,9 @@
     <string name="conference">Conference</string>
     <string name="settings">Settings</string>
     <string name="caller_unknown">Unknown</string>
+    <string name="caller_restricted">Restricted</string>
+    <string name="caller_payphone">Payphone</string>
+    <string name="caller_private">Private Number</string>
     <string name="contact_unknown_name">Unknown</string>
     <!--endregion-->
 

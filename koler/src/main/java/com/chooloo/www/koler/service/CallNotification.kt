@@ -2,268 +2,142 @@ package com.chooloo.www.koler.service
 
 import android.annotation.SuppressLint
 import android.app.Notification
-import android.app.Notification.CATEGORY_CALL
-import android.app.Notification.EXTRA_NOTIFICATION_ID
 import android.app.NotificationManager.IMPORTANCE_DEFAULT
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_CANCEL_CURRENT
-import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.ACTION_ANSWER
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.graphics.drawable.Icon
-import android.os.Build
-import android.telecom.Call.Details.CAPABILITY_MUTE
-import androidx.annotation.RequiresApi
-import androidx.annotation.StringRes
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.IconCompat
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.di.IoScope
-import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
-import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository
-import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository.Companion.IncomingCallMode
-import com.chooloo.www.koler.domain.CallData
+import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
+import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
+import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
+import com.chooloo.www.koler.domain.AudioRoute
+import com.chooloo.www.koler.domain.Call
+import com.chooloo.www.koler.domain.CallAudio
 import com.chooloo.www.koler.domain.CallRepository
 import com.chooloo.www.koler.domain.CallState
-import com.chooloo.www.koler.service.CallBroadcastReceiver.Companion.ACTION_DECLINE
-import com.chooloo.www.koler.service.CallBroadcastReceiver.Companion.ACTION_MUTE_OFF
-import com.chooloo.www.koler.service.CallBroadcastReceiver.Companion.ACTION_MUTE_ON
-import com.chooloo.www.koler.service.CallBroadcastReceiver.Companion.ACTION_SPEAKER_OFF
-import com.chooloo.www.koler.service.CallBroadcastReceiver.Companion.ACTION_SPEAKER_ON
+import com.chooloo.www.koler.domain.primaryCall
 import com.chooloo.www.koler.ui.call.CallActivity
+import com.chooloo.www.koler.ui.call.labelRes
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @Singleton
-@RequiresApi(Build.VERSION_CODES.O)
 class CallNotification @Inject constructor(
+    @ApplicationContext private val context: Context,
+    @IoScope private val ioScope: CoroutineScope,
     private val callRepository: CallRepository,
     private val phoneRepository: PhoneRepository,
-    @IoScope private val ioScope: CoroutineScope,
-    @ApplicationContext private val context: Context,
     private val preferenceRepository: PreferenceRepository,
     private val notificationManager: NotificationManagerCompat,
 ) {
-    private var _callData: CallData? = null
-
-    private val _channel
-        get() = if (_callData?.state == CallState.INCOMING && preferenceRepository.incomingCallMode.value == IncomingCallMode.POP_UP) {
-            _channelImportanceHigh
-        } else {
-            _channelImportanceLow
-        }
-
-    private val _channelImportanceLow by lazy {
-        createNotificationChannel(
-            id = CHANNEL_ID_PRIORITY_LOW,
-            importance = IMPORTANCE_DEFAULT,
-            name = getString(R.string.call_notification_channel_name),
-            description = getString(R.string.call_notification_channel_description)
-        )
-    }
-
-    private val _channelImportanceHigh by lazy {
-        createNotificationChannel(
-            id = CHANNEL_ID_PRIORITY_HIGH,
-            importance = IMPORTANCE_HIGH,
-            name = getString(R.string.call_notification_channel_name),
-            description = getString(R.string.call_notification_channel_description)
-        )
-    }
-
-    private val _contentPendingIntent by lazy {
-        PendingIntent.getActivity(
-            context,
-            0,
-            Intent(context, CallActivity::class.java).apply {
-                flags = FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_CLEAR_TASK
-            },
-            FLAG_IMMUTABLE
-        )
-    }
-
-    private val _actionAnswer by lazy {
-        NotificationCompat.Action(
-            IconCompat.createFromIcon(
-                context,
-                Icon.createWithResource(context, R.drawable.view_carousel)
-            ),
-            getString(R.string.action_answer),
-            getCallPendingIntent(ACTION_ANSWER, 0)
-        )
-    }
-
-    private val _actionDecline by lazy {
-        NotificationCompat.Action(
-            IconCompat.createFromIcon(
-                context,
-                Icon.createWithResource(context, R.drawable.view_carousel)
-            ),
-            getString(R.string.action_hangup),
-            getCallPendingIntent(ACTION_DECLINE, 1)
-        )
-    }
-
-    private val _actionMuteOn by lazy {
-        NotificationCompat.Action(
-            IconCompat.createFromIcon(
-                context,
-                Icon.createWithResource(context, R.drawable.view_carousel)
-            ),
-            getString(R.string.call_action_mute),
-            getCallPendingIntent(ACTION_MUTE_ON, 2)
-        )
-    }
-
-    private val _actionMuteOff by lazy {
-        NotificationCompat.Action(
-            IconCompat.createFromIcon(
-                context,
-                Icon.createWithResource(context, R.drawable.view_carousel)
-            ),
-            getString(R.string.call_action_unmute),
-            getCallPendingIntent(ACTION_MUTE_OFF, 3)
-        )
-    }
-
-    private val _actionSpeakerOn by lazy {
-        NotificationCompat.Action(
-            IconCompat.createFromIcon(
-                context,
-                Icon.createWithResource(context, R.drawable.view_carousel)
-            ),
-            getString(R.string.call_action_speaker),
-            getCallPendingIntent(ACTION_SPEAKER_ON, 4)
-        )
-    }
-
-    private val _actionSpeakerOff by lazy {
-        NotificationCompat.Action(
-            IconCompat.createFromIcon(
-                context,
-                Icon.createWithResource(context, R.drawable.view_carousel)
-            ),
-            getString(R.string.call_action_speaker_off),
-            getCallPendingIntent(ACTION_SPEAKER_OFF, 5)
-        )
-    }
-
-    private fun createNotificationChannel(
-        id: String,
-        name: String,
-        importance: Int,
-        description: String
-    ) = NotificationChannelCompat.Builder(id, importance)
-        .setName(name)
-        .setDescription(description)
-        .build()
-        .also(notificationManager::createNotificationChannel)
-
-    private fun getCallIntent(callAction: String) =
-        Intent(context, CallBroadcastReceiver::class.java).apply {
-            action = callAction
-            putExtra(EXTRA_NOTIFICATION_ID, ID)
-        }
-
-    private fun getCallPendingIntent(callAction: String, rc: Int) =
-        PendingIntent.getBroadcast(
-            context,
-            rc,
-            getCallIntent(callAction),
-            FLAG_CANCEL_CURRENT or FLAG_IMMUTABLE
-        )
-
-    private suspend fun buildNotification(callData: CallData): Notification {
-        val phoneAccount = phoneRepository.lookupAccount(callData.number)
-        val actions = mutableListOf<NotificationCompat.Action>()
-
-        if (callData.state !in arrayOf(CallState.DISCONNECTED, CallState.DISCONNECTING)) {
-            actions.add(_actionDecline)
-        }
-
-        if (callData.state == CallState.INCOMING) {
-            actions.add(_actionAnswer)
-        } else if (callData.state !in arrayOf(CallState.DISCONNECTED, CallState.DISCONNECTING)) {
-            val isMuted = callRepository.isMuteActive.value
-            if (callData.isCapable(CAPABILITY_MUTE)) {
-                actions.add(if (isMuted) _actionMuteOff else _actionMuteOn)
-            }
-
-            val isSpeakerOn = callRepository.isSpeakerActive.value
-            actions.add(if (isSpeakerOn) _actionSpeakerOff else _actionSpeakerOn)
-        }
-
-        val builder = NotificationCompat.Builder(context, _channel.id)
-            .setWhen(0)
-            .setColorized(true)
-            .setOngoing(true)
-            .setCategory(CATEGORY_CALL)
-            .setOnlyAlertOnce(true)
-            .setSmallIcon(R.drawable.view_carousel)
-            .setPriority(PRIORITY)
-            .setContentIntent(_contentPendingIntent)
-            .setContentTitle(phoneAccount?.displayString ?: callData.number)
-            .setContentText(ContextCompat.getString(context, callData.state.stringRes))
-
-        actions.forEach(builder::addAction)
-        return builder.build()
-    }
-
-    private fun getString(@StringRes res: Int) =
-        context.getString(res)
-
-    @SuppressLint("MissingPermission")
-    private suspend fun show(callData: CallData) {
-        val notification = buildNotification(callData)
-        notificationManager.notify(ID, notification)
-    }
-
-    private suspend fun refresh() {
-        _callData?.let { show(it) }
-    }
+    private var job: Job? = null
 
     fun attach() {
-        callRepository.apply {
-            ioScope.launch {
-                audioRoute.collect { refresh() }
-            }
-
-            ioScope.launch {
-                isMuteActive.collect { refresh() }
-            }
-
-            ioScope.launch {
-                mainCall.collect {
-                    _callData = it
-                    if (it == null) {
-                        detach()
-                    } else {
-                        refresh()
-                    }
+        createChannels()
+        job?.cancel()
+        job = ioScope.launch {
+            combine(callRepository.calls, callRepository.audio) { calls, audio -> primaryCall(calls) to audio }
+                .collectLatest { (call, audio) ->
+                    if (call == null) notificationManager.cancel(ID) else show(call, audio)
                 }
-            }
         }
-
-        Thread.currentThread().setUncaughtExceptionHandler { _, _ -> detach() }
     }
 
     fun detach() {
+        job?.cancel()
+        job = null
         notificationManager.cancel(ID)
     }
 
-    companion object {
+    @SuppressLint("MissingPermission")
+    private suspend fun show(call: Call, audio: CallAudio) {
+        val title = call.number?.let { phoneRepository.lookup(it)?.name } ?: call.number
+            ?: context.getString(R.string.caller_unknown)
+        val isIncoming = call.state == CallState.INCOMING
+        val isPopUp = preferenceRepository.incomingCallMode.value == IncomingCallMode.POP_UP
+        val channelId = if (isIncoming && isPopUp) CHANNEL_ID_PRIORITY_HIGH else CHANNEL_ID_PRIORITY_LOW
+
+        val builder = NotificationCompat.Builder(context, channelId)
+            .setWhen(0)
+            .setOngoing(true)
+            .setOnlyAlertOnce(true)
+            .setCategory(Notification.CATEGORY_CALL)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSmallIcon(R.drawable.view_carousel)
+            .setContentIntent(contentIntent())
+            .setContentTitle(title)
+            .setContentText(context.getString(call.state.labelRes))
+
+        actionsFor(call, audio).forEach(builder::addAction)
+        notificationManager.notify(ID, builder.build())
+    }
+
+    private fun actionsFor(call: Call, audio: CallAudio): List<NotificationCompat.Action> {
+        if (call.state in setOf(CallState.DISCONNECTED, CallState.DISCONNECTING)) return emptyList()
+        if (call.state == CallState.INCOMING) {
+            return listOf(
+                action(R.string.action_hangup, CallBroadcastReceiver.ACTION_DECLINE),
+                action(R.string.action_answer, CallBroadcastReceiver.ACTION_ANSWER),
+            )
+        }
+        return buildList {
+            add(action(R.string.action_hangup, CallBroadcastReceiver.ACTION_DECLINE))
+            if (call.can(Call.Capability.MUTE)) {
+                add(
+                    if (audio.isMuted) action(R.string.call_action_unmute, CallBroadcastReceiver.ACTION_MUTE_OFF)
+                    else action(R.string.call_action_mute, CallBroadcastReceiver.ACTION_MUTE_ON)
+                )
+            }
+            add(
+                if (audio.route == AudioRoute.SPEAKER) action(R.string.call_action_speaker_off, CallBroadcastReceiver.ACTION_SPEAKER_OFF)
+                else action(R.string.call_action_speaker, CallBroadcastReceiver.ACTION_SPEAKER_ON)
+            )
+        }
+    }
+
+    private fun action(titleRes: Int, receiverAction: String) = NotificationCompat.Action(
+        R.drawable.view_carousel,
+        context.getString(titleRes),
+        PendingIntent.getBroadcast(
+            context,
+            receiverAction.hashCode(),
+            Intent(context, CallBroadcastReceiver::class.java).setAction(receiverAction),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+    )
+
+    private fun contentIntent() = PendingIntent.getActivity(
+        context,
+        0,
+        Intent(context, CallActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        PendingIntent.FLAG_IMMUTABLE
+    )
+
+    private fun createChannels() {
+        listOf(CHANNEL_ID_PRIORITY_LOW to IMPORTANCE_DEFAULT, CHANNEL_ID_PRIORITY_HIGH to IMPORTANCE_HIGH)
+            .forEach { (id, importance) ->
+                notificationManager.createNotificationChannel(
+                    NotificationChannelCompat.Builder(id, importance)
+                        .setName(context.getString(R.string.call_notification_channel_name))
+                        .setDescription(context.getString(R.string.call_notification_channel_description))
+                        .build()
+                )
+            }
+    }
+
+    private companion object {
         const val ID = 420
-        const val PRIORITY = NotificationCompat.PRIORITY_HIGH
         const val CHANNEL_ID_PRIORITY_LOW = "cnc_priority_low"
         const val CHANNEL_ID_PRIORITY_HIGH = "cnc_priority_high"
     }

@@ -8,17 +8,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.PhoneData
+import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.ui.components.list.List
 import com.chooloo.www.chooloolib.utils.LoadingState
 
 @Composable
 fun PhonesList(
     modifier: Modifier = Modifier,
-    items: List<PhoneData>,
-    onItemClick: (item: PhoneData) -> Unit = {},
-    onItemLongClick: (item: PhoneData) -> Unit = {},
-    onItemActionClick: (item: PhoneData) -> Unit = {},
+    items: List<Phone>,
+    onItemClick: (item: Phone) -> Unit = {},
+    onItemLongClick: (item: Phone) -> Unit = {},
+    onItemActionClick: (item: Phone) -> Unit = {},
     loadingState: LoadingState = LoadingState.IDLE,
 ) {
     List(
@@ -36,7 +36,7 @@ fun PhonesList(
         key = { item -> item.hashCode().toString() },
         item = { item ->
             PhoneListItem(
-                phoneItem = item,
+                phone = item,
                 onClick = { onItemClick(item) },
                 onLongClick = { onItemLongClick(item) },
                 onOpenClick = { onItemActionClick(item) }
@@ -50,10 +50,7 @@ fun PhonesList(
 fun PhonesListPreview() {
     PhonesList(
         items = listOf(
-            PhoneData(
-                number = "123123",
-                normalizedNumber = "123123"
-            ),
+            Phone(id = 0, contactId = 0, number = "123123"),
         ),
         loadingState = LoadingState.SUCCESS
     )
@@ -64,10 +61,7 @@ fun PhonesListPreview() {
 fun LoadingPhonesListPreview() {
     PhonesList(
         items = listOf(
-            PhoneData(
-                number = "123123",
-                normalizedNumber = "123123"
-            ),
+            Phone(id = 0, contactId = 0, number = "123123"),
         ),
         loadingState = LoadingState.LOADING
     )

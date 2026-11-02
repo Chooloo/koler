@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.chooloo.www.chooloolib.domain.model.ContactData
+import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.ui.components.Permissioned
 
 @Composable
@@ -15,8 +15,8 @@ fun ContactsScreen(
     modifier: Modifier = Modifier,
     filter: String,
     withFavorites: Boolean = true,
-    onItemClick: (ContactData) -> Unit = {},
-    onItemLongClick: (ContactData) -> Unit = {},
+    onItemClick: (Contact) -> Unit = {},
+    onItemLongClick: (Contact) -> Unit = {},
     viewModel: ContactsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

@@ -10,13 +10,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.caller.CallerScreen
+import com.chooloo.www.chooloolib.ui.common.copyToClipboard
 import com.chooloo.www.chooloolib.ui.components.AppBarHeader
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.contacts.ContactsScreen
@@ -33,10 +33,11 @@ fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     settingsViewModel: PreferencesViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(
-        initialPage = uiState.initialPage,
+        initialPage = uiState.initialPage.ordinal,
         pageCount = { 3 }
     )
     val tabsHeaders = listOf(
@@ -51,6 +52,8 @@ fun MainScreen(
         }
     }
 
+    DefaultDialerRequest()
+
     BottomSheet(
         visible = uiState.isMenuVisible,
         onDismiss = { mainViewModel.onDismissMenu() }
@@ -62,26 +65,26 @@ fun MainScreen(
     }
 
     BottomSheet(
-        visible = uiState.selectedRecentData != null,
-        onDismiss = mainViewModel::onDismissSelectedRecentData
+        visible = uiState.selectedRecentGroup != null,
+        onDismiss = mainViewModel::onDismissSelectedRecentGroup
     ) {
-        uiState.selectedRecentData?.let { recentItem ->
-            if (recentItem.groupAccounts.isNotEmpty()) {
+        uiState.selectedRecentGroup?.let { group ->
+            if (group.recents.size > 1) {
                 RecentsList(
-                    items = recentItem.groupAccounts,
-                    onItemClick = mainViewModel::onRecentDataClick
+                    items = group.recents,
+                    onItemClick = mainViewModel::onRecentGroupClick
                 )
             } else {
-                CallerScreen(recentId = recentItem.id)
+                CallerScreen(recentId = group.latest.id)
             }
         }
     }
 
     BottomSheet(
-        visible = uiState.selectedContactData != null,
-        onDismiss = mainViewModel::onDismissSelectedContactData
+        visible = uiState.selectedContact != null,
+        onDismiss = mainViewModel::onDismissSelectedContact
     ) {
-        CallerScreen(contactId = uiState.selectedContactData?.id)
+        CallerScreen(contactId = uiState.selectedContact?.id)
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -97,8 +100,7 @@ fun MainScreen(
                 }
             },
             onMenuClick = mainViewModel::onMenuButtonClick,
-            onSearchTextChange = mainViewModel::onSearchTextChange,
-            onSearchFocusChange = mainViewModel::onSearchFocusChanged
+            onSearchTextChange = mainViewModel::onSearchTextChange
         )
 
         HorizontalPager(
@@ -111,25 +113,17 @@ fun MainScreen(
                 1 -> ContactsScreen(
                     filter = uiState.searchText,
                     modifier = Modifier.fillMaxSize(),
-                    onItemClick = mainViewModel::onContactDataClick
+                    onItemClick = mainViewModel::onContactClick
                 )
 
                 2 -> RecentsScreen(
                     filter = uiState.searchText,
                     modifier = Modifier.fillMaxSize(),
-                    onItemClick = mainViewModel::onRecentDataClick,
-                    onItemLongClick = mainViewModel::onRecentDataLongClick
+                    onItemClick = mainViewModel::onRecentGroupClick,
+                    onItemLongClick = { context.copyToClipboard(it.latest.number) }
                 )
             }
         }
     }
 }
 
-@Preview
-@Composable
-fun MainPreview() {
-    MainScreen(
-        mainViewModel = viewModel(),
-        settingsViewModel = viewModel()
-    )
-}

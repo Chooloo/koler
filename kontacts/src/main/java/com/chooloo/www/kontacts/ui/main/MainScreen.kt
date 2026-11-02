@@ -12,11 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.caller.CallerScreen
+import com.chooloo.www.chooloolib.ui.common.createContact
 import com.chooloo.www.chooloolib.ui.components.AppBarHeader
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.contacts.ContactsScreen
@@ -29,6 +31,7 @@ fun MainScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     settingsViewModel: PreferencesViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val uiState by mainViewModel.uiState.collectAsStateWithLifecycle()
 
     BottomSheet(
@@ -57,19 +60,18 @@ fun MainScreen(
                 searchText = uiState.searchText,
                 searchHintRes = R.string.hint_search_contacts,
                 onMenuClick = mainViewModel::onMenuButtonClick,
-                onSearchTextChange = mainViewModel::onSearchTextChange,
-                onSearchFocusChange = mainViewModel::onSearchFocusChanged
+                onSearchTextChange = mainViewModel::onSearchTextChange
             )
 
             ContactsScreen(
                 filter = uiState.searchText,
                 modifier = Modifier.fillMaxSize(),
-                onItemClick = mainViewModel::onContactDataClick
+                onItemClick = mainViewModel::onContactClick
             )
         }
 
         FloatingActionButton(
-            onClick = mainViewModel::onAddContactClick,
+            onClick = { context.createContact() },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(Spacing.ExtraLarge)

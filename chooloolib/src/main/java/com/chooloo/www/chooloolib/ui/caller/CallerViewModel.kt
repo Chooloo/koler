@@ -1,16 +1,15 @@
 package com.chooloo.www.chooloolib.ui.caller
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.ContactData
-import com.chooloo.www.chooloolib.domain.model.RecentData
-import com.chooloo.www.chooloolib.domain.repository.blocked.BlockedRepository
-import com.chooloo.www.chooloolib.domain.repository.contact.ContactRepository
-import com.chooloo.www.chooloolib.domain.repository.navigation.NavigationRepository
-import com.chooloo.www.chooloolib.domain.repository.permission.PermissionRepository
-import com.chooloo.www.chooloolib.domain.repository.phone.PhoneRepository
-import com.chooloo.www.chooloolib.domain.repository.recent.RecentRepository
-import com.chooloo.www.chooloolib.domain.repository.telecom.TelecomRepository
+import com.chooloo.www.chooloolib.domain.model.Contact
+import com.chooloo.www.chooloolib.domain.model.Recent
+import com.chooloo.www.chooloolib.domain.repository.BlockedRepository
+import com.chooloo.www.chooloolib.domain.repository.ContactRepository
+import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
+import com.chooloo.www.chooloolib.domain.repository.RecentRepository
+import com.chooloo.www.chooloolib.domain.repository.TelecomRepository
 import com.chooloo.www.chooloolib.ui.common.BaseViewModel
 import com.chooloo.www.chooloolib.utils.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,132 +29,82 @@ class CallerViewModel @Inject constructor(
     private val blockedRepository: BlockedRepository,
     private val contactRepository: ContactRepository,
     private val telecomRepository: TelecomRepository,
-    private val navigationRepository: NavigationRepository,
-    private val permissionRepository: PermissionRepository
 ) : BaseViewModel() {
     data class UiState(
         val name: String? = null,
         val number: String? = null,
+        val contact: Contact? = null,
         val isBlocked: Boolean? = null,
         val isDeleted: Boolean = false,
-        val isCallable: Boolean = false,
-        val isEditable: Boolean = false,
-        val isBlockable: Boolean? = null,
-        val isDeletable: Boolean = false,
-        val isFavorable: Boolean = false,
-        val isHistorable: Boolean = false,
-        val isSmsEnabled: Boolean = false,
-        val recentData: RecentData? = null,
-        val contactData: ContactData? = null,
         val isHistoryVisible: Boolean = false,
         val loadingState: LoadingState = LoadingState.IDLE,
-    )
+    ) {
+        val hasNumber: Boolean get() = !number.isNullOrEmpty()
+    }
 
     private var _loadJob: Job? = null
     private val _uiState = MutableStateFlow(UiState())
 
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    private fun ensureContact(): ContactData? = _uiState.value.contactData?.let {
-        if (it != ContactData.UNKNOWN) it else {
-            onError(Errors.ContactNotFound())
-            null
-        }
-    } ?: run {
-        onError(Errors.ContactNotFound())
-        null
-    }
-
-    private fun ensureNumber(): String? = _uiState.value.number ?: run {
-        onError(Errors.ContactNumberNotFound())
-        null
-    }
-
-    private fun setContactItem(contactData: ContactData) {
-        _uiState.update {
-            it.copy(
-                name = contactData.name,
-                number = contactData.number,
-                isFavorable = true,
-                isHistorable = true,
-                contactData = contactData,
-                loadingState = LoadingState.SUCCESS,
-                isCallable = !contactData.number.isNullOrEmpty(),
-                isBlockable = !contactData.number.isNullOrEmpty(),
-                isSmsEnabled = !contactData.number.isNullOrEmpty(),
-                isEditable = contactData != ContactData.UNKNOWN,
-                isDeletable = contactData != ContactData.UNKNOWN,
-            )
-        }
-        if (permissionRepository.isDefaultDialer) {
-            contactData.number?.let { number ->
-                viewModelScope.launch {
-                    _uiState.update {
-                        it.copy(isBlocked = blockedRepository.isNumberBlocked(number))
+    fun onContactId(contactId: Long) {
+        load {
+            contactRepository.contact(contactId)
+                .catch { onLoadFailed(it, Errors.ContactNotFound()) }
+                .collect { contact ->
+                    if (contact == null) {
+                        onLoadFailed(null, Errors.ContactNotFound())
+                    } else {
+                        showCaller(name = contact.name, number = contact.number, contact = contact)
                     }
                 }
-            }
         }
     }
 
-    private fun setRecentItem(recentData: RecentData) {
-        viewModelScope.launch {
-            phoneRepository.lookupAccount(recentData.number).also { lookupAccount ->
-                lookupAccount?.contactId?.let(::onContactId) ?: run {
-                    _uiState.update {
-                        it.copy(
-                            name = recentData.name,
-                            number = recentData.number,
-                            recentData = recentData,
-                            contactData = null,
-                            isCallable = recentData.number.isNotEmpty(),
-                            isBlockable = recentData.number.isNotEmpty(),
-                            isEditable = false,
-                            isDeletable = false,
-                            isSmsEnabled = recentData.number.isNotEmpty(),
-                            isHistorable = true,
-                            isFavorable = false,
-                            loadingState = LoadingState.SUCCESS,
-                        )
-                    }
-                    if (permissionRepository.isDefaultDialer && recentData.number.isNotEmpty()) {
-                        _uiState.update {
-                            it.copy(isBlocked = blockedRepository.isNumberBlocked(recentData.number))
-                        }
+    fun onRecentId(recentId: Long) {
+        load {
+            recentRepository.recent(recentId)
+                .catch { onLoadFailed(it, Errors.RecentNotFound()) }
+                .collect { recent ->
+                    if (recent == null) {
+                        onLoadFailed(null, Errors.RecentNotFound())
+                    } else {
+                        showRecent(recent)
                     }
                 }
-            }
-        }
-    }
-
-    fun onSmsClick() {
-        ensureNumber()?.let {
-            viewModelScope.launch { navigationRepository.goToSendSms(it) }
         }
     }
 
     fun onCallClick() {
-        ensureNumber()?.let {
-            viewModelScope.launch { telecomRepository.callNumber(it) }
-        }
-    }
-
-    fun onEditClick() {
-        ensureContact()?.id?.let {
-            viewModelScope.launch { contactRepository.editContact(it) }
-        }
+        _uiState.value.number?.let { viewModelScope.launch { telecomRepository.callNumber(it) } }
     }
 
     fun onDeleteClick() {
-        ensureContact()?.let { contact ->
-            viewModelScope.launch {
-                try {
-                    contactRepository.deleteContact(contact.id)
-                    _uiState.update { it.copy(isDeleted = true) }
-                } catch (_: Exception) {
-                    onError(Errors.ContactDeletionFailed())
-                }
+        val contact = _uiState.value.contact ?: return
+        viewModelScope.launch {
+            runCatching { contactRepository.deleteContact(contact.id) }
+                .onSuccess { _uiState.update { it.copy(isDeleted = true) } }
+                .onFailure { onActionFailed(it, Errors.ContactDeletionFailed()) }
+        }
+    }
+
+    fun onToggleBlocked(isBlocked: Boolean) {
+        val number = _uiState.value.number ?: return
+        viewModelScope.launch {
+            runCatching {
+                if (isBlocked) blockedRepository.block(number) else blockedRepository.unblock(number)
+                blockedRepository.isBlocked(number)
             }
+                .onSuccess { blocked -> _uiState.update { it.copy(isBlocked = blocked) } }
+                .onFailure { onActionFailed(it, Errors.ContactBlockChangeFailed()) }
+        }
+    }
+
+    fun onToggleFavorite(isFavorite: Boolean) {
+        val contact = _uiState.value.contact ?: return
+        viewModelScope.launch {
+            runCatching { contactRepository.setFavorite(contact.id, isFavorite) }
+                .onFailure { onActionFailed(it, Errors.ContactFavChangeFailed()) }
         }
     }
 
@@ -166,81 +116,51 @@ class CallerViewModel @Inject constructor(
         _uiState.update { it.copy(isHistoryVisible = false) }
     }
 
-    fun onCreateContactClick() {
-        viewModelScope.launch {
-            ensureNumber()?.let { contactRepository.createContact(it) }
-        }
-    }
-
-    fun onRecentId(recentId: Long) {
+    private fun load(block: suspend () -> Unit) {
         _loadJob?.cancel()
-        _uiState.update { it.copy(loadingState = LoadingState.LOADING, isDeleted = false) }
-        _loadJob = viewModelScope.launch {
-            recentRepository.getRecentFlow(recentId).collect { record ->
-                record?.let {
-                    setRecentItem(RecentData.fromRecord(record))
-                } ?: run {
-                    _uiState.update { it.copy(loadingState = LoadingState.FAILED) }
-                    onError(Errors.RecentNotFound())
-                }
-            }
+        _uiState.update { UiState(loadingState = LoadingState.LOADING) }
+        _loadJob = viewModelScope.launch { block() }
+    }
+
+    private suspend fun showRecent(recent: Recent) {
+        val contactId = phoneRepository.lookup(recent.number)?.contactId
+        if (contactId != null) {
+            onContactId(contactId)
+        } else {
+            showCaller(name = recent.name, number = recent.number, contact = null)
         }
     }
 
-    fun onContactId(contactId: Long) {
-        _loadJob?.cancel()
-        _uiState.update { it.copy(loadingState = LoadingState.LOADING, isDeleted = false) }
-        _loadJob = viewModelScope.launch {
-            contactRepository.getContactFlow(contactId).collect { contact ->
-                contact?.id?.let {
-                    val phone = phoneRepository.getContactAccounts(contact.id).firstOrNull()
-                    setContactItem(ContactData.fromRecord(contact, phone?.number))
-                } ?: run {
-                    _uiState.update { it.copy(loadingState = LoadingState.FAILED) }
-                    onError(Errors.ContactNotFound())
-                }
-            }
+    private suspend fun showCaller(name: String?, number: String?, contact: Contact?) {
+        _uiState.update {
+            it.copy(name = name, number = number, contact = contact, loadingState = LoadingState.SUCCESS)
+        }
+        if (!number.isNullOrEmpty() && telecomRepository.isDefaultDialer()) {
+            val isBlocked = blockedRepository.isBlocked(number)
+            _uiState.update { it.copy(isBlocked = isBlocked) }
         }
     }
 
-    fun onToggleBlocked(isBlocked: Boolean) {
-        ensureNumber()?.let { number ->
-            viewModelScope.launch {
-                try {
-                    if (isBlocked) {
-                        blockedRepository.blockNumber(number)
-                    } else {
-                        blockedRepository.unblockNumber(number)
-                    }
-                    _uiState.update { it.copy(isBlocked = blockedRepository.isNumberBlocked(number)) }
-                } catch (_: Exception) {
-                    onError(Errors.ContactBlockChangeFailed())
-                }
-            }
-        }
+    private fun onLoadFailed(error: Throwable?, vmError: VMError) {
+        error?.let { Log.e(TAG, "Failed loading caller", it) }
+        _uiState.update { it.copy(loadingState = LoadingState.FAILED) }
+        onError(vmError)
     }
 
-    fun onToggleFavorite(isFavorite: Boolean) {
-        ensureContact()?.let { contact ->
-            viewModelScope.launch {
-                try {
-                    contactRepository.toggleContactFavorite(contact.id, isFavorite)
-                    _uiState.update {
-                        it.copy(contactData = it.contactData?.copy(isFavorite = isFavorite))
-                    }
-                } catch (_: Exception) {
-                    onError(Errors.ContactFavChangeFailed())
-                }
-            }
-        }
+    private fun onActionFailed(error: Throwable, vmError: VMError) {
+        Log.e(TAG, "Caller action failed", error)
+        onError(vmError)
     }
 
     sealed class Errors {
         class RecentNotFound : VMError(R.string.error_recent_not_found)
         class ContactNotFound : VMError(R.string.error_contact_not_found)
         class ContactDeletionFailed : VMError(R.string.error_contact_deletion_failed)
-        class ContactNumberNotFound : VMError(R.string.error_contact_number_not_found)
         class ContactBlockChangeFailed : VMError(R.string.error_contact_block_change_failed)
         class ContactFavChangeFailed : VMError(R.string.error_contact_favorite_change_failed)
+    }
+
+    private companion object {
+        const val TAG = "CallerViewModel"
     }
 }

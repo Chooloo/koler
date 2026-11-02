@@ -1,13 +1,13 @@
 package com.chooloo.www.chooloolib.ui.preferences
 
+import android.util.Log
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
+import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
-import com.chooloo.www.chooloolib.domain.repository.navigation.NavigationRepository
-import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository
-import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository.Companion.IncomingCallMode
-import com.chooloo.www.chooloolib.domain.repository.preference.PreferenceRepository.Companion.Page
-import com.chooloo.www.chooloolib.domain.repository.recent.RecentRepository
-import com.chooloo.www.chooloolib.ui.common.BaseViewModel
+import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
+import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,115 +19,64 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PreferencesViewModel @Inject constructor(
     private val recentRepository: RecentRepository,
-    private val navigationRepository: NavigationRepository,
     private val preferenceRepository: PreferenceRepository,
-) : BaseViewModel() {
+) : ViewModel() {
     data class UiState(
-        val defaultPage: Page? = null,
-        val themeMode: ThemeMode? = null,
-        val isAnimationsEnabled: Boolean? = null,
-        val isDialpadTonesEnabled: Boolean? = null,
-        val isGroupRecentsEnabled: Boolean? = null,
-        val isDialpadVibrateEnabled: Boolean? = null,
-        val incomingCallModel: IncomingCallMode? = null
+        val defaultPage: Page,
+        val themeMode: ThemeMode,
+        val isAnimationsEnabled: Boolean,
+        val isDialpadTonesEnabled: Boolean,
+        val isGroupRecentsEnabled: Boolean,
+        val isDialpadVibrateEnabled: Boolean,
+        val incomingCallMode: IncomingCallMode,
     )
 
-    val uiState: StateFlow<UiState> = combine<Any, UiState>(
-        preferenceRepository.defaultPage,
-        preferenceRepository.themeMode,
-        preferenceRepository.isAnimationsEnabled,
-        preferenceRepository.isDialpadTonesEnabled,
-        preferenceRepository.isGroupRecentsEnabled,
-        preferenceRepository.isDialpadVibrateEnabled,
-        preferenceRepository.incomingCallMode
-    ) { values ->
+    private fun currentState() = with(preferenceRepository) {
         UiState(
-            defaultPage = values[0] as Page,
-            themeMode = values[1] as ThemeMode,
-            isAnimationsEnabled = values[2] as Boolean,
-            isDialpadTonesEnabled = values[3] as Boolean,
-            isGroupRecentsEnabled = values[4] as Boolean,
-            isDialpadVibrateEnabled = values[5] as Boolean,
-            incomingCallModel = values[6] as IncomingCallMode
+            defaultPage = defaultPage.value,
+            themeMode = themeMode.value,
+            isAnimationsEnabled = isAnimationsEnabled.value,
+            isDialpadTonesEnabled = isDialpadTonesEnabled.value,
+            isGroupRecentsEnabled = isGroupRecentsEnabled.value,
+            isDialpadVibrateEnabled = isDialpadVibrateEnabled.value,
+            incomingCallMode = incomingCallMode.value,
         )
-    }.stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
-        UiState(
-            defaultPage = preferenceRepository.defaultPage.value,
-            themeMode = preferenceRepository.themeMode.value,
-            isAnimationsEnabled = preferenceRepository.isAnimationsEnabled.value,
-            isDialpadTonesEnabled = preferenceRepository.isDialpadTonesEnabled.value,
-            isGroupRecentsEnabled = preferenceRepository.isGroupRecentsEnabled.value,
-            isDialpadVibrateEnabled = preferenceRepository.isDialpadVibrateEnabled.value,
-            incomingCallModel = preferenceRepository.incomingCallMode.value
-        )
-    )
-
-    fun onDefaultPage(page: Page) {
-        preferenceRepository.setDefaultPage(page)
     }
 
-    fun onThemeMode(themeMode: ThemeMode) {
-        preferenceRepository.setThemeMode(themeMode)
-    }
+    val uiState: StateFlow<UiState> = with(preferenceRepository) {
+        combine<Any, UiState>(
+            defaultPage,
+            themeMode,
+            isAnimationsEnabled,
+            isDialpadTonesEnabled,
+            isGroupRecentsEnabled,
+            isDialpadVibrateEnabled,
+            incomingCallMode,
+        ) { currentState() }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), currentState())
 
-    fun onIsAnimationsEnabled(toggled: Boolean) {
-        preferenceRepository.setIsAnimationsEnabled(toggled)
-    }
+    fun onDefaultPage(page: Page) = preferenceRepository.setDefaultPage(page)
 
-    fun onIsDialpadTonesEnabled(toggled: Boolean) {
-        preferenceRepository.setIsDialpadTonesEnabled(toggled)
-    }
+    fun onThemeMode(themeMode: ThemeMode) = preferenceRepository.setThemeMode(themeMode)
 
-    fun onIsGroupRecentsEnabled(toggled: Boolean) {
-        preferenceRepository.setIsGroupRecentsEnabled(toggled)
-    }
+    fun onIsAnimationsEnabled(toggled: Boolean) = preferenceRepository.setIsAnimationsEnabled(toggled)
 
-    fun onIsDialpadVibrateEnabled(toggled: Boolean) {
-        preferenceRepository.setIsDialpadVibrateEnabled(toggled)
-    }
+    fun onIsDialpadTonesEnabled(toggled: Boolean) = preferenceRepository.setIsDialpadTonesEnabled(toggled)
 
-    fun onIncomingCallMode(callMode: IncomingCallMode) {
-        preferenceRepository.setIncomingCallModel(callMode)
-    }
+    fun onIsGroupRecentsEnabled(toggled: Boolean) = preferenceRepository.setIsGroupRecentsEnabled(toggled)
 
-    fun onManageBlockedClick() {
-        viewModelScope.launch {
-            navigationRepository.goToManageBlockedNumbers()
-        }
-    }
+    fun onIsDialpadVibrateEnabled(toggled: Boolean) = preferenceRepository.setIsDialpadVibrateEnabled(toggled)
+
+    fun onIncomingCallMode(callMode: IncomingCallMode) = preferenceRepository.setIncomingCallMode(callMode)
 
     fun onClearRecentsClick() {
         viewModelScope.launch {
-            try {
-                recentRepository.deleteAllRecents()
-            } catch (_: Exception) {
-            }
+            runCatching { recentRepository.deleteAllRecents() }
+                .onFailure { Log.e(TAG, "Failed clearing recents", it) }
         }
     }
 
-    fun onRateClick() {
-        viewModelScope.launch {
-            navigationRepository.goToRateApp()
-        }
-    }
-
-    fun onEmailClick() {
-        viewModelScope.launch {
-            navigationRepository.goToSendEmail()
-        }
-    }
-
-    fun onReportBugsClick() {
-        viewModelScope.launch {
-            navigationRepository.goToReportBug()
-        }
-    }
-
-    fun onDonateClick() {
-        viewModelScope.launch {
-            navigationRepository.goToDonate()
-        }
+    private companion object {
+        const val TAG = "PreferencesViewModel"
     }
 }
