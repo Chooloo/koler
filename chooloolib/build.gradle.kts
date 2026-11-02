@@ -21,6 +21,10 @@ android {
         compose = true
     }
 
+    testFixtures {
+        enable = true
+    }
+
     lint {
         warning += "MissingTranslation"
     }
@@ -37,6 +41,9 @@ dependencies {
     implementation(libs.datastore.preferences)
 
     debugApi(libs.compose.ui.tooling)
+
+    testFixturesImplementation(libs.junit)
+    testFixturesImplementation(libs.coroutines.test)
 
     testImplementation(libs.junit)
     testImplementation(libs.turbine)

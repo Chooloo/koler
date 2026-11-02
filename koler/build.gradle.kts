@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":chooloolib"))
     implementation(libs.hilt.android)
 
+    testImplementation(testFixtures(project(":chooloolib")))
     testImplementation(libs.junit)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)
