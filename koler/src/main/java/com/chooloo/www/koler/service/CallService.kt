@@ -1,7 +1,10 @@
 package com.chooloo.www.koler.service
 
+import android.app.KeyguardManager
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.IBinder
+import android.os.PowerManager
 import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
@@ -40,7 +43,9 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         callRepository.onCallAdded(call)
-        if (call.telecomState != Call.STATE_RINGING) showCallUi(showDialpad = false)
+        if (call.telecomState != Call.STATE_RINGING || (calls.size == 1 && !isPhoneInUse() && !isDoNotDisturbOn())) {
+            showCallUi(showDialpad = false)
+        }
     }
 
     override fun onCallRemoved(call: Call) {
@@ -62,6 +67,14 @@ class CallService : InCallService() {
         super.onBringToForeground(showDialpad)
         showCallUi(showDialpad)
     }
+
+    private fun isPhoneInUse(): Boolean =
+        getSystemService(PowerManager::class.java).isInteractive &&
+            !getSystemService(KeyguardManager::class.java).isKeyguardLocked
+
+    private fun isDoNotDisturbOn(): Boolean =
+        getSystemService(NotificationManager::class.java).currentInterruptionFilter !=
+            NotificationManager.INTERRUPTION_FILTER_ALL
 
     private fun showCallUi(showDialpad: Boolean) {
         startActivity(
