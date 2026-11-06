@@ -1,18 +1,26 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Ostatnie</string>
     <string name="contacts">Kontakty</string>
     <string name="conference">Konferencja</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Ciemny</string>
     <string name="theme_mode_light">Jasny</string>
     <string name="theme_mode_system">Systemowy</string>
-    <string name="number_copied_to_clipboard">Numer skopiowany do schowka</string>
-    <string name="hint_search_recents">Szukaj Ostatnie</string>
-    <string name="hint_search_contacts">Szukaj Kontakty</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Wycisz</string>
     <string name="call_action_unmute">Wył. Wyciszenie</string>
     <string name="call_action_speaker">Głośnik</string>
     <string name="call_action_speaker_off">Wyłącz Głośnik</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">Wybieranie…</string>
     <string name="call_state_holding">Połączenie wstrzymane</string>
     <string name="call_state_connecting">Łączenie…</string>
@@ -22,23 +30,50 @@
     <string name="call_state_unknown">Nieznany status połączenia</string>
     <string name="call_state_disconnecting">Rozłączanie…</string>
     <string name="call_state_phone_account">Wybierz konto telefonu</string>
-    <string name="pref_title_rate">Oceń</string>
-    <string name="pref_title_animations">Animacje</string>
-    <string name="pref_title_theme_mode">Tryb Motywu</string>
-    <string name="pref_title_email">Wyślij do nas Emaila</string>
-    <string name="pref_title_report_bugs">Zgłoś Błędy</string>
-    <string name="pref_title_manage_blocked">Zarządzaj Zablokowanymi Numerami</string>
-    <string name="no_results_recents">Brak ostatnich połączeń</string>
-    <string name="no_results_contacts">Brak kontaktów</string>
-    <string name="cd_accept_call">Przycisk do Odebrania</string>
-    <string name="cd_hangup_call">Przycisk do Odrzucenia</string>
-    <string name="call_notification_channel_name">Powiadomienia Połączeń</string>
-    <string name="call_notification_channel_description">Powiadomienie aktywnego połączenia, pokazane dla komfortowego użytku</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Głośnik</string>
     <string name="audio_route_earpiece">Słuchawka</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Słuchawki przewodowe</string>
     <string name="audio_route_wired_or_earpiece">Przewodowy lub słuchawka</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Oceń</string>
+    <string name="pref_title_email">Wyślij do nas Emaila</string>
+    <string name="pref_title_report_bugs">Zgłoś Błędy</string>
+    <string name="pref_title_animations">Animacje</string>
+    <string name="pref_title_theme_mode">Tryb Motywu</string>
+    <string name="pref_title_default_page">Domyślna Strona</string>
+    <string name="pref_title_dialpad_vibrate">Wibruj na klawiaturze numeryczna</string>
+    <string name="pref_title_manage_blocked">Zarządzaj Zablokowanymi Numerami</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Szukaj Ostatnie</string>
+    <string name="hint_search_contacts">Szukaj Kontakty</string>
+    <string name="number_copied_to_clipboard">Numer skopiowany do schowka</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Brak ostatnich połączeń</string>
+    <string name="no_results_contacts">Brak kontaktów</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <string name="call_notification_channel_name">Powiadomienia Połączeń</string>
+    <string name="call_notification_channel_description">Powiadomienie aktywnego połączenia, pokazane dla komfortowego użytku</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_accept_call">Przycisk do Odebrania</string>
+    <string name="cd_hangup_call">Przycisk do Odrzucenia</string>
     <string name="cd_favorite_star">Ulubione</string>
+    <!--endregion-->
+
     <string name="settings">Ustawienia</string>
+    <string name="cd_search">Szukaj</string>
+
 </resources>

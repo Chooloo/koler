@@ -1,18 +1,32 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Récents</string>
     <string name="contacts">Contacts</string>
     <string name="conference">Conférence</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Sombre</string>
     <string name="theme_mode_light">Clair</string>
     <string name="theme_mode_system">Système</string>
-    <string name="number_copied_to_clipboard">Numéro copié dans le presse-papiers</string>
-    <string name="hint_search_recents">Recherche dans les Appels Récents</string>
-    <string name="hint_search_contacts">Recherche dans les Contacts</string>
+    <string name="pop_up_notification">Notification Pop-Up</string>
+    <string name="full_screen">Plein écran</string>
+    <!--endregion-->
+
+    <!--region Actions-->
+    <string name="action_clear_recents">Supprimer tous les appels récents</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Couper le micro</string>
     <string name="call_action_unmute">Réactiver le micro</string>
     <string name="call_action_speaker">Haut-Parleur</string>
     <string name="call_action_speaker_off">Désactiver le Haut-Parleur</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">Numérotation…</string>
     <string name="call_state_holding">Appel en attente</string>
     <string name="call_state_connecting">Liaison…</string>
@@ -22,23 +36,56 @@
     <string name="call_state_unknown">Statut d\'appel inconnu</string>
     <string name="call_state_disconnecting">Déconnexion de l\'appel…</string>
     <string name="call_state_phone_account">Sélectionnez le compte téléphonique</string>
-    <string name="pref_title_rate">Évaluer</string>
-    <string name="pref_title_animations">Animations</string>
-    <string name="pref_title_theme_mode">Thème de l\'application</string>
-    <string name="pref_title_email">Nous envoyer un e-mail</string>
-    <string name="pref_title_report_bugs">Signaler un bug</string>
-    <string name="pref_title_manage_blocked">Gérer les numéros bloqués</string>
-    <string name="no_results_recents">Aucun élément récent trouvé</string>
-    <string name="no_results_contacts">Aucun contact trouvé</string>
-    <string name="cd_accept_call">Bouton de réponse</string>
-    <string name="cd_hangup_call">Bouton de rejet</string>
-    <string name="call_notification_channel_name">Notification d\'appel</string>
-    <string name="call_notification_channel_description">Notification d\'appel en cours, affichée pour un usage confortable et un accès facile aux actions d\'appel</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Haut-Parleur</string>
-    <string name="audio_route_earpiece">Téléphone</string>
+    <string name="audio_route_earpiece">Écouteurs</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Casque filaire</string>
-    <string name="audio_route_wired_or_earpiece">Filaire ou Téléphone</string>
+    <string name="audio_route_wired_or_earpiece">Filaire ou Écouteurs</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Évaluer</string>
+    <string name="pref_title_email">Nous envoyer un e-mail</string>
+    <string name="pref_title_report_bugs">Signaler un bug</string>
+    <string name="pref_title_animations">Animations</string>
+    <string name="pref_title_theme_mode">Thème de l\'application</string>
+    <string name="pref_title_default_page">Page par défaut</string>
+    <string name="pref_title_dialpad_vibrate">Vibrer à l\'appui sur le clavier</string>
+    <string name="pref_title_incoming_call_mode">Mode lors d\'appel entrant</string>
+    <string name="pref_title_manage_blocked">Gérer les numéros bloqués</string>
+    <string name="explain_clear_recents">Toutes les entrées de l\'historique d\'appels seront supprimées définitivement</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Recherche dans les Appels Récents</string>
+    <string name="hint_search_contacts">Recherche dans les Contacts</string>
+    <string name="number_copied_to_clipboard">Numéro copié dans le presse-papiers</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Aucun élément récent trouvé</string>
+    <string name="no_results_contacts">Aucun contact trouvé</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <string name="call_notification_channel_name">Notification d\'appel</string>
+    <string name="call_notification_channel_description">Notification d\'appel en cours, affichée pour un usage confortable et un accès facile aux actions d\'appel</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_call">Appel</string>
+    <string name="cd_accept_call">Bouton de réponse</string>
+    <string name="cd_hangup_call">Bouton de rejet</string>
+    <string name="cd_manage_call">Gérer les appels</string>
     <string name="cd_favorite_star">Étoile de Favoris</string>
+    <!--endregion-->
+
     <string name="settings">Paramètres</string>
+    <string name="cd_search">Recherche</string>
+    <string name="action_edit">Modifier</string>
+    <string name="action_delete">Supprimer</string>
+
 </resources>

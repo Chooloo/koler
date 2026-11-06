@@ -1,18 +1,26 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Son Aramalar</string>
     <string name="contacts">Kişiler</string>
     <string name="conference">Konferans</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Koyu</string>
     <string name="theme_mode_light">Açık</string>
     <string name="theme_mode_system">Sistem</string>
-    <string name="number_copied_to_clipboard">Numara panoya kopyalandı</string>
-    <string name="hint_search_recents">Son aramaları ara</string>
-    <string name="hint_search_contacts">Kişileri ara</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Sustur</string>
     <string name="call_action_unmute">Susturmayı kaldır</string>
     <string name="call_action_speaker">Hoparlör</string>
     <string name="call_action_speaker_off">Hoparlörü kapat</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">Aranıyor…</string>
     <string name="call_state_holding">Arama beklemede</string>
     <string name="call_state_connecting">Bağlanıyor…</string>
@@ -22,24 +30,17 @@
     <string name="call_state_unknown">Bilinmeyen arama durumu</string>
     <string name="call_state_disconnecting">Arama sonlandırılıyor…</string>
     <string name="call_state_phone_account">Telefon hesabı seç</string>
-    <string name="pref_title_rate">Değerlendir</string>
-    <string name="pref_title_animations">Animasyonlar</string>
-    <string name="pref_title_theme_mode">Uygulama teması</string>
-    <string name="pref_title_email">Bize e-posta gönder</string>
-    <string name="pref_title_report_bugs">Hata bildir</string>
-    <string name="pref_title_manage_blocked">Engellenen numaraları yönet</string>
-    <string name="no_results_recents">Son arama yok</string>
-    <string name="no_results_contacts">Kişi yok</string>
-    <string name="cd_accept_call">Cevaplama Tuşu</string>
-    <string name="cd_hangup_call">Reddetme Tuşu</string>
-    <string name="call_notification_channel_name">Arama Bildirimi</string>
-    <string name="call_notification_channel_description">Rahat kullanım için gösterilen aktif arama bildirimi</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Hoparlör</string>
     <string name="audio_route_earpiece">Kablosuz</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Kablolu kulaklık</string>
     <string name="audio_route_wired_or_earpiece">Kablolu veya Kablosuz</string>
-    <string name="cd_favorite_star">Favori yıldız</string>
+    <!--endregion-->
+
+    <!--region Account Type Labels-->
     <string name="type_label_im">İM</string>
     <string name="type_label_name">Ad</string>
     <string name="type_label_phone">Telefon</string>
@@ -47,5 +48,42 @@
     <string name="type_label_custom">Özel</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Kuruluş</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Değerlendir</string>
+    <string name="pref_title_email">Bize e-posta gönder</string>
+    <string name="pref_title_report_bugs">Hata bildir</string>
+    <string name="pref_title_animations">Animasyonlar</string>
+    <string name="pref_title_theme_mode">Uygulama teması</string>
+    <string name="pref_title_default_page">Varsayılan Sayfa</string>
+    <string name="pref_title_dialpad_vibrate">Tuş takımı tıklamalarında titret</string>
+    <string name="pref_title_manage_blocked">Engellenen numaraları yönet</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Son aramaları ara</string>
+    <string name="hint_search_contacts">Kişileri ara</string>
+    <string name="number_copied_to_clipboard">Numara panoya kopyalandı</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Son arama yok</string>
+    <string name="no_results_contacts">Kişi yok</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <string name="call_notification_channel_name">Arama Bildirimi</string>
+    <string name="call_notification_channel_description">Rahat kullanım için gösterilen aktif arama bildirimi</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_accept_call">Cevaplama Tuşu</string>
+    <string name="cd_hangup_call">Reddetme Tuşu</string>
+    <string name="cd_favorite_star">Favori yıldız</string>
+    <!--endregion-->
+
     <string name="settings">Ayarlar</string>
+    <string name="cd_search">Arama</string>
+
 </resources>

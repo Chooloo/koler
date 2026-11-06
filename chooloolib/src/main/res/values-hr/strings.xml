@@ -1,30 +1,60 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Nedavno</string>
     <string name="contacts">Kontakti</string>
-    <string name="number_copied_to_clipboard">Broj kopiran u međuspremnik</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Isključi zvuk</string>
     <string name="call_action_unmute">Uključi zvuk</string>
     <string name="call_action_speaker">Zvučnik</string>
     <string name="call_action_speaker_off">Isključi zvučnik</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">Pozivanje…</string>
     <string name="call_state_holding">Poziv na čekanju</string>
     <string name="call_state_incoming">Dolazni poziv</string>
-    <string name="call_state_disconnected">Poziv završen</string>
     <string name="call_state_active">Poziv u tijeku</string>
+    <string name="call_state_disconnected">Poziv završen</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
+    <string name="audio_route_speaker">Zvučnik</string>
+    <string name="audio_route_earpiece">Slušalica</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_wired_headset">Žičane slušalice</string>
+    <string name="audio_route_wired_or_earpiece">Žičano ili slušalica</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
     <string name="pref_title_rate">Ocijeni</string>
-    <string name="pref_title_animations">Animacije</string>
     <string name="pref_title_email">Pošalji nam e-poštu</string>
     <string name="pref_title_report_bugs">Prijavi grešku</string>
-    <string name="no_results_contacts">Nema kontakata :/</string>
+    <string name="pref_title_animations">Animacije</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="number_copied_to_clipboard">Broj kopiran u međuspremnik</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
     <string name="no_results_recents">Nema nedavnog :/</string>
-    <string name="cd_accept_call">Tipka za prihvat poziva</string>
-    <string name="cd_hangup_call">Tipka za odbijanje poziva</string>
+    <string name="no_results_contacts">Nema kontakata :/</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
     <string name="call_notification_channel_name">Obavijesti o pozivima</string>
     <string name="call_notification_channel_description">Obavijesti aktivnih poziva, prikazane za ugodno korištenje</string>
-    <string name="audio_route_speaker">Speaker</string>
-    <string name="audio_route_earpiece">Earpiece</string>
-    <string name="audio_route_bluetooth">Bluetooth</string>
-    <string name="audio_route_wired_headset">Wired Headset</string>
-    <string name="audio_route_wired_or_earpiece">Wired or Earpiece</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_accept_call">Tipka za prihvat poziva</string>
+    <string name="cd_hangup_call">Tipka za odbijanje poziva</string>
+    <!--endregion-->
+
+    <string name="cd_search">Traži</string>
+
 </resources>
