@@ -8,6 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.PhoneLookup as PhoneLookupContract
+import android.util.Log
 import com.chooloo.www.chooloolib.data.source.ContentQuery
 import com.chooloo.www.chooloolib.data.source.int
 import com.chooloo.www.chooloolib.data.source.long
@@ -59,20 +60,22 @@ class PhoneRepositoryImpl @Inject constructor(
         if (number.isBlank() || context.checkSelfPermission(READ_CONTACTS) != PERMISSION_GRANTED) {
             return@withContext null
         }
-        contentResolver.queryAll(
-            ContentQuery(
-                uri = Uri.withAppendedPath(PhoneLookupContract.CONTENT_FILTER_URI, Uri.encode(number)),
-                projection = arrayOf(
-                    PhoneLookupContract.TYPE,
-                    PhoneLookupContract.LABEL,
-                    PhoneLookupContract.NUMBER,
-                    PhoneLookupContract.PHOTO_URI,
-                    PhoneLookupContract.CONTACT_ID,
-                    PhoneLookupContract.DISPLAY_NAME,
+        runCatching {
+            contentResolver.queryAll(
+                ContentQuery(
+                    uri = Uri.withAppendedPath(PhoneLookupContract.CONTENT_FILTER_URI, Uri.encode(number)),
+                    projection = arrayOf(
+                        PhoneLookupContract.TYPE,
+                        PhoneLookupContract.LABEL,
+                        PhoneLookupContract.NUMBER,
+                        PhoneLookupContract.PHOTO_URI,
+                        PhoneLookupContract.CONTACT_ID,
+                        PhoneLookupContract.DISPLAY_NAME,
+                    ),
                 ),
-            ),
-            ::toPhoneLookup
-        ).firstOrNull()
+                ::toPhoneLookup
+            ).firstOrNull()
+        }.onFailure { Log.e(TAG, "Contact lookup failed", it) }.getOrNull()
     }
 
     private fun toPhone(cursor: Cursor) = PhoneModel(
@@ -95,4 +98,8 @@ class PhoneRepositoryImpl @Inject constructor(
         type = cursor.int(PhoneLookupContract.TYPE),
         photoUri = cursor.string(PhoneLookupContract.PHOTO_URI),
     )
+
+    private companion object {
+        const val TAG = "PhoneRepository"
+    }
 }

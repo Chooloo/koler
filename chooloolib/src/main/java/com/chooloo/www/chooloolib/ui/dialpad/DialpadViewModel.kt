@@ -61,7 +61,10 @@ class DialpadViewModel @Inject constructor(
             if (settings.isDialpadVibrateEnabled) audioRepository.vibrate()
         }
         val value = _uiState.updateAndGet { it.copy(value = it.value + key) }.value
-        viewModelScope.launch { telecomRepository.handleSecretCode(value) }
+        viewModelScope.launch {
+            runCatching { telecomRepository.handleSecretCode(value) }
+                .onFailure { Log.e(TAG, "Secret code failed", it) }
+        }
     }
 
     fun onKeyLongClick(key: Char) {

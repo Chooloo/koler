@@ -116,17 +116,16 @@ class CallRepositoryImpl @Inject constructor(
 
     override fun selectPhoneAccount(callId: String, accountId: String) = withCall(callId) {
         val handle = availablePhoneAccounts.firstOrNull { it.accountId == accountId }
-            ?: error("Phone account $accountId is not available for call $callId")
+        if (handle == null) {
+            Log.e(TAG, "Phone account $accountId is not available for call $callId")
+            return@withCall
+        }
         phoneAccountSelected(handle, false)
     }
 
-    override fun setMuted(isMuted: Boolean) {
-        requireService().setMuted(isMuted)
-    }
+    override fun setMuted(isMuted: Boolean) = withService { setMuted(isMuted) }
 
-    override fun setAudioRoute(route: AudioRoute) {
-        requireService().setAudioRoute(route.telecomRoute)
-    }
+    override fun setAudioRoute(route: AudioRoute) = withService { setAudioRoute(route.telecomRoute) }
 
     private fun publishCalls() {
         _calls.value = telecomCalls.map { (id, call) -> call.toDomain(id, ::accountLabel) }
@@ -135,7 +134,14 @@ class CallRepositoryImpl @Inject constructor(
     private fun accountLabel(handle: PhoneAccountHandle): String? =
         telecomManager.getPhoneAccount(handle)?.label?.toString()
 
-    private fun requireService() = checkNotNull(service) { "No in-call service is bound" }
+    private inline fun withService(action: InCallService.() -> Unit) {
+        val service = service
+        if (service == null) {
+            Log.e(TAG, "Ignoring action, no in-call service is bound")
+            return
+        }
+        service.action()
+    }
 
     private inline fun withCall(callId: String, action: TelecomCall.() -> Unit) {
         val call = telecomCalls[callId]
