@@ -1,6 +1,5 @@
 package com.chooloo.www.chooloolib.domain.repository
 
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
@@ -11,7 +10,6 @@ interface PreferenceRepository {
 
     suspend fun setDefaultPage(page: Page)
     suspend fun setThemeMode(themeMode: ThemeMode)
-    suspend fun setIncomingCallMode(incomingCallMode: IncomingCallMode)
     suspend fun setIsAnimationsEnabled(isEnabled: Boolean)
     suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean)
     suspend fun setIsDialpadTonesEnabled(isEnabled: Boolean)

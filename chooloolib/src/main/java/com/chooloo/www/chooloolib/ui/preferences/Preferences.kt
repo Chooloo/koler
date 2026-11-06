@@ -12,14 +12,12 @@ import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.Palette
-import androidx.compose.material.icons.rounded.PhoneInTalk
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Vibration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
 import com.chooloo.www.chooloolib.ui.common.titleRes
@@ -42,7 +40,6 @@ private enum class PreferenceItem(
     THEME_MODE(PreferenceSection.APPEARANCE, Icons.Rounded.Palette, R.string.pref_title_theme_mode),
     ANIMATIONS_ENABLED(PreferenceSection.APPEARANCE, Icons.Rounded.Animation, R.string.pref_title_animations),
     DEFAULT_PAGE(PreferenceSection.DIALER, Icons.Rounded.Home, R.string.pref_title_default_page, isDialerOnly = true),
-    INCOMING_CALL_MODE(PreferenceSection.DIALER, Icons.Rounded.PhoneInTalk, R.string.pref_title_incoming_call_mode, isDialerOnly = true),
     GROUP_RECENTS_ENABLED(PreferenceSection.DIALER, Icons.AutoMirrored.Rounded.ViewList, R.string.pref_title_group_recents, isDialerOnly = true),
     DIALPAD_TONES_ENABLED(PreferenceSection.DIALER, Icons.Rounded.MusicNote, R.string.pref_title_dialpad_tones, isDialerOnly = true),
     DIALPAD_VIBRATE_ENABLED(PreferenceSection.DIALER, Icons.Rounded.Vibration, R.string.pref_title_dialpad_vibrate, isDialerOnly = true),
@@ -62,7 +59,6 @@ fun Preferences(
     isGroupRecentsEnabled: Boolean,
     isDialpadTonesEnabled: Boolean,
     isDialpadVibrateEnabled: Boolean,
-    incomingCallMode: IncomingCallMode,
     showDialerPreferences: Boolean,
     onDefaultPage: (Page) -> Unit,
     onThemeMode: (ThemeMode) -> Unit,
@@ -70,7 +66,6 @@ fun Preferences(
     onIsGroupRecentsEnabled: (Boolean) -> Unit,
     onIsDialpadTonesEnabled: (Boolean) -> Unit,
     onIsDialpadVibrateEnabled: (Boolean) -> Unit,
-    onIncomingCallMode: (IncomingCallMode) -> Unit,
     onManageBlockedClick: () -> Unit,
     onClearRecentsClick: () -> Unit,
     onRateClick: () -> Unit,
@@ -106,14 +101,6 @@ fun Preferences(
                     selectedValue = defaultPage,
                     label = { stringResource(it.titleRes) },
                     onValueSelected = onDefaultPage,
-                )
-                PreferenceItem.INCOMING_CALL_MODE -> ChoicePreferenceListItem(
-                    icon = icon,
-                    title = title,
-                    values = IncomingCallMode.entries,
-                    selectedValue = incomingCallMode,
-                    label = { stringResource(it.titleRes) },
-                    onValueSelected = onIncomingCallMode,
                 )
                 PreferenceItem.ANIMATIONS_ENABLED ->
                     SwitchPreferenceListItem(icon, title, isAnimationsEnabled, onIsAnimationsEnabled)

@@ -28,8 +28,6 @@
     <string name="theme_mode_dark">Dark</string>
     <string name="theme_mode_light">Light</string>
     <string name="theme_mode_system">System</string>
-    <string name="pop_up_notification">Pop-Up Notification</string>
-    <string name="full_screen">Full Screen</string>
     <!--endregion-->
 
     <!--region Actions-->
@@ -93,7 +91,6 @@
     <string name="pref_title_group_recents">Group recents</string>
     <string name="pref_title_dialpad_tones">Play dialpad tones</string>
     <string name="pref_title_dialpad_vibrate">Vibrate on dialpad keys</string>
-    <string name="pref_title_incoming_call_mode">Incoming call mode</string>
     <string name="pref_title_manage_blocked">Manage Blocked Numbers</string>
     <string name="explain_clear_recents">All call history will be deleted permanently</string>
     <!--endregion-->

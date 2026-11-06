@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
@@ -26,8 +25,6 @@ class PreferenceRepositoryImpl @Inject constructor(
             Settings(
                 defaultPage = preferences.enum(DEFAULT_PAGE, PAGE_KEYS) ?: defaults.defaultPage,
                 themeMode = preferences.enum(THEME_MODE, THEME_MODE_KEYS) ?: defaults.themeMode,
-                incomingCallMode = preferences.enum(INCOMING_CALL_MODE, INCOMING_CALL_MODE_KEYS)
-                    ?: defaults.incomingCallMode,
                 isAnimationsEnabled = preferences[ANIMATIONS] ?: defaults.isAnimationsEnabled,
                 isGroupRecentsEnabled = preferences[GROUP_RECENTS] ?: defaults.isGroupRecentsEnabled,
                 isDialpadTonesEnabled = preferences[DIALPAD_TONES] ?: defaults.isDialpadTonesEnabled,
@@ -39,9 +36,6 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setDefaultPage(page: Page) = set(DEFAULT_PAGE, PAGE_KEYS.getValue(page))
 
     override suspend fun setThemeMode(themeMode: ThemeMode) = set(THEME_MODE, THEME_MODE_KEYS.getValue(themeMode))
-
-    override suspend fun setIncomingCallMode(incomingCallMode: IncomingCallMode) =
-        set(INCOMING_CALL_MODE, INCOMING_CALL_MODE_KEYS.getValue(incomingCallMode))
 
     override suspend fun setIsAnimationsEnabled(isEnabled: Boolean) = set(ANIMATIONS, isEnabled)
 
@@ -61,7 +55,6 @@ class PreferenceRepositoryImpl @Inject constructor(
     private companion object {
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val DEFAULT_PAGE = stringPreferencesKey("default_page")
-        val INCOMING_CALL_MODE = stringPreferencesKey("incoming_call_mode")
         val ANIMATIONS = booleanPreferencesKey("animations")
         val GROUP_RECENTS = booleanPreferencesKey("group_recents")
         val DIALPAD_TONES = booleanPreferencesKey("dialpad_tones")
@@ -72,10 +65,6 @@ class PreferenceRepositoryImpl @Inject constructor(
             ThemeMode.SYSTEM to "system",
             ThemeMode.LIGHT to "light",
             ThemeMode.DARK to "dark",
-        )
-        val INCOMING_CALL_MODE_KEYS = mapOf(
-            IncomingCallMode.FULL_SCREEN to "full_screen",
-            IncomingCallMode.POP_UP to "popup_notification",
         )
     }
 }

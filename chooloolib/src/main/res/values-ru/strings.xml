@@ -65,7 +65,6 @@
     <string name="pref_title_group_recents">Группировать похожие недавние</string>
     <string name="pref_title_dialpad_tones">Звук при наборе номера</string>
     <string name="pref_title_dialpad_vibrate">Вибрация при наборе</string>
-    <string name="pref_title_incoming_call_mode">Режим входящего вызова</string>
     <string name="pref_title_manage_blocked">Управление заблокированными номерами</string>
     <!--endregion-->
 

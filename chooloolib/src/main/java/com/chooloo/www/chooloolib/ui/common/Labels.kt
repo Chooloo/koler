@@ -2,7 +2,6 @@ package com.chooloo.www.chooloolib.ui.common
 
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.Recent
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
@@ -21,13 +20,6 @@ val Page.titleRes: Int
         Page.DIALER -> R.string.dialer
         Page.CONTACTS -> R.string.contacts
         Page.RECENTS -> R.string.recents
-    }
-
-@get:StringRes
-val IncomingCallMode.titleRes: Int
-    get() = when (this) {
-        IncomingCallMode.FULL_SCREEN -> R.string.full_screen
-        IncomingCallMode.POP_UP -> R.string.pop_up_notification
     }
 
 @get:StringRes

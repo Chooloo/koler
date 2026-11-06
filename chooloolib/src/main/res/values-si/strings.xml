@@ -11,8 +11,6 @@
     <string name="theme_mode_dark">අඳුරු</string>
     <string name="theme_mode_light">දීප්ත</string>
     <string name="theme_mode_system">පද්ධතිය</string>
-    <string name="pop_up_notification">උත්පතන දැනුම්දීම</string>
-    <string name="full_screen">පූර්ණ තිරය</string>
     <!--endregion-->
 
     <!--region Actions-->
@@ -68,7 +66,6 @@
     <string name="pref_title_group_recents">සමාන මෑත දෑ සමූහනය</string>
     <string name="pref_title_dialpad_tones">අංක එබීමේ නාද</string>
     <string name="pref_title_dialpad_vibrate">අංක එබීමේදී කම්පනය</string>
-    <string name="pref_title_incoming_call_mode">ඇමතුම් ලැබෙන ප්‍රකාරය</string>
     <string name="pref_title_manage_blocked">අවහිර කළ අංක කළමනාකරණය</string>
     <string name="explain_clear_recents">සමස්ත ඇමතුම් ඉතිහාසය සදහටම මකා දමනු ඇත</string>
     <!--endregion-->

@@ -1,6 +1,5 @@
 package com.chooloo.www.chooloolib.testing
 
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
@@ -83,9 +82,6 @@ class FakePreferenceRepository(initial: Settings = Settings()) : PreferenceRepos
     override suspend fun setDefaultPage(page: Page) = state.update { it.copy(defaultPage = page) }
 
     override suspend fun setThemeMode(themeMode: ThemeMode) = state.update { it.copy(themeMode = themeMode) }
-
-    override suspend fun setIncomingCallMode(incomingCallMode: IncomingCallMode) =
-        state.update { it.copy(incomingCallMode = incomingCallMode) }
 
     override suspend fun setIsAnimationsEnabled(isEnabled: Boolean) = state.update { it.copy(isAnimationsEnabled = isEnabled) }
 
