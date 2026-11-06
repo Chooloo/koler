@@ -48,6 +48,7 @@ class CallNotification @Inject constructor(
     private val notificationManager: NotificationManagerCompat,
 ) {
     private var job: Job? = null
+    private var alertedCallId: String? = null
 
     fun attach(service: Service) {
         createChannels()
@@ -82,6 +83,8 @@ class CallNotification @Inject constructor(
             .setImportant(true)
             .build()
         val isIncoming = call.state == CallState.INCOMING
+        val shouldAlert = isIncoming && call.id != alertedCallId
+        if (shouldAlert) alertedCallId = call.id
         val style = if (isIncoming) {
             NotificationCompat.CallStyle.forIncomingCall(
                 caller,
@@ -95,7 +98,7 @@ class CallNotification @Inject constructor(
         return NotificationCompat.Builder(context, if (isIncoming) CHANNEL_ID_INCOMING else CHANNEL_ID_ONGOING)
             .setStyle(style)
             .setOngoing(true)
-            .setOnlyAlertOnce(!isIncoming)
+            .setOnlyAlertOnce(!shouldAlert)
             .setCategory(Notification.CATEGORY_CALL)
             .setSmallIcon(R.drawable.ic_call)
             .setContentIntent(callScreenIntent())
@@ -151,20 +154,24 @@ class CallNotification @Inject constructor(
     )
 
     private fun createChannels() {
-        listOf(CHANNEL_ID_ONGOING to IMPORTANCE_DEFAULT, CHANNEL_ID_INCOMING to IMPORTANCE_HIGH)
-            .forEach { (id, importance) ->
-                notificationManager.createNotificationChannel(
-                    NotificationChannelCompat.Builder(id, importance)
-                        .setName(context.getString(LibR.string.call_notification_channel_name))
-                        .setDescription(context.getString(LibR.string.call_notification_channel_description))
-                        .build()
-                )
-            }
+        LEGACY_CHANNEL_IDS.forEach(notificationManager::deleteNotificationChannel)
+        notificationManager.createNotificationChannelsCompat(
+            listOf(
+                channel(CHANNEL_ID_ONGOING, IMPORTANCE_DEFAULT).build(),
+                // Telecom plays the ringtone because the manifest doesn't declare IN_CALL_SERVICE_RINGING.
+                channel(CHANNEL_ID_INCOMING, IMPORTANCE_HIGH).setSound(null, null).build()
+            )
+        )
     }
+
+    private fun channel(id: String, importance: Int) = NotificationChannelCompat.Builder(id, importance)
+        .setName(context.getString(LibR.string.call_notification_channel_name))
+        .setDescription(context.getString(LibR.string.call_notification_channel_description))
 
     private companion object {
         const val ID = 420
         const val CHANNEL_ID_ONGOING = "cnc_priority_low"
-        const val CHANNEL_ID_INCOMING = "cnc_priority_high"
+        const val CHANNEL_ID_INCOMING = "call_incoming"
+        val LEGACY_CHANNEL_IDS = listOf("cnc_priority_high", "call_notification_channel")
     }
 }
