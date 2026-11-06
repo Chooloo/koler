@@ -65,7 +65,6 @@
     <string name="pref_title_group_recents">Ähnliche Anrufe zusammenfassen</string>
     <string name="pref_title_dialpad_tones">Wähltasten-Töne</string>
     <string name="pref_title_dialpad_vibrate">Vibration bei Tastendruck</string>
-    <string name="pref_title_incoming_call_mode">Modus für eingehende Anrufe</string>
     <string name="pref_title_manage_blocked">Blockierte Nummern verwalten</string>
     <!--endregion-->
 

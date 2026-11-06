@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.model.Page
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.domain.model.ThemeMode
@@ -33,8 +32,6 @@ class PreferencesViewModel @Inject constructor(
     fun onDefaultPage(page: Page) = update { setDefaultPage(page) }
 
     fun onThemeMode(themeMode: ThemeMode) = update { setThemeMode(themeMode) }
-
-    fun onIncomingCallMode(callMode: IncomingCallMode) = update { setIncomingCallMode(callMode) }
 
     fun onIsAnimationsEnabled(isEnabled: Boolean) = update { setIsAnimationsEnabled(isEnabled) }
 

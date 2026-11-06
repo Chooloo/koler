@@ -11,8 +11,6 @@
     <string name="theme_mode_dark">Sombre</string>
     <string name="theme_mode_light">Clair</string>
     <string name="theme_mode_system">Système</string>
-    <string name="pop_up_notification">Notification Pop-Up</string>
-    <string name="full_screen">Plein écran</string>
     <!--endregion-->
 
     <!--region Actions-->
@@ -54,7 +52,6 @@
     <string name="pref_title_theme_mode">Thème de l\'application</string>
     <string name="pref_title_default_page">Page par défaut</string>
     <string name="pref_title_dialpad_vibrate">Vibrer à l\'appui sur le clavier</string>
-    <string name="pref_title_incoming_call_mode">Mode lors d\'appel entrant</string>
     <string name="pref_title_manage_blocked">Gérer les numéros bloqués</string>
     <string name="explain_clear_recents">Toutes les entrées de l\'historique d\'appels seront supprimées définitivement</string>
     <!--endregion-->

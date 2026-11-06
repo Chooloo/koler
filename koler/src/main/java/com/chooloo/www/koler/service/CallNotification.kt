@@ -15,9 +15,7 @@ import androidx.core.app.Person
 import androidx.core.app.ServiceCompat
 import com.chooloo.www.chooloolib.R as LibR
 import com.chooloo.www.chooloolib.di.ApplicationScope
-import com.chooloo.www.chooloolib.domain.model.IncomingCallMode
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
-import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.domain.AudioRoute
 import com.chooloo.www.koler.domain.Call
@@ -44,7 +42,6 @@ class CallNotification @Inject constructor(
     @ApplicationScope private val applicationScope: CoroutineScope,
     private val callRepository: CallRepository,
     private val phoneRepository: PhoneRepository,
-    private val preferenceRepository: PreferenceRepository,
     private val notificationManager: NotificationManagerCompat,
 ) {
     private var job: Job? = null
@@ -54,16 +51,16 @@ class CallNotification @Inject constructor(
         createChannels()
         job?.cancel()
         job = applicationScope.launch(Dispatchers.Main.immediate) {
-            combine(callRepository.calls, callRepository.audio, preferenceRepository.settings) { calls, audio, settings ->
-                Triple(primaryCall(calls), audio, settings.incomingCallMode)
-            }.collectLatest { (call, audio, incomingCallMode) ->
+            combine(callRepository.calls, callRepository.audio) { calls, audio ->
+                primaryCall(calls) to audio
+            }.collectLatest { (call, audio) ->
                 if (call == null) {
                     ServiceCompat.stopForeground(service, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 } else {
                     ServiceCompat.startForeground(
                         service,
                         ID,
-                        build(call, audio, incomingCallMode),
+                        build(call, audio),
                         ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL
                     )
                 }
@@ -77,7 +74,7 @@ class CallNotification @Inject constructor(
         ServiceCompat.stopForeground(service, ServiceCompat.STOP_FOREGROUND_REMOVE)
     }
 
-    private suspend fun build(call: Call, audio: CallAudio, incomingCallMode: IncomingCallMode): Notification {
+    private suspend fun build(call: Call, audio: CallAudio): Notification {
         val caller = Person.Builder()
             .setName(call.title(context, call.number?.let { phoneRepository.lookup(it) }))
             .setImportant(true)
@@ -104,7 +101,7 @@ class CallNotification @Inject constructor(
             .setContentIntent(callScreenIntent())
             .setContentText(context.getString(call.state.labelRes))
             .apply {
-                if (isIncoming && incomingCallMode == IncomingCallMode.FULL_SCREEN) {
+                if (isIncoming) {
                     setFullScreenIntent(callScreenIntent(), true)
                 }
                 if (call.hasStarted) {
