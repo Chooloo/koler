@@ -43,7 +43,7 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         callRepository.onCallAdded(call)
-        if (call.telecomState != Call.STATE_RINGING || (!isPhoneInUse() && !isDoNotDisturbOn())) {
+        if (call.telecomState != Call.STATE_RINGING || (calls.size == 1 && !isPhoneInUse() && !isDoNotDisturbOn())) {
             showCallUi(showDialpad = false)
         }
     }
