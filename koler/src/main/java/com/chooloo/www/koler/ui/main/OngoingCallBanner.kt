@@ -1,0 +1,35 @@
+package com.chooloo.www.koler.ui.main
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.chooloo.www.chooloolib.ui.components.list.ListItem
+import com.chooloo.www.chooloolib.ui.theme.Spacing
+import com.chooloo.www.koler.ui.call.labelRes
+import com.chooloo.www.koler.ui.call.title
+
+@Composable
+fun OngoingCallBanner(
+    ongoingCall: MainViewModel.OngoingCall,
+    onClick: () -> Unit,
+) {
+    Surface(
+        shape = MaterialTheme.shapes.extraLarge,
+        color = MaterialTheme.colorScheme.primaryContainer,
+        modifier = Modifier.padding(horizontal = Spacing.Page),
+    ) {
+        ListItem(
+            title = ongoingCall.call.title(LocalContext.current, ongoingCall.caller),
+            subtitle = stringResource(ongoingCall.call.state.labelRes),
+            onClick = onClick,
+            startContainer = { Icon(Icons.Rounded.Call, contentDescription = null) },
+        )
+    }
+}

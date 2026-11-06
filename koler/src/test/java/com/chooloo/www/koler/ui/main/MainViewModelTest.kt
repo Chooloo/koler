@@ -1,0 +1,111 @@
+package com.chooloo.www.koler.ui.main
+
+import androidx.lifecycle.SavedStateHandle
+import com.chooloo.www.chooloolib.domain.model.Page
+import com.chooloo.www.chooloolib.domain.model.PhoneLookup
+import com.chooloo.www.chooloolib.domain.model.Settings
+import com.chooloo.www.chooloolib.testing.FakePhoneRepository
+import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
+import com.chooloo.www.chooloolib.testing.MainDispatcherRule
+import com.chooloo.www.koler.domain.Call
+import com.chooloo.www.koler.domain.CallState
+import com.chooloo.www.koler.ui.call.FakeCallRepository
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Rule
+import org.junit.Test
+
+class MainViewModelTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private val callRepository = FakeCallRepository()
+    private val lookup = PhoneLookup(contactId = 1, name = "Dana", number = "111")
+    private val viewModel by lazy {
+        MainViewModel(
+            SavedStateHandle(),
+            FakePreferenceRepository(),
+            callRepository,
+            FakePhoneRepository(mapOf("111" to lookup)),
+        )
+    }
+
+    private fun runSubscribed(block: suspend () -> Unit) = runTest(mainDispatcherRule.dispatcher) {
+        viewModel.ongoingCall.launchIn(backgroundScope)
+        viewModel.uiState.launchIn(backgroundScope)
+        block()
+    }
+
+    @Test
+    fun `ongoing call follows the primary call and its caller`() = runSubscribed {
+        val held = Call(id = "c1", state = CallState.HOLDING, number = "222")
+        val active = Call(id = "c2", state = CallState.ACTIVE, number = "111")
+
+        callRepository.calls.value = listOf(held, active)
+
+        assertEquals(MainViewModel.OngoingCall(active, lookup), viewModel.ongoingCall.value)
+    }
+
+    @Test
+    fun `ongoing call without a number has no caller`() = runSubscribed {
+        val call = Call(id = "c1", state = CallState.ACTIVE, number = null)
+
+        callRepository.calls.value = listOf(call)
+
+        assertEquals(MainViewModel.OngoingCall(call, null), viewModel.ongoingCall.value)
+    }
+
+    @Test
+    fun `ongoing call clears when the last call ends`() = runSubscribed {
+        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
+
+        callRepository.calls.value = emptyList()
+
+        assertNull(viewModel.ongoingCall.value)
+    }
+
+    @Test
+    fun `dial sheet closes when a call starts`() = runSubscribed {
+        viewModel.onDialpadOpen()
+
+        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.DIALING, number = "111"))
+
+        assertFalse(viewModel.uiState.value.isDialpadOpen)
+    }
+
+    @Test
+    fun `dial sheet stays open while a call only rings`() = runSubscribed {
+        viewModel.onDialpadOpen()
+
+        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.INCOMING, number = "111"))
+
+        assertTrue(viewModel.uiState.value.isDialpadOpen)
+    }
+
+    @Test
+    fun `dial sheet can reopen during a call`() = runSubscribed {
+        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
+
+        viewModel.onDialpadOpen()
+
+        assertTrue(viewModel.uiState.value.isDialpadOpen)
+    }
+
+    @Test
+    fun `dialer default page does not open the sheet during a call`() = runTest(mainDispatcherRule.dispatcher) {
+        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
+        val viewModel = MainViewModel(
+            SavedStateHandle(),
+            FakePreferenceRepository(Settings(defaultPage = Page.DIALER)),
+            callRepository,
+            FakePhoneRepository(),
+        )
+        viewModel.uiState.launchIn(backgroundScope)
+
+        assertFalse(viewModel.uiState.value.isDialpadOpen)
+    }
+}
