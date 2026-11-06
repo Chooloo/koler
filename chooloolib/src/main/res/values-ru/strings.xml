@@ -1,18 +1,31 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Недавние</string>
     <string name="contacts">Контакты</string>
     <string name="conference">Конференция</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Тёмная</string>
     <string name="theme_mode_light">Светлая</string>
     <string name="theme_mode_system">Системная</string>
-    <string name="number_copied_to_clipboard">Номер скопирован</string>
-    <string name="hint_search_recents">Поиск в недавних</string>
-    <string name="hint_search_contacts">Поиск в контактах</string>
+    <!--endregion-->
+
+    <!--region Actions-->
+    <string name="action_call">Позвонить</string>
+    <string name="add_contact">Добавить контакт</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Отключить микрофон</string>
     <string name="call_action_unmute">Включить микрофон</string>
     <string name="call_action_speaker">Динамик</string>
     <string name="call_action_speaker_off">Отключить динамик</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">Вызов...</string>
     <string name="call_state_holding">Вызов на удержании</string>
     <string name="call_state_connecting">Соединение...</string>
@@ -22,25 +35,17 @@
     <string name="call_state_unknown">Статус вызова неизвестен</string>
     <string name="call_state_disconnecting">Отсоединение...</string>
     <string name="call_state_phone_account">Выбрать аккаунт</string>
-    <string name="pref_title_rate">Оценить</string>
-    <string name="pref_title_animations">Анимации</string>
-    <string name="pref_title_theme_mode">Тема</string>
-    <string name="pref_title_email">Напишите нам Email</string>
-    <string name="pref_title_report_bugs">Сообщить об ошибке</string>
-    <string name="pref_title_manage_blocked">Управление заблокированными номерами</string>
-    <string name="no_results_recents">Нет недавних</string>
-    <string name="no_results_contacts">Нет контактов</string>
-    <string name="cd_call">Телефонный вызов</string>
-    <string name="cd_accept_call">Кнопка ответить</string>
-    <string name="cd_hangup_call">Кнопка отклонить</string>
-    <string name="call_notification_channel_name">Уведомление о вызове</string>
-    <string name="call_notification_channel_description">Уведомление о вызове, для удобного управления</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Динамик</string>
     <string name="audio_route_earpiece">Телефон</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Проводная гарнитура (с микрофоном)</string>
     <string name="audio_route_wired_or_earpiece">Проводные наушники (без микрофона)</string>
-    <string name="cd_favorite_star">Избранное</string>
+    <!--endregion-->
+
+    <!--region Account Type Labels-->
     <string name="type_label_im">Мессенджер</string>
     <string name="type_label_name">Имя</string>
     <string name="type_label_phone">Номер телефона</string>
@@ -48,7 +53,49 @@
     <string name="type_label_custom">Другое</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Организация</string>
-    <string name="action_call">Позвонить</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Оценить</string>
+    <string name="pref_title_email">Напишите нам Email</string>
+    <string name="pref_title_report_bugs">Сообщить об ошибке</string>
+    <string name="pref_title_animations">Анимации</string>
+    <string name="pref_title_theme_mode">Тема</string>
+    <string name="pref_title_default_page">Главная страница</string>
+    <string name="pref_title_group_recents">Группировать похожие недавние</string>
+    <string name="pref_title_dialpad_tones">Звук при наборе номера</string>
+    <string name="pref_title_dialpad_vibrate">Вибрация при наборе</string>
+    <string name="pref_title_incoming_call_mode">Режим входящего вызова</string>
+    <string name="pref_title_manage_blocked">Управление заблокированными номерами</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Поиск в недавних</string>
+    <string name="hint_search_contacts">Поиск в контактах</string>
+    <string name="number_copied_to_clipboard">Номер скопирован</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Нет недавних</string>
+    <string name="no_results_contacts">Нет контактов</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <string name="call_notification_channel_name">Уведомление о вызове</string>
+    <string name="call_notification_channel_description">Уведомление о вызове, для удобного управления</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_call">Телефонный вызов</string>
     <string name="cd_add_contact">Добавить контакт</string>
+    <string name="cd_accept_call">Кнопка ответить</string>
+    <string name="cd_hangup_call">Кнопка отклонить</string>
+    <string name="cd_favorite_star">Избранное</string>
+    <!--endregion-->
+
     <string name="settings">Настройки</string>
+    <string name="cd_search">Поиск</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_delete">Удалить</string>
+
 </resources>

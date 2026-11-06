@@ -1,18 +1,26 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">گزارش ها</string>
     <string name="contacts">مخاطبین</string>
     <string name="conference">کنفرانس</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">تاریک</string>
     <string name="theme_mode_light">روشن</string>
     <string name="theme_mode_system">دستگاه</string>
-    <string name="number_copied_to_clipboard">از شماره رونوشت گرفته شد</string>
-    <string name="hint_search_recents">جستجو در گزارش ها</string>
-    <string name="hint_search_contacts">جستجو در مخاطبین</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">بی صدا</string>
     <string name="call_action_unmute">صدا دار</string>
     <string name="call_action_speaker">بلندگو</string>
     <string name="call_action_speaker_off">گوشی</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">… درحال تماس</string>
     <string name="call_state_holding">تماس در حالت انتظار</string>
     <string name="call_state_connecting">در حال برقراری</string>
@@ -22,23 +30,50 @@
     <string name="call_state_unknown">وضعیت تماس نامشخص</string>
     <string name="call_state_disconnecting">تماس در حال  خاتمه</string>
     <string name="call_state_phone_account">انتخاب سیم کارت</string>
-    <string name="pref_title_rate">امتیازدهی</string>
-    <string name="pref_title_animations">پویانمایی ها</string>
-    <string name="pref_title_theme_mode">حالت نمایه</string>
-    <string name="pref_title_email">به ما ایمیل بزنید</string>
-    <string name="pref_title_report_bugs">گزارش مشکل</string>
-    <string name="pref_title_manage_blocked">مدیریت شماره های مسدودشده</string>
-    <string name="no_results_recents">گزارشی موجود نیست</string>
-    <string name="no_results_contacts">مخاطبی موحود نیست</string>
-    <string name="cd_accept_call">دکمه پاسخگویی تماس</string>
-    <string name="cd_hangup_call">دکمه رد تماس</string>
-    <string name="call_notification_channel_name">اعلان تماس</string>
-    <string name="call_notification_channel_description">اعلان تماس فعال، نمایش برای استفاده راحت</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">بلندگو</string>
     <string name="audio_route_earpiece">هدفون</string>
     <string name="audio_route_bluetooth">بلوتوث</string>
     <string name="audio_route_wired_headset">هدست سیمی</string>
     <string name="audio_route_wired_or_earpiece">سیمی یا گوشی</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">امتیازدهی</string>
+    <string name="pref_title_email">به ما ایمیل بزنید</string>
+    <string name="pref_title_report_bugs">گزارش مشکل</string>
+    <string name="pref_title_animations">پویانمایی ها</string>
+    <string name="pref_title_theme_mode">حالت نمایه</string>
+    <string name="pref_title_default_page">صفحه پیش فرض</string>
+    <string name="pref_title_dialpad_vibrate">لرزش هنگام فشردن شماره گیر</string>
+    <string name="pref_title_manage_blocked">مدیریت شماره های مسدودشده</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">جستجو در گزارش ها</string>
+    <string name="hint_search_contacts">جستجو در مخاطبین</string>
+    <string name="number_copied_to_clipboard">از شماره رونوشت گرفته شد</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">گزارشی موجود نیست</string>
+    <string name="no_results_contacts">مخاطبی موحود نیست</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <string name="call_notification_channel_name">اعلان تماس</string>
+    <string name="call_notification_channel_description">اعلان تماس فعال، نمایش برای استفاده راحت</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_accept_call">دکمه پاسخگویی تماس</string>
+    <string name="cd_hangup_call">دکمه رد تماس</string>
     <string name="cd_favorite_star">ستاره موردعلاقه</string>
+    <!--endregion-->
+
     <string name="settings">تنظیمات</string>
+    <string name="cd_search">جستجو</string>
+
 </resources>

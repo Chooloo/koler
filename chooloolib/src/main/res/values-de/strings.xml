@@ -1,18 +1,31 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Anrufliste</string>
     <string name="contacts">Kontakte</string>
     <string name="conference">Konferenz</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Dunkel</string>
     <string name="theme_mode_light">Hell</string>
     <string name="theme_mode_system">System</string>
-    <string name="number_copied_to_clipboard">Nummer in Zwischenablage kopiert</string>
-    <string name="hint_search_recents">Anrufliste durchsuchen</string>
-    <string name="hint_search_contacts">Kontakte durchsuchen</string>
+    <!--endregion-->
+
+    <!--region Actions-->
+    <string name="action_call">Anrufen</string>
+    <string name="add_contact">Kontakt hinzufügen</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Stumm</string>
     <string name="call_action_unmute">Stummschaltung aufheben</string>
     <string name="call_action_speaker">Lautsprecher</string>
     <string name="call_action_speaker_off">Lautsprecher deaktivieren</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">Wählt…</string>
     <string name="call_state_holding">Anruf wird gehalten</string>
     <string name="call_state_connecting">Verbinde…</string>
@@ -22,25 +35,17 @@
     <string name="call_state_unknown">Anrufstatus unbekannt</string>
     <string name="call_state_disconnecting">Trenne Verbindung…</string>
     <string name="call_state_phone_account">Telefonkonto auswählen</string>
-    <string name="pref_title_rate">Bewerten</string>
-    <string name="pref_title_animations">Animationen</string>
-    <string name="pref_title_theme_mode">Design</string>
-    <string name="pref_title_email">Schrebe uns eine E-Mail</string>
-    <string name="pref_title_report_bugs">Fehler melden</string>
-    <string name="pref_title_manage_blocked">Blockierte Nummern verwalten</string>
-    <string name="no_results_recents">Keine kürzlichen Anrufe</string>
-    <string name="no_results_contacts">Keine Kontakte</string>
-    <string name="cd_call">Anruf</string>
-    <string name="cd_accept_call">Annehmen-Knopf</string>
-    <string name="cd_hangup_call">Ablehen-Knopf</string>
-    <string name="call_notification_channel_name">Anruf-Benachrichtigung</string>
-    <string name="call_notification_channel_description">Anruf-Benachrichtigung, für komfortable Anrufsteuerung</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Lautsprecher</string>
     <string name="audio_route_earpiece">Ohrmuschel</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
-    <string name="audio_route_wired_headset">Gabelgebundenes Headset (mit Mikro)</string>
+    <string name="audio_route_wired_headset">Kabelgebundenes Headset (mit Mikro)</string>
     <string name="audio_route_wired_or_earpiece">Kabelgebundene Kopfhörer (ohne Mikro)</string>
-    <string name="cd_favorite_star">Favoritenstern</string>
+    <!--endregion-->
+
+    <!--region Account Type Labels-->
     <string name="type_label_im">IM</string>
     <string name="type_label_name">Name</string>
     <string name="type_label_phone">Telefon</string>
@@ -48,7 +53,50 @@
     <string name="type_label_custom">Benutzerdefiniert</string>
     <string name="type_label_whatsapp">WhatsApp</string>
     <string name="type_label_organization">Organisation</string>
-    <string name="action_call">Anrufen</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Bewerten</string>
+    <string name="pref_title_email">Schreibe uns eine E-Mail</string>
+    <string name="pref_title_report_bugs">Fehler melden</string>
+    <string name="pref_title_animations">Animationen</string>
+    <string name="pref_title_theme_mode">Design</string>
+    <string name="pref_title_default_page">Standard-Startansicht</string>
+    <string name="pref_title_group_recents">Ähnliche Anrufe zusammenfassen</string>
+    <string name="pref_title_dialpad_tones">Wähltasten-Töne</string>
+    <string name="pref_title_dialpad_vibrate">Vibration bei Tastendruck</string>
+    <string name="pref_title_incoming_call_mode">Modus für eingehende Anrufe</string>
+    <string name="pref_title_manage_blocked">Blockierte Nummern verwalten</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Anrufliste durchsuchen</string>
+    <string name="hint_search_contacts">Kontakte durchsuchen</string>
+    <string name="number_copied_to_clipboard">Nummer in Zwischenablage kopiert</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Keine kürzlichen Anrufe</string>
+    <string name="no_results_contacts">Keine Kontakte</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <string name="call_notification_channel_name">Anruf-Benachrichtigung</string>
+    <string name="call_notification_channel_description">Anruf-Benachrichtigung, für komfortable Anrufsteuerung</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_call">Anruf</string>
     <string name="cd_add_contact">Kontakt hinzufügen</string>
+    <string name="cd_accept_call">Annehmen-Knopf</string>
+    <string name="cd_hangup_call">Ablehnen-Knopf</string>
+    <string name="cd_manage_call">Anrufe verwalten</string>
+    <string name="cd_favorite_star">Favoritenstern</string>
+    <!--endregion-->
+
     <string name="settings">Einstellungen</string>
+    <string name="cd_search">Suche</string>
+    <string name="action_edit">Bearbeiten</string>
+    <string name="action_delete">Löschen</string>
+
 </resources>

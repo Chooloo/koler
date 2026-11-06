@@ -1,18 +1,26 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">最近</string>
     <string name="contacts">联系人</string>
     <string name="conference">电话会议</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">暗黑模式</string>
     <string name="theme_mode_light">白色模式</string>
     <string name="theme_mode_system">系统</string>
-    <string name="number_copied_to_clipboard">号码已复制到剪贴板</string>
-    <string name="hint_search_recents">搜索最近通话</string>
-    <string name="hint_search_contacts">搜索联系人</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">静音</string>
     <string name="call_action_unmute">取消静音</string>
     <string name="call_action_speaker">音响</string>
     <string name="call_action_speaker_off">关闭音响</string>
+    <!--endregion-->
+
+    <!--region Call States-->
     <string name="call_state_dialing">正在拨号</string>
     <string name="call_state_holding">暂停通话</string>
     <string name="call_state_connecting">连接中…</string>
@@ -22,9 +30,28 @@
     <string name="call_state_unknown">通话状态未知</string>
     <string name="call_state_disconnecting">电话停止连接</string>
     <string name="call_state_phone_account">选择手机账号</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
     <string name="pref_title_rate">速度</string>
     <string name="pref_title_animations">动效</string>
     <string name="pref_title_theme_mode">主题模式</string>
+    <string name="pref_title_default_page">默认页面</string>
+    <string name="pref_title_dialpad_tones">拨号盘触摸音效</string>
+    <string name="pref_title_dialpad_vibrate">点击拨号盘时振动</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">搜索最近通话</string>
+    <string name="hint_search_contacts">搜索联系人</string>
+    <string name="number_copied_to_clipboard">号码已复制到剪贴板</string>
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
     <string name="cd_favorite_star">星标</string>
+    <!--endregion-->
+
     <string name="settings">设置</string>
+    <string name="cd_search">搜索</string>
+
 </resources>
