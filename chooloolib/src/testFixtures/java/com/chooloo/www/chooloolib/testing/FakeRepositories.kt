@@ -35,6 +35,7 @@ class FakeTelecomRepository(private val defaultDialer: Boolean = true) : Telecom
     val secretCodes = mutableListOf<String>()
     var voicemailCalls = 0
     var callError: Exception? = null
+    var secretCodeError: Exception? = null
 
     override fun isDefaultDialer() = defaultDialer
 
@@ -48,6 +49,7 @@ class FakeTelecomRepository(private val defaultDialer: Boolean = true) : Telecom
     }
 
     override suspend fun handleSecretCode(code: String): Boolean {
+        secretCodeError?.let { throw it }
         secretCodes += code
         return false
     }

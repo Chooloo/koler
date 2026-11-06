@@ -7,6 +7,7 @@ import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
 import com.chooloo.www.chooloolib.testing.FakeRecentRepository
 import com.chooloo.www.chooloolib.testing.FakeTelecomRepository
 import com.chooloo.www.chooloolib.testing.MainDispatcherRule
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -42,6 +43,16 @@ class DialpadViewModelTest {
         assertEquals(listOf('1', '2'), audio.playedTones)
         assertEquals(0, audio.vibrations)
         assertEquals(listOf("1", "12"), telecom.secretCodes)
+    }
+
+    @Test
+    fun `failed secret code keeps the typed value`() = runTest(mainDispatcherRule.dispatcher) {
+        val viewModel = viewModel()
+        telecom.secretCodeError = SecurityException()
+
+        viewModel.onKeyClick('1')
+
+        assertEquals("1", viewModel.uiState.value.value)
     }
 
     @Test
