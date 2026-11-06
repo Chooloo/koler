@@ -6,15 +6,24 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.domain.model.Page
+import com.chooloo.www.chooloolib.domain.model.PhoneLookup
+import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.ui.caller.CallerTarget
+import com.chooloo.www.koler.domain.Call
+import com.chooloo.www.koler.domain.CallRepository
+import com.chooloo.www.koler.domain.CallState
+import com.chooloo.www.koler.domain.primaryCall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -23,8 +32,12 @@ import kotlinx.coroutines.launch
 class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val preferenceRepository: PreferenceRepository,
+    private val callRepository: CallRepository,
+    phoneRepository: PhoneRepository,
 ) : ViewModel() {
     enum class Tab { RECENTS, CONTACTS }
+
+    data class OngoingCall(val call: Call, val caller: PhoneLookup?)
 
     data class UiState(
         val tab: Tab? = null,
@@ -53,13 +66,20 @@ class MainViewModel @Inject constructor(
         UiState(tab, isDialpadOpen, transient.dialNumber, isSearching, searchText, transient.selectedCaller, transient.isSettingsOpen)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
+    val ongoingCall: StateFlow<OngoingCall?> = callRepository.calls
+        .map(::primaryCall)
+        .distinctUntilChanged()
+        .map { call -> call?.let { OngoingCall(it, it.number?.let { number -> phoneRepository.lookup(number) }) } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
     init {
+        closeDialSheetsWhenCallStarts()
         viewModelScope.launch {
             if (tab.value != null) return@launch
             val defaultPage = preferenceRepository.settings.first().defaultPage
             if (tab.value != null) return@launch
             savedStateHandle[KEY_TAB] = if (defaultPage == Page.CONTACTS) Tab.CONTACTS else Tab.RECENTS
-            if (defaultPage == Page.DIALER) savedStateHandle[KEY_DIALPAD_OPEN] = true
+            if (defaultPage == Page.DIALER && callRepository.calls.value.isEmpty()) savedStateHandle[KEY_DIALPAD_OPEN] = true
         }
     }
 
@@ -112,6 +132,19 @@ class MainViewModel @Inject constructor(
 
     fun onSettingsClose() {
         transientState.update { it.copy(isSettingsOpen = false) }
+    }
+
+    private fun closeDialSheetsWhenCallStarts() {
+        viewModelScope.launch {
+            callRepository.calls
+                .map { calls -> calls.any { it.state != CallState.INCOMING } }
+                .distinctUntilChanged()
+                .filter { it }
+                .collect {
+                    onDialpadClose()
+                    onCallerDismiss()
+                }
+        }
     }
 
     private companion object {

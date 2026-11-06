@@ -1,16 +1,15 @@
 package com.chooloo.www.koler.ui.call
 
-import android.app.ActivityManager
 import android.app.KeyguardManager
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
 import com.chooloo.www.koler.domain.CallRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -21,18 +20,17 @@ class CallActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setExcludeFromRecents(false)
         showWhenLocked()
-        if (intent.getBooleanExtra(EXTRA_SHOW_DIALPAD, false)) callViewModel.onShowKeypad()
+        showKeypadIfRequested(intent)
         finishWhenCallsEnd()
         setChoolooContent {
             CallScreen(callViewModel = callViewModel)
         }
     }
 
-    override fun onDestroy() {
-        setExcludeFromRecents(true)
-        super.onDestroy()
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        showKeypadIfRequested(intent)
     }
 
     override fun finish() {
@@ -41,9 +39,8 @@ class CallActivity : BaseActivity() {
 
     private fun finishWhenCallsEnd() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                callRepository.calls.collect { if (it.isEmpty()) finish() }
-            }
+            callRepository.calls.first { it.isEmpty() }
+            finish()
         }
     }
 
@@ -53,10 +50,8 @@ class CallActivity : BaseActivity() {
         getSystemService(KeyguardManager::class.java).requestDismissKeyguard(this, null)
     }
 
-    private fun setExcludeFromRecents(exclude: Boolean) {
-        getSystemService(ActivityManager::class.java).appTasks
-            .firstOrNull { it.taskInfo?.taskId == taskId }
-            ?.setExcludeFromRecents(exclude)
+    private fun showKeypadIfRequested(intent: Intent) {
+        if (intent.getBooleanExtra(EXTRA_SHOW_DIALPAD, false)) callViewModel.onShowKeypad()
     }
 
     companion object {

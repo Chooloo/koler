@@ -56,10 +56,9 @@
         <activity
             android:name=".ui.call.CallActivity"
             android:configChanges="screenSize|keyboardHidden"
-            android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
-            android:noHistory="true" />
+            android:taskAffinity="${applicationId}.call" />
 
         <service
             android:name=".service.CallService"

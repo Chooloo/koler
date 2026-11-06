@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.ui.main
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,6 +32,7 @@ import com.chooloo.www.chooloolib.ui.dialpad.DialpadScreen
 import com.chooloo.www.chooloolib.ui.preferences.PreferencesScreen
 import com.chooloo.www.chooloolib.ui.recents.RecentsScreen
 import com.chooloo.www.chooloolib.ui.theme.Sizes
+import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.ui.main.MainViewModel.Tab
 
 @Composable
@@ -39,6 +41,7 @@ fun MainScreen(
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val ongoingCall by viewModel.ongoingCall.collectAsStateWithLifecycle()
     val tab = uiState.tab ?: return
     val listPadding = PaddingValues(bottom = Sizes.FloatingBarInset)
 
@@ -54,6 +57,12 @@ fun MainScreen(
                     }
                 }
             )
+            ongoingCall?.let {
+                OngoingCallBanner(
+                    ongoingCall = it,
+                    onClick = { context.startActivity(Intent(context, CallActivity::class.java)) },
+                )
+            }
             when (tab) {
                 Tab.RECENTS -> RecentsScreen(
                     filter = uiState.searchText,
