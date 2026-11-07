@@ -19,14 +19,17 @@ import javax.inject.Inject
 class CallService : InCallService() {
     @Inject lateinit var callRepository: CallRepositoryImpl
     @Inject lateinit var callNotification: CallNotification
+    @Inject lateinit var proximityScreenLock: ProximityScreenLock
 
     override fun onCreate() {
         super.onCreate()
         callRepository.onServiceCreated(this)
         callNotification.attach(this)
+        proximityScreenLock.attach()
     }
 
     override fun onDestroy() {
+        proximityScreenLock.detach()
         callNotification.detach(this)
         callRepository.onServiceDestroyed(this)
         super.onDestroy()
