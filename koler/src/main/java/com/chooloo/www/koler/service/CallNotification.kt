@@ -8,6 +8,8 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.net.Uri
+import android.telecom.PhoneAccount
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -78,6 +80,7 @@ class CallNotification @Inject constructor(
         val caller = Person.Builder()
             .setName(call.title(context, call.number?.let { phoneRepository.lookup(it) }))
             .setImportant(true)
+            .setUri(call.number?.takeIf { it.isNotBlank() }?.let { Uri.fromParts(PhoneAccount.SCHEME_TEL, it, null).toString() })
             .build()
         val isIncoming = call.state == CallState.INCOMING
         val shouldAlert = isIncoming && call.id != alertedCallId
@@ -94,6 +97,7 @@ class CallNotification @Inject constructor(
 
         return NotificationCompat.Builder(context, if (isIncoming) CHANNEL_ID_INCOMING else CHANNEL_ID_ONGOING)
             .setStyle(style)
+            .addPerson(caller)
             .setOngoing(true)
             .setOnlyAlertOnce(!shouldAlert)
             .setCategory(Notification.CATEGORY_CALL)
