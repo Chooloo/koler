@@ -6,9 +6,12 @@ import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.testing.FakePhoneRepository
 import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
+import com.chooloo.www.chooloolib.testing.FakeRecentRepository
+import com.chooloo.www.chooloolib.testing.FakeTelecomRepository
 import com.chooloo.www.chooloolib.testing.MainDispatcherRule
 import com.chooloo.www.koler.domain.Call
 import com.chooloo.www.koler.domain.CallState
+import com.chooloo.www.koler.domain.ClearMissedCalls
 import com.chooloo.www.koler.ui.call.FakeCallRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.test.runTest
@@ -24,12 +27,15 @@ class MainViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private val callRepository = FakeCallRepository()
+    private val telecomRepository = FakeTelecomRepository()
+    private val recentRepository = FakeRecentRepository()
     private val lookup = PhoneLookup(contactId = 1, name = "Dana", number = "111")
     private val viewModel by lazy {
         MainViewModel(
             SavedStateHandle(),
             FakePreferenceRepository(),
             callRepository,
+            ClearMissedCalls(telecomRepository, recentRepository),
             FakePhoneRepository(mapOf("111" to lookup)),
         )
     }
@@ -102,10 +108,37 @@ class MainViewModelTest {
             SavedStateHandle(),
             FakePreferenceRepository(Settings(defaultPage = Page.DIALER)),
             callRepository,
+            ClearMissedCalls(telecomRepository, recentRepository),
             FakePhoneRepository(),
         )
         viewModel.uiState.launchIn(backgroundScope)
 
         assertFalse(viewModel.uiState.value.isDialpadOpen)
+    }
+
+    @Test
+    fun `opening missed calls shows recents with nothing covering it`() = runSubscribed {
+        viewModel.onTabSelected(MainViewModel.Tab.CONTACTS)
+        viewModel.onDialpadOpen()
+        viewModel.onSettingsOpen()
+        viewModel.onSearchOpen()
+        viewModel.onSearchTextChange("dana")
+
+        viewModel.onMissedCallsOpened()
+
+        val state = viewModel.uiState.value
+        assertEquals(MainViewModel.Tab.RECENTS, state.tab)
+        assertFalse(state.isDialpadOpen)
+        assertFalse(state.isSettingsOpen)
+        assertFalse(state.isSearching)
+        assertEquals("", state.searchText)
+    }
+
+    @Test
+    fun `opening missed calls clears them`() = runSubscribed {
+        viewModel.onMissedCallsOpened()
+
+        assertEquals(1, telecomRepository.missedCallsNotificationCancels)
+        assertEquals(1, recentRepository.missedCallsReadMarks)
     }
 }

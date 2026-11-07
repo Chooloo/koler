@@ -120,6 +120,14 @@
     <!--region Notifications-->
     <string name="call_notification_channel_name">Call Notification</string>
     <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
+    <string name="missed_call_notification_channel_name">Missed Calls</string>
+    <string name="missed_call_notification_channel_description">Calls you did not answer</string>
+    <string name="missed_call_notification_title">Missed call</string>
+    <string name="missed_calls_notification_title">Missed calls</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d missed call</item>
+        <item quantity="other">%d missed calls</item>
+    </plurals>
     <!--endregion-->
 
     <!--region Permissions-->

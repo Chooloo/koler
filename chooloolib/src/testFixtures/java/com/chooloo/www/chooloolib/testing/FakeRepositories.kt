@@ -33,6 +33,7 @@ class FakeTelecomRepository(private val defaultDialer: Boolean = true) : Telecom
     val calledNumbers = mutableListOf<String>()
     val secretCodes = mutableListOf<String>()
     var voicemailCalls = 0
+    var missedCallsNotificationCancels = 0
     var callError: Exception? = null
     var secretCodeError: Exception? = null
 
@@ -52,6 +53,10 @@ class FakeTelecomRepository(private val defaultDialer: Boolean = true) : Telecom
         secretCodes += code
         return false
     }
+
+    override suspend fun cancelMissedCallsNotification() {
+        missedCallsNotificationCancels++
+    }
 }
 
 class FakePhoneRepository(private val lookups: Map<String, PhoneLookup> = emptyMap()) : PhoneRepository {
@@ -61,6 +66,8 @@ class FakePhoneRepository(private val lookups: Map<String, PhoneLookup> = emptyM
 }
 
 class FakeRecentRepository(var lastOutgoingNumber: String? = null) : RecentRepository {
+    var missedCallsReadMarks = 0
+
     override fun recents(filter: String?): Flow<List<Recent>> = flowOf(emptyList())
 
     override fun recent(recentId: Long): Flow<Recent?> = flowOf(null)
@@ -72,6 +79,10 @@ class FakeRecentRepository(var lastOutgoingNumber: String? = null) : RecentRepos
     override suspend fun deleteRecent(recentId: Long) = Unit
 
     override suspend fun deleteAllRecents() = Unit
+
+    override suspend fun markMissedCallsRead() {
+        missedCallsReadMarks++
+    }
 }
 
 class FakePreferenceRepository(initial: Settings = Settings()) : PreferenceRepository {

@@ -1,11 +1,15 @@
 package com.chooloo.www.chooloolib.data.repository
 
+import android.Manifest.permission.WRITE_CALL_LOG
 import android.content.ContentResolver
 import android.content.ContentUris
 import android.content.Context
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.database.Cursor
 import android.provider.CallLog.Calls
 import android.telephony.PhoneNumberUtils
+import android.util.Log
+import androidx.core.content.contentValuesOf
 import com.chooloo.www.chooloolib.data.source.ContentQuery
 import com.chooloo.www.chooloolib.data.source.int
 import com.chooloo.www.chooloolib.data.source.long
@@ -91,6 +95,20 @@ class RecentRepositoryImpl @Inject constructor(
         Unit
     }
 
+    override suspend fun markMissedCallsRead() = withContext(ioDispatcher) {
+        if (context.checkSelfPermission(WRITE_CALL_LOG) != PERMISSION_GRANTED) {
+            Log.e(TAG, "Missed calls stay unread: WRITE_CALL_LOG is not granted")
+            return@withContext
+        }
+        contentResolver.update(
+            Calls.CONTENT_URI,
+            contentValuesOf(Calls.NEW to 0, Calls.IS_READ to 1),
+            "${Calls.TYPE} = ? AND ${Calls.NEW} = 1",
+            arrayOf(Calls.MISSED_TYPE.toString()),
+        )
+        Unit
+    }
+
     private suspend fun withContactDetails(recents: List<Recent>): List<Recent> {
         val lookups = recents.filter { it.name == null && it.number.isNotEmpty() }
             .map { it.number }
@@ -138,6 +156,7 @@ class RecentRepositoryImpl @Inject constructor(
     }
 
     private companion object {
+        const val TAG = "RecentRepository"
         const val MATCH_DIGITS = 7
         val PROJECTION = arrayOf(
             Calls._ID,

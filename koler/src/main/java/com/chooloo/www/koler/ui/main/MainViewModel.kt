@@ -13,9 +13,11 @@ import com.chooloo.www.chooloolib.ui.caller.CallerTarget
 import com.chooloo.www.koler.domain.Call
 import com.chooloo.www.koler.domain.CallRepository
 import com.chooloo.www.koler.domain.CallState
+import com.chooloo.www.koler.domain.ClearMissedCalls
 import com.chooloo.www.koler.domain.primaryCall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,11 +30,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+const val ACTION_SHOW_MISSED_CALLS = "com.chooloo.www.koler.action.SHOW_MISSED_CALLS"
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val preferenceRepository: PreferenceRepository,
     private val callRepository: CallRepository,
+    private val clearMissedCalls: ClearMissedCalls,
     phoneRepository: PhoneRepository,
 ) : ViewModel() {
     enum class Tab { RECENTS, CONTACTS }
@@ -84,12 +89,26 @@ class MainViewModel @Inject constructor(
     }
 
     fun onViewIntent(intent: Intent) {
-        if (intent.action !in arrayOf(Intent.ACTION_DIAL, Intent.ACTION_VIEW)) return
+        when (intent.action) {
+            ACTION_SHOW_MISSED_CALLS -> onMissedCallsOpened()
+            Intent.ACTION_DIAL, Intent.ACTION_VIEW -> openDialpad(intent)
+        }
+    }
+
+    private fun openDialpad(intent: Intent) {
         val number = intent.data?.schemeSpecificPart?.let(Uri::decode)?.trim()
         if (number.isNullOrEmpty()) return
         transientState.update { it.copy(dialNumber = number) }
         if (tab.value == null) savedStateHandle[KEY_TAB] = Tab.RECENTS
         savedStateHandle[KEY_DIALPAD_OPEN] = true
+    }
+
+    fun onMissedCallsOpened() {
+        onTabSelected(Tab.RECENTS)
+        onDialpadClose()
+        onSearchClose()
+        transientState.value = TransientState()
+        viewModelScope.launch(NonCancellable) { clearMissedCalls() }
     }
 
     fun onTabSelected(tab: Tab) {

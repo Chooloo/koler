@@ -10,4 +10,5 @@ interface RecentRepository {
     suspend fun lastOutgoingNumber(): String?
     suspend fun deleteRecent(recentId: Long)
     suspend fun deleteAllRecents()
+    suspend fun markMissedCallsRead()
 }

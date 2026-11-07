@@ -76,5 +76,15 @@
         </service>
 
         <receiver android:name=".service.CallBroadcastReceiver" />
+
+        <receiver
+            android:name=".service.MissedCallReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.telecom.action.SHOW_MISSED_CALLS_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".service.MissedCallDismissReceiver" />
     </application>
 </manifest>
