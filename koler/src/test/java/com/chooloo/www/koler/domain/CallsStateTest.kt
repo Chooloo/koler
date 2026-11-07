@@ -65,4 +65,52 @@ class CallsStateTest {
         assertFalse(call("a", CallState.ACTIVE, connectTimeMillis = 0).hasStarted)
         assertFalse(call("a", CallState.DIALING, connectTimeMillis = 1).hasStarted)
     }
+
+    @Test
+    fun `proximity lock is held on the earpiece while a call is at the ear`() {
+        listOf(CallState.CONNECTING, CallState.DIALING, CallState.ACTIVE, CallState.HOLDING, CallState.CONFERENCED)
+            .forEach { state ->
+                assertEquals(
+                    ProximityScreenOff.HOLD,
+                    proximityScreenOff(listOf(call("a", state)), AudioRoute.EARPIECE)
+                )
+            }
+    }
+
+    @Test
+    fun `proximity lock is released at once on any other route`() {
+        val calls = listOf(call("a", CallState.ACTIVE))
+
+        listOf(AudioRoute.SPEAKER, AudioRoute.BLUETOOTH, AudioRoute.WIRED_HEADSET, null).forEach { route ->
+            assertEquals(ProximityScreenOff.RELEASE_NOW, proximityScreenOff(calls, route))
+        }
+    }
+
+    @Test
+    fun `proximity lock waits for uncovering when no call is at the ear`() {
+        listOf(
+            emptyList(),
+            listOf(call("a", CallState.INCOMING)),
+            listOf(call("a", CallState.SELECT_PHONE_ACCOUNT)),
+            listOf(call("a", CallState.DISCONNECTING)),
+            listOf(call("a", CallState.DISCONNECTED)),
+        ).forEach { calls ->
+            assertEquals(
+                ProximityScreenOff.RELEASE_WHEN_UNCOVERED,
+                proximityScreenOff(calls, AudioRoute.EARPIECE)
+            )
+        }
+    }
+
+    @Test
+    fun `proximity lock stays held when another call rings during a call`() {
+        val calls = listOf(call("a", CallState.ACTIVE), call("b", CallState.INCOMING))
+
+        assertEquals(ProximityScreenOff.HOLD, proximityScreenOff(calls, AudioRoute.EARPIECE))
+    }
+
+    @Test
+    fun `proximity lock release ignores a route reset once calls are gone`() {
+        assertEquals(ProximityScreenOff.RELEASE_WHEN_UNCOVERED, proximityScreenOff(emptyList(), null))
+    }
 }

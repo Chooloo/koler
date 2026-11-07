@@ -12,6 +12,8 @@ enum class CallsState {
     DISCONNECTED,
 }
 
+enum class ProximityScreenOff { HOLD, RELEASE_NOW, RELEASE_WHEN_UNCOVERED }
+
 private val PRIMARY_CALL_PRIORITY = listOf(
     CallState.INCOMING,
     CallState.DIALING,
@@ -27,6 +29,14 @@ private val ONGOING_STATES = setOf(
     CallState.ACTIVE,
     CallState.HOLDING,
     CallState.DISCONNECTING,
+    CallState.CONFERENCED,
+)
+
+private val HELD_TO_EAR_STATES = setOf(
+    CallState.CONNECTING,
+    CallState.DIALING,
+    CallState.ACTIVE,
+    CallState.HOLDING,
     CallState.CONFERENCED,
 )
 
@@ -47,4 +57,10 @@ fun callsState(calls: List<Call>, hasPendingOutgoing: Boolean): CallsState {
         allIn(CallState.DISCONNECTED) -> CallsState.DISCONNECTED
         else -> CallsState.ACTIVE
     }
+}
+
+fun proximityScreenOff(calls: List<Call>, route: AudioRoute?): ProximityScreenOff = when {
+    calls.none { it.state in HELD_TO_EAR_STATES } -> ProximityScreenOff.RELEASE_WHEN_UNCOVERED
+    route == AudioRoute.EARPIECE -> ProximityScreenOff.HOLD
+    else -> ProximityScreenOff.RELEASE_NOW
 }
