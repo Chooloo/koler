@@ -19,10 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.min
+import com.chooloo.www.chooloolib.ui.theme.Layout
 import com.chooloo.www.chooloolib.ui.theme.Sizes
 import com.chooloo.www.chooloolib.ui.theme.Spacing
-
-private val KEY_ROWS = listOf("123", "456", "789", "*0#")
 
 @Composable
 fun Keypad(
@@ -38,7 +37,7 @@ fun Keypad(
     ) {
         val keySize = min((maxWidth - Spacing.Large * 2) / 3, Sizes.KeypadKey)
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.Medium)) {
-            KEY_ROWS.forEach { row ->
+            Layout.KEYPAD_ROWS.forEach { row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(Spacing.Large)) {
                     row.forEach { key ->
                         KeypadKey(
@@ -56,10 +55,18 @@ fun Keypad(
 
 @Composable
 private fun KeypadKey(key: Char, size: Dp, onClick: () -> Unit, onLongClick: (() -> Unit)?) {
-    Surface(shape = CircleShape, color = MaterialTheme.colorScheme.surfaceContainerHigh, modifier = Modifier.size(size)) {
+    Surface(
+        shape = CircleShape,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        modifier = Modifier.size(size),
+    ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.combinedClickable(role = Role.Button, onClick = onClick, onLongClick = onLongClick),
+            modifier = Modifier.combinedClickable(
+                role = Role.Button,
+                onClick = onClick,
+                onLongClick = onLongClick,
+            ),
         ) {
             Text(text = key.toString(), style = MaterialTheme.typography.headlineLarge)
         }

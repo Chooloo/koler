@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -11,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.caller.CallerScreen
-import com.chooloo.www.chooloolib.ui.common.createContact
+import com.chooloo.www.chooloolib.ui.common.rememberExternalActions
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.components.FloatingBubble
 import com.chooloo.www.chooloolib.ui.contacts.ContactsScreen
@@ -19,10 +20,8 @@ import com.chooloo.www.chooloolib.ui.home.HomeScaffold
 import com.chooloo.www.chooloolib.ui.preferences.PreferencesScreen
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel,
-) {
-    val context = LocalContext.current
+fun MainScreen(viewModel: MainViewModel) {
+    val externalActions = rememberExternalActions()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     HomeScaffold(
@@ -38,7 +37,7 @@ fun MainScreen(
             FloatingBubble(
                 icon = Icons.Rounded.PersonAdd,
                 contentDescription = stringResource(R.string.cd_add_contact),
-                onClick = { context.createContact() },
+                onClick = { externalActions.createContact() },
                 modifier = Modifier.align(Alignment.CenterStart),
             )
         },
@@ -50,11 +49,17 @@ fun MainScreen(
         )
     }
 
-    BottomSheet(visible = uiState.isSettingsOpen, skipPartiallyExpanded = true, onDismiss = viewModel::onSettingsClose) {
+    BottomSheet(
+        visible = uiState.isSettingsOpen,
+        skipPartiallyExpanded = true,
+        onDismiss = viewModel::onSettingsClose,
+    ) {
         PreferencesScreen(showDialerPreferences = false)
     }
 
     BottomSheet(visible = uiState.selectedCaller != null, onDismiss = viewModel::onContactDismiss) {
-        uiState.selectedCaller?.let { CallerScreen(target = it, onDismiss = viewModel::onContactDismiss) }
+        uiState.selectedCaller?.let {
+            CallerScreen(target = it, onDismiss = viewModel::onContactDismiss)
+        }
     }
 }

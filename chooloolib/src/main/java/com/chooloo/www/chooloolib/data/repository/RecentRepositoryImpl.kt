@@ -2,20 +2,17 @@ package com.chooloo.www.chooloolib.data.repository
 
 import android.Manifest.permission.WRITE_CALL_LOG
 import android.content.ContentResolver
-import android.content.ContentUris
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.database.Cursor
 import android.provider.CallLog.Calls
 import android.telephony.PhoneNumberUtils
 import android.util.Log
 import androidx.core.content.contentValuesOf
 import com.chooloo.www.chooloolib.data.source.ContentQuery
-import com.chooloo.www.chooloolib.data.source.int
-import com.chooloo.www.chooloolib.data.source.long
-import com.chooloo.www.chooloolib.data.source.observeAll
-import com.chooloo.www.chooloolib.data.source.string
+import com.chooloo.www.chooloolib.data.source.ContentSource
 import com.chooloo.www.chooloolib.di.IoDispatcher
+import com.chooloo.www.chooloolib.domain.enum.RecentPresentation
+import com.chooloo.www.chooloolib.domain.enum.RecentType
 import com.chooloo.www.chooloolib.domain.model.Recent
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
@@ -36,48 +33,50 @@ import kotlinx.coroutines.withContext
 class RecentRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val contentResolver: ContentResolver,
+    private val contentSource: ContentSource,
     private val phoneRepository: PhoneRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : RecentRepository {
-    override fun recents(filter: String?): Flow<List<Recent>> {
-        val pattern = filter?.takeIf { it.isNotEmpty() }?.let { "%$it%" }
-        return contentResolver.observeAll(
-            ContentQuery(
-                uri = Calls.CONTENT_URI,
-                projection = PROJECTION,
-                selection = pattern?.let { "(${Calls.CACHED_NAME} LIKE ? OR ${Calls.NUMBER} LIKE ?)" },
-                selectionArgs = pattern?.let { arrayOf(it, it) },
-                sortOrder = "${Calls.DATE} DESC",
-            ),
-            ::toRecent
-        ).mapLatest(::withContactDetails).flowOn(ioDispatcher)
+    override fun recents(filter: String): Flow<List<Recent>> {
+        val pattern = filter.takeIf { it.isNotEmpty() }?.let { "%$it%" }
+        return observeRecents(
+            selection = pattern?.let { "(${Calls.CACHED_NAME} LIKE ? OR ${Calls.NUMBER} LIKE ?)" },
+            selectionArgs = pattern?.let { arrayOf(it, it) },
+        ).mapLatest { recents ->
+            val lookups = recents.filter { it.name == null && it.number.isNotEmpty() }
+                .map { it.number }
+                .distinct()
+                .associateWith { phoneRepository.lookup(it) }
+            recents.map { recent ->
+                val lookup = lookups[recent.number] ?: return@map recent
+                recent.copy(
+                    name = lookup.name,
+                    photoUri = lookup.photoUri ?: recent.photoUri,
+                    numberType = lookup.type,
+                    numberLabel = lookup.label,
+                )
+            }
+        }.flowOn(ioDispatcher)
     }
 
     override fun recent(recentId: Long): Flow<Recent?> =
-        contentResolver.observeAll(
-            ContentQuery(
-                uri = Calls.CONTENT_URI,
-                projection = PROJECTION,
-                selection = "${Calls._ID} = ?",
-                selectionArgs = arrayOf(recentId.toString()),
-            ),
-            ::toRecent
-        ).map { it.firstOrNull() }.flowOn(ioDispatcher)
+        observeRecents("${Calls._ID} = ?", arrayOf(recentId.toString()))
+            .map { it.firstOrNull() }
+            .flowOn(ioDispatcher)
 
     override fun recentsOfNumbers(numbers: List<String>): Flow<List<Recent>> {
-        val suffixes = numbers.map { number -> number.filter(Char::isDigit).takeLast(MATCH_DIGITS) }.filter { it.isNotEmpty() }
+        val suffixes = numbers.map { it.filter(Char::isDigit).takeLast(MATCH_DIGITS) }
+            .filter { it.isNotEmpty() }
         if (suffixes.isEmpty()) return flowOf(emptyList())
-        return contentResolver.observeAll(
-            ContentQuery(
-                uri = Calls.CONTENT_URI,
-                projection = PROJECTION,
-                selection = suffixes.joinToString(" OR ") { "${Calls.NUMBER} LIKE ?" },
-                selectionArgs = suffixes.map { "%$it" }.toTypedArray(),
-                sortOrder = "${Calls.DATE} DESC",
-            ),
-            ::toRecent
+        return observeRecents(
+            selection = suffixes.joinToString(" OR ") { "${Calls.NUMBER} LIKE ?" },
+            selectionArgs = suffixes.map { "%$it" }.toTypedArray(),
         )
-            .map { recents -> recents.filter { recent -> numbers.any { PhoneNumberUtils.compare(context, it, recent.number) } } }
+            .map { recents ->
+                recents.filter { recent ->
+                    numbers.any { PhoneNumberUtils.compare(context, it, recent.number) }
+                }
+            }
             .flowOn(ioDispatcher)
     }
 
@@ -85,75 +84,61 @@ class RecentRepositoryImpl @Inject constructor(
         Calls.getLastOutgoingCall(context)?.takeIf { it.isNotEmpty() }
     }
 
-    override suspend fun deleteRecent(recentId: Long) = withContext(ioDispatcher) {
-        val deleted = contentResolver.delete(ContentUris.withAppendedId(Calls.CONTENT_URI, recentId), null, null)
-        check(deleted > 0) { "Recent $recentId was not deleted" }
+    override suspend fun deleteAllRecents() {
+        withContext(ioDispatcher) { contentResolver.delete(Calls.CONTENT_URI, null, null) }
     }
 
-    override suspend fun deleteAllRecents() = withContext(ioDispatcher) {
-        contentResolver.delete(Calls.CONTENT_URI, null, null)
-        Unit
-    }
-
-    override suspend fun markMissedCallsRead() = withContext(ioDispatcher) {
+    override suspend fun markMissedCallsRead() {
         if (context.checkSelfPermission(WRITE_CALL_LOG) != PERMISSION_GRANTED) {
             Log.e(TAG, "Missed calls stay unread: WRITE_CALL_LOG is not granted")
-            return@withContext
+            return
         }
-        contentResolver.update(
-            Calls.CONTENT_URI,
-            contentValuesOf(Calls.NEW to 0, Calls.IS_READ to 1),
-            "${Calls.TYPE} = ? AND ${Calls.NEW} = 1",
-            arrayOf(Calls.MISSED_TYPE.toString()),
-        )
-        Unit
-    }
-
-    private suspend fun withContactDetails(recents: List<Recent>): List<Recent> {
-        val lookups = recents.filter { it.name == null && it.number.isNotEmpty() }
-            .map { it.number }
-            .distinct()
-            .associateWith { phoneRepository.lookup(it) }
-        return recents.map { recent ->
-            val lookup = lookups[recent.number] ?: return@map recent
-            recent.copy(
-                name = lookup.name,
-                photoUri = lookup.photoUri ?: recent.photoUri,
-                numberType = lookup.type,
-                numberLabel = lookup.label,
+        withContext(ioDispatcher) {
+            contentResolver.update(
+                Calls.CONTENT_URI,
+                contentValuesOf(Calls.NEW to 0, Calls.IS_READ to 1),
+                "${Calls.TYPE} = ? AND ${Calls.NEW} = 1",
+                arrayOf(Calls.MISSED_TYPE.toString()),
             )
         }
     }
 
-    private fun toRecent(cursor: Cursor) = Recent(
-        id = cursor.long(Calls._ID),
-        number = cursor.string(Calls.NUMBER).orEmpty(),
-        dateMillis = cursor.long(Calls.DATE),
-        type = typeOf(cursor.int(Calls.TYPE)),
-        durationSeconds = cursor.long(Calls.DURATION),
-        name = cursor.string(Calls.CACHED_NAME)?.takeIf { it.isNotEmpty() },
-        photoUri = cursor.string(Calls.CACHED_PHOTO_URI),
-        numberType = cursor.int(Calls.CACHED_NUMBER_TYPE).takeIf { it != 0 },
-        numberLabel = cursor.string(Calls.CACHED_NUMBER_LABEL),
-        presentation = presentationOf(cursor.int(Calls.NUMBER_PRESENTATION)),
-    )
-
-    private fun typeOf(type: Int) = when (type) {
-        Calls.INCOMING_TYPE, Calls.ANSWERED_EXTERNALLY_TYPE -> Recent.Type.INCOMING
-        Calls.OUTGOING_TYPE -> Recent.Type.OUTGOING
-        Calls.MISSED_TYPE -> Recent.Type.MISSED
-        Calls.VOICEMAIL_TYPE -> Recent.Type.VOICEMAIL
-        Calls.REJECTED_TYPE -> Recent.Type.REJECTED
-        Calls.BLOCKED_TYPE -> Recent.Type.BLOCKED
-        else -> Recent.Type.UNKNOWN
-    }
-
-    private fun presentationOf(presentation: Int) = when (presentation) {
-        Calls.PRESENTATION_RESTRICTED -> Recent.Presentation.RESTRICTED
-        Calls.PRESENTATION_PAYPHONE -> Recent.Presentation.PAYPHONE
-        Calls.PRESENTATION_UNKNOWN -> Recent.Presentation.UNKNOWN
-        else -> Recent.Presentation.ALLOWED
-    }
+    private fun observeRecents(selection: String?, selectionArgs: Array<String>?) =
+        contentSource.observeAll(
+            ContentQuery(
+                uri = Calls.CONTENT_URI,
+                projection = PROJECTION,
+                selection = selection,
+                selectionArgs = selectionArgs,
+                sortOrder = "${Calls.DATE} DESC",
+            ),
+        ) { row ->
+            Recent(
+                id = row.long(Calls._ID),
+                number = row.string(Calls.NUMBER).orEmpty(),
+                dateMillis = row.long(Calls.DATE),
+                type = when (row.int(Calls.TYPE)) {
+                    Calls.INCOMING_TYPE, Calls.ANSWERED_EXTERNALLY_TYPE -> RecentType.INCOMING
+                    Calls.OUTGOING_TYPE -> RecentType.OUTGOING
+                    Calls.MISSED_TYPE -> RecentType.MISSED
+                    Calls.VOICEMAIL_TYPE -> RecentType.VOICEMAIL
+                    Calls.REJECTED_TYPE -> RecentType.REJECTED
+                    Calls.BLOCKED_TYPE -> RecentType.BLOCKED
+                    else -> RecentType.UNKNOWN
+                },
+                durationSeconds = row.long(Calls.DURATION),
+                name = row.string(Calls.CACHED_NAME)?.takeIf { it.isNotEmpty() },
+                photoUri = row.string(Calls.CACHED_PHOTO_URI),
+                numberType = row.int(Calls.CACHED_NUMBER_TYPE).takeIf { it != 0 },
+                numberLabel = row.string(Calls.CACHED_NUMBER_LABEL),
+                presentation = when (row.int(Calls.NUMBER_PRESENTATION)) {
+                    Calls.PRESENTATION_RESTRICTED -> RecentPresentation.RESTRICTED
+                    Calls.PRESENTATION_PAYPHONE -> RecentPresentation.PAYPHONE
+                    Calls.PRESENTATION_UNKNOWN -> RecentPresentation.UNKNOWN
+                    else -> RecentPresentation.ALLOWED
+                },
+            )
+        }
 
     private companion object {
         const val TAG = "RecentRepository"

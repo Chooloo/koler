@@ -8,11 +8,11 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.window.DialogWindowProvider
@@ -31,7 +31,9 @@ fun BottomSheet(
     LaunchedEffect(visible) {
         when {
             visible && isShown -> sheetState.show()
+
             visible -> isShown = true
+
             isShown -> {
                 sheetState.hide()
                 isShown = false
@@ -43,10 +45,16 @@ fun BottomSheet(
         ModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = onDismiss,
-            dragHandle = { BottomSheetDefaults.DragHandle() }
+            dragHandle = { BottomSheetDefaults.DragHandle() },
         ) {
             TransparentNavigationBar()
-            Box(modifier = Modifier.padding(start = Spacing.Page, end = Spacing.Page, bottom = Spacing.Medium)) {
+            Box(
+                modifier = Modifier.padding(
+                    start = Spacing.Page,
+                    end = Spacing.Page,
+                    bottom = Spacing.Medium,
+                ),
+            ) {
                 content()
             }
         }

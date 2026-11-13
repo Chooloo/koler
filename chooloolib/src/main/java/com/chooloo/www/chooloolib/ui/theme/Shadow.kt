@@ -9,6 +9,12 @@ import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 
-fun Modifier.softShadow(shape: Shape = CircleShape): Modifier =
-    dropShadow(shape, Shadow(radius = 12.dp, color = Color.Black.copy(alpha = 0.12f), offset = DpOffset(0.dp, 3.dp)))
-        .dropShadow(shape, Shadow(radius = 1.dp, color = Color.Black.copy(alpha = 0.10f)))
+fun Modifier.softShadow(shape: Shape = CircleShape): Modifier = dropShadow(
+    shape,
+    Shadow(
+        radius = 12.dp,
+        color = Color.Black.copy(alpha = 0.12f),
+        offset = DpOffset(0.dp, 3.dp),
+    ),
+)
+    .dropShadow(shape, Shadow(radius = 1.dp, color = Color.Black.copy(alpha = 0.10f)))

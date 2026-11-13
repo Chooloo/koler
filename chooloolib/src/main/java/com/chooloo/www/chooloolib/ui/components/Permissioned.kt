@@ -48,11 +48,14 @@ fun Permissioned(
 
     var missing by remember(permissions) { mutableStateOf(missingPermissions()) }
     var isPermanentlyDenied by rememberSaveable { mutableStateOf(false) }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-        missing = missingPermissions()
-        isPermanentlyDenied = activity != null && missing.isNotEmpty() &&
-            missing.none { permission -> ActivityCompat.shouldShowRequestPermissionRationale(activity, permission) }
-    }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            missing = missingPermissions()
+            isPermanentlyDenied = activity != null && missing.isNotEmpty() &&
+                missing.none { permission ->
+                    ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+                }
+        }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { missing = missingPermissions() }
 
     if (missing.isEmpty()) return content()
@@ -64,19 +67,34 @@ fun Permissioned(
             .fillMaxSize()
             .padding(Spacing.ExtraLarge),
     ) {
-        Text(text = stringResource(rationaleRes), style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+        Text(
+            text = stringResource(rationaleRes),
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+        )
         Button(
             onClick = {
                 if (isPermanentlyDenied) {
                     context.startActivity(
-                        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null))
+                        Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.fromParts("package", context.packageName, null),
+                        ),
                     )
                 } else {
                     launcher.launch((missing + optionalPermissions).toTypedArray())
                 }
-            }
+            },
         ) {
-            Text(stringResource(if (isPermanentlyDenied) R.string.action_open_settings else R.string.action_grant_access))
+            Text(
+                stringResource(
+                    if (isPermanentlyDenied) {
+                        R.string.action_open_settings
+                    } else {
+                        R.string.action_grant_access
+                    },
+                ),
+            )
         }
     }
 }

@@ -41,7 +41,7 @@ fun HomeScaffold(
                     IconButton(onClick = onSettingsOpen) {
                         Icon(Icons.Rounded.Settings, stringResource(R.string.settings))
                     }
-                }
+                },
             )
             content(PaddingValues(bottom = Sizes.FloatingBarInset))
         }

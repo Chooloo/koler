@@ -12,22 +12,29 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.chooloo.www.chooloolib.domain.model.Recent
+import com.chooloo.www.chooloolib.domain.enum.RecentType
 
 @Composable
-fun RecentTypeIcon(type: Recent.Type, contentDescription: String?, modifier: Modifier = Modifier) {
+fun RecentTypeIcon(type: RecentType, contentDescription: String?, modifier: Modifier = Modifier) {
     val icon = when (type) {
-        Recent.Type.BLOCKED -> Icons.Rounded.Block
-        Recent.Type.REJECTED -> Icons.Rounded.CallEnd
-        Recent.Type.VOICEMAIL -> Icons.Rounded.Voicemail
-        Recent.Type.MISSED -> Icons.AutoMirrored.Rounded.CallMissed
-        Recent.Type.OUTGOING -> Icons.AutoMirrored.Rounded.CallMade
-        Recent.Type.INCOMING -> Icons.AutoMirrored.Rounded.CallReceived
-        Recent.Type.UNKNOWN -> Icons.Rounded.QuestionMark
+        RecentType.BLOCKED -> Icons.Rounded.Block
+        RecentType.REJECTED -> Icons.Rounded.CallEnd
+        RecentType.VOICEMAIL -> Icons.Rounded.Voicemail
+        RecentType.MISSED -> Icons.AutoMirrored.Rounded.CallMissed
+        RecentType.OUTGOING -> Icons.AutoMirrored.Rounded.CallMade
+        RecentType.INCOMING -> Icons.AutoMirrored.Rounded.CallReceived
+        RecentType.UNKNOWN -> Icons.Rounded.QuestionMark
     }
     val tint = when (type) {
-        Recent.Type.MISSED, Recent.Type.BLOCKED, Recent.Type.REJECTED -> MaterialTheme.colorScheme.error
+        RecentType.MISSED, RecentType.BLOCKED, RecentType.REJECTED ->
+            MaterialTheme.colorScheme.error
+
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    Icon(imageVector = icon, contentDescription = contentDescription, tint = tint, modifier = modifier)
+    Icon(
+        imageVector = icon,
+        contentDescription = contentDescription,
+        tint = tint,
+        modifier = modifier,
+    )
 }

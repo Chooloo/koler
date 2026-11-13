@@ -56,6 +56,7 @@ import com.chooloo.www.chooloolib.ui.components.RoundAction
 import com.chooloo.www.chooloolib.ui.components.list.HeaderListItem
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.ui.recents.RecentTypeIcon
+import com.chooloo.www.chooloolib.ui.theme.Layout
 import com.chooloo.www.chooloolib.ui.theme.Sizes
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
@@ -83,10 +84,19 @@ fun Caller(
         verticalArrangement = Arrangement.spacedBy(Spacing.Medium),
         modifier = Modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
         Header(state, onToggleFavorite, onCopy)
-        Actions(state, onCall, onMessage, onWhatsapp, onEdit, onAddContact, onToggleBlocked, onDelete)
+        Actions(
+            state,
+            onCall,
+            onMessage,
+            onWhatsapp,
+            onEdit,
+            onAddContact,
+            onToggleBlocked,
+            onDelete,
+        )
         if (state.details.phones.size > 1) {
             Section(R.string.phones) {
                 state.details.phones.forEach { phone -> PhoneRow(phone, onCall, onMessage, onCopy) }
@@ -94,7 +104,9 @@ fun Caller(
         }
         if (state.details.emails.isNotEmpty()) {
             Section(R.string.emails) {
-                state.details.emails.forEach { email -> ListItem(title = email, onClick = { onEmail(email) }) }
+                state.details.emails.forEach { email ->
+                    ListItem(title = email, onClick = { onEmail(email) })
+                }
             }
         }
         if (state.history.isNotEmpty()) {
@@ -104,19 +116,31 @@ fun Caller(
 }
 
 @Composable
-private fun Header(state: CallerViewModel.UiState, onToggleFavorite: () -> Unit, onCopy: (String) -> Unit) {
+private fun Header(
+    state: CallerViewModel.UiState,
+    onToggleFavorite: () -> Unit,
+    onCopy: (String) -> Unit,
+) {
     val title = state.name ?: state.number ?: stringResource(R.string.caller_unknown)
 
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Spacing.ExtraSmall),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Avatar(name = state.name, photoUri = state.contact?.photoUri, size = Sizes.AvatarLarge)
-            Text(text = title, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center,
+            )
             state.details.organization?.let {
-                Text(text = it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
             if (state.name != null && state.hasNumber) {
                 state.number?.let { NumberChip(it, state.details.phones, onCopy) }
@@ -125,9 +149,14 @@ private fun Header(state: CallerViewModel.UiState, onToggleFavorite: () -> Unit,
         state.contact?.let { contact ->
             IconButton(onClick = onToggleFavorite, modifier = Modifier.align(Alignment.TopEnd)) {
                 Icon(
-                    imageVector = if (contact.isFavorite) Icons.Rounded.Star else Icons.Rounded.StarBorder,
+                    imageVector =
+                        if (contact.isFavorite) Icons.Rounded.Star else Icons.Rounded.StarBorder,
                     contentDescription = stringResource(R.string.cd_favorite_star),
-                    tint = if (contact.isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = if (contact.isFavorite) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    },
                 )
             }
         }
@@ -176,24 +205,65 @@ private fun Actions(
 
     val primary = buildList {
         number?.let {
-            add(CallerAction(Icons.Rounded.Call, stringResource(R.string.action_call), isPrimary = true) { onCall(it) })
-            add(CallerAction(Icons.AutoMirrored.Rounded.Message, stringResource(R.string.action_message)) { onMessage(it) })
+            add(
+                CallerAction(
+                    Icons.Rounded.Call,
+                    stringResource(R.string.action_call),
+                    isPrimary = true,
+                ) {
+                    onCall(it)
+                },
+            )
+            add(
+                CallerAction(
+                    Icons.AutoMirrored.Rounded.Message,
+                    stringResource(R.string.action_message),
+                ) {
+                    onMessage(it)
+                },
+            )
         }
         state.details.whatsappNumber?.let {
-            add(CallerAction(Icons.Rounded.Chat, stringResource(R.string.type_label_whatsapp)) { onWhatsapp(it) })
+            add(
+                CallerAction(Icons.Rounded.Chat, stringResource(R.string.type_label_whatsapp)) {
+                    onWhatsapp(it)
+                },
+            )
         }
         if (contact != null) {
-            add(CallerAction(Icons.Rounded.Edit, stringResource(R.string.action_edit)) { onEdit(contact.id) })
+            add(
+                CallerAction(Icons.Rounded.Edit, stringResource(R.string.action_edit)) {
+                    onEdit(contact.id)
+                },
+            )
         } else {
-            add(CallerAction(Icons.Rounded.PersonAdd, stringResource(R.string.add_contact)) { onAddContact(number) })
+            add(
+                CallerAction(Icons.Rounded.PersonAdd, stringResource(R.string.add_contact)) {
+                    onAddContact(number)
+                },
+            )
         }
     }
     val extra = buildList {
         state.isBlocked?.let { isBlocked ->
-            add(CallerAction(Icons.Rounded.Block, stringResource(if (isBlocked) R.string.action_unblock else R.string.action_block), onClick = onToggleBlocked))
+            add(
+                CallerAction(
+                    Icons.Rounded.Block,
+                    stringResource(
+                        if (isBlocked) R.string.action_unblock else R.string.action_block,
+                    ),
+                    onClick = onToggleBlocked,
+                ),
+            )
         }
         if (contact != null) {
-            add(CallerAction(Icons.Rounded.DeleteOutline, stringResource(R.string.action_delete), onClick = onDelete))
+            add(
+                CallerAction(
+                    Icons.Rounded.DeleteOutline,
+                    stringResource(R.string.action_delete),
+                    onClick = onDelete,
+                ),
+            )
         }
     }
     val toggle = CallerAction(
@@ -207,17 +277,23 @@ private fun Actions(
     }
 
     FlowRow(
-        maxItemsInEachRow = ACTIONS_PER_ROW,
+        maxItemsInEachRow = Layout.CALLER_ACTIONS_PER_ROW,
         horizontalArrangement = Arrangement.spacedBy(Spacing.Large, Alignment.CenterHorizontally),
         verticalArrangement = Arrangement.spacedBy(Spacing.Medium),
         modifier = Modifier
             .fillMaxWidth()
             .animateContentSize(),
     ) {
-        visible.forEach { RoundAction(icon = it.icon, label = it.label, onClick = it.onClick, isHighlighted = it.isPrimary) }
+        visible.forEach {
+            RoundAction(
+                icon = it.icon,
+                label = it.label,
+                onClick = it.onClick,
+                isHighlighted = it.isPrimary,
+            )
+        }
     }
 }
-
 
 @Composable
 private fun PhoneRow(
@@ -236,7 +312,7 @@ private fun PhoneRow(
             IconButton(onClick = { onMessage(phone.number) }) {
                 Icon(Icons.AutoMirrored.Rounded.Message, stringResource(R.string.action_message))
             }
-        }
+        },
     )
 }
 
@@ -244,27 +320,32 @@ private fun PhoneRow(
 private fun History(history: List<Recent>, onCall: (String) -> Unit, onCopy: (String) -> Unit) {
     val context = LocalContext.current
     var isExpanded by rememberSaveable { mutableStateOf(false) }
-    val visible = if (isExpanded) history else history.take(COLLAPSED_HISTORY_SIZE)
+    val visible = if (isExpanded) history else history.take(Layout.COLLAPSED_HISTORY_SIZE)
 
     Section(R.string.recent_calls) {
         visible.forEach { recent ->
             val time = DateUtils.formatDateTime(
                 context,
                 recent.dateMillis,
-                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH
+                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or
+                    DateUtils.FORMAT_ABBREV_MONTH,
             )
-            val duration = recent.durationSeconds.takeIf { it > 0 }?.let(DateUtils::formatElapsedTime)
+            val duration =
+                recent.durationSeconds.takeIf { it > 0 }?.let(DateUtils::formatElapsedTime)
             ListItem(
                 title = listOfNotNull(time, duration).joinToString(" · "),
                 onClick = { onCall(recent.number) },
                 onLongClick = { onCopy(recent.number) },
                 endContainer = {
                     RecentTypeIcon(type = recent.type, contentDescription = null)
-                }
+                },
             )
         }
-        if (history.size > COLLAPSED_HISTORY_SIZE) {
-            TextButton(onClick = { isExpanded = !isExpanded }, modifier = Modifier.padding(horizontal = Spacing.Small)) {
+        if (history.size > Layout.COLLAPSED_HISTORY_SIZE) {
+            TextButton(
+                onClick = { isExpanded = !isExpanded },
+                modifier = Modifier.padding(horizontal = Spacing.Small),
+            ) {
                 Text(stringResource(if (isExpanded) R.string.show_less else R.string.show_all))
             }
         }
@@ -278,6 +359,3 @@ private fun Section(@StringRes titleRes: Int, content: @Composable () -> Unit) {
         content()
     }
 }
-
-private const val COLLAPSED_HISTORY_SIZE = 3
-private const val ACTIONS_PER_ROW = 4

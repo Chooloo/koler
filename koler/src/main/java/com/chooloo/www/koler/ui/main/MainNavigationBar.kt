@@ -26,7 +26,11 @@ fun MainNavigationBar(
     modifier: Modifier = Modifier,
 ) {
     FloatingPill(modifier = modifier) {
-        TabBubble(Icons.Rounded.History, stringResource(R.string.recents), selectedTab == Tab.RECENTS) {
+        TabBubble(
+            Icons.Rounded.History,
+            stringResource(R.string.recents),
+            selectedTab == Tab.RECENTS,
+        ) {
             onTabSelected(Tab.RECENTS)
         }
         FloatingBubble(
@@ -38,7 +42,11 @@ fun MainNavigationBar(
             contentColor = MaterialTheme.colorScheme.onPrimary,
             hasShadow = false,
         )
-        TabBubble(Icons.Rounded.Person, stringResource(R.string.contacts), selectedTab == Tab.CONTACTS) {
+        TabBubble(
+            Icons.Rounded.Person,
+            stringResource(R.string.contacts),
+            selectedTab == Tab.CONTACTS,
+        ) {
             onTabSelected(Tab.CONTACTS)
         }
     }
@@ -56,7 +64,11 @@ private fun TabBubble(icon: ImageVector, label: String, isSelected: Boolean, onC
             label = "tabContainer",
         ).value,
         contentColor = animateColorAsState(
-            if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
+            if (isSelected) {
+                MaterialTheme.colorScheme.onSecondaryContainer
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
             label = "tabContent",
         ).value,
         hasShadow = false,

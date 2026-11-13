@@ -1,12 +1,12 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
-import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.testing.FakeAudioRepository
 import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
 import com.chooloo.www.chooloolib.testing.FakeRecentRepository
 import com.chooloo.www.chooloolib.testing.FakeTelecomRepository
 import com.chooloo.www.chooloolib.testing.MainDispatcherRule
+import com.chooloo.www.chooloolib.ui.common.UserMessage
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -34,7 +34,8 @@ class DialpadViewModelTest {
 
     @Test
     fun `key click appends key and plays enabled feedback`() {
-        val viewModel = viewModel(Settings(isDialpadTonesEnabled = true, isDialpadVibrateEnabled = false))
+        val viewModel =
+            viewModel(Settings(isDialpadTonesEnabled = true, isDialpadVibrateEnabled = false))
 
         viewModel.onKeyClick('1')
         viewModel.onKeyClick('2')
@@ -84,7 +85,7 @@ class DialpadViewModelTest {
         viewModel.setNumber("123")
 
         viewModel.onCallClick()
-        assertEquals(R.string.error_call_failed, viewModel.uiState.value.message)
+        assertEquals(UserMessage.CALL_FAILED, viewModel.uiState.value.message)
 
         viewModel.onMessageShown()
         assertEquals(null, viewModel.uiState.value.message)

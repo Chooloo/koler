@@ -16,10 +16,7 @@ import com.chooloo.www.chooloolib.ui.theme.Spacing
 import com.chooloo.www.chooloolib.ui.theme.softShadow
 
 @Composable
-fun FloatingPill(
-    modifier: Modifier = Modifier,
-    content: @Composable RowScope.() -> Unit,
-) {
+fun FloatingPill(modifier: Modifier = Modifier, content: @Composable RowScope.() -> Unit) {
     Surface(
         shape = CircleShape,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,

@@ -4,16 +4,16 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chooloo.www.chooloolib.domain.model.Page
+import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.ui.caller.CallerTarget
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.domain.CallRepository
-import com.chooloo.www.koler.domain.CallState
-import com.chooloo.www.koler.domain.ClearMissedCalls
-import com.chooloo.www.koler.domain.primaryCall
+import com.chooloo.www.koler.domain.enum.CallState
+import com.chooloo.www.koler.domain.model.Call
+import com.chooloo.www.koler.domain.repository.CallRepository
+import com.chooloo.www.koler.domain.usecase.ClearMissedCalls
+import com.chooloo.www.koler.domain.usecase.GetPrimaryCall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.NonCancellable
@@ -36,6 +36,7 @@ class MainViewModel @Inject constructor(
     private val callRepository: CallRepository,
     private val clearMissedCalls: ClearMissedCalls,
     phoneRepository: PhoneRepository,
+    getPrimaryCall: GetPrimaryCall,
 ) : ViewModel() {
     enum class Tab { RECENTS, CONTACTS }
 
@@ -63,15 +64,38 @@ class MainViewModel @Inject constructor(
     private val searchText = savedStateHandle.getStateFlow(KEY_SEARCH_TEXT, "")
     private val transientState = MutableStateFlow(TransientState())
 
-    val uiState: StateFlow<UiState> = combine(tab, isDialpadOpen, isSearching, searchText, transientState) {
-            tab, isDialpadOpen, isSearching, searchText, transient ->
-        UiState(tab, isDialpadOpen, transient.dialNumber, isSearching, searchText, transient.selectedCaller, transient.isSettingsOpen)
+    val uiState: StateFlow<UiState> = combine(
+        tab,
+        isDialpadOpen,
+        isSearching,
+        searchText,
+        transientState,
+    ) {
+            tab,
+            isDialpadOpen,
+            isSearching,
+            searchText,
+            transient,
+        ->
+        UiState(
+            tab,
+            isDialpadOpen,
+            transient.dialNumber,
+            isSearching,
+            searchText,
+            transient.selectedCaller,
+            transient.isSettingsOpen,
+        )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
     val ongoingCall: StateFlow<OngoingCall?> = callRepository.calls
-        .map(::primaryCall)
+        .map { getPrimaryCall(it) }
         .distinctUntilChanged()
-        .map { call -> call?.let { OngoingCall(it, it.number?.let { number -> phoneRepository.lookup(number) }) } }
+        .map { call ->
+            call?.let {
+                OngoingCall(it, it.number?.let { number -> phoneRepository.lookup(number) })
+            }
+        }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     init {
@@ -80,8 +104,11 @@ class MainViewModel @Inject constructor(
             if (tab.value != null) return@launch
             val defaultPage = preferenceRepository.settings.first().defaultPage
             if (tab.value != null) return@launch
-            savedStateHandle[KEY_TAB] = if (defaultPage == Page.CONTACTS) Tab.CONTACTS else Tab.RECENTS
-            if (defaultPage == Page.DIALER && callRepository.calls.value.isEmpty()) savedStateHandle[KEY_DIALPAD_OPEN] = true
+            savedStateHandle[KEY_TAB] =
+                if (defaultPage == Page.CONTACTS) Tab.CONTACTS else Tab.RECENTS
+            if (defaultPage == Page.DIALER && callRepository.calls.value.isEmpty()) {
+                savedStateHandle[KEY_DIALPAD_OPEN] = true
+            }
         }
     }
 
@@ -99,7 +126,9 @@ class MainViewModel @Inject constructor(
         onSearchClose()
         transientState.value = TransientState()
         viewModelScope.launch(NonCancellable) {
-            runCatching { clearMissedCalls() }.onFailure { Log.e(TAG, "Failed clearing missed calls", it) }
+            runCatching {
+                clearMissedCalls()
+            }.onFailure { Log.e(TAG, "Failed clearing missed calls", it) }
         }
     }
 

@@ -10,9 +10,9 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.RecentGroup
-import com.chooloo.www.chooloolib.ui.common.fallbackNameRes
-import com.chooloo.www.chooloolib.ui.components.list.ListItem
+import com.chooloo.www.chooloolib.ui.common.Labels
 import com.chooloo.www.chooloolib.ui.components.Avatar
+import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.ui.theme.Sizes
 
 @Composable
@@ -20,7 +20,7 @@ fun RecentListItem(
     modifier: Modifier = Modifier,
     group: RecentGroup,
     onClick: () -> Unit = {},
-    onLongClick: (() -> Unit)? = null
+    onLongClick: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val recent = group.latest
@@ -37,7 +37,7 @@ fun RecentListItem(
         modifier = modifier.height(Sizes.CompactListItem),
         subtitle = subtitle,
         title = recent.name
-            ?: recent.presentation.fallbackNameRes?.let { stringResource(it) }
+            ?: Labels.fallbackNameRes(recent.presentation)?.let { stringResource(it) }
             ?: recent.number.ifEmpty { stringResource(R.string.caller_unknown) },
         onClick = onClick,
         onLongClick = onLongClick,
@@ -46,6 +46,6 @@ fun RecentListItem(
         },
         endContainer = {
             RecentTypeIcon(type = recent.type, contentDescription = typeLabel)
-        }
+        },
     )
 }

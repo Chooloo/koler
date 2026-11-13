@@ -24,6 +24,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun handleIntent(intent: Intent) {
-        if (intent.action == Intent.ACTION_VIEW) intent.data?.let { mainViewModel.onContactLinkOpened(it.toString()) }
+        if (intent.action == Intent.ACTION_VIEW) {
+            intent.data?.let { mainViewModel.onContactLinkOpened(it.toString()) }
+        }
     }
 }

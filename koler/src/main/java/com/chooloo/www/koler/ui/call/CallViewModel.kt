@@ -6,15 +6,17 @@ import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.domain.repository.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
-import com.chooloo.www.koler.domain.AudioRoute
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.domain.CallAudio
-import com.chooloo.www.koler.domain.CallRepository
-import com.chooloo.www.koler.domain.CallState
-import com.chooloo.www.koler.domain.CallsState
-import com.chooloo.www.koler.domain.callsState
-import com.chooloo.www.koler.domain.primaryCall
-import com.chooloo.www.koler.domain.setSpeaker
+import com.chooloo.www.koler.domain.enum.AudioRoute
+import com.chooloo.www.koler.domain.enum.CallCapability
+import com.chooloo.www.koler.domain.enum.CallState
+import com.chooloo.www.koler.domain.enum.CallsState
+import com.chooloo.www.koler.domain.model.Call
+import com.chooloo.www.koler.domain.model.CallAudio
+import com.chooloo.www.koler.domain.model.PhoneAccount
+import com.chooloo.www.koler.domain.repository.CallRepository
+import com.chooloo.www.koler.domain.usecase.GetCallsState
+import com.chooloo.www.koler.domain.usecase.GetPrimaryCall
+import com.chooloo.www.koler.domain.usecase.SetSpeaker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -42,6 +44,9 @@ class CallViewModel @Inject constructor(
     private val phoneRepository: PhoneRepository,
     private val audioRepository: AudioRepository,
     private val preferenceRepository: PreferenceRepository,
+    private val getPrimaryCall: GetPrimaryCall,
+    private val getCallsState: GetCallsState,
+    private val setSpeaker: SetSpeaker,
 ) : ViewModel() {
     enum class Sheet { KEYPAD, ADD_CALL, MANAGE, AUDIO_ROUTE }
 
@@ -61,14 +66,16 @@ class CallViewModel @Inject constructor(
 
     private val localState = MutableStateFlow(LocalState())
 
-    private val primaryCall = callRepository.calls.map(::primaryCall)
+    private val primaryCall = callRepository.calls.map { getPrimaryCall(it) }
 
     private val caller = primaryCall.map { it?.number }
         .distinctUntilChanged()
         .mapLatest { number -> number?.let { phoneRepository.lookup(it) } }
         .onStart { emit(null) }
 
-    private val elapsedSeconds = primaryCall.map { call -> call?.connectTimeMillis?.takeIf { call.hasStarted } }
+    private val elapsedSeconds = primaryCall.map { call ->
+        call?.connectTimeMillis?.takeIf { call.hasStarted }
+    }
         .distinctUntilChanged()
         .flatMapLatest { connectTime ->
             if (connectTime == null) {
@@ -90,8 +97,8 @@ class CallViewModel @Inject constructor(
         combine(caller, elapsedSeconds, ::Pair),
         localState,
     ) { calls, audio, (hasPendingOutgoing, canAddCall), (caller, elapsed), local ->
-        val call = primaryCall(calls)
-        val state = callsState(calls, hasPendingOutgoing)
+        val call = getPrimaryCall(calls)
+        val state = getCallsState(calls, hasPendingOutgoing)
         UiState(
             call = call,
             calls = calls,
@@ -105,28 +112,38 @@ class CallViewModel @Inject constructor(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
+    init {
+        closeAddCallWhenCallAdded()
+    }
+
     fun onCallActionClick(type: CallActionType) {
         val state = uiState.value
         val callId = state.call?.id
         when (type) {
             CallActionType.SWAP -> callId?.let(callRepository::swap)
+
             CallActionType.MERGE -> callId?.let(callRepository::merge)
+
             CallActionType.HOLD -> callId?.let {
-                if (state.call?.state == CallState.HOLDING) callRepository.unhold(it) else callRepository.hold(it)
+                if (state.call?.state == CallState.HOLDING) {
+                    callRepository.unhold(it)
+                } else {
+                    callRepository.hold(it)
+                }
             }
+
             CallActionType.MUTE -> callRepository.setMuted(!state.audio.isMuted)
+
             CallActionType.KEYPAD -> showSheet(Sheet.KEYPAD)
+
             CallActionType.ADD_CALL -> showSheet(Sheet.ADD_CALL)
+
             CallActionType.SPEAKER -> if (AudioRoute.BLUETOOTH in state.audio.supportedRoutes) {
                 showSheet(Sheet.AUDIO_ROUTE)
             } else {
-                callRepository.setSpeaker(state.audio.route != AudioRoute.SPEAKER)
+                setSpeaker(state.audio.route != AudioRoute.SPEAKER)
             }
         }
-    }
-
-    init {
-        closeAddCallWhenCallAdded()
     }
 
     suspend fun awaitCallsEnded() {
@@ -147,11 +164,13 @@ class CallViewModel @Inject constructor(
         uiState.value.call?.id?.let { callRepository.playDtmf(it, key) }
         localState.update { it.copy(keypadValue = it.keypadValue + key) }
         viewModelScope.launch {
-            if (preferenceRepository.settings.first().isDialpadVibrateEnabled) audioRepository.vibrate()
+            if (preferenceRepository.settings.first().isDialpadVibrateEnabled) {
+                audioRepository.vibrate()
+            }
         }
     }
 
-    fun onPhoneAccountSelected(account: Call.PhoneAccount) {
+    fun onPhoneAccountSelected(account: PhoneAccount) {
         uiState.value.call?.id?.let { callRepository.selectPhoneAccount(it, account.id) }
     }
 
@@ -176,7 +195,15 @@ class CallViewModel @Inject constructor(
         viewModelScope.launch {
             var previousCount = callRepository.calls.value.size
             callRepository.calls.collect { calls ->
-                if (calls.size > previousCount) localState.update { if (it.sheet == Sheet.ADD_CALL) it.copy(sheet = null) else it }
+                if (calls.size > previousCount) {
+                    localState.update {
+                        if (it.sheet == Sheet.ADD_CALL) {
+                            it.copy(sheet = null)
+                        } else {
+                            it
+                        }
+                    }
+                }
                 previousCount = calls.size
             }
         }
@@ -184,21 +211,38 @@ class CallViewModel @Inject constructor(
 
     private fun showSheet(sheet: Sheet) = localState.update { it.copy(sheet = sheet) }
 
-    private fun actions(state: CallsState, call: Call?, audio: CallAudio, canAddCall: Boolean): List<CallAction> {
+    private fun actions(
+        state: CallsState,
+        call: Call?,
+        audio: CallAudio,
+        canAddCall: Boolean,
+    ): List<CallAction> {
         if (call == null) return emptyList()
         val common = listOf(
             CallAction(CallActionType.KEYPAD, isEnabled = true),
-            CallAction(CallActionType.MUTE, isEnabled = call.can(Call.Capability.MUTE), isActive = audio.isMuted),
-            CallAction(CallActionType.HOLD, isEnabled = call.can(Call.Capability.HOLD), isActive = call.state == CallState.HOLDING),
+            CallAction(
+                CallActionType.MUTE,
+                isEnabled = call.can(CallCapability.MUTE),
+                isActive = audio.isMuted,
+            ),
+            CallAction(
+                CallActionType.HOLD,
+                isEnabled = call.can(CallCapability.HOLD),
+                isActive = call.state == CallState.HOLDING,
+            ),
             CallAction(CallActionType.ADD_CALL, isEnabled = canAddCall),
         )
         return if (state == CallsState.ACTIVE_MULTI) {
             listOf(
-                CallAction(CallActionType.SWAP, isEnabled = call.can(Call.Capability.SWAP)),
-                CallAction(CallActionType.MERGE, isEnabled = call.can(Call.Capability.MERGE)),
+                CallAction(CallActionType.SWAP, isEnabled = call.can(CallCapability.SWAP)),
+                CallAction(CallActionType.MERGE, isEnabled = call.can(CallCapability.MERGE)),
             ) + common
         } else {
-            common + CallAction(CallActionType.SPEAKER, isEnabled = true, isActive = audio.route == AudioRoute.SPEAKER)
+            common + CallAction(
+                CallActionType.SPEAKER,
+                isEnabled = true,
+                isActive = audio.route == AudioRoute.SPEAKER,
+            )
         }
     }
 }

@@ -25,7 +25,9 @@ abstract class BaseActivity : ComponentActivity() {
 
     protected fun setChoolooContent(content: @Composable () -> Unit) {
         setContent {
-            val settings by preferenceRepository.settings.collectAsStateWithLifecycle(initialValue = null)
+            val settings by preferenceRepository.settings.collectAsStateWithLifecycle(
+                initialValue = null,
+            )
             settings?.let { ChoolooTheme(themeMode = it.themeMode, content = content) }
         }
     }

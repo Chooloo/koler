@@ -1,14 +1,13 @@
 package com.chooloo.www.chooloolib.ui.dialpad
 
 import android.util.Log
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.repository.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import com.chooloo.www.chooloolib.domain.repository.TelecomRepository
+import com.chooloo.www.chooloolib.ui.common.UserMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,13 +25,13 @@ class DialpadViewModel @Inject constructor(
     private val telecomRepository: TelecomRepository,
     private val preferenceRepository: PreferenceRepository,
 ) : ViewModel() {
-    data class UiState(val value: String = "", @StringRes val message: Int? = null)
+    data class UiState(val value: String = "", val message: UserMessage? = null)
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     fun setNumber(number: String) {
-        _uiState.update { it.copy(value = number.filter(::isDialable)) }
+        _uiState.update { it.copy(value = number.filter { it.isDigit() || it in "+#*" }) }
     }
 
     fun onCallClick() {
@@ -57,7 +56,7 @@ class DialpadViewModel @Inject constructor(
     fun onKeyClick(key: Char) {
         viewModelScope.launch {
             val settings = preferenceRepository.settings.first()
-            if (settings.isDialpadTonesEnabled) audioRepository.playDtmfTone(key)
+            if (settings.isDialpadTonesEnabled) audioRepository.playTone(key)
             if (settings.isDialpadVibrateEnabled) audioRepository.vibrate()
         }
         val value = _uiState.updateAndGet { it.copy(value = it.value + key) }.value
@@ -82,12 +81,10 @@ class DialpadViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching { action() }.onFailure { error ->
                 Log.e(TAG, "Call failed", error)
-                _uiState.update { it.copy(message = R.string.error_call_failed) }
+                _uiState.update { it.copy(message = UserMessage.CALL_FAILED) }
             }
         }
     }
-
-    private fun isDialable(char: Char) = char.isDigit() || char in "+#*"
 
     private companion object {
         const val TAG = "DialpadViewModel"

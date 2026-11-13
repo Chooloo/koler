@@ -21,10 +21,14 @@ fun ContactsList(
     withFavorites: Boolean = false,
     onItemClick: (Contact) -> Unit,
     onItemLongClick: ((Contact) -> Unit)?,
-    loadingState: LoadingState
+    loadingState: LoadingState,
 ) {
     val rows = remember(items, withFavorites) {
-        val favorites = if (withFavorites) items.filter { it.isFavorite }.map { ContactRow(it, isFavorite = true) } else emptyList()
+        val favorites = if (withFavorites) {
+            items.filter { it.isFavorite }.map { ContactRow(it, isFavorite = true) }
+        } else {
+            emptyList()
+        }
         favorites + items.map { ContactRow(it, isFavorite = false) }
     }
 
@@ -44,8 +48,8 @@ fun ContactsList(
             ContactListItem(
                 contact = row.contact,
                 onClick = { onItemClick(row.contact) },
-                onLongClick = onItemLongClick?.let { { it(row.contact) } }
+                onLongClick = onItemLongClick?.let { { it(row.contact) } },
             )
-        }
+        },
     )
 }

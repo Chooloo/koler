@@ -10,8 +10,6 @@ import androidx.compose.ui.Modifier
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Recent
 import com.chooloo.www.chooloolib.domain.model.RecentGroup
-import com.chooloo.www.chooloolib.domain.model.groupedByNumberAndDay
-import com.chooloo.www.chooloolib.domain.model.ungrouped
 import com.chooloo.www.chooloolib.ui.common.LoadingState
 import com.chooloo.www.chooloolib.ui.components.list.ItemList
 
@@ -26,7 +24,11 @@ fun RecentsList(
     loadingState: LoadingState,
 ) {
     val groups = remember(items, groupSimilar) {
-        if (groupSimilar) items.groupedByNumberAndDay() else items.ungrouped()
+        if (groupSimilar) {
+            RecentGroup.groupedByNumberAndDay(items)
+        } else {
+            RecentGroup.ungrouped(items)
+        }
     }
 
     ItemList(
@@ -42,15 +44,15 @@ fun RecentsList(
             DateUtils.getRelativeTimeSpanString(
                 group.latest.dateMillis,
                 System.currentTimeMillis(),
-                DateUtils.DAY_IN_MILLIS
+                DateUtils.DAY_IN_MILLIS,
             ).toString()
         },
         item = { group ->
             RecentListItem(
                 group = group,
                 onClick = { onItemClick(group) },
-                onLongClick = onItemLongClick?.let { { it(group) } }
+                onLongClick = onItemLongClick?.let { { it(group) } },
             )
-        }
+        },
     )
 }

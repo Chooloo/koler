@@ -38,7 +38,7 @@ fun Dialpad(
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
+        verticalArrangement = Arrangement.Bottom,
     ) {
         DialpadNumber(number = value)
         Keypad(onKeyClick = onKeyClick, onKeyLongClick = onKeyLongClick)
@@ -46,7 +46,7 @@ fun Dialpad(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = Spacing.Medium)
+                .padding(vertical = Spacing.Medium),
         ) {
             val sideOffset = Sizes.Button / 2 + Spacing.Medium + Sizes.ButtonLarge / 2
             Row(
@@ -70,7 +70,11 @@ fun Dialpad(
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.zIndex(1f),
                 )
-                Reveal(visible = value.isNotEmpty(), hiddenOffsetX = -sideOffset, hiddenScale = 1f) {
+                Reveal(
+                    visible = value.isNotEmpty(),
+                    hiddenOffsetX = -sideOffset,
+                    hiddenScale = 1f,
+                ) {
                     FloatingBubble(
                         icon = Icons.AutoMirrored.Rounded.Backspace,
                         contentDescription = stringResource(R.string.cd_backspace),

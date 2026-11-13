@@ -34,10 +34,19 @@ fun RoundAction(
     ) {
         val buttonModifier = Modifier.size(size)
         if (isHighlighted) {
-            FilledIconButton(onClick = onClick, enabled = enabled, modifier = buttonModifier) { Icon(icon, label) }
+            FilledIconButton(onClick = onClick, enabled = enabled, modifier = buttonModifier) {
+                Icon(icon, label)
+            }
         } else {
-            FilledTonalIconButton(onClick = onClick, enabled = enabled, modifier = buttonModifier) { Icon(icon, label) }
+            FilledTonalIconButton(onClick = onClick, enabled = enabled, modifier = buttonModifier) {
+                Icon(icon, label)
+            }
         }
-        Text(text = label, style = MaterialTheme.typography.labelMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }

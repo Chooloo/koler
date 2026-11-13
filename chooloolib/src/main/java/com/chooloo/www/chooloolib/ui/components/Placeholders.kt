@@ -16,10 +16,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
-fun Loading(
-    modifier: Modifier = Modifier,
-    @StringRes titleRes: Int? = null
-) {
+fun Loading(modifier: Modifier = Modifier, @StringRes titleRes: Int? = null) {
     CenteredColumn(modifier) {
         CircularProgressIndicator()
         PlaceholderText(titleRes ?: R.string.loading)
@@ -30,7 +27,7 @@ fun Loading(
 fun Empty(
     modifier: Modifier = Modifier,
     @StringRes titleRes: Int?,
-    image: @Composable (() -> Unit)? = null
+    image: @Composable (() -> Unit)? = null,
 ) {
     CenteredColumn(modifier) {
         image?.invoke()
@@ -44,11 +41,15 @@ private fun CenteredColumn(modifier: Modifier, content: @Composable ColumnScope.
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(Spacing.Medium, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
-        content = content
+        content = content,
     )
 }
 
 @Composable
 private fun PlaceholderText(@StringRes titleRes: Int) {
-    Text(text = stringResource(titleRes), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    Text(
+        text = stringResource(titleRes),
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
 }

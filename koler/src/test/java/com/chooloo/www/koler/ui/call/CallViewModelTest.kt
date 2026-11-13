@@ -5,11 +5,15 @@ import com.chooloo.www.chooloolib.testing.FakeAudioRepository
 import com.chooloo.www.chooloolib.testing.FakePhoneRepository
 import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
 import com.chooloo.www.chooloolib.testing.MainDispatcherRule
-import com.chooloo.www.koler.domain.AudioRoute
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.domain.CallAudio
-import com.chooloo.www.koler.domain.CallState
-import com.chooloo.www.koler.domain.CallsState
+import com.chooloo.www.koler.domain.enum.AudioRoute
+import com.chooloo.www.koler.domain.enum.CallCapability
+import com.chooloo.www.koler.domain.enum.CallState
+import com.chooloo.www.koler.domain.enum.CallsState
+import com.chooloo.www.koler.domain.model.Call
+import com.chooloo.www.koler.domain.model.CallAudio
+import com.chooloo.www.koler.domain.usecase.GetCallsState
+import com.chooloo.www.koler.domain.usecase.GetPrimaryCall
+import com.chooloo.www.koler.domain.usecase.SetSpeaker
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -22,13 +26,16 @@ class CallViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private val callRepository = FakeCallRepository()
-    private val lookup = PhoneLookup(contactId = 1, name = "Dana", number = "111")
+    private val lookup = PhoneLookup(contactId = 1, name = "Dana")
     private val viewModel by lazy {
         CallViewModel(
             callRepository,
             FakePhoneRepository(mapOf("111" to lookup)),
             FakeAudioRepository(),
             FakePreferenceRepository(),
+            GetPrimaryCall(),
+            GetCallsState(),
+            SetSpeaker(callRepository),
         )
     }
 
@@ -36,7 +43,7 @@ class CallViewModelTest {
         id = id,
         state = state,
         number = "111",
-        capabilities = setOf(Call.Capability.MUTE, Call.Capability.HOLD),
+        capabilities = setOf(CallCapability.MUTE, CallCapability.HOLD),
     )
 
     private fun runSubscribed(block: suspend () -> Unit) = runTest(mainDispatcherRule.dispatcher) {
@@ -68,7 +75,11 @@ class CallViewModelTest {
     @Test
     fun `speaker toggles directly without bluetooth`() = runSubscribed {
         callRepository.calls.value = listOf(activeCall())
-        callRepository.audio.value = CallAudio(route = AudioRoute.EARPIECE, supportedRoutes = listOf(AudioRoute.EARPIECE, AudioRoute.SPEAKER))
+        callRepository.audio.value =
+            CallAudio(
+                route = AudioRoute.EARPIECE,
+                supportedRoutes = listOf(AudioRoute.EARPIECE, AudioRoute.SPEAKER),
+            )
 
         viewModel.onCallActionClick(CallActionType.SPEAKER)
 
@@ -78,7 +89,8 @@ class CallViewModelTest {
     @Test
     fun `speaker opens the route picker when bluetooth is available`() = runSubscribed {
         callRepository.calls.value = listOf(activeCall())
-        callRepository.audio.value = CallAudio(supportedRoutes = listOf(AudioRoute.SPEAKER, AudioRoute.BLUETOOTH))
+        callRepository.audio.value =
+            CallAudio(supportedRoutes = listOf(AudioRoute.SPEAKER, AudioRoute.BLUETOOTH))
 
         viewModel.onCallActionClick(CallActionType.SPEAKER)
 
@@ -88,7 +100,8 @@ class CallViewModelTest {
 
     @Test
     fun `actions reflect capabilities and active state`() = runSubscribed {
-        callRepository.calls.value = listOf(activeCall().copy(capabilities = setOf(Call.Capability.MUTE)))
+        callRepository.calls.value =
+            listOf(activeCall().copy(capabilities = setOf(CallCapability.MUTE)))
         callRepository.audio.value = CallAudio(isMuted = true, route = AudioRoute.SPEAKER)
 
         val actions = viewModel.uiState.value.actions.associateBy { it.type }
@@ -131,7 +144,11 @@ class CallViewModelTest {
         callRepository.calls.value = listOf(activeCall())
         viewModel.onCallActionClick(CallActionType.ADD_CALL)
 
-        callRepository.calls.value = listOf(activeCall(state = CallState.HOLDING), activeCall(id = "c2", state = CallState.DIALING))
+        callRepository.calls.value =
+            listOf(
+                activeCall(state = CallState.HOLDING),
+                activeCall(id = "c2", state = CallState.DIALING),
+            )
 
         assertEquals(null, viewModel.uiState.value.sheet)
     }
@@ -141,7 +158,8 @@ class CallViewModelTest {
         callRepository.calls.value = listOf(activeCall())
         viewModel.onShowKeypad()
 
-        callRepository.calls.value = listOf(activeCall(), activeCall(id = "c2", state = CallState.INCOMING))
+        callRepository.calls.value =
+            listOf(activeCall(), activeCall(id = "c2", state = CallState.INCOMING))
 
         assertEquals(CallViewModel.Sheet.KEYPAD, viewModel.uiState.value.sheet)
     }

@@ -1,7 +1,7 @@
 package com.chooloo.www.koler.ui.main
 
 import androidx.lifecycle.SavedStateHandle
-import com.chooloo.www.chooloolib.domain.model.Page
+import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.domain.model.Settings
 import com.chooloo.www.chooloolib.testing.FakePhoneRepository
@@ -9,9 +9,10 @@ import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
 import com.chooloo.www.chooloolib.testing.FakeRecentRepository
 import com.chooloo.www.chooloolib.testing.FakeTelecomRepository
 import com.chooloo.www.chooloolib.testing.MainDispatcherRule
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.domain.CallState
-import com.chooloo.www.koler.domain.ClearMissedCalls
+import com.chooloo.www.koler.domain.enum.CallState
+import com.chooloo.www.koler.domain.model.Call
+import com.chooloo.www.koler.domain.usecase.ClearMissedCalls
+import com.chooloo.www.koler.domain.usecase.GetPrimaryCall
 import com.chooloo.www.koler.ui.call.FakeCallRepository
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.test.runTest
@@ -29,7 +30,7 @@ class MainViewModelTest {
     private val callRepository = FakeCallRepository()
     private val telecomRepository = FakeTelecomRepository()
     private val recentRepository = FakeRecentRepository()
-    private val lookup = PhoneLookup(contactId = 1, name = "Dana", number = "111")
+    private val lookup = PhoneLookup(contactId = 1, name = "Dana")
     private val viewModel by lazy {
         MainViewModel(
             SavedStateHandle(),
@@ -37,6 +38,7 @@ class MainViewModelTest {
             callRepository,
             ClearMissedCalls(telecomRepository, recentRepository),
             FakePhoneRepository(mapOf("111" to lookup)),
+            GetPrimaryCall(),
         )
     }
 
@@ -67,7 +69,8 @@ class MainViewModelTest {
 
     @Test
     fun `ongoing call clears when the last call ends`() = runSubscribed {
-        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
+        callRepository.calls.value =
+            listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
 
         callRepository.calls.value = emptyList()
 
@@ -78,7 +81,8 @@ class MainViewModelTest {
     fun `dial sheet closes when a call starts`() = runSubscribed {
         viewModel.onDialpadOpen()
 
-        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.DIALING, number = "111"))
+        callRepository.calls.value =
+            listOf(Call(id = "c1", state = CallState.DIALING, number = "111"))
 
         assertFalse(viewModel.uiState.value.isDialpadOpen)
     }
@@ -87,14 +91,16 @@ class MainViewModelTest {
     fun `dial sheet stays open while a call only rings`() = runSubscribed {
         viewModel.onDialpadOpen()
 
-        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.INCOMING, number = "111"))
+        callRepository.calls.value =
+            listOf(Call(id = "c1", state = CallState.INCOMING, number = "111"))
 
         assertTrue(viewModel.uiState.value.isDialpadOpen)
     }
 
     @Test
     fun `dial sheet can reopen during a call`() = runSubscribed {
-        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
+        callRepository.calls.value =
+            listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
 
         viewModel.onDialpadOpen()
 
@@ -102,19 +108,22 @@ class MainViewModelTest {
     }
 
     @Test
-    fun `dialer default page does not open the sheet during a call`() = runTest(mainDispatcherRule.dispatcher) {
-        callRepository.calls.value = listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
-        val viewModel = MainViewModel(
-            SavedStateHandle(),
-            FakePreferenceRepository(Settings(defaultPage = Page.DIALER)),
-            callRepository,
-            ClearMissedCalls(telecomRepository, recentRepository),
-            FakePhoneRepository(),
-        )
-        viewModel.uiState.launchIn(backgroundScope)
+    fun `dialer default page does not open the sheet during a call`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            callRepository.calls.value =
+                listOf(Call(id = "c1", state = CallState.ACTIVE, number = "111"))
+            val viewModel = MainViewModel(
+                SavedStateHandle(),
+                FakePreferenceRepository(Settings(defaultPage = Page.DIALER)),
+                callRepository,
+                ClearMissedCalls(telecomRepository, recentRepository),
+                FakePhoneRepository(),
+                GetPrimaryCall(),
+            )
+            viewModel.uiState.launchIn(backgroundScope)
 
-        assertFalse(viewModel.uiState.value.isDialpadOpen)
-    }
+            assertFalse(viewModel.uiState.value.isDialpadOpen)
+        }
 
     @Test
     fun `opening missed calls shows recents with nothing covering it`() = runSubscribed {

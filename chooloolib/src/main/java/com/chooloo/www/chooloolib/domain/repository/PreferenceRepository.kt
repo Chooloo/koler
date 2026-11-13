@@ -1,8 +1,8 @@
 package com.chooloo.www.chooloolib.domain.repository
 
-import com.chooloo.www.chooloolib.domain.model.Page
+import com.chooloo.www.chooloolib.domain.enum.Page
+import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 import com.chooloo.www.chooloolib.domain.model.Settings
-import com.chooloo.www.chooloolib.domain.model.ThemeMode
 import kotlinx.coroutines.flow.Flow
 
 interface PreferenceRepository {

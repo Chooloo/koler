@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
+import com.chooloo.www.koler.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,12 +26,10 @@ class MainActivity : BaseActivity() {
 
     private fun handleIntent(intent: Intent) {
         when (intent.action) {
-            ACTION_SHOW_MISSED_CALLS -> mainViewModel.onMissedCallsOpened()
-            Intent.ACTION_DIAL, Intent.ACTION_VIEW -> intent.data?.schemeSpecificPart?.let(mainViewModel::onDialNumber)
-        }
-    }
+            AppConstants.ACTION_SHOW_MISSED_CALLS -> mainViewModel.onMissedCallsOpened()
 
-    companion object {
-        const val ACTION_SHOW_MISSED_CALLS = "com.chooloo.www.koler.action.SHOW_MISSED_CALLS"
+            Intent.ACTION_DIAL, Intent.ACTION_VIEW ->
+                intent.data?.schemeSpecificPart?.let(mainViewModel::onDialNumber)
+        }
     }
 }

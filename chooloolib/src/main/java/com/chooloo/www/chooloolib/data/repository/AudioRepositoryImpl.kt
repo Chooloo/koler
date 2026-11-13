@@ -23,7 +23,7 @@ class AudioRepositoryImpl @Inject constructor(
             .getOrNull()
     }
 
-    override suspend fun playDtmfTone(key: Char) {
+    override suspend fun playTone(key: Char) {
         val tone = DTMF_TONES[key] ?: return
         if (audioManager.ringerMode == RINGER_MODE_NORMAL) {
             toneGenerator?.startTone(tone, TONE_LENGTH_MS)

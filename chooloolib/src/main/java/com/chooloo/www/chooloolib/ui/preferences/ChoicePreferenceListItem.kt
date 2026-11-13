@@ -48,7 +48,9 @@ fun <T> ChoicePreferenceListItem(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { isChoosing = false }) { Text(stringResource(R.string.action_cancel)) }
+                TextButton(onClick = { isChoosing = false }) {
+                    Text(stringResource(R.string.action_cancel))
+                }
             },
         )
     }

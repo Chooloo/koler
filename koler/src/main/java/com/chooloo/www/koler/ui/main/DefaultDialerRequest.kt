@@ -16,10 +16,13 @@ fun DefaultDialerRequest() {
     val context = LocalContext.current
     val roleManager = context.getSystemService(RoleManager::class.java)
     var isRequested by rememberSaveable { mutableStateOf(false) }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
     LaunchedEffect(Unit) {
-        if (!isRequested && roleManager.isRoleAvailable(RoleManager.ROLE_DIALER) && !roleManager.isRoleHeld(RoleManager.ROLE_DIALER)) {
+        if (!isRequested && roleManager.isRoleAvailable(RoleManager.ROLE_DIALER) &&
+            !roleManager.isRoleHeld(RoleManager.ROLE_DIALER)
+        ) {
             isRequested = true
             launcher.launch(roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER))
         }

@@ -76,10 +76,10 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".service.CallBroadcastReceiver" />
+        <receiver android:name=".receiver.CallActionReceiver" />
 
         <receiver
-            android:name=".service.MissedCallReceiver"
+            android:name=".receiver.MissedCallReceiver"
             android:permission="android.permission.MODIFY_PHONE_STATE"
             android:exported="true">
             <intent-filter>
@@ -87,6 +87,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".service.MissedCallDismissReceiver" />
+        <receiver android:name=".receiver.MissedCallDismissReceiver" />
     </application>
 </manifest>

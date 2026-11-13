@@ -30,15 +30,29 @@ fun <ItemType> ItemList(
     val headersByIndex = remember(items, header) { headersByIndex(items, header) }
 
     when {
-        loadingState == LoadingState.LOADING -> Loading(modifier = modifier, titleRes = loadingTitle)
-        loadingState == LoadingState.FAILED -> Empty(modifier = modifier, titleRes = R.string.error_loading_failed)
+        loadingState == LoadingState.LOADING -> Loading(
+            modifier = modifier,
+            titleRes = loadingTitle,
+        )
+
+        loadingState == LoadingState.FAILED -> Empty(
+            modifier = modifier,
+            titleRes = R.string.error_loading_failed,
+        )
+
         items.isEmpty() -> Empty(
             modifier = modifier,
             titleRes = emptyTitle,
-            image = emptyIcon?.let { icon -> { Icon(icon, contentDescription = null) } }
+            image = emptyIcon?.let { icon -> { Icon(icon, contentDescription = null) } },
         )
+
         else -> LazyColumn(modifier = modifier, contentPadding = contentPadding) {
-            itemsIndexed(items = items, key = key?.let { { _, item -> it(item) } }) { index, listItem ->
+            itemsIndexed(
+                items = items,
+                key = key?.let {
+                    { _, item -> it(item) }
+                },
+            ) { index, listItem ->
                 headersByIndex[index]?.let { HeaderListItem(header = it) }
                 item(listItem)
             }
@@ -46,7 +60,10 @@ fun <ItemType> ItemList(
     }
 }
 
-private fun <ItemType> headersByIndex(items: List<ItemType>, header: ((ItemType) -> String)?): Map<Int, String> {
+private fun <ItemType> headersByIndex(
+    items: List<ItemType>,
+    header: ((ItemType) -> String)?,
+): Map<Int, String> {
     if (header == null) return emptyMap()
     var lastHeader: String? = null
     return buildMap {
