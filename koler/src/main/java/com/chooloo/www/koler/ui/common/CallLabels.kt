@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.call
+package com.chooloo.www.koler.ui.common
 
 import android.content.Context
 import androidx.annotation.StringRes

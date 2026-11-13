@@ -12,7 +12,6 @@ import com.chooloo.www.chooloolib.R as LibR
 import com.chooloo.www.chooloolib.di.IoDispatcher
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.koler.R
-import com.chooloo.www.koler.ui.main.ACTION_SHOW_MISSED_CALLS
 import com.chooloo.www.koler.ui.main.MainActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -68,7 +67,7 @@ class MissedCallNotification @Inject constructor(
         context,
         0,
         Intent(context, MainActivity::class.java)
-            .setAction(ACTION_SHOW_MISSED_CALLS)
+            .setAction(MainActivity.ACTION_SHOW_MISSED_CALLS)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )

@@ -1,4 +1,4 @@
-package com.chooloo.www.koler.ui.call
+package com.chooloo.www.koler.ui.common
 
 import android.content.ContextWrapper
 import com.chooloo.www.koler.domain.Call

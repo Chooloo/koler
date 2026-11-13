@@ -24,10 +24,8 @@ fun ContactsScreen(
 ) {
 
     Permissioned(
-        permissions = listOf(
-            Manifest.permission.READ_CONTACTS,
-            Manifest.permission.WRITE_CONTACTS
-        ),
+        permissions = listOf(Manifest.permission.READ_CONTACTS),
+        optionalPermissions = listOf(Manifest.permission.WRITE_CONTACTS),
         rationaleRes = R.string.permission_rationale_contacts,
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()

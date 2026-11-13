@@ -41,7 +41,6 @@
     <string name="call_action_hold">Hold</string>
     <string name="call_action_mute">Mute</string>
     <string name="call_action_merge">Merge</string>
-    <string name="call_action_resume">Resume</string>
     <string name="call_action_keypad">Keypad</string>
     <string name="call_action_unmute">Unmute</string>
     <string name="call_action_speaker">Speaker</string>
@@ -71,13 +70,7 @@
     <!--endregion-->
 
     <!--region Account Type Labels-->
-    <string name="type_label_im">IM</string>
-    <string name="type_label_name">Name</string>
-    <string name="type_label_phone">Phone</string>
-    <string name="type_label_email">Email</string>
-    <string name="type_label_custom">Custom</string>
     <string name="type_label_whatsapp">WhatsApp</string>
-    <string name="type_label_organization">Organization</string>
     <!--endregion-->
 
     <!--region Preference Titles & Descriptions-->
@@ -85,7 +78,6 @@
     <string name="pref_title_donate">Donate</string>
     <string name="pref_title_email">Email Us</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
-    <string name="pref_title_animations">Animations</string>
     <string name="pref_title_theme_mode">Theme Mode</string>
     <string name="pref_title_default_page">Default Page</string>
     <string name="pref_title_group_recents">Group recents</string>
@@ -118,8 +110,10 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Call Notification</string>
-    <string name="call_notification_channel_description">Active call notification, shown for comfortable usage</string>
+    <string name="call_notification_channel_ongoing_name">Ongoing calls</string>
+    <string name="call_notification_channel_incoming_name">Incoming calls</string>
+    <string name="call_notification_channel_incoming_description">Rings and shows incoming calls</string>
+    <string name="call_notification_channel_ongoing_description">Shows the call in progress</string>
     <string name="missed_call_notification_channel_name">Missed Calls</string>
     <string name="missed_call_notification_channel_description">Calls you did not answer</string>
     <string name="missed_call_notification_title">Missed call</string>
@@ -162,18 +156,19 @@
     <string name="confirm_delete_contact_title">Delete this contact?</string>
     <string name="confirm_delete_contact">The contact will be removed from this device and its synced accounts.</string>
     <string name="error_call_failed">Couldn\'t place the call</string>
+    <string name="error_loading_failed">Couldn\'t load this list</string>
     <string name="error_clear_recents_failed">Couldn\'t clear recent calls</string>
     <string name="action_more">More</string>
     <string name="pref_section_appearance">Appearance</string>
     <string name="pref_section_dialer">Dialer</string>
-    <string name="pref_section_blocking">Blocking &amp; history</string>
+    <string name="pref_section_blocking">Blocking</string>
     <string name="pref_section_about">About</string>
     <string name="action_less">Less</string>
     <string name="confirm_block_title">Block this number?</string>
     <string name="confirm_block">Calls and messages from this number will be blocked.</string>
-    <string name="permission_rationale_contacts">Koler needs access to your contacts to show them here.</string>
-    <string name="permission_rationale_call_log">Koler needs access to your call history to show recent calls.</string>
-    <string name="permission_rationale_phone">Koler needs phone access to place calls.</string>
+    <string name="permission_rationale_contacts">Allow access to your contacts to show them here.</string>
+    <string name="permission_rationale_call_log">Allow access to your call history to show recent calls.</string>
+    <string name="permission_rationale_phone">Allow phone access to place calls.</string>
     <string name="action_grant_access">Grant access</string>
     <string name="action_open_settings">Open settings</string>
 </resources>

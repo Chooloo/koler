@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.common.LoadingState
 import com.chooloo.www.chooloolib.ui.components.Empty
 import com.chooloo.www.chooloolib.ui.components.Loading
@@ -30,6 +31,7 @@ fun <ItemType> ItemList(
 
     when {
         loadingState == LoadingState.LOADING -> Loading(modifier = modifier, titleRes = loadingTitle)
+        loadingState == LoadingState.FAILED -> Empty(modifier = modifier, titleRes = R.string.error_loading_failed)
         items.isEmpty() -> Empty(
             modifier = modifier,
             titleRes = emptyTitle,

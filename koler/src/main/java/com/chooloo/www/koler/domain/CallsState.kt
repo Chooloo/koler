@@ -3,9 +3,7 @@ package com.chooloo.www.koler.domain
 enum class CallsState {
     NO_CALLS,
     INCOMING,
-    EXTRA_INCOMING,
     WAITING_FOR_ACCOUNT,
-    PENDING_OUTGOING,
     OUTGOING,
     ACTIVE,
     ACTIVE_MULTI,
@@ -48,11 +46,9 @@ fun callsState(calls: List<Call>, hasPendingOutgoing: Boolean): CallsState {
 
     return when {
         calls.isEmpty() -> if (hasPendingOutgoing) CallsState.OUTGOING else CallsState.NO_CALLS
-        calls.any { it.state == CallState.INCOMING } ->
-            if (calls.any { it.state == CallState.ACTIVE }) CallsState.EXTRA_INCOMING else CallsState.INCOMING
+        calls.any { it.state == CallState.INCOMING } -> CallsState.INCOMING
         allIn(CallState.SELECT_PHONE_ACCOUNT) -> CallsState.WAITING_FOR_ACCOUNT
-        allIn(CallState.CONNECTING) -> CallsState.PENDING_OUTGOING
-        allIn(CallState.DIALING) -> CallsState.OUTGOING
+        allIn(CallState.CONNECTING, CallState.DIALING) -> CallsState.OUTGOING
         calls.all { it.state in ONGOING_STATES } -> if (calls.size > 1) CallsState.ACTIVE_MULTI else CallsState.ACTIVE
         allIn(CallState.DISCONNECTED) -> CallsState.DISCONNECTED
         else -> CallsState.ACTIVE

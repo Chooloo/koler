@@ -33,7 +33,6 @@
     <string name="pref_title_rate">Ocijeni</string>
     <string name="pref_title_email">Pošalji nam e-poštu</string>
     <string name="pref_title_report_bugs">Prijavi grešku</string>
-    <string name="pref_title_animations">Animacije</string>
     <!--endregion-->
 
     <!--region Hints & Messages-->
@@ -46,8 +45,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Obavijesti o pozivima</string>
-    <string name="call_notification_channel_description">Obavijesti aktivnih poziva, prikazane za ugodno korištenje</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -56,5 +53,98 @@
     <!--endregion-->
 
     <string name="cd_search">Traži</string>
-
+    <string name="action_block">Blokiraj</string>
+    <string name="action_call">Nazovi</string>
+    <string name="action_cancel">Odustani</string>
+    <string name="action_clear_recents">Izbriši sve nedavne pozive</string>
+    <string name="action_delete">Izbriši</string>
+    <string name="action_edit">Uredi</string>
+    <string name="action_grant_access">Dopusti pristup</string>
+    <string name="action_less">Manje</string>
+    <string name="action_message">Poruka</string>
+    <string name="action_more">Više</string>
+    <string name="action_open_settings">Otvori postavke</string>
+    <string name="action_unblock">Odblokiraj</string>
+    <string name="add_contact">Dodaj kontakt</string>
+    <string name="call_action_add_call">Dodaj poziv</string>
+    <string name="call_action_hold">Na čekanju</string>
+    <string name="call_action_keypad">Tipkovnica</string>
+    <string name="call_action_merge">Spoji</string>
+    <string name="call_action_swap">Zamijeni</string>
+    <string name="call_notification_channel_incoming_description">Zvoni i prikazuje dolazne pozive</string>
+    <string name="call_notification_channel_incoming_name">Dolazni pozivi</string>
+    <string name="call_notification_channel_ongoing_description">Prikazuje poziv u tijeku</string>
+    <string name="call_notification_channel_ongoing_name">Pozivi u tijeku</string>
+    <string name="call_state_conferenced">Konferencijski poziv</string>
+    <string name="call_state_connecting">Povezivanje…</string>
+    <string name="call_state_disconnecting">Prekidanje poziva…</string>
+    <string name="call_state_phone_account">Odaberi telefonski račun</string>
+    <string name="call_state_unknown">Nepoznato stanje poziva</string>
+    <string name="caller_payphone">Javna govornica</string>
+    <string name="caller_restricted">Skriveni broj</string>
+    <string name="caller_unknown">Nepoznato</string>
+    <string name="cd_add_contact">Dodaj kontakt</string>
+    <string name="cd_backspace">Brisanje</string>
+    <string name="cd_call">Nazovi</string>
+    <string name="cd_close_search">Zatvori pretraživanje</string>
+    <string name="cd_copy_number">Kopiraj broj</string>
+    <string name="cd_dialpad">Tipkovnica</string>
+    <string name="cd_favorite_star">Zvjezdica favorita</string>
+    <string name="cd_manage_call">Upravljaj pozivom</string>
+    <string name="cd_split_call">Odvoji poziv</string>
+    <string name="conference">Konferencija</string>
+    <string name="confirm_block">Pozivi i poruke s ovog broja bit će blokirani.</string>
+    <string name="confirm_block_title">Blokirati ovaj broj?</string>
+    <string name="confirm_delete_contact">Kontakt će biti uklonjen s ovog uređaja i sinkroniziranih računa.</string>
+    <string name="confirm_delete_contact_title">Izbrisati ovaj kontakt?</string>
+    <string name="contact_unknown_name">Nepoznato</string>
+    <string name="dialer">Telefon</string>
+    <string name="emails">E-pošta</string>
+    <string name="error_call_failed">Poziv nije uspio</string>
+    <string name="error_caller_not_found">Pozivatelj nije pronađen</string>
+    <string name="error_clear_recents_failed">Brisanje nedavnih poziva nije uspjelo</string>
+    <string name="error_contact_block_change_failed">Promjena blokade nije uspjela</string>
+    <string name="error_contact_deletion_failed">Brisanje kontakta nije uspjelo</string>
+    <string name="error_contact_favorite_change_failed">Promjena favorita nije uspjela</string>
+    <string name="error_loading_failed">Učitavanje popisa nije uspjelo</string>
+    <string name="error_no_app_found">Nijedna aplikacija ne može izvršiti ovu radnju</string>
+    <string name="explain_clear_recents">Cijela povijest poziva bit će trajno izbrisana</string>
+    <string name="hint_search_contacts">Pretraži kontakte</string>
+    <string name="hint_search_recents">Pretraži nedavne</string>
+    <string name="loading">Učitavanje…</string>
+    <string name="loading_contacts">Učitavanje kontakata…</string>
+    <string name="loading_recents">Učitavanje nedavnih poziva…</string>
+    <string name="missed_call_notification_channel_description">Pozivi na koje niste odgovorili</string>
+    <string name="missed_call_notification_channel_name">Propušteni pozivi</string>
+    <string name="missed_call_notification_title">Propušteni poziv</string>
+    <string name="missed_calls_notification_title">Propušteni pozivi</string>
+    <string name="no_results_calls">Nema pronađenih poziva</string>
+    <string name="permission_rationale_call_log">Dopusti pristup povijesti poziva za prikaz nedavnih poziva.</string>
+    <string name="permission_rationale_contacts">Dopusti pristup kontaktima za njihov prikaz ovdje.</string>
+    <string name="permission_rationale_phone">Dopusti pristup telefonu za upućivanje poziva.</string>
+    <string name="phones">Brojevi</string>
+    <string name="pref_section_about">O aplikaciji</string>
+    <string name="pref_section_appearance">Izgled</string>
+    <string name="pref_section_blocking">Blokiranje</string>
+    <string name="pref_section_dialer">Telefon</string>
+    <string name="pref_title_default_page">Početna stranica</string>
+    <string name="pref_title_dialpad_tones">Tonovi tipkovnice</string>
+    <string name="pref_title_dialpad_vibrate">Vibracija tipkovnice</string>
+    <string name="pref_title_donate">Doniraj</string>
+    <string name="pref_title_group_recents">Grupiraj nedavne</string>
+    <string name="pref_title_manage_blocked">Blokirani brojevi</string>
+    <string name="pref_title_theme_mode">Tema</string>
+    <string name="recent_calls">Povijest</string>
+    <string name="settings">Postavke</string>
+    <string name="show_all">Prikaži sve</string>
+    <string name="show_less">Prikaži manje</string>
+    <string name="theme_mode_dark">Tamna</string>
+    <string name="theme_mode_light">Svijetla</string>
+    <string name="theme_mode_system">Sustav</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d propušteni poziv</item>
+        <item quantity="few">%d propuštena poziva</item>
+        <item quantity="other">%d propuštenih poziva</item>
+    </plurals>
 </resources>

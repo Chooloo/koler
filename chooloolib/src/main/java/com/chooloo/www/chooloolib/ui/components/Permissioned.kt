@@ -37,6 +37,7 @@ import com.chooloo.www.chooloolib.ui.theme.Spacing
 fun Permissioned(
     permissions: List<String>,
     @StringRes rationaleRes: Int,
+    optionalPermissions: List<String> = emptyList(),
     content: @Composable () -> Unit,
 ) {
     val context = LocalContext.current
@@ -71,7 +72,7 @@ fun Permissioned(
                         Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null))
                     )
                 } else {
-                    launcher.launch(missing.toTypedArray())
+                    launcher.launch((missing + optionalPermissions).toTypedArray())
                 }
             }
         ) {

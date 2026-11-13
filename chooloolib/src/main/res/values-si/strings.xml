@@ -47,20 +47,13 @@
     <!--endregion-->
 
     <!--region Account Type Labels-->
-    <string name="type_label_im">IM</string>
-    <string name="type_label_name">නම</string>
-    <string name="type_label_phone">දුරකථනය</string>
-    <string name="type_label_email">වි-තැපෑල</string>
-    <string name="type_label_custom">අභිරුචි</string>
     <string name="type_label_whatsapp">වට්ස්ඇප්</string>
-    <string name="type_label_organization">සංවිධානය</string>
     <!--endregion-->
 
     <!--region Preference Titles & Descriptions-->
     <string name="pref_title_rate">අගයන්න</string>
     <string name="pref_title_email">අපට ලියන්න</string>
     <string name="pref_title_report_bugs">දෝෂ වාර්තා</string>
-    <string name="pref_title_animations">චලන</string>
     <string name="pref_title_theme_mode">තේමා ප්‍රකාරය</string>
     <string name="pref_title_default_page">පෙරනිමි පිටුව</string>
     <string name="pref_title_group_recents">සමාන මෑත දෑ සමූහනය</string>
@@ -82,8 +75,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">ඇමතුම් දැනුම්දීම</string>
-    <string name="call_notification_channel_description">පහසුවෙන් භාවිතය උදෙසා සක්‍රිය ඇමතුම දැනුම්දීම පෙන්වයි</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -99,5 +90,69 @@
     <string name="cd_search">සොයන්න</string>
     <string name="action_edit">සංස්කරණය</string>
     <string name="action_delete">මකන්න</string>
-
+    <string name="action_block">අවහිර කරන්න</string>
+    <string name="action_cancel">අවලංගු කරන්න</string>
+    <string name="action_grant_access">ප්‍රවේශය දෙන්න</string>
+    <string name="action_less">අඩුවෙන්</string>
+    <string name="action_message">පණිවිඩය</string>
+    <string name="action_more">තවත්</string>
+    <string name="action_open_settings">සැකසීම් විවෘත කරන්න</string>
+    <string name="action_unblock">අවහිරය ඉවත් කරන්න</string>
+    <string name="call_action_add_call">ඇමතුමක් එක් කරන්න</string>
+    <string name="call_action_hold">රඳවන්න</string>
+    <string name="call_action_keypad">යතුරුපුවරුව</string>
+    <string name="call_action_merge">ඒකාබද්ධ කරන්න</string>
+    <string name="call_action_swap">මාරු කරන්න</string>
+    <string name="call_notification_channel_incoming_description">නාද වී පැමිණෙන ඇමතුම් පෙන්වයි</string>
+    <string name="call_notification_channel_incoming_name">පැමිණෙන ඇමතුම්</string>
+    <string name="call_notification_channel_ongoing_description">සිදුවන ඇමතුම පෙන්වයි</string>
+    <string name="call_notification_channel_ongoing_name">සිදුවන ඇමතුම්</string>
+    <string name="call_state_conferenced">සම්මන්ත්‍රණ ඇමතුම</string>
+    <string name="caller_payphone">පොදු දුරකථනය</string>
+    <string name="caller_restricted">සීමා කළ</string>
+    <string name="caller_unknown">නොදන්නා</string>
+    <string name="cd_backspace">පසුපසට මකන්න</string>
+    <string name="cd_close_search">සෙවීම වසන්න</string>
+    <string name="cd_copy_number">අංකය පිටපත් කරන්න</string>
+    <string name="cd_dialpad">ඩයල්පෑඩය</string>
+    <string name="cd_split_call">ඇමතුම වෙන් කරන්න</string>
+    <string name="confirm_block">මෙම අංකයෙන් එන ඇමතුම් සහ පණිවිඩ අවහිර වේ.</string>
+    <string name="confirm_block_title">මෙම අංකය අවහිර කරන්නද?</string>
+    <string name="confirm_delete_contact">සම්බන්ධතාව මෙම උපාංගයෙන් සහ සමමුහුර්ත ගිණුම් වලින් ඉවත් වේ.</string>
+    <string name="confirm_delete_contact_title">මෙම සම්බන්ධතාව මකන්නද?</string>
+    <string name="contact_unknown_name">නොදන්නා</string>
+    <string name="dialer">දුරකථනය</string>
+    <string name="emails">ඊමේල්</string>
+    <string name="error_call_failed">ඇමතුම ගැනීමට නොහැකි විය</string>
+    <string name="error_caller_not_found">අමතන්නා හමු නොවීය</string>
+    <string name="error_clear_recents_failed">මෑත ඇමතුම් මැකීමට නොහැකි විය</string>
+    <string name="error_contact_block_change_failed">අවහිර තත්ත්වය වෙනස් කිරීමට නොහැකි විය</string>
+    <string name="error_contact_deletion_failed">සම්බන්ධතාව මැකීමට නොහැකි විය</string>
+    <string name="error_contact_favorite_change_failed">ප්‍රියතම වෙනස් කිරීමට නොහැකි විය</string>
+    <string name="error_loading_failed">ලැයිස්තුව පූරණය කළ නොහැකි විය</string>
+    <string name="error_no_app_found">මෙම ක්‍රියාව කළ හැකි යෙදුමක් නැත</string>
+    <string name="loading">පූරණය වෙමින්…</string>
+    <string name="loading_contacts">සම්බන්ධතා පූරණය වෙමින්…</string>
+    <string name="loading_recents">මෑත ඇමතුම් පූරණය වෙමින්…</string>
+    <string name="missed_call_notification_channel_description">ඔබ පිළිතුරු නොදුන් ඇමතුම්</string>
+    <string name="missed_call_notification_channel_name">මඟහැරුණු ඇමතුම්</string>
+    <string name="missed_call_notification_title">මඟහැරුණු ඇමතුම</string>
+    <string name="missed_calls_notification_title">මඟහැරුණු ඇමතුම්</string>
+    <string name="no_results_calls">ඇමතුම් හමු නොවීය</string>
+    <string name="permission_rationale_call_log">මෑත ඇමතුම් බැලීමට ඇමතුම් ඉතිහාසයට ප්‍රවේශය දෙන්න.</string>
+    <string name="permission_rationale_contacts">සම්බන්ධතා මෙහි බැලීමට ඒවාට ප්‍රවේශය දෙන්න.</string>
+    <string name="permission_rationale_phone">ඇමතුම් ගැනීමට දුරකථන ප්‍රවේශය දෙන්න.</string>
+    <string name="phones">දුරකථන අංක</string>
+    <string name="pref_section_about">පිළිබඳ</string>
+    <string name="pref_section_appearance">පෙනුම</string>
+    <string name="pref_section_blocking">අවහිර කිරීම</string>
+    <string name="pref_section_dialer">ඩයලරය</string>
+    <string name="pref_title_donate">පරිත්‍යාග කරන්න</string>
+    <string name="recent_calls">ඉතිහාසය</string>
+    <string name="show_all">සියල්ල පෙන්වන්න</string>
+    <string name="show_less">අඩුවෙන් පෙන්වන්න</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">මඟහැරුණු ඇමතුම් %d</item>
+        <item quantity="other">මඟහැරුණු ඇමතුම් %d</item>
+    </plurals>
 </resources>

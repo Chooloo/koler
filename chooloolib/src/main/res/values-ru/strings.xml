@@ -26,14 +26,14 @@
     <!--endregion-->
 
     <!--region Call States-->
-    <string name="call_state_dialing">Вызов...</string>
+    <string name="call_state_dialing">Вызов…</string>
     <string name="call_state_holding">Вызов на удержании</string>
-    <string name="call_state_connecting">Соединение...</string>
+    <string name="call_state_connecting">Соединение…</string>
     <string name="call_state_incoming">Входящий вызов</string>
     <string name="call_state_active">Выполняется вызов</string>
     <string name="call_state_disconnected">Вызов завершён</string>
     <string name="call_state_unknown">Статус вызова неизвестен</string>
-    <string name="call_state_disconnecting">Отсоединение...</string>
+    <string name="call_state_disconnecting">Отсоединение…</string>
     <string name="call_state_phone_account">Выбрать аккаунт</string>
     <!--endregion-->
 
@@ -46,20 +46,13 @@
     <!--endregion-->
 
     <!--region Account Type Labels-->
-    <string name="type_label_im">Мессенджер</string>
-    <string name="type_label_name">Имя</string>
-    <string name="type_label_phone">Номер телефона</string>
-    <string name="type_label_email">Email</string>
-    <string name="type_label_custom">Другое</string>
     <string name="type_label_whatsapp">WhatsApp</string>
-    <string name="type_label_organization">Организация</string>
     <!--endregion-->
 
     <!--region Preference Titles & Descriptions-->
     <string name="pref_title_rate">Оценить</string>
     <string name="pref_title_email">Напишите нам Email</string>
     <string name="pref_title_report_bugs">Сообщить об ошибке</string>
-    <string name="pref_title_animations">Анимации</string>
     <string name="pref_title_theme_mode">Тема</string>
     <string name="pref_title_default_page">Главная страница</string>
     <string name="pref_title_group_recents">Группировать похожие недавние</string>
@@ -80,8 +73,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Уведомление о вызове</string>
-    <string name="call_notification_channel_description">Уведомление о вызове, для удобного управления</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -96,5 +87,74 @@
     <string name="cd_search">Поиск</string>
     <string name="action_edit">Редактировать</string>
     <string name="action_delete">Удалить</string>
-
+    <string name="action_block">Заблокировать</string>
+    <string name="action_cancel">Отмена</string>
+    <string name="action_clear_recents">Удалить все недавние вызовы</string>
+    <string name="action_grant_access">Разрешить доступ</string>
+    <string name="action_less">Меньше</string>
+    <string name="action_message">Сообщение</string>
+    <string name="action_more">Ещё</string>
+    <string name="action_open_settings">Открыть настройки</string>
+    <string name="action_unblock">Разблокировать</string>
+    <string name="call_action_add_call">Добавить вызов</string>
+    <string name="call_action_hold">Удержание</string>
+    <string name="call_action_keypad">Клавиатура</string>
+    <string name="call_action_merge">Объединить</string>
+    <string name="call_action_swap">Переключить</string>
+    <string name="call_notification_channel_incoming_description">Звонит и показывает входящие вызовы</string>
+    <string name="call_notification_channel_incoming_name">Входящие вызовы</string>
+    <string name="call_notification_channel_ongoing_description">Показывает текущий вызов</string>
+    <string name="call_notification_channel_ongoing_name">Текущие вызовы</string>
+    <string name="call_state_conferenced">Конференц-вызов</string>
+    <string name="caller_payphone">Таксофон</string>
+    <string name="caller_restricted">Скрытый номер</string>
+    <string name="caller_unknown">Неизвестно</string>
+    <string name="cd_backspace">Удалить символ</string>
+    <string name="cd_close_search">Закрыть поиск</string>
+    <string name="cd_copy_number">Копировать номер</string>
+    <string name="cd_dialpad">Клавиатура</string>
+    <string name="cd_manage_call">Управление вызовом</string>
+    <string name="cd_split_call">Отделить вызов</string>
+    <string name="confirm_block">Вызовы и сообщения с этого номера будут заблокированы.</string>
+    <string name="confirm_block_title">Заблокировать этот номер?</string>
+    <string name="confirm_delete_contact">Контакт будет удалён с этого устройства и из синхронизированных аккаунтов.</string>
+    <string name="confirm_delete_contact_title">Удалить этот контакт?</string>
+    <string name="contact_unknown_name">Неизвестно</string>
+    <string name="dialer">Телефон</string>
+    <string name="emails">Эл. почта</string>
+    <string name="error_call_failed">Не удалось позвонить</string>
+    <string name="error_caller_not_found">Абонент не найден</string>
+    <string name="error_clear_recents_failed">Не удалось очистить недавние вызовы</string>
+    <string name="error_contact_block_change_failed">Не удалось изменить блокировку</string>
+    <string name="error_contact_deletion_failed">Не удалось удалить контакт</string>
+    <string name="error_contact_favorite_change_failed">Не удалось изменить избранное</string>
+    <string name="error_loading_failed">Не удалось загрузить список</string>
+    <string name="error_no_app_found">Нет приложения для этого действия</string>
+    <string name="explain_clear_recents">Вся история вызовов будет удалена безвозвратно</string>
+    <string name="loading">Загрузка…</string>
+    <string name="loading_contacts">Загрузка контактов…</string>
+    <string name="loading_recents">Загрузка недавних вызовов…</string>
+    <string name="missed_call_notification_channel_description">Вызовы, на которые вы не ответили</string>
+    <string name="missed_call_notification_channel_name">Пропущенные вызовы</string>
+    <string name="missed_call_notification_title">Пропущенный вызов</string>
+    <string name="missed_calls_notification_title">Пропущенные вызовы</string>
+    <string name="no_results_calls">Вызовы не найдены</string>
+    <string name="permission_rationale_call_log">Разрешите доступ к журналу вызовов, чтобы видеть недавние вызовы.</string>
+    <string name="permission_rationale_contacts">Разрешите доступ к контактам, чтобы видеть их здесь.</string>
+    <string name="permission_rationale_phone">Разрешите доступ к телефону, чтобы звонить.</string>
+    <string name="phones">Номера</string>
+    <string name="pref_section_about">О приложении</string>
+    <string name="pref_section_appearance">Оформление</string>
+    <string name="pref_section_blocking">Блокировка</string>
+    <string name="pref_section_dialer">Телефон</string>
+    <string name="pref_title_donate">Поддержать</string>
+    <string name="recent_calls">История</string>
+    <string name="show_all">Показать все</string>
+    <string name="show_less">Свернуть</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d пропущенный вызов</item>
+        <item quantity="few">%d пропущенных вызова</item>
+        <item quantity="many">%d пропущенных вызовов</item>
+        <item quantity="other">%d пропущенного вызова</item>
+    </plurals>
 </resources>

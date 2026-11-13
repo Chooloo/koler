@@ -33,8 +33,6 @@ class PreferencesViewModel @Inject constructor(
 
     fun onThemeMode(themeMode: ThemeMode) = update { setThemeMode(themeMode) }
 
-    fun onIsAnimationsEnabled(isEnabled: Boolean) = update { setIsAnimationsEnabled(isEnabled) }
-
     fun onIsGroupRecentsEnabled(isEnabled: Boolean) = update { setIsGroupRecentsEnabled(isEnabled) }
 
     fun onIsDialpadTonesEnabled(isEnabled: Boolean) = update { setIsDialpadTonesEnabled(isEnabled) }

@@ -6,6 +6,8 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.provider.ContactsContract.Contacts
+import android.provider.ContactsContract.RawContacts
+import androidx.core.net.toUri
 import com.chooloo.www.chooloolib.data.source.ContentQuery
 import com.chooloo.www.chooloolib.data.source.int
 import com.chooloo.www.chooloolib.data.source.long
@@ -41,6 +43,16 @@ class ContactRepositoryImpl @Inject constructor(
         contentResolver.observeAll(contactQuery(contactId), ::toContact)
             .map { contacts -> contacts.firstOrNull()?.let { it.copy(number = primaryNumbers(contactId)[it.id]) } }
             .flowOn(ioDispatcher)
+
+    override suspend fun contactIdOf(link: String): Long? = withContext(ioDispatcher) {
+        val uri = link.toUri()
+        val lookupUri = if (contentResolver.getType(uri) == RawContacts.CONTENT_ITEM_TYPE) {
+            RawContacts.getContactLookupUri(contentResolver, uri)
+        } else {
+            uri
+        }
+        lookupUri?.let { Contacts.lookupContact(contentResolver, it) }?.let(ContentUris::parseId)
+    }
 
     override suspend fun deleteContact(contactId: Long) = withContext(ioDispatcher) {
         val deleted = contentResolver.delete(ContentUris.withAppendedId(Contacts.CONTENT_URI, contactId), null, null)
@@ -84,7 +96,6 @@ class ContactRepositoryImpl @Inject constructor(
         name = cursor.string(Contacts.DISPLAY_NAME_PRIMARY),
         photoUri = cursor.string(Contacts.PHOTO_URI) ?: cursor.string(Contacts.PHOTO_THUMBNAIL_URI),
         isFavorite = cursor.int(Contacts.STARRED) == 1,
-        hasPhoneNumber = cursor.int(Contacts.HAS_PHONE_NUMBER) > 0,
     )
 
     private companion object {
@@ -93,7 +104,6 @@ class ContactRepositoryImpl @Inject constructor(
             Contacts.STARRED,
             Contacts.PHOTO_URI,
             Contacts.PHOTO_THUMBNAIL_URI,
-            Contacts.HAS_PHONE_NUMBER,
             Contacts.DISPLAY_NAME_PRIMARY,
         )
     }

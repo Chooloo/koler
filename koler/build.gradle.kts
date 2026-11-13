@@ -17,8 +17,8 @@ android {
         applicationId = "com.chooloo.www.koler"
         minSdk = libs.versions.min.sdk.get().toInt()
         targetSdk = libs.versions.target.sdk.get().toInt()
-        versionCode = 82
-        versionName = "v1.6.1"
+        versionCode = 83
+        versionName = "v1.7.0"
     }
 
     buildTypes {

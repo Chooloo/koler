@@ -34,10 +34,10 @@ class CallsStateTest {
     }
 
     @Test
-    fun `incoming next to an active call is extra incoming`() {
+    fun `any ringing call is incoming`() {
         assertEquals(CallsState.INCOMING, callsState(listOf(call("a", CallState.INCOMING)), false))
         assertEquals(
-            CallsState.EXTRA_INCOMING,
+            CallsState.INCOMING,
             callsState(listOf(call("a", CallState.ACTIVE), call("b", CallState.INCOMING)), false)
         )
     }
@@ -54,7 +54,8 @@ class CallsStateTest {
     @Test
     fun `dialing connecting account selection and disconnected map to their states`() {
         assertEquals(CallsState.OUTGOING, callsState(listOf(call("a", CallState.DIALING)), false))
-        assertEquals(CallsState.PENDING_OUTGOING, callsState(listOf(call("a", CallState.CONNECTING)), false))
+        assertEquals(CallsState.OUTGOING, callsState(listOf(call("a", CallState.CONNECTING)), false))
+        assertEquals(CallsState.OUTGOING, callsState(listOf(call("a", CallState.CONNECTING), call("b", CallState.DIALING)), false))
         assertEquals(CallsState.WAITING_FOR_ACCOUNT, callsState(listOf(call("a", CallState.SELECT_PHONE_ACCOUNT)), false))
         assertEquals(CallsState.DISCONNECTED, callsState(listOf(call("a", CallState.DISCONNECTED)), false))
     }

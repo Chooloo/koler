@@ -25,7 +25,6 @@
     <string name="pref_title_rate">Taksi</string>
     <string name="pref_title_email">Sendi retpoŝtmesaĝon al ni</string>
     <string name="pref_title_report_bugs">Raporti cimigoj</string>
-    <string name="pref_title_animations">Animacioj</string>
     <!--endregion-->
 
     <!--region Hints & Messages-->
@@ -38,8 +37,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Telefonada sciigo</string>
-    <string name="call_notification_channel_description">Sciigo de farata alvoko, montrata por komforta uzado</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -48,5 +45,102 @@
     <!--endregion-->
 
     <string name="cd_search">Serĉi</string>
-
+    <string name="action_block">Bloki</string>
+    <string name="action_call">Voki</string>
+    <string name="action_cancel">Nuligi</string>
+    <string name="action_clear_recents">Forigi ĉiujn lastajn vokojn</string>
+    <string name="action_delete">Forigi</string>
+    <string name="action_edit">Redakti</string>
+    <string name="action_grant_access">Permesi aliron</string>
+    <string name="action_less">Malpli</string>
+    <string name="action_message">Mesaĝo</string>
+    <string name="action_more">Pli</string>
+    <string name="action_open_settings">Malfermi agordojn</string>
+    <string name="action_unblock">Malbloki</string>
+    <string name="add_contact">Aldoni kontakton</string>
+    <string name="audio_route_bluetooth">Bluetooth</string>
+    <string name="audio_route_earpiece">Aŭdilo</string>
+    <string name="audio_route_speaker">Laŭtparolilo</string>
+    <string name="audio_route_wired_headset">Drata kapaŭdilo</string>
+    <string name="audio_route_wired_or_earpiece">Drata aŭ aŭdilo</string>
+    <string name="call_action_add_call">Aldoni vokon</string>
+    <string name="call_action_hold">Paŭzigi</string>
+    <string name="call_action_keypad">Klavaro</string>
+    <string name="call_action_merge">Kunigi</string>
+    <string name="call_action_swap">Interŝanĝi</string>
+    <string name="call_notification_channel_incoming_description">Sonoras kaj montras envenantajn vokojn</string>
+    <string name="call_notification_channel_incoming_name">Envenantaj vokoj</string>
+    <string name="call_notification_channel_ongoing_description">Montras la nunan vokon</string>
+    <string name="call_notification_channel_ongoing_name">Nunaj vokoj</string>
+    <string name="call_state_conferenced">Konferenca voko</string>
+    <string name="call_state_connecting">Konektante…</string>
+    <string name="call_state_disconnecting">Finante vokon…</string>
+    <string name="call_state_phone_account">Elekti telefonan konton</string>
+    <string name="call_state_unknown">Nekonata vokstato</string>
+    <string name="caller_payphone">Publika telefono</string>
+    <string name="caller_restricted">Kaŝita</string>
+    <string name="caller_unknown">Nekonata</string>
+    <string name="cd_add_contact">Aldoni kontakton</string>
+    <string name="cd_backspace">Retropaŝo</string>
+    <string name="cd_call">Voki</string>
+    <string name="cd_close_search">Fermi serĉon</string>
+    <string name="cd_copy_number">Kopii numeron</string>
+    <string name="cd_dialpad">Ciferklavaro</string>
+    <string name="cd_favorite_star">Stelo de plej ŝatataj</string>
+    <string name="cd_manage_call">Administri vokon</string>
+    <string name="cd_split_call">Apartigi vokon</string>
+    <string name="conference">Konferenco</string>
+    <string name="confirm_block">Vokoj kaj mesaĝoj de ĉi tiu numero estos blokitaj.</string>
+    <string name="confirm_block_title">Ĉu bloki ĉi tiun numeron?</string>
+    <string name="confirm_delete_contact">La kontakto estos forigita el ĉi tiu aparato kaj ĝiaj sinkronigitaj kontoj.</string>
+    <string name="confirm_delete_contact_title">Ĉu forigi ĉi tiun kontakton?</string>
+    <string name="contact_unknown_name">Nekonata</string>
+    <string name="dialer">Telefono</string>
+    <string name="emails">Retpoŝto</string>
+    <string name="error_call_failed">Ne eblis voki</string>
+    <string name="error_caller_not_found">Vokanto ne trovita</string>
+    <string name="error_clear_recents_failed">Ne eblis forigi lastajn vokojn</string>
+    <string name="error_contact_block_change_failed">Ne eblis ŝanĝi blokadon</string>
+    <string name="error_contact_deletion_failed">Ne eblis forigi kontakton</string>
+    <string name="error_contact_favorite_change_failed">Ne eblis ŝanĝi plej ŝatatan</string>
+    <string name="error_loading_failed">Ne eblis ŝargi la liston</string>
+    <string name="error_no_app_found">Neniu aplikaĵo povas fari ĉi tion</string>
+    <string name="explain_clear_recents">La tuta vokhistorio estos daŭre forigita</string>
+    <string name="hint_search_contacts">Serĉi kontaktojn</string>
+    <string name="hint_search_recents">Serĉi lastajn</string>
+    <string name="loading">Ŝargante…</string>
+    <string name="loading_contacts">Ŝargante kontaktojn…</string>
+    <string name="loading_recents">Ŝargante lastajn vokojn…</string>
+    <string name="missed_call_notification_channel_description">Vokoj, al kiuj vi ne respondis</string>
+    <string name="missed_call_notification_channel_name">Maltrafitaj vokoj</string>
+    <string name="missed_call_notification_title">Maltrafita voko</string>
+    <string name="missed_calls_notification_title">Maltrafitaj vokoj</string>
+    <string name="no_results_calls">Neniuj vokoj trovitaj</string>
+    <string name="permission_rationale_call_log">Permesu aliron al via vokhistorio por vidi lastajn vokojn.</string>
+    <string name="permission_rationale_contacts">Permesu aliron al viaj kontaktoj por vidi ilin ĉi tie.</string>
+    <string name="permission_rationale_phone">Permesu telefonan aliron por voki.</string>
+    <string name="phones">Numeroj</string>
+    <string name="pref_section_about">Pri</string>
+    <string name="pref_section_appearance">Aspekto</string>
+    <string name="pref_section_blocking">Blokado</string>
+    <string name="pref_section_dialer">Telefono</string>
+    <string name="pref_title_default_page">Defaŭlta paĝo</string>
+    <string name="pref_title_dialpad_tones">Klavartonoj</string>
+    <string name="pref_title_dialpad_vibrate">Vibri ĉe klavoj</string>
+    <string name="pref_title_donate">Donaci</string>
+    <string name="pref_title_group_recents">Grupigi lastajn</string>
+    <string name="pref_title_manage_blocked">Blokitaj numeroj</string>
+    <string name="pref_title_theme_mode">Etoso</string>
+    <string name="recent_calls">Historio</string>
+    <string name="settings">Agordoj</string>
+    <string name="show_all">Montri ĉion</string>
+    <string name="show_less">Montri malpli</string>
+    <string name="theme_mode_dark">Malhela</string>
+    <string name="theme_mode_light">Hela</string>
+    <string name="theme_mode_system">Sistema</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d maltrafita voko</item>
+        <item quantity="other">%d maltrafitaj vokoj</item>
+    </plurals>
 </resources>

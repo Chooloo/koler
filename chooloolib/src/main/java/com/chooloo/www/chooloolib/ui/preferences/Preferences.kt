@@ -3,7 +3,6 @@ package com.chooloo.www.chooloolib.ui.preferences
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ViewList
-import androidx.compose.material.icons.rounded.Animation
 import androidx.compose.material.icons.rounded.Block
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.DeleteSweep
@@ -38,13 +37,12 @@ private enum class PreferenceItem(
     val isDialerOnly: Boolean = false,
 ) {
     THEME_MODE(PreferenceSection.APPEARANCE, Icons.Rounded.Palette, R.string.pref_title_theme_mode),
-    ANIMATIONS_ENABLED(PreferenceSection.APPEARANCE, Icons.Rounded.Animation, R.string.pref_title_animations),
     DEFAULT_PAGE(PreferenceSection.DIALER, Icons.Rounded.Home, R.string.pref_title_default_page, isDialerOnly = true),
     GROUP_RECENTS_ENABLED(PreferenceSection.DIALER, Icons.AutoMirrored.Rounded.ViewList, R.string.pref_title_group_recents, isDialerOnly = true),
     DIALPAD_TONES_ENABLED(PreferenceSection.DIALER, Icons.Rounded.MusicNote, R.string.pref_title_dialpad_tones, isDialerOnly = true),
     DIALPAD_VIBRATE_ENABLED(PreferenceSection.DIALER, Icons.Rounded.Vibration, R.string.pref_title_dialpad_vibrate, isDialerOnly = true),
+    CLEAR_RECENTS(PreferenceSection.DIALER, Icons.Rounded.DeleteSweep, R.string.action_clear_recents, R.string.explain_clear_recents, isDialerOnly = true),
     MANAGE_BLOCKED(PreferenceSection.BLOCKING, Icons.Rounded.Block, R.string.pref_title_manage_blocked, isDialerOnly = true),
-    CLEAR_RECENTS(PreferenceSection.BLOCKING, Icons.Rounded.DeleteSweep, R.string.action_clear_recents, R.string.explain_clear_recents, isDialerOnly = true),
     RATE(PreferenceSection.ABOUT, Icons.Rounded.Star, R.string.pref_title_rate),
     EMAIL(PreferenceSection.ABOUT, Icons.Rounded.Email, R.string.pref_title_email),
     REPORT_BUGS(PreferenceSection.ABOUT, Icons.Rounded.BugReport, R.string.pref_title_report_bugs),
@@ -55,14 +53,12 @@ private enum class PreferenceItem(
 fun Preferences(
     defaultPage: Page,
     themeMode: ThemeMode,
-    isAnimationsEnabled: Boolean,
     isGroupRecentsEnabled: Boolean,
     isDialpadTonesEnabled: Boolean,
     isDialpadVibrateEnabled: Boolean,
     showDialerPreferences: Boolean,
     onDefaultPage: (Page) -> Unit,
     onThemeMode: (ThemeMode) -> Unit,
-    onIsAnimationsEnabled: (Boolean) -> Unit,
     onIsGroupRecentsEnabled: (Boolean) -> Unit,
     onIsDialpadTonesEnabled: (Boolean) -> Unit,
     onIsDialpadVibrateEnabled: (Boolean) -> Unit,
@@ -102,8 +98,6 @@ fun Preferences(
                     label = { stringResource(it.titleRes) },
                     onValueSelected = onDefaultPage,
                 )
-                PreferenceItem.ANIMATIONS_ENABLED ->
-                    SwitchPreferenceListItem(icon, title, isAnimationsEnabled, onIsAnimationsEnabled)
                 PreferenceItem.GROUP_RECENTS_ENABLED ->
                     SwitchPreferenceListItem(icon, title, isGroupRecentsEnabled, onIsGroupRecentsEnabled)
                 PreferenceItem.DIALPAD_TONES_ENABLED ->

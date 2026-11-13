@@ -7,6 +7,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
@@ -22,8 +27,19 @@ fun BottomSheet(
     content: @Composable () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
+    var isShown by remember { mutableStateOf(false) }
+    LaunchedEffect(visible) {
+        when {
+            visible && isShown -> sheetState.show()
+            visible -> isShown = true
+            isShown -> {
+                sheetState.hide()
+                isShown = false
+            }
+        }
+    }
 
-    if (visible) {
+    if (isShown) {
         ModalBottomSheet(
             sheetState = sheetState,
             onDismissRequest = onDismiss,

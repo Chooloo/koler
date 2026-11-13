@@ -17,6 +17,8 @@ import com.chooloo.www.chooloolib.ui.components.list.RadioListItem
 import com.chooloo.www.chooloolib.ui.dialpad.DialpadScreen
 import com.chooloo.www.koler.domain.CallsState
 import com.chooloo.www.koler.ui.call.CallViewModel.Sheet
+import com.chooloo.www.koler.ui.common.labelRes
+import com.chooloo.www.koler.ui.common.title
 
 @Composable
 fun CallScreen(
@@ -27,11 +29,11 @@ fun CallScreen(
     val call = uiState.call
     val caller = uiState.caller
 
-    BottomSheet(visible = uiState.sheet == Sheet.ADD_CALL, onDismiss = callViewModel::onSheetDismiss) {
+    BottomSheet(visible = uiState.sheet == Sheet.ADD_CALL, skipPartiallyExpanded = true, onDismiss = callViewModel::onSheetDismiss) {
         DialpadScreen()
     }
 
-    BottomSheet(visible = uiState.sheet == Sheet.KEYPAD, onDismiss = callViewModel::onSheetDismiss) {
+    BottomSheet(visible = uiState.sheet == Sheet.KEYPAD, skipPartiallyExpanded = true, onDismiss = callViewModel::onSheetDismiss) {
         Column {
             DialpadNumber(number = uiState.keypadValue)
             Keypad(onKeyClick = callViewModel::onKeypadKeyClick)
@@ -74,6 +76,7 @@ fun CallScreen(
     CallContent(
         callerName = call?.title(context, caller) ?: stringResource(R.string.caller_unknown),
         status = callStatus(uiState.elapsedSeconds, call?.state?.let { stringResource(it.labelRes) }),
+        avatarName = caller?.name?.takeUnless { call?.isConference == true },
         callerPhotoUri = caller?.photoUri,
         callsState = uiState.callsState,
         actions = uiState.actions,

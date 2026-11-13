@@ -44,7 +44,6 @@
     <string name="pref_title_rate">امتیازدهی</string>
     <string name="pref_title_email">به ما ایمیل بزنید</string>
     <string name="pref_title_report_bugs">گزارش مشکل</string>
-    <string name="pref_title_animations">پویانمایی ها</string>
     <string name="pref_title_theme_mode">حالت نمایه</string>
     <string name="pref_title_default_page">صفحه پیش فرض</string>
     <string name="pref_title_dialpad_vibrate">لرزش هنگام فشردن شماره گیر</string>
@@ -63,8 +62,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">اعلان تماس</string>
-    <string name="call_notification_channel_description">اعلان تماس فعال، نمایش برای استفاده راحت</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -75,5 +72,81 @@
 
     <string name="settings">تنظیمات</string>
     <string name="cd_search">جستجو</string>
-
+    <string name="action_block">مسدود کردن</string>
+    <string name="action_call">تماس</string>
+    <string name="action_cancel">لغو</string>
+    <string name="action_clear_recents">حذف همه تماس‌های اخیر</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_edit">ویرایش</string>
+    <string name="action_grant_access">اجازه دسترسی</string>
+    <string name="action_less">کمتر</string>
+    <string name="action_message">پیام</string>
+    <string name="action_more">بیشتر</string>
+    <string name="action_open_settings">باز کردن تنظیمات</string>
+    <string name="action_unblock">رفع انسداد</string>
+    <string name="add_contact">افزودن مخاطب</string>
+    <string name="call_action_add_call">افزودن تماس</string>
+    <string name="call_action_hold">انتظار</string>
+    <string name="call_action_keypad">صفحه کلید</string>
+    <string name="call_action_merge">ادغام</string>
+    <string name="call_action_swap">جابه‌جایی</string>
+    <string name="call_notification_channel_incoming_description">زنگ می‌زند و تماس‌های ورودی را نشان می‌دهد</string>
+    <string name="call_notification_channel_incoming_name">تماس‌های ورودی</string>
+    <string name="call_notification_channel_ongoing_description">تماس در جریان را نشان می‌دهد</string>
+    <string name="call_notification_channel_ongoing_name">تماس‌های در جریان</string>
+    <string name="call_state_conferenced">تماس کنفرانسی</string>
+    <string name="caller_payphone">تلفن عمومی</string>
+    <string name="caller_restricted">پنهان</string>
+    <string name="caller_unknown">ناشناس</string>
+    <string name="cd_add_contact">افزودن مخاطب</string>
+    <string name="cd_backspace">پاک کردن</string>
+    <string name="cd_call">تماس</string>
+    <string name="cd_close_search">بستن جستجو</string>
+    <string name="cd_copy_number">کپی شماره</string>
+    <string name="cd_dialpad">صفحه شماره‌گیر</string>
+    <string name="cd_manage_call">مدیریت تماس</string>
+    <string name="cd_split_call">جدا کردن تماس</string>
+    <string name="confirm_block">تماس‌ها و پیام‌های این شماره مسدود می‌شوند.</string>
+    <string name="confirm_block_title">این شماره مسدود شود؟</string>
+    <string name="confirm_delete_contact">مخاطب از این دستگاه و حساب‌های همگام‌شده آن حذف می‌شود.</string>
+    <string name="confirm_delete_contact_title">این مخاطب حذف شود؟</string>
+    <string name="contact_unknown_name">ناشناس</string>
+    <string name="dialer">تلفن</string>
+    <string name="emails">ایمیل</string>
+    <string name="error_call_failed">برقراری تماس ممکن نشد</string>
+    <string name="error_caller_not_found">تماس‌گیرنده پیدا نشد</string>
+    <string name="error_clear_recents_failed">حذف تماس‌های اخیر ممکن نشد</string>
+    <string name="error_contact_block_change_failed">تغییر وضعیت انسداد ممکن نشد</string>
+    <string name="error_contact_deletion_failed">حذف مخاطب ممکن نشد</string>
+    <string name="error_contact_favorite_change_failed">تغییر علاقه‌مندی ممکن نشد</string>
+    <string name="error_loading_failed">بارگیری فهرست ممکن نشد</string>
+    <string name="error_no_app_found">هیچ برنامه‌ای نمی‌تواند این کار را انجام دهد</string>
+    <string name="explain_clear_recents">کل سابقه تماس برای همیشه حذف می‌شود</string>
+    <string name="loading">در حال بارگیری…</string>
+    <string name="loading_contacts">در حال بارگیری مخاطبین…</string>
+    <string name="loading_recents">در حال بارگیری تماس‌های اخیر…</string>
+    <string name="missed_call_notification_channel_description">تماس‌هایی که پاسخ ندادید</string>
+    <string name="missed_call_notification_channel_name">تماس‌های بی‌پاسخ</string>
+    <string name="missed_call_notification_title">تماس بی‌پاسخ</string>
+    <string name="missed_calls_notification_title">تماس‌های بی‌پاسخ</string>
+    <string name="no_results_calls">تماسی پیدا نشد</string>
+    <string name="permission_rationale_call_log">برای دیدن تماس‌های اخیر، اجازه دسترسی به سابقه تماس را بدهید.</string>
+    <string name="permission_rationale_contacts">برای دیدن مخاطبین در اینجا، اجازه دسترسی به آن‌ها را بدهید.</string>
+    <string name="permission_rationale_phone">برای برقراری تماس، اجازه دسترسی به تلفن را بدهید.</string>
+    <string name="phones">شماره‌ها</string>
+    <string name="pref_section_about">درباره</string>
+    <string name="pref_section_appearance">ظاهر</string>
+    <string name="pref_section_blocking">مسدودسازی</string>
+    <string name="pref_section_dialer">تلفن</string>
+    <string name="pref_title_dialpad_tones">صدای صفحه کلید</string>
+    <string name="pref_title_donate">حمایت مالی</string>
+    <string name="pref_title_group_recents">گروه‌بندی اخیر</string>
+    <string name="recent_calls">سابقه</string>
+    <string name="show_all">نمایش همه</string>
+    <string name="show_less">نمایش کمتر</string>
+    <string name="type_label_whatsapp">واتساپ</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d تماس بی‌پاسخ</item>
+        <item quantity="other">%d تماس بی‌پاسخ</item>
+    </plurals>
 </resources>

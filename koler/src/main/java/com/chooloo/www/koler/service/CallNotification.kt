@@ -26,8 +26,8 @@ import com.chooloo.www.koler.domain.CallRepository
 import com.chooloo.www.koler.domain.CallState
 import com.chooloo.www.koler.domain.primaryCall
 import com.chooloo.www.koler.ui.call.CallActivity
-import com.chooloo.www.koler.ui.call.labelRes
-import com.chooloo.www.koler.ui.call.title
+import com.chooloo.www.koler.ui.common.labelRes
+import com.chooloo.www.koler.ui.common.title
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -122,7 +122,7 @@ class CallNotification @Inject constructor(
         if (call.can(Call.Capability.MUTE)) {
             add(
                 if (audio.isMuted) {
-                    action(R.drawable.ic_mic, LibR.string.call_action_unmute, CallBroadcastReceiver.ACTION_MUTE_OFF)
+                    action(R.drawable.ic_mic_off, LibR.string.call_action_unmute, CallBroadcastReceiver.ACTION_MUTE_OFF)
                 } else {
                     action(R.drawable.ic_mic_off, LibR.string.call_action_mute, CallBroadcastReceiver.ACTION_MUTE_ON)
                 }
@@ -130,7 +130,7 @@ class CallNotification @Inject constructor(
         }
         add(
             if (audio.route == AudioRoute.SPEAKER) {
-                action(R.drawable.ic_volume_down, LibR.string.call_action_speaker_off, CallBroadcastReceiver.ACTION_SPEAKER_OFF)
+                action(R.drawable.ic_volume_up, LibR.string.call_action_speaker_off, CallBroadcastReceiver.ACTION_SPEAKER_OFF)
             } else {
                 action(R.drawable.ic_volume_up, LibR.string.call_action_speaker, CallBroadcastReceiver.ACTION_SPEAKER_ON)
             }
@@ -158,16 +158,19 @@ class CallNotification @Inject constructor(
         LEGACY_CHANNEL_IDS.forEach(notificationManager::deleteNotificationChannel)
         notificationManager.createNotificationChannelsCompat(
             listOf(
-                channel(CHANNEL_ID_ONGOING, IMPORTANCE_DEFAULT).build(),
+                channel(CHANNEL_ID_ONGOING, IMPORTANCE_DEFAULT, LibR.string.call_notification_channel_ongoing_name, LibR.string.call_notification_channel_ongoing_description).build(),
                 // Telecom plays the ringtone because the manifest doesn't declare IN_CALL_SERVICE_RINGING.
-                channel(CHANNEL_ID_INCOMING, IMPORTANCE_HIGH).setSound(null, null).build()
+                channel(CHANNEL_ID_INCOMING, IMPORTANCE_HIGH, LibR.string.call_notification_channel_incoming_name, LibR.string.call_notification_channel_incoming_description)
+                    .setSound(null, null)
+                    .build()
             )
         )
     }
 
-    private fun channel(id: String, importance: Int) = NotificationChannelCompat.Builder(id, importance)
-        .setName(context.getString(LibR.string.call_notification_channel_name))
-        .setDescription(context.getString(LibR.string.call_notification_channel_description))
+    private fun channel(id: String, importance: Int, nameRes: Int, descriptionRes: Int) =
+        NotificationChannelCompat.Builder(id, importance)
+            .setName(context.getString(nameRes))
+            .setDescription(context.getString(descriptionRes))
 
     private companion object {
         const val ID = 420

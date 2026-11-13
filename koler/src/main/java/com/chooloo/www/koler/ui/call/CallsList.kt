@@ -14,6 +14,8 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.components.list.ItemList
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.koler.domain.Call
+import com.chooloo.www.koler.ui.common.labelRes
+import com.chooloo.www.koler.ui.common.title
 
 @Composable
 fun CallsList(

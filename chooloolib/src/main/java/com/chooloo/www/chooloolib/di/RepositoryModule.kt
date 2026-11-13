@@ -2,7 +2,7 @@ package com.chooloo.www.chooloolib.di
 
 import com.chooloo.www.chooloolib.data.repository.AudioRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.BlockedRepositoryImpl
-import com.chooloo.www.chooloolib.data.repository.ContactAccountRepositoryImpl
+import com.chooloo.www.chooloolib.data.repository.ContactDetailsRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.ContactRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.PhoneRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.PreferenceRepositoryImpl
@@ -10,7 +10,7 @@ import com.chooloo.www.chooloolib.data.repository.RecentRepositoryImpl
 import com.chooloo.www.chooloolib.data.repository.TelecomRepositoryImpl
 import com.chooloo.www.chooloolib.domain.repository.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.BlockedRepository
-import com.chooloo.www.chooloolib.domain.repository.ContactAccountRepository
+import com.chooloo.www.chooloolib.domain.repository.ContactDetailsRepository
 import com.chooloo.www.chooloolib.domain.repository.ContactRepository
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
@@ -31,7 +31,7 @@ abstract class RepositoryModule {
     abstract fun bindBlockedRepository(impl: BlockedRepositoryImpl): BlockedRepository
 
     @Binds
-    abstract fun bindContactAccountRepository(impl: ContactAccountRepositoryImpl): ContactAccountRepository
+    abstract fun bindContactDetailsRepository(impl: ContactDetailsRepositoryImpl): ContactDetailsRepository
 
     @Binds
     abstract fun bindContactRepository(impl: ContactRepositoryImpl): ContactRepository

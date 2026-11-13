@@ -12,7 +12,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) mainViewModel.onViewIntent(intent)
+        if (savedInstanceState == null) handleIntent(intent)
         setChoolooContent {
             MainScreen(viewModel = mainViewModel)
         }
@@ -20,6 +20,17 @@ class MainActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        mainViewModel.onViewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        when (intent.action) {
+            ACTION_SHOW_MISSED_CALLS -> mainViewModel.onMissedCallsOpened()
+            Intent.ACTION_DIAL, Intent.ACTION_VIEW -> intent.data?.schemeSpecificPart?.let(mainViewModel::onDialNumber)
+        }
+    }
+
+    companion object {
+        const val ACTION_SHOW_MISSED_CALLS = "com.chooloo.www.koler.action.SHOW_MISSED_CALLS"
     }
 }

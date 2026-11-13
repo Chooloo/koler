@@ -10,7 +10,6 @@ interface PreferenceRepository {
 
     suspend fun setDefaultPage(page: Page)
     suspend fun setThemeMode(themeMode: ThemeMode)
-    suspend fun setIsAnimationsEnabled(isEnabled: Boolean)
     suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean)
     suspend fun setIsDialpadTonesEnabled(isEnabled: Boolean)
     suspend fun setIsDialpadVibrateEnabled(isEnabled: Boolean)

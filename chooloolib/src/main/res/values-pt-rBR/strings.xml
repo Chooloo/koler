@@ -44,7 +44,6 @@
     <string name="pref_title_rate">Avaliar</string>
     <string name="pref_title_email">Envie um e-mail</string>
     <string name="pref_title_report_bugs">Relatar falhas</string>
-    <string name="pref_title_animations">Animações</string>
     <string name="pref_title_theme_mode">Tipo de tema</string>
     <string name="pref_title_default_page">Página padrão</string>
     <string name="pref_title_dialpad_vibrate">Vibrar ao tocar no discador</string>
@@ -63,8 +62,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Notificação de ligação</string>
-    <string name="call_notification_channel_description">Notificação da ligação ativa para facilitar uso mais confortável</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -75,5 +72,82 @@
 
     <string name="settings">Configurações</string>
     <string name="cd_search">Procurar</string>
-
+    <string name="action_block">Bloquear</string>
+    <string name="action_call">Ligar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_clear_recents">Apagar todas as chamadas recentes</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_grant_access">Permitir acesso</string>
+    <string name="action_less">Menos</string>
+    <string name="action_message">Mensagem</string>
+    <string name="action_more">Mais</string>
+    <string name="action_open_settings">Abrir configurações</string>
+    <string name="action_unblock">Desbloquear</string>
+    <string name="add_contact">Adicionar contato</string>
+    <string name="call_action_add_call">Adicionar chamada</string>
+    <string name="call_action_hold">Em espera</string>
+    <string name="call_action_keypad">Teclado</string>
+    <string name="call_action_merge">Mesclar</string>
+    <string name="call_action_swap">Alternar</string>
+    <string name="call_notification_channel_incoming_description">Toca e mostra chamadas recebidas</string>
+    <string name="call_notification_channel_incoming_name">Chamadas recebidas</string>
+    <string name="call_notification_channel_ongoing_description">Mostra a chamada em andamento</string>
+    <string name="call_notification_channel_ongoing_name">Chamadas em andamento</string>
+    <string name="call_state_conferenced">Chamada em conferência</string>
+    <string name="caller_payphone">Telefone público</string>
+    <string name="caller_restricted">Restrito</string>
+    <string name="caller_unknown">Desconhecido</string>
+    <string name="cd_add_contact">Adicionar contato</string>
+    <string name="cd_backspace">Apagar</string>
+    <string name="cd_call">Ligar</string>
+    <string name="cd_close_search">Fechar pesquisa</string>
+    <string name="cd_copy_number">Copiar número</string>
+    <string name="cd_dialpad">Teclado</string>
+    <string name="cd_manage_call">Gerenciar chamada</string>
+    <string name="cd_split_call">Separar chamada</string>
+    <string name="confirm_block">Chamadas e mensagens deste número serão bloqueadas.</string>
+    <string name="confirm_block_title">Bloquear este número?</string>
+    <string name="confirm_delete_contact">O contato será removido deste dispositivo e das contas sincronizadas.</string>
+    <string name="confirm_delete_contact_title">Excluir este contato?</string>
+    <string name="contact_unknown_name">Desconhecido</string>
+    <string name="dialer">Telefone</string>
+    <string name="emails">E-mail</string>
+    <string name="error_call_failed">Não foi possível fazer a chamada</string>
+    <string name="error_caller_not_found">Contato não encontrado</string>
+    <string name="error_clear_recents_failed">Não foi possível apagar as chamadas recentes</string>
+    <string name="error_contact_block_change_failed">Não foi possível alterar o bloqueio</string>
+    <string name="error_contact_deletion_failed">Não foi possível excluir o contato</string>
+    <string name="error_contact_favorite_change_failed">Não foi possível alterar o favorito</string>
+    <string name="error_loading_failed">Não foi possível carregar a lista</string>
+    <string name="error_no_app_found">Nenhum app pode realizar esta ação</string>
+    <string name="explain_clear_recents">Todo o histórico de chamadas será apagado permanentemente</string>
+    <string name="loading">Carregando…</string>
+    <string name="loading_contacts">Carregando contatos…</string>
+    <string name="loading_recents">Carregando chamadas recentes…</string>
+    <string name="missed_call_notification_channel_description">Chamadas que você não atendeu</string>
+    <string name="missed_call_notification_channel_name">Chamadas perdidas</string>
+    <string name="missed_call_notification_title">Chamada perdida</string>
+    <string name="missed_calls_notification_title">Chamadas perdidas</string>
+    <string name="no_results_calls">Nenhuma chamada encontrada</string>
+    <string name="permission_rationale_call_log">Permita o acesso ao histórico de chamadas para ver as chamadas recentes.</string>
+    <string name="permission_rationale_contacts">Permita o acesso aos contatos para vê-los aqui.</string>
+    <string name="permission_rationale_phone">Permita o acesso ao telefone para fazer chamadas.</string>
+    <string name="phones">Telefones</string>
+    <string name="pref_section_about">Sobre</string>
+    <string name="pref_section_appearance">Aparência</string>
+    <string name="pref_section_blocking">Bloqueio</string>
+    <string name="pref_section_dialer">Telefone</string>
+    <string name="pref_title_dialpad_tones">Tons do teclado</string>
+    <string name="pref_title_donate">Doar</string>
+    <string name="pref_title_group_recents">Agrupar recentes</string>
+    <string name="recent_calls">Histórico</string>
+    <string name="show_all">Mostrar tudo</string>
+    <string name="show_less">Mostrar menos</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d chamada perdida</item>
+        <item quantity="many">%d chamadas perdidas</item>
+        <item quantity="other">%d chamadas perdidas</item>
+    </plurals>
 </resources>

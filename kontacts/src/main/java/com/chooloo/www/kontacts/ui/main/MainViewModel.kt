@@ -1,9 +1,9 @@
 package com.chooloo.www.kontacts.ui.main
 
-import android.content.Intent
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.ui.caller.CallerTarget
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,24 +19,23 @@ class MainViewModel @Inject constructor(
     data class UiState(
         val isSearching: Boolean = false,
         val searchText: String = "",
-        val selectedContactId: Long? = null,
+        val selectedCaller: CallerTarget? = null,
         val isSettingsOpen: Boolean = false,
     )
 
-    private val selectedContactId = MutableStateFlow<Long?>(null)
+    private val selectedCaller = MutableStateFlow<CallerTarget?>(null)
     private val isSettingsOpen = MutableStateFlow(false)
 
     val uiState: StateFlow<UiState> = combine(
         savedStateHandle.getStateFlow(KEY_SEARCHING, false),
         savedStateHandle.getStateFlow(KEY_SEARCH_TEXT, ""),
-        selectedContactId,
+        selectedCaller,
         isSettingsOpen,
         ::UiState,
     ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
-    fun onViewIntent(intent: Intent) {
-        if (intent.action != Intent.ACTION_VIEW) return
-        selectedContactId.value = intent.data?.lastPathSegment?.toLongOrNull() ?: return
+    fun onContactLinkOpened(link: String) {
+        selectedCaller.value = CallerTarget.LinkTarget(link)
     }
 
     fun onSearchOpen() {
@@ -53,11 +52,11 @@ class MainViewModel @Inject constructor(
     }
 
     fun onContactSelected(contactId: Long) {
-        selectedContactId.value = contactId
+        selectedCaller.value = CallerTarget.ContactTarget(contactId)
     }
 
     fun onContactDismiss() {
-        selectedContactId.value = null
+        selectedCaller.value = null
     }
 
     fun onSettingsOpen() {

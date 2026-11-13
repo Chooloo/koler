@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Contact
-import com.chooloo.www.chooloolib.domain.model.ContactAccount
+import com.chooloo.www.chooloolib.domain.model.ContactDetails
 import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.domain.model.Recent
 import com.chooloo.www.chooloolib.domain.repository.BlockedRepository
-import com.chooloo.www.chooloolib.domain.repository.ContactAccountRepository
+import com.chooloo.www.chooloolib.domain.repository.ContactDetailsRepository
 import com.chooloo.www.chooloolib.domain.repository.ContactRepository
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.RecentRepository
@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
@@ -39,6 +40,7 @@ import kotlinx.coroutines.launch
 sealed interface CallerTarget {
     data class ContactTarget(val contactId: Long) : CallerTarget
     data class RecentTarget(val recentId: Long) : CallerTarget
+    data class LinkTarget(val link: String) : CallerTarget
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -50,7 +52,7 @@ class CallerViewModel @AssistedInject constructor(
     private val blockedRepository: BlockedRepository,
     private val contactRepository: ContactRepository,
     private val telecomRepository: TelecomRepository,
-    private val contactAccountRepository: ContactAccountRepository,
+    private val contactDetailsRepository: ContactDetailsRepository,
 ) : ViewModel() {
     @AssistedFactory
     interface Factory {
@@ -102,7 +104,7 @@ class CallerViewModel @AssistedInject constructor(
             if (contactId == null) {
                 flowOf(Details())
             } else {
-                combine(phoneRepository.phones(contactId), contactAccountRepository.accounts(contactId), ::detailsOf)
+                combine(phoneRepository.phones(contactId), contactDetailsRepository.details(contactId), ::detailsOf)
                     .catch { error ->
                         Log.e(TAG, "Failed loading caller details", error)
                         emit(Details())
@@ -166,18 +168,17 @@ class CallerViewModel @AssistedInject constructor(
         message.value = null
     }
 
-    private fun detailsOf(phones: List<Phone>, accounts: List<ContactAccount>) = Details(
+    private fun detailsOf(phones: List<Phone>, details: ContactDetails) = Details(
         phones = phones.distinctBy { it.number },
-        emails = accounts.dataOf(ContactAccount.Type.EMAIL).distinct(),
-        organization = accounts.dataOf(ContactAccount.Type.ORGANIZATION).firstOrNull(),
-        whatsappNumber = accounts.dataOf(ContactAccount.Type.WHATSAPP).firstOrNull(),
+        emails = details.emails,
+        organization = details.organization,
+        whatsappNumber = details.whatsappNumber,
     )
-
-    private fun List<ContactAccount>.dataOf(type: ContactAccount.Type) =
-        filter { it.type == type }.mapNotNull { it.data?.takeIf(String::isNotBlank) }
 
     private fun callerOf(target: CallerTarget): Flow<Caller?> = when (target) {
         is CallerTarget.ContactTarget -> contactCaller(target.contactId)
+        is CallerTarget.LinkTarget -> flow { emit(contactRepository.contactIdOf(target.link)) }
+            .flatMapLatest { contactId -> contactId?.let(::contactCaller) ?: flowOf(null) }
         is CallerTarget.RecentTarget -> recentRepository.recent(target.recentId).flatMapLatest { recent ->
             when {
                 recent == null -> flowOf(null)

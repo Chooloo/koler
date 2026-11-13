@@ -22,10 +22,8 @@ fun RecentsScreen(
     viewModel: RecentsViewModel = hiltViewModel()
 ) {
     Permissioned(
-        permissions = listOf(
-            Manifest.permission.READ_CALL_LOG,
-            Manifest.permission.WRITE_CALL_LOG
-        ),
+        permissions = listOf(Manifest.permission.READ_CALL_LOG),
+        optionalPermissions = listOf(Manifest.permission.WRITE_CALL_LOG),
         rationaleRes = R.string.permission_rationale_call_log,
     ) {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
