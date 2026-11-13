@@ -25,7 +25,6 @@ class PreferenceRepositoryImpl @Inject constructor(
             Settings(
                 defaultPage = preferences.enum(DEFAULT_PAGE, PAGE_KEYS) ?: defaults.defaultPage,
                 themeMode = preferences.enum(THEME_MODE, THEME_MODE_KEYS) ?: defaults.themeMode,
-                isAnimationsEnabled = preferences[ANIMATIONS] ?: defaults.isAnimationsEnabled,
                 isGroupRecentsEnabled = preferences[GROUP_RECENTS] ?: defaults.isGroupRecentsEnabled,
                 isDialpadTonesEnabled = preferences[DIALPAD_TONES] ?: defaults.isDialpadTonesEnabled,
                 isDialpadVibrateEnabled = preferences[DIALPAD_VIBRATE] ?: defaults.isDialpadVibrateEnabled,
@@ -36,8 +35,6 @@ class PreferenceRepositoryImpl @Inject constructor(
     override suspend fun setDefaultPage(page: Page) = set(DEFAULT_PAGE, PAGE_KEYS.getValue(page))
 
     override suspend fun setThemeMode(themeMode: ThemeMode) = set(THEME_MODE, THEME_MODE_KEYS.getValue(themeMode))
-
-    override suspend fun setIsAnimationsEnabled(isEnabled: Boolean) = set(ANIMATIONS, isEnabled)
 
     override suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean) = set(GROUP_RECENTS, isEnabled)
 
@@ -55,7 +52,6 @@ class PreferenceRepositoryImpl @Inject constructor(
     private companion object {
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val DEFAULT_PAGE = stringPreferencesKey("default_page")
-        val ANIMATIONS = booleanPreferencesKey("animations")
         val GROUP_RECENTS = booleanPreferencesKey("group_recents")
         val DIALPAD_TONES = booleanPreferencesKey("dialpad_tones")
         val DIALPAD_VIBRATE = booleanPreferencesKey("dialpad_vibrate")

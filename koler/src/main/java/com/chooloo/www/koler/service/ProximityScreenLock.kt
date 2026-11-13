@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.PowerManager
 import android.util.Log
@@ -41,6 +42,8 @@ class ProximityScreenLock @Inject constructor(
         update(ProximityScreenOff.RELEASE_WHEN_UNCOVERED)
     }
 
+    // Held for the whole call, which has no upper time limit; released when the call leaves the ear or ends.
+    @SuppressLint("WakelockTimeout")
     private fun update(screenOff: ProximityScreenOff) {
         when (screenOff) {
             ProximityScreenOff.HOLD -> wakeLock?.acquire()

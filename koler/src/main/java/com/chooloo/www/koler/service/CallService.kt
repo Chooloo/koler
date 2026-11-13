@@ -46,6 +46,8 @@ class CallService : InCallService() {
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         callRepository.onCallAdded(call)
+        // The framework reports only changes from its own starting value, so read the current value.
+        callRepository.onCanAddCallChanged(canAddCall())
         if (call.telecomState != Call.STATE_RINGING || (calls.size == 1 && !isPhoneInUse() && !isDoNotDisturbOn())) {
             showCallUi(showDialpad = false)
         }

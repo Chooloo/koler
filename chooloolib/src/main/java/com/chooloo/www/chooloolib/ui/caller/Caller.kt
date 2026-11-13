@@ -258,7 +258,7 @@ private fun History(history: List<Recent>, onCall: (String) -> Unit, onCopy: (St
                 title = listOfNotNull(time, duration).joinToString(" · "),
                 onClick = { onCall(recent.number) },
                 onLongClick = { onCopy(recent.number) },
-                startContainer = {
+                endContainer = {
                     RecentTypeIcon(type = recent.type, contentDescription = null)
                 }
             )

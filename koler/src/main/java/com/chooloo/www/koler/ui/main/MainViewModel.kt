@@ -1,7 +1,6 @@
 package com.chooloo.www.koler.ui.main
 
-import android.content.Intent
-import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,8 +28,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-const val ACTION_SHOW_MISSED_CALLS = "com.chooloo.www.koler.action.SHOW_MISSED_CALLS"
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -88,17 +85,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onViewIntent(intent: Intent) {
-        when (intent.action) {
-            ACTION_SHOW_MISSED_CALLS -> onMissedCallsOpened()
-            Intent.ACTION_DIAL, Intent.ACTION_VIEW -> openDialpad(intent)
-        }
-    }
-
-    private fun openDialpad(intent: Intent) {
-        val number = intent.data?.schemeSpecificPart?.let(Uri::decode)?.trim()
-        if (number.isNullOrEmpty()) return
-        transientState.update { it.copy(dialNumber = number) }
+    fun onDialNumber(number: String) {
+        val trimmed = number.trim()
+        if (trimmed.isEmpty()) return
+        transientState.update { it.copy(dialNumber = trimmed) }
         if (tab.value == null) savedStateHandle[KEY_TAB] = Tab.RECENTS
         savedStateHandle[KEY_DIALPAD_OPEN] = true
     }
@@ -108,7 +98,9 @@ class MainViewModel @Inject constructor(
         onDialpadClose()
         onSearchClose()
         transientState.value = TransientState()
-        viewModelScope.launch(NonCancellable) { clearMissedCalls() }
+        viewModelScope.launch(NonCancellable) {
+            runCatching { clearMissedCalls() }.onFailure { Log.e(TAG, "Failed clearing missed calls", it) }
+        }
     }
 
     fun onTabSelected(tab: Tab) {
@@ -167,6 +159,7 @@ class MainViewModel @Inject constructor(
     }
 
     private companion object {
+        const val TAG = "MainViewModel"
         const val KEY_TAB = "tab"
         const val KEY_DIALPAD_OPEN = "dialpad_open"
         const val KEY_SEARCHING = "searching"

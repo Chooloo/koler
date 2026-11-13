@@ -44,7 +44,6 @@
     <string name="pref_title_rate">Oceń</string>
     <string name="pref_title_email">Wyślij do nas Emaila</string>
     <string name="pref_title_report_bugs">Zgłoś Błędy</string>
-    <string name="pref_title_animations">Animacje</string>
     <string name="pref_title_theme_mode">Tryb Motywu</string>
     <string name="pref_title_default_page">Domyślna Strona</string>
     <string name="pref_title_dialpad_vibrate">Wibruj na klawiaturze numeryczna</string>
@@ -63,8 +62,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Powiadomienia Połączeń</string>
-    <string name="call_notification_channel_description">Powiadomienie aktywnego połączenia, pokazane dla komfortowego użytku</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -75,5 +72,83 @@
 
     <string name="settings">Ustawienia</string>
     <string name="cd_search">Szukaj</string>
-
+    <string name="action_block">Zablokuj</string>
+    <string name="action_call">Zadzwoń</string>
+    <string name="action_cancel">Anuluj</string>
+    <string name="action_clear_recents">Usuń wszystkie ostatnie połączenia</string>
+    <string name="action_delete">Usuń</string>
+    <string name="action_edit">Edytuj</string>
+    <string name="action_grant_access">Zezwól na dostęp</string>
+    <string name="action_less">Mniej</string>
+    <string name="action_message">Wiadomość</string>
+    <string name="action_more">Więcej</string>
+    <string name="action_open_settings">Otwórz ustawienia</string>
+    <string name="action_unblock">Odblokuj</string>
+    <string name="add_contact">Dodaj kontakt</string>
+    <string name="call_action_add_call">Dodaj połączenie</string>
+    <string name="call_action_hold">Zawieś</string>
+    <string name="call_action_keypad">Klawiatura</string>
+    <string name="call_action_merge">Scal</string>
+    <string name="call_action_swap">Przełącz</string>
+    <string name="call_notification_channel_incoming_description">Dzwoni i pokazuje połączenia przychodzące</string>
+    <string name="call_notification_channel_incoming_name">Połączenia przychodzące</string>
+    <string name="call_notification_channel_ongoing_description">Pokazuje trwające połączenie</string>
+    <string name="call_notification_channel_ongoing_name">Trwające połączenia</string>
+    <string name="call_state_conferenced">Połączenie konferencyjne</string>
+    <string name="caller_payphone">Automat telefoniczny</string>
+    <string name="caller_restricted">Zastrzeżony</string>
+    <string name="caller_unknown">Nieznany</string>
+    <string name="cd_add_contact">Dodaj kontakt</string>
+    <string name="cd_backspace">Backspace</string>
+    <string name="cd_call">Zadzwoń</string>
+    <string name="cd_close_search">Zamknij wyszukiwanie</string>
+    <string name="cd_copy_number">Kopiuj numer</string>
+    <string name="cd_dialpad">Klawiatura</string>
+    <string name="cd_manage_call">Zarządzaj połączeniem</string>
+    <string name="cd_split_call">Rozdziel połączenie</string>
+    <string name="confirm_block">Połączenia i wiadomości z tego numeru będą blokowane.</string>
+    <string name="confirm_block_title">Zablokować ten numer?</string>
+    <string name="confirm_delete_contact">Kontakt zostanie usunięty z tego urządzenia i zsynchronizowanych kont.</string>
+    <string name="confirm_delete_contact_title">Usunąć ten kontakt?</string>
+    <string name="contact_unknown_name">Nieznany</string>
+    <string name="dialer">Telefon</string>
+    <string name="emails">E-mail</string>
+    <string name="error_call_failed">Nie udało się zadzwonić</string>
+    <string name="error_caller_not_found">Nie znaleziono rozmówcy</string>
+    <string name="error_clear_recents_failed">Nie udało się usunąć ostatnich połączeń</string>
+    <string name="error_contact_block_change_failed">Nie udało się zmienić blokady</string>
+    <string name="error_contact_deletion_failed">Nie udało się usunąć kontaktu</string>
+    <string name="error_contact_favorite_change_failed">Nie udało się zmienić ulubionych</string>
+    <string name="error_loading_failed">Nie udało się wczytać listy</string>
+    <string name="error_no_app_found">Żadna aplikacja nie obsługuje tej czynności</string>
+    <string name="explain_clear_recents">Cała historia połączeń zostanie trwale usunięta</string>
+    <string name="loading">Wczytywanie…</string>
+    <string name="loading_contacts">Wczytywanie kontaktów…</string>
+    <string name="loading_recents">Wczytywanie ostatnich połączeń…</string>
+    <string name="missed_call_notification_channel_description">Połączenia, których nie odebrano</string>
+    <string name="missed_call_notification_channel_name">Nieodebrane połączenia</string>
+    <string name="missed_call_notification_title">Nieodebrane połączenie</string>
+    <string name="missed_calls_notification_title">Nieodebrane połączenia</string>
+    <string name="no_results_calls">Nie znaleziono połączeń</string>
+    <string name="permission_rationale_call_log">Zezwól na dostęp do historii połączeń, aby widzieć ostatnie połączenia.</string>
+    <string name="permission_rationale_contacts">Zezwól na dostęp do kontaktów, aby je tu widzieć.</string>
+    <string name="permission_rationale_phone">Zezwól na dostęp do telefonu, aby dzwonić.</string>
+    <string name="phones">Numery</string>
+    <string name="pref_section_about">Informacje</string>
+    <string name="pref_section_appearance">Wygląd</string>
+    <string name="pref_section_blocking">Blokowanie</string>
+    <string name="pref_section_dialer">Telefon</string>
+    <string name="pref_title_dialpad_tones">Dźwięki klawiatury</string>
+    <string name="pref_title_donate">Wesprzyj</string>
+    <string name="pref_title_group_recents">Grupuj ostatnie</string>
+    <string name="recent_calls">Historia</string>
+    <string name="show_all">Pokaż wszystko</string>
+    <string name="show_less">Pokaż mniej</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d nieodebrane połączenie</item>
+        <item quantity="few">%d nieodebrane połączenia</item>
+        <item quantity="many">%d nieodebranych połączeń</item>
+        <item quantity="other">%d nieodebranego połączenia</item>
+    </plurals>
 </resources>

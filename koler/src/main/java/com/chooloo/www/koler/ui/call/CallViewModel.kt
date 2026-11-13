@@ -125,6 +125,14 @@ class CallViewModel @Inject constructor(
         }
     }
 
+    init {
+        closeAddCallWhenCallAdded()
+    }
+
+    suspend fun awaitCallsEnded() {
+        callRepository.calls.first { it.isEmpty() }
+    }
+
     fun onAccept() {
         uiState.value.call?.id?.let(callRepository::answer)
     }
@@ -163,6 +171,16 @@ class CallViewModel @Inject constructor(
     fun onShowKeypad() = showSheet(Sheet.KEYPAD)
 
     fun onSheetDismiss() = localState.update { it.copy(sheet = null) }
+
+    private fun closeAddCallWhenCallAdded() {
+        viewModelScope.launch {
+            var previousCount = callRepository.calls.value.size
+            callRepository.calls.collect { calls ->
+                if (calls.size > previousCount) localState.update { if (it.sheet == Sheet.ADD_CALL) it.copy(sheet = null) else it }
+                previousCount = calls.size
+            }
+        }
+    }
 
     private fun showSheet(sheet: Sheet) = localState.update { it.copy(sheet = sheet) }
 

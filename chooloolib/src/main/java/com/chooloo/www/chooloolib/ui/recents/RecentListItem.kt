@@ -12,6 +12,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.RecentGroup
 import com.chooloo.www.chooloolib.ui.common.fallbackNameRes
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
+import com.chooloo.www.chooloolib.ui.components.Avatar
 import com.chooloo.www.chooloolib.ui.theme.Sizes
 
 @Composable
@@ -40,6 +41,9 @@ fun RecentListItem(
             ?: recent.number.ifEmpty { stringResource(R.string.caller_unknown) },
         onClick = onClick,
         onLongClick = onLongClick,
+        startContainer = {
+            Avatar(name = recent.name, photoUri = recent.photoUri, size = Sizes.AvatarSmall)
+        },
         endContainer = {
             RecentTypeIcon(type = recent.type, contentDescription = typeLabel)
         }

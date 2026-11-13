@@ -45,9 +45,7 @@ class PhoneRepositoryImpl @Inject constructor(
                     Phone.NUMBER,
                     Phone.STARRED,
                     Phone.CONTACT_ID,
-                    Phone.IS_SUPER_PRIMARY,
                     Phone.PHOTO_THUMBNAIL_URI,
-                    Phone.DISPLAY_NAME_PRIMARY,
                 ),
                 selection = contactId?.let { "${Phone.CONTACT_ID} = ?" },
                 selectionArgs = contactId?.let { arrayOf(it.toString()) },
@@ -82,12 +80,10 @@ class PhoneRepositoryImpl @Inject constructor(
         id = cursor.long(Phone._ID),
         contactId = cursor.long(Phone.CONTACT_ID),
         number = cursor.string(Phone.NUMBER).orEmpty(),
-        displayName = cursor.string(Phone.DISPLAY_NAME_PRIMARY),
         label = cursor.string(Phone.LABEL),
         type = cursor.int(Phone.TYPE),
         photoUri = cursor.string(Phone.PHOTO_THUMBNAIL_URI),
         isFavorite = cursor.int(Phone.STARRED) == 1,
-        isPrimary = cursor.int(Phone.IS_SUPER_PRIMARY) != 0,
     )
 
     private fun toPhoneLookup(cursor: Cursor) = PhoneLookup(

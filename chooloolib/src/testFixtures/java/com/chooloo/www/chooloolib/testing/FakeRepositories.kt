@@ -94,8 +94,6 @@ class FakePreferenceRepository(initial: Settings = Settings()) : PreferenceRepos
 
     override suspend fun setThemeMode(themeMode: ThemeMode) = state.update { it.copy(themeMode = themeMode) }
 
-    override suspend fun setIsAnimationsEnabled(isEnabled: Boolean) = state.update { it.copy(isAnimationsEnabled = isEnabled) }
-
     override suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean) = state.update { it.copy(isGroupRecentsEnabled = isEnabled) }
 
     override suspend fun setIsDialpadTonesEnabled(isEnabled: Boolean) = state.update { it.copy(isDialpadTonesEnabled = isEnabled) }

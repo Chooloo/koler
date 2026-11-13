@@ -6,22 +6,17 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
-import com.chooloo.www.koler.domain.CallRepository
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CallActivity : BaseActivity() {
-    @Inject lateinit var callRepository: CallRepository
-
     private val callViewModel: CallViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showWhenLocked()
-        showKeypadIfRequested(intent)
+        if (savedInstanceState == null) showKeypadIfRequested(intent)
         finishWhenCallsEnd()
         setChoolooContent {
             CallScreen(callViewModel = callViewModel)
@@ -39,7 +34,7 @@ class CallActivity : BaseActivity() {
 
     private fun finishWhenCallsEnd() {
         lifecycleScope.launch {
-            callRepository.calls.first { it.isEmpty() }
+            callViewModel.awaitCallsEnded()
             finish()
         }
     }

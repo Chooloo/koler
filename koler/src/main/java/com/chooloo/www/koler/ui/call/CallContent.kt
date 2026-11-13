@@ -2,10 +2,16 @@ package com.chooloo.www.koler.ui.call
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.CallEnd
@@ -18,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.components.Avatar
 import com.chooloo.www.chooloolib.ui.components.FloatingBubble
@@ -28,6 +35,7 @@ import com.chooloo.www.koler.domain.CallsState
 @Composable
 fun CallContent(
     callerName: String,
+    avatarName: String?,
     status: String?,
     callerPhotoUri: String?,
     callsState: CallsState,
@@ -37,29 +45,51 @@ fun CallContent(
     onHangup: () -> Unit,
     onManage: () -> Unit,
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = Spacing.ExtraLarge),
-    ) {
-        CallerHeader(callerName, status, callerPhotoUri)
-        if (callsState in ACTIONS_STATES) {
-            CallActions(actions = actions, onActionClick = onActionClick)
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val header = @Composable { CallerHeader(callerName, avatarName, status, callerPhotoUri) }
+        val buttons = @Composable {
+            if (callsState in ACTIONS_STATES) {
+                CallActions(actions = actions, onActionClick = onActionClick)
+            }
+            CallControls(callsState, onAccept, onHangup, onManage)
         }
-        CallControls(callsState, onAccept, onHangup, onManage)
+
+        val height = maxHeight
+        if (maxWidth > height) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize()) {
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)) { header() }
+                ScrollingColumn(minHeight = height, modifier = Modifier.weight(1f)) { buttons() }
+            }
+        } else {
+            ScrollingColumn(minHeight = height, modifier = Modifier.fillMaxWidth()) {
+                Box(modifier = Modifier.padding(top = Spacing.ExtraLarge)) { header() }
+                buttons()
+            }
+        }
     }
 }
 
 @Composable
-private fun CallerHeader(name: String, status: String?, photoUri: String?) {
+private fun ScrollingColumn(minHeight: Dp, modifier: Modifier, content: @Composable () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .heightIn(min = minHeight)
+            .padding(vertical = Spacing.ExtraLarge),
+    ) {
+        content()
+    }
+}
+
+@Composable
+private fun CallerHeader(name: String, avatarName: String?, status: String?, photoUri: String?) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.Small),
-        modifier = Modifier.padding(top = Spacing.ExtraLarge),
     ) {
-        Avatar(name = name, photoUri = photoUri, size = Sizes.AvatarLarge)
+        Avatar(name = avatarName, photoUri = photoUri, size = Sizes.AvatarLarge)
         Text(
             text = name,
             style = MaterialTheme.typography.headlineMedium,
@@ -96,7 +126,7 @@ private fun CallControls(callsState: CallsState, onAccept: () -> Unit, onHangup:
             containerColor = MaterialTheme.colorScheme.errorContainer,
             contentColor = MaterialTheme.colorScheme.onErrorContainer,
         )
-        if (callsState in INCOMING_STATES) {
+        if (callsState == CallsState.INCOMING) {
             FloatingBubble(
                 icon = Icons.Rounded.Call,
                 contentDescription = stringResource(R.string.cd_accept_call),
@@ -112,6 +142,5 @@ private fun CallControls(callsState: CallsState, onAccept: () -> Unit, onHangup:
 fun callStatus(elapsedSeconds: Long?, stateLabel: String?): String? =
     elapsedSeconds?.let(DateUtils::formatElapsedTime) ?: stateLabel
 
-private val ACTIONS_STATES = setOf(CallsState.ACTIVE, CallsState.ACTIVE_MULTI, CallsState.OUTGOING, CallsState.PENDING_OUTGOING)
-private val INCOMING_STATES = setOf(CallsState.INCOMING, CallsState.EXTRA_INCOMING)
+private val ACTIONS_STATES = setOf(CallsState.ACTIVE, CallsState.ACTIVE_MULTI, CallsState.OUTGOING)
 private val ENDED_STATES = setOf(CallsState.DISCONNECTED, CallsState.NO_CALLS)

@@ -6,5 +6,4 @@ data class Contact(
     val photoUri: String? = null,
     val number: String? = null,
     val isFavorite: Boolean = false,
-    val hasPhoneNumber: Boolean = false,
 )

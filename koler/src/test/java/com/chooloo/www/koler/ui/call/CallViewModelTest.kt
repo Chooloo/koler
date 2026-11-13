@@ -125,4 +125,24 @@ class CallViewModelTest {
 
         assertEquals(listOf("decline c1"), callRepository.actions)
     }
+
+    @Test
+    fun `add call sheet closes when the new call is added`() = runSubscribed {
+        callRepository.calls.value = listOf(activeCall())
+        viewModel.onCallActionClick(CallActionType.ADD_CALL)
+
+        callRepository.calls.value = listOf(activeCall(state = CallState.HOLDING), activeCall(id = "c2", state = CallState.DIALING))
+
+        assertEquals(null, viewModel.uiState.value.sheet)
+    }
+
+    @Test
+    fun `keypad sheet stays open when a call is added`() = runSubscribed {
+        callRepository.calls.value = listOf(activeCall())
+        viewModel.onShowKeypad()
+
+        callRepository.calls.value = listOf(activeCall(), activeCall(id = "c2", state = CallState.INCOMING))
+
+        assertEquals(CallViewModel.Sheet.KEYPAD, viewModel.uiState.value.sheet)
+    }
 }

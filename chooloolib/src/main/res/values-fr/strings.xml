@@ -48,7 +48,6 @@
     <string name="pref_title_rate">Évaluer</string>
     <string name="pref_title_email">Nous envoyer un e-mail</string>
     <string name="pref_title_report_bugs">Signaler un bug</string>
-    <string name="pref_title_animations">Animations</string>
     <string name="pref_title_theme_mode">Thème de l\'application</string>
     <string name="pref_title_default_page">Page par défaut</string>
     <string name="pref_title_dialpad_vibrate">Vibrer à l\'appui sur le clavier</string>
@@ -68,8 +67,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Notification d\'appel</string>
-    <string name="call_notification_channel_description">Notification d\'appel en cours, affichée pour un usage confortable et un accès facile aux actions d\'appel</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -84,5 +81,76 @@
     <string name="cd_search">Recherche</string>
     <string name="action_edit">Modifier</string>
     <string name="action_delete">Supprimer</string>
-
+    <string name="action_block">Bloquer</string>
+    <string name="action_call">Appeler</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_grant_access">Autoriser l\'accès</string>
+    <string name="action_less">Moins</string>
+    <string name="action_message">Message</string>
+    <string name="action_more">Plus</string>
+    <string name="action_open_settings">Ouvrir les paramètres</string>
+    <string name="action_unblock">Débloquer</string>
+    <string name="add_contact">Ajouter un contact</string>
+    <string name="call_action_add_call">Ajouter un appel</string>
+    <string name="call_action_hold">En attente</string>
+    <string name="call_action_keypad">Clavier</string>
+    <string name="call_action_merge">Fusionner</string>
+    <string name="call_action_swap">Permuter</string>
+    <string name="call_notification_channel_incoming_description">Sonne et affiche les appels entrants</string>
+    <string name="call_notification_channel_incoming_name">Appels entrants</string>
+    <string name="call_notification_channel_ongoing_description">Affiche l\'appel en cours</string>
+    <string name="call_notification_channel_ongoing_name">Appels en cours</string>
+    <string name="call_state_conferenced">Appel en conférence</string>
+    <string name="caller_payphone">Cabine téléphonique</string>
+    <string name="caller_restricted">Masqué</string>
+    <string name="caller_unknown">Inconnu</string>
+    <string name="cd_add_contact">Ajouter un contact</string>
+    <string name="cd_backspace">Retour arrière</string>
+    <string name="cd_close_search">Fermer la recherche</string>
+    <string name="cd_copy_number">Copier le numéro</string>
+    <string name="cd_dialpad">Clavier</string>
+    <string name="cd_split_call">Séparer l\'appel</string>
+    <string name="confirm_block">Les appels et messages de ce numéro seront bloqués.</string>
+    <string name="confirm_block_title">Bloquer ce numéro ?</string>
+    <string name="confirm_delete_contact">Le contact sera supprimé de cet appareil et de ses comptes synchronisés.</string>
+    <string name="confirm_delete_contact_title">Supprimer ce contact ?</string>
+    <string name="contact_unknown_name">Inconnu</string>
+    <string name="dialer">Téléphone</string>
+    <string name="emails">E-mail</string>
+    <string name="error_call_failed">Impossible de passer l\'appel</string>
+    <string name="error_caller_not_found">Appelant introuvable</string>
+    <string name="error_clear_recents_failed">Impossible d\'effacer les appels récents</string>
+    <string name="error_contact_block_change_failed">Impossible de modifier le blocage</string>
+    <string name="error_contact_deletion_failed">Impossible de supprimer le contact</string>
+    <string name="error_contact_favorite_change_failed">Impossible de modifier le favori</string>
+    <string name="error_loading_failed">Impossible de charger la liste</string>
+    <string name="error_no_app_found">Aucune application ne peut effectuer cette action</string>
+    <string name="loading">Chargement…</string>
+    <string name="loading_contacts">Chargement des contacts…</string>
+    <string name="loading_recents">Chargement des appels récents…</string>
+    <string name="missed_call_notification_channel_description">Appels auxquels vous n\'avez pas répondu</string>
+    <string name="missed_call_notification_channel_name">Appels manqués</string>
+    <string name="missed_call_notification_title">Appel manqué</string>
+    <string name="missed_calls_notification_title">Appels manqués</string>
+    <string name="no_results_calls">Aucun appel trouvé</string>
+    <string name="permission_rationale_call_log">Autorisez l\'accès à votre historique d\'appels pour afficher les appels récents.</string>
+    <string name="permission_rationale_contacts">Autorisez l\'accès à vos contacts pour les afficher ici.</string>
+    <string name="permission_rationale_phone">Autorisez l\'accès au téléphone pour passer des appels.</string>
+    <string name="phones">Numéros</string>
+    <string name="pref_section_about">À propos</string>
+    <string name="pref_section_appearance">Apparence</string>
+    <string name="pref_section_blocking">Blocage</string>
+    <string name="pref_section_dialer">Téléphone</string>
+    <string name="pref_title_dialpad_tones">Tonalités du clavier</string>
+    <string name="pref_title_donate">Faire un don</string>
+    <string name="pref_title_group_recents">Regrouper les appels récents</string>
+    <string name="recent_calls">Historique</string>
+    <string name="show_all">Tout afficher</string>
+    <string name="show_less">Afficher moins</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d appel manqué</item>
+        <item quantity="many">%d appels manqués</item>
+        <item quantity="other">%d appels manqués</item>
+    </plurals>
 </resources>

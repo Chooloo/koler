@@ -44,7 +44,6 @@
     <string name="pref_title_rate">Vota</string>
     <string name="pref_title_email">Inviaci un\'email</string>
     <string name="pref_title_report_bugs">Segnala Bug</string>
-    <string name="pref_title_animations">Animazioni</string>
     <string name="pref_title_theme_mode">Modalità Tema</string>
     <string name="pref_title_default_page">Pagina Predefinita</string>
     <string name="pref_title_dialpad_tones">Toni del tastierino al clic</string>
@@ -64,8 +63,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Notifica di Chiamata</string>
-    <string name="call_notification_channel_description">Notifica della chiamata attiva, mostrata per uso confortevole</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -76,5 +73,81 @@
 
     <string name="settings">Impostazioni</string>
     <string name="cd_search">Cerca</string>
-
+    <string name="action_block">Blocca</string>
+    <string name="action_call">Chiama</string>
+    <string name="action_cancel">Annulla</string>
+    <string name="action_clear_recents">Elimina tutte le chiamate recenti</string>
+    <string name="action_delete">Elimina</string>
+    <string name="action_edit">Modifica</string>
+    <string name="action_grant_access">Consenti accesso</string>
+    <string name="action_less">Meno</string>
+    <string name="action_message">Messaggio</string>
+    <string name="action_more">Altro</string>
+    <string name="action_open_settings">Apri impostazioni</string>
+    <string name="action_unblock">Sblocca</string>
+    <string name="add_contact">Aggiungi contatto</string>
+    <string name="call_action_add_call">Aggiungi chiamata</string>
+    <string name="call_action_hold">In attesa</string>
+    <string name="call_action_keypad">Tastierino</string>
+    <string name="call_action_merge">Unisci</string>
+    <string name="call_action_swap">Scambia</string>
+    <string name="call_notification_channel_incoming_description">Squilla e mostra le chiamate in arrivo</string>
+    <string name="call_notification_channel_incoming_name">Chiamate in arrivo</string>
+    <string name="call_notification_channel_ongoing_description">Mostra la chiamata in corso</string>
+    <string name="call_notification_channel_ongoing_name">Chiamate in corso</string>
+    <string name="call_state_conferenced">Chiamata in conferenza</string>
+    <string name="caller_payphone">Telefono pubblico</string>
+    <string name="caller_restricted">Riservato</string>
+    <string name="caller_unknown">Sconosciuto</string>
+    <string name="cd_add_contact">Aggiungi contatto</string>
+    <string name="cd_backspace">Cancella</string>
+    <string name="cd_call">Chiama</string>
+    <string name="cd_close_search">Chiudi ricerca</string>
+    <string name="cd_copy_number">Copia numero</string>
+    <string name="cd_dialpad">Tastierino</string>
+    <string name="cd_manage_call">Gestisci chiamata</string>
+    <string name="cd_split_call">Separa chiamata</string>
+    <string name="confirm_block">Chiamate e messaggi da questo numero saranno bloccati.</string>
+    <string name="confirm_block_title">Bloccare questo numero?</string>
+    <string name="confirm_delete_contact">Il contatto verrà rimosso da questo dispositivo e dagli account sincronizzati.</string>
+    <string name="confirm_delete_contact_title">Eliminare questo contatto?</string>
+    <string name="contact_unknown_name">Sconosciuto</string>
+    <string name="dialer">Telefono</string>
+    <string name="emails">Email</string>
+    <string name="error_call_failed">Impossibile effettuare la chiamata</string>
+    <string name="error_caller_not_found">Chiamante non trovato</string>
+    <string name="error_clear_recents_failed">Impossibile eliminare le chiamate recenti</string>
+    <string name="error_contact_block_change_failed">Impossibile modificare il blocco</string>
+    <string name="error_contact_deletion_failed">Impossibile eliminare il contatto</string>
+    <string name="error_contact_favorite_change_failed">Impossibile modificare il preferito</string>
+    <string name="error_loading_failed">Impossibile caricare l\'elenco</string>
+    <string name="error_no_app_found">Nessuna app può eseguire questa azione</string>
+    <string name="explain_clear_recents">Tutta la cronologia chiamate verrà eliminata definitivamente</string>
+    <string name="loading">Caricamento…</string>
+    <string name="loading_contacts">Caricamento contatti…</string>
+    <string name="loading_recents">Caricamento chiamate recenti…</string>
+    <string name="missed_call_notification_channel_description">Chiamate a cui non hai risposto</string>
+    <string name="missed_call_notification_channel_name">Chiamate perse</string>
+    <string name="missed_call_notification_title">Chiamata persa</string>
+    <string name="missed_calls_notification_title">Chiamate perse</string>
+    <string name="no_results_calls">Nessuna chiamata trovata</string>
+    <string name="permission_rationale_call_log">Consenti l\'accesso alla cronologia chiamate per vedere le chiamate recenti.</string>
+    <string name="permission_rationale_contacts">Consenti l\'accesso ai contatti per vederli qui.</string>
+    <string name="permission_rationale_phone">Consenti l\'accesso al telefono per effettuare chiamate.</string>
+    <string name="phones">Numeri</string>
+    <string name="pref_section_about">Informazioni</string>
+    <string name="pref_section_appearance">Aspetto</string>
+    <string name="pref_section_blocking">Blocco</string>
+    <string name="pref_section_dialer">Telefono</string>
+    <string name="pref_title_donate">Dona</string>
+    <string name="pref_title_group_recents">Raggruppa recenti</string>
+    <string name="recent_calls">Cronologia</string>
+    <string name="show_all">Mostra tutto</string>
+    <string name="show_less">Mostra meno</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d chiamata persa</item>
+        <item quantity="many">%d chiamate perse</item>
+        <item quantity="other">%d chiamate perse</item>
+    </plurals>
 </resources>

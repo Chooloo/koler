@@ -3,6 +3,7 @@ package com.chooloo.www.koler.service
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.chooloo.www.chooloolib.di.ApplicationScope
 import com.chooloo.www.koler.domain.ClearMissedCalls
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,9 +21,15 @@ class MissedCallDismissReceiver : BroadcastReceiver() {
         applicationScope.launch {
             try {
                 clearMissedCalls()
+            } catch (error: Exception) {
+                Log.e(TAG, "Failed clearing missed calls", error)
             } finally {
                 pendingResult.finish()
             }
         }
+    }
+
+    private companion object {
+        const val TAG = "MissedCallDismissReceiver"
     }
 }

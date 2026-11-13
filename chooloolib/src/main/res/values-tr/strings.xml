@@ -41,20 +41,13 @@
     <!--endregion-->
 
     <!--region Account Type Labels-->
-    <string name="type_label_im">İM</string>
-    <string name="type_label_name">Ad</string>
-    <string name="type_label_phone">Telefon</string>
-    <string name="type_label_email">E-posta</string>
-    <string name="type_label_custom">Özel</string>
     <string name="type_label_whatsapp">WhatsApp</string>
-    <string name="type_label_organization">Kuruluş</string>
     <!--endregion-->
 
     <!--region Preference Titles & Descriptions-->
     <string name="pref_title_rate">Değerlendir</string>
     <string name="pref_title_email">Bize e-posta gönder</string>
     <string name="pref_title_report_bugs">Hata bildir</string>
-    <string name="pref_title_animations">Animasyonlar</string>
     <string name="pref_title_theme_mode">Uygulama teması</string>
     <string name="pref_title_default_page">Varsayılan Sayfa</string>
     <string name="pref_title_dialpad_vibrate">Tuş takımı tıklamalarında titret</string>
@@ -73,8 +66,6 @@
     <!--endregion-->
 
     <!--region Notifications-->
-    <string name="call_notification_channel_name">Arama Bildirimi</string>
-    <string name="call_notification_channel_description">Rahat kullanım için gösterilen aktif arama bildirimi</string>
     <!--endregion-->
 
     <!--region Content Descriptions-->
@@ -85,5 +76,80 @@
 
     <string name="settings">Ayarlar</string>
     <string name="cd_search">Arama</string>
-
+    <string name="action_block">Engelle</string>
+    <string name="action_call">Ara</string>
+    <string name="action_cancel">İptal</string>
+    <string name="action_clear_recents">Tüm son aramaları sil</string>
+    <string name="action_delete">Sil</string>
+    <string name="action_edit">Düzenle</string>
+    <string name="action_grant_access">Erişime izin ver</string>
+    <string name="action_less">Daha az</string>
+    <string name="action_message">Mesaj</string>
+    <string name="action_more">Daha fazla</string>
+    <string name="action_open_settings">Ayarları aç</string>
+    <string name="action_unblock">Engeli kaldır</string>
+    <string name="add_contact">Kişi ekle</string>
+    <string name="call_action_add_call">Arama ekle</string>
+    <string name="call_action_hold">Beklet</string>
+    <string name="call_action_keypad">Tuş takımı</string>
+    <string name="call_action_merge">Birleştir</string>
+    <string name="call_action_swap">Değiştir</string>
+    <string name="call_notification_channel_incoming_description">Gelen aramalarda çalar ve gösterir</string>
+    <string name="call_notification_channel_incoming_name">Gelen aramalar</string>
+    <string name="call_notification_channel_ongoing_description">Süren aramayı gösterir</string>
+    <string name="call_notification_channel_ongoing_name">Süren aramalar</string>
+    <string name="call_state_conferenced">Konferans araması</string>
+    <string name="caller_payphone">Ankesörlü telefon</string>
+    <string name="caller_restricted">Gizli</string>
+    <string name="caller_unknown">Bilinmiyor</string>
+    <string name="cd_add_contact">Kişi ekle</string>
+    <string name="cd_backspace">Geri sil</string>
+    <string name="cd_call">Ara</string>
+    <string name="cd_close_search">Aramayı kapat</string>
+    <string name="cd_copy_number">Numarayı kopyala</string>
+    <string name="cd_dialpad">Tuş takımı</string>
+    <string name="cd_manage_call">Aramayı yönet</string>
+    <string name="cd_split_call">Aramayı ayır</string>
+    <string name="confirm_block">Bu numaradan gelen aramalar ve mesajlar engellenecek.</string>
+    <string name="confirm_block_title">Bu numara engellensin mi?</string>
+    <string name="confirm_delete_contact">Kişi bu cihazdan ve eşitlenen hesaplardan kaldırılacak.</string>
+    <string name="confirm_delete_contact_title">Bu kişi silinsin mi?</string>
+    <string name="contact_unknown_name">Bilinmiyor</string>
+    <string name="dialer">Telefon</string>
+    <string name="emails">E-posta</string>
+    <string name="error_call_failed">Arama yapılamadı</string>
+    <string name="error_caller_not_found">Arayan bulunamadı</string>
+    <string name="error_clear_recents_failed">Son aramalar silinemedi</string>
+    <string name="error_contact_block_change_failed">Engelleme durumu değiştirilemedi</string>
+    <string name="error_contact_deletion_failed">Kişi silinemedi</string>
+    <string name="error_contact_favorite_change_failed">Favori değiştirilemedi</string>
+    <string name="error_loading_failed">Liste yüklenemedi</string>
+    <string name="error_no_app_found">Bu işlemi yapabilecek uygulama yok</string>
+    <string name="explain_clear_recents">Tüm arama geçmişi kalıcı olarak silinecek</string>
+    <string name="loading">Yükleniyor…</string>
+    <string name="loading_contacts">Kişiler yükleniyor…</string>
+    <string name="loading_recents">Son aramalar yükleniyor…</string>
+    <string name="missed_call_notification_channel_description">Yanıtlamadığınız aramalar</string>
+    <string name="missed_call_notification_channel_name">Cevapsız aramalar</string>
+    <string name="missed_call_notification_title">Cevapsız arama</string>
+    <string name="missed_calls_notification_title">Cevapsız aramalar</string>
+    <string name="no_results_calls">Arama bulunamadı</string>
+    <string name="permission_rationale_call_log">Son aramaları görmek için arama geçmişinize erişime izin verin.</string>
+    <string name="permission_rationale_contacts">Kişileri burada görmek için erişime izin verin.</string>
+    <string name="permission_rationale_phone">Arama yapmak için telefon erişimine izin verin.</string>
+    <string name="phones">Numaralar</string>
+    <string name="pref_section_about">Hakkında</string>
+    <string name="pref_section_appearance">Görünüm</string>
+    <string name="pref_section_blocking">Engelleme</string>
+    <string name="pref_section_dialer">Telefon</string>
+    <string name="pref_title_dialpad_tones">Tuş sesleri</string>
+    <string name="pref_title_donate">Bağış yap</string>
+    <string name="pref_title_group_recents">Son aramaları grupla</string>
+    <string name="recent_calls">Geçmiş</string>
+    <string name="show_all">Tümünü göster</string>
+    <string name="show_less">Daha az göster</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d cevapsız arama</item>
+        <item quantity="other">%d cevapsız arama</item>
+    </plurals>
 </resources>
