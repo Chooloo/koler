@@ -12,10 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
-fun HeaderListItem(
-    modifier: Modifier = Modifier,
-    header: String
-) {
+fun HeaderListItem(modifier: Modifier = Modifier, header: String) {
     Box(
         modifier = modifier
             .padding(
@@ -24,7 +21,7 @@ fun HeaderListItem(
                 bottom = Spacing.Small,
             )
             .clip(MaterialTheme.shapes.large)
-            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh),
     ) {
         Text(
             text = header,
@@ -32,7 +29,7 @@ fun HeaderListItem(
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.labelSmall,
             modifier = Modifier
-                .padding(horizontal = Spacing.Small, vertical = Spacing.ExtraSmall)
+                .padding(horizontal = Spacing.Small, vertical = Spacing.ExtraSmall),
         )
     }
 }

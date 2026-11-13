@@ -15,10 +15,7 @@ import com.chooloo.www.chooloolib.ui.theme.Sizes
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
-fun ScreenTopBar(
-    title: String,
-    actions: @Composable RowScope.() -> Unit = {},
-) {
+fun ScreenTopBar(title: String, actions: @Composable RowScope.() -> Unit = {}) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier

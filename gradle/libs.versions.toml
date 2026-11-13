@@ -4,6 +4,8 @@ kotlin = '2.4.21'
 ksp = '2.3.13'
 hilt = '2.60.1'
 foojay-resolver = '1.0.0'
+ktlint-plugin = '14.2.0'
+ktlint-cli = '1.8.0'
 compose-bom = '2026.09.00'
 activity-compose = '1.13.0'
 androidx-hilt = '1.4.0'
@@ -50,3 +52,4 @@ kotlin-compose = { id = 'org.jetbrains.kotlin.plugin.compose', version.ref = 'ko
 ksp = { id = 'com.google.devtools.ksp', version.ref = 'ksp' }
 hilt = { id = 'com.google.dagger.hilt.android', version.ref = 'hilt' }
 foojay-resolver = { id = 'org.gradle.toolchains.foojay-resolver-convention', version.ref = 'foojay-resolver' }
+ktlint = { id = 'org.jlleitschuh.gradle.ktlint', version.ref = 'ktlint-plugin' }

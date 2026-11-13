@@ -20,4 +20,5 @@ object Sizes {
     val KeypadKey = 80.dp
     val CompactListItem = 64.dp
     val FloatingBarInset = Bar + Spacing.Medium * 2
+    val CallActionWidth = ButtonLarge + Spacing.Large
 }

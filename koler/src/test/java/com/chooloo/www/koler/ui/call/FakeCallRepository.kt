@@ -1,9 +1,9 @@
 package com.chooloo.www.koler.ui.call
 
-import com.chooloo.www.koler.domain.AudioRoute
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.domain.CallAudio
-import com.chooloo.www.koler.domain.CallRepository
+import com.chooloo.www.koler.domain.enum.AudioRoute
+import com.chooloo.www.koler.domain.model.Call
+import com.chooloo.www.koler.domain.model.CallAudio
+import com.chooloo.www.koler.domain.repository.CallRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class FakeCallRepository : CallRepository {
@@ -22,7 +22,8 @@ class FakeCallRepository : CallRepository {
     override fun merge(callId: String) = record("merge $callId")
     override fun separate(callId: String) = record("separate $callId")
     override fun playDtmf(callId: String, key: Char) = record("dtmf $callId $key")
-    override fun selectPhoneAccount(callId: String, accountId: String) = record("account $callId $accountId")
+    override fun selectPhoneAccount(callId: String, accountId: String) =
+        record("account $callId $accountId")
     override fun setMuted(isMuted: Boolean) = record("muted $isMuted")
     override fun setAudioRoute(route: AudioRoute) = record("route $route")
 

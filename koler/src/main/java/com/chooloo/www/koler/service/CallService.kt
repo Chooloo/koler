@@ -9,8 +9,10 @@ import android.telecom.Call
 import android.telecom.CallAudioState
 import android.telecom.InCallService
 import android.telecom.TelecomManager
-import com.chooloo.www.koler.data.CallRepositoryImpl
-import com.chooloo.www.koler.data.telecomState
+import com.chooloo.www.koler.data.repository.CallRepositoryImpl
+import com.chooloo.www.koler.device.ProximityScreenLock
+import com.chooloo.www.koler.domain.enum.CallState
+import com.chooloo.www.koler.notification.CallNotification
 import com.chooloo.www.koler.ui.call.CallActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -18,7 +20,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CallService : InCallService() {
     @Inject lateinit var callRepository: CallRepositoryImpl
+
     @Inject lateinit var callNotification: CallNotification
+
     @Inject lateinit var proximityScreenLock: ProximityScreenLock
 
     override fun onCreate() {
@@ -45,10 +49,12 @@ class CallService : InCallService() {
 
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
-        callRepository.onCallAdded(call)
+        val addedCall = callRepository.onCallAdded(call)
         // The framework reports only changes from its own starting value, so read the current value.
         callRepository.onCanAddCallChanged(canAddCall())
-        if (call.telecomState != Call.STATE_RINGING || (calls.size == 1 && !isPhoneInUse() && !isDoNotDisturbOn())) {
+        if (addedCall.state != CallState.INCOMING ||
+            (calls.size == 1 && !isPhoneInUse() && !isDoNotDisturbOn())
+        ) {
             showCallUi(showDialpad = false)
         }
     }
@@ -85,7 +91,7 @@ class CallService : InCallService() {
         startActivity(
             Intent(this, CallActivity::class.java)
                 .putExtra(CallActivity.EXTRA_SHOW_DIALPAD, showDialpad)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
         )
     }
 }

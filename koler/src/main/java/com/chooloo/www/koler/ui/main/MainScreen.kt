@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -13,8 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.caller.CallerScreen
 import com.chooloo.www.chooloolib.ui.caller.CallerTarget
-import com.chooloo.www.chooloolib.ui.common.copyToClipboard
-import com.chooloo.www.chooloolib.ui.common.createContact
+import com.chooloo.www.chooloolib.ui.common.rememberExternalActions
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.components.FloatingBubble
 import com.chooloo.www.chooloolib.ui.components.Reveal
@@ -27,10 +27,9 @@ import com.chooloo.www.koler.ui.call.CallActivity
 import com.chooloo.www.koler.ui.main.MainViewModel.Tab
 
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel,
-) {
+fun MainScreen(viewModel: MainViewModel) {
     val context = LocalContext.current
+    val externalActions = rememberExternalActions()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val ongoingCall by viewModel.ongoingCall.collectAsStateWithLifecycle()
     val tab = uiState.tab ?: return
@@ -41,17 +40,24 @@ fun MainScreen(
         title = stringResource(if (tab == Tab.RECENTS) R.string.recents else R.string.contacts),
         isSearching = uiState.isSearching,
         searchText = uiState.searchText,
-        searchHintRes = if (tab == Tab.RECENTS) R.string.hint_search_recents else R.string.hint_search_contacts,
+        searchHintRes = if (tab == Tab.RECENTS) {
+            R.string.hint_search_recents
+        } else {
+            R.string.hint_search_contacts
+        },
         onSearchOpen = viewModel::onSearchOpen,
         onSearchTextChange = viewModel::onSearchTextChange,
         onSearchClose = viewModel::onSearchClose,
         onSettingsOpen = viewModel::onSettingsOpen,
         bottomBarContent = {
-            Reveal(visible = tab == Tab.CONTACTS, modifier = Modifier.align(Alignment.CenterStart)) {
+            Reveal(
+                visible = tab == Tab.CONTACTS,
+                modifier = Modifier.align(Alignment.CenterStart),
+            ) {
                 FloatingBubble(
                     icon = Icons.Rounded.PersonAdd,
                     contentDescription = stringResource(R.string.cd_add_contact),
-                    onClick = { context.createContact() },
+                    onClick = { externalActions.createContact() },
                 )
             }
             MainNavigationBar(
@@ -72,9 +78,12 @@ fun MainScreen(
             Tab.RECENTS -> RecentsScreen(
                 filter = uiState.searchText,
                 contentPadding = listPadding,
-                onItemClick = { viewModel.onCallerSelected(CallerTarget.RecentTarget(it.latest.id)) },
-                onItemLongClick = { context.copyToClipboard(it.latest.number) },
+                onItemClick = {
+                    viewModel.onCallerSelected(CallerTarget.RecentTarget(it.latest.id))
+                },
+                onItemLongClick = { externalActions.copyToClipboard(it.latest.number) },
             )
+
             Tab.CONTACTS -> ContactsScreen(
                 filter = uiState.searchText,
                 contentPadding = listPadding,
@@ -83,15 +92,25 @@ fun MainScreen(
         }
     }
 
-    BottomSheet(visible = uiState.isSettingsOpen, skipPartiallyExpanded = true, onDismiss = viewModel::onSettingsClose) {
+    BottomSheet(
+        visible = uiState.isSettingsOpen,
+        skipPartiallyExpanded = true,
+        onDismiss = viewModel::onSettingsClose,
+    ) {
         PreferencesScreen(showDialerPreferences = true)
     }
 
-    BottomSheet(visible = uiState.isDialpadOpen, skipPartiallyExpanded = true, onDismiss = viewModel::onDialpadClose) {
+    BottomSheet(
+        visible = uiState.isDialpadOpen,
+        skipPartiallyExpanded = true,
+        onDismiss = viewModel::onDialpadClose,
+    ) {
         DialpadScreen(initialNumber = uiState.dialNumber)
     }
 
     BottomSheet(visible = uiState.selectedCaller != null, onDismiss = viewModel::onCallerDismiss) {
-        uiState.selectedCaller?.let { CallerScreen(target = it, onDismiss = viewModel::onCallerDismiss) }
+        uiState.selectedCaller?.let {
+            CallerScreen(target = it, onDismiss = viewModel::onCallerDismiss)
+        }
     }
 }

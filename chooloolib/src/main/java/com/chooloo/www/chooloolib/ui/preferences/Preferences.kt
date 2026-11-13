@@ -17,9 +17,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.domain.model.Page
-import com.chooloo.www.chooloolib.domain.model.ThemeMode
-import com.chooloo.www.chooloolib.ui.common.titleRes
+import com.chooloo.www.chooloolib.domain.enum.Page
+import com.chooloo.www.chooloolib.domain.enum.ThemeMode
+import com.chooloo.www.chooloolib.ui.common.Labels
 import com.chooloo.www.chooloolib.ui.components.list.ItemList
 
 private enum class PreferenceSection(@StringRes val titleRes: Int) {
@@ -37,12 +37,43 @@ private enum class PreferenceItem(
     val isDialerOnly: Boolean = false,
 ) {
     THEME_MODE(PreferenceSection.APPEARANCE, Icons.Rounded.Palette, R.string.pref_title_theme_mode),
-    DEFAULT_PAGE(PreferenceSection.DIALER, Icons.Rounded.Home, R.string.pref_title_default_page, isDialerOnly = true),
-    GROUP_RECENTS_ENABLED(PreferenceSection.DIALER, Icons.AutoMirrored.Rounded.ViewList, R.string.pref_title_group_recents, isDialerOnly = true),
-    DIALPAD_TONES_ENABLED(PreferenceSection.DIALER, Icons.Rounded.MusicNote, R.string.pref_title_dialpad_tones, isDialerOnly = true),
-    DIALPAD_VIBRATE_ENABLED(PreferenceSection.DIALER, Icons.Rounded.Vibration, R.string.pref_title_dialpad_vibrate, isDialerOnly = true),
-    CLEAR_RECENTS(PreferenceSection.DIALER, Icons.Rounded.DeleteSweep, R.string.action_clear_recents, R.string.explain_clear_recents, isDialerOnly = true),
-    MANAGE_BLOCKED(PreferenceSection.BLOCKING, Icons.Rounded.Block, R.string.pref_title_manage_blocked, isDialerOnly = true),
+    DEFAULT_PAGE(
+        PreferenceSection.DIALER,
+        Icons.Rounded.Home,
+        R.string.pref_title_default_page,
+        isDialerOnly = true,
+    ),
+    GROUP_RECENTS_ENABLED(
+        PreferenceSection.DIALER,
+        Icons.AutoMirrored.Rounded.ViewList,
+        R.string.pref_title_group_recents,
+        isDialerOnly = true,
+    ),
+    DIALPAD_TONES_ENABLED(
+        PreferenceSection.DIALER,
+        Icons.Rounded.MusicNote,
+        R.string.pref_title_dialpad_tones,
+        isDialerOnly = true,
+    ),
+    DIALPAD_VIBRATE_ENABLED(
+        PreferenceSection.DIALER,
+        Icons.Rounded.Vibration,
+        R.string.pref_title_dialpad_vibrate,
+        isDialerOnly = true,
+    ),
+    CLEAR_RECENTS(
+        PreferenceSection.DIALER,
+        Icons.Rounded.DeleteSweep,
+        R.string.action_clear_recents,
+        R.string.explain_clear_recents,
+        isDialerOnly = true,
+    ),
+    MANAGE_BLOCKED(
+        PreferenceSection.BLOCKING,
+        Icons.Rounded.Block,
+        R.string.pref_title_manage_blocked,
+        isDialerOnly = true,
+    ),
     RATE(PreferenceSection.ABOUT, Icons.Rounded.Star, R.string.pref_title_rate),
     EMAIL(PreferenceSection.ABOUT, Icons.Rounded.Email, R.string.pref_title_email),
     REPORT_BUGS(PreferenceSection.ABOUT, Icons.Rounded.BugReport, R.string.pref_title_report_bugs),
@@ -87,30 +118,85 @@ fun Preferences(
                     title = title,
                     values = ThemeMode.entries,
                     selectedValue = themeMode,
-                    label = { stringResource(it.titleRes) },
+                    label = { stringResource(Labels.titleRes(it)) },
                     onValueSelected = onThemeMode,
                 )
+
                 PreferenceItem.DEFAULT_PAGE -> ChoicePreferenceListItem(
                     icon = icon,
                     title = title,
                     values = Page.entries,
                     selectedValue = defaultPage,
-                    label = { stringResource(it.titleRes) },
+                    label = { stringResource(Labels.titleRes(it)) },
                     onValueSelected = onDefaultPage,
                 )
+
                 PreferenceItem.GROUP_RECENTS_ENABLED ->
-                    SwitchPreferenceListItem(icon, title, isGroupRecentsEnabled, onIsGroupRecentsEnabled)
+                    SwitchPreferenceListItem(
+                        icon,
+                        title,
+                        isGroupRecentsEnabled,
+                        onIsGroupRecentsEnabled,
+                    )
+
                 PreferenceItem.DIALPAD_TONES_ENABLED ->
-                    SwitchPreferenceListItem(icon, title, isDialpadTonesEnabled, onIsDialpadTonesEnabled)
+                    SwitchPreferenceListItem(
+                        icon,
+                        title,
+                        isDialpadTonesEnabled,
+                        onIsDialpadTonesEnabled,
+                    )
+
                 PreferenceItem.DIALPAD_VIBRATE_ENABLED ->
-                    SwitchPreferenceListItem(icon, title, isDialpadVibrateEnabled, onIsDialpadVibrateEnabled)
-                PreferenceItem.MANAGE_BLOCKED -> ActionPreferenceListItem(icon, title, description, onManageBlockedClick)
-                PreferenceItem.CLEAR_RECENTS -> ActionPreferenceListItem(icon, title, description, onClearRecentsClick)
-                PreferenceItem.RATE -> ActionPreferenceListItem(icon, title, description, onRateClick)
-                PreferenceItem.EMAIL -> ActionPreferenceListItem(icon, title, description, onEmailClick)
-                PreferenceItem.REPORT_BUGS -> ActionPreferenceListItem(icon, title, description, onReportBugsClick)
-                PreferenceItem.DONATE -> ActionPreferenceListItem(icon, title, description, onDonateClick)
+                    SwitchPreferenceListItem(
+                        icon,
+                        title,
+                        isDialpadVibrateEnabled,
+                        onIsDialpadVibrateEnabled,
+                    )
+
+                PreferenceItem.MANAGE_BLOCKED -> ActionPreferenceListItem(
+                    icon,
+                    title,
+                    description,
+                    onManageBlockedClick,
+                )
+
+                PreferenceItem.CLEAR_RECENTS -> ActionPreferenceListItem(
+                    icon,
+                    title,
+                    description,
+                    onClearRecentsClick,
+                )
+
+                PreferenceItem.RATE -> ActionPreferenceListItem(
+                    icon,
+                    title,
+                    description,
+                    onRateClick,
+                )
+
+                PreferenceItem.EMAIL -> ActionPreferenceListItem(
+                    icon,
+                    title,
+                    description,
+                    onEmailClick,
+                )
+
+                PreferenceItem.REPORT_BUGS -> ActionPreferenceListItem(
+                    icon,
+                    title,
+                    description,
+                    onReportBugsClick,
+                )
+
+                PreferenceItem.DONATE -> ActionPreferenceListItem(
+                    icon,
+                    title,
+                    description,
+                    onDonateClick,
+                )
             }
-        }
+        },
     )
 }

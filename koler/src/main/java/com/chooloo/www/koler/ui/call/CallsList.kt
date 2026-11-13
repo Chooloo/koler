@@ -13,9 +13,9 @@ import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.components.list.ItemList
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.ui.common.labelRes
-import com.chooloo.www.koler.ui.common.title
+import com.chooloo.www.koler.domain.enum.CallCapability
+import com.chooloo.www.koler.domain.model.Call
+import com.chooloo.www.koler.ui.common.CallLabels
 
 @Composable
 fun CallsList(
@@ -30,29 +30,29 @@ fun CallsList(
         emptyIcon = Icons.Rounded.CallIcon,
         item = { item ->
             ListItem(
-                title = item.title(LocalContext.current, null),
-                subtitle = stringResource(item.state.labelRes),
+                title = CallLabels.title(item, LocalContext.current, null),
+                subtitle = stringResource(CallLabels.labelRes(item.state)),
                 endContainer = {
                     Row {
                         IconButton(
                             onClick = { onSeparateCallClick(item) },
-                            enabled = item.can(Call.Capability.SEPARATE)
+                            enabled = item.can(CallCapability.SEPARATE),
                         ) {
                             Icon(
                                 Icons.AutoMirrored.Rounded.CallSplit,
-                                stringResource(R.string.cd_split_call)
+                                stringResource(R.string.cd_split_call),
                             )
                         }
 
                         IconButton(onClick = { onHangupCallClick(item) }) {
                             Icon(
                                 Icons.Rounded.CallEnd,
-                                stringResource(R.string.cd_hangup_call)
+                                stringResource(R.string.cd_hangup_call),
                             )
                         }
                     }
-                }
+                },
             )
-        }
+        },
     )
 }

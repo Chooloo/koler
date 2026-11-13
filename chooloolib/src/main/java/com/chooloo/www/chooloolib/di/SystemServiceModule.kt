@@ -24,8 +24,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object SystemServiceModule {
+    private const val PREFERENCES_NAME = "settings"
+    private const val LEGACY_PREFERENCES_NAME = "chooloo_preferences"
+
     @Provides
-    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver = context.contentResolver
+    fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =
+        context.contentResolver
 
     @Provides
     fun provideAudioManager(@ApplicationContext context: Context): AudioManager =
@@ -40,8 +44,9 @@ object SystemServiceModule {
         context.getSystemService(TelephonyManager::class.java)
 
     @Provides
-    fun provideNotificationManager(@ApplicationContext context: Context): NotificationManagerCompat =
-        NotificationManagerCompat.from(context)
+    fun provideNotificationManager(
+        @ApplicationContext context: Context,
+    ): NotificationManagerCompat = NotificationManagerCompat.from(context)
 
     @Provides
     fun provideVibrator(@ApplicationContext context: Context): Vibrator =
@@ -56,9 +61,6 @@ object SystemServiceModule {
     fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
         PreferenceDataStoreFactory.create(
             migrations = listOf(SharedPreferencesMigration(context, LEGACY_PREFERENCES_NAME)),
-            produceFile = { context.preferencesDataStoreFile(PREFERENCES_NAME) }
+            produceFile = { context.preferencesDataStoreFile(PREFERENCES_NAME) },
         )
-
-    private const val PREFERENCES_NAME = "settings"
-    private const val LEGACY_PREFERENCES_NAME = "chooloo_preferences"
 }

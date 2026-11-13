@@ -13,9 +13,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-) : ViewModel() {
+class MainViewModel @Inject constructor(private val savedStateHandle: SavedStateHandle) :
+    ViewModel() {
     data class UiState(
         val isSearching: Boolean = false,
         val searchText: String = "",

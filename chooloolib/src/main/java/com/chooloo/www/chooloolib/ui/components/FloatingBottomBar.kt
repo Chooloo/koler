@@ -31,7 +31,7 @@ fun FloatingBottomBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = Spacing.Small, vertical = Spacing.Medium)
+            .padding(horizontal = Spacing.Small, vertical = Spacing.Medium),
     ) {
         Reveal(visible = !isSearching, hiddenScale = 1f) {
             Box(modifier = Modifier.fillMaxWidth()) {

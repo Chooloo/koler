@@ -10,7 +10,11 @@ import androidx.compose.ui.semantics.Role
 fun RadioListItem(title: String, isSelected: Boolean, onClick: () -> Unit) {
     ListItem(
         title = title,
-        modifier = Modifier.selectable(selected = isSelected, role = Role.RadioButton, onClick = onClick),
+        modifier = Modifier.selectable(
+            selected = isSelected,
+            role = Role.RadioButton,
+            onClick = onClick,
+        ),
         startContainer = { RadioButton(selected = isSelected, onClick = null) },
     )
 }

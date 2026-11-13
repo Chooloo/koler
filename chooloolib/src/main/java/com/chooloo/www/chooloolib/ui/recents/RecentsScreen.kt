@@ -16,10 +16,10 @@ import com.chooloo.www.chooloolib.ui.components.Permissioned
 fun RecentsScreen(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
-    filter: String? = null,
+    filter: String,
     onItemClick: (RecentGroup) -> Unit,
     onItemLongClick: ((RecentGroup) -> Unit)? = null,
-    viewModel: RecentsViewModel = hiltViewModel()
+    viewModel: RecentsViewModel = hiltViewModel(),
 ) {
     Permissioned(
         permissions = listOf(Manifest.permission.READ_CALL_LOG),
@@ -35,7 +35,7 @@ fun RecentsScreen(
             modifier = modifier,
             contentPadding = contentPadding,
             items = uiState.items,
-            groupSimilar = isGroupRecentsEnabled && filter.isNullOrEmpty(),
+            groupSimilar = isGroupRecentsEnabled && filter.isEmpty(),
             onItemClick = onItemClick,
             onItemLongClick = onItemLongClick,
             loadingState = uiState.loadingState,

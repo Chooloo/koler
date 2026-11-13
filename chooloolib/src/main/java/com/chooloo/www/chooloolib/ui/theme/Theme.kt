@@ -19,13 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.chooloo.www.chooloolib.domain.model.ThemeMode
+import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 
 @Composable
-fun ChoolooTheme(
-    themeMode: ThemeMode = ThemeMode.SYSTEM,
-    content: @Composable () -> Unit
-) {
+fun ChoolooTheme(themeMode: ThemeMode = ThemeMode.SYSTEM, content: @Composable () -> Unit) {
     val isDark = when (themeMode) {
         ThemeMode.SYSTEM -> isSystemInDarkTheme()
         ThemeMode.LIGHT -> false
@@ -35,7 +32,9 @@ fun ChoolooTheme(
     val colorScheme = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ->
             if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+
         isDark -> darkColorScheme()
+
         else -> lightColorScheme()
     }
 
@@ -50,12 +49,16 @@ fun ChoolooTheme(
         }
     }
 
-    MaterialTheme(colorScheme = colorScheme, typography = ChoolooTypography, shapes = ChoolooShapes) {
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = ChoolooTypography,
+        shapes = ChoolooShapes,
+    ) {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             Box(
                 modifier = Modifier
                     .safeDrawingPadding()
-                    .padding(start = Spacing.Page, end = Spacing.Page, top = Spacing.Medium)
+                    .padding(start = Spacing.Page, end = Spacing.Page, top = Spacing.Medium),
             ) {
                 content()
             }

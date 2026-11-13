@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
-import com.chooloo.www.koler.domain.AudioRoute
-import com.chooloo.www.koler.domain.Call
-import com.chooloo.www.koler.domain.CallState
+import com.chooloo.www.koler.domain.enum.AudioRoute
+import com.chooloo.www.koler.domain.enum.CallState
+import com.chooloo.www.koler.domain.model.Call
 
-@get:StringRes
-val CallState.labelRes: Int
-    get() = when (this) {
+object CallLabels {
+    @StringRes
+    fun labelRes(state: CallState): Int = when (state) {
         CallState.CONNECTING -> R.string.call_state_connecting
         CallState.DIALING -> R.string.call_state_dialing
         CallState.INCOMING -> R.string.call_state_incoming
@@ -23,9 +23,8 @@ val CallState.labelRes: Int
         CallState.UNKNOWN -> R.string.call_state_unknown
     }
 
-@get:StringRes
-val AudioRoute.labelRes: Int
-    get() = when (this) {
+    @StringRes
+    fun labelRes(route: AudioRoute): Int = when (route) {
         AudioRoute.EARPIECE -> R.string.audio_route_earpiece
         AudioRoute.SPEAKER -> R.string.audio_route_speaker
         AudioRoute.BLUETOOTH -> R.string.audio_route_bluetooth
@@ -33,7 +32,11 @@ val AudioRoute.labelRes: Int
         AudioRoute.WIRED_OR_EARPIECE -> R.string.audio_route_wired_or_earpiece
     }
 
-fun Call.title(context: Context, caller: PhoneLookup?): String = when {
-    isConference -> context.getString(R.string.conference)
-    else -> caller?.name ?: displayName ?: number ?: context.getString(R.string.caller_unknown)
+    fun title(call: Call, context: Context, caller: PhoneLookup?): String = when {
+        call.isConference -> context.getString(R.string.conference)
+
+        else ->
+            caller?.name ?: call.displayName ?: call.number
+                ?: context.getString(R.string.caller_unknown)
+    }
 }

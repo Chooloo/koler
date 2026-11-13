@@ -24,11 +24,16 @@ class TelecomRepositoryImpl @Inject constructor(
     private val telephonyManager: TelephonyManager,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : TelecomRepository {
-    override fun isDefaultDialer(): Boolean = context.packageName == telecomManager.defaultDialerPackage
+    override fun isDefaultDialer(): Boolean =
+        context.packageName == telecomManager.defaultDialerPackage
 
     @RequiresPermission(CALL_PHONE)
     override suspend fun callNumber(number: String) {
-        val scheme = if (number.contains("@") || number.contains("%40")) PhoneAccount.SCHEME_SIP else PhoneAccount.SCHEME_TEL
+        val scheme = if (number.contains("@") || number.contains("%40")) {
+            PhoneAccount.SCHEME_SIP
+        } else {
+            PhoneAccount.SCHEME_TEL
+        }
         telecomManager.placeCall(Uri.fromParts(scheme, number, null), Bundle())
     }
 
@@ -37,12 +42,10 @@ class TelecomRepositoryImpl @Inject constructor(
         telecomManager.placeCall(Uri.fromParts(PhoneAccount.SCHEME_VOICEMAIL, "", null), Bundle())
     }
 
-    override suspend fun handleSecretCode(code: String): Boolean {
-        val isSecretCode = code.length > 8 && code.startsWith("*#*#") && code.endsWith("#*#*")
-        if (isSecretCode) {
+    override suspend fun handleSecretCode(code: String) {
+        if (code.length > 8 && code.startsWith("*#*#") && code.endsWith("#*#*")) {
             telephonyManager.sendDialerSpecialCode(code.substring(4, code.length - 4))
         }
-        return isSecretCode
     }
 
     // Telecom also allows the default dialer, which the annotation on this API does not list.

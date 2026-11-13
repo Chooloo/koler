@@ -30,7 +30,7 @@ import com.chooloo.www.chooloolib.ui.components.Avatar
 import com.chooloo.www.chooloolib.ui.components.FloatingBubble
 import com.chooloo.www.chooloolib.ui.theme.Sizes
 import com.chooloo.www.chooloolib.ui.theme.Spacing
-import com.chooloo.www.koler.domain.CallsState
+import com.chooloo.www.koler.domain.enum.CallsState
 
 @Composable
 fun CallContent(
@@ -48,16 +48,18 @@ fun CallContent(
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val header = @Composable { CallerHeader(callerName, avatarName, status, callerPhotoUri) }
         val buttons = @Composable {
-            if (callsState in ACTIONS_STATES) {
+            if (callsState.showsActions) {
                 CallActions(actions = actions, onActionClick = onActionClick)
             }
-            CallControls(callsState, onAccept, onHangup, onManage)
+            if (!callsState.isEnded) CallControls(callsState, onAccept, onHangup, onManage)
         }
 
         val height = maxHeight
         if (maxWidth > height) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxSize()) {
-                Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)) { header() }
+                Box(contentAlignment = Alignment.Center, modifier = Modifier.weight(1f)) {
+                    header()
+                }
                 ScrollingColumn(minHeight = height, modifier = Modifier.weight(1f)) { buttons() }
             }
         } else {
@@ -98,14 +100,22 @@ private fun CallerHeader(name: String, avatarName: String?, status: String?, pho
             overflow = TextOverflow.Ellipsis,
         )
         status?.let {
-            Text(text = it, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }
 
 @Composable
-private fun CallControls(callsState: CallsState, onAccept: () -> Unit, onHangup: () -> Unit, onManage: () -> Unit) {
-    if (callsState in ENDED_STATES) return
+private fun CallControls(
+    callsState: CallsState,
+    onAccept: () -> Unit,
+    onHangup: () -> Unit,
+    onManage: () -> Unit,
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(Spacing.ExtraLarge),
@@ -141,6 +151,3 @@ private fun CallControls(callsState: CallsState, onAccept: () -> Unit, onHangup:
 
 fun callStatus(elapsedSeconds: Long?, stateLabel: String?): String? =
     elapsedSeconds?.let(DateUtils::formatElapsedTime) ?: stateLabel
-
-private val ACTIONS_STATES = setOf(CallsState.ACTIVE, CallsState.ACTIVE_MULTI, CallsState.OUTGOING)
-private val ENDED_STATES = setOf(CallsState.DISCONNECTED, CallsState.NO_CALLS)

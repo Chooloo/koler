@@ -8,11 +8,13 @@ import kotlinx.coroutines.flow.map
 data class ListUiState<T>(
     val items: List<T> = emptyList(),
     val loadingState: LoadingState = LoadingState.LOADING,
-)
-
-fun <T> Flow<List<T>>.asListUiState(tag: String): Flow<ListUiState<T>> =
-    map { ListUiState(it, LoadingState.SUCCESS) }
-        .catch { error ->
-            Log.e(tag, "Failed loading items", error)
-            emit(ListUiState(loadingState = LoadingState.FAILED))
-        }
+) {
+    companion object {
+        fun <T> from(items: Flow<List<T>>, tag: String): Flow<ListUiState<T>> = items
+            .map { ListUiState(it, LoadingState.SUCCESS) }
+            .catch { error ->
+                Log.e(tag, "Failed loading items", error)
+                emit(ListUiState(loadingState = LoadingState.FAILED))
+            }
+    }
+}

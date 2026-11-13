@@ -18,14 +18,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import coil3.compose.AsyncImage
+import com.chooloo.www.chooloolib.ui.theme.Layout
 
 @Composable
-fun Avatar(
-    name: String?,
-    photoUri: String?,
-    size: Dp,
-    modifier: Modifier = Modifier,
-) {
+fun Avatar(name: String?, photoUri: String?, size: Dp, modifier: Modifier = Modifier) {
     val initial = name?.firstOrNull(Char::isLetter)?.uppercaseChar()
     val contentColor = MaterialTheme.colorScheme.onPrimaryContainer
     Box(
@@ -40,20 +36,25 @@ fun Avatar(
                 text = initial.toString(),
                 color = contentColor,
                 style = MaterialTheme.typography.titleMedium,
-                fontSize = with(LocalDensity.current) { (size * CONTENT_RATIO).toSp() },
+                fontSize = with(LocalDensity.current) {
+                    (size * Layout.AVATAR_CONTENT_RATIO).toSp()
+                },
             )
         } else {
             Icon(
                 imageVector = Icons.Rounded.Person,
                 contentDescription = null,
                 tint = contentColor,
-                modifier = Modifier.size(size * CONTENT_RATIO),
+                modifier = Modifier.size(size * Layout.AVATAR_CONTENT_RATIO),
             )
         }
         photoUri?.let {
-            AsyncImage(model = it, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+            AsyncImage(
+                model = it,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize(),
+            )
         }
     }
 }
-
-private const val CONTENT_RATIO = 0.45f

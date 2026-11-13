@@ -11,17 +11,17 @@ import androidx.compose.ui.text.style.TextAlign
 import com.chooloo.www.chooloolib.ui.theme.Spacing
 
 @Composable
-fun DialpadNumber(
-    number: String,
-    modifier: Modifier = Modifier,
-) {
+fun DialpadNumber(number: String, modifier: Modifier = Modifier) {
     val style = MaterialTheme.typography.headlineLarge
     Text(
         text = number,
         maxLines = 1,
         style = style,
         textAlign = TextAlign.Center,
-        autoSize = TextAutoSize.StepBased(minFontSize = MaterialTheme.typography.titleMedium.fontSize, maxFontSize = style.fontSize),
+        autoSize = TextAutoSize.StepBased(
+            minFontSize = MaterialTheme.typography.titleMedium.fontSize,
+            maxFontSize = style.fontSize,
+        ),
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = Spacing.Medium),

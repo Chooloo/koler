@@ -24,7 +24,9 @@ fun ListItem(
 ) {
     MaterialListItem(
         headlineContent = { Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-        supportingContent = subtitle?.let { { Text(text = it, maxLines = 1, overflow = TextOverflow.Ellipsis) } },
+        supportingContent = subtitle?.let {
+            { Text(text = it, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+        },
         leadingContent = startContainer,
         trailingContent = endContainer,
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
@@ -33,10 +35,14 @@ fun ListItem(
             .then(modifier)
             .then(
                 if (onClick != null) {
-                    Modifier.combinedClickable(role = Role.Button, onClick = onClick, onLongClick = onLongClick)
+                    Modifier.combinedClickable(
+                        role = Role.Button,
+                        onClick = onClick,
+                        onLongClick = onLongClick,
+                    )
                 } else {
                     Modifier
-                }
+                },
             ),
     )
 }

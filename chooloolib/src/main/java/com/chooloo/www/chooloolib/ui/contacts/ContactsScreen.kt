@@ -20,9 +20,8 @@ fun ContactsScreen(
     withFavorites: Boolean = true,
     onItemClick: (Contact) -> Unit,
     onItemLongClick: ((Contact) -> Unit)? = null,
-    viewModel: ContactsViewModel = hiltViewModel()
+    viewModel: ContactsViewModel = hiltViewModel(),
 ) {
-
     Permissioned(
         permissions = listOf(Manifest.permission.READ_CONTACTS),
         optionalPermissions = listOf(Manifest.permission.WRITE_CONTACTS),

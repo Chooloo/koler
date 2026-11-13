@@ -39,7 +39,11 @@ fun FloatingBubble(
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.combinedClickable(role = Role.Button, onClick = onClick, onLongClick = onLongClick),
+            modifier = Modifier.combinedClickable(
+                role = Role.Button,
+                onClick = onClick,
+                onLongClick = onLongClick,
+            ),
         ) {
             Icon(imageVector = icon, contentDescription = contentDescription)
         }

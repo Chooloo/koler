@@ -25,6 +25,6 @@ fun ContactListItem(
         onLongClick = onLongClick,
         startContainer = {
             Avatar(name = contact.name, photoUri = contact.photoUri, size = Sizes.AvatarSmall)
-        }
+        },
     )
 }

@@ -11,17 +11,36 @@ import androidx.compose.ui.semantics.Role
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 
 @Composable
-fun ActionPreferenceListItem(icon: ImageVector, title: String, subtitle: String?, onClick: () -> Unit) {
-    ListItem(title = title, subtitle = subtitle, onClick = onClick, startContainer = { PreferenceIcon(icon) })
+fun ActionPreferenceListItem(
+    icon: ImageVector,
+    title: String,
+    subtitle: String?,
+    onClick: () -> Unit,
+) {
+    ListItem(
+        title = title,
+        subtitle = subtitle,
+        onClick = onClick,
+        startContainer = { PreferenceIcon(icon) },
+    )
 }
 
 @Composable
-fun SwitchPreferenceListItem(icon: ImageVector, title: String, value: Boolean, onValueChange: (Boolean) -> Unit) {
+fun SwitchPreferenceListItem(
+    icon: ImageVector,
+    title: String,
+    value: Boolean,
+    onValueChange: (Boolean) -> Unit,
+) {
     ListItem(
         title = title,
-        modifier = Modifier.toggleable(value = value, role = Role.Switch, onValueChange = onValueChange),
+        modifier = Modifier.toggleable(
+            value = value,
+            role = Role.Switch,
+            onValueChange = onValueChange,
+        ),
         startContainer = { PreferenceIcon(icon) },
-        endContainer = { Switch(checked = value, onCheckedChange = null) }
+        endContainer = { Switch(checked = value, onCheckedChange = null) },
     )
 }
 
