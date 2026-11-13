@@ -130,8 +130,8 @@ class MainViewModelTest {
         viewModel.onTabSelected(MainViewModel.Tab.CONTACTS)
         viewModel.onDialpadOpen()
         viewModel.onSettingsOpen()
-        viewModel.onSearchOpen()
-        viewModel.onSearchTextChange("dana")
+        viewModel.search.open()
+        viewModel.search.changeText("dana")
 
         viewModel.onMissedCallsOpened()
 

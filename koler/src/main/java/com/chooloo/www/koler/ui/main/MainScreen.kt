@@ -45,9 +45,9 @@ fun MainScreen(viewModel: MainViewModel) {
         } else {
             R.string.hint_search_contacts
         },
-        onSearchOpen = viewModel::onSearchOpen,
-        onSearchTextChange = viewModel::onSearchTextChange,
-        onSearchClose = viewModel::onSearchClose,
+        onSearchOpen = viewModel.search::open,
+        onSearchTextChange = viewModel.search::changeText,
+        onSearchClose = viewModel.search::close,
         onSettingsOpen = viewModel::onSettingsOpen,
         bottomBarContent = {
             Reveal(

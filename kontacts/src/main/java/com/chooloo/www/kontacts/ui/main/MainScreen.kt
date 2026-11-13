@@ -29,9 +29,9 @@ fun MainScreen(viewModel: MainViewModel) {
         isSearching = uiState.isSearching,
         searchText = uiState.searchText,
         searchHintRes = R.string.hint_search_contacts,
-        onSearchOpen = viewModel::onSearchOpen,
-        onSearchTextChange = viewModel::onSearchTextChange,
-        onSearchClose = viewModel::onSearchClose,
+        onSearchOpen = viewModel.search::open,
+        onSearchTextChange = viewModel.search::changeText,
+        onSearchClose = viewModel.search::close,
         onSettingsOpen = viewModel::onSettingsOpen,
         bottomBarContent = {
             FloatingBubble(
