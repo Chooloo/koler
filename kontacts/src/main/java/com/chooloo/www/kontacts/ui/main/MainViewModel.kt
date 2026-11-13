@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chooloo.www.chooloolib.ui.caller.CallerTarget
+import com.chooloo.www.chooloolib.ui.home.HomeSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,8 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val savedStateHandle: SavedStateHandle) :
-    ViewModel() {
+class MainViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel() {
     data class UiState(
         val isSearching: Boolean = false,
         val searchText: String = "",
@@ -22,12 +22,14 @@ class MainViewModel @Inject constructor(private val savedStateHandle: SavedState
         val isSettingsOpen: Boolean = false,
     )
 
+    val search = HomeSearch(savedStateHandle)
+
     private val selectedCaller = MutableStateFlow<CallerTarget?>(null)
     private val isSettingsOpen = MutableStateFlow(false)
 
     val uiState: StateFlow<UiState> = combine(
-        savedStateHandle.getStateFlow(KEY_SEARCHING, false),
-        savedStateHandle.getStateFlow(KEY_SEARCH_TEXT, ""),
+        search.isOpen,
+        search.text,
         selectedCaller,
         isSettingsOpen,
         ::UiState,
@@ -35,19 +37,6 @@ class MainViewModel @Inject constructor(private val savedStateHandle: SavedState
 
     fun onContactLinkOpened(link: String) {
         selectedCaller.value = CallerTarget.LinkTarget(link)
-    }
-
-    fun onSearchOpen() {
-        savedStateHandle[KEY_SEARCHING] = true
-    }
-
-    fun onSearchClose() {
-        savedStateHandle[KEY_SEARCHING] = false
-        savedStateHandle[KEY_SEARCH_TEXT] = ""
-    }
-
-    fun onSearchTextChange(text: String) {
-        savedStateHandle[KEY_SEARCH_TEXT] = text
     }
 
     fun onContactSelected(contactId: Long) {
@@ -64,10 +53,5 @@ class MainViewModel @Inject constructor(private val savedStateHandle: SavedState
 
     fun onSettingsClose() {
         isSettingsOpen.value = false
-    }
-
-    private companion object {
-        const val KEY_SEARCHING = "searching"
-        const val KEY_SEARCH_TEXT = "search_text"
     }
 }

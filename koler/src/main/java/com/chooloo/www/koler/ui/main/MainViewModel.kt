@@ -9,6 +9,7 @@ import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
 import com.chooloo.www.chooloolib.ui.caller.CallerTarget
+import com.chooloo.www.chooloolib.ui.home.HomeSearch
 import com.chooloo.www.koler.domain.enum.CallState
 import com.chooloo.www.koler.domain.model.Call
 import com.chooloo.www.koler.domain.repository.CallRepository
@@ -60,15 +61,15 @@ class MainViewModel @Inject constructor(
 
     private val tab = savedStateHandle.getStateFlow<Tab?>(KEY_TAB, null)
     private val isDialpadOpen = savedStateHandle.getStateFlow(KEY_DIALPAD_OPEN, false)
-    private val isSearching = savedStateHandle.getStateFlow(KEY_SEARCHING, false)
-    private val searchText = savedStateHandle.getStateFlow(KEY_SEARCH_TEXT, "")
     private val transientState = MutableStateFlow(TransientState())
+
+    val search = HomeSearch(savedStateHandle)
 
     val uiState: StateFlow<UiState> = combine(
         tab,
         isDialpadOpen,
-        isSearching,
-        searchText,
+        search.isOpen,
+        search.text,
         transientState,
     ) {
             tab,
@@ -123,7 +124,7 @@ class MainViewModel @Inject constructor(
     fun onMissedCallsOpened() {
         onTabSelected(Tab.RECENTS)
         onDialpadClose()
-        onSearchClose()
+        search.close()
         transientState.value = TransientState()
         viewModelScope.launch(NonCancellable) {
             runCatching {
@@ -143,19 +144,6 @@ class MainViewModel @Inject constructor(
     fun onDialpadClose() {
         savedStateHandle[KEY_DIALPAD_OPEN] = false
         transientState.update { it.copy(dialNumber = null) }
-    }
-
-    fun onSearchOpen() {
-        savedStateHandle[KEY_SEARCHING] = true
-    }
-
-    fun onSearchClose() {
-        savedStateHandle[KEY_SEARCHING] = false
-        savedStateHandle[KEY_SEARCH_TEXT] = ""
-    }
-
-    fun onSearchTextChange(text: String) {
-        savedStateHandle[KEY_SEARCH_TEXT] = text
     }
 
     fun onCallerSelected(target: CallerTarget) {
@@ -191,7 +179,5 @@ class MainViewModel @Inject constructor(
         const val TAG = "MainViewModel"
         const val KEY_TAB = "tab"
         const val KEY_DIALPAD_OPEN = "dialpad_open"
-        const val KEY_SEARCHING = "searching"
-        const val KEY_SEARCH_TEXT = "search_text"
     }
 }
