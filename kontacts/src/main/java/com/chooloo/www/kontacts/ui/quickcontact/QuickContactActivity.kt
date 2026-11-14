@@ -1,35 +1,30 @@
 package com.chooloo.www.kontacts.ui.quickcontact
 
-import androidx.activity.viewModels
-import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.kontacts.databinding.QuickContactBinding
-import com.chooloo.www.kontacts.di.factory.fragment.FragmentFactory
+import android.Manifest
+import android.os.Bundle
+import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.ui.caller.CallerScreen
+import com.chooloo.www.chooloolib.ui.caller.CallerTarget
+import com.chooloo.www.chooloolib.ui.common.BaseActivity
+import com.chooloo.www.chooloolib.ui.components.BottomSheet
+import com.chooloo.www.chooloolib.ui.components.Permissioned
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class QuickContactActivity : BaseActivity<QuickContactViewState>() {
-    override val contentView by lazy { binding.root }
-    override val viewState: QuickContactViewState by viewModels()
-
-    private val binding by lazy { QuickContactBinding.inflate(layoutInflater) }
-
-    @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var fragmentFactory: FragmentFactory
-
-
-    override fun onSetup() {
-        viewState.apply {
-            showContactEvent.observe(this@QuickContactActivity) {
-                it.ifNew?.let { contactId ->
-                    prompts.showFragment(fragmentFactory.getContactFragment(contactId).apply {
-                        setOnFinishListener { this@QuickContactActivity.viewState.onFragmentFinish() }
-                    })
+class QuickContactActivity : BaseActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val link = intent.data?.toString() ?: return finish()
+        setChoolooContent {
+            BottomSheet(visible = true, onDismiss = ::finish) {
+                Permissioned(
+                    permissions = listOf(Manifest.permission.READ_CONTACTS),
+                    rationaleRes = R.string.permission_rationale_contacts,
+                    optionalPermissions = listOf(Manifest.permission.WRITE_CONTACTS),
+                ) {
+                    CallerScreen(target = CallerTarget.LinkTarget(link), onDismiss = ::finish)
                 }
             }
         }
-
-        viewState.onIntent(intent)
     }
 }

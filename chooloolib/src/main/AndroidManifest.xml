@@ -1,54 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission
-        android:name="android.permission.MODIFY_PHONE_STATE"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
-    <application>
-        <activity
-            android:name=".ui.call.CallActivity"
-            android:configChanges="screenSize|keyboardHidden"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:noHistory="true"
-            android:screenOrientation="unspecified"
-            android:showOnLockScreen="true">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
-        </activity>
-        <activity
-            android:name=".ui.permissions.PermissionRequestActivity"
-            android:screenOrientation="unspecified" />
-        <activity
-            android:name=".ui.permissions.DefaultDialerRequestActivity"
-            android:screenOrientation="unspecified" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-        <service
-            android:name="com.chooloo.www.chooloolib.api.service.CallService"
-            android:exported="true"
-            android:foregroundServiceType="phoneCall"
-            android:permission="android.permission.BIND_INCALL_SERVICE">
-
-            <meta-data
-                android:name="android.telecom.IN_CALL_SERVICE_UI"
-                android:value="true" />
-
-            <intent-filter>
-                <action android:name="android.telecom.InCallService" />
-            </intent-filter>
-        </service>
-
-        <receiver android:name=".receiver.CallBroadcastReceiver" />
-    </application>
 </manifest>

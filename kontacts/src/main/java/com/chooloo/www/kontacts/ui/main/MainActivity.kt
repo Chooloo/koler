@@ -1,67 +1,31 @@
 package com.chooloo.www.kontacts.ui.main
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.fragment.app.commit
-import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.kontacts.R
-import com.chooloo.www.kontacts.databinding.MainBinding
+import com.chooloo.www.chooloolib.ui.common.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory as ChoolooFragmentFactory
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<MainViewState>() {
-    override val contentView by lazy { binding.root }
-    override val viewState: MainViewState by viewModels()
+class MainActivity : BaseActivity() {
+    private val mainViewModel: MainViewModel by viewModels()
 
-    private val binding by lazy { MainBinding.inflate(layoutInflater) }
-    private val contactsFragment by lazy { fragmentFactory.getContactsFragment() }
-
-    @Inject lateinit var prompts: PromptsInteractor
-    @Inject lateinit var fragmentFactory: ChoolooFragmentFactory
-
-
-    override fun onSetup() {
-        binding.apply {
-            mainTabs.setHeadersResList(arrayOf(R.string.contacts))
-
-            mainMenuButton.setOnClickListener {
-                viewState.onSettingsClick()
-            }
-
-            mainAddContactButton.setOnClickListener {
-                viewState.onAddContactClick()
-            }
-
-            mainSearchBar.apply {
-                setOnTextChangedListener(viewState::onSearchTextChange)
-                editText?.setOnFocusChangeListener { _, hasFocus ->
-                    viewState.onSearchFocusChange(hasFocus)
-                }
-            }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) handleIntent(intent)
+        setChoolooContent {
+            MainScreen(viewModel = mainViewModel)
         }
+    }
 
-        viewState.apply {
-            searchHintRes.observe(this@MainActivity, binding.mainSearchBar::setHint)
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
 
-            searchText.observe(this@MainActivity) {
-                binding.mainSearchBar.text = it
-            }
-
-            isSearching.observe(this@MainActivity) {
-                if (it) binding.root.transitionToState(R.id.constraint_set_main_collapsed)
-            }
-
-            showMenuEvent.observe(this@MainActivity) {
-                it.ifNew?.let { prompts.showFragment(fragmentFactory.getSettingsFragment()) }
-            }
+    private fun handleIntent(intent: Intent) {
+        if (intent.action == Intent.ACTION_VIEW) {
+            intent.data?.let { mainViewModel.onContactLinkOpened(it.toString()) }
         }
-
-        supportFragmentManager.commit {
-            replace(binding.mainFragmentContainer.id, contactsFragment)
-        }
-
-        viewState.onIntent(intent)
     }
 }

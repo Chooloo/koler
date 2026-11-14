@@ -1,7 +1,7 @@
 package com.chooloo.www.kontacts
 
-import com.chooloo.www.chooloolib.ChoolooApp
+import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class KontactsApp : ChoolooApp()
+class KontactsApp : Application()

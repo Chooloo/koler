@@ -1,122 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Нещодавні</string>
     <string name="contacts">Контакти</string>
     <string name="conference">Конференція</string>
-    <string name="default_page">Головна</string>
-    <string name="settings">Налаштування</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Темна</string>
     <string name="theme_mode_light">Світла</string>
     <string name="theme_mode_system">Системна</string>
-    <string name="prompt_yes_or_no">Так чи Ні?</string>
-    <string name="prompt_are_you_sure">Ви впевнені?</string>
-    <string name="number_copied_to_clipboard">Скопійований номер</string>
-    <string name="action_yes">Так</string>
-    <string name="action_no">Ні</string>
-    <string name="action_answer">Відповідь</string>
-    <string name="action_hangup">Скинути</string>
-    <string name="action_show_history">Показати історію</string>
-    <string name="action_open_whatsapp">Відкрити WhatsApp</string>
-    <string name="action_block_number">Заблокувати номер</string>
-    <string name="action_unblock_number">Розблокувати номер</string>
-    <string name="action_choose_audio_route">Вибрати пристрій звуку</string>
-    <string name="action_choose_phone_account">Вибрати акаунт</string>
-    <string name="app_name">Koler</string>
-    <string name="support_email">choolookulu@gmail.com</string>
-    <string name="hint_search">Пошук</string>
-    <string name="hint_theme_mode">Тема</string>
-    <string name="hint_sim_account">Sim акаунт</string>
-    <string name="hint_default_page">Головна сторінка</string>
-    <string name="hint_animations">Показати анімації</string>
-    <string name="hint_search_recents">Шукати нещодавні</string>
-    <string name="hint_search_contacts">Шукати контакти</string>
-    <string name="hint_compact_mode">Компактні елементи списку</string>
-    <string name="hint_search_items">Шукати контакти &amp; нещодавні</string>
-    <string name="hint_dialpad_vibrate">Вібро при натисканні на цифрову панель</string>
-    <string name="hint_should_ask_sim">Питати Sim перед кожним викликом</string>
-    <string name="hint_dialpad_tones">Звук при натисканні на цифрову панель</string>
-    <string name="hint_group_recents">Згруповувати нещодавні від однієї людини</string>
-    <string name="hint_show_blocked">Показувати опцію блокування/розблокування для номерів (номеронабирач за замовчуванням необхідний).</string>
-    <string name="explain_is_on_hold">%s на притримуванні</string>
-    <string name="explain_choose_theme_mode">Тема Koler обрана, щоб побачити зміни перезапустіть застосунок</string>
-    <string name="explain_choose_sim_account">Подзвонити з іншою sim</string>
-    <string name="explain_choose_audio_route">Спрямуйте аудіо до іншого джерела</string>
-    <string name="explain_choose_phone_account">Продовжити виклик з іншого акаунту</string>
-    <string name="explain_delete_contact">Контакт буде назавжди видалений</string>
-    <string name="explain_delete_recent">Запис в журналі буде назавжди видалений</string>
-    <string name="explain_choose_default_page">Ця сторінка буде відкриватись при запуску Koler</string>
-    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
-    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
-    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Вимкнути мікрофон</string>
     <string name="call_action_unmute">Увімкнути мікрофон</string>
     <string name="call_action_speaker">Гучномовець</string>
     <string name="call_action_speaker_off">Вимк. Гучномовець</string>
-    <string name="call_status_new">Новий виклик</string>
-    <string name="call_status_dialing">Виклик…</string>
-    <string name="call_status_holding">Дзвінок на притримуванні</string>
-    <string name="call_status_connecting">З\'єднання…</string>
-    <string name="call_status_incoming">Вхідний виклик</string>
-    <string name="call_status_active">Виконується дзвінок</string>
-    <string name="call_status_disconnected">Дзвінок завершено</string>
-    <string name="call_status_pulling_call">Перехоплення виклику…</string>
-    <string name="call_status_unknown">Невідомий статус дзвінка</string>
-    <string name="call_status_disconnecting">Відключення виклику…</string>
-    <string name="call_status_phone_account">Вибрати акаунт</string>
-    <string name="pref_title_rate">Оцінити</string>
-    <string name="pref_title_compact">Компактний режим</string>
-    <string name="pref_title_animations">Анімації</string>
-    <string name="pref_title_app_color">Колірний акцент</string>
-    <string name="pref_title_theme_mode">Тема</string>
-    <string name="pref_title_email">Надіслати нам Email</string>
-    <string name="pref_title_report_bugs">Повідомити про помилку</string>
-    <string name="pref_title_manage_blocked">Керувати заблокованими номерами</string>
-    <string name="error_no_results">Немає результатів</string>
-    <string name="error_no_results_recents">Немає нещодавніх</string>
-    <string name="error_no_results_contacts">Немає контактів</string>
-    <string name="error_no_results_phones">Немає номерів телефону</string>
-    <string name="error_not_default_dialer_blocked">Зробіть Koler номеронабирачем за замовчуванням, щоб побачити заблоковані номери</string>
-    <string name="error_not_default_dialer_call">Зробіть Koler номеронабирачем за замовчуванням для здійснення дзвінків</string>
-    <string name="error_no_permissions_edit_call_log">Немає доволів на зміну журналу викликів :)</string>
-    <string name="error_no_permissions_make_call">Немає дозволів на здійснення дзвінка :(</string>
-    <string name="error_no_permissions_phones">Мені потрібен доступ до контактів :)</string>
-    <string name="error_no_permissions_recents">Мені потрібен дозвіл до журналу викликів :)</string>
-    <string name="error_no_permissions_contacts">Мені потрібен доступ до контактів :)</string>
-    <string name="error_no_permissions_contacts_and_call_log">Мені потрібен дозвіл до контаків та журналу викликів :)</string>
-    <string name="error_no_number_to_call">Не знайдено номера :(</string>
-    <string name="error_cant_hold_call">Не можу притримати виклик</string>
-    <string name="error_cant_swap_calls">Не можу перемкнути дзвінки</string>
-    <string name="error_cant_merge_call">Не можу зєднати дзвінки</string>
-    <string name="error_couldnt_get_number_from_intent">Не можу знайти номер</string>
-    <string name="dialpad_0_letters">+</string>
-    <string name="dialpad_1_letters">Гол.пошта</string>
-    <string name="dialpad_2_letters">АБВГҐ</string>
-    <string name="dialpad_3_letters">ДЕЄЖЗ</string>
-    <string name="dialpad_4_letters">ИІЇЙКЛ</string>
-    <string name="dialpad_5_letters">МНОП</string>
-    <string name="dialpad_6_letters">РСТУ</string>
-    <string name="dialpad_7_letters">ФХЦЧ</string>
-    <string name="dialpad_8_letters">ШЩ</string>
-    <string name="dialpad_9_letters">ЬЮЯ</string>
-    <string name="dialpad_star_letters" />
-    <string name="dialpad_pound_letters" />
-    <string name="content_description_menu_button">Кнопка Меню</string>
-    <string name="content_description_answer_button">Кнопка Відповісти</string>
-    <string name="content_description_reject_button">Кнопка Відхилити</string>
-    <string name="content_description_call_actions_button">Кнопка Дії виклику</string>
-    <string name="call_notification_channel_name">Сповіщення виклику</string>
-    <string name="call_notification_channel_description">Сповіщення активного виклику, показане для комфортного використання</string>
+    <!--endregion-->
+
+    <!--region Call States-->
+    <string name="call_state_dialing">Виклик…</string>
+    <string name="call_state_holding">Дзвінок на притримуванні</string>
+    <string name="call_state_connecting">З\'єднання…</string>
+    <string name="call_state_incoming">Вхідний виклик</string>
+    <string name="call_state_active">Виконується дзвінок</string>
+    <string name="call_state_disconnected">Дзвінок завершено</string>
+    <string name="call_state_unknown">Невідомий статус дзвінка</string>
+    <string name="call_state_disconnecting">Відключення виклику…</string>
+    <string name="call_state_phone_account">Вибрати акаунт</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Гучномовець</string>
     <string name="audio_route_earpiece">Динамік</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Провідні навушники</string>
     <string name="audio_route_wired_or_earpiece">Провідні або Динамік</string>
-    <string name="content_description_favorite_star">Вибрані</string>
-    <string name="content_description_empty_list_icon">Іконка порожнього списку</string>
-    <string name="type_label_im">Месенджер</string>
-    <string name="type_label_name">Ім\'я</string>
-    <string name="type_label_phone">Номер телефону</string>
-    <string name="type_label_email">Email</string>
-    <string name="type_label_custom">Інше</string>
+    <!--endregion-->
+
+    <!--region Account Type Labels-->
     <string name="type_label_whatsapp">WhatsApp</string>
-    <string name="type_label_organization">Організація</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Оцінити</string>
+    <string name="pref_title_email">Надіслати нам Email</string>
+    <string name="pref_title_report_bugs">Повідомити про помилку</string>
+    <string name="pref_title_theme_mode">Тема</string>
+    <string name="pref_title_default_page">Головна сторінка</string>
+    <string name="pref_title_dialpad_vibrate">Вібро при натисканні на цифрову панель</string>
+    <string name="pref_title_manage_blocked">Керувати заблокованими номерами</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Шукати нещодавні</string>
+    <string name="hint_search_contacts">Шукати контакти</string>
+    <string name="number_copied_to_clipboard">Скопійований номер</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Немає нещодавніх</string>
+    <string name="no_results_contacts">Немає контактів</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_accept_call">Кнопка Відповісти</string>
+    <string name="cd_hangup_call">Кнопка Відхилити</string>
+    <string name="cd_favorite_star">Вибрані</string>
+    <!--endregion-->
+
+    <string name="settings">Налаштування</string>
+    <string name="cd_search">Пошук</string>
+    <string name="action_block">Заблокувати</string>
+    <string name="action_call">Зателефонувати</string>
+    <string name="action_cancel">Скасувати</string>
+    <string name="action_clear_recents">Видалити всі недавні виклики</string>
+    <string name="action_delete">Видалити</string>
+    <string name="action_edit">Редагувати</string>
+    <string name="action_grant_access">Надати доступ</string>
+    <string name="action_less">Менше</string>
+    <string name="action_message">Повідомлення</string>
+    <string name="action_more">Ще</string>
+    <string name="action_open_settings">Відкрити налаштування</string>
+    <string name="action_unblock">Розблокувати</string>
+    <string name="add_contact">Додати контакт</string>
+    <string name="call_action_add_call">Додати виклик</string>
+    <string name="call_action_hold">Утримання</string>
+    <string name="call_action_keypad">Клавіатура</string>
+    <string name="call_action_merge">Об\'єднати</string>
+    <string name="call_action_swap">Перемкнути</string>
+    <string name="call_notification_channel_incoming_description">Дзвонить і показує вхідні виклики</string>
+    <string name="call_notification_channel_incoming_name">Вхідні виклики</string>
+    <string name="call_notification_channel_ongoing_description">Показує поточний виклик</string>
+    <string name="call_notification_channel_ongoing_name">Поточні виклики</string>
+    <string name="call_state_conferenced">Конференц-виклик</string>
+    <string name="caller_payphone">Таксофон</string>
+    <string name="caller_restricted">Прихований номер</string>
+    <string name="caller_unknown">Невідомо</string>
+    <string name="cd_add_contact">Додати контакт</string>
+    <string name="cd_backspace">Видалити символ</string>
+    <string name="cd_call">Зателефонувати</string>
+    <string name="cd_close_search">Закрити пошук</string>
+    <string name="cd_copy_number">Копіювати номер</string>
+    <string name="cd_dialpad">Клавіатура</string>
+    <string name="cd_manage_call">Керувати викликом</string>
+    <string name="cd_split_call">Відокремити виклик</string>
+    <string name="confirm_block">Виклики та повідомлення з цього номера буде заблоковано.</string>
+    <string name="confirm_block_title">Заблокувати цей номер?</string>
+    <string name="confirm_delete_contact">Контакт буде видалено з цього пристрою та синхронізованих облікових записів.</string>
+    <string name="confirm_delete_contact_title">Видалити цей контакт?</string>
+    <string name="contact_unknown_name">Невідомо</string>
+    <string name="dialer">Телефон</string>
+    <string name="emails">Ел. пошта</string>
+    <string name="error_call_failed">Не вдалося зателефонувати</string>
+    <string name="error_caller_not_found">Абонента не знайдено</string>
+    <string name="error_clear_recents_failed">Не вдалося очистити недавні виклики</string>
+    <string name="error_contact_block_change_failed">Не вдалося змінити блокування</string>
+    <string name="error_contact_deletion_failed">Не вдалося видалити контакт</string>
+    <string name="error_contact_favorite_change_failed">Не вдалося змінити обране</string>
+    <string name="error_loading_failed">Не вдалося завантажити список</string>
+    <string name="error_no_app_found">Немає застосунку для цієї дії</string>
+    <string name="explain_clear_recents">Усю історію викликів буде видалено назавжди</string>
+    <string name="loading">Завантаження…</string>
+    <string name="loading_contacts">Завантаження контактів…</string>
+    <string name="loading_recents">Завантаження недавніх викликів…</string>
+    <string name="missed_call_notification_channel_description">Виклики, на які ви не відповіли</string>
+    <string name="missed_call_notification_channel_name">Пропущені виклики</string>
+    <string name="missed_call_notification_title">Пропущений виклик</string>
+    <string name="missed_calls_notification_title">Пропущені виклики</string>
+    <string name="no_results_calls">Викликів не знайдено</string>
+    <string name="permission_rationale_call_log">Надайте доступ до журналу викликів, щоб бачити недавні виклики.</string>
+    <string name="permission_rationale_contacts">Надайте доступ до контактів, щоб бачити їх тут.</string>
+    <string name="permission_rationale_phone">Надайте доступ до телефона, щоб телефонувати.</string>
+    <string name="phones">Номери</string>
+    <string name="pref_section_about">Про застосунок</string>
+    <string name="pref_section_appearance">Вигляд</string>
+    <string name="pref_section_blocking">Блокування</string>
+    <string name="pref_section_dialer">Телефон</string>
+    <string name="pref_title_dialpad_tones">Звуки клавіатури</string>
+    <string name="pref_title_donate">Підтримати</string>
+    <string name="pref_title_group_recents">Групувати недавні</string>
+    <string name="recent_calls">Історія</string>
+    <string name="show_all">Показати все</string>
+    <string name="show_less">Згорнути</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d пропущений виклик</item>
+        <item quantity="few">%d пропущені виклики</item>
+        <item quantity="many">%d пропущених викликів</item>
+        <item quantity="other">%d пропущеного виклику</item>
+    </plurals>
 </resources>

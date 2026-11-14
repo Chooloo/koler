@@ -1,110 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--region Titles & Sections-->
     <string name="recents">Recentes</string>
     <string name="contacts">Contatos</string>
     <string name="conference">Conferência</string>
-    <string name="default_page">Padrão</string>
-    <string name="settings">Configurações</string>
+    <!--endregion-->
+
+    <!--region Theme & Call Modes-->
     <string name="theme_mode_dark">Escuro</string>
     <string name="theme_mode_light">Claro</string>
     <string name="theme_mode_system">Sistema</string>
-    <string name="prompt_yes_or_no">Sim ou Não?</string>
-    <string name="prompt_are_you_sure">Tem certeza?</string>
-    <string name="number_copied_to_clipboard">O número foi copiado ao clipboard</string>
-    <string name="action_answer">Atender</string>
-    <string name="action_hangup">Desligar</string>
-    <string name="action_yes">Sim</string>
-    <string name="action_no">Não</string>
-    <string name="action_show_history">Mostrar histórico</string>
-    <string name="action_block_number">Bloquear número</string>
-    <string name="action_unblock_number">Desbloquear número</string>
-    <string name="action_choose_audio_route">Escolha a via de áudio</string>
-    <string name="action_choose_phone_account">Escolha uma conta de telefone</string>
-    <string name="app_name">Koler</string>
-    <string name="support_email">choolookulu@gmail.com</string>
-    <string name="hint_search">Procurar</string>
-    <string name="hint_theme_mode">Tipo de tema</string>
-    <string name="hint_sim_account">Conta de SIM</string>
-    <string name="hint_default_page">Página padrão</string>
-    <string name="hint_animations">Mostrar animações</string>
-    <string name="hint_search_recents">Buscar em recentes</string>
-    <string name="hint_search_contacts">Buscar em contatos</string>
-    <string name="hint_search_items">Buscar em contatos &amp; recentes</string>
-    <string name="hint_dialpad_vibrate">Vibrar ao tocar no discador</string>
-    <string name="hint_should_ask_sim">Pergunte qual SIM usar antes de cada ligação</string>
-    <string name="hint_dialpad_tones">Ativar tons de discagem</string>
-    <string name="hint_show_blocked">Mostrar opção de bloqueio/desbloqueio de números (requer discador padrão).</string>
-    <string name="explain_is_on_hold">%s está em espera</string>
-    <string name="explain_choose_theme_mode">Definir o tema no Koler, reinicie app para efetuar a mudança</string>
-    <string name="explain_choose_sim_account">Ligar via SIM diferente</string>
-    <string name="explain_choose_audio_route">Encaminhar áudio para uma fonte diferente</string>
-    <string name="explain_choose_phone_account">Continuar a ligação atual usando uma conta de telefone específica</string>
-    <string name="explain_delete_contact">Este contato será excluído permanentemente</string>
-    <string name="explain_delete_recent">Este registro de ligações será excluído permanentemente</string>
-    <string name="explain_choose_default_page">Esta página sempre será mostrada ao reabrir o Koler</string>
-    <string name="app_source_url">https://github.com/Chooloo/call_manage</string>
-    <string name="app_bug_reporting_url">https://github.com/Chooloo/call_manage/issues</string>
-    <string name="donation_link">https://www.paypal.com/paypalme/theroeiedri?locale.x=en_US</string>
+    <!--endregion-->
+
+    <!--region Call Actions-->
     <string name="call_action_mute">Silenciar</string>
     <string name="call_action_unmute">Não silenciar</string>
     <string name="call_action_speaker">Alto-falante</string>
     <string name="call_action_speaker_off">Alto-falante desligado</string>
-    <string name="call_status_new">Nova ligação</string>
-    <string name="call_status_dialing">Discando…</string>
-    <string name="call_status_holding">Ligação em espera</string>
-    <string name="call_status_connecting">Conectando…</string>
-    <string name="call_status_incoming">Ligação recebida</string>
-    <string name="call_status_active">Ligação em andamento</string>
-    <string name="call_status_disconnected">Ligação concluída</string>
-    <string name="call_status_pulling_call">Estabelecendo ligação…</string>
-    <string name="call_status_unknown">Status da ligação desconhecido</string>
-    <string name="call_status_disconnecting">A ligação está desconectando…</string>
-    <string name="call_status_phone_account">Selecione conta de telefone</string>
-    <string name="pref_title_rate">Avaliar</string>
-    <string name="pref_title_animations">Animações</string>
-    <string name="pref_title_app_color">Destacar a cor</string>
-    <string name="pref_title_theme_mode">Tipo de tema</string>
-    <string name="pref_title_email">Envie um e-mail</string>
-    <string name="pref_title_report_bugs">Relatar falhas</string>
-    <string name="pref_title_manage_blocked">Gerenciar números bloqueados</string>
-    <string name="error_no_results">Nenhum resultado</string>
-    <string name="error_no_results_recents">Nenhum recente</string>
-    <string name="error_no_results_contacts">Nenhum contato</string>
-    <string name="error_no_results_phones">Nenhum número de telefone</string>
-    <string name="error_not_default_dialer_blocked">Defina o Koler como discador padrão para poder ver números bloqueados</string>
-    <string name="error_not_default_dialer_call">Defina o Koler como discador padrão para fazer ligações</string>
-    <string name="error_no_permissions_edit_call_log">Nenhuma permissão concedida para alterar o registro de ligações</string>
-    <string name="error_no_permissions_make_call">Nenhuma permissão concedida para fazer ligação</string>
-    <string name="error_no_permissions_phones">Permissão exigida para ler os contatos</string>
-    <string name="error_no_permissions_recents">Permissão exigida para ler o registro de ligações</string>
-    <string name="error_no_permissions_contacts">Permissão exigida para ler os contatos</string>
-    <string name="error_no_number_to_call">Nenhum número foi encontrado</string>
-    <string name="error_cant_hold_call">Não é possível colocar ligação em espera</string>
-    <string name="error_cant_swap_calls">Não é possível trocar ligações</string>
-    <string name="error_cant_merge_call">Não pode unir ligações</string>
-    <string name="error_couldnt_get_number_from_intent">Não foi possível encontrar o número</string>
-    <string name="dialpad_0_letters">+</string>
-    <string name="dialpad_1_letters">Correio de voz</string>
-    <string name="dialpad_2_letters">ABC</string>
-    <string name="dialpad_3_letters">DEF</string>
-    <string name="dialpad_4_letters">GHI</string>
-    <string name="dialpad_5_letters">JKL</string>
-    <string name="dialpad_6_letters">MNO</string>
-    <string name="dialpad_7_letters">PQRS</string>
-    <string name="dialpad_8_letters">TUV</string>
-    <string name="dialpad_9_letters">WXYZ</string>
-    <string name="dialpad_star_letters" />
-    <string name="dialpad_pound_letters" />
-    <string name="content_description_menu_button">Botão de menu</string>
-    <string name="content_description_answer_button">Botão de atender</string>
-    <string name="content_description_reject_button">Botão de recusar</string>
-    <string name="content_description_call_actions_button">Opções de ligação</string>
-    <string name="call_notification_channel_name">Notificação de ligação</string>
-    <string name="call_notification_channel_description">Notificação da ligação ativa para facilitar uso mais confortável</string>
+    <!--endregion-->
+
+    <!--region Call States-->
+    <string name="call_state_dialing">Discando…</string>
+    <string name="call_state_holding">Ligação em espera</string>
+    <string name="call_state_connecting">Conectando…</string>
+    <string name="call_state_incoming">Ligação recebida</string>
+    <string name="call_state_active">Ligação em andamento</string>
+    <string name="call_state_disconnected">Ligação concluída</string>
+    <string name="call_state_unknown">Status da ligação desconhecido</string>
+    <string name="call_state_disconnecting">A ligação está desconectando…</string>
+    <string name="call_state_phone_account">Selecione conta de telefone</string>
+    <!--endregion-->
+
+    <!--region Audio Routes-->
     <string name="audio_route_speaker">Alto-falante</string>
     <string name="audio_route_earpiece">Fone de ouvido</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Fone de ouvido com fio</string>
     <string name="audio_route_wired_or_earpiece">Fone de ouvido ou por cabo</string>
-    <string name="content_description_favorite_star">Estrela de favorito</string>
-    <string name="content_description_empty_list_icon">Ícone de lista vazia</string>
+    <!--endregion-->
+
+    <!--region Preference Titles & Descriptions-->
+    <string name="pref_title_rate">Avaliar</string>
+    <string name="pref_title_email">Envie um e-mail</string>
+    <string name="pref_title_report_bugs">Relatar falhas</string>
+    <string name="pref_title_theme_mode">Tipo de tema</string>
+    <string name="pref_title_default_page">Página padrão</string>
+    <string name="pref_title_dialpad_vibrate">Vibrar ao tocar no discador</string>
+    <string name="pref_title_manage_blocked">Gerenciar números bloqueados</string>
+    <!--endregion-->
+
+    <!--region Hints & Messages-->
+    <string name="hint_search_recents">Buscar em recentes</string>
+    <string name="hint_search_contacts">Buscar em contatos</string>
+    <string name="number_copied_to_clipboard">O número foi copiado ao clipboard</string>
+    <!--endregion-->
+
+    <!--region Loading & Empty States-->
+    <string name="no_results_recents">Nenhum recente</string>
+    <string name="no_results_contacts">Nenhum contato</string>
+    <!--endregion-->
+
+    <!--region Notifications-->
+    <!--endregion-->
+
+    <!--region Content Descriptions-->
+    <string name="cd_accept_call">Botão de atender</string>
+    <string name="cd_hangup_call">Botão de recusar</string>
+    <string name="cd_favorite_star">Estrela de favorito</string>
+    <!--endregion-->
+
+    <string name="settings">Configurações</string>
+    <string name="cd_search">Procurar</string>
+    <string name="action_block">Bloquear</string>
+    <string name="action_call">Ligar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_clear_recents">Apagar todas as chamadas recentes</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_grant_access">Permitir acesso</string>
+    <string name="action_less">Menos</string>
+    <string name="action_message">Mensagem</string>
+    <string name="action_more">Mais</string>
+    <string name="action_open_settings">Abrir configurações</string>
+    <string name="action_unblock">Desbloquear</string>
+    <string name="add_contact">Adicionar contato</string>
+    <string name="call_action_add_call">Adicionar chamada</string>
+    <string name="call_action_hold">Em espera</string>
+    <string name="call_action_keypad">Teclado</string>
+    <string name="call_action_merge">Mesclar</string>
+    <string name="call_action_swap">Alternar</string>
+    <string name="call_notification_channel_incoming_description">Toca e mostra chamadas recebidas</string>
+    <string name="call_notification_channel_incoming_name">Chamadas recebidas</string>
+    <string name="call_notification_channel_ongoing_description">Mostra a chamada em andamento</string>
+    <string name="call_notification_channel_ongoing_name">Chamadas em andamento</string>
+    <string name="call_state_conferenced">Chamada em conferência</string>
+    <string name="caller_payphone">Telefone público</string>
+    <string name="caller_restricted">Restrito</string>
+    <string name="caller_unknown">Desconhecido</string>
+    <string name="cd_add_contact">Adicionar contato</string>
+    <string name="cd_backspace">Apagar</string>
+    <string name="cd_call">Ligar</string>
+    <string name="cd_close_search">Fechar pesquisa</string>
+    <string name="cd_copy_number">Copiar número</string>
+    <string name="cd_dialpad">Teclado</string>
+    <string name="cd_manage_call">Gerenciar chamada</string>
+    <string name="cd_split_call">Separar chamada</string>
+    <string name="confirm_block">Chamadas e mensagens deste número serão bloqueadas.</string>
+    <string name="confirm_block_title">Bloquear este número?</string>
+    <string name="confirm_delete_contact">O contato será removido deste dispositivo e das contas sincronizadas.</string>
+    <string name="confirm_delete_contact_title">Excluir este contato?</string>
+    <string name="contact_unknown_name">Desconhecido</string>
+    <string name="dialer">Telefone</string>
+    <string name="emails">E-mail</string>
+    <string name="error_call_failed">Não foi possível fazer a chamada</string>
+    <string name="error_caller_not_found">Contato não encontrado</string>
+    <string name="error_clear_recents_failed">Não foi possível apagar as chamadas recentes</string>
+    <string name="error_contact_block_change_failed">Não foi possível alterar o bloqueio</string>
+    <string name="error_contact_deletion_failed">Não foi possível excluir o contato</string>
+    <string name="error_contact_favorite_change_failed">Não foi possível alterar o favorito</string>
+    <string name="error_loading_failed">Não foi possível carregar a lista</string>
+    <string name="error_no_app_found">Nenhum app pode realizar esta ação</string>
+    <string name="explain_clear_recents">Todo o histórico de chamadas será apagado permanentemente</string>
+    <string name="loading">Carregando…</string>
+    <string name="loading_contacts">Carregando contatos…</string>
+    <string name="loading_recents">Carregando chamadas recentes…</string>
+    <string name="missed_call_notification_channel_description">Chamadas que você não atendeu</string>
+    <string name="missed_call_notification_channel_name">Chamadas perdidas</string>
+    <string name="missed_call_notification_title">Chamada perdida</string>
+    <string name="missed_calls_notification_title">Chamadas perdidas</string>
+    <string name="no_results_calls">Nenhuma chamada encontrada</string>
+    <string name="permission_rationale_call_log">Permita o acesso ao histórico de chamadas para ver as chamadas recentes.</string>
+    <string name="permission_rationale_contacts">Permita o acesso aos contatos para vê-los aqui.</string>
+    <string name="permission_rationale_phone">Permita o acesso ao telefone para fazer chamadas.</string>
+    <string name="phones">Telefones</string>
+    <string name="pref_section_about">Sobre</string>
+    <string name="pref_section_appearance">Aparência</string>
+    <string name="pref_section_blocking">Bloqueio</string>
+    <string name="pref_section_dialer">Telefone</string>
+    <string name="pref_title_dialpad_tones">Tons do teclado</string>
+    <string name="pref_title_donate">Doar</string>
+    <string name="pref_title_group_recents">Agrupar recentes</string>
+    <string name="recent_calls">Histórico</string>
+    <string name="show_all">Mostrar tudo</string>
+    <string name="show_less">Mostrar menos</string>
+    <string name="type_label_whatsapp">WhatsApp</string>
+    <plurals name="missed_calls_notification_text">
+        <item quantity="one">%d chamada perdida</item>
+        <item quantity="many">%d chamadas perdidas</item>
+        <item quantity="other">%d chamadas perdidas</item>
+    </plurals>
 </resources>
