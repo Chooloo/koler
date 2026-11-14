@@ -1,0 +1,11 @@
+Koler 1.7.0 is a full rewrite with a new interface.
+
+- New look: contact photos everywhere, one floating bar, landscape call screen
+- Answer, decline and hang up from the call notification
+- Koler shows its own missed-call notifications
+- Screen stays on during speaker calls
+- Call screen respects Do Not Disturb allowed callers
+- Add call, merge and conference calls fixed
+- Block numbers and open WhatsApp from a contact
+- Themed (monochrome) app icon
+- Translations for 14 languages
