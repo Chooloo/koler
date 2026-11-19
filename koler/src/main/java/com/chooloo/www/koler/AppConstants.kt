@@ -3,7 +3,6 @@ package com.chooloo.www.koler
 object AppConstants {
     const val ACTION_SHOW_MISSED_CALLS = "com.chooloo.www.koler.action.SHOW_MISSED_CALLS"
 
-    const val ACTION_ANSWER = "action_answer"
     const val ACTION_DECLINE = "action_decline"
     const val ACTION_MUTE_ON = "action_mute_on"
     const val ACTION_MUTE_OFF = "action_mute_off"

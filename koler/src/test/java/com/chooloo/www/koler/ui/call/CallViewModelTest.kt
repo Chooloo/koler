@@ -131,6 +131,19 @@ class CallViewModelTest {
     }
 
     @Test
+    fun `accept answers the incoming call before state is subscribed`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            callRepository.calls.value = listOf(
+                activeCall(id = "c1", state = CallState.HOLDING),
+                activeCall(id = "c2", state = CallState.INCOMING),
+            )
+
+            viewModel.onAccept()
+
+            assertEquals(listOf("answer c2"), callRepository.actions)
+        }
+
+    @Test
     fun `dismissing the phone account picker declines the pending call`() = runSubscribed {
         callRepository.calls.value = listOf(activeCall(state = CallState.SELECT_PHONE_ACCOUNT))
 

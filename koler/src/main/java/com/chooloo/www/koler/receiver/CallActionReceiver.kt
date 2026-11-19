@@ -21,7 +21,6 @@ class CallActionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val primaryCallId = getPrimaryCall(callRepository.calls.value)?.id
         when (intent.action) {
-            AppConstants.ACTION_ANSWER -> primaryCallId?.let(callRepository::answer)
             AppConstants.ACTION_DECLINE -> primaryCallId?.let(callRepository::decline)
             AppConstants.ACTION_MUTE_ON -> callRepository.setMuted(true)
             AppConstants.ACTION_MUTE_OFF -> callRepository.setMuted(false)
