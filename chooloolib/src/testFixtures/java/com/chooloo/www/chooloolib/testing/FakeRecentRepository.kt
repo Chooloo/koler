@@ -5,12 +5,15 @@ import com.chooloo.www.chooloolib.domain.repository.RecentRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeRecentRepository(var lastOutgoingNumber: String? = null) : RecentRepository {
+class FakeRecentRepository(
+    var lastOutgoingNumber: String? = null,
+    private val recents: List<Recent> = emptyList(),
+) : RecentRepository {
     var missedCallsReadMarks = 0
 
     override fun recents(filter: String): Flow<List<Recent>> = flowOf(emptyList())
 
-    override fun recent(recentId: Long): Flow<Recent?> = flowOf(null)
+    override fun recent(recentId: Long): Flow<Recent?> = flowOf(recents.find { it.id == recentId })
 
     override fun recentsOfNumbers(numbers: List<String>): Flow<List<Recent>> = flowOf(emptyList())
 
