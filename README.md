@@ -59,5 +59,9 @@ Feel free to contact us for every little thing.
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.chooloo.www.koler)
 [<img src="https://github.com/machiav3lli/oandbackupx/blob/034b226cea5c1b30eb4f6a6f313e4dadcbb0ece4/badge_github.png" alt="Get it on GitHub" height="80">](https://github.com/Chooloo/koler/releases)
 
+**Requires Android 10 or newer.** Koler 1.7.0 and later won't install on Android 9 or older; the last version for those phones is [1.6.1](https://github.com/Chooloo/koler/releases/tag/v1.6.1).
+
+**Keep your phone's built-in phone app enabled.** Android always uses it for emergency calls, even when Koler is your default phone app. If it is disabled, an emergency call still connects but shows no call screen and can't be hung up.
+
 ## License
 [![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)
