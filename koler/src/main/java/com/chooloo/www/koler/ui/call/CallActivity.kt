@@ -16,7 +16,7 @@ class CallActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showWhenLocked()
-        if (savedInstanceState == null) showKeypadIfRequested(intent)
+        if (savedInstanceState == null) handleIntent(intent)
         finishWhenCallsEnd()
         setChoolooContent {
             CallScreen(callViewModel = callViewModel)
@@ -25,7 +25,7 @@ class CallActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        showKeypadIfRequested(intent)
+        handleIntent(intent)
     }
 
     override fun finish() {
@@ -45,11 +45,14 @@ class CallActivity : BaseActivity() {
         getSystemService(KeyguardManager::class.java).requestDismissKeyguard(this, null)
     }
 
-    private fun showKeypadIfRequested(intent: Intent) {
+    private fun handleIntent(intent: Intent) {
+        val isFromRecents = intent.flags and Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY != 0
+        if (intent.getBooleanExtra(EXTRA_ANSWER, false) && !isFromRecents) callViewModel.onAccept()
         if (intent.getBooleanExtra(EXTRA_SHOW_DIALPAD, false)) callViewModel.onShowKeypad()
     }
 
     companion object {
         const val EXTRA_SHOW_DIALPAD = "show_dialpad"
+        const val EXTRA_ANSWER = "answer"
     }
 }

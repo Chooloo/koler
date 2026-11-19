@@ -151,7 +151,7 @@ class CallViewModel @Inject constructor(
     }
 
     fun onAccept() {
-        uiState.value.call?.id?.let(callRepository::answer)
+        getPrimaryCall(callRepository.calls.value)?.id?.let(callRepository::answer)
     }
 
     fun onHangup() {

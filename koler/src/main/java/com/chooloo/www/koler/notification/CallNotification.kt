@@ -98,7 +98,7 @@ class CallNotification @Inject constructor(
             NotificationCompat.CallStyle.forIncomingCall(
                 caller,
                 receiverIntent(AppConstants.ACTION_DECLINE),
-                receiverIntent(AppConstants.ACTION_ANSWER),
+                callScreenIntent(answer = true),
             )
         } else {
             NotificationCompat.CallStyle.forOngoingCall(
@@ -184,10 +184,12 @@ class CallNotification @Inject constructor(
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
     )
 
-    private fun callScreenIntent() = PendingIntent.getActivity(
+    private fun callScreenIntent(answer: Boolean = false) = PendingIntent.getActivity(
         context,
-        0,
-        Intent(context, CallActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        if (answer) 1 else 0,
+        Intent(context, CallActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(CallActivity.EXTRA_ANSWER, answer),
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
     )
 
