@@ -11,6 +11,7 @@ class FakeCallRepository : CallRepository {
     override val audio = MutableStateFlow(CallAudio())
     override val canAddCall = MutableStateFlow(true)
     override val hasPendingOutgoing = MutableStateFlow(false)
+    override val isCallScreenShown = MutableStateFlow(false)
 
     val actions = mutableListOf<String>()
 
@@ -26,6 +27,7 @@ class FakeCallRepository : CallRepository {
         record("account $callId $accountId")
     override fun setMuted(isMuted: Boolean) = record("muted $isMuted")
     override fun setAudioRoute(route: AudioRoute) = record("route $route")
+    override fun setCallScreenShown(isShown: Boolean) = record("screen shown $isShown")
 
     private fun record(action: String) {
         actions += action

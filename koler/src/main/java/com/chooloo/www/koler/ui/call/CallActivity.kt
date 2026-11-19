@@ -3,6 +3,7 @@ package com.chooloo.www.koler.ui.call
 import android.app.KeyguardManager
 import android.content.Intent
 import android.os.Bundle
+import android.os.PowerManager
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
@@ -21,6 +22,18 @@ class CallActivity : BaseActivity() {
         setChoolooContent {
             CallScreen(callViewModel = callViewModel)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        callViewModel.onScreenShown()
+    }
+
+    override fun onStop() {
+        if (getSystemService(PowerManager::class.java).isInteractive) {
+            callViewModel.onScreenHidden()
+        }
+        super.onStop()
     }
 
     override fun onNewIntent(intent: Intent) {

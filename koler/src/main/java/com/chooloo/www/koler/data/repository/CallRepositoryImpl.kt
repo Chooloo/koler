@@ -39,11 +39,13 @@ class CallRepositoryImpl @Inject constructor(private val callMapper: CallMapper)
     private val _audio = MutableStateFlow(CallAudio())
     private val _canAddCall = MutableStateFlow(false)
     private val _hasPendingOutgoing = MutableStateFlow(false)
+    private val _isCallScreenShown = MutableStateFlow(false)
 
     override val calls: StateFlow<List<Call>> = _calls.asStateFlow()
     override val audio: StateFlow<CallAudio> = _audio.asStateFlow()
     override val canAddCall: StateFlow<Boolean> = _canAddCall.asStateFlow()
     override val hasPendingOutgoing: StateFlow<Boolean> = _hasPendingOutgoing.asStateFlow()
+    override val isCallScreenShown: StateFlow<Boolean> = _isCallScreenShown.asStateFlow()
 
     override fun answer(callId: String) = withCall(callId) { answer(details.videoState) }
 
@@ -92,6 +94,10 @@ class CallRepositoryImpl @Inject constructor(private val callMapper: CallMapper)
         setAudioRoute(callMapper.toTelecomRoute(route))
     }
 
+    override fun setCallScreenShown(isShown: Boolean) {
+        _isCallScreenShown.value = isShown
+    }
+
     fun onServiceCreated(service: InCallService) {
         this.service = service
     }
@@ -106,6 +112,7 @@ class CallRepositoryImpl @Inject constructor(private val callMapper: CallMapper)
         _audio.value = CallAudio()
         _canAddCall.value = false
         _hasPendingOutgoing.value = false
+        _isCallScreenShown.value = false
     }
 
     fun onCallAdded(call: TelecomCall): Call {

@@ -62,6 +62,14 @@ class CallViewModelTest {
     }
 
     @Test
+    fun `screen shown and hidden are reported to the repository`() {
+        viewModel.onScreenShown()
+        viewModel.onScreenHidden()
+
+        assertEquals(listOf("screen shown true", "screen shown false"), callRepository.actions)
+    }
+
+    @Test
     fun `mute and hold toggle from their current state`() = runSubscribed {
         callRepository.calls.value = listOf(activeCall(state = CallState.HOLDING))
         callRepository.audio.value = CallAudio(isMuted = true)

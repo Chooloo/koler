@@ -150,6 +150,10 @@ class CallViewModel @Inject constructor(
         callRepository.calls.first { it.isEmpty() }
     }
 
+    fun onScreenShown() = callRepository.setCallScreenShown(true)
+
+    fun onScreenHidden() = callRepository.setCallScreenShown(false)
+
     fun onAccept() {
         getPrimaryCall(callRepository.calls.value)?.id?.let(callRepository::answer)
     }

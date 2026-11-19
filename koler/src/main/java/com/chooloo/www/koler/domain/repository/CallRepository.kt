@@ -10,6 +10,7 @@ interface CallRepository {
     val audio: StateFlow<CallAudio>
     val canAddCall: StateFlow<Boolean>
     val hasPendingOutgoing: StateFlow<Boolean>
+    val isCallScreenShown: StateFlow<Boolean>
 
     fun answer(callId: String)
     fun decline(callId: String)
@@ -22,4 +23,5 @@ interface CallRepository {
     fun selectPhoneAccount(callId: String, accountId: String)
     fun setMuted(isMuted: Boolean)
     fun setAudioRoute(route: AudioRoute)
+    fun setCallScreenShown(isShown: Boolean)
 }
