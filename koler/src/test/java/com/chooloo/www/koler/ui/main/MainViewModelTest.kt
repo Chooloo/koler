@@ -144,6 +144,24 @@ class MainViewModelTest {
     }
 
     @Test
+    fun `dial link opens the dialpad with its number`() = runSubscribed {
+        viewModel.onDialNumber(" 123 456-789 ")
+
+        val state = viewModel.uiState.value
+        assertTrue(state.isDialpadOpen)
+        assertEquals("123 456-789", state.dialNumber)
+    }
+
+    @Test
+    fun `blank dial link is ignored`() = runSubscribed {
+        viewModel.onDialNumber("  ")
+
+        val state = viewModel.uiState.value
+        assertFalse(state.isDialpadOpen)
+        assertNull(state.dialNumber)
+    }
+
+    @Test
     fun `opening missed calls clears them`() = runSubscribed {
         viewModel.onMissedCallsOpened()
 
