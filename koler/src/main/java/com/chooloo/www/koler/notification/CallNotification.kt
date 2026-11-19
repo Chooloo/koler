@@ -21,11 +21,13 @@ import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.koler.AppConstants
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.domain.enum.AudioRoute
+import com.chooloo.www.koler.domain.enum.CallAlert
 import com.chooloo.www.koler.domain.enum.CallCapability
 import com.chooloo.www.koler.domain.enum.CallState
 import com.chooloo.www.koler.domain.model.Call
 import com.chooloo.www.koler.domain.model.CallAudio
 import com.chooloo.www.koler.domain.repository.CallRepository
+import com.chooloo.www.koler.domain.usecase.GetCallAlert
 import com.chooloo.www.koler.domain.usecase.GetPrimaryCall
 import com.chooloo.www.koler.receiver.CallActionReceiver
 import com.chooloo.www.koler.ui.call.CallActivity
@@ -48,6 +50,7 @@ class CallNotification @Inject constructor(
     private val phoneRepository: PhoneRepository,
     private val notificationManager: NotificationManagerCompat,
     private val getPrimaryCall: GetPrimaryCall,
+    private val getCallAlert: GetCallAlert,
 ) {
     private var job: Job? = null
     private var alertedCallId: String? = null
@@ -56,16 +59,20 @@ class CallNotification @Inject constructor(
         createChannels()
         job?.cancel()
         job = applicationScope.launch(Dispatchers.Main.immediate) {
-            combine(callRepository.calls, callRepository.audio) { calls, audio ->
-                getPrimaryCall(calls) to audio
-            }.collectLatest { (call, audio) ->
+            combine(
+                callRepository.calls,
+                callRepository.audio,
+                callRepository.isCallScreenShown,
+            ) { calls, audio, isCallScreenShown ->
+                Triple(getPrimaryCall(calls), audio, isCallScreenShown)
+            }.collectLatest { (call, audio, isCallScreenShown) ->
                 if (call == null) {
                     ServiceCompat.stopForeground(service, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 } else {
                     ServiceCompat.startForeground(
                         service,
                         AppConstants.CALL_NOTIFICATION_ID,
-                        build(call, audio),
+                        build(call, audio, isCallScreenShown),
                         ServiceInfo.FOREGROUND_SERVICE_TYPE_PHONE_CALL,
                     )
                 }
@@ -79,7 +86,11 @@ class CallNotification @Inject constructor(
         ServiceCompat.stopForeground(service, ServiceCompat.STOP_FOREGROUND_REMOVE)
     }
 
-    private suspend fun build(call: Call, audio: CallAudio): Notification {
+    private suspend fun build(
+        call: Call,
+        audio: CallAudio,
+        isCallScreenShown: Boolean,
+    ): Notification {
         val caller = Person.Builder()
             .setName(
                 CallLabels.title(call, context, call.number?.let { phoneRepository.lookup(it) }),
@@ -92,7 +103,9 @@ class CallNotification @Inject constructor(
             )
             .build()
         val isIncoming = call.state == CallState.INCOMING
-        val shouldAlert = isIncoming && call.id != alertedCallId
+        val alert = getCallAlert(call, isCallScreenShown)
+        if (alert != CallAlert.RING) alertedCallId = null
+        val shouldAlert = alert == CallAlert.RING && call.id != alertedCallId
         if (shouldAlert) alertedCallId = call.id
         val style = if (isIncoming) {
             NotificationCompat.CallStyle.forIncomingCall(
@@ -107,22 +120,22 @@ class CallNotification @Inject constructor(
             )
         }
 
-        val channelId = if (isIncoming) {
-            AppConstants.CHANNEL_ID_CALL_INCOMING
-        } else {
-            AppConstants.CHANNEL_ID_CALL_ONGOING
+        val channelId = when (alert) {
+            CallAlert.RING -> AppConstants.CHANNEL_ID_CALL_INCOMING
+            CallAlert.SILENT, CallAlert.NONE -> AppConstants.CHANNEL_ID_CALL_ONGOING
         }
         return NotificationCompat.Builder(context, channelId)
             .setStyle(style)
             .addPerson(caller)
             .setOngoing(true)
             .setOnlyAlertOnce(!shouldAlert)
+            .setSilent(alert == CallAlert.SILENT)
             .setCategory(Notification.CATEGORY_CALL)
             .setSmallIcon(R.drawable.ic_call)
             .setContentIntent(callScreenIntent())
             .setContentText(context.getString(CallLabels.labelRes(call.state)))
             .apply {
-                if (isIncoming) {
+                if (alert == CallAlert.RING) {
                     setFullScreenIntent(callScreenIntent(), true)
                 }
                 if (call.hasStarted) {
