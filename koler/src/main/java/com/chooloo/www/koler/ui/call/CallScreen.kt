@@ -20,7 +20,10 @@ import com.chooloo.www.koler.ui.call.CallViewModel.Sheet
 import com.chooloo.www.koler.ui.common.CallLabels
 
 @Composable
-fun CallScreen(callViewModel: CallViewModel = hiltViewModel()) {
+fun CallScreen(
+    runWhenUnlocked: (action: () -> Unit) -> Unit,
+    callViewModel: CallViewModel = hiltViewModel(),
+) {
     val context = LocalContext.current
     val uiState by callViewModel.uiState.collectAsStateWithLifecycle()
     val call = uiState.call
@@ -101,7 +104,13 @@ fun CallScreen(callViewModel: CallViewModel = hiltViewModel()) {
         callerPhotoUri = caller?.photoUri,
         callsState = uiState.callsState,
         actions = uiState.actions,
-        onActionClick = callViewModel::onCallActionClick,
+        onActionClick = { type ->
+            if (type.requiresUnlock) {
+                runWhenUnlocked { callViewModel.onCallActionClick(type) }
+            } else {
+                callViewModel.onCallActionClick(type)
+            }
+        },
         onAccept = callViewModel::onAccept,
         onHangup = callViewModel::onHangup,
         onManage = callViewModel::onManage,

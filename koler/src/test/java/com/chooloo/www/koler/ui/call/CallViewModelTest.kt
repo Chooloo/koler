@@ -161,6 +161,14 @@ class CallViewModelTest {
     }
 
     @Test
+    fun `only add call requires unlocking the phone`() {
+        assertEquals(
+            listOf(CallActionType.ADD_CALL),
+            CallActionType.entries.filter { it.requiresUnlock },
+        )
+    }
+
+    @Test
     fun `add call sheet closes when the new call is added`() = runSubscribed {
         callRepository.calls.value = listOf(activeCall())
         viewModel.onCallActionClick(CallActionType.ADD_CALL)

@@ -4,6 +4,7 @@ import android.app.KeyguardManager
 import android.content.Intent
 import android.os.Bundle
 import android.os.PowerManager
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.chooloo.www.chooloolib.ui.common.BaseActivity
@@ -20,7 +21,7 @@ class CallActivity : BaseActivity() {
         if (savedInstanceState == null) handleIntent(intent)
         finishWhenCallsEnd()
         setChoolooContent {
-            CallScreen(callViewModel = callViewModel)
+            CallScreen(callViewModel = callViewModel, runWhenUnlocked = ::runWhenUnlocked)
         }
     }
 
@@ -55,7 +56,21 @@ class CallActivity : BaseActivity() {
     private fun showWhenLocked() {
         setShowWhenLocked(true)
         setTurnScreenOn(true)
-        getSystemService(KeyguardManager::class.java).requestDismissKeyguard(this, null)
+    }
+
+    private fun runWhenUnlocked(action: () -> Unit) {
+        val keyguardManager = getSystemService(KeyguardManager::class.java)
+        if (!keyguardManager.isKeyguardLocked) return action()
+        keyguardManager.requestDismissKeyguard(
+            this,
+            object : KeyguardManager.KeyguardDismissCallback() {
+                override fun onDismissSucceeded() = action()
+
+                override fun onDismissError() {
+                    Log.e(TAG, "Keyguard dismiss request failed")
+                }
+            },
+        )
     }
 
     private fun handleIntent(intent: Intent) {
@@ -67,5 +82,6 @@ class CallActivity : BaseActivity() {
     companion object {
         const val EXTRA_SHOW_DIALPAD = "show_dialpad"
         const val EXTRA_ANSWER = "answer"
+        private const val TAG = "CallActivity"
     }
 }

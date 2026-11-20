@@ -12,11 +12,15 @@ import androidx.compose.material.icons.rounded.SwapCalls
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.chooloo.www.chooloolib.R
 
-enum class CallActionType(val icon: ImageVector, @StringRes val labelRes: Int) {
+enum class CallActionType(
+    val icon: ImageVector,
+    @StringRes val labelRes: Int,
+    val requiresUnlock: Boolean = false,
+) {
     KEYPAD(Icons.Rounded.Dialpad, R.string.call_action_keypad),
     MUTE(Icons.Rounded.MicOff, R.string.call_action_mute),
     HOLD(Icons.Rounded.Pause, R.string.call_action_hold),
-    ADD_CALL(Icons.Rounded.AddIcCall, R.string.call_action_add_call),
+    ADD_CALL(Icons.Rounded.AddIcCall, R.string.call_action_add_call, requiresUnlock = true),
     SPEAKER(Icons.AutoMirrored.Rounded.VolumeUp, R.string.call_action_speaker),
     SWAP(Icons.Rounded.SwapCalls, R.string.call_action_swap),
     MERGE(Icons.AutoMirrored.Rounded.CallMerge, R.string.call_action_merge),
