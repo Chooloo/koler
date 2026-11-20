@@ -15,9 +15,9 @@
 
     <!--region Call Actions-->
     <string name="call_action_mute">Wycisz</string>
-    <string name="call_action_unmute">Wył. Wyciszenie</string>
+    <string name="call_action_unmute">Wyłącz wyciszenie</string>
     <string name="call_action_speaker">Głośnik</string>
-    <string name="call_action_speaker_off">Wyłącz Głośnik</string>
+    <string name="call_action_speaker_off">Wyłącz głośnik</string>
     <!--endregion-->
 
     <!--region Call States-->
@@ -37,22 +37,22 @@
     <string name="audio_route_earpiece">Słuchawka</string>
     <string name="audio_route_bluetooth">Bluetooth</string>
     <string name="audio_route_wired_headset">Słuchawki przewodowe</string>
-    <string name="audio_route_wired_or_earpiece">Przewodowy lub słuchawka</string>
+    <string name="audio_route_wired_or_earpiece">Słuchawki przewodowe lub słuchawka</string>
     <!--endregion-->
 
     <!--region Preference Titles & Descriptions-->
     <string name="pref_title_rate">Oceń</string>
-    <string name="pref_title_email">Wyślij do nas Emaila</string>
-    <string name="pref_title_report_bugs">Zgłoś Błędy</string>
-    <string name="pref_title_theme_mode">Tryb Motywu</string>
-    <string name="pref_title_default_page">Domyślna Strona</string>
-    <string name="pref_title_dialpad_vibrate">Wibruj na klawiaturze numeryczna</string>
-    <string name="pref_title_manage_blocked">Zarządzaj Zablokowanymi Numerami</string>
+    <string name="pref_title_email">Wyślij do nas e-mail</string>
+    <string name="pref_title_report_bugs">Zgłoś błędy</string>
+    <string name="pref_title_theme_mode">Tryb motywu</string>
+    <string name="pref_title_default_page">Domyślna strona</string>
+    <string name="pref_title_dialpad_vibrate">Wibracje klawiatury numerycznej</string>
+    <string name="pref_title_manage_blocked">Zarządzaj zablokowanymi numerami</string>
     <!--endregion-->
 
     <!--region Hints & Messages-->
-    <string name="hint_search_recents">Szukaj Ostatnie</string>
-    <string name="hint_search_contacts">Szukaj Kontakty</string>
+    <string name="hint_search_recents">Szukaj w ostatnich</string>
+    <string name="hint_search_contacts">Szukaj w kontaktach</string>
     <string name="number_copied_to_clipboard">Numer skopiowany do schowka</string>
     <!--endregion-->
 
@@ -65,8 +65,8 @@
     <!--endregion-->
 
     <!--region Content Descriptions-->
-    <string name="cd_accept_call">Przycisk do Odebrania</string>
-    <string name="cd_hangup_call">Przycisk do Odrzucenia</string>
+    <string name="cd_accept_call">Odbierz połączenie</string>
+    <string name="cd_hangup_call">Zakończ połączenie</string>
     <string name="cd_favorite_star">Ulubione</string>
     <!--endregion-->
 
@@ -99,7 +99,7 @@
     <string name="caller_restricted">Zastrzeżony</string>
     <string name="caller_unknown">Nieznany</string>
     <string name="cd_add_contact">Dodaj kontakt</string>
-    <string name="cd_backspace">Backspace</string>
+    <string name="cd_backspace">Usuń znak</string>
     <string name="cd_call">Zadzwoń</string>
     <string name="cd_close_search">Zamknij wyszukiwanie</string>
     <string name="cd_copy_number">Kopiuj numer</string>
@@ -130,8 +130,8 @@
     <string name="missed_call_notification_title">Nieodebrane połączenie</string>
     <string name="missed_calls_notification_title">Nieodebrane połączenia</string>
     <string name="no_results_calls">Nie znaleziono połączeń</string>
-    <string name="permission_rationale_call_log">Zezwól na dostęp do historii połączeń, aby widzieć ostatnie połączenia.</string>
-    <string name="permission_rationale_contacts">Zezwól na dostęp do kontaktów, aby je tu widzieć.</string>
+    <string name="permission_rationale_call_log">Zezwól na dostęp do historii połączeń, aby wyświetlić ostatnie połączenia.</string>
+    <string name="permission_rationale_contacts">Zezwól na dostęp do kontaktów, aby wyświetlić je tutaj.</string>
     <string name="permission_rationale_phone">Zezwól na dostęp do telefonu, aby dzwonić.</string>
     <string name="phones">Numery</string>
     <string name="pref_section_about">Informacje</string>
