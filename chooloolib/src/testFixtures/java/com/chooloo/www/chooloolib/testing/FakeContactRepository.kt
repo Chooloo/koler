@@ -6,12 +6,17 @@ import com.chooloo.www.chooloolib.domain.repository.ContactRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
-class FakeContactRepository : ContactRepository {
-    override fun contacts(filter: String): Flow<List<Contact>> = flowOf(emptyList())
+class FakeContactRepository(
+    private val contacts: List<Contact> = emptyList(),
+    private val details: Map<Long, ContactDetails> = emptyMap(),
+) : ContactRepository {
+    override fun contacts(filter: String): Flow<List<Contact>> = flowOf(contacts)
 
-    override fun contact(contactId: Long): Flow<Contact?> = flowOf(null)
+    override fun contact(contactId: Long): Flow<Contact?> =
+        flowOf(contacts.firstOrNull { it.id == contactId })
 
-    override fun details(contactId: Long): Flow<ContactDetails> = flowOf(ContactDetails())
+    override fun details(contactId: Long): Flow<ContactDetails> =
+        flowOf(details[contactId] ?: ContactDetails())
 
     override suspend fun contactIdOf(link: String): Long? = null
 

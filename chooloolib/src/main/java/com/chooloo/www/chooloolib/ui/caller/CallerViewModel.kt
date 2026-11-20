@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -102,10 +103,12 @@ class CallerViewModel @AssistedInject constructor(
             }
         }
 
-    private val history: Flow<List<Recent>> = combine(caller, details) { caller, details ->
-        details.phones.map { it.number }.ifEmpty { listOfNotNull(caller?.number) }.distinct()
-    }
-        .distinctUntilChanged()
+    private val numbers: Flow<List<String>> =
+        combine(caller, details) { caller, details -> numbersOf(caller?.number, details) }
+            .distinctUntilChanged()
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+
+    private val history: Flow<List<Recent>> = numbers
         .flatMapLatest { numbers ->
             recentRepository.recentsOfNumbers(numbers).catch { error ->
                 Log.e(TAG, "Failed loading caller history", error)
@@ -113,15 +116,12 @@ class CallerViewModel @AssistedInject constructor(
             }
         }
 
-    private val isBlocked: Flow<Boolean?> = combine(
-        caller.map { it?.number }.distinctUntilChanged(),
-        blockedRefresh,
-    ) { number, _ -> number }
-        .mapLatest { number ->
-            val blockable =
-                number?.takeIf { it.isNotEmpty() && telecomRepository.isDefaultDialer() }
-                    ?: return@mapLatest null
-            runCatching { blockedRepository.isBlocked(blockable) }
+    private val isBlocked: Flow<Boolean?> = combine(numbers, blockedRefresh) { numbers, _ ->
+        numbers
+    }
+        .mapLatest { numbers ->
+            if (numbers.isEmpty() || !telecomRepository.isDefaultDialer()) return@mapLatest null
+            runCatching { numbers.all { blockedRepository.isBlocked(it) } }
                 .onFailure { Log.e(TAG, "Failed reading blocked state", it) }
                 .getOrNull()
         }
@@ -159,18 +159,29 @@ class CallerViewModel @AssistedInject constructor(
 
     fun onToggleBlocked() = launch(UserMessage.CONTACT_BLOCK_CHANGE_FAILED) {
         val state = uiState.value
-        val number = state.number ?: return@launch
-        if (state.isBlocked == true) {
-            blockedRepository.unblock(number)
-        } else {
-            blockedRepository.block(number)
+        val isUnblocking = state.isBlocked == true
+        try {
+            numbersOf(state.number, state.details).forEach { number ->
+                if (isUnblocking) {
+                    blockedRepository.unblock(number)
+                } else {
+                    blockedRepository.block(number)
+                }
+            }
+        } finally {
+            blockedRefresh.update { it + 1 }
         }
-        blockedRefresh.update { it + 1 }
     }
 
     fun onMessageShown() {
         message.value = null
     }
+
+    private fun numbersOf(number: String?, details: ContactDetails): List<String> =
+        details.phones.map { it.number }
+            .ifEmpty { listOfNotNull(number) }
+            .filter { it.isNotEmpty() }
+            .distinct()
 
     private fun contactCaller(contactId: Long): Flow<Caller?> =
         contactRepository.contact(contactId).map { contact ->
