@@ -2,7 +2,7 @@ package com.chooloo.www.chooloolib.ui.recents
 
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.text.format.DateUtils
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,7 +35,7 @@ fun RecentListItem(
     ).joinToString(" · ")
 
     ListItem(
-        modifier = modifier.height(Sizes.CompactListItem),
+        modifier = modifier.heightIn(min = Sizes.CompactListItem),
         subtitle = subtitle,
         title = recent.name
             ?: Labels.fallbackNameRes(recent.presentation)?.let { stringResource(it) }

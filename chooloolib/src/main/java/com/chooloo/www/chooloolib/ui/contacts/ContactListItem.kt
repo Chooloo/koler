@@ -1,6 +1,6 @@
 package com.chooloo.www.chooloolib.ui.contacts
 
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,7 +19,7 @@ fun ContactListItem(
     modifier: Modifier = Modifier,
 ) {
     ListItem(
-        modifier = modifier.height(Sizes.CompactListItem),
+        modifier = modifier.heightIn(min = Sizes.CompactListItem),
         subtitle = contact.number?.forceLtr(),
         title = contact.name ?: stringResource(id = R.string.contact_unknown_name),
         onClick = onClick,

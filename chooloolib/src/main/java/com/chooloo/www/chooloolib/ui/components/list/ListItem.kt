@@ -23,9 +23,9 @@ fun ListItem(
     endContainer: @Composable (() -> Unit)? = null,
 ) {
     MaterialListItem(
-        headlineContent = { Text(text = title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+        headlineContent = { Text(text = title, maxLines = 2, overflow = TextOverflow.Ellipsis) },
         supportingContent = subtitle?.let {
-            { Text(text = it, maxLines = 1, overflow = TextOverflow.Ellipsis) }
+            { Text(text = it, maxLines = 2, overflow = TextOverflow.Ellipsis) }
         },
         leadingContent = startContainer,
         trailingContent = endContainer,
