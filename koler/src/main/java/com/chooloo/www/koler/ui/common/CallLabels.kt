@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
+import com.chooloo.www.chooloolib.ui.common.forceLtr
 import com.chooloo.www.koler.domain.enum.AudioRoute
 import com.chooloo.www.koler.domain.enum.CallState
 import com.chooloo.www.koler.domain.model.Call
@@ -36,7 +37,7 @@ object CallLabels {
         call.isConference -> context.getString(R.string.conference)
 
         else ->
-            caller?.name ?: call.displayName ?: call.number
+            caller?.name ?: call.displayName ?: call.number?.forceLtr()
                 ?: context.getString(R.string.caller_unknown)
     }
 }

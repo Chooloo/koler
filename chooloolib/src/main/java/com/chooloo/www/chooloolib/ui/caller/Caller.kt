@@ -49,6 +49,7 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.Phone
 import com.chooloo.www.chooloolib.domain.model.Recent
 import com.chooloo.www.chooloolib.ui.common.LoadingState
+import com.chooloo.www.chooloolib.ui.common.forceLtr
 import com.chooloo.www.chooloolib.ui.components.Avatar
 import com.chooloo.www.chooloolib.ui.components.Empty
 import com.chooloo.www.chooloolib.ui.components.Loading
@@ -121,7 +122,7 @@ private fun Header(
     onToggleFavorite: () -> Unit,
     onCopy: (String) -> Unit,
 ) {
-    val title = state.name ?: state.number ?: stringResource(R.string.caller_unknown)
+    val title = state.name ?: state.number?.forceLtr() ?: stringResource(R.string.caller_unknown)
 
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(
@@ -170,7 +171,7 @@ private fun NumberChip(number: String, phones: List<Phone>, onCopy: (String) -> 
         ?.let { PhoneContract.getTypeLabel(resources, it.type, it.label).toString() }
     AssistChip(
         onClick = { onCopy(number) },
-        label = { Text(listOfNotNull(number, typeLabel).joinToString(" · ")) },
+        label = { Text(listOfNotNull(number.forceLtr(), typeLabel).joinToString(" · ")) },
         trailingIcon = {
             Icon(
                 imageVector = Icons.Rounded.ContentCopy,
@@ -304,7 +305,7 @@ private fun PhoneRow(
 ) {
     val resources = LocalResources.current
     ListItem(
-        title = phone.number,
+        title = phone.number.forceLtr(),
         subtitle = PhoneContract.getTypeLabel(resources, phone.type, phone.label).toString(),
         onClick = { onCall(phone.number) },
         onLongClick = { onCopy(phone.number) },
