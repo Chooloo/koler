@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.ui.components.DialpadNumber
 import com.chooloo.www.chooloolib.ui.components.FloatingBubble
 import com.chooloo.www.chooloolib.ui.components.Keypad
 import com.chooloo.www.chooloolib.ui.components.Reveal
@@ -28,7 +27,8 @@ import com.chooloo.www.chooloolib.ui.theme.Spacing
 @Composable
 fun Dialpad(
     modifier: Modifier = Modifier,
-    value: String,
+    input: DialpadInput,
+    onInputChange: (DialpadInput) -> Unit,
     onCallClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onDeleteLongClick: () -> Unit,
@@ -40,7 +40,7 @@ fun Dialpad(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        DialpadNumber(number = value)
+        DialpadField(input = input, onInputChange = onInputChange)
         Keypad(onKeyClick = onKeyClick, onKeyLongClick = onKeyLongClick)
         Box(
             contentAlignment = Alignment.Center,
@@ -53,7 +53,11 @@ fun Dialpad(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.Medium),
             ) {
-                Reveal(visible = value.isNotEmpty(), hiddenOffsetX = sideOffset, hiddenScale = 1f) {
+                Reveal(
+                    visible = input.text.isNotEmpty(),
+                    hiddenOffsetX = sideOffset,
+                    hiddenScale = 1f,
+                ) {
                     FloatingBubble(
                         icon = Icons.Rounded.PersonAdd,
                         contentDescription = stringResource(R.string.cd_add_contact),
@@ -71,7 +75,7 @@ fun Dialpad(
                     modifier = Modifier.zIndex(1f),
                 )
                 Reveal(
-                    visible = value.isNotEmpty(),
+                    visible = input.text.isNotEmpty(),
                     hiddenOffsetX = -sideOffset,
                     hiddenScale = 1f,
                 ) {

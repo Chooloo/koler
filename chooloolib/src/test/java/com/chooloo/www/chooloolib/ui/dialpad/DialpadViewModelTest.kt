@@ -29,7 +29,7 @@ class DialpadViewModelTest {
 
         viewModel.setNumber("+972 (50) 123-45#*")
 
-        assertEquals("+9725012345#*", viewModel.uiState.value.value)
+        assertEquals("+9725012345#*", viewModel.uiState.value.input.text)
     }
 
     @Test
@@ -40,7 +40,7 @@ class DialpadViewModelTest {
         viewModel.onKeyClick('1')
         viewModel.onKeyClick('2')
 
-        assertEquals("12", viewModel.uiState.value.value)
+        assertEquals("12", viewModel.uiState.value.input.text)
         assertEquals(listOf('1', '2'), audio.playedTones)
         assertEquals(0, audio.vibrations)
         assertEquals(listOf("1", "12"), telecom.secretCodes)
@@ -53,7 +53,7 @@ class DialpadViewModelTest {
 
         viewModel.onKeyClick('1')
 
-        assertEquals("1", viewModel.uiState.value.value)
+        assertEquals("1", viewModel.uiState.value.input.text)
     }
 
     @Test
@@ -62,10 +62,10 @@ class DialpadViewModelTest {
         viewModel.setNumber("123")
 
         viewModel.onDeleteClick()
-        assertEquals("12", viewModel.uiState.value.value)
+        assertEquals("12", viewModel.uiState.value.input.text)
 
         viewModel.onDeleteLongClick()
-        assertEquals("", viewModel.uiState.value.value)
+        assertEquals("", viewModel.uiState.value.input.text)
     }
 
     @Test
@@ -97,7 +97,7 @@ class DialpadViewModelTest {
 
         viewModel.onCallClick()
 
-        assertEquals("0501234567", viewModel.uiState.value.value)
+        assertEquals("0501234567", viewModel.uiState.value.input.text)
         assertEquals(emptyList<String>(), telecom.calledNumbers)
     }
 
@@ -108,7 +108,75 @@ class DialpadViewModelTest {
         viewModel.onKeyLongClick('0')
         viewModel.onKeyLongClick('1')
 
-        assertEquals("+", viewModel.uiState.value.value)
+        assertEquals("+", viewModel.uiState.value.input.text)
         assertEquals(1, telecom.voicemailCalls)
+    }
+
+    @Test
+    fun `key click inserts at the cursor and replaces a selection`() {
+        val viewModel = viewModel()
+        viewModel.onInputChange(DialpadInput("1234", 2))
+
+        viewModel.onKeyClick('9')
+        assertEquals(DialpadInput("12934", 3), viewModel.uiState.value.input)
+
+        viewModel.onInputChange(DialpadInput("12934", 1, 4))
+        viewModel.onKeyClick('5')
+        assertEquals(DialpadInput("154", 2), viewModel.uiState.value.input)
+    }
+
+    @Test
+    fun `delete removes before the cursor or the selection and does nothing at the start`() {
+        val viewModel = viewModel()
+        viewModel.onInputChange(DialpadInput("1234", 2))
+
+        viewModel.onDeleteClick()
+        assertEquals(DialpadInput("134", 1), viewModel.uiState.value.input)
+
+        viewModel.onInputChange(DialpadInput("134", 0))
+        viewModel.onDeleteClick()
+        assertEquals(DialpadInput("134", 0), viewModel.uiState.value.input)
+
+        viewModel.onInputChange(DialpadInput("134", 1, 2))
+        viewModel.onDeleteClick()
+        assertEquals(DialpadInput("14", 1), viewModel.uiState.value.input)
+    }
+
+    @Test
+    fun `long press zero adds plus at the cursor`() {
+        val viewModel = viewModel()
+        viewModel.onInputChange(DialpadInput("0501234567", 0))
+
+        viewModel.onKeyLongClick('0')
+
+        assertEquals(DialpadInput("+0501234567", 1), viewModel.uiState.value.input)
+    }
+
+    @Test
+    fun `paste keeps only dialable characters and puts the cursor after them`() {
+        val viewModel = viewModel()
+
+        viewModel.onInputChange(DialpadInput("12(050) 1-800-ab34", 16))
+
+        assertEquals(DialpadInput("12050180034", 9), viewModel.uiState.value.input)
+    }
+
+    @Test
+    fun `set number puts the cursor at the end`() {
+        val viewModel = viewModel()
+
+        viewModel.setNumber("050 123")
+
+        assertEquals(DialpadInput("050123", 6), viewModel.uiState.value.input)
+    }
+
+    @Test
+    fun `key click replaces a reversed selection`() {
+        val viewModel = viewModel()
+        viewModel.onInputChange(DialpadInput("12345", 4, 1))
+
+        viewModel.onKeyClick('9')
+
+        assertEquals(DialpadInput("195", 2), viewModel.uiState.value.input)
     }
 }
