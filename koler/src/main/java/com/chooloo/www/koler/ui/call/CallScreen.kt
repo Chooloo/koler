@@ -97,6 +97,7 @@ fun CallScreen(callViewModel: CallViewModel = hiltViewModel()) {
             uiState.elapsedSeconds,
             call?.state?.let { stringResource(CallLabels.labelRes(it)) },
         ),
+        phoneAccountLabel = call?.phoneAccount?.label,
         avatarName = caller?.name?.takeUnless { call?.isConference == true },
         callerPhotoUri = caller?.photoUri,
         callsState = uiState.callsState,
