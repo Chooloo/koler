@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import com.chooloo.www.chooloolib.ui.theme.Sizes
@@ -45,7 +46,8 @@ fun RoundAction(
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
-            maxLines = 1,
+            maxLines = 2,
+            textAlign = TextAlign.Center,
             overflow = TextOverflow.Ellipsis,
         )
     }
