@@ -1,11 +1,15 @@
 package com.chooloo.www.koler.ui.call
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.domain.repository.AudioRepository
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
 import com.chooloo.www.chooloolib.domain.repository.PreferenceRepository
+import com.chooloo.www.chooloolib.domain.repository.TelecomRepository
+import com.chooloo.www.chooloolib.ui.common.UserMessage
 import com.chooloo.www.koler.domain.enum.AudioRoute
 import com.chooloo.www.koler.domain.enum.CallCapability
 import com.chooloo.www.koler.domain.enum.CallState
@@ -44,6 +48,7 @@ class CallViewModel @Inject constructor(
     private val phoneRepository: PhoneRepository,
     private val audioRepository: AudioRepository,
     private val preferenceRepository: PreferenceRepository,
+    private val telecomRepository: TelecomRepository,
     private val getPrimaryCall: GetPrimaryCall,
     private val getCallsState: GetCallsState,
     private val setSpeaker: SetSpeaker,
@@ -60,9 +65,16 @@ class CallViewModel @Inject constructor(
         val actions: List<CallAction> = emptyList(),
         val keypadValue: String = "",
         val sheet: Sheet? = null,
+        val addCallSearch: String? = null,
+        val message: UserMessage? = null,
     )
 
-    private data class LocalState(val keypadValue: String = "", val sheet: Sheet? = null)
+    private data class LocalState(
+        val keypadValue: String = "",
+        val sheet: Sheet? = null,
+        val addCallSearch: String? = null,
+        val message: UserMessage? = null,
+    )
 
     private val localState = MutableStateFlow(LocalState())
 
@@ -109,6 +121,8 @@ class CallViewModel @Inject constructor(
             actions = actions(state, call, audio, canAddCall),
             keypadValue = local.keypadValue,
             sheet = local.sheet,
+            addCallSearch = local.addCallSearch,
+            message = local.message,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), UiState())
 
@@ -136,7 +150,8 @@ class CallViewModel @Inject constructor(
 
             CallActionType.KEYPAD -> showSheet(Sheet.KEYPAD)
 
-            CallActionType.ADD_CALL -> showSheet(Sheet.ADD_CALL)
+            CallActionType.ADD_CALL ->
+                localState.update { it.copy(sheet = Sheet.ADD_CALL, addCallSearch = null) }
 
             CallActionType.SPEAKER -> if (AudioRoute.BLUETOOTH in state.audio.supportedRoutes) {
                 showSheet(Sheet.AUDIO_ROUTE)
@@ -195,6 +210,26 @@ class CallViewModel @Inject constructor(
 
     fun onSheetDismiss() = localState.update { it.copy(sheet = null) }
 
+    fun onAddCallSearchOpen() = localState.update { it.copy(addCallSearch = "") }
+
+    fun onAddCallSearchChange(text: String) = localState.update { it.copy(addCallSearch = text) }
+
+    fun onAddCallSearchClose() = localState.update { it.copy(addCallSearch = null) }
+
+    fun onAddCallContactClick(contact: Contact) {
+        viewModelScope.launch {
+            runCatching {
+                val number = checkNotNull(contact.number) { "Contact has no number" }
+                telecomRepository.callNumber(number)
+            }.onFailure { error ->
+                Log.e(TAG, "Add call failed", error)
+                localState.update { it.copy(message = UserMessage.CALL_FAILED) }
+            }
+        }
+    }
+
+    fun onMessageShown() = localState.update { it.copy(message = null) }
+
     private fun closeAddCallWhenCallAdded() {
         viewModelScope.launch {
             var previousCount = callRepository.calls.value.size
@@ -248,5 +283,9 @@ class CallViewModel @Inject constructor(
                 isActive = audio.route == AudioRoute.SPEAKER,
             )
         }
+    }
+
+    private companion object {
+        const val TAG = "CallViewModel"
     }
 }

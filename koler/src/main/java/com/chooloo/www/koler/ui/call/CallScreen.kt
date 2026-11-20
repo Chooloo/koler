@@ -11,10 +11,10 @@ import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.ui.components.BottomSheet
 import com.chooloo.www.chooloolib.ui.components.DialpadNumber
 import com.chooloo.www.chooloolib.ui.components.Keypad
+import com.chooloo.www.chooloolib.ui.components.MessageToast
 import com.chooloo.www.chooloolib.ui.components.list.ItemList
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.ui.components.list.RadioListItem
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadScreen
 import com.chooloo.www.koler.domain.enum.CallsState
 import com.chooloo.www.koler.ui.call.CallViewModel.Sheet
 import com.chooloo.www.koler.ui.common.CallLabels
@@ -26,12 +26,20 @@ fun CallScreen(callViewModel: CallViewModel = hiltViewModel()) {
     val call = uiState.call
     val caller = uiState.caller
 
+    MessageToast(message = uiState.message, onShown = callViewModel::onMessageShown)
+
     BottomSheet(
         visible = uiState.sheet == Sheet.ADD_CALL,
         skipPartiallyExpanded = true,
         onDismiss = callViewModel::onSheetDismiss,
     ) {
-        DialpadScreen()
+        AddCallSheet(
+            search = uiState.addCallSearch,
+            onSearchOpen = callViewModel::onAddCallSearchOpen,
+            onSearchChange = callViewModel::onAddCallSearchChange,
+            onSearchClose = callViewModel::onAddCallSearchClose,
+            onContactClick = callViewModel::onAddCallContactClick,
+        )
     }
 
     BottomSheet(

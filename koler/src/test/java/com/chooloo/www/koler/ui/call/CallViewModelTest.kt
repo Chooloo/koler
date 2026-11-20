@@ -1,10 +1,13 @@
 package com.chooloo.www.koler.ui.call
 
+import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.domain.model.PhoneLookup
 import com.chooloo.www.chooloolib.testing.FakeAudioRepository
 import com.chooloo.www.chooloolib.testing.FakePhoneRepository
 import com.chooloo.www.chooloolib.testing.FakePreferenceRepository
+import com.chooloo.www.chooloolib.testing.FakeTelecomRepository
 import com.chooloo.www.chooloolib.testing.MainDispatcherRule
+import com.chooloo.www.chooloolib.ui.common.UserMessage
 import com.chooloo.www.koler.domain.enum.AudioRoute
 import com.chooloo.www.koler.domain.enum.CallCapability
 import com.chooloo.www.koler.domain.enum.CallState
@@ -26,6 +29,7 @@ class CallViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     private val callRepository = FakeCallRepository()
+    private val telecomRepository = FakeTelecomRepository()
     private val lookup = PhoneLookup(contactId = 1, name = "Dana")
     private val viewModel by lazy {
         CallViewModel(
@@ -33,6 +37,7 @@ class CallViewModelTest {
             FakePhoneRepository(mapOf("111" to lookup)),
             FakeAudioRepository(),
             FakePreferenceRepository(),
+            telecomRepository,
             GetPrimaryCall(),
             GetCallsState(),
             SetSpeaker(callRepository),
@@ -172,6 +177,43 @@ class CallViewModelTest {
             )
 
         assertEquals(null, viewModel.uiState.value.sheet)
+    }
+
+    @Test
+    fun `add call sheet reopens with search closed`() = runSubscribed {
+        viewModel.onCallActionClick(CallActionType.ADD_CALL)
+        viewModel.onAddCallSearchOpen()
+        viewModel.onAddCallSearchChange("Dana")
+        viewModel.onSheetDismiss()
+
+        viewModel.onCallActionClick(CallActionType.ADD_CALL)
+
+        assertEquals(null, viewModel.uiState.value.addCallSearch)
+    }
+
+    @Test
+    fun `picking a contact calls its number`() = runSubscribed {
+        viewModel.onAddCallContactClick(Contact(id = 2, name = "Noa", number = "222"))
+
+        assertEquals(listOf("222"), telecomRepository.calledNumbers)
+        assertEquals(null, viewModel.uiState.value.message)
+    }
+
+    @Test
+    fun `picking a contact without a number shows call failed`() = runSubscribed {
+        viewModel.onAddCallContactClick(Contact(id = 2, name = "Noa"))
+
+        assertTrue(telecomRepository.calledNumbers.isEmpty())
+        assertEquals(UserMessage.CALL_FAILED, viewModel.uiState.value.message)
+    }
+
+    @Test
+    fun `a failed contact call shows call failed`() = runSubscribed {
+        telecomRepository.callError = IllegalStateException("no permission")
+
+        viewModel.onAddCallContactClick(Contact(id = 2, name = "Noa", number = "222"))
+
+        assertEquals(UserMessage.CALL_FAILED, viewModel.uiState.value.message)
     }
 
     @Test
