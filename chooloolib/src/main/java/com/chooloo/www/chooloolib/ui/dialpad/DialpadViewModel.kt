@@ -25,17 +25,24 @@ class DialpadViewModel @Inject constructor(
     private val telecomRepository: TelecomRepository,
     private val preferenceRepository: PreferenceRepository,
 ) : ViewModel() {
-    data class UiState(val value: String = "", val message: UserMessage? = null)
+    data class UiState(val input: DialpadInput = DialpadInput(), val message: UserMessage? = null)
 
     private val _uiState = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
     fun setNumber(number: String) {
-        _uiState.update { it.copy(value = number.filter { it.isDigit() || it in "+#*" }) }
+        onInputChange(DialpadInput(number))
+    }
+
+    fun onInputChange(input: DialpadInput) {
+        val text = input.text.filter(::isDialable)
+        val cursor = input.text.take(input.selectionEnd).count(::isDialable)
+        val accepted = if (text == input.text) input else DialpadInput(text, cursor)
+        _uiState.update { it.copy(input = accepted) }
     }
 
     fun onCallClick() {
-        val value = _uiState.value.value
+        val value = _uiState.value.input.text
         launchCatching {
             if (value.isNotEmpty()) {
                 telecomRepository.callNumber(value)
@@ -46,11 +53,11 @@ class DialpadViewModel @Inject constructor(
     }
 
     fun onDeleteClick() {
-        _uiState.update { it.copy(value = it.value.dropLast(1)) }
+        _uiState.update { it.copy(input = it.input.deleteBackward()) }
     }
 
     fun onDeleteLongClick() {
-        _uiState.update { it.copy(value = "") }
+        _uiState.update { it.copy(input = DialpadInput()) }
     }
 
     fun onKeyClick(key: Char) {
@@ -59,16 +66,16 @@ class DialpadViewModel @Inject constructor(
             if (settings.isDialpadTonesEnabled) audioRepository.playTone(key)
             if (settings.isDialpadVibrateEnabled) audioRepository.vibrate()
         }
-        val value = _uiState.updateAndGet { it.copy(value = it.value + key) }.value
+        val state = _uiState.updateAndGet { it.copy(input = it.input.replaceSelection("$key")) }
         viewModelScope.launch {
-            runCatching { telecomRepository.handleSecretCode(value) }
+            runCatching { telecomRepository.handleSecretCode(state.input.text) }
                 .onFailure { Log.e(TAG, "Secret code failed", it) }
         }
     }
 
     fun onKeyLongClick(key: Char) {
         when (key) {
-            '0' -> _uiState.update { it.copy(value = it.value + '+') }
+            '0' -> _uiState.update { it.copy(input = it.input.replaceSelection("+")) }
             '1' -> launchCatching { telecomRepository.callVoicemail() }
         }
     }
@@ -88,5 +95,7 @@ class DialpadViewModel @Inject constructor(
 
     private companion object {
         const val TAG = "DialpadViewModel"
+
+        fun isDialable(char: Char) = char.isDigit() || char in "+#*"
     }
 }

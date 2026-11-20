@@ -34,10 +34,11 @@ fun DialpadScreen(
         rationaleRes = R.string.permission_rationale_phone,
     ) {
         Dialpad(
-            value = uiState.value,
+            input = uiState.input,
+            onInputChange = dialpadViewModel::onInputChange,
             onCallClick = dialpadViewModel::onCallClick,
             onDeleteClick = dialpadViewModel::onDeleteClick,
-            onAddContactClick = { externalActions.createContact(uiState.value) },
+            onAddContactClick = { externalActions.createContact(uiState.input.text) },
             onDeleteLongClick = dialpadViewModel::onDeleteLongClick,
             onKeyClick = dialpadViewModel::onKeyClick,
             onKeyLongClick = dialpadViewModel::onKeyLongClick,
