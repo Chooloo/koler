@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.chooloo.www.chooloolib.R as LibR
 import com.chooloo.www.chooloolib.di.IoDispatcher
 import com.chooloo.www.chooloolib.domain.repository.PhoneRepository
+import com.chooloo.www.chooloolib.ui.common.forceLtr
 import com.chooloo.www.koler.AppConstants
 import com.chooloo.www.koler.R
 import com.chooloo.www.koler.receiver.MissedCallDismissReceiver
@@ -69,9 +70,9 @@ class MissedCallNotification @Inject constructor(
         notificationManager.notify(AppConstants.MISSED_CALL_NOTIFICATION_ID, notification)
     }
 
-    private suspend fun callerName(number: String?): String =
-        number?.takeIf { it.isNotBlank() }?.let { phoneRepository.lookup(it)?.name ?: it }
-            ?: context.getString(LibR.string.caller_unknown)
+    private suspend fun callerName(number: String?): String = number?.takeIf { it.isNotBlank() }
+        ?.let { phoneRepository.lookup(it)?.name ?: it.forceLtr() }
+        ?: context.getString(LibR.string.caller_unknown)
 
     private fun openRecentsIntent() = PendingIntent.getActivity(
         context,

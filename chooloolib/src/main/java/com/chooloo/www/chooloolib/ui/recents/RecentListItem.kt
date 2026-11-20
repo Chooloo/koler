@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
 import com.chooloo.www.chooloolib.domain.model.RecentGroup
 import com.chooloo.www.chooloolib.ui.common.Labels
+import com.chooloo.www.chooloolib.ui.common.forceLtr
 import com.chooloo.www.chooloolib.ui.components.Avatar
 import com.chooloo.www.chooloolib.ui.components.list.ListItem
 import com.chooloo.www.chooloolib.ui.theme.Sizes
@@ -38,7 +39,8 @@ fun RecentListItem(
         subtitle = subtitle,
         title = recent.name
             ?: Labels.fallbackNameRes(recent.presentation)?.let { stringResource(it) }
-            ?: recent.number.ifEmpty { stringResource(R.string.caller_unknown) },
+            ?: recent.number.takeIf { it.isNotEmpty() }?.forceLtr()
+            ?: stringResource(R.string.caller_unknown),
         onClick = onClick,
         onLongClick = onLongClick,
         startContainer = {
