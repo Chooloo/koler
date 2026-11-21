@@ -215,7 +215,9 @@ class CallNotification @Inject constructor(
                     IMPORTANCE_DEFAULT,
                     LibR.string.call_notification_channel_ongoing_name,
                     LibR.string.call_notification_channel_ongoing_description,
-                ).build(),
+                )
+                    .setSound(null, null)
+                    .build(),
                 // Telecom plays the ringtone because the manifest doesn't declare IN_CALL_SERVICE_RINGING.
                 channel(
                     AppConstants.CHANNEL_ID_CALL_INCOMING,
