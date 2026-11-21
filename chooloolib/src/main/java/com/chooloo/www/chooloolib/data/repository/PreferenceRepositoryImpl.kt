@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 import com.chooloo.www.chooloolib.domain.model.Settings
@@ -25,6 +26,8 @@ class PreferenceRepositoryImpl @Inject constructor(private val dataStore: DataSt
                 defaultPage = enumOf(preferences, DEFAULT_PAGE, PAGE_KEYS) ?: defaults.defaultPage,
                 themeMode =
                     enumOf(preferences, THEME_MODE, THEME_MODE_KEYS) ?: defaults.themeMode,
+                contactOrder = enumOf(preferences, CONTACT_ORDER, CONTACT_ORDER_KEYS)
+                    ?: defaults.contactOrder,
                 isGroupRecentsEnabled =
                     preferences[GROUP_RECENTS] ?: defaults.isGroupRecentsEnabled,
                 isDialpadTonesEnabled =
@@ -39,6 +42,9 @@ class PreferenceRepositoryImpl @Inject constructor(private val dataStore: DataSt
 
     override suspend fun setThemeMode(themeMode: ThemeMode) =
         set(THEME_MODE, THEME_MODE_KEYS.getValue(themeMode))
+
+    override suspend fun setContactOrder(contactOrder: ContactOrder) =
+        set(CONTACT_ORDER, CONTACT_ORDER_KEYS.getValue(contactOrder))
 
     override suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean) =
         set(GROUP_RECENTS, isEnabled)
@@ -62,6 +68,7 @@ class PreferenceRepositoryImpl @Inject constructor(private val dataStore: DataSt
     private companion object {
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val DEFAULT_PAGE = stringPreferencesKey("default_page")
+        val CONTACT_ORDER = stringPreferencesKey("contact_order")
         val GROUP_RECENTS = booleanPreferencesKey("group_recents")
         val DIALPAD_TONES = booleanPreferencesKey("dialpad_tones")
         val DIALPAD_VIBRATE = booleanPreferencesKey("dialpad_vibrate")
@@ -75,6 +82,10 @@ class PreferenceRepositoryImpl @Inject constructor(private val dataStore: DataSt
             ThemeMode.SYSTEM to "system",
             ThemeMode.LIGHT to "light",
             ThemeMode.DARK to "dark",
+        )
+        val CONTACT_ORDER_KEYS = mapOf(
+            ContactOrder.FIRST_NAME to "first_name",
+            ContactOrder.LAST_NAME to "last_name",
         )
     }
 }

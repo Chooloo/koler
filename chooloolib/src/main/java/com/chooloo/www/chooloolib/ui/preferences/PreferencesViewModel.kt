@@ -3,6 +3,7 @@ package com.chooloo.www.chooloolib.ui.preferences
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 import com.chooloo.www.chooloolib.domain.model.Settings
@@ -36,6 +37,8 @@ class PreferencesViewModel @Inject constructor(
     fun onDefaultPage(page: Page) = update { setDefaultPage(page) }
 
     fun onThemeMode(themeMode: ThemeMode) = update { setThemeMode(themeMode) }
+
+    fun onContactOrder(contactOrder: ContactOrder) = update { setContactOrder(contactOrder) }
 
     fun onIsGroupRecentsEnabled(isEnabled: Boolean) = update { setIsGroupRecentsEnabled(isEnabled) }
 

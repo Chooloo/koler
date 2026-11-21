@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.testing
 
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.domain.model.ContactDetails
 import com.chooloo.www.chooloolib.domain.repository.ContactRepository
@@ -10,7 +11,8 @@ class FakeContactRepository(
     private val contacts: List<Contact> = emptyList(),
     private val details: Map<Long, ContactDetails> = emptyMap(),
 ) : ContactRepository {
-    override fun contacts(filter: String): Flow<List<Contact>> = flowOf(contacts)
+    override fun contacts(filter: String, order: ContactOrder): Flow<List<Contact>> =
+        flowOf(contacts)
 
     override fun contact(contactId: Long): Flow<Contact?> =
         flowOf(contacts.firstOrNull { it.id == contactId })

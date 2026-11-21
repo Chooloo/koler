@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.domain.repository
 
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 import com.chooloo.www.chooloolib.domain.model.Settings
@@ -10,6 +11,7 @@ interface PreferenceRepository {
 
     suspend fun setDefaultPage(page: Page)
     suspend fun setThemeMode(themeMode: ThemeMode)
+    suspend fun setContactOrder(contactOrder: ContactOrder)
     suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean)
     suspend fun setIsDialpadTonesEnabled(isEnabled: Boolean)
     suspend fun setIsDialpadVibrateEnabled(isEnabled: Boolean)

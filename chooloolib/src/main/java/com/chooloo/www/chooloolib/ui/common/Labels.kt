@@ -2,6 +2,7 @@ package com.chooloo.www.chooloolib.ui.common
 
 import androidx.annotation.StringRes
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.enum.RecentPresentation
 import com.chooloo.www.chooloolib.domain.enum.ThemeMode
@@ -12,6 +13,12 @@ object Labels {
         ThemeMode.SYSTEM -> R.string.theme_mode_system
         ThemeMode.LIGHT -> R.string.theme_mode_light
         ThemeMode.DARK -> R.string.theme_mode_dark
+    }
+
+    @StringRes
+    fun titleRes(contactOrder: ContactOrder): Int = when (contactOrder) {
+        ContactOrder.FIRST_NAME -> R.string.contact_order_first_name
+        ContactOrder.LAST_NAME -> R.string.contact_order_last_name
     }
 
     @StringRes
