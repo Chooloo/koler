@@ -9,4 +9,5 @@ enum class UserMessage(@StringRes val textRes: Int) {
     CONTACT_FAVORITE_CHANGE_FAILED(R.string.error_contact_favorite_change_failed),
     CONTACT_BLOCK_CHANGE_FAILED(R.string.error_contact_block_change_failed),
     CLEAR_RECENTS_FAILED(R.string.error_clear_recents_failed),
+    DELETE_RECENTS_FAILED(R.string.error_delete_recents_failed),
 }

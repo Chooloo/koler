@@ -161,6 +161,13 @@
     <string name="error_call_failed">Couldn\'t place the call</string>
     <string name="error_loading_failed">Couldn\'t load this list</string>
     <string name="error_clear_recents_failed">Couldn\'t clear recent calls</string>
+    <string name="action_copy_number">Copy number</string>
+    <plurals name="confirm_delete_recents_title">
+        <item quantity="one">Delete this call?</item>
+        <item quantity="other">Delete these %d calls?</item>
+    </plurals>
+    <string name="confirm_delete_recents">This can\'t be undone.</string>
+    <string name="error_delete_recents_failed">Couldn\'t delete from call history</string>
     <string name="action_more">More</string>
     <string name="pref_section_appearance">Appearance</string>
     <string name="pref_section_dialer">Dialer</string>

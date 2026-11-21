@@ -84,6 +84,16 @@ class RecentRepositoryImpl @Inject constructor(
         Calls.getLastOutgoingCall(context)?.takeIf { it.isNotEmpty() }
     }
 
+    override suspend fun deleteRecents(recentIds: List<Long>) {
+        withContext(ioDispatcher) {
+            contentResolver.delete(
+                Calls.CONTENT_URI,
+                "${Calls._ID} IN (${recentIds.joinToString(",") { "?" }})",
+                recentIds.map(Long::toString).toTypedArray(),
+            )
+        }
+    }
+
     override suspend fun deleteAllRecents() {
         withContext(ioDispatcher) { contentResolver.delete(Calls.CONTENT_URI, null, null) }
     }

@@ -81,7 +81,6 @@ fun MainScreen(viewModel: MainViewModel) {
                 onItemClick = {
                     viewModel.onCallerSelected(CallerTarget.RecentTarget(it.latest.id))
                 },
-                onItemLongClick = { externalActions.copyToClipboard(it.latest.number) },
             )
 
             Tab.CONTACTS -> ContactsScreen(

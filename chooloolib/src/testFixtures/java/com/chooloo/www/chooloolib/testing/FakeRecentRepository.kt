@@ -10,6 +10,8 @@ class FakeRecentRepository(
     private val recents: List<Recent> = emptyList(),
 ) : RecentRepository {
     var missedCallsReadMarks = 0
+    var deletedRecentIds: List<Long>? = null
+    var deleteError: Throwable? = null
 
     override fun recents(filter: String): Flow<List<Recent>> = flowOf(emptyList())
 
@@ -18,6 +20,11 @@ class FakeRecentRepository(
     override fun recentsOfNumbers(numbers: List<String>): Flow<List<Recent>> = flowOf(emptyList())
 
     override suspend fun lastOutgoingNumber() = lastOutgoingNumber
+
+    override suspend fun deleteRecents(recentIds: List<Long>) {
+        deleteError?.let { throw it }
+        deletedRecentIds = recentIds
+    }
 
     override suspend fun deleteAllRecents() = Unit
 
