@@ -1,5 +1,6 @@
 package com.chooloo.www.koler.data.mapper
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.telecom.Call as TelecomCall
 import android.telecom.Call.Details
@@ -56,14 +57,22 @@ class CallMapper @Inject constructor(private val telecomManager: TelecomManager)
             },
             phoneAccounts = if (state == TelecomCall.STATE_SELECT_PHONE_ACCOUNT) {
                 availablePhoneAccounts(call).map { handle ->
-                    val label = telecomManager.getPhoneAccount(handle)?.label?.toString()
-                    PhoneAccount(accountId(handle), label ?: handle.id)
+                    PhoneAccount(accountId(handle), label(handle) ?: handle.id)
                 }
             } else {
                 emptyList()
             },
+            phoneAccount = details.accountHandle
+                ?.takeIf {
+                    @SuppressLint("MissingPermission")
+                    telecomManager.callCapablePhoneAccounts.size > 1
+                }
+                ?.let { handle -> label(handle)?.let { PhoneAccount(accountId(handle), it) } },
         )
     }
+
+    private fun label(handle: PhoneAccountHandle): String? =
+        telecomManager.getPhoneAccount(handle)?.label?.toString()?.takeIf { it.isNotBlank() }
 
     fun toCallAudio(audioState: CallAudioState): CallAudio = CallAudio(
         isMuted = audioState.isMuted,

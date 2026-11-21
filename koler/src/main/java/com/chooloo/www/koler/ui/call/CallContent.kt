@@ -37,6 +37,7 @@ fun CallContent(
     callerName: String,
     avatarName: String?,
     status: String?,
+    phoneAccountLabel: String?,
     callerPhotoUri: String?,
     callsState: CallsState,
     actions: List<CallAction>,
@@ -46,7 +47,9 @@ fun CallContent(
     onManage: () -> Unit,
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val header = @Composable { CallerHeader(callerName, avatarName, status, callerPhotoUri) }
+        val header = @Composable {
+            CallerHeader(callerName, avatarName, status, phoneAccountLabel, callerPhotoUri)
+        }
         val buttons = @Composable {
             if (callsState.showsActions) {
                 CallActions(actions = actions, onActionClick = onActionClick)
@@ -86,7 +89,13 @@ private fun ScrollingColumn(minHeight: Dp, modifier: Modifier, content: @Composa
 }
 
 @Composable
-private fun CallerHeader(name: String, avatarName: String?, status: String?, photoUri: String?) {
+private fun CallerHeader(
+    name: String,
+    avatarName: String?,
+    status: String?,
+    phoneAccountLabel: String?,
+    photoUri: String?,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.Small),
@@ -103,6 +112,13 @@ private fun CallerHeader(name: String, avatarName: String?, status: String?, pho
             Text(
                 text = it,
                 style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        phoneAccountLabel?.let {
+            Text(
+                text = it,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }

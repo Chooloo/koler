@@ -12,6 +12,7 @@ data class Call(
     val connectTimeMillis: Long = 0,
     val capabilities: Set<CallCapability> = emptySet(),
     val phoneAccounts: List<PhoneAccount> = emptyList(),
+    val phoneAccount: PhoneAccount? = null,
 ) {
     val hasStarted: Boolean
         get() = connectTimeMillis > 0 && state !in NOT_STARTED_STATES
