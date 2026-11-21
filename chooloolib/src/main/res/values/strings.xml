@@ -25,6 +25,8 @@
     <!--endregion-->
 
     <!--region Theme & Call Modes-->
+    <string name="contact_order_first_name">First name</string>
+    <string name="contact_order_last_name">Last name</string>
     <string name="theme_mode_dark">Dark</string>
     <string name="theme_mode_light">Light</string>
     <string name="theme_mode_system">System</string>
@@ -79,6 +81,7 @@
     <string name="pref_title_email">Email Us</string>
     <string name="pref_title_report_bugs">Report Bugs</string>
     <string name="pref_title_theme_mode">Theme Mode</string>
+    <string name="pref_title_contact_order">Sort Contacts By</string>
     <string name="pref_title_default_page">Default Page</string>
     <string name="pref_title_group_recents">Group recents</string>
     <string name="pref_title_dialpad_tones">Play dialpad tones</string>

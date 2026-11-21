@@ -1,5 +1,6 @@
 package com.chooloo.www.chooloolib.testing
 
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 import com.chooloo.www.chooloolib.domain.model.Settings
@@ -17,6 +18,10 @@ class FakePreferenceRepository(initial: Settings = Settings()) : PreferenceRepos
 
     override suspend fun setThemeMode(themeMode: ThemeMode) = state.update {
         it.copy(themeMode = themeMode)
+    }
+
+    override suspend fun setContactOrder(contactOrder: ContactOrder) = state.update {
+        it.copy(contactOrder = contactOrder)
     }
 
     override suspend fun setIsGroupRecentsEnabled(isEnabled: Boolean) = state.update {

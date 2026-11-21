@@ -16,6 +16,7 @@ import com.chooloo.www.chooloolib.data.source.ContentQuery
 import com.chooloo.www.chooloolib.data.source.ContentSource
 import com.chooloo.www.chooloolib.data.source.CursorRow
 import com.chooloo.www.chooloolib.di.IoDispatcher
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.model.Contact
 import com.chooloo.www.chooloolib.domain.model.ContactDetails
 import com.chooloo.www.chooloolib.domain.model.Phone as PhoneModel
@@ -35,24 +36,24 @@ class ContactRepositoryImpl @Inject constructor(
     private val contentSource: ContentSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ContactRepository {
-    override fun contacts(filter: String): Flow<List<Contact>> = contentSource.observeAll(
-        ContentQuery(
-            uri = if (filter.isEmpty()) {
-                Contacts.CONTENT_URI
-            } else {
-                Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(filter))
-            },
-            projection = PROJECTION,
-            selection = "${Contacts.DISPLAY_NAME_PRIMARY} IS NOT NULL",
-            sortOrder = "${Contacts.SORT_KEY_PRIMARY} ASC",
-        ),
-        ::toContact,
-    )
-        .map { contacts ->
-            val numbers = primaryNumbers()
-            contacts.map { it.copy(number = numbers[it.id]) }
-        }
-        .flowOn(ioDispatcher)
+    override fun contacts(filter: String, order: ContactOrder): Flow<List<Contact>> =
+        contentSource.observeAll(
+            ContentQuery(
+                uri = if (filter.isEmpty()) {
+                    Contacts.CONTENT_URI
+                } else {
+                    Uri.withAppendedPath(Contacts.CONTENT_FILTER_URI, Uri.encode(filter))
+                },
+                projection = PROJECTION,
+                selection = "${order.nameColumn} IS NOT NULL",
+                sortOrder = "${order.sortKeyColumn} ASC",
+            ),
+        ) { row -> toContact(row, order.nameColumn) }
+            .map { contacts ->
+                val numbers = primaryNumbers()
+                contacts.map { it.copy(number = numbers[it.id]) }
+            }
+            .flowOn(ioDispatcher)
 
     override fun contact(contactId: Long): Flow<Contact?> = contentSource.observeAll(
         ContentQuery(
@@ -154,12 +155,13 @@ class ContactRepositoryImpl @Inject constructor(
         .distinctBy { it.first }
         .associate { it.first to it.second!! }
 
-    private fun toContact(row: CursorRow) = Contact(
-        id = row.long(Contacts._ID),
-        name = row.string(Contacts.DISPLAY_NAME_PRIMARY),
-        photoUri = row.string(Contacts.PHOTO_URI) ?: row.string(Contacts.PHOTO_THUMBNAIL_URI),
-        isFavorite = row.int(Contacts.STARRED) == 1,
-    )
+    private fun toContact(row: CursorRow, nameColumn: String = Contacts.DISPLAY_NAME_PRIMARY) =
+        Contact(
+            id = row.long(Contacts._ID),
+            name = row.string(nameColumn),
+            photoUri = row.string(Contacts.PHOTO_URI) ?: row.string(Contacts.PHOTO_THUMBNAIL_URI),
+            isFavorite = row.int(Contacts.STARRED) == 1,
+        )
 
     companion object {
         private const val WHATSAPP_MIME_TYPE = "vnd.android.cursor.item/vnd.com.whatsapp.profile"
@@ -170,7 +172,20 @@ class ContactRepositoryImpl @Inject constructor(
             Contacts.PHOTO_URI,
             Contacts.PHOTO_THUMBNAIL_URI,
             Contacts.DISPLAY_NAME_PRIMARY,
+            Contacts.DISPLAY_NAME_ALTERNATIVE,
         )
+
+        private val ContactOrder.nameColumn: String
+            get() = when (this) {
+                ContactOrder.FIRST_NAME -> Contacts.DISPLAY_NAME_PRIMARY
+                ContactOrder.LAST_NAME -> Contacts.DISPLAY_NAME_ALTERNATIVE
+            }
+
+        private val ContactOrder.sortKeyColumn: String
+            get() = when (this) {
+                ContactOrder.FIRST_NAME -> Contacts.SORT_KEY_PRIMARY
+                ContactOrder.LAST_NAME -> Contacts.SORT_KEY_ALTERNATIVE
+            }
 
         fun whatsappNumberOf(data: String): String? =
             data.substringBefore('@').filter(Char::isDigit).takeIf(String::isNotEmpty)

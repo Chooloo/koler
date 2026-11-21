@@ -11,12 +11,14 @@ import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.SortByAlpha
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Vibration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.chooloo.www.chooloolib.R
+import com.chooloo.www.chooloolib.domain.enum.ContactOrder
 import com.chooloo.www.chooloolib.domain.enum.Page
 import com.chooloo.www.chooloolib.domain.enum.ThemeMode
 import com.chooloo.www.chooloolib.ui.common.Labels
@@ -37,6 +39,11 @@ private enum class PreferenceItem(
     val isDialerOnly: Boolean = false,
 ) {
     THEME_MODE(PreferenceSection.APPEARANCE, Icons.Rounded.Palette, R.string.pref_title_theme_mode),
+    CONTACT_ORDER(
+        PreferenceSection.APPEARANCE,
+        Icons.Rounded.SortByAlpha,
+        R.string.pref_title_contact_order,
+    ),
     DEFAULT_PAGE(
         PreferenceSection.DIALER,
         Icons.Rounded.Home,
@@ -84,12 +91,14 @@ private enum class PreferenceItem(
 fun Preferences(
     defaultPage: Page,
     themeMode: ThemeMode,
+    contactOrder: ContactOrder,
     isGroupRecentsEnabled: Boolean,
     isDialpadTonesEnabled: Boolean,
     isDialpadVibrateEnabled: Boolean,
     showDialerPreferences: Boolean,
     onDefaultPage: (Page) -> Unit,
     onThemeMode: (ThemeMode) -> Unit,
+    onContactOrder: (ContactOrder) -> Unit,
     onIsGroupRecentsEnabled: (Boolean) -> Unit,
     onIsDialpadTonesEnabled: (Boolean) -> Unit,
     onIsDialpadVibrateEnabled: (Boolean) -> Unit,
@@ -120,6 +129,15 @@ fun Preferences(
                     selectedValue = themeMode,
                     label = { stringResource(Labels.titleRes(it)) },
                     onValueSelected = onThemeMode,
+                )
+
+                PreferenceItem.CONTACT_ORDER -> ChoicePreferenceListItem(
+                    icon = icon,
+                    title = title,
+                    values = ContactOrder.entries,
+                    selectedValue = contactOrder,
+                    label = { stringResource(Labels.titleRes(it)) },
+                    onValueSelected = onContactOrder,
                 )
 
                 PreferenceItem.DEFAULT_PAGE -> ChoicePreferenceListItem(
