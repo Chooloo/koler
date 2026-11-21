@@ -12,8 +12,9 @@ object AppConstants {
     const val CALL_NOTIFICATION_ID = 420
     const val MISSED_CALL_NOTIFICATION_ID = 421
 
-    const val CHANNEL_ID_CALL_ONGOING = "cnc_priority_low"
+    const val CHANNEL_ID_CALL_ONGOING = "call_ongoing"
     const val CHANNEL_ID_CALL_INCOMING = "call_incoming"
     const val CHANNEL_ID_MISSED_CALLS = "missed_calls"
-    val LEGACY_CALL_CHANNEL_IDS = listOf("cnc_priority_high", "call_notification_channel")
+    val LEGACY_CALL_CHANNEL_IDS =
+        listOf("cnc_priority_high", "cnc_priority_low", "call_notification_channel")
 }
