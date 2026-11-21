@@ -8,6 +8,7 @@ interface RecentRepository {
     fun recent(recentId: Long): Flow<Recent?>
     fun recentsOfNumbers(numbers: List<String>): Flow<List<Recent>>
     suspend fun lastOutgoingNumber(): String?
+    suspend fun deleteRecents(recentIds: List<Long>)
     suspend fun deleteAllRecents()
     suspend fun markMissedCallsRead()
 }
